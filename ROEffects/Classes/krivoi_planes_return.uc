@@ -1,0 +1,470 @@
+class krivoi_planes_return extends ROLevelEmitters;
+
+defaultproperties
+{
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter0
+         UseDirectionAs=PTDU_Normal
+         FadeOut=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         UseRandomSubdivision=True
+         ColorScale(0)=(Color=(B=255,G=255,R=255,A=255))
+         ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         FadeOutStartTime=17.000000
+         MaxParticles=20
+         StartLocationRange=(Y=(Min=-300.000000,Max=300.000000),Z=(Max=100.000000))
+         UseRotationFrom=PTRS_Actor
+         SpinCCWorCW=(X=0.000000,Y=0.000000,Z=0.000000)
+         SizeScale(1)=(RelativeTime=0.170000,RelativeSize=1.000000)
+         SizeScale(2)=(RelativeTime=0.870000,RelativeSize=1.000000)
+         SizeScale(3)=(RelativeTime=1.000000)
+         StartSizeRange=(X=(Min=8.000000,Max=8.000000),Y=(Min=8.000000,Max=8.000000),Z=(Min=8.000000,Max=8.000000))
+         InitialParticlesPerSecond=20.000000
+         DrawStyle=PTDS_AlphaBlend
+         Texture=None
+         TextureUSubdivisions=2
+         TextureVSubdivisions=2
+         LifetimeRange=(Min=60.000000,Max=60.000000)
+         StartVelocityRange=(X=(Min=42.000000,Max=45.000000))
+     End Object
+     Emitters(0)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter0'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter1
+         UseDirectionAs=PTDU_Normal
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         Acceleration=(Z=-0.050000)
+         ColorScale(0)=(Color=(B=255,G=255,R=255,A=255))
+         ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         MaxParticles=1
+         StartLocationShape=PTLS_Sphere
+         UseRotationFrom=PTRS_Actor
+         SpinCCWorCW=(X=0.000000,Y=0.000000,Z=0.000000)
+         SizeScale(1)=(RelativeTime=0.170000,RelativeSize=1.000000)
+         SizeScale(2)=(RelativeTime=0.870000,RelativeSize=1.000000)
+         SizeScale(3)=(RelativeTime=1.000000)
+         StartSizeRange=(X=(Min=8.000000,Max=8.000000),Y=(Min=8.000000,Max=8.000000),Z=(Min=8.000000,Max=8.000000))
+         InitialParticlesPerSecond=1.000000
+         DrawStyle=PTDS_AlphaBlend
+         Texture=None
+         TextureUSubdivisions=2
+         TextureVSubdivisions=2
+         SubdivisionStart=3
+         SubdivisionEnd=3
+         LifetimeRange=(Min=32.250000,Max=32.250000)
+         StartVelocityRange=(X=(Min=50.000000,Max=50.000000))
+     End Object
+     Emitters(1)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter1'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter2
+         UseColorScale=True
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseSizeScale=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         ColorScale(0)=(Color=(B=51,G=153,R=255,A=255))
+         ColorScale(1)=(RelativeTime=0.096429,Color=(A=255))
+         ColorScale(2)=(RelativeTime=1.000000,Color=(A=255))
+         ColorScale(3)=(RelativeTime=1.000000,Color=(A=255))
+         ColorScale(4)=(RelativeTime=1.000000,Color=(B=128,G=128,R=128,A=255))
+         ColorScale(5)=(RelativeTime=1.000000,Color=(A=255))
+         ColorScale(6)=(RelativeTime=1.000000,Color=(A=255))
+         FadeOutStartTime=2.000000
+         FadeInEndTime=0.240000
+         MaxParticles=305
+         AddLocationFromOtherEmitter=1
+         StartSpinRange=(X=(Min=-0.500000,Max=0.500000))
+         SizeScale(0)=(RelativeSize=1.000000)
+         SizeScale(1)=(RelativeTime=0.500000,RelativeSize=2.000000)
+         SizeScale(2)=(RelativeTime=1.000000,RelativeSize=5.000000)
+         StartSizeRange=(X=(Min=2.500000,Max=5.000000),Y=(Min=2.500000,Max=5.000000),Z=(Min=2.500000,Max=5.000000))
+         InitialParticlesPerSecond=10.000000
+         DrawStyle=PTDS_AlphaBlend
+         Texture=Texture'Effects_Tex.explosions.DSmoke_2'
+         LifetimeRange=(Min=10.000000,Max=10.000000)
+         InitialDelayRange=(Min=1.000000,Max=1.000000)
+     End Object
+     Emitters(2)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter2'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter3
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         UseSizeScale=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         BlendBetweenSubdivisions=True
+         ColorScale(0)=(Color=(R=253,A=255))
+         ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         FadeOutStartTime=0.200000
+         FadeInEndTime=0.050000
+         MaxParticles=2
+         AddLocationFromOtherEmitter=1
+         SizeScale(1)=(RelativeTime=0.140000,RelativeSize=1.000000)
+         SizeScale(2)=(RelativeTime=1.000000,RelativeSize=1.500000)
+         StartSizeRange=(X=(Min=15.000000,Max=15.000000),Y=(Min=15.000000,Max=15.000000),Z=(Min=15.000000,Max=15.000000))
+         InitialParticlesPerSecond=30.000000
+         DrawStyle=PTDS_Brighten
+         Texture=Texture'Effects_Tex.explosions.impact_2frame'
+         TextureUSubdivisions=2
+         TextureVSubdivisions=1
+         LifetimeRange=(Min=1.000000,Max=1.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+     End Object
+     Emitters(3)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter3'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter4
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         BlendBetweenSubdivisions=True
+         Acceleration=(Z=-15.000000)
+         ColorScale(0)=(Color=(B=255,G=255,R=255,A=255))
+         ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         FadeOutStartTime=0.220000
+         FadeInEndTime=0.220000
+         MaxParticles=1
+         AddLocationFromOtherEmitter=1
+         StartSpinRange=(X=(Min=-0.500000,Max=0.500000))
+         StartSizeRange=(X=(Min=3.000000,Max=3.000000),Y=(Min=3.000000,Max=3.000000),Z=(Min=3.000000,Max=3.000000))
+         InitialParticlesPerSecond=60.000000
+         Texture=Texture'Effects_Tex.explosions.impact_2frame'
+         TextureUSubdivisions=2
+         TextureVSubdivisions=1
+         SubdivisionEnd=2
+         LifetimeRange=(Min=10.000000,Max=10.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+         StartVelocityRange=(Y=(Min=-50.000000,Max=50.000000))
+         StartVelocityRadialRange=(Min=-50000.000000,Max=-50000.000000)
+         MaxAbsVelocity=(X=50.000000,Y=50.000000,Z=25.000000)
+         AddVelocityFromOtherEmitter=0
+     End Object
+     Emitters(4)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter4'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter5
+         UseColorScale=True
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseSizeScale=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         Acceleration=(X=4.000000,Z=4.000000)
+         ColorScale(0)=(Color=(B=51,G=153,R=255,A=255))
+         ColorScale(1)=(RelativeTime=0.185714,Color=(A=255))
+         ColorScale(2)=(RelativeTime=0.485714,Color=(B=25,G=25,R=25,A=255))
+         ColorScale(3)=(RelativeTime=1.000000,Color=(B=125,G=125,R=125,A=255))
+         ColorScale(4)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         ColorScale(5)=(RelativeTime=1.000000,Color=(A=255))
+         ColorScale(6)=(RelativeTime=1.000000,Color=(A=255))
+         FadeOutStartTime=0.300000
+         FadeInEndTime=0.200000
+         MaxParticles=90
+         AddLocationFromOtherEmitter=4
+         StartSpinRange=(X=(Min=-0.500000,Max=0.500000))
+         SizeScale(0)=(RelativeSize=0.500000)
+         SizeScale(1)=(RelativeTime=1.000000,RelativeSize=1.000000)
+         StartSizeRange=(X=(Min=2.500000,Max=10.000000),Y=(Min=2.500000,Max=10.000000),Z=(Min=2.500000,Max=10.000000))
+         InitialParticlesPerSecond=10.000000
+         DrawStyle=PTDS_AlphaBlend
+         Texture=Texture'Effects_Tex.explosions.DSmoke_2'
+         SecondsBeforeInactive=0.000000
+         LifetimeRange=(Min=10.000000,Max=10.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+         MaxAbsVelocity=(X=1.000000,Z=1.000000)
+     End Object
+     Emitters(5)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter5'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter6
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         BlendBetweenSubdivisions=True
+         Acceleration=(X=10.000000,Y=-10.000000,Z=-5.000000)
+         ColorScale(0)=(Color=(B=255,G=255,R=255,A=255))
+         ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         FadeOutStartTime=0.220000
+         FadeInEndTime=0.220000
+         MaxParticles=1
+         AddLocationFromOtherEmitter=1
+         StartSpinRange=(X=(Min=-0.500000,Max=0.500000))
+         StartSizeRange=(X=(Min=3.000000,Max=3.000000),Y=(Min=3.000000,Max=3.000000),Z=(Min=3.000000,Max=3.000000))
+         InitialParticlesPerSecond=60.000000
+         Texture=Texture'Effects_Tex.explosions.impact_2frame'
+         TextureUSubdivisions=2
+         TextureVSubdivisions=1
+         SubdivisionEnd=2
+         LifetimeRange=(Min=10.000000,Max=10.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+         StartVelocityRange=(X=(Min=-18.000000,Max=-18.000000),Y=(Min=50.000000,Max=50.000000))
+         MaxAbsVelocity=(X=10.000000)
+     End Object
+     Emitters(6)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter6'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter7
+         UseColorScale=True
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseSizeScale=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         Acceleration=(X=4.000000,Z=4.000000)
+         ColorScale(0)=(Color=(B=51,G=153,R=255,A=255))
+         ColorScale(1)=(RelativeTime=0.178571,Color=(A=255))
+         ColorScale(2)=(RelativeTime=0.482143,Color=(A=255))
+         ColorScale(3)=(RelativeTime=1.000000,Color=(A=255))
+         ColorScale(4)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         ColorScale(5)=(RelativeTime=1.000000,Color=(A=255))
+         ColorScale(6)=(RelativeTime=1.000000,Color=(A=255))
+         Opacity=0.150000
+         FadeOutStartTime=0.300000
+         FadeInEndTime=0.200000
+         MaxParticles=60
+         AddLocationFromOtherEmitter=6
+         StartSpinRange=(X=(Min=-0.500000,Max=0.500000))
+         SizeScale(0)=(RelativeSize=0.500000)
+         SizeScale(1)=(RelativeTime=1.000000,RelativeSize=0.500000)
+         StartSizeRange=(X=(Min=1.000000,Max=10.000000),Y=(Min=1.000000,Max=10.000000),Z=(Min=1.000000,Max=10.000000))
+         InitialParticlesPerSecond=30.000000
+         DrawStyle=PTDS_AlphaBlend
+         Texture=Texture'Effects_Tex.explosions.DSmoke_2'
+         SecondsBeforeInactive=0.000000
+         LifetimeRange=(Min=10.000000,Max=10.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+         MaxAbsVelocity=(X=1.000000,Z=1.000000)
+     End Object
+     Emitters(7)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter7'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter8
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         BlendBetweenSubdivisions=True
+         Acceleration=(Y=10.000000,Z=5.000000)
+         ColorScale(0)=(Color=(B=255,G=255,R=255,A=255))
+         ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         FadeOutStartTime=0.220000
+         FadeInEndTime=0.220000
+         MaxParticles=2
+         AddLocationFromOtherEmitter=1
+         StartSpinRange=(X=(Min=-0.500000,Max=0.500000))
+         StartSizeRange=(X=(Min=2.500000,Max=2.500000),Y=(Min=2.500000,Max=2.500000),Z=(Min=2.500000,Max=2.500000))
+         InitialParticlesPerSecond=60.000000
+         Texture=Texture'Effects_Tex.explosions.impact_2frame'
+         TextureUSubdivisions=2
+         TextureVSubdivisions=1
+         SubdivisionEnd=2
+         LifetimeRange=(Min=5.000000,Max=5.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+         StartVelocityRange=(X=(Min=4.000000,Max=4.000000),Z=(Min=-20.000000,Max=-20.000000))
+         MaxAbsVelocity=(Y=10.000000)
+     End Object
+     Emitters(8)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter8'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter9
+         UseColorScale=True
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseSizeScale=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         Acceleration=(X=4.000000,Z=4.000000)
+         ColorScale(0)=(Color=(B=51,G=153,R=255,A=255))
+         ColorScale(1)=(RelativeTime=0.178571,Color=(A=255))
+         ColorScale(2)=(RelativeTime=0.482143,Color=(A=255))
+         ColorScale(3)=(RelativeTime=1.000000,Color=(A=255))
+         ColorScale(4)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         ColorScale(5)=(RelativeTime=1.000000,Color=(A=255))
+         ColorScale(6)=(RelativeTime=1.000000,Color=(A=255))
+         Opacity=0.150000
+         FadeOutStartTime=0.300000
+         FadeInEndTime=0.200000
+         MaxParticles=60
+         AddLocationFromOtherEmitter=8
+         StartSpinRange=(X=(Min=-0.500000,Max=0.500000))
+         SizeScale(0)=(RelativeSize=0.250000)
+         SizeScale(1)=(RelativeTime=1.000000,RelativeSize=0.500000)
+         StartSizeRange=(X=(Min=1.000000,Max=10.000000),Y=(Min=1.000000,Max=10.000000),Z=(Min=1.000000,Max=10.000000))
+         InitialParticlesPerSecond=30.000000
+         DrawStyle=PTDS_AlphaBlend
+         Texture=Texture'Effects_Tex.explosions.DSmoke_2'
+         SecondsBeforeInactive=0.000000
+         LifetimeRange=(Min=10.000000,Max=10.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+         MaxAbsVelocity=(X=1.000000,Z=1.000000)
+     End Object
+     Emitters(9)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter9'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter10
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         BlendBetweenSubdivisions=True
+         Acceleration=(X=-10.000000,Y=10.000000,Z=-9.000000)
+         ColorScale(0)=(Color=(B=255,G=255,R=255,A=255))
+         ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         FadeOutStartTime=0.220000
+         FadeInEndTime=0.220000
+         MaxParticles=2
+         AddLocationFromOtherEmitter=1
+         StartSpinRange=(X=(Min=-0.500000,Max=0.500000))
+         StartSizeRange=(X=(Min=2.000000,Max=4.000000),Y=(Min=2.000000,Max=4.000000),Z=(Min=2.000000,Max=4.000000))
+         InitialParticlesPerSecond=60.000000
+         Texture=Texture'Effects_Tex.explosions.impact_2frame'
+         TextureUSubdivisions=2
+         TextureVSubdivisions=1
+         SubdivisionEnd=2
+         LifetimeRange=(Min=6.000000,Max=6.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+         StartVelocityRange=(X=(Min=10.000000,Max=10.000000),Y=(Min=10.000000,Max=10.000000),Z=(Min=10.000000,Max=10.000000))
+         MaxAbsVelocity=(X=10.000000)
+     End Object
+     Emitters(10)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter10'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter11
+         UseColorScale=True
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         SpinParticles=True
+         UseSizeScale=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         Acceleration=(X=4.000000,Z=4.000000)
+         ColorScale(0)=(Color=(B=51,G=153,R=255,A=255))
+         ColorScale(1)=(RelativeTime=0.178571,Color=(A=255))
+         ColorScale(2)=(RelativeTime=0.482143,Color=(A=255))
+         ColorScale(3)=(RelativeTime=1.000000,Color=(B=125,G=125,R=125,A=255))
+         ColorScale(4)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         ColorScale(5)=(RelativeTime=1.000000,Color=(A=255))
+         ColorScale(6)=(RelativeTime=1.000000,Color=(A=255))
+         Opacity=0.150000
+         FadeOutStartTime=0.300000
+         FadeInEndTime=0.200000
+         MaxParticles=60
+         AddLocationFromOtherEmitter=10
+         StartSpinRange=(X=(Min=-0.500000,Max=0.500000))
+         SizeScale(0)=(RelativeSize=0.500000)
+         SizeScale(1)=(RelativeTime=1.000000,RelativeSize=0.500000)
+         StartSizeRange=(X=(Min=1.000000,Max=10.000000),Y=(Min=1.000000,Max=10.000000),Z=(Min=1.000000,Max=10.000000))
+         InitialParticlesPerSecond=30.000000
+         DrawStyle=PTDS_AlphaBlend
+         Texture=Texture'Effects_Tex.explosions.DSmoke_2'
+         SecondsBeforeInactive=0.000000
+         LifetimeRange=(Min=10.000000,Max=10.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+         MaxAbsVelocity=(X=1.000000,Z=1.000000)
+     End Object
+     Emitters(11)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter11'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter12
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         UseSizeScale=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         BlendBetweenSubdivisions=True
+         ColorScale(0)=(Color=(R=253,A=255))
+         ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         FadeOutStartTime=0.200000
+         FadeInEndTime=0.050000
+         MaxParticles=2
+         StartLocationRange=(X=(Min=-5.000000,Max=5.000000),Y=(Min=-5.000000,Max=5.000000),Z=(Min=-5.000000,Max=5.000000))
+         AddLocationFromOtherEmitter=1
+         SizeScale(1)=(RelativeTime=0.140000,RelativeSize=1.000000)
+         SizeScale(2)=(RelativeTime=1.000000,RelativeSize=1.500000)
+         StartSizeRange=(X=(Min=10.000000,Max=15.000000),Y=(Min=10.000000,Max=15.000000),Z=(Min=10.000000,Max=15.000000))
+         InitialParticlesPerSecond=30.000000
+         DrawStyle=PTDS_Brighten
+         Texture=Texture'Effects_Tex.explosions.impact_2frame'
+         TextureUSubdivisions=2
+         TextureVSubdivisions=1
+         LifetimeRange=(Min=1.000000,Max=1.000000)
+         InitialDelayRange=(Min=32.000000,Max=32.000000)
+     End Object
+     Emitters(12)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter12'
+
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter13
+         FadeOut=True
+         FadeIn=True
+         RespawnDeadParticles=False
+         ZTest=False
+         UseSizeScale=True
+         UseRegularSizeScale=False
+         UniformSize=True
+         AutomaticInitialSpawning=False
+         BlendBetweenSubdivisions=True
+         ColorScale(0)=(Color=(R=253,A=255))
+         ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
+         FadeOutStartTime=0.200000
+         FadeInEndTime=0.050000
+         MaxParticles=2
+         StartLocationRange=(X=(Min=-10.000000,Max=10.000000),Y=(Min=-10.000000,Max=10.000000),Z=(Min=-10.000000,Max=10.000000))
+         AddLocationFromOtherEmitter=1
+         SizeScale(1)=(RelativeTime=0.140000,RelativeSize=1.000000)
+         SizeScale(2)=(RelativeTime=1.000000,RelativeSize=1.500000)
+         StartSizeRange=(X=(Min=10.000000,Max=10.000000),Y=(Min=10.000000,Max=10.000000),Z=(Min=10.000000,Max=10.000000))
+         InitialParticlesPerSecond=30.000000
+         DrawStyle=PTDS_Brighten
+         Texture=Texture'Effects_Tex.explosions.impact_2frame'
+         TextureUSubdivisions=2
+         TextureVSubdivisions=1
+         LifetimeRange=(Min=1.000000,Max=1.000000)
+         InitialDelayRange=(Min=32.200012,Max=32.200012)
+     End Object
+     Emitters(13)=SpriteEmitter'ROEffects.krivoi_planes_return.SpriteEmitter13'
+
+     AutoDestroy=True
+     bNoDelete=False
+}

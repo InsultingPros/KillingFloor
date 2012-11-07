@@ -1,0 +1,21 @@
+//-----------------------------------------------------------
+//
+//-----------------------------------------------------------
+class KatanaFireB extends KFMeleeFire;
+
+defaultproperties
+{
+     damageConst=150
+     maxAdditionalDamage=55
+     ProxySize=0.150000
+     weaponRange=95.000000
+     DamagedelayMin=0.650000
+     DamagedelayMax=0.650000
+     hitDamageClass=Class'KFMod.DamTypeKatana'
+     HitEffectClass=Class'KFMod.AxeHitEffect'
+     MeleeHitSoundRefs(0)="KF_AxeSnd.Axe_HitFlesh"
+     bWaitForRelease=True
+     FireAnim="HardAttack"
+     FireRate=1.000000
+     BotRefireRate=0.850000
+}
