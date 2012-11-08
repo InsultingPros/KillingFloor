@@ -26,8 +26,7 @@ defaultproperties
      FireAnims(3)="Fire4"
      FireAnims(4)="Fire5"
      FireAnims(5)="Fire6"
-     damageConst=100
-     maxAdditionalDamage=35
+     MeleeDamage=135
      ProxySize=0.150000
      weaponRange=95.000000
      DamagedelayMin=0.320000

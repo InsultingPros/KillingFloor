@@ -5,8 +5,7 @@ class KatanaFireB extends KFMeleeFire;
 
 defaultproperties
 {
-     damageConst=150
-     maxAdditionalDamage=55
+     MeleeDamage=205
      ProxySize=0.150000
      weaponRange=95.000000
      DamagedelayMin=0.650000

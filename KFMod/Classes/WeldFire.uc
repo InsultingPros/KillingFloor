@@ -6,6 +6,8 @@ var localized 	string 		NoWeldTargetMessage;
 var localized 	string 		CantWeldTargetMessage;
 var 			float 		FailTime;
 
+var int maxAdditionalDamage;
+
 function PlayFiring()
 {
 	if ( Weapon.Mesh != None )
@@ -33,7 +35,7 @@ simulated Function Timer()
 
 	If( !KFWeapon(Weapon).bNoHit )
 	{
-		MyDamage = damageConst + Rand(MaxAdditionalDamage);
+		MyDamage = MeleeDamage + Rand(MaxAdditionalDamage);
 
 		if ( KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo) != none && KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo).ClientVeteranSkill != none )
 		{
@@ -139,8 +141,7 @@ defaultproperties
 {
      NoWeldTargetMessage="You must be near a weldable door to use the welder."
      CantWeldTargetMessage="You cannot weld this door."
-     damageConst=10
-     maxAdditionalDamage=0
+     MeleeDamage=10
      DamagedelayMin=0.100000
      DamagedelayMax=0.100000
      hitDamageClass=Class'KFMod.DamTypeWelder'

@@ -5,8 +5,7 @@ class AxeFireB extends KFMeleeFire;
 
 defaultproperties
 {
-     damageConst=200
-     maxAdditionalDamage=75
+     MeleeDamage=275
      ProxySize=0.150000
      weaponRange=90.000000
      DamagedelayMin=0.760000

@@ -11,7 +11,6 @@ defaultproperties
      ReloadAnimRate=1.000000
      WeaponReloadAnim="Reload_Shotgun"
      Weight=8.000000
-     bTorchEnabled=True
      bHasAimingMode=True
      IdleAimAnim="Idle_Iron"
      StandardDisplayFOV=65.000000

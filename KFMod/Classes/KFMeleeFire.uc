@@ -1,8 +1,8 @@
 // KFMeleeFire
 class KFMeleeFire extends WeaponFire;
 
-var int damageConst;
-var int maxAdditionalDamage;
+var() int MeleeDamage;
+
 var float ProxySize;
 
 var int NumConHits; // Number of successful strikes before a combo.
@@ -111,13 +111,11 @@ simulated function Timer()
 	local int MyDamage;
 	local bool bBackStabbed;
 
-	// Changed to remove the random in Balance Round 5
-	MyDamage = damageConst + MaxAdditionalDamage;
+	MyDamage = MeleeDamage;
 
 	If( !KFWeapon(Weapon).bNoHit )
 	{
-		// Changed to remove the random in Balance Round 6
-		MyDamage = damageConst + MaxAdditionalDamage;
+		MyDamage = MeleeDamage;
 		StartTrace = Instigator.Location + Instigator.EyePosition();
 
 		if( Instigator.Controller!=None && PlayerController(Instigator.Controller)==None && Instigator.Controller.Enemy!=None )
@@ -286,8 +284,7 @@ function DoFireEffect()
 		return;
 
 	kf = KFMeleeGun(Weapon);
-	// Changed to remove the random in Balance Round 6
-	damage = damageConst + MaxAdditionalDamage;
+	damage = MeleeDamage;
 }
 
 
@@ -320,7 +317,6 @@ function ImpactShakeView()
 
 defaultproperties
 {
-     maxAdditionalDamage=5
      ProxySize=0.200000
      IdleAnim="Idle"
      IdleAnimRate=1.000000

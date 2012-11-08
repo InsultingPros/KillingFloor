@@ -37,13 +37,11 @@ simulated function Timer()
 	local vector dir, lookdir;
 	local float DiffAngle, VictimDist;
 
-	// Changed to remove the random in Balance Round 5
-	MyDamage = damageConst + MaxAdditionalDamage;
+	MyDamage = MeleeDamage;
 
 	If( !KFWeapon(Weapon).bNoHit )
 	{
-		// Changed to remove the random in Balance Round 6
-		MyDamage = damageConst + MaxAdditionalDamage;
+		MyDamage = MeleeDamage;
 		StartTrace = Instigator.Location + Instigator.EyePosition();
 
 		if( Instigator.Controller!=None && PlayerController(Instigator.Controller)==None && Instigator.Controller.Enemy!=None )
@@ -170,8 +168,7 @@ defaultproperties
      FireAnims(4)="Fire5"
      FireAnims(5)="Fire6"
      WideDamageMinHitAngle=0.650000
-     damageConst=165
-     maxAdditionalDamage=45
+     MeleeDamage=210
      ProxySize=0.150000
      weaponRange=110.000000
      DamagedelayMin=0.630000

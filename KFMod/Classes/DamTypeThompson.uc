@@ -1,6 +1,17 @@
 class DamTypeThompson extends KFProjectileWeaponDamageType
 	abstract;
 
+static function AwardKill(KFSteamStatsAndAchievements KFStatsAndAchievements, KFPlayerController Killer, KFMonster Killed )
+{
+	if( Killed.IsA('ZombieStalker') )
+		KFStatsAndAchievements.AddStalkerKill();
+}
+
+static function AwardDamage(KFSteamStatsAndAchievements KFStatsAndAchievements, int Amount)
+{
+	KFStatsAndAchievements.AddBullpupDamage(Amount);
+}
+
 defaultproperties
 {
      WeaponClass=Class'KFMod.ThompsonSMG'

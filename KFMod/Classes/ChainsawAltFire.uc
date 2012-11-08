@@ -61,8 +61,7 @@ defaultproperties
      FireAnims(0)="Fire2"
      FireAnims(1)="fire3"
      FireEndSoundRef="KF_ChainsawSnd.Chainsaw_RevLong_End"
-     damageConst=190
-     maxAdditionalDamage=80
+     MeleeDamage=270
      DamagedelayMin=0.650000
      DamagedelayMax=0.650000
      hitDamageClass=Class'KFMod.DamTypeChainsaw'

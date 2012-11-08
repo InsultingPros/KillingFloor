@@ -5,8 +5,7 @@ class MacheteFireB extends KFMeleeFire;
 
 defaultproperties
 {
-     damageConst=90
-     maxAdditionalDamage=40
+     MeleeDamage=130
      ProxySize=0.120000
      DamagedelayMin=0.710000
      DamagedelayMax=0.710000

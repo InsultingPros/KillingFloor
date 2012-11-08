@@ -22,6 +22,8 @@ var		string			FireEndSoundRef;
 var		string			AmbientFireSoundRef;
 var		string			AmbientIdleSoundRef;
 
+var int maxAdditionalDamage;
+
 static function PreloadAssets(optional KFMeleeFire Spawned)
 {
 	super.PreloadAssets(Spawned);
@@ -185,13 +187,13 @@ function DoFireEffect()
 		return;
 
 	kf = KFMeleeGun(Weapon);
-	damage = damageConst + Rand(MaxAdditionalDamage) ;
+	damage = MeleeDamage + Rand(MaxAdditionalDamage) ;
 
-	MyDamage = damageConst + Rand(MaxAdditionalDamage);
+	MyDamage = MeleeDamage + Rand(MaxAdditionalDamage);
 
 	If( !KFWeapon(Weapon).bNoHit )
 	{
-		MyDamage = damageConst + Rand(MaxAdditionalDamage);
+		MyDamage = MeleeDamage + Rand(MaxAdditionalDamage);
 		StartTrace = Instigator.Location + Instigator.EyePosition();
 
 		if( Instigator.Controller!=None && PlayerController(Instigator.Controller)==None && Instigator.Controller.Enemy!=None )
@@ -334,7 +336,8 @@ defaultproperties
      FireStartSoundRef="KF_ChainsawSnd.Chainsaw_RevLong_Start"
      FireEndSoundRef="KF_ChainsawSnd.Chainsaw_RevLong_End"
      AmbientFireSoundRef="KF_ChainsawSnd.Chainsaw_RevLong_Loop"
-     damageConst=14
+     maxAdditionalDamage=5
+     MeleeDamage=14
      hitDamageClass=Class'KFMod.DamTypeChainsaw'
      HitEffectClass=Class'KFMod.ChainsawHitEffect'
      NoAmmoSoundRef="KF_FlamethrowerSnd.FT_DryFire"

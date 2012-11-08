@@ -23,7 +23,6 @@ simulated event ModeDoFire()
           LastFireAnim = FireAnim;
           FireAnim = FireAnims[AnimToPlay];
 
-          damageConst = default.damageConst;
           DamagedelayMin = default.DamagedelayMin;
 
            //  3  and 2 should never play consecutively. it looks screwey.
@@ -33,13 +32,6 @@ simulated event ModeDoFire()
            LastFireAnim == FireAnims[2] && FireAnim == FireAnims[1] ||
             LastFireAnim == FireAnims[2] && FireAnim == FireAnims[2])
             FireAnim = FireAnims[0];
-
-//           if(FireAnim == FireAnims[2])
-//            {
-//              damageConst *= 1.5;
-//              DamagedelayMin = 0.25;
-//            }
-
      }
 
 
@@ -54,7 +46,7 @@ defaultproperties
      FireAnims(1)="Fire2"
      FireAnims(2)="fire3"
      FireAnims(3)="Fire4"
-     damageConst=14
+     MeleeDamage=19
      DamagedelayMin=0.450000
      DamagedelayMax=0.450000
      hitDamageClass=Class'KFMod.DamTypeKnife'

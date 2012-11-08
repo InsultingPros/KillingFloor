@@ -50,5 +50,5 @@ function SetCurrentGame( CacheManager.GameRecord CurrentGame )
 
 defaultproperties
 {
-     LastActiveMutators="WhiskyThrowingAxe.WThrowingAxeMut"
+     LastActiveMutators="AlteredWeapons.MutAlteredWeapons"
 }

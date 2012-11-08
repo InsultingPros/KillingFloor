@@ -2,7 +2,7 @@ class ClawsFire extends KFMeleeFire;
 
 defaultproperties
 {
-     damageConst=10
+     MeleeDamage=10
      DamagedelayMin=0.200000
      DamagedelayMax=0.700000
      hitDamageClass=Class'KFMod.DamTypeClaws'

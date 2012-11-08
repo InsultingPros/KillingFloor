@@ -1204,7 +1204,7 @@ simulated function UpdateHud()
         || M79GrenadeLauncher(PawnOwner.Weapon) != none || PipeBombExplosive(PawnOwner.Weapon) != none
         || HuskGun(PawnOwner.Weapon) != none || CrossBuzzSaw(PawnOwner.Weapon) != none )
 	{
-		ClipsDigits.Value += KFWeapon(PawnOwner.Weapon).MagAmmoRemaining;
+		ClipsDigits.Value = KFWeapon(PawnOwner.Weapon).AmmoAmount(0);
 	}
 
 	if ( PlayerGrenade == none )

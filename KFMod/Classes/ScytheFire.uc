@@ -30,13 +30,11 @@ simulated function Timer()
 	local vector dir, lookdir;
 	local float DiffAngle, VictimDist;
 
-	// Changed to remove the random in Balance Round 5
-	MyDamage = damageConst + MaxAdditionalDamage;
+	MyDamage = MeleeDamage;
 
 	If( !KFWeapon(Weapon).bNoHit )
 	{
-		// Changed to remove the random in Balance Round 6
-		MyDamage = damageConst + MaxAdditionalDamage;
+		MyDamage = MeleeDamage;
 		StartTrace = Instigator.Location + Instigator.EyePosition();
 
 		if( Instigator.Controller!=None && PlayerController(Instigator.Controller)==None && Instigator.Controller.Enemy!=None )
@@ -161,8 +159,7 @@ defaultproperties
      FireAnims(2)="fire3"
      FireAnims(3)="Fire4"
      WideDamageMinHitAngle=0.650000
-     damageConst=200
-     maxAdditionalDamage=60
+     MeleeDamage=260
      ProxySize=0.150000
      weaponRange=105.000000
      DamagedelayMin=0.650000
@@ -170,6 +167,6 @@ defaultproperties
      hitDamageClass=Class'KFMod.DamTypeScythe'
      MeleeHitSounds(0)=SoundGroup'KF_AxeSnd.Axe_HitFlesh'
      HitEffectClass=Class'KFMod.ScytheHitEffect'
-     FireRate=1.000000
+     FireRate=1.200000
      BotRefireRate=0.850000
 }

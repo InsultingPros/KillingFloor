@@ -4507,20 +4507,20 @@ defaultproperties
      MonsterClasses(6)=(MClassName="KFChar.ZombieBloat_HALLOWEEN",Mid="G")
      MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_HALLOWEEN",Mid="H")
      MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_HALLOWEEN",Mid="I")
-     ShortSpecialSquads(2)=(ZedClass=("KFChar.ZombieCrawler_HALLOWEEN","KFChar.ZombieGorefast_HALLOWEEN","KFChar.ZombieStalker_HALLOWEEN","KFChar.ZombieScrake_HALLOWEEN"),NumZeds=(2,2,1,1))
-     ShortSpecialSquads(3)=(ZedClass=("KFChar.ZombieBloat_HALLOWEEN","KFChar.ZombieSiren_HALLOWEEN","KFChar.ZombieFleshPound_HALLOWEEN"),NumZeds=(1,2,1))
-     NormalSpecialSquads(3)=(ZedClass=("KFChar.ZombieCrawler_HALLOWEEN","KFChar.ZombieGorefast_HALLOWEEN","KFChar.ZombieStalker_HALLOWEEN","KFChar.ZombieScrake_HALLOWEEN"),NumZeds=(2,2,1,1))
-     NormalSpecialSquads(4)=(ZedClass=("KFChar.ZombieFleshPound_HALLOWEEN"),NumZeds=(1))
-     NormalSpecialSquads(5)=(ZedClass=("KFChar.ZombieBloat_HALLOWEEN","KFChar.ZombieSiren_HALLOWEEN","KFChar.ZombieFleshPound_HALLOWEEN"),NumZeds=(1,1,1))
-     NormalSpecialSquads(6)=(ZedClass=("KFChar.ZombieBloat_HALLOWEEN","KFChar.ZombieSiren_HALLOWEEN","KFChar.ZombieFleshPound_HALLOWEEN"),NumZeds=(1,1,2))
-     LongSpecialSquads(4)=(ZedClass=("KFChar.ZombieCrawler_HALLOWEEN","KFChar.ZombieGorefast_HALLOWEEN","KFChar.ZombieStalker_HALLOWEEN","KFChar.ZombieScrake_HALLOWEEN"),NumZeds=(2,2,1,1))
-     LongSpecialSquads(6)=(ZedClass=("KFChar.ZombieFleshPound_HALLOWEEN"),NumZeds=(1))
-     LongSpecialSquads(7)=(ZedClass=("KFChar.ZombieBloat_HALLOWEEN","KFChar.ZombieSiren_HALLOWEEN","KFChar.ZombieFleshPound_HALLOWEEN"),NumZeds=(1,1,1))
-     LongSpecialSquads(8)=(ZedClass=("KFChar.ZombieBloat_HALLOWEEN","KFChar.ZombieSiren_HALLOWEEN","KFChar.ZombieScrake_HALLOWEEN","KFChar.ZombieFleshPound_HALLOWEEN"),NumZeds=(1,2,1,1))
-     LongSpecialSquads(9)=(ZedClass=("KFChar.ZombieBloat_HALLOWEEN","KFChar.ZombieSiren_HALLOWEEN","KFChar.ZombieScrake_HALLOWEEN","KFChar.ZombieFleshPound_HALLOWEEN"),NumZeds=(1,2,1,2))
-     FinalSquads(0)=(ZedClass=("KFChar.ZombieClot_HALLOWEEN"),NumZeds=(4))
-     FinalSquads(1)=(ZedClass=("KFChar.ZombieClot_HALLOWEEN","KFChar.ZombieCrawler_HALLOWEEN"),NumZeds=(3,1))
-     FinalSquads(2)=(ZedClass=("KFChar.ZombieClot_HALLOWEEN","KFChar.ZombieStalker_HALLOWEEN","KFChar.ZombieCrawler_HALLOWEEN"),NumZeds=(3,1,1))
+     ShortSpecialSquads(2)=(ZedClass=("KFChar.ZombieCrawler","KFChar.ZombieGorefast","KFChar.ZombieStalker","KFChar.ZombieScrake"),NumZeds=(2,2,1,1))
+     ShortSpecialSquads(3)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieFleshPound"),NumZeds=(1,2,1))
+     NormalSpecialSquads(3)=(ZedClass=("KFChar.ZombieCrawler","KFChar.ZombieGorefast","KFChar.ZombieStalker","KFChar.ZombieScrake"),NumZeds=(2,2,1,1))
+     NormalSpecialSquads(4)=(ZedClass=("KFChar.ZombieFleshPound"),NumZeds=(1))
+     NormalSpecialSquads(5)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieFleshPound"),NumZeds=(1,1,1))
+     NormalSpecialSquads(6)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieFleshPound"),NumZeds=(1,1,2))
+     LongSpecialSquads(4)=(ZedClass=("KFChar.ZombieCrawler","KFChar.ZombieGorefast","KFChar.ZombieStalker","KFChar.ZombieScrake"),NumZeds=(2,2,1,1))
+     LongSpecialSquads(6)=(ZedClass=("KFChar.ZombieFleshPound"),NumZeds=(1))
+     LongSpecialSquads(7)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieFleshPound"),NumZeds=(1,1,1))
+     LongSpecialSquads(8)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieScrake","KFChar.ZombieFleshPound"),NumZeds=(1,2,1,1))
+     LongSpecialSquads(9)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieScrake","KFChar.ZombieFleshPound"),NumZeds=(1,2,1,2))
+     FinalSquads(0)=(ZedClass=("KFChar.ZombieClot"),NumZeds=(4))
+     FinalSquads(1)=(ZedClass=("KFChar.ZombieClot","KFChar.ZombieCrawler"),NumZeds=(3,1))
+     FinalSquads(2)=(ZedClass=("KFChar.ZombieClot","KFChar.ZombieStalker","KFChar.ZombieCrawler"),NumZeds=(3,1,1))
      HumanName(0)="Cpl.McinTyre"
      HumanName(1)="Sgt.Michaels"
      HumanName(2)="Pvt.Davin"
@@ -4565,7 +4565,7 @@ defaultproperties
      bUseEndGameBoss=True
      bRespawnOnBoss=True
      BossBattleSong="KF_Abandon"
-     EndGameBossClass="KFChar.ZombieBoss_HALLOWEEN"
+     EndGameBossClass="KFChar.ZombieBoss"
      StartingCashBeginner=300
      StartingCashNormal=250
      StartingCashHard=250
@@ -4581,15 +4581,15 @@ defaultproperties
      TimeBetweenWavesHard=60
      TimeBetweenWavesSuicidal=60
      TimeBetweenWavesHell=60
-     StandardMonsterClasses(0)=(MClassName="KFChar.ZombieClot_HALLOWEEN",Mid="A")
-     StandardMonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_HALLOWEEN",Mid="B")
-     StandardMonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_HALLOWEEN",Mid="C")
-     StandardMonsterClasses(3)=(MClassName="KFChar.ZombieStalker_HALLOWEEN",Mid="D")
-     StandardMonsterClasses(4)=(MClassName="KFChar.ZombieScrake_HALLOWEEN",Mid="E")
-     StandardMonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_HALLOWEEN",Mid="F")
-     StandardMonsterClasses(6)=(MClassName="KFChar.ZombieBloat_HALLOWEEN",Mid="G")
-     StandardMonsterClasses(7)=(MClassName="KFChar.ZombieSiren_HALLOWEEN",Mid="H")
-     StandardMonsterClasses(8)=(MClassName="KFChar.ZombieHusk_HALLOWEEN",Mid="I")
+     StandardMonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
+     StandardMonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
+     StandardMonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
+     StandardMonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
+     StandardMonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
+     StandardMonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
+     StandardMonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
+     StandardMonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
+     StandardMonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
      StandardMonsterSquads(0)="4A"
      StandardMonsterSquads(1)="4A1G"
      StandardMonsterSquads(2)="2B"

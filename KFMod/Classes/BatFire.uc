@@ -20,8 +20,7 @@ function PlayFiring()
 defaultproperties
 {
      FireAnim2="Fire2"
-     damageConst=45
-     maxAdditionalDamage=25
+     MeleeDamage=70
      ProxySize=0.120000
      DamagedelayMin=0.500000
      DamagedelayMax=0.500000

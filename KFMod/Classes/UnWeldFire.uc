@@ -22,7 +22,7 @@ function bool AllowFire()
 
 defaultproperties
 {
-     damageConst=15
+     MeleeDamage=15
      hitDamageClass=Class'KFMod.DamTypeUnWeld'
      AmmoPerFire=15
 }
