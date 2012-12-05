@@ -185,7 +185,6 @@ function bool GameTypeLocked()
 
 defaultproperties
 {
-     bExpert=True
      FirewallWarning="KFGUI.KFFirewallWarn"
      PageCaption=
      t_Header=GUIHeader'GUI2K4.UT2k4ServerBrowser.ServerBrowserHeader'

@@ -556,7 +556,6 @@ function string GetPlayerProperty( string Prop )
 defaultproperties
 {
      QueryName="MasterUplink"
-     OldQueryPortNumber=7717
      bRestartServerOnPortSwap=True
      bDebugPortSwaps=True
 }

@@ -814,6 +814,7 @@ defaultproperties
      Waves(13)=(WaveMask=3972,WaveMaxMonsters=12,WaveDuration=180,WaveDifficulty=2.000000)
      Waves(14)=(WaveMask=3712,WaveMaxMonsters=12,WaveDuration=180,WaveDifficulty=2.000000)
      Waves(15)=(WaveMask=2048,WaveMaxMonsters=8,WaveDuration=255,WaveDifficulty=2.000000)
+     bPlayersMustBeReady=True
      bForceNoPlayerLights=True
      DefaultMaxLives=1
      InitialBots=2

@@ -50,5 +50,4 @@ function SetCurrentGame( CacheManager.GameRecord CurrentGame )
 
 defaultproperties
 {
-     LastActiveMutators="AlteredWeapons.MutAlteredWeapons"
 }

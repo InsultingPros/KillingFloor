@@ -1833,6 +1833,7 @@ defaultproperties
      RestartWait=10
      bAutoNumBots=True
      bAllowTaunts=True
+     bWaitForNetPlayers=True
      NumRounds=1
      SpawnProtectionTime=2.000000
      LateEntryLives=1

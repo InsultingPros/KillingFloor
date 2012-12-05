@@ -6153,7 +6153,7 @@ defaultproperties
      baseSwayPitchAcc=200.000000
      SwayCurve=(Points=(,(InVal=0.750000,OutVal=0.100000),(InVal=1.500000,OutVal=0.250000),(InVal=3.000000,OutVal=0.500000),(InVal=10.000000,OutVal=1.000000),(InVal=1000000000.000000,OutVal=1.000000)))
      ROMidGameMenuClass="ROInterface.ROGUIRoleSelection"
-     GlobalDetailLevel=6
+     GlobalDetailLevel=-1
      ForcedTeamSelectOnRoleSelectPage=-5
      bUseBlurEffect=True
      MaxAltBlurLevel=215

@@ -898,7 +898,6 @@ defaultproperties
      MenuSong="KFMenu"
      SteamMustBeRunningText="Steam must be running and you must have an active internet connection to access this"
      UnknownSteamErrorText="Unknown Steam error prevented access to this"
-     AcceptedEULA=True
      PopInSound=Sound'PatchSounds.slide1-1'
      SlideInSound=Sound'PatchSounds.slide1-1'
      BeepSound=Sound'KFWeaponSound.bullethitmetal3'

@@ -1918,7 +1918,6 @@ simulated function UpdateMagCapacity(PlayerReplicationInfo PRI)
 
 defaultproperties
 {
-     KFScopeDetail=KF_TextureScope
      bReduceMagAmmoOnSecondaryFire=True
      FlashBoneName="tip"
      WeaponReloadAnim="Reload1"

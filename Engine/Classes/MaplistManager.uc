@@ -938,11 +938,6 @@ defaultproperties
      Games(11)=(GameType="ROEngine.ROTeamGame",ActiveMaplist="Default RO")
      Games(12)=(GameType="KFmod.KFGameType",ActiveMaplist="Default KF")
      Games(13)=(GameType="KFmod.KFGameTypePvP",ActiveMaplist="Default KFP")
-     Games(14)=(GameType="KFMod.KFDMGameType",ActiveMaplist="Default KFDM")
-     Games(15)=(GameType="KFMod.KFSPGameType",ActiveMaplist="Default KFS")
-     Games(16)=(GameType="Endurance.EnduranceGT",ActiveMaplist="Default KF0")
-     Games(17)=(GameType="BenjiDebug.DebugGameType",ActiveMaplist="Default KF1")
-     Games(18)=(GameType="UpgradedMelee.StaggerGT",ActiveMaplist="Default KF2")
      DefaultListName="Default"
      InvalidGameType="could not be loaded.  Normally, this means an .u file has been deleted, but the .int file has not."
      ReallyInvalidGameType="The requested gametype '%gametype%' could not be loaded."

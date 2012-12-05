@@ -198,4 +198,5 @@ function BroadcastTeam( Controller Sender, coerce string Msg, optional name Type
 
 defaultproperties
 {
+     bPartitionSpectators=True
 }

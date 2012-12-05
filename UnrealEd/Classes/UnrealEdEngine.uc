@@ -8,5 +8,4 @@ var const pointer	hWndMain;
 
 defaultproperties
 {
-     AutoSaveIndex=1
 }

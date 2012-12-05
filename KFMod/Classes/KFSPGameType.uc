@@ -204,6 +204,7 @@ function float RatePlayerStart(NavigationPoint N, byte Team, Controller Player)
 
 defaultproperties
 {
+     bNoLateJoiners=True
      ScoreBoardType="KFMod.KFSPObjectiveBoardNew"
      HUDType="KFmod.HUDKillingFloorSP"
      MapListType="KFMod.KFMapListSP"

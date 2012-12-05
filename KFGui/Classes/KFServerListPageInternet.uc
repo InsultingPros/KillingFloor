@@ -408,7 +408,6 @@ defaultproperties
      End Object
      FilterPanel=KFFilterPanel'KFGui.KFServerListPageInternet.PanelFilter'
 
-     PlayCount=10
      Begin Object Class=GUISplitter Name=HorzSplitter
          DefaultPanels(0)="GUI2K4.UT2K4Browser_ServerListBox"
          DefaultPanels(1)="XInterface.GUISplitter"

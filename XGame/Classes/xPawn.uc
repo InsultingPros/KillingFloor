@@ -2475,6 +2475,7 @@ defaultproperties
      RequiredEquipment(1)="XWeapons.ShieldGun"
      VoiceType="xGame.MercMaleVoice"
      bCanWallDodge=True
+     bNoCoronas=False
      GroundSpeed=440.000000
      WaterSpeed=220.000000
      AirSpeed=440.000000

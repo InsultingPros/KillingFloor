@@ -925,6 +925,7 @@ defaultproperties
      BreathingSound=Sound'KFPlayerSound.Malebreath'
      StartingBlurFadeOutTime=0.500000
      NewSchoolHitBlurIntensity=0.800000
+     bUseBlurEffect=True
      JarrMoveMag=50.000000
      JarrMoveRate=200.000000
      JarrMoveDuration=3.000000

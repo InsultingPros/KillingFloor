@@ -7425,6 +7425,7 @@ defaultproperties
      bCanStrafe=True
      bCanDoubleJump=False
      bCanWalkOffLedges=True
+     bNoCoronas=False
      bCanPickupInventory=True
      bMuffledHearing=True
      SightRadius=6000.000000

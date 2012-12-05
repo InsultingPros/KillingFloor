@@ -524,7 +524,7 @@ defaultproperties
 
      b_Tutorial=None
 
-     LastSelectedMap="KF-Doom2-Final-REWHITELISTED"
+     LastSelectedMap="KF-Test"
      ch_OfficialMapsOnly=None
 
 }

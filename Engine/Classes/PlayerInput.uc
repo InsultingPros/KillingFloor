@@ -347,5 +347,6 @@ defaultproperties
      MouseSmoothingStrength=0.300000
      MouseSensitivity=3.000000
      MouseSamplingTime=0.008333
+     DoubleClickTime=0.250000
      bEnableDodging=True
 }

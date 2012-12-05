@@ -931,10 +931,9 @@ defaultproperties
      bShowWeaponInfo=True
      bShowPersonalInfo=True
      bShowPoints=True
-     bCrosshairShow=True
+     bShowWeaponBar=True
      bShowPortrait=True
      bShowPortraitVC=True
-     bNoEnemyNames=True
      bSmallWeaponBar=True
      ConsoleColor=(B=253,G=216,R=153,A=255)
      ProgressFontName="ROFonts.ROBtsrmVr12"

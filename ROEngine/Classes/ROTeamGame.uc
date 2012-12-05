@@ -4205,6 +4205,7 @@ defaultproperties
      CountDown=0
      DefaultEnemyRosterClass="ROEngine.ROTeamRoster"
      LoginMenuClass="ROInterface.ROUT2K4PlayerSetupPage"
+     EndTimeDelay=15.000000
      DefaultVoiceChannel="Team"
      bTeamScoreRounds=True
      bAllowVehicles=True

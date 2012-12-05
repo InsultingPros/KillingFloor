@@ -4498,15 +4498,15 @@ defaultproperties
      LongWaves(7)=(WaveMask=58616303,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(8)=(WaveMask=75393519,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(9)=(WaveMask=90171865,WaveMaxMonsters=45,WaveDuration=255,WaveDifficulty=0.300000)
-     MonsterClasses(0)=(MClassName="KFChar.ZombieClot_HALLOWEEN",Mid="A")
-     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_HALLOWEEN",Mid="B")
-     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_HALLOWEEN",Mid="C")
-     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker_HALLOWEEN",Mid="D")
-     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake_HALLOWEEN",Mid="E")
-     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_HALLOWEEN",Mid="F")
-     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat_HALLOWEEN",Mid="G")
-     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_HALLOWEEN",Mid="H")
-     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_HALLOWEEN",Mid="I")
+     MonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
+     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
+     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
+     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
+     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
+     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
+     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
+     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
+     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
      ShortSpecialSquads(2)=(ZedClass=("KFChar.ZombieCrawler","KFChar.ZombieGorefast","KFChar.ZombieStalker","KFChar.ZombieScrake"),NumZeds=(2,2,1,1))
      ShortSpecialSquads(3)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieFleshPound"),NumZeds=(1,2,1))
      NormalSpecialSquads(3)=(ZedClass=("KFChar.ZombieCrawler","KFChar.ZombieGorefast","KFChar.ZombieStalker","KFChar.ZombieScrake"),NumZeds=(2,2,1,1))
@@ -4662,7 +4662,7 @@ defaultproperties
      MonsterSquad(26)="2I"
      ControllerClassName="KFmod.KFDoorController"
      LobbyTimeout=20
-     TimeBetweenWaves=90
+     TimeBetweenWaves=60
      AvailableChars(0)="Corporal_Lewis"
      AvailableChars(1)="Lieutenant_Masterson"
      AvailableChars(2)="Police_Constable_Briar"
@@ -4743,12 +4743,12 @@ defaultproperties
      Waves(1)=(WaveMask=16974063,WaveMaxMonsters=28,WaveDuration=255,WaveDifficulty=0.100000)
      Waves(2)=(WaveMask=19662621,WaveMaxMonsters=32,WaveDuration=255,WaveDifficulty=0.100000)
      Waves(3)=(WaveMask=20713145,WaveMaxMonsters=32,WaveDuration=255,WaveDifficulty=0.200000)
-     Waves(4)=(WaveMask=37490365,WaveMaxMonsters=35,WaveDuration=255,WaveDifficulty=0.200000)
+     Waves(4)=(WaveMask=20713149,WaveMaxMonsters=35,WaveDuration=255,WaveDifficulty=0.200000)
      Waves(5)=(WaveMask=39337661,WaveMaxMonsters=35,WaveDuration=255,WaveDifficulty=0.200000)
-     Waves(6)=(WaveMask=56114877,WaveMaxMonsters=35,WaveDuration=255,WaveDifficulty=0.200000)
-     Waves(7)=(WaveMask=58616303,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
-     Waves(8)=(WaveMask=75393519,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
-     Waves(9)=(WaveMask=90171865,WaveMaxMonsters=45,WaveDuration=255,WaveDifficulty=0.300000)
+     Waves(6)=(WaveMask=39337661,WaveMaxMonsters=35,WaveDuration=255,WaveDifficulty=0.200000)
+     Waves(7)=(WaveMask=41839087,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
+     Waves(8)=(WaveMask=41839087,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
+     Waves(9)=(WaveMask=39840217,WaveMaxMonsters=45,WaveDuration=255,WaveDifficulty=0.300000)
      Waves(10)=(WaveMask=65026687,WaveMaxMonsters=50)
      Waves(11)=(WaveMask=63750079,WaveMaxMonsters=50)
      Waves(12)=(WaveMask=64810679,WaveMaxMonsters=50)

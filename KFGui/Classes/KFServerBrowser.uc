@@ -97,8 +97,6 @@ function bool ComboOnPreDraw(Canvas Canvas)
 defaultproperties
 {
      AllTypesClassName="All Types"
-     CurrentGameType="All Types"
-     bPlayerVerified=True
      Begin Object Class=moComboBox Name=GameTypeCombo
          bReadOnly=True
          CaptionWidth=0.100000

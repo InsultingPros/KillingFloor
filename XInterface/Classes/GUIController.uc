@@ -1455,7 +1455,6 @@ defaultproperties
      EditFavoriteMenu="GUI2K4.EditFavoritePage"
      DesignerMenu="GUIDesigner.PropertyManager"
      bModulateStackedMenus=True
-     bExpertMode=True
      bHighlightCurrent=True
      bCurMenuInitialized=True
      LCDLogo=Texture'G15LCD.Logos.BWLogoRGB8A'

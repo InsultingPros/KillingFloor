@@ -501,7 +501,6 @@ defaultproperties
      AttackSuitability=0.500000
      SquadName="Squad"
      bPlayerShadows=True
-     bBlobShadow=True
      bCanCrouch=True
      bCanSwim=True
      bCanClimbLadders=True

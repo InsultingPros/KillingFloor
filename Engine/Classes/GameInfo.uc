@@ -2769,7 +2769,7 @@ defaultproperties
      bWeaponShouldViewShake=True
      bModViewShake=True
      GoreLevel=2
-     GameDifficulty=1.000000
+     GameDifficulty=2.000000
      AutoAim=0.930000
      GameSpeed=1.000000
      HUDType="Engine.HUD"

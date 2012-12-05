@@ -83,7 +83,6 @@ defaultproperties
      CacheSizeMegs=2
      UseSound=True
      UseStaticMeshBatching=True
-     DetectedVideoMemory=512
      C_WorldBox=(B=107,A=255)
      C_GroundPlane=(B=63,A=255)
      C_GroundHighlight=(B=127,A=255)
