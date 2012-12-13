@@ -13,8 +13,6 @@ var rotator Bladerot;
 var() sound ZoomSound;
 var bool bArrowRemoved;
 
-var     float               ForceZoomOutTime; // Track forced zooming out
-
 simulated function WeaponTick(float dt)
 {
     super.WeaponTick(dt);
@@ -34,25 +32,25 @@ simulated function WeaponTick(float dt)
         }
  	}
 
-    if( ForceZoomOutTime > 0 )
-    {
-        if( bAimingRifle )
-        {
-    	    if( Level.TimeSeconds - ForceZoomOutTime > 0 )
-    	    {
-                ForceZoomOutTime = 0;
-
-            	ZoomOut(false);
-
-            	if( Role < ROLE_Authority)
-        			ServerZoomOut(false);
-    		}
-		}
-		else
-		{
-            ForceZoomOutTime = 0;
-		}
-	}
+//    if( ForceZoomOutTime > 0 )
+//    {
+//        if( bAimingRifle )
+//        {
+//    	    if( Level.TimeSeconds - ForceZoomOutTime > 0 )
+//    	    {
+//                ForceZoomOutTime = 0;
+//
+//            	ZoomOut(false);
+//
+//            	if( Role < ROLE_Authority)
+//        			ServerZoomOut(false);
+//    		}
+//		}
+//		else
+//		{
+//            ForceZoomOutTime = 0;
+//		}
+//	}
 }
 
 // Force the weapon out of iron sights shortly after firing so reloading looks right
@@ -60,7 +58,7 @@ simulated function bool StartFire(int Mode)
 {
     if ( super.StartFire(Mode) )
     {
-        ForceZoomOutTime = Level.TimeSeconds + 0.4;
+        //ForceZoomOutTime = Level.TimeSeconds + 0.4;
 
         if ( Instigator != none && PlayerController(Instigator.Controller) != none &&
 			  KFSteamStatsAndAchievements(PlayerController(Instigator.Controller).SteamStatsAndAchievements) != none )
@@ -102,13 +100,14 @@ function float SuggestAttackStyle()
 
 simulated function bool CanZoomNow()
 {
-	return (!FireMode[0].bIsFiring && Instigator!=None && Instigator.Physics!=PHYS_Falling);
+	return (!FireMode[0].bIsFiring);
 }
 
 defaultproperties
 {
      bInPose=True
      RotateRate=5000.000000
+     ForceZoomOutOnFireTime=0.400000
      MagCapacity=1
      ReloadRate=0.010000
      WeaponReloadAnim="Reload_Cheetah"

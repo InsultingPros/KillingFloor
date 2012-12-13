@@ -6,7 +6,7 @@ class AxePickup extends KFWeaponPickup;
 defaultproperties
 {
      Weight=5.000000
-     cost=150
+     cost=1000
      PowerValue=56
      SpeedValue=32
      RangeValue=-20

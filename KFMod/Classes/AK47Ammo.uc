@@ -4,6 +4,7 @@
 class AK47Ammo extends KFAmmunition;
 
 #EXEC OBJ LOAD FILE=KillingFloorHUD.utx
+//duplicated by goldenak47ammo
 
 defaultproperties
 {

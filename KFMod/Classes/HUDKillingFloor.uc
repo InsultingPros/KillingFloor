@@ -50,6 +50,7 @@ var()   SpriteWidget			FlameIcon;
 var()   SpriteWidget			FlameTankIcon;
 var()   SpriteWidget			HuskAmmoIcon;
 var()   SpriteWidget			SawAmmoIcon;
+var()   SpriteWidget			ZEDAmmoIcon;
 
 var()   SpriteWidget            FlashlightBG;
 var()   SpriteWidget            FlashlightIcon;
@@ -317,6 +318,11 @@ var                     bool                bShowKFDebugXHair;
 
 var globalconfig		bool				bLightHud;
 
+/* Should we display Specimen kills on the HUD as they occur ?  (Marco's mod) */
+var globalconfig        bool                bTallySpecimenKills;
+
+var                     int                 MessageHealthLimit,MessageMassLimit;
+
 // Screen Blackout
 var	float	FadeTime;
 var	color	FadeColor;
@@ -457,6 +463,8 @@ simulated function SetHUDAlpha()
     FlameIcon.Tints[1].A = KFHUDAlpha;
 	FlameTankIcon.Tints[0].A = KFHUDAlpha;
 	FlameTankIcon.Tints[1].A = KFHUDAlpha;
+	ZEDAmmoIcon.Tints[0].A = KFHUDAlpha;
+	ZEDAmmoIcon.Tints[1].A = KFHUDAlpha;
 
 	FlashlightBG.Tints[0].A = KFHUDAlpha;
 	FlashlightBG.Tints[1].A = KFHUDAlpha;
@@ -648,6 +656,9 @@ function DrawPlayerInfo(Canvas C, Pawn P, float ScreenLocX, float ScreenLocY)
 	C.SetPos(ScreenLocX - (XL * 0.5), ScreenLocY - (YL * 0.75));
 	C.DrawTextClipped(PlayerName);
 
+    BarLength = FMin(default.BarLength * (float(C.SizeX) / 1024.f),default.BarLength);
+    BarHeight = FMin(default.BarHeight * (float(C.SizeX) / 1024.f),default.BarHeight);
+
 	OffsetX = (36.f * VeterancyMatScaleFactor * 0.6) - (HealthIconSize + 2.0);
 
 	if ( KFPlayerReplicationInfo(P.PlayerReplicationInfo).ClientVeteranSkill != none &&
@@ -666,7 +677,8 @@ function DrawPlayerInfo(Canvas C, Pawn P, float ScreenLocX, float ScreenLocY)
 			TempLevel = KFPlayerReplicationInfo(P.PlayerReplicationInfo).ClientVeteranSkillLevel;
 		}
 
-		TempSize = 36.f * VeterancyMatScaleFactor;
+		TempSize = FMin((36 * VeterancyMatScaleFactor ) * (float(C.SizeX) / 1024.f),36 * VeterancyMatScaleFactor) ;
+		VetStarSize = FMin(default.VetStarSize * (float(C.SizeX) / 1024.f),default.VetStarSize);
 		TempX = ScreenLocX + ((BarLength + HealthIconSize) * 0.5) - (TempSize * 0.25) - OffsetX;
 		TempY = ScreenLocY - YL - (TempSize * 0.75);
 
@@ -1113,6 +1125,10 @@ simulated function DrawHealthBar(Canvas C, Actor A, int Health, int MaxHealth, f
 	TargetLocation = A.Location + vect(0, 0, 1) * (A.CollisionHeight * 2);
 	Dist = VSize(TargetLocation - CameraLocation);
 
+    EnemyHealthBarLength = FMin(default.EnemyHealthBarLength * (float(C.SizeX) / 1024.f),default.EnemyHealthBarLength);
+    EnemyHealthBarHeight = FMin(default.EnemyHealthBarHeight * (float(C.SizeX) / 1024.f),default.EnemyHealthBarHeight);
+
+
 	CamDir  = vector(CameraRotation);
 
 	// Check Distance Threshold / behind camera cut off
@@ -1521,15 +1537,26 @@ simulated function DrawHudPassA (Canvas C)
 				}
 			}
 
+    		if ( MP7MMedicGun(PawnOwner.Weapon) != none || MP5MMedicGun(PawnOwner.Weapon) != none || M7A3MMedicGun(PawnOwner.Weapon) != none  )
+    		if ( MP7MMedicGun(PawnOwner.Weapon) != none || MP5MMedicGun(PawnOwner.Weapon) != none
+                || M7A3MMedicGun(PawnOwner.Weapon) != none || KrissMMedicGun(PawnOwner.Weapon) != none )
     		if ( MP7MMedicGun(PawnOwner.Weapon) != none || MP5MMedicGun(PawnOwner.Weapon) != none )
     		{
                 if( MP7MMedicGun(PawnOwner.Weapon) != none )
                 {
                     MedicGunDigits.Value = MP7MMedicGun(PawnOwner.Weapon).ChargeBar() * 100;
                 }
-                else
+                else if( M7A3MMedicGun(PawnOwner.Weapon) != none )
+                {
+                    MedicGunDigits.Value = M7A3MMedicGun(PawnOwner.Weapon).ChargeBar() * 100;
+                }
+                else if( MP5MMedicGun(PawnOwner.Weapon) != none )
                 {
                     MedicGunDigits.Value = MP5MMedicGun(PawnOwner.Weapon).ChargeBar() * 100;
+                }
+                else
+                {
+                    MedicGunDigits.Value = KrissMMedicGun(PawnOwner.Weapon).ChargeBar() * 100;
                 }
 
             	if ( MedicGunDigits.Value < 50 )
@@ -1638,6 +1665,11 @@ simulated function DrawHudPassA (Canvas C)
 					    DrawSpriteWidget(C, SingleBulletIcon);
 						DrawSpriteWidget(C, BulletsInClipIcon);
 				    }
+					else if ( ZEDGun(PawnOwner.Weapon) != none )
+					{
+						DrawSpriteWidget(C, ClipsIcon);
+						DrawSpriteWidget(C, ZedAmmoIcon);
+					}
 					else
 					{
 						DrawSpriteWidget(C, ClipsIcon);
@@ -1706,7 +1738,8 @@ simulated function DrawHudPassA (Canvas C)
 			TempLevel = KFPRI.ClientVeteranSkillLevel;
 		}
 
-		TempSize = 36 * VeterancyMatScaleFactor * 1.4;
+		TempSize = FMin((36 * VeterancyMatScaleFactor * 1.4) * (float(C.SizeX) / 1024.f),36 * VeterancyMatScaleFactor * 1.4) ;
+		VetStarSize = FMin(default.VetStarSize * (float(C.SizeX) / 1024.f),default.VetStarSize);
 		TempX = C.ClipX * 0.007;
 		TempY = C.ClipY * 0.93 - TempSize;
 
@@ -2048,18 +2081,25 @@ simulated function DrawKFHUDTextElements(Canvas C)
 	local string   S;
 	local vector   Pos, FixedZPos;
 	local rotator  ShopDirPointerRotation;
+	local float    CircleSize;
+	local float    ResScale;
 
 	if ( PlayerOwner == none || KFGRI == none || !KFGRI.bMatchHasBegun || KFPlayerController(PlayerOwner).bShopping )
 	{
 		return;
 	}
 
+    ResScale =  C.SizeX / 1024.0;
+    CircleSize = FMin(128 * ResScale,128);
+	C.FontScaleX = FMin(ResScale,1.f);
+	C.FontScaleY = FMin(ResScale,1.f);
+
 	// Countdown Text
 	if( !KFGRI.bWaveInProgress )
 	{
 		C.SetDrawColor(255, 255, 255, 255);
-		C.SetPos(C.ClipX - 130, 2);
-		C.DrawTile(Material'KillingFloorHUD.HUD.Hud_Bio_Clock_Circle', 128, 128, 0, 0, 256, 256);
+		C.SetPos(C.ClipX - CircleSize, 2);
+		C.DrawTile(Material'KillingFloorHUD.HUD.Hud_Bio_Clock_Circle', CircleSize, CircleSize, 0, 0, 256, 256);
 
 		if ( KFGRI.TimeToNextWave <= 5 )
 		{
@@ -2077,7 +2117,7 @@ simulated function DrawKFHUDTextElements(Canvas C)
 		C.Font = LoadFont(2);
 		C.Strlen(S, XL, YL);
 		C.SetDrawColor(255, 50, 50, KFHUDAlpha);
-		C.SetPos(C.ClipX - 66 - (XL / 2), 66 - YL / 2);
+		C.SetPos(C.ClipX - CircleSize/2 - (XL / 2), CircleSize/2 - YL / 2);
 		C.DrawText(S, False);
 	}
 	else
@@ -2095,26 +2135,30 @@ simulated function DrawKFHUDTextElements(Canvas C)
 		}
 
 		C.SetDrawColor(255, 255, 255, 255);
-		C.SetPos(C.ClipX - 128, 2);
-		C.DrawTile(Material'KillingFloorHUD.HUD.Hud_Bio_Circle', 128, 128, 0, 0, 256, 256);
+		C.SetPos(C.ClipX - CircleSize, 2);
+		C.DrawTile(Material'KillingFloorHUD.HUD.Hud_Bio_Circle', CircleSize, CircleSize, 0, 0, 256, 256);
 
 		S = string(KFGRI.MaxMonsters);
 		C.Font = LoadFont(1);
 		C.Strlen(S, XL, YL);
 		C.SetDrawColor(255, 50, 50, KFHUDAlpha);
-		C.SetPos(C.ClipX - 64 - (XL / 2), 66 - (YL / 1.5));
+		C.SetPos(C.ClipX - CircleSize/2 - (XL / 2), CircleSize/2 - (YL / 1.5));
 		C.DrawText(S);
 
 		// Show the number of waves
 		S = WaveString @ string(KFGRI.WaveNumber + 1) $ "/" $ string(KFGRI.FinalWave);
 		C.Font = LoadFont(5);
 		C.Strlen(S, XL, YL);
-		C.SetPos(C.ClipX - 64 - (XL / 2), 66 + (YL / 2.5));
+		C.SetPos(C.ClipX - CircleSize/2 - (XL / 2), CircleSize/2 + (YL / 2.5));
 		C.DrawText(S);
 
    		//Needed for the hints showing up in the second downtime
 		bIsSecondDowntime = true;
 	}
+
+	C.FontScaleX = 1;
+	C.FontScaleY = 1;
+
 
 	if ( KFPRI == none || KFPRI.Team == none || KFPRI.bOnlySpectator || PawnOwner == none )
 	{
@@ -2246,7 +2290,7 @@ simulated function Timer()
     			CurrentR = CurrentVolume.DistanceFogColor.R ;
     			CurrentG = CurrentVolume.DistanceFogColor.G ;
     			CurrentB = CurrentVolume.DistanceFogColor.B ;
-			}
+		}
 		}
 		else return;
 
@@ -2309,7 +2353,9 @@ simulated function Timer()
 simulated function DrawModOverlay( Canvas C )
 {
 	local float MaxRBrighten, MaxGBrighten, MaxBBrighten;
-
+	local PlayerReplicationInfo PRI;
+	local bool bHasDefaultPhysicsVolume, bHasKFPhysicsVolume;
+	
 	C.SetPos(0, 0);
 
 	// We want the overlay to start black, and fade in, almost like the player opened their eyes
@@ -2321,6 +2367,8 @@ simulated function DrawModOverlay( Canvas C )
 		{
 			return;
 		}
+		
+		PRI = PlayerOwner.PlayerReplicationInfo;
 
 		// if critical, pulsate.  otherwise, dont.
 		if ( PlayerOwner.Pawn != none && PlayerOwner.Pawn.Health > 0 )
@@ -2341,7 +2389,7 @@ simulated function DrawModOverlay( Canvas C )
 		}
 
 		// Dead Players see Red
-		if( PlayerOwner.PlayerReplicationInfo.bOutOfLives || PlayerOwner.PlayerReplicationInfo.bIsSpectator )
+		if( PRI.bOutOfLives || PRI.bIsSpectator )
 		{
 /*			if( !bDisplayDeathScreen )
 			{
@@ -2364,7 +2412,7 @@ simulated function DrawModOverlay( Canvas C )
 		}
 */
 		// Hook for fade in from black at the start.
-		if ( !bInitialDark && PlayerOwner.PlayerReplicationInfo.bReadyToPlay )
+		if ( !bInitialDark && PRI.bReadyToPlay )
 		{
 			C.SetDrawColor(0, 0, 0, 255);
 			C.DrawTile(VisionOverlay, C.SizeX, C.SizeY, 0, 0, 1024, 1024);
@@ -2405,18 +2453,33 @@ simulated function DrawModOverlay( Canvas C )
 		// the physicsvolume check is abit screwy because the player is always in a volume called "DefaultPhyicsVolume"
 		// so we've gotta make sure that the return checks take this into consideration.
 
+        // The checks for KFPhysicsVolume below fix the issue with Moonbase's zoneinfo fog
+        // settings being overridden. Moonbase is the only map (now, at least) using one of
+        // these volumes.
 		if ( PlayerOwner != none && PlayerOwner.Pawn != none )
 		{
 			// This block of code here just makes sure that if we've already got a tint, and we step into a zone/volume without
 			// bDistanceFog, our current tint is not affected.
 			// a.  If I'm in a zone and its not bDistanceFog. AND IM NOT IN A PHYSICSVOLUME. Just a zone.
-			// b.  If I'm in a Volume
-			if ( PlayerOwner.PlayerReplicationInfo.PlayerZone != none && !PlayerOwner.PlayerReplicationInfo.PlayerZone.bDistanceFog &&
-				 PlayerOwner.PlayerReplicationInfo.PlayerVolume == none || DefaultPhysicsVolume(PlayerOwner.pawn.PhysicsVolume)==None &&
-				 !PlayerOwner.pawn.PhysicsVolume.bDistanceFog )
+			// b.  If I'm in a Volume			
+			if( DefaultPhysicsVolume( PlayerOwner.Pawn.PhysicsVolume ) != none )
 			{
-				return;
+				bHasDefaultPhysicsVolume = true;
 			}
+			else if( KFPhysicsVolume( PlayerOwner.Pawn.PhysicsVolume ) != none )
+			{
+				bHasKFPhysicsVolume = true;
+			}
+
+			if ( PRI.PlayerZone != none && !PRI.PlayerZone.bDistanceFog &&
+				 PRI.PlayerVolume == none || !bHasDefaultPhysicsVolume &&
+				 !PlayerOwner.Pawn.PhysicsVolume.bDistanceFog )
+			{
+				if( !bHasKFPhysicsVolume )
+				{
+					return;
+				}
+			}		
 		}
 
 		if ( PlayerOwner != none && !bZoneChanged && PlayerOwner.Pawn != none )
@@ -2424,8 +2487,8 @@ simulated function DrawModOverlay( Canvas C )
 			// Grab the most recent zone info from our PRI
 			// Only update if it's different
 			// EDIT:  AND HAS bDISTANCEFOG true
-			if ( CurrentZone != PlayerOwner.PlayerReplicationInfo.PlayerZone || DefaultPhysicsVolume(PlayerOwner.pawn.PhysicsVolume) == None &&
-				 CurrentVolume != PlayerOwner.pawn.PhysicsVolume )
+			if ( CurrentZone != PlayerOwner.PlayerReplicationInfo.PlayerZone || ( !bHasDefaultPhysicsVolume 
+				&& !bHasKFPhysicsVolume ) && CurrentVolume != PlayerOwner.Pawn.PhysicsVolume )
 			{
 				if ( CurrentZone != none )
 				{
@@ -2439,17 +2502,17 @@ simulated function DrawModOverlay( Canvas C )
 				// This is for all occasions where we're either in a Levelinfo handled zone
 				// Or a zoneinfo.
 				// If we're in a LevelInfo / ZoneInfo  and NOT touching a Volume.  Set current Zone
-				if ( PlayerOwner.PlayerReplicationInfo.PlayerZone != none && PlayerOwner.PlayerReplicationInfo.PlayerZone.bDistanceFog &&
-					 DefaultPhysicsVolume(PlayerOwner.pawn.PhysicsVolume)!= none && !PlayerOwner.PlayerReplicationInfo.PlayerZone.bNoKFColorCorrection )
+				if ( PRI.PlayerZone != none && PRI.PlayerZone.bDistanceFog &&
+					 ( bHasDefaultPhysicsVolume || bHasKFPhysicsVolume ) && !PRI.PlayerZone.bNoKFColorCorrection )
 				{
 					CurrentVolume = none;
-					CurrentZone = PlayerOwner.PlayerReplicationInfo.PlayerZone;
+					CurrentZone = PRI.PlayerZone;
 				}
-				else if ( DefaultPhysicsVolume(PlayerOwner.pawn.PhysicsVolume) == None && PlayerOwner.pawn.PhysicsVolume.bDistanceFog &&
-					!PlayerOwner.pawn.PhysicsVolume.bNoKFColorCorrection)
+				else if ( !bHasDefaultPhysicsVolume && PlayerOwner.Pawn.PhysicsVolume.bDistanceFog &&
+					!PlayerOwner.Pawn.PhysicsVolume.bNoKFColorCorrection)
 				{
 					CurrentZone = none;
-					CurrentVolume = PlayerOwner.pawn.PhysicsVolume;
+					CurrentVolume = PlayerOwner.Pawn.PhysicsVolume;
 				}
 
 				if ( CurrentVolume != none )
@@ -2476,9 +2539,9 @@ simulated function DrawModOverlay( Canvas C )
     					LastB = LastZone.DistanceFogColor.B;
 					}
 				}
-				else if ( LastVolume != none )
+				else if ( LastVolume != none ) 
 				{
-					if( LastZone.bNewKFColorCorrection )
+					if( LastVolume.bNewKFColorCorrection )
 					{
                         LastR = LastVolume.KFOverlayColor.R;
     					LastG = LastVolume.KFOverlayColor.G;
@@ -4306,6 +4369,26 @@ simulated function DrawFadeEffect(Canvas C)
 	C.DrawColor = WhiteColor;
 }
 
+function UpdateKillMessage(Object OptionalObject,PlayerReplicationInfo RelatedPRI_1)
+{
+    local int i;
+
+	for( i=0; i< arraycount(LocalMessages); ++i )
+	{
+		if( LocalMessages[i].Message== class 'KillsMessage' &&
+        LocalMessages[i].OptionalObject==OptionalObject &&
+        LocalMessages[i].RelatedPRI==RelatedPRI_1 )
+		{
+			++LocalMessages[i].Switch;
+			LocalMessages[i].DrawColor = class'KillsMessage'.static.GetColor(LocalMessages[i].Switch);
+			LocalMessages[i].LifeTime = class 'KillsMessage'.Default.MessageShowTime;
+			LocalMessages[i].EndOfLife = class 'KillsMessage'.Default.MessageShowTime + Level.TimeSeconds;
+			LocalMessages[i].StringMessage = class 'KillsMessage'.static.GetString(LocalMessages[i].Switch,RelatedPRI_1,,OptionalObject);
+			return;
+		}
+	}
+}
+
 defaultproperties
 {
      KFHUDAlpha=200
@@ -4340,6 +4423,7 @@ defaultproperties
      FlameTankIcon=(WidgetTexture=Texture'KillingFloorHUD.HUD.Hud_Flame_Tank',RenderStyle=STY_Alpha,TextureCoords=(X2=64,Y2=64),TextureScale=0.220000,PosX=0.853000,PosY=0.943000,ScaleMode=SM_Right,Scale=1.000000,Tints[0]=(B=255,G=255,R=255,A=255),Tints[1]=(B=255,G=255,R=255,A=255))
      HuskAmmoIcon=(WidgetTexture=Texture'KillingFloorHUD.HUD.Hud_Flame',RenderStyle=STY_Alpha,TextureCoords=(X2=64,Y2=64),TextureScale=0.220000,PosX=0.848000,PosY=0.943000,ScaleMode=SM_Right,Scale=1.000000,Tints[0]=(B=255,G=255,R=255,A=255),Tints[1]=(B=255,G=255,R=255,A=255))
      SawAmmoIcon=(WidgetTexture=Texture'KillingFloor2HUD.HUD.Texture_Hud_Sawblade',RenderStyle=STY_Alpha,TextureCoords=(X2=64,Y2=64),TextureScale=0.220000,PosX=0.853000,PosY=0.943000,ScaleMode=SM_Right,Scale=1.000000,Tints[0]=(B=255,G=255,R=255,A=255),Tints[1]=(B=255,G=255,R=255,A=255))
+     ZEDAmmoIcon=(WidgetTexture=Texture'KillingFloorHUD.HUD.Hud_Lightning_Bolt',RenderStyle=STY_Alpha,TextureCoords=(X2=64,Y2=64),TextureScale=0.200000,PosX=0.781000,PosY=0.945000,ScaleMode=SM_Right,Scale=1.000000,Tints[0]=(B=255,G=255,R=255,A=255),Tints[1]=(B=255,G=255,R=255,A=255))
      FlashlightBG=(WidgetTexture=Texture'KillingFloorHUD.HUD.Hud_Box_128x64',RenderStyle=STY_Alpha,TextureCoords=(X2=128,Y2=64),TextureScale=0.350000,PosX=0.705000,PosY=0.935000,Scale=1.000000,Tints[0]=(B=255,G=255,R=255,A=255),Tints[1]=(B=255,G=255,R=255,A=255))
      FlashlightIcon=(WidgetTexture=Texture'KillingFloorHUD.HUD.Hud_Flashlight',RenderStyle=STY_Alpha,TextureCoords=(X2=64,Y2=64),TextureScale=0.310000,PosX=0.704000,PosY=0.938000,Scale=1.000000,Tints[0]=(B=255,G=255,R=255,A=255),Tints[1]=(B=255,G=255,R=255,A=255))
      FlashlightOffIcon=(WidgetTexture=Texture'KillingFloorHUD.HUD.Hud_Flashlight_Off',RenderStyle=STY_Alpha,TextureCoords=(X2=64,Y2=64),TextureScale=0.310000,PosX=0.704000,PosY=0.938000,Scale=1.000000,Tints[0]=(B=255,G=255,R=255,A=255),Tints[1]=(B=255,G=255,R=255,A=255))
@@ -4434,6 +4518,8 @@ defaultproperties
      HintTitleWidget=(RenderStyle=STY_Alpha,WrapHeight=1.000000,bDrawShadow=True,Tints[0]=(B=255,G=255,R=255,A=255),Tints[1]=(B=255,G=255,R=255,A=255))
      HintTextWidget=(RenderStyle=STY_Alpha,WrapHeight=1.000000,Tints[0]=(B=255,G=255,R=255,A=255),Tints[1]=(B=255,G=255,R=255,A=255))
      HintCoords=(X=0.980000,Y=0.250000,XL=-1.000000)
+     MessageHealthLimit=1000
+     MessageMassLimit=5000
      FadeTime=-1.000000
      WhiteFlashTime=0.500000
      YouveWonTheMatch="Your squad survived!"

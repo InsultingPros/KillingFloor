@@ -9,6 +9,8 @@ class ZombieClot extends ZombieClotBase;
 // NOTE: All Variables are declared in the base class to eliminate hitching
 //----------------------------------------------------------------------------
 
+
+
 function ClawDamageTarget()
 {
 	local vector PushDir;
@@ -200,8 +202,33 @@ simulated function Destroyed()
 	}
 }
 
+static simulated function PreCacheStaticMeshes(LevelInfo myLevel)
+{//should be derived and used.
+    Super.PreCacheStaticMeshes(myLevel);
+/*
+    myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_1');
+	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_2');
+	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_3');
+	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_4');
+	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_5');
+	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_6');
+*/
+}
+
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.clot_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.clot_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.clot_diffuse');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.clot_spec');
+}
+
 defaultproperties
 {
+     EventClasses(0)="KFChar.ZombieClot"
+     EventClasses(1)="KFChar.ZombieClot"
+     EventClasses(2)="KFChar.ZombieClot_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieClot_XMAS"
      DetachedArmClass=Class'KFChar.SeveredArmClot'
      DetachedLegClass=Class'KFChar.SeveredLegClot'
      DetachedHeadClass=Class'KFChar.SeveredHeadClot'

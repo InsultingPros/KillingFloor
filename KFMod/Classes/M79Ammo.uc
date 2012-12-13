@@ -1,5 +1,7 @@
 class M79Ammo extends KFAmmunition;
 
+//duplicated by goldenm79ammo
+
 defaultproperties
 {
      AmmoPickupAmount=3

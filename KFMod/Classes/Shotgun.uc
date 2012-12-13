@@ -6,6 +6,7 @@ class Shotgun extends KFWeaponShotgun;
 defaultproperties
 {
      FirstPersonFlashlightOffset=(X=-25.000000,Y=-18.000000,Z=8.000000)
+     ForceZoomOutOnFireTime=0.010000
      MagCapacity=8
      ReloadRate=0.666667
      ReloadAnim="Reload"

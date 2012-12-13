@@ -45,6 +45,10 @@ var() xPickUpBase PickUpBase;          // Pick-up base which spawned this pickup
 
 var Controller TeamOwner[4];		// AI controller currently going after this pickup (for team coordination)
 
+// #ifdef _KF_
+var() bool bExcludeFromNavigation;  // If true, this pickup won't become part of the navigation network.
+// #endif
+
 native final function AddToNavigation();			// cache dropped inventory in navigation network
 native final function RemoveFromNavigation();
 

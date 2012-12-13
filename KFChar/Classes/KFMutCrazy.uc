@@ -22,18 +22,18 @@ function Timer()
 			for( j=0; j<KF.InitSquads[i].MSquad.Length; j++ )
 				KF.InitSquads[i].MSquad[j] = GetReplaceClass(KF.InitSquads[i].MSquad[j]);
 		}
-		for( i=0; i<KF.SpecialSquads.Length; i++ )
+		for( i=0; i<KF.MonsterCollection.default.SpecialSquads.Length; i++ )
 		{
-			for( j=0; j<KF.SpecialSquads[i].ZedClass.Length; j++ )
-				ReplaceMonsterStr(KF.SpecialSquads[i].ZedClass[j]);
+			for( j=0; j<KF.MonsterCollection.default.SpecialSquads[i].ZedClass.Length; j++ )
+				ReplaceMonsterStr(KF.MonsterCollection.default.SpecialSquads[i].ZedClass[j]);
 		}
-		for( i=0; i<KF.FinalSquads.Length; i++ )
+		for( i=0; i<KF.MonsterCollection.default.FinalSquads.Length; i++ )
 		{
-			for( j=0; j<KF.FinalSquads[i].ZedClass.Length; j++ )
-				ReplaceMonsterStr(KF.FinalSquads[i].ZedClass[j]);
+			for( j=0; j<KF.MonsterCollection.default.FinalSquads[i].ZedClass.Length; j++ )
+				ReplaceMonsterStr(KF.MonsterCollection.default.FinalSquads[i].ZedClass[j]);
 		}
 		KF.FallbackMonster = GetReplaceClass( Class<KFMonster>(KF.FallbackMonster) );
-		KF.EndGameBossClass = string(Class'ZombieBossMix');
+		KF.MonsterCollection.default.EndGameBossClass = string(Class'ZombieBossMix');
 	}
 	Destroy();
 }

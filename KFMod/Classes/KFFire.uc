@@ -362,7 +362,7 @@ event ModeDoFire()
 
 	LastFireTime = Level.TimeSeconds;
 
-	if (Weapon.Owner != none && AllowFire() && !bFiringDoesntAffectMovement)
+	if (Weapon.Owner != none && AllowFire() && !bFiringDoesntAffectMovement && Weapon.Owner.Physics != PHYS_Falling )
 	{
 		if (FireRate > 0.25)
 		{
@@ -433,6 +433,8 @@ simulated function HandleRecoil(float Rec)
 	local rotator NewRecoilRotation;
 	local KFPlayerController KFPC;
 	local KFPawn KFPwn;
+	local vector AdjustedVelocity;
+	local float AdjustedSpeed;
 
     if( Instigator != none )
     {
@@ -459,8 +461,25 @@ simulated function HandleRecoil(float Rec)
 
     	    if( RecoilVelocityScale > 0 )
     	    {
-                NewRecoilRotation.Pitch += (VSize(Weapon.Owner.Velocity)* RecoilVelocityScale);
-        	    NewRecoilRotation.Yaw += (VSize(Weapon.Owner.Velocity)* RecoilVelocityScale);
+                if( Weapon.Owner != none && Weapon.Owner.Physics == PHYS_Falling &&
+                    Weapon.Owner.PhysicsVolume.Gravity.Z > class'PhysicsVolume'.default.Gravity.Z )
+                {
+                    AdjustedVelocity = Weapon.Owner.Velocity;
+                    // Ignore Z velocity in low grav so we don't get massive recoil
+                    AdjustedVelocity.Z = 0;
+                    AdjustedSpeed = VSize(AdjustedVelocity);
+                    //log("AdjustedSpeed = "$AdjustedSpeed$" scale = "$(AdjustedSpeed* RecoilVelocityScale * 0.5));
+
+                    // Reduce the falling recoil in low grav
+                    NewRecoilRotation.Pitch += (AdjustedSpeed* RecoilVelocityScale * 0.5);
+            	    NewRecoilRotation.Yaw += (AdjustedSpeed* RecoilVelocityScale * 0.5);
+        	    }
+        	    else
+        	    {
+                    //log("Velocity = "$VSize(Weapon.Owner.Velocity)$" scale = "$(VSize(Weapon.Owner.Velocity)* RecoilVelocityScale));
+                    NewRecoilRotation.Pitch += (VSize(Weapon.Owner.Velocity)* RecoilVelocityScale);
+            	    NewRecoilRotation.Yaw += (VSize(Weapon.Owner.Velocity)* RecoilVelocityScale);
+        	    }
     	    }
     	    NewRecoilRotation.Pitch += (Instigator.HealthMax / Instigator.Health * 5);
     	    NewRecoilRotation.Yaw += (Instigator.HealthMax / Instigator.Health * 5);

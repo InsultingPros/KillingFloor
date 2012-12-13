@@ -400,6 +400,44 @@ simulated event ModifyVelocity(float DeltaTime, vector OldVelocity)
     }
 }
 
+function TakeFallingDamage()
+{
+	local float Shake, EffectiveSpeed;
+	local float UsedMaxFallSpeed;
+
+    UsedMaxFallSpeed = MaxFallSpeed;
+
+    // Higher max fall speed in low grav so that weapons that push you around
+    // don't cause you to die
+    if( Instigator.PhysicsVolume.Gravity.Z > class'PhysicsVolume'.default.Gravity.Z )
+    {
+        UsedMaxFallSpeed *= 2.0;
+    }
+
+	if (Velocity.Z < -0.5 * UsedMaxFallSpeed)
+	{
+		if ( Role == ROLE_Authority )
+		{
+		    MakeNoise(1.0);
+		    if (Velocity.Z < -1 * UsedMaxFallSpeed)
+		    {
+				EffectiveSpeed = Velocity.Z;
+				if ( TouchingWaterVolume() )
+					EffectiveSpeed = FMin(0, EffectiveSpeed + 100);
+				if ( EffectiveSpeed < -1 * UsedMaxFallSpeed )
+					TakeDamage(-100 * (EffectiveSpeed + UsedMaxFallSpeed)/UsedMaxFallSpeed, None, Location, vect(0,0,0), class'Fell');
+		    }
+		}
+		if ( Controller != None )
+		{
+			Shake = FMin(1, -1 * Velocity.Z/MaxFallSpeed);
+            Controller.DamageShake(Shake);
+		}
+	}
+	else if (Velocity.Z < -1.4 * JumpZ)
+		MakeNoise(0.5);
+}
+
 exec function TestEye()
 {
     local Vector X,Y,Z;
@@ -1504,7 +1542,7 @@ simulated function HandleNadeThrowAnim()
         {
             SetAnimAction('Frag_Flamethrower');
         }
-        else if( Axe(Weapon) != none )
+        else if( Axe(Weapon) != none || DwarfAxe(Weapon) != none )
         {
             SetAnimAction('Frag_Axe');
         }
@@ -1572,7 +1610,7 @@ simulated function HandleNadeThrowAnim()
         {
             SetAnimAction('Frag_MP7');
         }
-        else if( M7A3MMedicGun(Weapon) != none )
+        else if( M7A3MMedicGun(Weapon) != none || KrissMMedicGun(Weapon) != none )
         {
             SetAnimAction('Frag_Kriss');
         }
@@ -1599,6 +1637,10 @@ simulated function HandleNadeThrowAnim()
         else if( HuskGun(Weapon) != none )
         {
             SetAnimAction('Frag_HuskGun');
+        }
+        else if( ZEDGun(Weapon) != none )
+        {
+            SetAnimAction('Frag_Zed');
         }
         else if( NailGun(Weapon) != none )
         {
@@ -1868,7 +1910,7 @@ simulated event SetAnimAction(name NewAction)
             || AnimAction == 'Frag_M4203' || AnimAction == 'Frag_MP5'
             || AnimAction == 'Frag_HuskGun' || AnimAction == 'Frag_Kriss'
             || AnimAction == 'Frag_Thompson' || AnimAction == 'Frag_scythe'
-            || AnimAction == 'Frag_Cheetah')
+            || AnimAction == 'Frag_Cheetah' || AnimAction == 'Frag_Zed')
 		{
             AnimBlendParams(1, 1.0, 0.0, 0.2, FireRootBone);
 			PlayAnim(NewAction,, 0.0, 1);
@@ -1896,7 +1938,8 @@ simulated event SetAnimAction(name NewAction)
             || AnimAction == 'Reload_Fal_Acog' || AnimAction == 'Reload_M7A3'
             || AnimAction == 'Reload_KSG' || AnimAction == 'Reload_Flare'
             || AnimAction == 'Reload_DualFlare' || AnimAction == 'Reload_Cheetah'
-            || AnimAction == 'Reload_Thompson')
+            || AnimAction == 'Reload_Thompson' || AnimAction == 'Reload_Kriss'
+            || AnimAction == 'Reload_Zed')
 		{
 			AnimBlendParams(1, 1.0, 0.0, 0.2, FireRootBone);
 			PlayAnim(NewAction,, 0.1, 1);
@@ -2225,6 +2268,12 @@ function PlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<Dama
 	local rotator SplatRot;
 
 	bRecentHit = Level.TimeSeconds - LastPainTime < 0.2;
+
+    // Take you out of ironsights when taking momentum from damage
+    if( VSize(Momentum) > 0 && KFWeapon(Weapon) != none )
+    {
+        KFWeapon(Weapon).bForceLeaveIronsights = true;
+    }
 
     if ( Damage <= 0 )
         return;
@@ -2946,19 +2995,39 @@ function ServerBuyWeapon( Class<Weapon> WClass )
 	local float Price;
 	local bool bIsDualWeapon, bHasDual9mms, bHasDualHCs, bHasDualRevolvers;
 	local bool bIgnoreDualWeaponWeight;
+	local bool isLocked;
 
 	if ( !CanBuyNow() || Class<KFWeapon>(WClass) == none || Class<KFWeaponPickup>(WClass.Default.PickupClass) == none )
 	{
 		return;
 	}
 
-	if ( Class<KFWeapon>(WClass).Default.AppID > 0 )
+    if ( Class<KFWeapon>(WClass).Default.AppID > 0 && Class<KFWeapon>(WClass).Default.UnlockedByAchievement != -1 )
+    {
+
+		if ( KFSteamStatsAndAchievements(PlayerReplicationInfo.SteamStatsAndAchievements) == none ||
+            (!KFSteamStatsAndAchievements(PlayerReplicationInfo.SteamStatsAndAchievements).PlayerOwnsWeaponDLC(Class<KFWeapon>(WClass).Default.AppID) &&
+             KFSteamStatsAndAchievements(PlayerReplicationInfo.SteamStatsAndAchievements).Achievements[Class<KFWeapon>(WClass).Default.UnlockedByAchievement].bCompleted != 1 ))
+		{
+		    return;
+        }
+
+    }
+	else if ( Class<KFWeapon>(WClass).Default.AppID > 0 )
 	{
 		if ( KFSteamStatsAndAchievements(PlayerReplicationInfo.SteamStatsAndAchievements) == none ||
-			!KFSteamStatsAndAchievements(PlayerReplicationInfo.SteamStatsAndAchievements).PlayerOwnsWeaponDLC(Class<KFWeapon>(WClass).Default.AppID) )
+			!KFSteamStatsAndAchievements(PlayerReplicationInfo.SteamStatsAndAchievements).PlayerOwnsWeaponDLC(Class<KFWeapon>(WClass).Default.AppID))
 		{
 			return;
 		}
+	}
+	else if ( Class<KFWeapon>(WClass).Default.UnlockedByAchievement != -1  )
+	{
+	    if ( KFSteamStatsAndAchievements(PlayerReplicationInfo.SteamStatsAndAchievements) == none ||
+             KFSteamStatsAndAchievements(PlayerReplicationInfo.SteamStatsAndAchievements).Achievements[Class<KFWeapon>(WClass).Default.UnlockedByAchievement].bCompleted != 1 )
+		{
+		    return;
+        }
 	}
 
 	Price = class<KFWeaponPickup>(WClass.Default.PickupClass).Default.Cost;
@@ -3879,6 +3948,20 @@ function GiveWeapon(string aClassName )
 			KFGameType(Level.Game).WeaponSpawned(newWeapon);
 		}
 	}
+}
+
+function bool DoJump( bool bUpdating )
+{
+    if ( Super.DoJump(bUpdating) )
+    {
+        // Take you out of ironsights if you jump on a non-lowgrav map
+        if( KFWeapon(Weapon) != none && PhysicsVolume.Gravity.Z <= class'PhysicsVolume'.default.Gravity.Z )
+        {
+            KFWeapon(Weapon).ForceZoomOutTime = Level.TimeSeconds + 0.01;
+        }
+        return true;
+    }
+    return false;
 }
 
 defaultproperties

@@ -12,7 +12,7 @@ class ChainsawPickup extends KFWeaponPickup;
 defaultproperties
 {
      Weight=8.000000
-     cost=1000
+     cost=2750
      PowerValue=60
      SpeedValue=90
      RangeValue=-25

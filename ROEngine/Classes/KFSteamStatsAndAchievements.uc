@@ -53,6 +53,10 @@ const KFSTAT_EnemiesKilledWithBullpup		= 42;
 const KFSTAT_EnemiesKilledWithTrenchOnHillbilly			= 43;
 const KFSTAT_EnemiesKilledDuringHillbilly	= 44;
 const KFSTAT_HillbillyAchievementsCompleted	= 45;
+const KFSTAT_Stat46	= 46; //this is the stat used to determine what event we're on
+const KFSTAT_FleshPoundsKilledWithAxe	    = 47;
+const KFSTAT_ZedsKilledWhileAirborne     	= 48;
+const KFSTAT_ZEDSKilledWhileZapped      	= 49;
 const KFSTAT_OwnedWeaponDLC					= 200;
 //These values end up going through a byte at some point.  Don't make the values too big.
 //Yes this is here because it's happened before.
@@ -184,6 +188,15 @@ var	int						SavedZedKilledDuringHillbilly;
 var const SteamStatInt		HillbillyAchievementsCompleted;
 var	int						SavedHillbillyAchievementsCompleted;
 
+var const SteamStatInt		Stat46;
+
+var	const SteamStatInt		FleshPoundsKilledWithAxe;
+var	int						SavedFleshPoundsKilledWithAxe;
+var	const SteamStatInt		ZedsKilledWhileAirborne;
+var	int						SavedZedsKilledWhileAirborne;
+var	const SteamStatInt		ZEDSKilledWhileZapped;
+var	int						SavedZEDSKilledWhileZapped;
+
 var int						EnemiesKilledWithMKB42NoReload;
 var int						StalkersKilledWithNail;
 var int						HillbillyCrawlerKills;
@@ -196,6 +209,9 @@ var int						HuskAndZedOneShotZedKills;
 var const SteamStatInt		OwnedWeaponDLC;
 
 var int						NullValue;
+
+var bool                    CanGetAxe;
+var int                     ZEDpiecesObtained;
 
 //=============================================================================
 // Achievements
@@ -403,6 +419,17 @@ const KFACHIEVEMENT_Kill1Hillbilly1HuskAndZedIn1Shot	= 197;
 const KFACHIEVEMENT_Kill5HillbillyZedsIn10SecsSythOrAxe	= 198;
 const KFACHIEVEMENT_Set3HillbillyGorefastsOnFire		= 199;
 
+const KFACHIEVEMENT_HaveMyAxe					        = 200;
+const KFACHIEVEMENT_OneSmallStepForMan			     	= 201;
+const KFACHIEVEMENT_ButItsAllRed			    	    = 202;
+const KFACHIEVEMENT_GameOverMan					        = 203;
+const KFACHIEVEMENT_WinMoonbaseNormal					= 204;
+const KFACHIEVEMENT_WinMoonbaseHard			     		= 205;
+const KFACHIEVEMENT_WinMoonbaseSuicidal			    	= 206;
+const KFACHIEVEMENT_WinMoonbaseHell					    = 207;
+
+const KFACHIEVEMENT_CanGetAxe   					    = 208;//this is a dummy achievement
+
 struct native export KFAchievement
 {
 	var	string	SteamName;
@@ -435,6 +462,8 @@ var	globalconfig int	CommandoPerkLevel;
 var	globalconfig int	BerserkerPerkLevel;
 var	globalconfig int	FirebugPerkLevel;
 var	globalconfig int	DemolitionsPerkLevel;
+
+simulated native final function GetEventCommand();
 
 simulated native final function InitializePerks();
 simulated native final function CheckMedicPerks(bool bShowNotification);
@@ -469,7 +498,8 @@ replication
 		Mac10BurnDamage, DroppedTier3Weapons, HalloweenKills, HalloweenScrakeKills,
 		XMasHusksKilledWithHuskCannon, XMasPointsHealedWithMP5,
 		EnemiesKilledWithFNFal, EnemiesKilledWithBullpup, ZedSetFireWithTrenchOnHillbilly,
-		ZedKilledDuringHillbilly, HillbillyAchievementsCompleted;
+		ZedKilledDuringHillbilly, HillbillyAchievementsCompleted, FleshPoundsKilledWithAxe,
+        ZedsKilledWhileAirborne, ZEDSKilledWhileZapped;
 }
 
 // (cpptext)
@@ -820,6 +850,30 @@ simulated event PostNetReceive()
 		bFlushStatsToDatabase = true;
 	}
 
+	if ( FleshPoundsKilledWithAxe.Value != SavedFleshPoundsKilledWithAxe )
+	{
+		FlushStatToSteamInt(FleshPoundsKilledWithAxe, SteamNameStat[KFSTAT_FleshPoundsKilledWithAxe]);
+
+		SavedFleshPoundsKilledWithAxe = FleshPoundsKilledWithAxe.Value;
+		bFlushStatsToDatabase = true;
+	}
+
+	if ( ZedsKilledWhileAirborne.Value != SavedZedsKilledWhileAirborne )
+	{
+		FlushStatToSteamInt(ZedsKilledWhileAirborne, SteamNameStat[KFSTAT_ZedsKilledWhileAirborne]);
+
+		SavedZedsKilledWhileAirborne = ZedsKilledWhileAirborne.Value;
+		bFlushStatsToDatabase = true;
+	}
+
+	if ( ZEDSKilledWhileZapped.Value != SavedZEDSKilledWhileZapped )
+	{
+		FlushStatToSteamInt(ZEDSKilledWhileZapped, SteamNameStat[KFSTAT_ZEDSKilledWhileZapped]);
+
+		SavedZEDSKilledWhileZapped = ZEDSKilledWhileZapped.Value;
+		bFlushStatsToDatabase = true;
+	}
+
 
 	if ( bFlushStatsToDatabase )
 	{
@@ -989,6 +1043,20 @@ simulated event OnStatsAndAchievementsReady()
 	SavedHillbillyAchievementsCompleted = HillbillyAchievementsCompleted.Value;
 	PCOwner.ServerInitializeSteamStatInt(KFSTAT_HillbillyAchievementsCompleted, HillbillyAchievementsCompleted.Value);
 
+	GetStatInt(Stat46, SteamNameStat[KFSTAT_Stat46]);
+	PCOwner.ServerInitializeSteamStatInt(KFSTAT_Stat46, Stat46.Value);
+	GetEventCommand();
+
+	GetStatInt(FleshPoundsKilledWithAxe, SteamNameStat[KFSTAT_FleshPoundsKilledWithAxe]);
+	PCOwner.ServerInitializeSteamStatInt(KFSTAT_FleshPoundsKilledWithAxe, FleshPoundsKilledWithAxe.Value);
+
+	GetStatInt(ZedsKilledWhileAirborne, SteamNameStat[KFSTAT_ZedsKilledWhileAirborne]);
+	PCOwner.ServerInitializeSteamStatInt(KFSTAT_ZedsKilledWhileAirborne, ZedsKilledWhileAirborne.Value);
+
+	GetStatInt(ZEDSKilledWhileZapped, SteamNameStat[KFSTAT_ZEDSKilledWhileZapped]);
+	PCOwner.ServerInitializeSteamStatInt(KFSTAT_ZEDSKilledWhileZapped, ZEDSKilledWhileZapped.Value);
+
+
 	EnemiesKilledWithMKB42NoReload = 0;
 	StalkersKilledWithNail = 0;
 	HillbillyCrawlerKills = 0;
@@ -1010,6 +1078,17 @@ simulated event OnStatsAndAchievementsReady()
 	CheckBerserkerPerks(false);
 	CheckFirebugPerks(false);
 	CheckDemolitionsPerks(false);
+
+	//Achievements[i].bCompleted = byte(GetAchievementCompleted(Achievements[i].SteamName));
+
+    //use these functions to call out to the server to make sure the servers know if the achievements
+    //have been gotten or not
+    GetAchievementCompleted(Achievements[131].SteamName);
+    GetAchievementCompleted(Achievements[155].SteamName);
+    GetAchievementCompleted(Achievements[162].SteamName);
+    GetAchievementCompleted(Achievements[193].SteamName);
+    GetAchievementCompleted(Achievements[202].SteamName);
+    GetAchievementCompleted(Achievements[208].SteamName);
 
 	for ( i = 0; i < Achievements.Length; i++ )
 	{
@@ -1189,6 +1268,22 @@ function InitializeSteamStatInt(int Index, int Value)
 			InitStatInt(HillbillyAchievementsCompleted, Value);
 			break;
 
+		case KFSTAT_Stat46:
+			InitStatInt(Stat46, Value);
+			break;
+
+		case KFSTAT_FleshPoundsKilledWithAxe:
+			InitStatInt(FleshPoundsKilledWithAxe, Value);
+			break;
+
+		case KFSTAT_ZedsKilledWhileAirborne:
+			InitStatInt(ZedsKilledWhileAirborne, Value);
+			break;
+
+		case KFSTAT_ZEDSKilledWhileZapped:
+			InitStatInt(ZEDSKilledWhileZapped, Value);
+			break;
+
 		case KFSTAT_OwnedWeaponDLC:
 			InitStatInt(OwnedWeaponDLC, Value);
 			break;
@@ -1224,7 +1319,7 @@ function string GetWeaponDLCPackName(int AppID)
 }
 
 // Sets the specified Steam Achievement as completed; also, flushes all Stats and Achievements to the client
-function SetSteamAchievementCompleted(int Index)
+simulated function SetSteamAchievementCompleted(int Index)
 {
 	if ( bDebugStats )
 		log("STEAMSTATS: SetSteamAchievementCompleted called - Name="$Achievements[Index].SteamName @ "Player="$PCOwner.PlayerReplicationInfo.PlayerName);
@@ -1658,6 +1753,13 @@ simulated function UpdateAchievementProgress()
 	Achievements[KFACHIEVEMENT_Kill1000HillbillyZeds].ProgressNumerator =  Min(Achievements[KFACHIEVEMENT_Kill1000HillbillyZeds].ProgressDenominator, SavedZedKilledDuringHillbilly);
 	Achievements[KFACHIEVEMENT_Kill15HillbillyCrawlersThomOrMKB].ProgressNumerator = Min(Achievements[KFACHIEVEMENT_Kill15HillbillyCrawlersThomOrMKB].ProgressDenominator, HillbillyCrawlerKills);
 
+	Achievements[KFACHIEVEMENT_Complete7ReaperAchievements].ProgressNumerator = Min(Achievements[KFACHIEVEMENT_Complete7ReaperAchievements].ProgressDenominator, SavedHillbillyAchievementsCompleted);
+	Achievements[KFACHIEVEMENT_Kill1000HillbillyZeds].ProgressNumerator =  Min(Achievements[KFACHIEVEMENT_Kill1000HillbillyZeds].ProgressDenominator, SavedZedKilledDuringHillbilly);
+	Achievements[KFACHIEVEMENT_Kill15HillbillyCrawlersThomOrMKB].ProgressNumerator = Min(Achievements[KFACHIEVEMENT_Kill15HillbillyCrawlersThomOrMKB].ProgressDenominator, HillbillyCrawlerKills);
+
+	Achievements[KFACHIEVEMENT_HaveMyAxe].ProgressNumerator = Min(Achievements[KFACHIEVEMENT_HaveMyAxe].ProgressDenominator, FleshPoundsKilledWithAxe.Value);
+	Achievements[KFACHIEVEMENT_OneSmallStepForMan].ProgressNumerator =  Min(Achievements[KFACHIEVEMENT_OneSmallStepForMan].ProgressDenominator, ZedsKilledWhileAirborne.Value);
+	Achievements[KFACHIEVEMENT_GameOverMan].ProgressNumerator = Min(Achievements[KFACHIEVEMENT_GameOverMan].ProgressDenominator, ZEDSKilledWhileZapped.Value);
 }
 
 simulated function int GetAchievementCompletedCount()
@@ -1917,373 +2019,87 @@ function WonGame(string MapName, float Difficulty, bool bLong)
 	{
 		if ( MapName ~= "KF-WestLondon" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinWestLondonNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWestLondonNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinWestLondonHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWestLondonHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinWestLondonSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWestLondonSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinWestLondonHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWestLondonHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinWestLondonNormal);
 		}
 		else if ( MapName ~= "KF-Manor" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinManorNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinManorNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinManorHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinManorHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinManorSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinManorSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinManorHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinManorHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinManorNormal);
 		}
 		else if ( MapName ~= "KF-BioticsLab" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinBioticsLabNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBioticsLabNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinBioticsLabHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBioticsLabHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinBioticsLabSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBioticsLabSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinBioticsLabHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBioticsLabHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinBioticsLabNormal);
 		}
 		else if ( MapName ~= "KF-Farm" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinFarmNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFarmNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinFarmHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFarmHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinFarmSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFarmSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinFarmHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFarmHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinFarmNormal);
 		}
 		else if ( MapName ~= "KF-Offices" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinOfficesNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinOfficesNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinOfficesHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinOfficesHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinOfficesSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinOfficesSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinOfficesHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinOfficesHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinOfficesNormal);
 		}
 		else if ( MapName ~= "KF-Foundry" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinFoundryNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFoundryNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinFoundryHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFoundryHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinFoundrySuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFoundrySuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinFoundryHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFoundryHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinFoundryNormal);
 		}
 		else if ( MapName ~= "KF-Bedlam" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinAsylumNormal].bCompleted == 0 )
+            if ( Difficulty == 4.0 )
 			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinAsylumNormal);
-			}
-			else if ( Difficulty == 4.0 )
-			{
-				if ( Achievements[KFACHIEVEMENT_WinAsylumHard].bCompleted == 0 )
-				{
-					SetSteamAchievementCompleted(KFACHIEVEMENT_WinAsylumHard);
-				}
-
 				if ( Achievements[KFACHIEVEMENT_WinBedlamHardHalloween].bCompleted == 0 )
 				{
 					SetSteamAchievementCompleted(KFACHIEVEMENT_WinBedlamHardHalloween);
 					CheckHalloweenAchievementsCompleted();
 				}
 			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinAsylumSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinAsylumSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinAsylumHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinAsylumHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinAsylumNormal);
 		}
 		else if ( MapName ~= "KF-Wyre" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinWyreNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWyreNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinWyreHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWyreHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinWyreSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWyreSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinWyreHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWyreHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinWyreNormal);
 		}
 		else if ( MapName ~= "KF-Biohazard" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinBiohazardNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBiohazardNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinBiohazardHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBiohazardHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinBiohazardSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBiohazardSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinBiohazardHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBiohazardHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinBiohazardNormal);
 		}
 		else if ( MapName ~= "KF-Crash" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinCrashNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinCrashNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinCrashHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinCrashHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinCrashSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinCrashSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinCrashHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinCrashHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinCrashNormal);
 		}
 		else if ( MapName ~= "KF-Departed" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinDepartedNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinDepartedNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinDepartedHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinDepartedHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinDepartedSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinDepartedSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinDepartedHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinDepartedHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinDepartedNormal);
 		}
 		else if ( MapName ~= "KF-FilthsCross" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinFilthsCrossNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFilthsCrossNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinFilthsCrossHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFilthsCrossHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinFilthsCrossSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFilthsCrossSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinFilthsCrossHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFilthsCrossHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinFilthsCrossNormal);
 		}
 		else if ( MapName ~= "KF-Hospitalhorrors" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinHospitalHorrorsNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinHospitalHorrorsNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinHospitalHorrorsHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinHospitalHorrorsHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinHospitalHorrorsSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinHospitalHorrorsSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinHospitalHorrorsHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinHospitalHorrorsHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinHospitalHorrorsNormal);
 		}
 		else if ( MapName ~= "KF-Icebreaker" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinIcebreakerNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinIcebreakerNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinIcebreakerHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinIcebreakerHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinIcebreakerSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinIcebreakerSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinIcebreakerHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinIcebreakerHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinIcebreakerNormal);
 		}
 		else if ( MapName ~= "KF-MountainPass" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinMountainPassNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinMountainPassNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinMountainPassHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinMountainPassHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinMountainPassSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinMountainPassSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinMountainPassHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinMountainPassHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinMountainPassNormal);
 		}
 		else if ( MapName ~= "KF-Suburbia" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinSuburbiaNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinSuburbiaNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinSuburbiaHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinSuburbiaHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinSuburbiaSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinSuburbiaSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinSuburbiaHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinSuburbiaHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinSuburbiaNormal);
 		}
 		else if ( MapName ~= "KF-Waterworks" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinWaterworksNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWaterworksNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinWaterworksHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWaterworksHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinWaterworksSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWaterworksSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinWaterworksHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWaterworksHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinWaterworksNormal);
 		}
 		else if ( MapName ~= "KF-Aperture" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinApertureNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinApertureNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinApertureHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinApertureHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinApertureSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinApertureSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinApertureHellOnEarth].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinApertureHellOnEarth);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinApertureNormal);
 		}
 		else if ( MapName ~= "KF-AbusementPark" )
 		{
-			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinSideshowNormal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinSideshowNormal);
-			}
-			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinSideshowHard].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinSideshowHard);
-			}
-			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinSideshowSuicidal].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinSideshowSuicidal);
-			}
-			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinSideshowHell].bCompleted == 0 )
-			{
-				SetSteamAchievementCompleted(KFACHIEVEMENT_WinSideshowHell);
-			}
+			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinSideshowNormal);
 		}
 
 		if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinAllMapsNormal].bCompleted == 0 )
@@ -2427,81 +2243,26 @@ function WonGame(string MapName, float Difficulty, bool bLong)
 
 	if ( MapName ~= "KF-IceCave" )
 	{
-		if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinIceCaveNormal].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinIceCaveNormal);
-		}
-		else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinIceCaveHard].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinIceCaveHard);
-		}
-		else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinIceCaveSuicidal].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinIceCaveSuicidal);
-		}
-		else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinIceCaveHell].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinIceCaveHell);
-		}
-
+		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinIceCaveNormal);
 		CheckChristmasAchievementsCompleted();
 	}
 	else if ( MapName ~= "KF-EvilSantasLair" )
 	{
-		if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinSantasEvilLairNormal].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinSantasEvilLairNormal);
-		}
-		else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinSantasEvilLairHard].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinSantasEvilLairHard);
-		}
-		else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinSantasEvilLairSuicidal].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinSantasEvilLairSuicidal);
-		}
-		else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinSantasEvilLairHell].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinSantasEvilLairHell);
-		}
-
+		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinSantasEvilLairNormal);
 		CheckChristmasAchievementsCompleted();
 	}
 	else if ( MapName ~= "KF-Hellride" )
 	{
-		if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinHellrideNormal].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinHellrideNormal);
-
-			if ( bDebugStats )
-				log("SUMMER ACHIEVEMENTS: KFACHIEVEMENT_WinHellrideNormal!! Player=" $ PCOwner.PlayerReplicationInfo.PlayerName);
-		}
-		else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinHellrideHard].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinHellrideHard);
-
-			if ( bDebugStats )
-				log("SUMMER ACHIEVEMENTS: KFACHIEVEMENT_WinHellrideHard!! Player=" $ PCOwner.PlayerReplicationInfo.PlayerName);
-		}
-		else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinHellrideSuicidal].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinHellrideSuicidal);
-
-			if ( bDebugStats )
-				log("SUMMER ACHIEVEMENTS: KFACHIEVEMENT_WinHellrideSuicidal!! Player=" $ PCOwner.PlayerReplicationInfo.PlayerName);
-		}
-		else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinHellrideHell].bCompleted == 0 )
-		{
-			SetSteamAchievementCompleted(KFACHIEVEMENT_WinHellrideHell);
-
-			if ( bDebugStats )
-				log("SUMMER ACHIEVEMENTS: Got KFACHIEVEMENT_WinHellrideHell!! Player=" $ PCOwner.PlayerReplicationInfo.PlayerName);
-		}
+		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinHellrideNormal);
 	}
 	else if ( MapName ~= "KF-HillbillyHorror" )
 	{
 		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinHillbillyNormal);
 		CheckHillbillyAchievementsCompleted();
+	}
+	else if ( MapName ~= "KF-Moonbase" )
+	{
+		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinMoonBaseNormal);
 	}
 }
 
@@ -3050,7 +2811,7 @@ function KilledPatriarch(bool bPatriarchHealed, bool bKilledWithLAW, bool bSuici
 		SetSteamAchievementCompleted(KFACHIEVEMENT_KillChristmasPatriarch);
 		CheckChristmasAchievementsCompleted();
 	}
-	
+
 	if ( Achievements[KFACHIEVEMENT_KillSideshowPatriarch].bCompleted == 0 )
 	{
 		SetSteamAchievementCompleted(KFACHIEVEMENT_KillSideshowPatriarch);
@@ -3270,7 +3031,11 @@ function CheckChristmasAchievementsCompleted()
 		 Achievements[KFACHIEVEMENT_WinIceCaveNormal].bCompleted == 1 ||
 		 Achievements[KFACHIEVEMENT_WinIceCaveHard].bCompleted == 1 ||
 		 Achievements[KFACHIEVEMENT_WinIceCaveSuicidal].bCompleted == 1 ||
-		 Achievements[KFACHIEVEMENT_WinIceCaveHell].bCompleted == 1 )
+		 Achievements[KFACHIEVEMENT_WinIceCaveHell].bCompleted == 1 ||
+         Achievements[KFACHIEVEMENT_WinMoonbaseNormal].bCompleted == 1 ||
+		 Achievements[KFACHIEVEMENT_WinMoonbaseHard].bCompleted == 1 ||
+		 Achievements[KFACHIEVEMENT_WinMoonbaseSuicidal].bCompleted == 1 ||
+		 Achievements[KFACHIEVEMENT_WinMoonbaseHell].bCompleted == 1)
 	{
 		bBeatChristmasMap = true;
 	}
@@ -3803,6 +3568,17 @@ function AddKillPoints(int AchievementID)
 			CheckAchievementPoints(AchievementID, "Adding Hillbilly Gorefast on Fire", HillbillyGorefastsOnFire);
 			break;
 
+		case KFACHIEVEMENT_HaveMyAxe:
+			CheckAchievementPoints(AchievementID, "Adding Fleshpound killed in back by Axe", HuskAndZedOneShotTotalKills);
+			break;
+		case KFACHIEVEMENT_OneSmallStepForMan:
+			KillHillbillyZedsIn10Seconds();
+			CheckAchievementPoints(AchievementID, "Adding Hillbilly scythe/axe kill", HillbillysKilledIn10Secs);
+			break;
+		case KFACHIEVEMENT_GameOverMan:
+			CheckAchievementPoints(AchievementID, "Adding Hillbilly Gorefast on Fire", HillbillyGorefastsOnFire);
+			break;
+
 	}
 }
 
@@ -3905,11 +3681,18 @@ function AddHuskAndZedOneShotKill(bool HuskKill, bool ZedKill)
 // Activated when all 25 gnomes have been killed, event is interpreted through "Tag"
 function Trigger(actor Other, pawn EventInstigator )
 {
-	if ( Achievements[KFACHIEVEMENT_Destroy25GnomesInHillbilly].bCompleted == 0 && !bUsedCheats)
-	{
-		SetSteamAchievementCompleted(KFACHIEVEMENT_Destroy25GnomesInHillbilly);
-		CheckHillbillyAchievementsCompleted();
-	}
+    log("----------");
+    log(Other);
+    log("trigger");
+    if( Other.IsA( 'KF_GnomeSmashable' ) )
+    {
+	    if ( Achievements[KFACHIEVEMENT_Destroy25GnomesInHillbilly].bCompleted == 0 && !bUsedCheats)
+	    {
+		    SetSteamAchievementCompleted(KFACHIEVEMENT_Destroy25GnomesInHillbilly);
+		    CheckHillbillyAchievementsCompleted();
+	    }
+    }
+
 }
 
 function OnWeaponReloaded()
@@ -3949,6 +3732,34 @@ function AddScrakeKill(string MapName)
 	}
 }
 
+//this is for the dwarf axe
+function AddFleshpoundAxeKill()
+{
+    SetStatInt(FleshPoundsKilledWithAxe, FleshPoundsKilledWithAxe.Value + 1);
+	if ( Achievements[KFACHIEVEMENT_HaveMyAxe].bCompleted == 0 && FleshPoundsKilledWithAxe.Value >= Achievements[KFACHIEVEMENT_HaveMyAxe].ProgressDenominator )
+	{
+		SetSteamAchievementCompleted(KFACHIEVEMENT_HaveMyAxe);
+    }
+}
+
+function AddAirborneZedKill()
+{
+    SetStatInt(ZedsKilledWhileAirborne, ZedsKilledWhileAirborne.Value + 1);
+	if ( Achievements[KFACHIEVEMENT_OneSmallStepForMan].bCompleted == 0 && ZedsKilledWhileAirborne.Value >= Achievements[KFACHIEVEMENT_OneSmallStepForMan].ProgressDenominator )
+	{
+		SetSteamAchievementCompleted(KFACHIEVEMENT_OneSmallStepForMan);
+    }
+}
+
+function AddZedKilledWhileZapped()
+{
+    SetStatInt(ZEDSKilledWhileZapped, ZEDSKilledWhileZapped.Value + 1);
+	if ( Achievements[KFACHIEVEMENT_GameOverMan].bCompleted == 0 && ZEDSKilledWhileZapped.Value >= Achievements[KFACHIEVEMENT_GameOverMan].ProgressDenominator )
+	{
+		SetSteamAchievementCompleted(KFACHIEVEMENT_GameOverMan);
+    }
+}
+
 function CheckHalloweenAchievementsCompleted()
 {
 	local int HalloweenAchievementsCompleted;
@@ -3978,6 +3789,49 @@ function CheckHalloweenAchievementsCompleted()
 	{
 		SetSteamAchievementCompleted(KFACHIEVEMENT_Unlock6ofHalloweenAchievements);
 	}
+}
+
+simulated function OnAchievementReport( bool HasAchievement, string Achievement, int gameID, string steamIDIn)
+{
+    //NotAWarhammer
+    log("webapi!!!!!!!!!!!!", 'DevNet');
+    log(HasAchievement, 'DevNet');
+    log(Achievement, 'DevNet');
+    log(gameID, 'DevNet');
+    log(steamIDIn, 'DevNet');
+    if( HasAchievement && Achievement == "NotAWarhammer" && gameID == 213650 )
+    {
+        log("webapi correct achievement", 'DevNet'); 
+        if( Achievements[KFACHIEVEMENT_CanGetAxe].bCompleted != 1 )
+        {
+            log("webapi unlocking achievement", 'DevNet');
+            CanGetAxe = true;
+            //we could set the achievement here in a normal fashion but right now it's a
+            //fake achievement
+            SetSteamAchievementCompleted(KFACHIEVEMENT_CanGetAxe);
+            if ( PCOwner.Role < ROLE_Authority )
+            {
+				KFPC(PCOwner).ServerSetCanGetAxe();
+            }
+        }
+    }
+}
+
+function SetCanGetAxe()
+{
+	if( Achievements[KFACHIEVEMENT_CanGetAxe].bCompleted == 0 )
+	{
+		SetSteamAchievementCompleted(KFACHIEVEMENT_CanGetAxe);
+	}
+}
+
+function ZEDPieceGrabbed()
+{
+    ZEDpiecesObtained++;
+    if(ZEDpiecesObtained > 15)
+    {
+        SetSteamAchievementCompleted(KFACHIEVEMENT_ButItsAllRed);
+    }
 }
 
 defaultproperties
@@ -4183,6 +4037,15 @@ defaultproperties
      Achievements(197)=(SteamName="Kill1Hillbilly1HuskAndZedIn1Shot",ProgressDenominator=2,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_197',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(198)=(SteamName="Kill5HillbillyZedsIn10SecsSythOrAxe",ProgressDenominator=5,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_198',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(199)=(SteamName="Set3HillbillyGorefastsOnFire",ProgressDenominator=3,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_199',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(200)=(SteamName="HaveMyAxe",bShowProgress=1,ProgressDenominator=30,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_200',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(201)=(SteamName="OneSmallStepForMan",bShowProgress=1,ProgressDenominator=500,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_201',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(202)=(SteamName="ButItsAllRed",bShowProgress=1,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_202',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(203)=(SteamName="GameOverMan",bShowProgress=1,ProgressDenominator=20,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_203',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(204)=(SteamName="HereIsToUs",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_204',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(205)=(SteamName="AttemptingReentry",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_205',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(206)=(SteamName="AmusingDeath",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_206',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(207)=(SteamName="AGiantStepBackForHumanity",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_207',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(208)=(SteamName="DwarfAxe",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_208',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      SteamNameStat(0)="DamageHealed"
      SteamNameStat(1)="WeldingPoints"
      SteamNameStat(2)="ShotgunDamage"
@@ -4222,6 +4085,10 @@ defaultproperties
      SteamNameStat(43)="ZedSetFireWithTrenchOnHillbilly"
      SteamNameStat(44)="ZedKilledDuringHillbilly"
      SteamNameStat(45)="HillbillyAchievementsCompleted"
+     SteamNameStat(46)="Stat46"
+     SteamNameStat(47)="FleshPoundsKilledWithAxe"
+     SteamNameStat(48)="ZedsKilledWhileAirborne"
+     SteamNameStat(49)="ZedsKilledWhileZapped"
      SteamNameAchievement(0)="WinWestLondonNormal"
      SteamNameAchievement(1)="WinManorNormal"
      SteamNameAchievement(2)="WinFarmNormal"
@@ -4422,4 +4289,13 @@ defaultproperties
      SteamNameAchievement(197)="Kill1Hillbilly1HuskAndZedIn1Shot"
      SteamNameAchievement(198)="Kill5HillbillyZedsIn10SecsSythOrAxe"
      SteamNameAchievement(199)="Set3HillbillyGorefastsOnFire"
+     SteamNameAchievement(200)="HaveMyAxe"
+     SteamNameAchievement(201)="OneSmallStepForMan"
+     SteamNameAchievement(202)="ButItsAllRed"
+     SteamNameAchievement(203)="GameOverMan"
+     SteamNameAchievement(204)="HereIsToUs"
+     SteamNameAchievement(205)="AttemptingReentry"
+     SteamNameAchievement(206)="AmusingDeath"
+     SteamNameAchievement(207)="AGiantStepBackForHumanity"
+     SteamNameAchievement(208)="DwarfAxe"
 }

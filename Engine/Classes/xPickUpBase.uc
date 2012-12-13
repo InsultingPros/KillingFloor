@@ -17,7 +17,9 @@ var PickUp                      myPickUp;       // reference to the pick up spaw
 var Emitter                     myEmitter;      // reference to the emitter spawned with this base
 var	InventorySpot               myMarker;       // inventory spot marker associated with this pick-up base
 var(PickUpBase) bool			bDelayedSpawn;
-
+// #ifdef _KF_
+var() bool bExcludeFromNavigation;  // If true, this pickup won't become part of the navigation network.
+// #endif
 /* The UnrealEd console command "NewPickupBases" will apply the following properties to this pickup base
  * Used to apply UT2004's new pickup base staticmeshes because we can't just universally change StaticMesh
  * as that would cause them to be unlit in all old maps

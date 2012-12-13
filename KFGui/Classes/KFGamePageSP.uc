@@ -151,7 +151,7 @@ function bool GameTypeLocked()
 defaultproperties
 {
      PageCaption="Solo"
-     t_Header=GUIHeader'GUI2K4.UT2k4ServerBrowser.ServerBrowserHeader'
+     t_Header=GUIHeader'KFGui.KFServerBrowser.ServerBrowserHeader'
 
      Begin Object Class=KFGameFooter Name=SPFooter
          PrimaryCaption="PLAY"

@@ -1,0 +1,39 @@
+class KFMonstersXmas extends KFMonstersCollection;
+
+defaultproperties
+{
+     MonsterClasses(0)=(MClassName="KFChar.ZombieClot_XMAS")
+     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_XMAS")
+     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_XMAS")
+     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker_XMAS")
+     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake_XMAS")
+     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_XMAS")
+     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat_XMAS")
+     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_XMAS")
+     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_XMAS")
+     StandardMonsterClasses(0)=(MClassName="KFChar.ZombieClot_XMAS")
+     StandardMonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_XMAS")
+     StandardMonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_XMAS")
+     StandardMonsterClasses(3)=(MClassName="KFChar.ZombieStalker_XMAS")
+     StandardMonsterClasses(4)=(MClassName="KFChar.ZombieScrake_XMAS")
+     StandardMonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_XMAS")
+     StandardMonsterClasses(6)=(MClassName="KFChar.ZombieBloat_XMAS")
+     StandardMonsterClasses(7)=(MClassName="KFChar.ZombieSiren_XMAS")
+     StandardMonsterClasses(8)=(MClassName="KFChar.ZombieHusk_XMAS")
+     ShortSpecialSquads(2)=(ZedClass=("KFChar.ZombieCrawler_XMAS","KFChar.ZombieGorefast_XMAS","KFChar.ZombieStalker_XMAS","KFChar.ZombieScrake_XMAS"))
+     ShortSpecialSquads(3)=(ZedClass=("KFChar.ZombieBloat_XMAS","KFChar.ZombieSiren_XMAS","KFChar.ZombieFleshPound_XMAS"))
+     NormalSpecialSquads(3)=(ZedClass=("KFChar.ZombieCrawler_XMAS","KFChar.ZombieGorefast_XMAS","KFChar.ZombieStalker_XMAS","KFChar.ZombieScrake_XMAS"))
+     NormalSpecialSquads(4)=(ZedClass=("KFChar.ZombieFleshPound_XMAS"))
+     NormalSpecialSquads(5)=(ZedClass=("KFChar.ZombieBloat_XMAS","KFChar.ZombieSiren_XMAS","KFChar.ZombieFleshPound_XMAS"))
+     NormalSpecialSquads(6)=(ZedClass=("KFChar.ZombieBloat_XMAS","KFChar.ZombieSiren_XMAS","KFChar.ZombieFleshPound_XMAS"))
+     LongSpecialSquads(4)=(ZedClass=("KFChar.ZombieCrawler_XMAS","KFChar.ZombieGorefast_XMAS","KFChar.ZombieStalker_XMAS","KFChar.ZombieScrake_XMAS"))
+     LongSpecialSquads(6)=(ZedClass=("KFChar.ZombieFleshPound_XMAS"))
+     LongSpecialSquads(7)=(ZedClass=("KFChar.ZombieBloat_XMAS","KFChar.ZombieSiren_XMAS","KFChar.ZombieFleshPound_XMAS"))
+     LongSpecialSquads(8)=(ZedClass=("KFChar.ZombieBloat_XMAS","KFChar.ZombieSiren_XMAS","KFChar.ZombieScrake_XMAS","KFChar.ZombieFleshPound_XMAS"))
+     LongSpecialSquads(9)=(ZedClass=("KFChar.ZombieBloat_XMAS","KFChar.ZombieSiren_XMAS","KFChar.ZombieScrake_XMAS","KFChar.ZombieFleshPound_XMAS"))
+     FinalSquads(0)=(ZedClass=("KFChar.ZombieClot_XMAS"))
+     FinalSquads(1)=(ZedClass=("KFChar.ZombieClot_XMAS","KFChar.ZombieCrawler_XMAS"))
+     FinalSquads(2)=(ZedClass=("KFChar.ZombieClot_XMAS","KFChar.ZombieStalker_XMAS","KFChar.ZombieCrawler_XMAS"))
+     FallbackMonsterClass="KFChar.ZombieStalker_XMAS"
+     EndGameBossClass="KFChar.ZombieBoss_XMAS"
+}

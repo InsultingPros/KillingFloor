@@ -6,7 +6,7 @@ class CrossbuzzsawPickup extends KFWeaponPickup;
 defaultproperties
 {
      Weight=7.000000
-     cost=2500
+     cost=4000
      AmmoCost=80
      BuyClipSize=1
      PowerValue=80

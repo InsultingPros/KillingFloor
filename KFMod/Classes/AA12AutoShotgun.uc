@@ -52,13 +52,35 @@ simulated function WeaponTick(float dt)
 {
 	local float LastSeenSeconds,ReloadMulti;
 
-//	if( bHasAimingMode && Instigator != none && Instigator.IsLocallyControlled() )
-//	{
-//		if ( bAimingRifle && Instigator!=None && Instigator.Physics==PHYS_Falling )
-//		{
-//			IronSightZoomOut();
-//		}
-//	}
+    if( bForceLeaveIronsights )
+    {
+    	ZoomOut(true);
+
+    	if( Role < ROLE_Authority)
+			ServerZoomOut(false);
+
+        bForceLeaveIronsights = false;
+    }
+
+    if( ForceZoomOutTime > 0 )
+    {
+        if( bAimingRifle )
+        {
+    	    if( Level.TimeSeconds - ForceZoomOutTime > 0 )
+    	    {
+                ForceZoomOutTime = 0;
+
+            	ZoomOut(true);
+
+            	if( Role < ROLE_Authority)
+        			ServerZoomOut(false);
+    		}
+		}
+		else
+		{
+            ForceZoomOutTime = 0;
+		}
+	}
 
 	 if ( (Level.NetMode == NM_Client) || Instigator == None || KFFriendlyAI(Instigator.Controller) == none && Instigator.PlayerReplicationInfo == None)
 		return;

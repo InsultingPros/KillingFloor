@@ -41,6 +41,51 @@ exec function EnableCheats()
 	}
 }
 
+exec function ShowPaths()
+{
+	local NavigationPoint P;
+	local int i;
+	local ReachSpec Spec;
+	local vector SpecColor;
+
+	for( P = Level.NavigationPointList; P != none; P = P.NextNavigationPoint )
+	{
+		log( "Checking "$P$" with pathlist length "$P.Pathlist.Length );
+		for( i = 0; i < P.PathList.Length; i++ )
+		{
+			Spec = P.PathList[ i ];
+			SpecColor = vect( 0,255,0 );
+			// 260 = MAXVEHICLERADIUS 80 = MINCOMMONHEIGHT
+			if (( Spec.CollisionRadius >= 260 ) && (Spec.CollisionHeight >= 80))
+			{
+				SpecColor = vect( 255,255,255 );
+			}
+			// Jump spec
+			else if( ( Spec.reachFlags & 8 ) == Spec.reachFlags )
+			{
+				SpecColor = vect( 191, 165, 99 );
+			}
+			// Proscribed
+			else if( ( Spec.reachFlags & 128 ) == Spec.reachFlags )
+			{
+				SpecColor = vect( 255, 0, 0 );
+			}
+			// Forced
+			else if( ( Spec.reachFlags & 256 ) == Spec.reachFlags )
+			{
+				SpecColor = vect( 255, 255, 0 );
+			}
+			// Blue (narrow)
+			else if( ( Spec.CollisionRadius < 72 || Spec.CollisionHeight < 80 ) )
+			{
+				SpecColor = vect( 0, 0, 255 );
+			}
+
+			DrawStayingDebugLine( P.PathList[ i ].Start.Location, P.PathList[ i ].End.Location, SpecColor.X, SpecColor.Y, SpecColor.Z );
+		}
+	}
+}
+
 exec function ReviewJumpSpots(name TestLabel)
 {
 	if ( areCheatsEnabled() )
@@ -401,6 +446,7 @@ exec function Arsenal(optional bool bMaxAmmo)
 	Pawn.GiveWeapon("KFMod.Katana");
 	Pawn.GiveWeapon("KFMod.MAC10MP");
 	Pawn.GiveWeapon("KFMod.ClaymoreSword");
+	Pawn.GiveWeapon("KFMod.DwarfAxe");
 	Pawn.GiveWeapon("KFMod.M4AssaultRifle");
 	Pawn.GiveWeapon("KFMod.M4203AssaultRifle");
 	Pawn.GiveWeapon("KFMod.HuskGun");
@@ -410,6 +456,7 @@ exec function Arsenal(optional bool bMaxAmmo)
 	Pawn.GiveWeapon("KFMod.ThompsonSMG");
 	Pawn.GiveWeapon("KFmod.Scythe");
 	Pawn.GiveWeapon("KFmod.Crossbuzzsaw");
+	Pawn.GiveWeapon("KFmod.KrissMMedicGun");
 
     if( bMaxAmmo )
     {
@@ -487,6 +534,7 @@ exec function SMG()
     Pawn.GiveWeapon("KFmod.MP5MMedicGun");
     Pawn.GiveWeapon("KFMod.MAC10MP");
     Pawn.GiveWeapon("KFmod.ThompsonSMG");
+    Pawn.GiveWeapon("KFmod.KrissMMedicGun");
 
 	ReportCheat("SMG");
 	ClientMessage("SMG Weapons.");
@@ -502,9 +550,22 @@ exec function Meds()
     Pawn.GiveWeapon("KFmod.MP7MMedicGun");
     Pawn.GiveWeapon("KFmod.MP5MMedicGun");
     Pawn.GiveWeapon("KFmod.M7A3MMedicGun");
+    Pawn.GiveWeapon("KFmod.KrissMMedicGun");
 
 	ReportCheat("Meds");
 	ClientMessage("Medic Weapons.");
+}
+
+exec function ZED()
+{
+	if (!areCheatsEnabled()) return;
+	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+		return;
+
+    Pawn.GiveWeapon("KFmod.ZEDGun");
+
+	ReportCheat("ZED");
+	ClientMessage("ZEDGun.");
 }
 
 exec function Pistols()
@@ -561,6 +622,7 @@ exec function MeleeMe(optional bool bMaxAmmo)
 	Pawn.GiveWeapon("KFMod.ClaymoreSword");
 	Pawn.GiveWeapon("KFmod.Crossbuzzsaw");
 	Pawn.GiveWeapon("KFmod.Scythe");
+	Pawn.GiveWeapon("KFMod.DwarfAxe");
 
     if( bMaxAmmo )
     {
@@ -712,6 +774,32 @@ exec function PatRage()
 	ClientMessage("Forcing the Patriarch to do his radial attack");
 }
 
+exec function BurnEm()
+{
+	local KFMonster LevelMonster;
+
+	if (!areCheatsEnabled()) return;
+	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+		return;
+
+   forEach AllActors(class'KFMonster',LevelMonster)
+   {
+        LevelMonster.bBurnified = true;
+        LevelMonster.ZombieCrispUp();
+
+		LevelMonster.LastBurnDamage = 15;
+		LevelMonster.FireDamageClass = class'DamTypeFlamethrower';
+
+        LevelMonster.BurnDown = 10; // Inits burn tick count to 10
+        LevelMonster.GroundSpeed *= 0.80; // Lowers movement speed by 20%
+        LevelMonster.BurnInstigator = Pawn;
+        LevelMonster.SetTimer(1.0,false); // Sets timer function to be executed each second
+   }
+
+	ReportCheat("BurnEm");
+	ClientMessage("Forcing Zeds to Burn!!!");
+}
+
 exec function ArmorUp()
 {
 	local KFHumanPawn P;
@@ -793,6 +881,27 @@ exec function ViewZombie()
 	}
 	else
 		ViewSelf(true);
+}
+
+exec function Bond()
+{
+	if (!areCheatsEnabled()) return;
+	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+		return;
+
+    Pawn.GiveWeapon("KFmod.GoldenBenelliShotgun");
+    Pawn.GiveWeapon("KFmod.GoldenKatana");
+    Pawn.GiveWeapon("KFmod.GoldenM79GrenadeLauncher");
+    Pawn.GiveWeapon("KFmod.GoldenAK47AssaultRifle");
+}
+
+exec function GrantAchievement(int achievement)
+{
+	if (!areCheatsEnabled()) return;
+	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+		return;
+
+    KFSteamStatsAndAchievements(SteamStatsAndAchievements).Achievements[achievement].bCompleted = 1;
 }
 
 defaultproperties

@@ -9,6 +9,8 @@
 //=============================================================================
 class BenelliAmmo extends KFAmmunition;
 
+//duplicated by goldenbenelliammo
+
 defaultproperties
 {
      AmmoPickupAmount=6

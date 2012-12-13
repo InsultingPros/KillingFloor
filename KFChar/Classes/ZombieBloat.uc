@@ -653,11 +653,27 @@ simulated function ProcessHitFX()
         }
     }
 }
+static simulated function PreCacheStaticMeshes(LevelInfo myLevel)
+{//should be derived and used.
+    Super.PreCacheStaticMeshes(myLevel);
+	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.bloat_head');
+}
+
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.bloat_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.bloat_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.bloat_diffuse');
+}
 
 defaultproperties
 {
      BileExplosion=Class'KFMod.BileExplosion'
      BileExplosionHeadless=Class'KFMod.BileExplosionHeadless'
+     EventClasses(0)="KFChar.ZombieBloat"
+     EventClasses(1)="KFChar.ZombieBloat"
+     EventClasses(2)="KFChar.ZombieBloat_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieBloat_XMAS"
      DetachedArmClass=Class'KFChar.SeveredArmBloat'
      DetachedLegClass=Class'KFChar.SeveredLegBloat'
      DetachedHeadClass=Class'KFChar.SeveredHeadBloat'

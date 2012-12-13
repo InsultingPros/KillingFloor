@@ -6,7 +6,7 @@ class MachetePickup extends KFWeaponPickup;
 defaultproperties
 {
      Weight=1.000000
-     cost=100
+     cost=500
      PowerValue=35
      SpeedValue=56
      RangeValue=-20

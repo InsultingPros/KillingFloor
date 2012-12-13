@@ -77,7 +77,7 @@ function RangedAttack(Actor A)
 		Controller.bPreparingMove = true;
 		Acceleration = vect(0,0,0);
 	}
-	else if( Dist <= ScreamRadius && !bDecapitated)
+	else if( Dist <= ScreamRadius && !bDecapitated && !bZapped )
 	{
 		bShotAnim=true;
 		SetAnimAction('Siren_Scream');
@@ -110,6 +110,11 @@ simulated function int DoAnimAction( name AnimName )
 // Scream Time
 simulated function SpawnTwoShots()
 {
+    if( bZapped )
+    {
+        return;
+    }
+
     DoShakeEffect();
 
 	if( Level.NetMode!=NM_Client )
@@ -241,7 +246,7 @@ simulated function Tick( float Delta )
 	{
         if( bShotAnim )
         {
-            GroundSpeed = GetOriginalGroundSpeed() * 0.65;
+            SetGroundSpeed(GetOriginalGroundSpeed() * 0.65);
 
     		if( LookTarget!=None )
     		{
@@ -250,7 +255,7 @@ simulated function Tick( float Delta )
 		}
 		else
 		{
-            GroundSpeed = GetOriginalGroundSpeed();
+            SetGroundSpeed(GetOriginalGroundSpeed());
 		}
     }
 }
@@ -385,8 +390,21 @@ simulated function ProcessHitFX()
     }
 }
 
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.siren_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.siren_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.siren_diffuse');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.siren_hair');
+	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.siren_hair_fb');
+}
+
 defaultproperties
 {
+     EventClasses(0)="KFChar.ZombieSiren"
+     EventClasses(1)="KFChar.ZombieSiren"
+     EventClasses(2)="KFChar.ZombieSiren_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieSiren_XMAS"
      DetachedLegClass=Class'KFChar.SeveredLegSiren'
      DetachedHeadClass=Class'KFChar.SeveredHeadSiren'
      ControllerClass=Class'KFChar.SirenZombieController'

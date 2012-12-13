@@ -326,7 +326,7 @@ defaultproperties
      EmptyMessage="Empty"
      MyFontColor=(B=177,G=148,R=76,A=255)
      MyFontColor2=(B=177,G=148,R=76,A=255)
-     HealBoostAmount=20
+     HealBoostAmount=30
      SuccessfulHealMessage="You healed "
      HealAmmoCharge=500
      AmmoRegenRate=0.300000

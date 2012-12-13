@@ -90,10 +90,11 @@ static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, 
 
 static function float GetMagCapacityMod(KFPlayerReplicationInfo KFPRI, KFWeapon Other)
 {
-	if ( (MP7MMedicGun(Other) != none || MP5MMedicGun(Other) != none || M7A3MMedicGun(Other) != none)
+	if ( (MP7MMedicGun(Other) != none || MP5MMedicGun(Other) != none || M7A3MMedicGun(Other) != none
+        || KrissMMedicGun(Other) != none )
         && KFPRI.ClientVeteranSkillLevel > 0 )
 	{
-		return 1.0 + (0.20 * FMin(float(KFPRI.ClientVeteranSkillLevel), 5.0)); // 100% increase in MP7/MP5 Medic weapon ammo carry
+		return 1.0 + (0.20 * FMin(float(KFPRI.ClientVeteranSkillLevel), 5.0)); // 100% increase in Medic weapon ammo carry
 	}
 
 	return 1.0;
@@ -101,9 +102,10 @@ static function float GetMagCapacityMod(KFPlayerReplicationInfo KFPRI, KFWeapon 
 
 static function float GetAmmoPickupMod(KFPlayerReplicationInfo KFPRI, KFAmmunition Other)
 {
-	if ( (MP7MAmmo(Other) != none || MP5MAmmo(Other) != none || M7A3MAmmo(Other) != none) && KFPRI.ClientVeteranSkillLevel > 0 )
+	if ( (MP7MAmmo(Other) != none || MP5MAmmo(Other) != none || M7A3MAmmo(Other) != none
+        || KrissMAmmo(Other) != none ) && KFPRI.ClientVeteranSkillLevel > 0 )
 	{
-		return 1.0 + (0.20 * FMin(float(KFPRI.ClientVeteranSkillLevel), 5.0)); // 100% increase in MP7/MP5M Medic weapon ammo carry
+		return 1.0 + (0.20 * FMin(float(KFPRI.ClientVeteranSkillLevel), 5.0)); // 100% increase in Medic weapon ammo carry
 	}
 
 	return 1.0;
@@ -116,7 +118,8 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel));  // Up to 70% discount on Body Armor
 	}
-	else if ( Item == class'MP7MPickup' || Item == class'MP5MPickup' || Item == class'M7A3MPickup')
+	else if ( Item == class'MP7MPickup' || Item == class'MP5MPickup' || Item == class'M7A3MPickup'
+        || Item == class'KrissMPickup' )
 	{
 		return 0.25 - (0.02 * float(KFPRI.ClientVeteranSkillLevel));  // Up to 87% discount on Medic Gun
 	}

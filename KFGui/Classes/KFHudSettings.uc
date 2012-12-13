@@ -3,6 +3,9 @@ class KFHudSettings extends UT2K4Tab_HudSettings;
 var 	automated 	moCheckBox 	ch_LightHud;
 var() 				bool 		bLight;
 
+var     automated   moCheckBox  ch_SpecKillCounter;
+var                 bool        bTallySpecimenKills;
+
 function InitComponent(GUIController MyController, GUIComponent MyOwner)
 {
 	Super(Settings_Tabs).InitComponent(MyController, MyOwner);
@@ -10,6 +13,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 	i_BG1.ManageComponent(ch_Visible);
 	i_BG1.ManageComponent(ch_Weapons);
 	i_BG1.ManageComponent(ch_LightHud);
+	i_BG1.ManageComponent(ch_SpecKillCounter);
 	i_BG1.ManageComponent(ch_Personal);
 	i_BG1.ManageComponent(ch_Score);
 	// KFTODO: reintegrate these
@@ -29,7 +33,7 @@ function InternalOnLoadINI(GUIComponent Sender, string s)
 	local HUD H;
 
 	H = PlayerOwner().myHUD;
-	
+
 	switch (Sender)
 	{
 		case ch_DeathMsgs:
@@ -42,19 +46,32 @@ function InternalOnLoadINI(GUIComponent Sender, string s)
 			ch_Visible.SetComponentValue(bVis,true);
 			InitializeHUDColor();
 			break;
-			
-		
+
+
 		case ch_LightHud:
 			if ( HUDKillingFloor(H) != none )
 			{
 				bLight = HUDKillingFloor(H).bLightHud;
 				ch_LightHud.SetComponentValue(bLight,true);
-				break;	
+				break;
 			}
 			else
 			{
 				bLight = class'KFMod.HUDKillingFloor'.default.bLightHud;
 				ch_LightHud.SetComponentValue(bLight,true);
+				break;
+			}
+		case ch_SpecKillCounter:
+			if ( HUDKillingFloor(H) != none )
+			{
+				bTallySpecimenKills = HUDKillingFloor(H).bTallySpecimenKills;
+				ch_SpecKillCounter.SetComponentValue(bTallySpecimenKills,true);
+				break;
+			}
+			else
+			{
+				bTallySpecimenKills = class'KFMod.HUDKillingFloor'.default.bTallySpecimenKills;
+				ch_SpecKillCounter.SetComponentValue(bTallySpecimenKills,true);
 				break;
 			}
 
@@ -118,12 +135,18 @@ function SaveSettings()
 		H.bHideHUD = bVis;
 		bSave = True;
 	}
-	
+
 	if ( HUDKillingFloor(H) !=  none )
-	{	
+	{
 		if ( HUDKillingFloor(H).bLightHud != bLight )
 		{
 			HUDKillingFloor(H).bLightHUD = bLight;
+			bSave = True;
+		}
+
+		if ( HUDKillingFloor(H).bTallySpecimenKills != bTallySpecimenKills )
+		{
+			HUDKillingFloor(H).bTallySpecimenKills = bTallySpecimenKills;
 			bSave = True;
 		}
 	}
@@ -133,7 +156,13 @@ function SaveSettings()
     	{
 			class'KFMod.HUDKillingFloor'.default.bLightHud = bLight;
 			class'KFMod.HUDKillingFloor'.static.StaticSaveConfig();
-		}	
+		}
+
+		if ( class'KFMod.HUDKillingFloor'.default.bTallySpecimenKills != bTallySpecimenKills )
+    	{
+			class'KFMod.HUDKillingFloor'.default.bTallySpecimenKills = bTallySpecimenKills;
+			class'KFMod.HUDKillingFloor'.static.StaticSaveConfig();
+		}
 	}
 
 	if ( H.bShowWeaponInfo != bWeapons )
@@ -219,7 +248,7 @@ function SaveSettings()
 		if ( SaveCustomHUDColor() || bSave )
 			H.SaveConfig();
 	}
-	
+
 	else
 	{
 		if ( bSave )
@@ -227,7 +256,7 @@ function SaveSettings()
 
 		SaveCustomHUDColor();
 	}
-	
+
     if ( class'XGame.xDeathMessage'.default.bNoConsoleDeathMessages != bNoMsgs )
     {
 		class'XGame.xDeathMessage'.default.bNoConsoleDeathMessages = bNoMsgs;
@@ -238,11 +267,14 @@ function SaveSettings()
 function InternalOnChange(GUIComponent Sender)
 {
 	Super.InternalOnChange(Sender);
-	
+
 	switch (Sender)
 	{
 		case ch_LightHud:
 			bLight = ch_LightHud.IsChecked();
+			break;
+		case ch_SpecKillCounter:
+			bTallySpecimenKills = ch_SpecKillCounter.IsChecked();
 			break;
 	}
 }
@@ -297,6 +329,22 @@ defaultproperties
          OnLoadINI=KFHudSettings.InternalOnLoadINI
      End Object
      ch_LightHud=moCheckBox'KFGui.KFHudSettings.LightHud'
+
+     Begin Object Class=moCheckBox Name=SpecimenKillCounter
+         ComponentJustification=TXTA_Left
+         CaptionWidth=0.900000
+         Caption="Show Kill Counter"
+         OnCreateComponent=SpecimenKillCounter.InternalOnCreateComponent
+         IniOption="@Internal"
+         Hint="Tally specimen kills on the HUD"
+         WinTop=0.043906
+         WinLeft=0.379297
+         WinWidth=0.196875
+         TabOrder=1
+         OnChange=KFHudSettings.InternalOnChange
+         OnLoadINI=KFHudSettings.InternalOnLoadINI
+     End Object
+     ch_SpecKillCounter=moCheckBox'KFGui.KFHudSettings.SpecimenKillCounter'
 
      Begin Object Class=GUIImage Name=PreviewBK
          Image=Texture'InterfaceArt_tex.Menu.traderlist_normal'

@@ -63,11 +63,12 @@ exec function SwitchModes()
 
 simulated function bool CanZoomNow()
 {
-	return (!FireMode[0].bIsFiring && Instigator!=None && Instigator.Physics!=PHYS_Falling);
+	return (!FireMode[0].bIsFiring);
 }
 
 defaultproperties
 {
+     ForceZoomOutOnFireTime=0.010000
      MagCapacity=12
      ReloadRate=3.160000
      ReloadAnim="Reload"

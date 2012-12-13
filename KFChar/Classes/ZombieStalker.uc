@@ -47,7 +47,12 @@ simulated function Tick(float DeltaTime)
 	if( Level.NetMode==NM_DedicatedServer )
 		Return; // Servers aren't intrested in this info.
 
-	if( Level.TimeSeconds > NextCheckTime && Health > 0 )
+    if( bZapped )
+    {
+        // Make sure we check if we need to be cloaked as soon as the zap wears off
+        NextCheckTime = Level.TimeSeconds;
+    }
+	else if( Level.TimeSeconds > NextCheckTime && Health > 0 )
 	{
 		NextCheckTime = Level.TimeSeconds + 0.5;
 
@@ -85,6 +90,12 @@ simulated function Tick(float DeltaTime)
 
 simulated function CloakStalker()
 {
+    // No cloaking if zapped
+    if( bZapped )
+    {
+        return;
+    }
+
 	if ( bSpotted )
 	{
 		if( Level.NetMode == NM_DedicatedServer )
@@ -122,6 +133,11 @@ simulated function CloakStalker()
 
 simulated function UnCloakStalker()
 {
+    if( bZapped )
+    {
+        return;
+    }
+
 	if( !bCrispified )
 	{
 		LastUncloakTime = Level.TimeSeconds;
@@ -152,6 +168,61 @@ simulated function UnCloakStalker()
 			SetOverlayMaterial(Material'KFX.FBDecloakShader', 0.25, true);
 		}
 	}
+}
+
+// Set the zed to the zapped behavior
+simulated function SetZappedBehavior()
+{
+    super.SetZappedBehavior();
+
+	// Handle setting the zed to uncloaked so the zapped overlay works properly
+    if( Level.Netmode != NM_DedicatedServer )
+	{
+        Skins[1] = FinalBlend'KF_Specimens_Trip_T.stalker_fb';
+		Skins[0] = Combiner'KF_Specimens_Trip_T.stalker_cmb';
+
+		if (PlayerShadow != none)
+			PlayerShadow.bShadowActive = true;
+
+		bAcceptsProjectors = true;
+		SetOverlayMaterial(Material'KFZED_FX_T.Energy.ZED_overlay_Hit_Shdr', 999, true);
+	}
+}
+
+// Turn off the zapped behavior
+simulated function UnSetZappedBehavior()
+{
+    super.UnSetZappedBehavior();
+
+	// Handle getting the zed back cloaked if need be
+    if( Level.Netmode != NM_DedicatedServer )
+	{
+        NextCheckTime = Level.TimeSeconds;
+        SetOverlayMaterial(None, 0.0f, true);
+	}
+}
+
+// Overridden because we need to handle the overlays differently for zombies that can cloak
+function SetZapped(float ZapAmount, Pawn Instigator)
+{
+    LastZapTime = Level.TimeSeconds;
+
+    if( bZapped )
+    {
+        TotalZap = ZapThreshold;
+        RemainingZap = ZapDuration;
+    }
+    else
+    {
+        TotalZap += ZapAmount;
+
+        if( TotalZap >= ZapThreshold )
+        {
+            RemainingZap = ZapDuration;
+              bZapped = true;
+        }
+    }
+    ZappedBy = Instigator;
 }
 
 function RemoveHead()
@@ -218,8 +289,25 @@ function bool DoJump( bool bUpdating )
 	return false;
 }
 
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.stalker_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.stalker_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.stalker_diff');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.stalker_spec');
+	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.stalker_invisible');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.StalkerCloakOpacity_cmb');
+	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.StalkerCloakEnv_rot');
+	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.stalker_opacity_osc');
+	myLevel.AddPrecacheMaterial(Material'KFCharacters.StalkerSkin');
+}
+
 defaultproperties
 {
+     EventClasses(0)="KFChar.ZombieStalker"
+     EventClasses(1)="KFChar.ZombieStalker"
+     EventClasses(2)="KFChar.ZombieStalker_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieStalker_XMAS"
      DetachedArmClass=Class'KFChar.SeveredArmStalker'
      DetachedLegClass=Class'KFChar.SeveredLegStalker'
      DetachedHeadClass=Class'KFChar.SeveredHeadStalker'

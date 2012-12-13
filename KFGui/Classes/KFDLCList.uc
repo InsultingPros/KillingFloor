@@ -232,6 +232,7 @@ defaultproperties
      CharacterNames(7)="Harold_Lott"
      CharacterNames(8)="Ash_Harding"
      CharacterNames(9)="ChickenNator"
+     CharacterNames(10)="DAR"
      CharacterUnownedTextures(0)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Outbreak'
      CharacterUnownedTextures(1)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Nightfall'
      CharacterUnownedTextures(2)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_PostMortem'
@@ -242,6 +243,7 @@ defaultproperties
      CharacterUnownedTextures(7)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_MoneyMoney'
      CharacterUnownedTextures(8)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Ash'
      CharacterUnownedTextures(9)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Chickenator'
+     CharacterUnownedTextures(10)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Robot'
      CharacterOwnedTextures(0)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Outbreak'
      CharacterOwnedTextures(1)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Nightfall'
      CharacterOwnedTextures(2)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_PostMortem'
@@ -252,9 +254,13 @@ defaultproperties
      CharacterOwnedTextures(7)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_MoneyMoney'
      CharacterOwnedTextures(8)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Ash'
      CharacterOwnedTextures(9)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Chickenator'
+     CharacterOwnedTextures(10)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Robot'
      WeaponAppIDs(0)=210934
+     WeaponAppIDs(1)=210938
      WeaponUnownedTextures(0)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Community'
+     WeaponUnownedTextures(1)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Gold-Pack'
      WeaponOwnedTextures(0)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Community'
+     WeaponOwnedTextures(1)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Gold-Pack'
      OverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      HoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
      GetItemHeight=KFDLCList.DLCItemHeight

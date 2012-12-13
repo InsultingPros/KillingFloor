@@ -1,5 +1,7 @@
 class BenelliAmmoPickup extends KFAmmoPickup;
 
+//duplicated by goldenbenelliammopickup
+
 defaultproperties
 {
      AmmoAmount=6

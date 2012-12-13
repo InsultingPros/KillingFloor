@@ -37,7 +37,8 @@ static function float AddExtraAmmoFor(KFPlayerReplicationInfo KFPRI, Class<Ammun
 		return 1.0 + (0.20 * float(KFPRI.ClientVeteranSkillLevel));
 	}
 	else if ( AmmoType == class'ShotgunAmmo' || AmmoType == class'DBShotgunAmmo' || AmmoType == class'AA12Ammo'
-        || AmmoType == class'BenelliAmmo' || AmmoType == class'KSGAmmo' || AmmoType == class'NailGunAmmo')
+        || AmmoType == class'BenelliAmmo' || AmmoType == class'KSGAmmo' || AmmoType == class'NailGunAmmo'
+        || AmmoType == class'GoldenBenelliAmmo')
 	{
 		if ( KFPRI.ClientVeteranSkillLevel > 0 )
 		{
@@ -105,7 +106,8 @@ static function float GetShotgunPenetrationDamageMulti(KFPlayerReplicationInfo K
 static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup> Item)
 {
 	if ( Item == class'ShotgunPickup' || Item == class'BoomstickPickup' || Item == class'AA12Pickup'
-        || Item == class'BenelliPickup' || Item == class'KSGPickup' || Item == class'NailGunPickup')
+        || Item == class'BenelliPickup' || Item == class'KSGPickup' || Item == class'NailGunPickup'
+        || Item == class'GoldenBenelliPickup')
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on Shotguns
 	}

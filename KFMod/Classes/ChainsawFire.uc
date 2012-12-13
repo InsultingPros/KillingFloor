@@ -168,8 +168,11 @@ event ModeDoFire()
     	}
 
 
-    	Weapon.Owner.Velocity.x *= KFMeleeGun(Weapon).ChopSlowRate;
-    	Weapon.Owner.Velocity.y *= KFMeleeGun(Weapon).ChopSlowRate;
+    	if( Weapon.Owner != none && Weapon.Owner.Physics != PHYS_Falling )
+    	{
+            Weapon.Owner.Velocity.x *= KFMeleeGun(Weapon).ChopSlowRate;
+        	Weapon.Owner.Velocity.y *= KFMeleeGun(Weapon).ChopSlowRate;
+    	}
 	}
 }
 

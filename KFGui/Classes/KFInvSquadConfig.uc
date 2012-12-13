@@ -35,12 +35,12 @@ function InitActiveClasses()
 	local string S,ID;
 
 	// Init monster table
-	l = Class'KFGameType'.Default.MonsterClasses.Length;
+	l = Class'KFGameType'.default.MonsterCollection.Default.MonsterClasses.Length;
 	SquadMonsters.Length = l;
 	For( i=0; i<l; i++ )
 	{
-		SquadMonsters[i].MID = Class'KFGameType'.Default.MonsterClasses[i].MID;
-		SquadMonsters[i].MName = GetMonsterName(Class'KFGameType'.Default.MonsterClasses[i].MClassName);
+		SquadMonsters[i].MID = Class'KFGameType'.default.MonsterCollection.Default.MonsterClasses[i].MID;
+		SquadMonsters[i].MName = GetMonsterName(Class'KFGameType'.default.MonsterCollection.Default.MonsterClasses[i].MClassName);
 	}
 
 	// Init active squads on current settings

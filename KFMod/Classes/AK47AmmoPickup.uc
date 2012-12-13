@@ -1,4 +1,5 @@
 class AK47AmmoPickup extends KFAmmoPickup;
+//duplicated by goldenak47ammopickup
 
 defaultproperties
 {

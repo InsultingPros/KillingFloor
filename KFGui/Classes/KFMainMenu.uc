@@ -13,6 +13,9 @@ var automated   GUILabel    		KFVersionNum;   // Keep track of updates from now 
 var automated   GUILabel    		KFWorkshopDownload;
 
 var	transient	bool				bOwnsWeaponDLC;
+var transient   int                 WeaponDLCID;
+var             int                 WeaponBundle;
+var             array<int>          WeaponDLCs;
 var automated	GUIImage    		KFWeaponDLCImage;
 var automated	GUIImage    		KFWeaponDLCOverlay;
 var 			Texture				KFWeaponDLCOwnedTexture;
@@ -33,6 +36,9 @@ var 			Texture				KFCharacterDLCHoverTexture;
 #exec OBJ LOAD FIlE=2K4Menus.utx
 #exec OBJ LOAD FIlE=PatchTex.utx
 #exec OBJ LOAD FIlE=KF_DLC.utx
+
+#exec OBJ LOAD FIlE=KillingFloorHUD_HALLOWEEN.utx
+#exec OBJ LOAD FIlE=KillingFloorHUD_XMAS.utx
 /*
     Variable Name Legend
 
@@ -96,15 +102,70 @@ var localized 	string 				NewNewsMsg,
 
 var globalconfig bool AcceptedEULA;
 
+function int GetDLCListTextureIndex()
+{
+    local int i;
+    for(i = 0; i < class'KFDLCList'.default.WeaponAppIDs.Length;i++)
+    {
+        if( WeaponDLCID == class'KFDLCList'.default.WeaponAppIDs[i] )
+        {
+            return i;
+        }
+    }
+}
+
 function InitComponent(GUIController MyController, GUIComponent MyOwner)
 {
+    local int eventNum;
 	Super.InitComponent(MyController, MyOwner);
 
    	Background = none;
     i_BkChar.Image = CharShots[rand(CharShots.Length)];
 
-	bOwnsWeaponDLC = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(210934);
-	bOwnsCharacterDLC = PlayerOwner().CharacterAvailable("ChickenNator");
+    WeaponDLCID = DetermineWeaponDLC();
+	bOwnsWeaponDLC = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC( WeaponDLCID );
+	bOwnsCharacterDLC = PlayerOwner().CharacterAvailable("DAR");
+
+	eventNum = 3;//KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements).Stat46.Value;
+
+    if( eventNum == 2 )
+    {
+        KFBackground.Image = MaterialSequence'KillingFloorHUD_HALLOWEEN.MainMenu.kf_menu_seq_HALLOWEEN';
+        KFLogoBit.Image = FinalBlend'KillingFloorHUD_HALLOWEEN.KFLogoFB_halloween';
+    }
+    else if( eventNum == 3 )
+    {
+        KFBackground.Image = MaterialSequence'KillingFloorHUD_XMAS.MainMenu.kf_menu_seq_XMAS';
+        KFLogoBit.Image = FinalBlend'KillingFloorHUD_XMAS.KFLogoFB_XMAS';
+    }
+}
+
+function int DetermineWeaponDLC()
+{
+   local int i;
+   local array<int> dlcsAvailable;
+   if( WeaponDLCs.Length == 1 )
+   {
+       return WeaponDLCs[0];
+   }
+   for( i = 0; i < WeaponDLCs.Length; i++ )
+   {
+       if( !PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(WeaponDLCs[i]) )
+       {
+          dlcsAvailable.Insert(0, 1);
+          dlcsAvailable[0] = WeaponDLCs[i] ;
+       }
+   }
+
+
+   if ( dlcsAvailable.Length == 0 || ( WeaponDLCs.Length == dlcsAvailable.Length  && dlcsAvailable.Length != 1) )
+   {
+        return WeaponBundle;
+   }
+   else
+   {
+       return dlcsAvailable[ rand( dlcsAvailable.Length ) ];
+   }
 }
 
 function InternalOnOpen()
@@ -250,6 +311,15 @@ event Opened(GUIComponent Sender)
 	{
 		KFWeaponDLCImage.Image = KFWeaponDLCOwnedTexture;
 		KFWeaponDLCOverlay.SetVisibility(false);
+	}
+	else
+	{
+	    if( WeaponDLCID != WeaponBundle )
+	    {
+	        KFWeaponDLCImage.Image = class'KFDLCList'.default.WeaponUnownedTextures[GetDLCListTextureIndex()];
+	    }
+
+	    KFWeaponDLCOverlay.SetVisibility(true);
 	}
 
 	if ( bOwnsCharacterDLC )
@@ -544,6 +614,8 @@ function OnSteamStatsAndAchievementsReady()
 
 function bool DLCButtonDraw(Canvas Canvas)
 {
+    local int index;
+    index = GetDLCListTextureIndex();
 	if ( !bOwnsWeaponDLC && KFWeaponDLCOverlayTexture != none && KFWeaponDLCHoverTexture != none )
 	{
 		if ( KFWeaponDLCImage.IsInBounds() )
@@ -555,7 +627,14 @@ function bool DLCButtonDraw(Canvas Canvas)
 		}
 		else if ( KFWeaponDLCOverlay.Image != KFWeaponDLCOverlayTexture )
 		{
-			KFWeaponDLCOverlay.Image = KFWeaponDLCOverlayTexture;
+		    if( WeaponDLCID != WeaponBundle )
+		    {
+		        KFWeaponDLCOverlay.Image = class'KFDLCList'.default.WeaponUnownedTextures[index];
+		    }
+			else
+            {
+                KFWeaponDLCOverlay.Image = KFWeaponDLCOverlayTexture;
+            }
 		}
 	}
 
@@ -581,7 +660,7 @@ function bool WeaponDLCButtonClicked(GUIComponent Sender)
 {
 	if ( !bOwnsWeaponDLC )
 	{
-		PlayerOwner().SteamStatsAndAchievements.PurchaseWeaponDLC(210934);
+		PlayerOwner().SteamStatsAndAchievements.PurchaseWeaponDLC(WeaponDLCID);
 		return true;
 	}
 
@@ -649,8 +728,10 @@ defaultproperties
      End Object
      KFWorkshopDownload=GUILabel'KFGui.KFMainMenu.WorkshopDownloadLabel'
 
+     WeaponBundle=210938
+     WeaponDLCs(0)=210938
      Begin Object Class=GUIImage Name=WeaponDLCImage
-         Image=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Community'
+         Image=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Gold-Pack'
          ImageStyle=ISTY_Scaled
          WinTop=0.651389
          WinLeft=0.053125
@@ -680,11 +761,11 @@ defaultproperties
      End Object
      KFWeaponDLCOverlay=GUIImage'KFGui.KFMainMenu.WeaponDLCOverlay'
 
-     KFWeaponDLCOwnedTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Community'
-     KFWeaponDLCOverlayTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Community'
+     KFWeaponDLCOwnedTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Gold-Pack'
+     KFWeaponDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFWeaponDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
      Begin Object Class=GUIImage Name=CharacterDLCImage
-         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Chickenator'
+         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Robot'
          ImageStyle=ISTY_Scaled
          WinTop=0.811111
          WinLeft=0.053125
@@ -713,8 +794,8 @@ defaultproperties
      End Object
      KFCharacterDLCOverlay=GUIImage'KFGui.KFMainMenu.CharacterDLCOverlay'
 
-     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Chickenator'
-     KFCharacterDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Chickenator'
+     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Robot'
+     KFCharacterDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFCharacterDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
      Begin Object Class=BackgroundImage Name=ImgBkChar
          ImageColor=(A=160)

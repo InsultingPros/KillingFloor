@@ -6,7 +6,7 @@ class ScythePickup extends KFWeaponPickup;
 defaultproperties
 {
      Weight=6.000000
-     cost=1250
+     cost=2500
      PowerValue=70
      SpeedValue=25
      RangeValue=-20

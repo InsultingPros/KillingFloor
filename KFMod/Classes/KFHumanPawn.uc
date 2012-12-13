@@ -76,6 +76,22 @@ replication
 		SetAiming;
 }
 
+simulated function Setup(xUtil.PlayerRecord rec, optional bool bLoadNow)
+{
+    local KFMaleSoundGroup sg;
+    super.Setup(rec, bLoadNow);
+
+	if( class<SoldierSpeciesRobot>(Species) != none )
+	{
+       BreathingSound = class'KFDARSoundGroup'.default.BreathingSound;
+    }
+    else if( class<AshHardingSpecies>(Species) != none )
+    {
+       BreathingSound = class'KFFemaleSoundGroup'.default.BreathingSound;
+    }
+    log(BreathingSound);
+}
+
 function VeterancyChanged()
 {
 	local Inventory I;
@@ -131,8 +147,8 @@ event PreBeginPlay()
 {
 	Super.PreBeginPlay();
 	SetTimer(1.5,true);
-}
 
+}
 
 // Just changed to pendingWeapon
 simulated function ChangedWeapon()

@@ -63,6 +63,8 @@ var     config  bool    bShowHints;
 // ZED time message
 var     config	bool	bHadZED;
 
+var KFSteamWebApi webAPIAccessor;
+
 // Voice Messages
 var	bool	bHasHeardTraderWelcomeMessage;
 var	float	LastClotGrabMessageTime;
@@ -84,6 +86,9 @@ var 	config	int		AudioMessageLevel;
 //Temp Ammo needed for dualdeagle pickups
 var		int				PendingAmmo;
 
+// ZEDGun Support
+var	vector					EnemyLocation[16];	// Location of all enemies within 100 meter radius(5000 unreal units)
+
 var int						RandXOffset;
 var int						RandYOffset;
 
@@ -100,7 +105,7 @@ replication
 	// Functions server can call.
 	reliable if( Role == ROLE_Authority )
 		KFClientNetWorkMsg, ClientLocationalVoiceMessage, ClientEnterZedTime, ClientExitZedTime,
-		ClientWeaponSpawned, ClientWeaponDestroyed, ClientForceCollectGarbage;
+		ClientWeaponSpawned, ClientWeaponDestroyed, ClientZedsSpawn, ClientForceCollectGarbage, EnemyLocation;
 }
 
 simulated event PreBeginPlay()
@@ -1242,6 +1247,18 @@ auto state PlayerWaiting
 
 			SetTimer(0, false);
 		}
+
+
+    }
+
+    simulated function EndState()
+    {
+        super.EndState();
+        
+        if (Level.NetMode != NM_DedicatedServer)
+        {
+			SetupWebAPI();
+		}
     }
 
     // hax to open menu when player joins the game
@@ -1257,6 +1274,30 @@ auto state PlayerWaiting
             Timer();
         }
     }
+}
+
+simulated function SetupWebAPI()
+{
+	if( Player != None  && webAPIAccessor == none && SteamStatsAndAchievements != none )
+    {
+    	webAPIAccessor = Spawn(class'KFSteamWebAPI', self);
+		webAPIAccessor.AchievementReport = KFSteamStatsAndAchievements(SteamStatsAndAchievements).OnAchievementReport;	
+				
+		if ( SteamStatsAndAchievements.PCowner == None )
+			SteamStatsAndAchievements.PCOwner= self;
+
+		log("webapi*************", 'DevNet');
+		if( Level.NetMode != NM_DedicatedServer && Player != none && Player.GUIController != none )
+		{
+			webAPIAccessor.GetAchievements(Player.GUIController.SteamGetUserID());
+			log(Player.GUIController.SteamGetUserID(), 'DevNet');
+        }
+		else
+		{	
+	        webAPIAccessor.GetAchievements(SteamStatsAndAchievements.GetSteamUserID());
+	        log(SteamStatsAndAchievements.GetSteamUserID(), 'DevNet');
+        }
+	}
 }
 
 // unpossessed a pawn (because pawn was killed)
@@ -1569,6 +1610,8 @@ state PlayerWalking
         // Unzoom if we were zoomed
         TransitionFOV(DefaultFOV,0.);
 	}
+
+
 }
 
 function HandleWalking()
@@ -1960,10 +2003,22 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'AK47Attachment'.static.PreloadAssets();
 			break;
 
+		case class'GoldenAK47AssaultRifle':
+			class'GoldenAK47AssaultRifle'.static.PreloadAssets(Inv);
+			class'GoldenAK47Fire'.static.PreloadAssets(Level);
+			class'GoldenAK47Attachment'.static.PreloadAssets();
+			break;
+
 		case class'BenelliShotgun':
 			class'BenelliShotgun'.static.PreloadAssets(Inv);
 			class'BenelliFire'.static.PreloadAssets(Level);
 			class'BenelliAttachment'.static.PreloadAssets();
+			break;
+
+		case class'GoldenBenelliShotgun':
+			class'GoldenBenelliShotgun'.static.PreloadAssets(Inv);
+			class'GoldenBenelliFire'.static.PreloadAssets(Level);
+			class'GoldenBenelliAttachment'.static.PreloadAssets();
 			break;
 
 		case class'Chainsaw':
@@ -2008,6 +2063,14 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'HuskGunAttachment'.static.PreloadAssets();
 			break;
 
+		case class'ZEDGun':
+			class'ZEDGun'.static.PreloadAssets(Inv);
+			class'ZEDGunFire'.static.PreloadAssets(Level);
+			class'ZEDGunAltFire'.static.PreloadAssets(Level);
+			class'ZEDGunProjectile'.static.PreloadAssets();
+			class'ZEDGunAttachment'.static.PreloadAssets();
+			break;
+
 		case class'Katana':
 			class'Katana'.static.PreloadAssets(Inv);
 			class'KatanaFire'.static.PreloadAssets();
@@ -2015,11 +2078,25 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'KatanaAttachment'.static.PreloadAssets();
 			break;
 
+		case class'GoldenKatana':
+			class'GoldenKatana'.static.PreloadAssets(Inv);
+			class'KatanaFire'.static.PreloadAssets();
+			class'KatanaFireB'.static.PreloadAssets();
+			class'GoldenKatanaAttachment'.static.PreloadAssets();
+			break;
+
 		case class'ClaymoreSword':
 			class'ClaymoreSword'.static.PreloadAssets(Inv);
 			class'ClaymoreSwordFire'.static.PreloadAssets();
 			class'ClaymoreSwordFireB'.static.PreloadAssets();
 			class'ClaymoreSwordAttachment'.static.PreloadAssets();
+			break;
+
+		case class'DwarfAxe':
+			class'DwarfAxe'.static.PreloadAssets(Inv);
+			class'DwarfAxeFire'.static.PreloadAssets();
+			class'DwarfAxeFireB'.static.PreloadAssets();
+			class'DwarfAxeAttachment'.static.PreloadAssets();
 			break;
 
 		case class'FNFAL_ACOG_AssaultRifle':
@@ -2059,6 +2136,13 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'M79Fire'.static.PreloadAssets(Level);
 			class'M79GrenadeProjectile'.static.PreloadAssets();
 			class'M79Attachment'.static.PreloadAssets();
+			break;
+
+		case class'GoldenM79GrenadeLauncher':
+			class'GoldenM79GrenadeLauncher'.static.PreloadAssets(Inv);
+			class'GoldenM79Fire'.static.PreloadAssets(Level);
+			class'M79GrenadeProjectile'.static.PreloadAssets();
+			class'GoldenM79Attachment'.static.PreloadAssets();
 			break;
 
 		case class'M4203AssaultRifle':
@@ -2114,6 +2198,14 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'MP7MAltFire'.static.PreloadAssets(Level);
 			class'MP7MHealinglProjectile'.static.PreloadAssets();
 			class'MP7MAttachment'.static.PreloadAssets();
+			break;
+
+		case class'KrissMMedicGun':
+			class'KrissMMedicGun'.static.PreloadAssets(Inv);
+			class'KrissMFire'.static.PreloadAssets(Level);
+			class'KrissMAltFire'.static.PreloadAssets(Level);
+			class'KrissMHealingProjectile'.static.PreloadAssets();
+			class'KrissMAttachment'.static.PreloadAssets();
 			break;
 
 		case class'MP5MMedicGun':
@@ -2200,11 +2292,27 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			}
 			break;
 
+		case class'GoldenAK47AssaultRifle':
+			if ( class'GoldenAK47AssaultRifle'.static.UnloadAssets() )
+			{
+				class'GoldenAK47Fire'.static.UnloadAssets();
+				class'GoldenAK47Attachment'.static.UnloadAssets();
+			}
+			break;
+
 		case class'BenelliShotgun':
 			if ( class'BenelliShotgun'.static.UnloadAssets() )
 			{
 				class'BenelliFire'.static.UnloadAssets();
 				class'BenelliAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'GoldenBenelliShotgun':
+			if ( class'GoldenBenelliShotgun'.static.UnloadAssets() )
+			{
+				class'GoldenBenelliFire'.static.UnloadAssets();
+				class'GoldenBenelliAttachment'.static.UnloadAssets();
 			}
 			break;
 
@@ -2260,6 +2368,16 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			}
 			break;
 
+		case class'ZEDGun':
+			if ( class'ZEDGun'.static.UnloadAssets() )
+			{
+				class'ZEDGunFire'.static.UnloadAssets();
+				class'ZEDGunAltFire'.static.UnloadAssets();
+				class'ZEDGunProjectile'.static.UnloadAssets();
+				class'ZEDGunAttachment'.static.UnloadAssets();
+			}
+			break;
+
 		case class'Katana':
 			if ( class'Katana'.static.UnloadAssets() )
 			{
@@ -2269,12 +2387,30 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			}
 			break;
 
+		case class'GoldenKatana':
+			if ( class'GoldenKatana'.static.UnloadAssets() )
+			{
+				class'KatanaFire'.static.UnloadAssets();
+				class'KatanaFireB'.static.UnloadAssets();
+				class'GoldenKatanaAttachment'.static.UnloadAssets();
+			}
+			break;
+
 		case class'ClaymoreSword':
 			if ( class'ClaymoreSword'.static.UnloadAssets() )
 			{
 				class'ClaymoreSwordFire'.static.UnloadAssets();
 				class'ClaymoreSwordFireB'.static.UnloadAssets();
 				class'ClaymoreSwordAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'DwarfAxe':
+			if ( class'DwarfAxe'.static.UnloadAssets() )
+			{
+				class'DwarfAxeFire'.static.UnloadAssets();
+				class'DwarfAxeFireB'.static.UnloadAssets();
+				class'DwarfAxeAttachment'.static.UnloadAssets();
 			}
 			break;
 
@@ -2326,6 +2462,15 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 				class'M79Fire'.static.UnloadAssets();
 				class'M79GrenadeProjectile'.static.UnloadAssets();
 				class'M79Attachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'GoldenM79GrenadeLauncher':
+			if ( class'GoldenM79GrenadeLauncher'.static.UnloadAssets() )
+			{
+				class'GoldenM79Fire'.static.UnloadAssets();
+				class'M79GrenadeProjectile'.static.UnloadAssets();
+				class'GoldenM79Attachment'.static.UnloadAssets();
 			}
 			break;
 
@@ -2397,6 +2542,16 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 				class'MP7MAltFire'.static.UnloadAssets();
 				class'MP7MHealinglProjectile'.static.UnloadAssets();
 				class'MP7MAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'KrissMMedicGun':
+			if ( class'KrissMMedicGun'.static.UnloadAssets() )
+			{
+				class'KrissMFire'.static.UnloadAssets();
+				class'KrissMAltFire'.static.UnloadAssets();
+				class'KrissMHealingProjectile'.static.UnloadAssets();
+				class'KrissMAttachment'.static.UnloadAssets();
 			}
 			break;
 
@@ -2553,6 +2708,27 @@ simulated function AddRandomOffset()
 simulated function ClientForceCollectGarbage()
 {
 	ConsoleCommand("obj garbage");
+}
+
+simulated function ClientPickedup( KFGrabbable item )
+{
+   KFSteamStatsAndAchievements(SteamStatsAndAchievements).ZEDPieceGrabbed();
+}
+
+simulated function ClientZedsSpawn(int eventNum)
+{
+   if(eventNum == 0)
+   {
+       class'KFMonstersCollection'.static.PreLoadAssets();
+   }
+   else if(eventNum == 2)
+   {
+       class'KFMonstersHalloween'.static.PreLoadAssets();
+   }
+   else if(eventNum == 3)
+   {
+       class'KFMonstersXmas'.static.PreLoadAssets();
+   }
 }
 
 defaultproperties

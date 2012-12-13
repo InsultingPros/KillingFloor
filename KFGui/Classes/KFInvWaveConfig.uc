@@ -43,7 +43,7 @@ function InitActiveSquads()
 	l = AS.Length;
 	WaveSquad.Length = l;
 	m = 1;
-	z = Class'KFGameType'.Default.MonsterClasses.Length;
+	z = Class'KFGameType'.default.MonsterCollection.Default.MonsterClasses.Length;
 	For( i=0; i<l; i++ )
 	{
 		WaveSquad[i].Mask = m;
@@ -56,9 +56,9 @@ function InitActiveSquads()
 			AS[i] = Mid(AS[i],2);
 			for( j=0; j<z; j++ )
 			{
-				if( Class'KFGameType'.Default.MonsterClasses[j].MID==S )
+				if( Class'KFGameType'.default.MonsterCollection.Default.MonsterClasses[j].MID==S )
 				{
-					S = n$":"$GetMonsterName(Class'KFGameType'.Default.MonsterClasses[j].MClassName);
+					S = n$":"$GetMonsterName(Class'KFGameType'.default.MonsterCollection.Default.MonsterClasses[j].MClassName);
 					if( Len(S)==0 )
 						Break;
 					if( c++==0 )

@@ -4,8 +4,6 @@
 class TrenchgunBullet extends Projectile;
 
 var     xEmitter    Trail;
-var     Emitter     FlameTrail;
-var     class<Emitter> FlameTrailEmitterClass;
 var     float       DamageAtten;
 var     sound       ImpactSounds[6];
 var()   int         MaxPenetrations; // Yeah, Hardy har har. It refers in fact to the number of times the bolt can pass through someone and keep going.
@@ -40,7 +38,6 @@ simulated function PostBeginPlay()
 
             //Trail = Spawn(class'KFTracer',self);
             //Trail.Lifespan = Lifespan;
-			FlameTrail = Spawn(FlameTrailEmitterClass,self);
 			Trail = Spawn(class'FlameThrowerFlame',self);
 
         }
@@ -93,14 +90,7 @@ simulated function Destroyed()
 		Trail.GotoState('');
 	}
 
-	if ( FlameTrail != none )
-	{
-        FlameTrail.Kill();
-		FlameTrail.SetPhysics(PHYS_None);
-	}
-
-         Super.Destroyed();
-
+    Super.Destroyed();
 }
 
 simulated function Explode(vector HitLocation, vector HitNormal)
@@ -155,12 +145,6 @@ simulated singular function HitWall(vector HitNormal, actor Wall)
         //Trail.mRegenRange[0] = 0.0;//trail.mRegenRange[0] * 0.6;
         //Trail.mRegenRange[1] = 0.0;//trail.mRegenRange[1] * 0.6;
     }
-
-	if ( FlameTrail != none )
-	{
-        FlameTrail.Kill();
-		FlameTrail.SetPhysics(PHYS_None);
-	}
 
     Destroy();
 }
@@ -247,7 +231,6 @@ simulated function ProcessTouch (Actor Other, vector HitLocation)
 
 defaultproperties
 {
-     FlameTrailEmitterClass=Class'KFMod.DragonsBreathFlameEmitter'
      DamageAtten=5.000000
      MaxPenetrations=2
      PenDamageReduction=0.500000

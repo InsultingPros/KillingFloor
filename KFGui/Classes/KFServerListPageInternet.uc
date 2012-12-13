@@ -317,10 +317,13 @@ function Refresh()
 	local array<CustomFilter.AFilterRule> Rules;
 	local MasterServerClient.QueryData QueryItem;
 
+
 	if ( bQueryRunning )
 	{
 		SetTimer(0.0);
 		Uplink().Stop();
+		bQueryRunning=false;
+		return;
 	}
 	else
 	{

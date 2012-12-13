@@ -17,12 +17,15 @@ var int CashThrowAmount; // Amount of cash a player throws per keypress.   Set i
 
 var FakePlayerPawn BlamePawn;
 
+var int KillAssists;
+
 replication
 {
 	// Things the server should send to the client.
 	reliable if ( bNetDirty && (Role == Role_Authority) )
 		bWideScreenOverlay,SubTitle,PlayerHealth,bBuyingStuff,bStartingEquipmentChosen,
-		ThreeSecondScore,bViewingMatineeCinematic,ClientVeteranSkill,ClientVeteranSkillLevel;
+		ThreeSecondScore,bViewingMatineeCinematic,ClientVeteranSkill,ClientVeteranSkillLevel,
+		KillAssists;
 }
 
 /*

@@ -34,6 +34,7 @@ defaultproperties
      hitDamageClass=Class'KFMod.DamTypeKatana'
      HitEffectClass=Class'KFMod.AxeHitEffect'
      MeleeHitSoundRefs(0)="KF_KatanaSnd.Katana_HitFlesh"
+     WideDamageMinHitAngle=0.800000
      FireRate=0.670000
      BotRefireRate=0.850000
 }

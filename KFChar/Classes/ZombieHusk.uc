@@ -439,6 +439,13 @@ function PlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<Dama
 	if( DamageType.default.bLocationalHit )
 	{
 		CalcHitLoc( HitLocation, HitRay, HitBone, HitBoneDist );
+
+        // Do a zapped effect is someone shoots us and we're zapped to help show that the zed is taking more damage
+        if ( bZapped && DamageType.name != 'DamTypeZEDGun' )
+        {
+            PlaySound(class'ZedGunProjectile'.default.ExplosionSound,,class'ZedGunProjectile'.default.ExplosionSoundVolume);
+            Spawn(class'ZedGunProjectile'.default.ExplosionEmitter,,,HitLocation + HitNormal*20,rotator(HitNormal));
+        }
 	}
 	else
 	{
@@ -493,9 +500,24 @@ function PlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<Dama
 		SetOverlayMaterial( DamageType.default.DamageOverlayMaterial, DamageType.default.DamageOverlayTime, false );
 }
 
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T_Two.burns_diff');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T_Two.burns_emissive_mask');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T_Two.burns_energy_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T_Two.burns_env_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T_Two.burns_fire_cmb');
+	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T_Two.burns_shdr');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T_Two.burns_cmb');
+}
+
 defaultproperties
 {
      HuskFireProjClass=Class'KFChar.HuskFireProjectile'
+     EventClasses(0)="KFChar.ZombieHusk"
+     EventClasses(1)="KFChar.ZombieHusk"
+     EventClasses(2)="KFChar.ZombieHusk_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieHusk_XMAS"
      DetachedArmClass=Class'KFChar.SeveredArmHusk'
      DetachedLegClass=Class'KFChar.SeveredLegHusk'
      DetachedHeadClass=Class'KFChar.SeveredHeadHusk'

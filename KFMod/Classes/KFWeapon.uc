@@ -16,6 +16,10 @@ var config enum KFScopeDetailSettings
 
 var			bool 			bHasScope; 				// true for any sniper weapons, aka they'll have scopes
 var(Zooming)    float       ZoomedDisplayFOVHigh;       // What is the DisplayFOV when zoomed in on high scope detail setting
+var     float               ForceZoomOutTime;       // When set the weapon will zoom out at this time
+var         bool            bForceLeaveIronsights;  // Force the weapon out of ironsights on the next tick
+var(Zooming) float          ForceZoomOutOnFireTime; // How long to wait after firing to force zoom out. If zero don't force zoom out on fire
+var(Zooming) float          ForceZoomOutOnAltFireTime; // How long to wait after alt firing to force zoom out. If zero don't force zoom out on alt fire
 
 var()       int         	MagCapacity;      // How Much ammo this weapon can hold in its magazine
 var() 		float 			ReloadRate;
@@ -128,11 +132,12 @@ var		int				ReferenceCount;
 
 // Weapon DLC
 var	int	AppID;
+var int UnlockedByAchievement;
 
 replication
 {
 	reliable if(Role == ROLE_Authority)
-		MagAmmoRemaining;
+		MagAmmoRemaining, bForceLeaveIronsights;
 
 	reliable if( bNetDirty && bNetOwner && (Role==ROLE_Authority) )
 		MagCapacity, SellValue;
@@ -335,8 +340,11 @@ simulated exec function ToggleIronSights()
 		}
 		else
 		{
-			if (Owner.Physics == PHYS_Falling)
-				return;
+            if( Owner != none && Owner.Physics == PHYS_Falling &&
+                Owner.PhysicsVolume.Gravity.Z <= class'PhysicsVolume'.default.Gravity.Z )
+            {
+                return;
+            }
 
 	   		InterruptReload();
 
@@ -352,8 +360,11 @@ simulated exec function IronSightZoomIn()
 {
 	if( bHasAimingMode )
 	{
-		if (Owner.Physics == PHYS_Falling)
-			return;
+        if( Owner != none && Owner.Physics == PHYS_Falling &&
+            Owner.PhysicsVolume.Gravity.Z <= class'PhysicsVolume'.default.Gravity.Z )
+        {
+            return;
+        }
 
    		InterruptReload();
 
@@ -665,6 +676,15 @@ simulated function bool StartFire(int Mode)
 
 	if( RetVal )
 	{
+        if( Mode == 0 && ForceZoomOutOnFireTime > 0 )
+        {
+            ForceZoomOutTime = Level.TimeSeconds + ForceZoomOutOnFireTime;
+        }
+        else if( Mode == 1 && ForceZoomOutOnAltFireTime > 0 )
+        {
+            ForceZoomOutTime = Level.TimeSeconds + ForceZoomOutOnAltFireTime;
+        }
+
 		NumClicks=0;
 
 		InterruptReload();
@@ -1315,11 +1335,33 @@ simulated function WeaponTick(float dt)
 {
 	local float LastSeenSeconds,ReloadMulti;
 
-	if( bHasAimingMode && Instigator != none && Instigator.IsLocallyControlled() )
-	{
-		if ( bAimingRifle && Instigator!=None && Instigator.Physics==PHYS_Falling )
+    if( bForceLeaveIronsights )
+    {
+    	ZoomOut(true);
+
+    	if( Role < ROLE_Authority)
+			ServerZoomOut(false);
+
+        bForceLeaveIronsights = false;
+    }
+
+    if( ForceZoomOutTime > 0 )
+    {
+        if( bAimingRifle )
+        {
+    	    if( Level.TimeSeconds - ForceZoomOutTime > 0 )
+    	    {
+                ForceZoomOutTime = 0;
+
+            	ZoomOut(true);
+
+            	if( Role < ROLE_Authority)
+        			ServerZoomOut(false);
+    		}
+		}
+		else
 		{
-			IronSightZoomOut();
+            ForceZoomOutTime = 0;
 		}
 	}
 
@@ -1932,6 +1974,7 @@ defaultproperties
      StandardDisplayFOV=90.000000
      SleeveNum=1
      SellValue=-1
+     UnlockedByAchievement=-1
      bSniping=True
      bNoAmmoInstances=False
      Description="This is a very generic weapon."

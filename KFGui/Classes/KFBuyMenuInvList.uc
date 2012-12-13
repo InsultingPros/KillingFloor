@@ -458,7 +458,15 @@ function UpdateList()
 			}
 		}
 
-		PerkTextures[i] = class'KFGameType'.default.LoadedSkills[MyBuyables[i].ItemPerkIndex].default.OnHUDIcon;
+
+	    if(MyBuyables[i].ItemPerkIndex == 7 )
+	    {
+            PerkTextures[i] = class'KFBuyMenuSaleList'.default.NoPerkIcon;
+        }
+        else
+        {
+            PerkTextures[i] = class'KFGameType'.default.LoadedSkills[MyBuyables[i].ItemPerkIndex].default.OnHUDIcon;
+        }
 	}
 
 	if ( bNotify )

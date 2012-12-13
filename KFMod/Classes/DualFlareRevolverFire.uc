@@ -204,8 +204,19 @@ function DoFireEffect()
         SpawnProjectile(StartProj, Aim);
     }
 
-	if (Instigator != none && Instigator.Physics != PHYS_Falling)
-		Instigator.AddVelocity(KickMomentum >> Instigator.GetViewRotation());
+	if (Instigator != none )
+	{
+        if( Instigator.Physics != PHYS_Falling  )
+        {
+            Instigator.AddVelocity(KickMomentum >> Instigator.GetViewRotation());
+		}
+		// Really boost the momentum for low grav
+        else if( Instigator.Physics == PHYS_Falling
+            && Instigator.PhysicsVolume.Gravity.Z > class'PhysicsVolume'.default.Gravity.Z)
+        {
+            Instigator.AddVelocity((KickMomentum * 10.0) >> Instigator.GetViewRotation());
+        }
+	}
 }
 
 event ModeDoFire()

@@ -4,8 +4,28 @@ class KFMonster extends Skaarj
 	Abstract;
 
 #exec OBJ LOAD FILE=KF_EnemyGlobalSndTwo.uax
+#exec OBJ LOAD FILE=KFZED_Temp_UT.utx
+#exec OBJ LOAD FILE=KFZED_FX_T.utx
 
 
+var array<string> EventClasses;
+/*
+var string MeshRef;
+var	array<string> SkinsRef;
+var string	DetachedArmClassRef;		// class of detached arm to spawn for this pawn. Modified by the subclass to match the player model
+var string	DetachedLegClassRef;		// class of detached leg to spawn for this pawn. Modified by the subclass to match the player model
+var string	DetachedHeadClassRef;		// class of detached head to spawn for this pawn. Modified by the subclass to match the player model
+var string	DetachedSpecialArmClassRef;// class of detached special arm to spawn for this pawn. Modified by the subclass to match the player model
+
+//dynamic sound loading stuff
+var array<string> HitSoundRef;
+var string AmbientSoundRef;
+var array<string> ChallengeSoundRef;
+var string MoanVoiceRef;
+var array<string> DeathSoundRef;
+var string JumpSoundRef;
+var string MeleeAttackHitSoundRef;
+*/
 /* reference to the ZombieVolume which spawned me .. */
 var ZombieVolume                            SpawnVolume;
 
@@ -48,6 +68,18 @@ var		float	BleedOutTime;       // When this zombie will die from bleeding out
 var     bool    bNoBrainBitEmitter; // We want to skip the brain bit emitter for this zed
 
 var() bool bCannibal;  // If true, this enemy will stop to eat corpses it finds.
+
+var     bool    bZapped;            // This zed has been zapped by the ZEDGun
+var     bool    bOldZapped;         // The last state of the bZapped flag
+var     float   RemainingZap;       // How much zap time this zed has left
+var     float   TotalZap;           // How much zap this zed has taken
+var     float   LastZapTime;        // The last time we recieved any "zap"
+var()   float   ZapDuration;        // How long a zap lasts
+var()   float   ZappedSpeedMod;     // How much to slow down zeds when they are zapped
+var()   float   ZapThreshold;       // How much time of being hit with zap before this zed get's "zapped"
+var()   float   ZappedDamageMod;    // How much to scale damage by when this zed is zapped
+var()   float   ZapResistanceScale; // Every time the zed gets zapped, scale his resistance up by this modifier. This prevent zeds from getting constantly raped by zap (like the fleshpound)
+var     Pawn    ZappedBy;  //who did the zapping
 
 // Zombie flags:
 // 0 - Normal zombie
@@ -216,6 +248,7 @@ var class <SeveredAppendage>	DetachedArmClass;		// class of detached arm to spaw
 var class <SeveredAppendage>	DetachedLegClass;		// class of detached leg to spawn for this pawn. Modified by the subclass to match the player model
 var class <SeveredAppendage>	DetachedHeadClass;		// class of detached head to spawn for this pawn. Modified by the subclass to match the player model
 var class <SeveredAppendage>	DetachedSpecialArmClass;// class of detached special arm to spawn for this pawn. Modified by the subclass to match the player model
+
 var			bool				bLeftArmGibbed;			// LeftArm is already blown off
 var			bool				bRightArmGibbed;		// RightArm is already blown off
 var			bool				bLeftLegGibbed;			// LeftLeg is already blown off
@@ -262,6 +295,9 @@ replication
 	reliable if(bNetDirty && Role == ROLE_Authority)
 		bDecapitated,Gored,LookTarget,bBurnified,bAshen,FeedThreshold,bCannibal,bDiffAdjusted,bCloaked,
 		bCrispified,bZedUnderControl;
+
+	reliable if(bNetDirty && Role == ROLE_Authority)
+		bZapped;
 
 // Headshot debugging
 //	reliable if(Role == ROLE_Authority)
@@ -379,7 +415,7 @@ simulated function PostBeginPlay()
 
 		// Some randomization to their walk speeds.
 		RandomGroundSpeedScale = 1.0 + ((1.0 - (FRand() * 2.0)) * 0.1); // +/- 10%
-		GroundSpeed = default.GroundSpeed * RandomGroundSpeedScale;
+		SetGroundSpeed(default.GroundSpeed * RandomGroundSpeedScale);
 		//log(self$" Randomized ground speed "$GroundSpeed$" RandomGroundSpeedScale "$RandomGroundSpeedScale);
 
 		if( Level.Game.GameDifficulty < 2.0 )
@@ -436,6 +472,12 @@ simulated function PostBeginPlay()
 		AdditionalWalkAnims[AdditionalWalkAnims.length] = default.MovementAnims[0];
 		MovementAnims[0] = AdditionalWalkAnims[Rand(AdditionalWalkAnims.length)];
 	}
+}
+
+// Accessor for GroundSpeed so we can track what is setting it
+simulated function SetGroundSpeed(float NewGroundSpeed)
+{
+    GroundSpeed = NewGroundSpeed;
 }
 
 // Scales the damage this Zed deals by the difficulty level
@@ -632,7 +674,7 @@ function SetMindControlled(bool bNewMindControlled)
 
 		if( bNewMindControlled != bZedUnderControl )
 		{
-			GroundSpeed = OriginalGroundSpeed * 1.25;
+			SetGroundSpeed(OriginalGroundSpeed * 1.25);
 			Health *= 1.25;
 			HealthMax *= 1.25;
 		}
@@ -809,6 +851,11 @@ function JumpOffPawn()
 	}
 }
 
+event PickWallAdjustInLowGravity( vector WallHitNormal, actor HitActor )
+{
+	//Controller.SetFall();
+}
+
 // Actually execute the kick (this is notified in the ZombieKick animation)
 function KickActor()
 {
@@ -836,7 +883,7 @@ simulated function bool IsMoreThanHalf ( int AngleRot )
 // to the player faster if they can't be seen
 function bool CanSpeedAdjust()
 {
-	if ( !bDecapitated )
+	if ( !bDecapitated && !bZapped )
 	{
 		return true;
 	}
@@ -875,11 +922,11 @@ simulated function Tick(float DeltaTime)
 							FastTrace(Location + EyePosition(), P.Pawn.Location + P.Pawn.EyePosition()) )
 						{
 							LastSeenOrRelevantTime = Level.TimeSeconds;
-							GroundSpeed = GetOriginalGroundSpeed();
+							SetGroundSpeed(GetOriginalGroundSpeed());
 						}
 						else
 						{
-							GroundSpeed = default.GroundSpeed * (HiddenGroundSpeed / default.GroundSpeed);
+							SetGroundSpeed(default.GroundSpeed * (HiddenGroundSpeed / default.GroundSpeed));
 						}
 					}
 				}
@@ -887,19 +934,19 @@ simulated function Tick(float DeltaTime)
 			else
 			{
 				LastSeenOrRelevantTime = Level.TimeSeconds;
-				GroundSpeed = GetOriginalGroundSpeed();
+				SetGroundSpeed(GetOriginalGroundSpeed());
 			}
 		}
 		else if ( Level.NetMode == NM_DedicatedServer )
 		{
 			if ( Level.TimeSeconds - LastReplicateTime > 0.5 )
 			{
-				GroundSpeed = default.GroundSpeed * (300.0 / default.GroundSpeed);
+				SetGroundSpeed(default.GroundSpeed * (300.0 / default.GroundSpeed));
 			}
 			else
 			{
 				LastSeenOrRelevantTime = Level.TimeSeconds;
-				GroundSpeed = GetOriginalGroundSpeed();
+				SetGroundSpeed(GetOriginalGroundSpeed());
 			}
 		}
 		else if ( Level.NetMode == NM_ListenServer )
@@ -919,11 +966,11 @@ simulated function Tick(float DeltaTime)
 							FastTrace(Location + EyePosition(), P.Pawn.Location + P.Pawn.EyePosition()) )
 						{
 							LastSeenOrRelevantTime = Level.TimeSeconds;
-							GroundSpeed = GetOriginalGroundSpeed();
+							SetGroundSpeed(GetOriginalGroundSpeed());
 						}
 						else
 						{
-							GroundSpeed = default.GroundSpeed * (300.0 / default.GroundSpeed);
+							SetGroundSpeed(default.GroundSpeed * (300.0 / default.GroundSpeed));
 						}
 					}
 				}
@@ -931,7 +978,7 @@ simulated function Tick(float DeltaTime)
 			else
 			{
 				LastSeenOrRelevantTime = Level.TimeSeconds;
-				GroundSpeed = GetOriginalGroundSpeed();
+				SetGroundSpeed(GetOriginalGroundSpeed());
 			}
 		}
 	}
@@ -998,6 +1045,130 @@ simulated function Tick(float DeltaTime)
 		--BileCount;
 		NextBileTime+=BileFrequency;
 		TakeBileDamage();
+	}
+
+    if( bZapped && Role == ROLE_Authority )
+    {
+        RemainingZap -= DeltaTime;
+
+        if( RemainingZap <= 0 )
+        {
+            RemainingZap = 0;
+            bZapped = False;
+            ZappedBy = none;
+            // The Zed can take more zap each time they get zapped
+            ZapThreshold *= ZapResistanceScale;
+        }
+    }
+
+    if( !bZapped && TotalZap > 0 && ((Level.TimeSeconds - LastZapTime) > 0.1)  )
+    {
+        TotalZap -= DeltaTime;
+    }
+
+    if( bZapped != bOldZapped )
+    {
+        if( bZapped )
+        {
+            SetZappedBehavior();
+        }
+        else
+        {
+            UnSetZappedBehavior();
+        }
+
+        bOldZapped = bZapped;
+    }
+}
+
+// Apply "Zap" to the Zed
+function SetZapped(float ZapAmount, Pawn Instigator)
+{
+    LastZapTime = Level.TimeSeconds;
+
+    if( bZapped )
+    {
+        TotalZap = ZapThreshold;
+        RemainingZap = ZapDuration;
+        SetOverlayMaterial(Material'KFZED_FX_T.Energy.ZED_overlay_Hit_Shdr', RemainingZap, true);
+    }
+    else
+    {
+        TotalZap += ZapAmount;
+
+        if( TotalZap >= ZapThreshold )
+        {
+            RemainingZap = ZapDuration;
+            SetOverlayMaterial(Material'KFZED_FX_T.Energy.ZED_overlay_Hit_Shdr', RemainingZap, true);
+            bZapped = true;
+        }
+    }
+    ZappedBy = Instigator;
+}
+
+// Set the zed to the zapped behavior
+simulated function SetZappedBehavior()
+{
+	if( Role == Role_Authority )
+	{
+		Intelligence = BRAINS_Retarded; // burning dumbasses!
+
+		SetGroundSpeed(OriginalGroundSpeed * ZappedSpeedMod);
+		AirSpeed *= ZappedSpeedMod;
+		WaterSpeed *= ZappedSpeedMod;
+
+		// Make them less accurate while they are burning
+		if( Controller != none )
+		{
+		   MonsterController(Controller).Accuracy = -5;  // More chance of missing. (he's burning now, after all) :-D
+		}
+	}
+
+	// Set the forward movement anim to a random burning anim
+	MovementAnims[0] = BurningWalkFAnims[Rand(3)];
+	WalkAnims[0]     = BurningWalkFAnims[Rand(3)];
+
+	// Set the rest of the movement anims to the headless anim (not sure if these ever even get played) - Ramm
+	MovementAnims[1] = BurningWalkAnims[0];
+	WalkAnims[1]     = BurningWalkAnims[0];
+	MovementAnims[2] = BurningWalkAnims[1];
+	WalkAnims[2]     = BurningWalkAnims[1];
+	MovementAnims[3] = BurningWalkAnims[2];
+	WalkAnims[3]     = BurningWalkAnims[2];
+}
+
+// Turn off the on-fire behavior
+simulated function UnSetZappedBehavior()
+{
+	local int i;
+
+	if ( Role == Role_Authority )
+	{
+		Intelligence = default.Intelligence;
+
+		if( bBurnified )
+		{
+            SetGroundSpeed(GetOriginalGroundSpeed() * 0.80);
+        }
+        else
+        {
+            SetGroundSpeed(GetOriginalGroundSpeed());
+        }
+		AirSpeed = default.AirSpeed;
+		WaterSpeed = default.WaterSpeed;
+
+		// Set normal accuracy
+		if ( Controller != none )
+		{
+		   MonsterController(Controller).Accuracy = MonsterController(Controller).default.Accuracy;
+		}
+	}
+
+	// restore regular anims
+	for ( i = 0; i < 4; i++ )
+	{
+		MovementAnims[i] = default.MovementAnims[i];
+		WalkAnims[i]     = default.WalkAnims[i];
 	}
 }
 
@@ -1146,7 +1317,7 @@ simulated function DoDamageFX( Name boneName, int Damage, class<DamageType> Dama
 
 	if( bDecapitated && !bPlayBrainSplash )
 	{
-		if( class<DamTypeMelee>(DamageType) != none )
+        if( class<DamTypeMelee>(DamageType) != none )
 		{
 			 HitFX[HitFxTicker].damtype = class'DamTypeMeleeDecapitation';
 		}
@@ -1177,7 +1348,14 @@ simulated function DoDamageFX( Name boneName, int Damage, class<DamageType> Dama
 
 		bPlayBrainSplash = true;
 
-		return;
+        if( Damage > DamageType.default.HumanObliterationThreshhold && Damage != 1000 )
+		{
+		  // Do nothing
+		}
+		else
+		{
+		  return;
+		}
 	}
 
 	if ( FRand() > 0.3f || Damage > 30 || Health <= 0 /*|| DamageType == class 'DamTypeCrossbowHeadshot'*/)
@@ -2338,7 +2516,7 @@ function RemoveHead()
 
 	Velocity = vect(0,0,0);
 	SetAnimAction('HitF');
-	GroundSpeed *= 0.8;
+	SetGroundSpeed(GroundSpeed *= 0.80);
 	AirSpeed *= 0.8;
 	WaterSpeed *= 0.8;
 
@@ -2405,6 +2583,12 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 		KFPRI = KFPlayerReplicationInfo(instigatedBy.PlayerReplicationInfo);
 	}
 
+	// Scale damage if the Zed has been zapped
+    if( bZapped )
+    {
+        Damage *= ZappedDamageMod;
+    }
+
 	// Zeds and fire dont mix.
 	if ( class<KFWeaponDamageType>(damageType).default.bDealBurningDamage )
     {
@@ -2442,7 +2626,7 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
             {
                 bBurnified = true;
                 BurnDown = 10; // Inits burn tick count to 10
-                GroundSpeed *= 0.80; // Lowers movement speed by 20%
+                SetGroundSpeed(GroundSpeed *= 0.80); // Lowers movement speed by 20%
                 BurnInstigator = instigatedBy;
                 SetTimer(1.0,false); // Sets timer function to be executed each second
             }
@@ -2528,7 +2712,7 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 
 	if( Health-Damage > 0 && DamageType!=class'DamTypeFrag' && DamageType!=class'DamTypePipeBomb'
 		&& DamageType!=class'DamTypeM79Grenade' && DamageType!=class'DamTypeM32Grenade'
-        && DamageType!=class'DamTypeM203Grenade' )
+        && DamageType!=class'DamTypeM203Grenade' && DamageType!=class'DamTypeDwarfAxe')
 	{
 		Momentum = vect(0,0,0);
 	}
@@ -2626,6 +2810,13 @@ function PlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<Dama
 	if( DamageType.default.bLocationalHit )
 	{
 		CalcHitLoc( HitLocation, HitRay, HitBone, HitBoneDist );
+
+        // Do a zapped effect is someone shoots us and we're zapped to help show that the zed is taking more damage
+        if ( bZapped && DamageType.name != 'DamTypeZEDGun' )
+        {
+            PlaySound(class'ZedGunProjectile'.default.ExplosionSound,,class'ZedGunProjectile'.default.ExplosionSoundVolume);
+            Spawn(class'ZedGunProjectile'.default.ExplosionEmitter,,,HitLocation + HitNormal*20,rotator(HitNormal));
+        }
 	}
 	else
 	{
@@ -2697,7 +2888,6 @@ function OldPlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<D
 
 	if (Damage > DamageType.Default.DamageThreshold) //spawn some blood
 	{
-
 		HitNormal = Normal(HitLocation - Location);
 
 		// Play any set effect
@@ -2717,14 +2907,17 @@ function OldPlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<D
 			}
 
 			// Spawn any preset emitter
+            // Don't spawn the blood when we're zapped as we're spawning the zapped damage emitter elsewhere
+            if( !bZapped || (bZapped && !DamageType.default.bLocationalHit) )
+            {
+    			DesiredEmitter = DamageType.Static.GetPawnDamageEmitter(HitLocation, Damage, Momentum, self, (Level.bDropDetail || Level.DetailMode == DM_Low));
+    			if (DesiredEmitter != None)
+    			{
+    			    if( InstigatedBy != none )
+    			        HitNormal = Normal((InstigatedBy.Location+(vect(0,0,1)*InstigatedBy.EyeHeight))-HitLocation);
 
-			DesiredEmitter = DamageType.Static.GetPawnDamageEmitter(HitLocation, Damage, Momentum, self, (Level.bDropDetail || Level.DetailMode == DM_Low));
-			if (DesiredEmitter != None)
-			{
-			    if( InstigatedBy != none )
-			        HitNormal = Normal((InstigatedBy.Location+(vect(0,0,1)*InstigatedBy.EyeHeight))-HitLocation);
-
-				spawn(DesiredEmitter,,,HitLocation+HitNormal + (-HitNormal * CollisionRadius), Rotator(HitNormal));
+    				spawn(DesiredEmitter,,,HitLocation+HitNormal + (-HitNormal * CollisionRadius), Rotator(HitNormal));
+    			}
 			}
 		}
 	}
@@ -3316,7 +3509,7 @@ simulated function SetBurningBehavior()
 	{
 		Intelligence = BRAINS_Retarded; // burning dumbasses!
 
-		GroundSpeed = OriginalGroundSpeed * 0.8;
+		SetGroundSpeed(OriginalGroundSpeed * 0.8);
 		AirSpeed *= 0.8;
 		WaterSpeed *= 0.8;
 
@@ -3349,9 +3542,12 @@ simulated function UnSetBurningBehavior()
 	{
 		Intelligence = default.Intelligence;
 
-		GroundSpeed = GetOriginalGroundSpeed();
-		AirSpeed = default.AirSpeed;
-		WaterSpeed = default.WaterSpeed;
+		if( !bZapped )
+		{
+    		SetGroundSpeed(GetOriginalGroundSpeed());
+    		AirSpeed = default.AirSpeed;
+    		WaterSpeed = default.WaterSpeed;
+        }
 
 		// Set normal accuracy
 		if ( Controller != none )
@@ -3391,7 +3587,10 @@ function TakeFireDamage(int Damage,pawn Instigator)
 	if ( BurnDown == 0 )
 	{
 		bBurnified = false;
-		GroundSpeed = default.GroundSpeed;
+		if( !bZapped )
+		{
+            SetGroundSpeed(default.GroundSpeed);
+        }
 	}
 }
 
@@ -3510,6 +3709,104 @@ Begin:
 	GotoState('');
 }
 
+static simulated function PreCacheAssets(LevelInfo myLevel)
+{
+
+    //log("*********");
+    //log(default.Class);
+    //DynamicLoadSounds();
+    PreCacheStaticMeshes(myLevel);
+    if(myLevel != none)
+        PreCacheMaterials(myLevel);
+    //DynamicLoadMeshAndSkins();
+
+}
+
+static simulated function DynamicLoadMeshAndSkins()
+{
+    /*
+    local int i;
+
+    if(default.MeshRef != "")
+        UpdateDefaultMesh( SkeletalMesh(DynamicLoadObject(default.MeshRef, Class'SkeletalMesh')) );
+
+	for ( i = 0; i < default.SkinsRef.Length; i++ )
+	{
+	    if(default.SkinsRef[i] != "")
+  		    default.Skins[i] = Material(DynamicLoadObject(default.SkinsRef[i], class'Material'));
+	}
+	*/
+}
+
+static simulated function DynamicLoadSounds()
+{
+    local int i;
+    /*
+    if( default.AmbientSoundRef == "" )
+    {
+       log("don't have sound refs, bailing out");
+       return;
+    }
+
+    for(i = 0;i < default.HitSoundRef.length;i++)
+    {
+        default.HitSound[i] = Sound(DynamicLoadObject(default.HitSoundRef[i], Class'Sound'));
+    }
+
+    for(i = 0;i < default.ChallengeSoundRef.length;i++)
+    {
+        default.ChallengeSound[i] = Sound(DynamicLoadObject(default.ChallengeSoundRef[i], Class'Sound'));
+    }
+
+    for(i = 0;i < default.DeathSoundRef.length;i++)
+    {
+        default.DeathSound[i] = Sound(DynamicLoadObject(default.DeathSoundRef[i], Class'Sound'));
+    }
+
+    default.AmbientSound = Sound(DynamicLoadObject(default.AmbientSoundRef, Class'Sound'));
+    default.MoanVoice = Sound(DynamicLoadObject(default.MoanVoiceRef, Class'Sound'));
+    default.JumpSound = Sound(DynamicLoadObject(default.JumpSoundRef, Class'Sound'));
+
+    if( default.MeleeAttackHitSoundRef != "" )
+        default.MeleeAttackHitSound = Sound(DynamicLoadObject(default.MeleeAttackHitSoundRef, Class'Sound'));
+*/
+}
+
+static simulated function PreCacheStaticMeshes(LevelInfo myLevel)
+{//should be derived and used.
+/*
+    if( default.DetachedArmClassRef != "" )
+        default.DetachedArmClass = class<SeveredAppendage>(DynamicLoadObject(default.DetachedArmClassRef, Class'Class'));
+
+    if( default.DetachedLegClassRef != "" )
+        default.DetachedLegClass = class<SeveredAppendage>(DynamicLoadObject(default.DetachedLegClassRef, Class'Class'));
+
+    if( default.DetachedHeadClassRef != "" )
+        default.DetachedHeadClass = class<SeveredAppendage>(DynamicLoadObject(default.DetachedHeadClassRef, Class'Class'));
+
+    if( default.DetachedSpecialArmClassRef != "" )
+        default.DetachedSpecialArmClass = class<SeveredAppendage>(DynamicLoadObject(default.DetachedSpecialArmClassRef, Class'Class'));
+*/
+    if(myLevel == none)
+       return;
+
+    if( default.DetachedArmClass != none )
+        myLevel.AddPrecacheStaticMesh(default.DetachedArmClass.default.StaticMesh);
+
+    if( default.DetachedLegClass != none )
+        myLevel.AddPrecacheStaticMesh(default.DetachedLegClass.default.StaticMesh);
+
+    if( default.DetachedHeadClass != none )
+        myLevel.AddPrecacheStaticMesh(default.DetachedHeadClass.default.StaticMesh);
+
+    if( default.DetachedSpecialArmClass != none )
+        myLevel.AddPrecacheStaticMesh(default.DetachedSpecialArmClass.default.StaticMesh);
+}
+
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+}
+
 defaultproperties
 {
      MeleeAnims(0)="Claw"
@@ -3528,6 +3825,11 @@ defaultproperties
      StunTime=1.000000
      StunsRemaining=-1
      BleedOutDuration=5.000000
+     ZapDuration=4.000000
+     ZappedSpeedMod=0.500000
+     ZapThreshold=0.250000
+     ZappedDamageMod=2.000000
+     ZapResistanceScale=2.000000
      MaxSpineVariation=1000
      MaxContortionPercentage=0.250000
      MinTimeBetweenPainAnims=0.500000
@@ -3539,7 +3841,6 @@ defaultproperties
      ZombieDamType(2)=Class'KFMod.ZombieMeleeDamage'
      HeadLessDeathSound=SoundGroup'KF_EnemyGlobalSnd.Zomb_HeadlessDie'
      DecapitationSound=SoundGroup'KF_EnemyGlobalSnd.Generic_Decap'
-     MeleeAttackHitSound=SoundGroup'KF_EnemyGlobalSnd.Zomb_HitPlayer_Claw'
      BurnEffect=Class'KFMod.KFMonsterFlame'
      AltBurnEffect=Class'KFMod.KFAltMonsterFlame'
      CrispUpThreshhold=5
@@ -3574,9 +3875,6 @@ defaultproperties
      SeveredLegAttachClass=Class'ROEffects.SeveredLegAttachment'
      SeveredHeadAttachClass=Class'ROEffects.SeveredHeadAttachment'
      ProjectileBloodSplatClass=Class'ROEffects.ProjectileBloodSplat'
-     DetachedArmClass=Class'ROEffects.SeveredArm'
-     DetachedLegClass=Class'ROEffects.SeveredLeg'
-     DetachedHeadClass=Class'KFMod.SeveredHead'
      ObliteratedEffectClass=Class'ROEffects.PlayerObliteratedEmitter'
      HeadlessWalkAnims(0)="WalkF_Headless"
      HeadlessWalkAnims(1)="WalkB_Headless"

@@ -20,6 +20,11 @@ var int NumUpstreamPaths;
 var ReachSpec UpstreamPaths[8];
 var vector NeededJump[8];
 var float CalculatedGravityZ[8];
+//#ifdef _KF_
+var(KF) bool bIgnoreZDiff;	// Force the jump regardless of height distance from jump start location
+var(KF) int SpecialCostOverride; // Override the result of SpecialCost
+var(KF) float XYVelocityScale;
+//#endif
 
 function int GetPathIndex(ReachSpec Path)
 {
@@ -82,5 +87,7 @@ event bool SuggestMovePreparation(Pawn Other)
 
 defaultproperties
 {
+     SpecialCostOverride=-1
+     XYVelocityScale=1.000000
      bSpecialForced=True
 }

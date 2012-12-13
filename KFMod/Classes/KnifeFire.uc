@@ -52,6 +52,7 @@ defaultproperties
      hitDamageClass=Class'KFMod.DamTypeKnife'
      MeleeHitSounds(0)=SoundGroup'KF_KnifeSnd.Knife_HitFlesh'
      HitEffectClass=Class'KFMod.KnifeHitEffect'
+     WideDamageMinHitAngle=0.750000
      FireRate=0.600000
      BotRefireRate=0.300000
 }

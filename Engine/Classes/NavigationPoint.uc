@@ -72,6 +72,10 @@ var float BaseDist[2];			// used by some team game types - distance to red base
 
 var vector MaxPathSize;
 
+//ifdef _KF_
+var() bool bNoOutgoingJumps; // Set this to true to prevent R_Jump reachspecs from being connected from this pathnode to other pathnodes.
+//endif
+
 function PostBeginPlay()
 {
 	local int i;

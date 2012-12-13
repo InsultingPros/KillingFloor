@@ -869,7 +869,7 @@ event bool NotifyBump(actor Other)
 function SetFall()
 {
 	if (Pawn.bCanFly)
-	{
+	{	
 		Pawn.SetPhysics(PHYS_Flying);
 		return;
 	}
@@ -880,8 +880,30 @@ function SetFall()
 	}
 	else
 	{
-		Pawn.Velocity = EAdjustJump(Pawn.Velocity.Z,Pawn.GroundSpeed);
-		Pawn.Acceleration = vect(0,0,0);
+		if( Pawn.PhysicsVolume.IsA( 'KFPhysicsVolume' ) )
+		{
+			if( MoveTarget != none )
+			{
+				Destination = MoveTarget.Location;
+			}
+			if( Destination.Z > Pawn.Location.Z + 48.f )
+			{
+				Pawn.Velocity = Pawn.ComputeTrajectoryByTime( Pawn.Location, Destination, 2.0f );
+			}
+//			if( Pawn.Velocity.Z > 0 )
+//			{
+//				Pawn.Velocity.Z = min( Pawn.JumpZ, Pawn.Velocity.Z );
+//				log( self$" SetFall modified Pawn Velocity.Z to "$Pawn.Velocity.Z );
+//				}
+			
+			bPlannedJump = true;
+			Pawn.Acceleration = vect(0,0,0);
+		}		
+		else
+		{
+			Pawn.Velocity = EAdjustJump(Pawn.Velocity.Z,Pawn.GroundSpeed);
+			Pawn.Acceleration = vect(0,0,0);
+		}		
 	}
 }
 
@@ -1610,7 +1632,8 @@ ignores SeePlayer, HearNoise;
 		if ( MoveTarget != Enemy )
 			return;
 
-		Pawn.bCanJump = ActorReachable(Enemy);
+		Pawn.bCanJump = ActorReachable( Enemy );
+
 		if ( !Pawn.bCanJump )
 			MoveTimer = -1.0;
 	}
@@ -2524,6 +2547,10 @@ State WaitingForLanding
 		if ( (Enemy == None) || (Focus != Enemy) )
 			StopFiring();
 	}
+//Begin:
+//	WaitForLanding();
+//	Sleep(0.5);
+//    Goto('Begin');
 }
 
 defaultproperties

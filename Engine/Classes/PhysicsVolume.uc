@@ -57,6 +57,10 @@ var(Karma)	   float KBuoyancy;			  // How buoyant Karma things are in this volum
 var	Info PainTimer;
 var PhysicsVolume NextPhysicsVolume;
 
+// if _KF_
+var bool bIsAKFOverrideVolume;
+// endif
+
 replication
 {
 	// Things the server should send to the client.

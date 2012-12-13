@@ -1,5 +1,7 @@
 class KFBrowser_Footer extends UT2K4Browser_Footer;
 
+var	localized 	string			StopCaption;
+
 function UpdateActiveButtons(UT2K4Browser_Page CurrentPanel)
 {
     if (CurrentPanel == None)
@@ -43,6 +45,19 @@ function bool InternalOnClick(GUIComponent Sender)
     if ( Sender == b_Refresh )
     {
     	p_Anchor.RefreshClicked();
+
+    	if(  KFServerListPageInternet( p_Anchor .c_Tabs.ActiveTab.MyPanel ) != none )
+    	{
+    	    if( KFServerListPageInternet( p_Anchor .c_Tabs.ActiveTab.MyPanel ).bQueryRunning  )
+    	    {
+    	        b_refresh.Caption = StopCaption;
+    	    }
+            else
+    	    {
+    	        b_refresh.Caption = KFServerListPageInternet( p_Anchor .c_Tabs.ActiveTab.MyPanel ).RefreshCaption;
+    	    }
+    	}
+
     	return true;
     }
 
@@ -94,6 +109,7 @@ function float GetButtonLeft()
 
 defaultproperties
 {
+     StopCaption="STOP"
      Begin Object Class=GUITitleBar Name=BrowserStatus
          bUseTextHeight=False
          Justification=TXTA_Left

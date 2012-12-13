@@ -17,6 +17,13 @@ var() float TranslocZOffset;
 var Actor TranslocTarget;
 var vector CachedSpeed[8];
 
+//#ifdef _KF_
+var(KF) float JumpTime;
+var(KF) float XYVelocityScaleGorefast; // If < > 1, this value will be used for XYVelocity for gorefasts
+var(KF) float XYVelocityScaleBloat; // If < > 1, this value will be used for XYVelocity for bloats
+var bool bJumpingDown;
+//#endif
+
 function PostBeginPlay()
 {
 	Super.PostBeginPlay();
@@ -72,6 +79,13 @@ event int SpecialCost(Pawn Other, ReachSpec Path)
 	local vector DodgeV;
 	local float AllowedJumpZ, RealGroundSpeed;
 
+//#ifdef _KF_
+	if( SpecialCostOverride > -1 )
+	{
+		return SpecialCostOverride;
+	}
+//#endif
+	
 	if ( Vehicle(Other) != None )
 		return 10000000;	
 	if ( Other.Physics == PHYS_Flying )
@@ -123,6 +137,22 @@ event int SpecialCost(Pawn Other, ReachSpec Path)
 	return 10000000;
 }
 
+//#ifdef _KF_
+function DoForcedJump(Pawn Other)
+{
+	// Look into below line if more Z velocity is necessary
+	//AllowedJumpZ = Other.JumpZ * EffectiveDoubleJump(Path); 
+	Other.bWantsToCrouch = false;
+	Other.Controller.MoveTarget = self;
+	Other.Controller.Destination = Location;
+	Other.bNoJumpAdjust = false;
+	//Other.Velocity = Other.Controller.EAdjustJump(0,Other.GroundSpeed * XYVelocityScale);
+	Other.Velocity = Other.ComputeTrajectoryByTime( Other.Location, Location, JumpTime );
+	Other.SetPhysics(PHYS_Falling);
+	Other.DestinationOffset = CollisionRadius;
+}
+//#endif
+
 event bool SuggestMovePreparation(Pawn Other)
 {
 	local int Num;
@@ -132,6 +162,16 @@ event bool SuggestMovePreparation(Pawn Other)
 	
 	if ( Other.Controller == None )
 		return false;
+	
+//#ifdef _KF_	
+	// Optionally ignore the magic numbers for special cases and to avoid side effects since JumpSpots can be created automatically in the editor
+	if( bIgnoreZDiff  )
+	{
+		bJumpingDown = ( Other.Location.Z > 1.5 * Other.Controller.MoveTarget.Location.Z );
+		DoForcedJump( Other );
+		return false;
+	}	
+//#endif	
 
 	if ( bDodgeUp )
 	{
@@ -310,4 +350,5 @@ defaultproperties
      CachedSpeed(5)=(X=1000000.000000,Y=1000000.000000,Z=1000000.000000)
      CachedSpeed(6)=(X=1000000.000000,Y=1000000.000000,Z=1000000.000000)
      CachedSpeed(7)=(X=1000000.000000,Y=1000000.000000,Z=1000000.000000)
+     JumpTime=2.000000
 }

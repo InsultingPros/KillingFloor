@@ -293,6 +293,7 @@ native function bool CheckSteam();
 // _RO
 native function bool SteamRefreshLogin(string Password);
 native function string SteamGetUserName();
+native function string SteamGetUserID();
 simulated event ResolutionChanged(){}
 // end _RO_
 

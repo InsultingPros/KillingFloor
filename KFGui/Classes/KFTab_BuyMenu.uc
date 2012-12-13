@@ -243,16 +243,58 @@ function SaleChange(GUIComponent Sender)
 	OnAnychange();
 }
 
+function bool IsLocked(GUIBuyable buyable)
+{
+    local bool hasAchievement, hasAppID, canBuy;
+
+	if( KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements) != none )
+	{
+        if( TheBuyable.ItemWeaponClass.Default.UnlockedByAchievement != -1 )
+        {
+            hasAchievement = KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements).Achievements[TheBuyable.ItemWeaponClass.Default.UnlockedByAchievement].bCompleted == 1;
+        }
+        if( TheBuyable.ItemWeaponClass.Default.AppID > 0 )
+        {
+            hasAppID = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(TheBuyable.ItemWeaponClass.Default.AppID);
+        }
+	}
+
+    if( TheBuyable.ItemWeaponClass.Default.AppID > 0 &&
+        TheBuyable.ItemWeaponClass.Default.UnlockedByAchievement != -1 )
+    {
+        canBuy = hasAchievement || hasAppId;
+    }
+    else if( TheBuyable.ItemWeaponClass.Default.AppID > 0 )
+    {
+        canBuy = hasAppId;
+    }
+    else if( TheBuyable.ItemWeaponClass.Default.UnlockedByAchievement != -1 )
+    {
+        canBuy = hasAchievement;
+    }
+    else
+    {
+        canBuy = true;
+    }
+
+    return !canBuy;
+}
+
 function bool SaleDblClick(GUIComponent Sender)
 {
+
 	InvSelect.List.Index = -1;
 
 	TheBuyable = SaleSelect.GetSelectedBuyable();
 
 	GUIBuyMenu(OwnerPage()).WeightBar.NewBoxes = TheBuyable.ItemWeight;
 
+
+
+
+
 	if ( TheBuyable.ItemWeight + KFHumanPawn(PlayerOwner().Pawn).CurrentWeight <= KFHumanPawn(PlayerOwner().Pawn).MaxCarryWeight &&
-		 TheBuyable.ItemCost <= PlayerOwner().PlayerReplicationInfo.Score )
+		 TheBuyable.ItemCost <= PlayerOwner().PlayerReplicationInfo.Score && !IsLocked(TheBuyable))
 	{
 		DoBuy();
    		TheBuyable = none;
@@ -480,8 +522,13 @@ function SetInfoText()
 
 	if ( TheBuyable != none && OldPickupClass != TheBuyable.ItemPickupClass )
 	{
+		// Unowned Weapon DLC
+		if ( TheBuyable.ItemWeaponClass.Default.AppID > 0 && !PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(TheBuyable.ItemWeaponClass.Default.AppID) )
+		{
+			InfoScrollText.SetContent(Repl(InfoText[4], "%1", PlayerOwner().SteamStatsAndAchievements.GetWeaponDLCPackName(TheBuyable.ItemWeaponClass.Default.AppID)));
+		}
 		// Too expensive
-		if ( TheBuyable.ItemCost > PlayerOwner().PlayerReplicationInfo.Score && TheBuyable.bSaleList )
+		else if ( TheBuyable.ItemCost > PlayerOwner().PlayerReplicationInfo.Score && TheBuyable.bSaleList )
 		{
 			InfoScrollText.SetContent(InfoText[2]);
 		}
@@ -523,7 +570,8 @@ function OptionsChange(GUIComponent Sender)
 	else if ( TheBuyable.bSaleList )
 	{
 		if ( TheBuyable.ItemWeight + KFHumanPawn(PlayerOwner().Pawn).CurrentWeight <= KFHumanPawn(PlayerOwner().Pawn).MaxCarryWeight &&
-			 TheBuyable.ItemCost <= PlayerOwner().PlayerReplicationInfo.Score )
+			 TheBuyable.ItemCost <= PlayerOwner().PlayerReplicationInfo.Score &&
+			 (TheBuyable.ItemWeaponClass.Default.AppID <= 0 || PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(TheBuyable.ItemWeaponClass.Default.AppID)))
 		{
 			// Is it a vest?
 			if ( TheBuyable.bIsVest )

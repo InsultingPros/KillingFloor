@@ -3,6 +3,7 @@ class ZombieBoss extends ZombieBossBase;
 
 #exec OBJ LOAD FILE=KFPatch2.utx
 #exec OBJ LOAD FILE=KF_Specimens_Trip_T.utx
+#exec OBJ LOAD FILE=KF_tx_trip_t.utx
 
 //----------------------------------------------------------------------------
 // NOTE: Most Variables are declared in the base class to eliminate hitching
@@ -21,6 +22,27 @@ simulated function CalcAmbientRelevancyScale()
 {
         // Make the zed only relevant by thier ambient sound out to a range of 100 meters
     	CustomAmbientRelevancyScale = 5000/(100 * SoundRadius);
+}
+
+function vector ComputeTrajectoryByTime( vector StartPosition, vector EndPosition, float fTimeEnd  )
+{
+	local vector NewVelocity;
+	
+	NewVelocity = Super.ComputeTrajectoryByTime( StartPosition, EndPosition, fTimeEnd );
+	
+	if( PhysicsVolume.IsA( 'KFPhysicsVolume' ) && StartPosition.Z < EndPosition.Z )
+	{
+		if( PhysicsVolume.Gravity.Z < class'PhysicsVolume'.default.Gravity.Z )
+		{
+			// Just checking mass to be extra-cautious.
+			if( Mass > 900 )
+			{
+				// Extra velocity boost to counter oversized mass weighing the boss down.
+				NewVelocity.Z += 90;
+			}
+		}
+	}	
+	return NewVelocity;
 }
 
 function ZombieMoan()
@@ -102,7 +124,12 @@ simulated function Tick(float DeltaTime)
 		Return; // Servers aren't intrested in this info.
 
 	bSpecialCalcView = bIsBossView;
-	if( bCloaked && Level.TimeSeconds>LastCheckTimes )
+    if( bZapped )
+    {
+        // Make sure we check if we need to be cloaked as soon as the zap wears off
+        LastCheckTimes = Level.TimeSeconds;
+    }
+	else if( bCloaked && Level.TimeSeconds>LastCheckTimes )
 	{
 		LastCheckTimes = Level.TimeSeconds+0.8;
 		ForEach VisibleCollidingActors(Class'KFHumanPawn',HP,1000,Location)
@@ -131,6 +158,12 @@ simulated function CloakBoss()
 {
 	local Controller C;
 	local int Index;
+
+    // No cloaking if zapped
+    if( bZapped )
+    {
+        return;
+    }
 
 	if( bSpotted )
 	{
@@ -192,6 +225,11 @@ simulated function CloakBoss()
 
 simulated function UnCloakBoss()
 {
+    if( bZapped )
+    {
+        return;
+    }
+
 	Visibility = default.Visibility;
 	bCloaked = false;
 	bSpotted = False;
@@ -205,6 +243,61 @@ simulated function UnCloakBoss()
 
 	bAcceptsProjectors = true;
     SetOverlayMaterial( none, 0.0, true );
+}
+
+// Set the zed to the zapped behavior
+simulated function SetZappedBehavior()
+{
+    super.SetZappedBehavior();
+
+	// Handle setting the zed to uncloaked so the zapped overlay works properly
+    if( Level.Netmode != NM_DedicatedServer )
+	{
+        bUnlit = false;
+    	Skins = Default.Skins;
+
+    	if (PlayerShadow != none)
+    		PlayerShadow.bShadowActive = true;
+
+    	bAcceptsProjectors = true;
+		SetOverlayMaterial(Material'KFZED_FX_T.Energy.ZED_overlay_Hit_Shdr', 999, true);
+	}
+}
+
+// Turn off the zapped behavior
+simulated function UnSetZappedBehavior()
+{
+    super.UnSetZappedBehavior();
+
+	// Handle getting the zed back cloaked if need be
+    if( Level.Netmode != NM_DedicatedServer )
+	{
+        LastCheckTimes = Level.TimeSeconds;
+        SetOverlayMaterial(None, 0.0f, true);
+	}
+}
+
+// Overridden because we need to handle the overlays differently for zombies that can cloak
+function SetZapped(float ZapAmount, Pawn Instigator)
+{
+    LastZapTime = Level.TimeSeconds;
+
+    if( bZapped )
+    {
+        TotalZap = ZapThreshold;
+        RemainingZap = ZapDuration;
+    }
+    else
+    {
+        TotalZap += ZapAmount;
+
+        if( TotalZap >= ZapThreshold )
+        {
+            RemainingZap = ZapDuration;
+              bZapped = true;
+        }
+    }
+    ZappedBy = Instigator;
 }
 
 //-----------------------------------------------------------------------------
@@ -954,7 +1047,7 @@ state Charging
 
 	function EndState()
 	{
-        GroundSpeed = GetOriginalGroundSpeed();
+        SetGroundSpeed(GetOriginalGroundSpeed());
 		bChargingPlayer = False;
 		ChargeDamage = 0;
 		if( Level.NetMode!=NM_DedicatedServer )
@@ -980,7 +1073,7 @@ state Charging
         		if( Level.NetMode!=NM_DedicatedServer )
         			PostNetReceive();
     		}
-            GroundSpeed = OriginalGroundSpeed * 1.25;
+            SetGroundSpeed(OriginalGroundSpeed * 1.25);
             if( LookTarget!=None )
     		{
     		    Acceleration = AccelRate * Normal(LookTarget.Location - Location);
@@ -995,7 +1088,15 @@ state Charging
         			PostNetReceive();
     		}
 
-            GroundSpeed = OriginalGroundSpeed * 2.5;
+            // Zapping slows him down, but doesn't stop him
+            if( bZapped )
+            {
+                SetGroundSpeed(OriginalGroundSpeed * 1.5);
+            }
+            else
+            {
+                SetGroundSpeed(OriginalGroundSpeed * 2.5);
+            }
         }
 
 
@@ -1113,7 +1214,7 @@ State Escaping extends Charging // Got hurt and running away...
         		if( Level.NetMode!=NM_DedicatedServer )
         			PostNetReceive();
     		}
-            GroundSpeed = GetOriginalGroundSpeed();
+            SetGroundSpeed(GetOriginalGroundSpeed());
         }
         else
         {
@@ -1124,7 +1225,15 @@ State Escaping extends Charging // Got hurt and running away...
         			PostNetReceive();
     		}
 
-            GroundSpeed = OriginalGroundSpeed * 2.5;
+            // Zapping slows him down, but doesn't stop him
+            if( bZapped )
+            {
+                SetGroundSpeed(OriginalGroundSpeed * 1.5);
+            }
+            else
+            {
+                SetGroundSpeed(OriginalGroundSpeed * 2.5);
+            }
         }
 
 
@@ -1133,7 +1242,7 @@ State Escaping extends Charging // Got hurt and running away...
 
 	function EndState()
 	{
-        GroundSpeed = GetOriginalGroundSpeed();
+        SetGroundSpeed(GetOriginalGroundSpeed());
 		bChargingPlayer = False;
 		if( Level.NetMode!=NM_DedicatedServer )
 			PostNetReceive();
@@ -1864,8 +1973,30 @@ simulated function ProcessHitFX()
     }
 }
 
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+/*
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.gatling_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.gatling_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.gatling_D');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.PatGungoInvisible_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.patriarch_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.patriarch_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.patriarch_D');
+	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.patriarch_invisible');
+	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.patriarch_invisible_gun');
+    myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.patriarch_fizzle_FB');
+    myLevel.AddPrecacheMaterial(Texture'kf_fx_trip_t.Gore.Patriarch_Gore_Limbs_Diff');
+    myLevel.AddPrecacheMaterial(Texture'kf_fx_trip_t.Gore.Patriarch_Gore_Limbs_Spec');
+    */
+ }
+
 defaultproperties
 {
+     EventClasses(0)="KFChar.ZombieBoss"
+     EventClasses(1)="KFChar.ZombieBoss"
+     EventClasses(2)="KFChar.ZombieBoss_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieBoss_XMAS"
      DetachedArmClass=Class'KFChar.SeveredArmPatriarch'
      DetachedLegClass=Class'KFChar.SeveredLegPatriarch'
      DetachedHeadClass=Class'KFChar.SeveredHeadPatriarch'

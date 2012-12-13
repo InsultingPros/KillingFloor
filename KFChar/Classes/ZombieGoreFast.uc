@@ -11,9 +11,12 @@ class ZombieGoreFast extends ZombieGoreFastBase;
 
 simulated function PostNetReceive()
 {
-	if (bRunning)
-		MovementAnims[0]='ZombieRun';
-	else MovementAnims[0]=default.MovementAnims[0];
+    if( !bZapped )
+    {
+    	if (bRunning)
+    		MovementAnims[0]='ZombieRun';
+    	else MovementAnims[0]=default.MovementAnims[0];
+    }
 }
 
 // This zed has been taken control of. Boost its health and speed
@@ -49,7 +52,7 @@ function SetMindControlled(bool bNewMindControlled)
 
         if( bNewMindControlled != bZedUnderControl )
         {
-            GroundSpeed = OriginalGroundSpeed * 1.25;
+            SetGroundSpeed(OriginalGroundSpeed * 1.25);
     		Health *= 1.25;
     		HealthMax *= 1.25;
 		}
@@ -84,6 +87,13 @@ function RangedAttack(Actor A)
 
 state RunningState
 {
+    // Set the zed to the zapped behavior
+    simulated function SetZappedBehavior()
+    {
+        Global.SetZappedBehavior();
+        GoToState('');
+    }
+
     // Don't override speed in this state
     function bool CanSpeedAdjust()
     {
@@ -92,17 +102,27 @@ state RunningState
 
 	function BeginState()
 	{
-		GroundSpeed = OriginalGroundSpeed * 1.875;
-		bRunning = true;
-		if( Level.NetMode!=NM_DedicatedServer )
-			PostNetReceive();
+		if( bZapped )
+        {
+            GoToState('');
+        }
+        else
+        {
+    		SetGroundSpeed(OriginalGroundSpeed * 1.875);
+    		bRunning = true;
+    		if( Level.NetMode!=NM_DedicatedServer )
+    			PostNetReceive();
 
-		NetUpdateTime = Level.TimeSeconds - 1;
+    		NetUpdateTime = Level.TimeSeconds - 1;
+		}
 	}
 
 	function EndState()
 	{
-		GroundSpeed = GetOriginalGroundSpeed();
+		if( !bZapped )
+		{
+            SetGroundSpeed(GetOriginalGroundSpeed());
+        }
 		bRunning = False;
 		if( Level.NetMode!=NM_DedicatedServer )
 			PostNetReceive();
@@ -327,8 +347,19 @@ simulated function HideBone(name boneName)
 	}
 }
 
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.gorefast_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.gorefast_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.gorefast_diff');
+}
+
 defaultproperties
 {
+     EventClasses(0)="KFChar.ZombieGorefast"
+     EventClasses(1)="KFChar.ZombieGorefast"
+     EventClasses(2)="KFChar.ZombieGorefast_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieGorefast_XMAS"
      DetachedArmClass=Class'KFChar.SeveredArmGorefast'
      DetachedLegClass=Class'KFChar.SeveredLegGorefast'
      DetachedHeadClass=Class'KFChar.SeveredHeadGorefast'

@@ -9,7 +9,7 @@ class ZombieCrawler extends ZombieCrawlerBase;
 
 function bool DoPounce()
 {
-	if ( bIsCrouched || bWantsToCrouch || (Physics != PHYS_Walking) || VSize(Location - Controller.Target.Location) > (MeleeRange * 5) )
+	if ( bZapped || bIsCrouched || bWantsToCrouch || (Physics != PHYS_Walking) || VSize(Location - Controller.Target.Location) > (MeleeRange * 5) )
 		return false;
 
 	Velocity = Normal(Controller.Target.Location-Location)*PounceSpeed;
@@ -123,8 +123,20 @@ function bool FlipOver()
 	Return False;
 }
 
+
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.crawler_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.crawler_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.crawler_diff');
+}
+
 defaultproperties
 {
+     EventClasses(0)="KFChar.ZombieCrawler"
+     EventClasses(1)="KFChar.ZombieCrawler"
+     EventClasses(2)="KFChar.ZombieCrawler_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieCrawler_XMAS"
      DetachedArmClass=Class'KFChar.SeveredArmCrawler'
      DetachedLegClass=Class'KFChar.SeveredLegCrawler'
      DetachedHeadClass=Class'KFChar.SeveredHeadCrawler'

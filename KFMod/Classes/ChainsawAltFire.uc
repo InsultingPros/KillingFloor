@@ -67,6 +67,7 @@ defaultproperties
      hitDamageClass=Class'KFMod.DamTypeChainsaw'
      HitEffectClass=Class'KFMod.ChainsawHitEffect'
      FireSoundRef="KF_ChainsawSnd.Chainsaw_RevLong_Start"
+     WideDamageMinHitAngle=0.800000
      TransientSoundVolume=1.800000
      FireAnim="Fire2"
      FireRate=1.100000

@@ -7,6 +7,7 @@ var localized string FinalWaveInboundMessage;
 var localized string WeldedShutMessage;
 var localized string ZEDTimeActiveMessage;
 var localized string DoorMessage;
+var localized string PickupMessage;
 
 static function string GetString(
 	optional int Switch,
@@ -39,6 +40,10 @@ static function string GetString(
 	{
 		return default.DoorMessage;
 	}
+	else if ( Switch == 7 )
+	{
+		return default.PickupMessage;
+	}
 }
 
 static function int GetFontSize(int Switch, PlayerReplicationInfo RelatedPRI1, PlayerReplicationInfo RelatedPRI2, PlayerReplicationInfo LocalPlayer)
@@ -53,7 +58,7 @@ static function int GetFontSize(int Switch, PlayerReplicationInfo RelatedPRI1, P
 		return 2;
 	}
 
-	if ( switch == 6 )
+	if ( switch == 6 || switch == 7 )
 	{
 		return 0;
 	}
@@ -78,9 +83,14 @@ static function GetPos(int Switch, out EDrawPivot OutDrawPivot, out EStackMode O
 		    break;
 		case 4:
 			OutPosY = 0.7;
+			break;
 		case 5:
 			OutPosY = 0.7;
+			break;
 		case 6:
+			OutPosY = 0.8;
+			break;
+		case 7:
 			OutPosY = 0.8;
 			break;
 	}
@@ -101,6 +111,8 @@ static function float GetLifeTime(int Switch)
 			return 1.5;
 		case 6:
 			return 5;
+		case 7:
+		    return 5;
 	}
 }
 
@@ -170,6 +182,7 @@ defaultproperties
      WeldedShutMessage="This door is welded shut.|Use the Welder's alt-fire to unweld."
      ZEDTimeActiveMessage="ZED TIME ACTIVATED!"
      DoorMessage="Press '%Use%' to open/close the door.|Use the Welder to seal closed doors."
+     PickupMessage="Press '%Use%' to pick up Z.E.D. gun piece."
      bComplexString=True
      DrawColor=(G=0)
      FontSize=5

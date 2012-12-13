@@ -174,7 +174,7 @@ event ModeDoFire()
 		Weapon.PutDown();
 	}
 
-	if (Weapon.Owner != none && AllowFire())
+	if (Weapon.Owner != none && AllowFire() && Weapon.Owner.Physics != PHYS_Falling)
 	{
 		if (FireRate > 0.25)
 		{

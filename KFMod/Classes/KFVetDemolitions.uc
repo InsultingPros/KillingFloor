@@ -60,7 +60,8 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 		return 0.5 - (0.04 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 74% discount on PipeBomb(changed to 68% in Balance Round 1, upped to 74% in Round 4)
 	}
 	else if ( Item == class'M79Pickup' || Item == class 'M32Pickup'
-        || Item == class 'LawPickup' || Item == class 'M4203Pickup' )
+        || Item == class 'LawPickup' || Item == class 'M4203Pickup'
+        || Item == class'GoldenM79Pickup' )
 	{
 		return 0.90 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on M79/M32
 	}
@@ -76,7 +77,8 @@ static function float GetAmmoCostScaling(KFPlayerReplicationInfo KFPRI, class<Pi
 		return 0.5 - (0.04 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 74% discount on PipeBomb(changed to 68% in Balance Round 3, upped to 74% in Round 4)
 	}
 	else if ( Item == class'M79Pickup' || Item == class'M32Pickup'
-        || Item == class'LAWPickup' || Item == class'M4203Pickup' )
+        || Item == class'LAWPickup' || Item == class'M4203Pickup'
+        || Item == class'GoldenM79Pickup' )
 	{
 		return 1.0 - (0.05 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 30% discount on Grenade Launcher and LAW Ammo(Balance Round 5)
 	}

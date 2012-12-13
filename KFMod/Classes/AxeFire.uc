@@ -31,6 +31,7 @@ defaultproperties
      hitDamageClass=Class'KFMod.DamTypeAxe'
      MeleeHitSounds(0)=SoundGroup'KF_AxeSnd.Axe_HitFlesh'
      HitEffectClass=Class'KFMod.AxeHitEffect'
+     WideDamageMinHitAngle=0.650000
      FireRate=1.100000
      BotRefireRate=0.850000
 }

@@ -12,6 +12,7 @@ defaultproperties
      hitDamageClass=Class'KFMod.DamTypeMachete'
      MeleeHitSounds(0)=SoundGroup'KF_AxeSnd.Axe_HitFlesh'
      HitEffectClass=Class'KFMod.KnifeHitEffect'
+     WideDamageMinHitAngle=0.650000
      FireAnim="PowerAttack"
      FireRate=1.100000
      BotRefireRate=0.710000

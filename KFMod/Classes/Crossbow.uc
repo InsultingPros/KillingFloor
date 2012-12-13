@@ -43,7 +43,6 @@ var     Combiner            ScriptedScopeCombiner;
 var     texture             TexturedScopeTexture;
 
 var	    bool				bInitializedScope;		// Set to true when the scope has been initialized
-var     float               ForceZoomOutTime;
 
 var		string ZoomMatRef;
 var		string ScriptedTextureFallbackRef;
@@ -374,44 +373,6 @@ simulated function ZoomOut(bool bAnimateTransition)
 	}
 }
 
-simulated function WeaponTick(float dt)
-{
-    super.WeaponTick(dt);
-
-    if( ForceZoomOutTime > 0 )
-    {
-        if( bAimingRifle )
-        {
-    	    if( Level.TimeSeconds - ForceZoomOutTime > 0 )
-    	    {
-                ForceZoomOutTime = 0;
-
-            	ZoomOut(false);
-
-            	if( Role < ROLE_Authority)
-        			ServerZoomOut(false);
-    		}
-		}
-		else
-		{
-            ForceZoomOutTime = 0;
-		}
-	}
-}
-
-// Force the weapon out of iron sights shortly after firing so the textured
-// scope gets the same disadvantage as the 3d scope
-simulated function bool StartFire(int Mode)
-{
-    if( super.StartFire(Mode) )
-    {
-        ForceZoomOutTime = Level.TimeSeconds + 0.4;
-        return true;
-    }
-
-    return false;
-}
-
 /**
  * Called by the native code when the interpolation of the first person weapon to the zoomed position finishes
  */
@@ -710,6 +671,7 @@ defaultproperties
      ScriptedTextureFallbackRef="KF_Weapons_Trip_T.CBLens_cmb"
      bHasScope=True
      ZoomedDisplayFOVHigh=35.000000
+     ForceZoomOutOnFireTime=0.400000
      MagCapacity=1
      ReloadRate=0.010000
      WeaponReloadAnim="Reload_Crossbow"

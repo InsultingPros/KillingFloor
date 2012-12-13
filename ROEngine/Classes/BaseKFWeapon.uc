@@ -55,8 +55,11 @@ simulated function PerformZoom(bool bZoomStatus)
 {
 	if( bZoomStatus )
 	{
-		if( Instigator.Physics == PHYS_Falling )
-			return;
+        if( Owner != none && Owner.Physics == PHYS_Falling &&
+            Owner.PhysicsVolume.Gravity.Z <= class'PhysicsVolume'.default.Gravity.Z )
+        {
+            return;
+        }
 
 		ZoomIn(true);
 

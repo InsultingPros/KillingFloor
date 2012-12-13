@@ -10,52 +10,10 @@
 class M4203AssaultRifle extends M4AssaultRifle
 	config(user);
 
-var     float               ForceZoomOutTime;
-
 // Don't use alt fire to toggle
 simulated function AltFire(float F){}
 // Don't switch fire mode
 exec function SwitchModes(){}
-
-simulated function WeaponTick(float dt)
-{
-    super.WeaponTick(dt);
-
-    if( ForceZoomOutTime > 0 )
-    {
-        if( bAimingRifle )
-        {
-    	    if( Level.TimeSeconds - ForceZoomOutTime > 0 )
-    	    {
-                ForceZoomOutTime = 0;
-
-            	ZoomOut(false);
-
-            	if( Role < ROLE_Authority)
-        			ServerZoomOut(false);
-    		}
-		}
-		else
-		{
-            ForceZoomOutTime = 0;
-		}
-	}
-}
-
-// Force the weapon out of iron sights shortly after firing the 203 grenade
-simulated function bool StartFire(int Mode)
-{
-    if( super.StartFire(Mode) )
-    {
-        if( mode == 1 )
-        {
-            ForceZoomOutTime = Level.TimeSeconds + 0.4;
-        }
-        return true;
-    }
-
-    return false;
-}
 
 simulated function bool CanZoomNow()
 {
@@ -86,6 +44,7 @@ simulated function bool ReadyToFire(int Mode)
 
 defaultproperties
 {
+     ForceZoomOutOnAltFireTime=0.400000
      bHasSecondaryAmmo=True
      bReduceMagAmmoOnSecondaryFire=False
      WeaponReloadAnim="Reload_M4203"

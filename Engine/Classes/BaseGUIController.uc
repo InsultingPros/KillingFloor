@@ -33,6 +33,7 @@ Delegate OnAdminReply(string Reply);	// Called By PlayerController
 
 //ifdef _KF_
 function string SteamGetUserName();
+function string SteamGetUserID();
 //endif
 
 // ================================================

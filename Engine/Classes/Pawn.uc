@@ -421,6 +421,10 @@ var             float           CustomAmbientRelevancyScale;// Scale the net rel
 
 // End _RO_
 
+// if _KF_
+var const float	LedgeCheckThreshold; // Used in determining if pawn is going off ledge. 
+// end _KF_
+
 replication
 {
 	// Variables the server should send to the client.
@@ -2499,6 +2503,11 @@ event Falling()
 		Controller.SetFall();
 }
 
+//#ifdef _KF_
+// A section of the PickWallAdjust function has a hardcoded jump. This can override that.
+event PickWallAdjustInLowGravity( vector WallHitNormal, actor HitActor );
+//#endif
+
 event HitWall(vector HitNormal, actor Wall);
 
 event Landed(vector HitNormal)
@@ -2613,6 +2622,26 @@ function bool Dodge(eDoubleClickDir DoubleClickMove)
 {
 	return false;
 }
+
+//#ifdef _KF_
+// Alternate way to handle jumping that's level-designer controlled since they define the start and end positions with JumpSpot actors.
+// Placed in Engine.Pawn because actors from 3 different packages can call this function.
+function vector ComputeTrajectoryByTime( vector StartPosition, vector EndPosition, float fTimeEnd )
+{
+	local vector NewVelocity;
+	local float ZAccel;
+	
+	fTimeEnd = fTimeEnd * ( 1.1/Level.TimeDilation );
+
+	ZAccel = PhysicsVolume.Gravity.Z;
+	fTimeEnd = FMax( 0.0001f, fTimeEnd );
+	NewVelocity = ( EndPosition - StartPosition ) / fTimeEnd;
+	NewVelocity.z = ( ( EndPosition.z - StartPosition.z ) - ( 0.5f * ZAccel * ( fTimeEnd*fTimeEnd ) ) ) / fTimeEnd;
+
+	// return the inital velocity required to hit EndPosition at t = fTimeEnd
+	return NewVelocity;
+}
+//#endif
 
 //Player Jumped
 function bool DoJump( bool bUpdating )
@@ -3101,6 +3130,7 @@ defaultproperties
      ProneHeight=15.000000
      ProneRadius=22.000000
      CustomAmbientRelevancyScale=1.000000
+     LedgeCheckThreshold=4.000000
      DrawType=DT_Mesh
      bUseDynamicLights=True
      bStasis=True

@@ -89,7 +89,7 @@ var				bool					VideoPlayed;
 var automated	GUISectionBackground	ADBackground;
 var				LobbyMenuAd				LobbyMenuAd;
 
-const MAX_MOVIES = 4;
+const MAX_MOVIES = 6;
 
 function InitComponent(GUIController MyC, GUIComponent MyO)
 {

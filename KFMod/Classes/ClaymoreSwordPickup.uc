@@ -12,7 +12,7 @@ class ClaymoreSwordPickup extends KFWeaponPickup;
 defaultproperties
 {
      Weight=6.000000
-     cost=1500
+     cost=3000
      PowerValue=75
      SpeedValue=40
      RangeValue=-23

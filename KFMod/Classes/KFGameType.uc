@@ -46,11 +46,7 @@ var()	globalconfig int	KFGameLength;  		// The length for this game, adds/remove
 var()	globalconfig bool	bDisableZedSpawning;// Disable zed spawning for debugging
 
 
-struct MClassTypes
-{
-	var() config string MClassName,MID;
-};
-var() globalconfig array<MClassTypes> MonsterClasses;
+
 struct IMClassList
 {
 	var class<KFMonster> MClass;
@@ -62,29 +58,14 @@ struct MSquadsList
 };
 var array<MSquadsList> InitSquads;
 
+var class<KFMonstersCollection> MonsterCollection;
 
-// Store info for a special squad we want to spawn outside of the normal wave system
-struct SpecialSquad
-{
-	var array<string> ZedClass;
-	var array<int> NumZeds;
-};
-
-// Special squads are used to spawn a squad outside of the normal wave system so
-// we have a bit more control. Basically. these will only spawn towards the
-// end of the normal squad list. This way you don't end up with a bunch of really
-// beast Zeds spawning one right after the other> It also guarantees that this
-// squad will always get used - Ramm
-var     array<SpecialSquad>     SpecialSquads;          // The currently used SpecialSquad array
-var     array<SpecialSquad>     ShortSpecialSquads;     // The special squad array for a short game
-var     array<SpecialSquad>     NormalSpecialSquads;    // The special squad array for a normal game
-var     array<SpecialSquad>     LongSpecialSquads;      // The special squad array for a long game
-
-var     array<SpecialSquad>     FinalSquads;            // Squads that spawn with the Patriarch
 var     int                     FinalSquadNum;          // The final squad num we are on
 
 var     bool    bUsedSpecialSquad;  // Tracks if the special squad has been used already this time through the list
 var     int     SpecialListCounter; // Keep track of how many time's we've been through the list
+
+var transient int EventNum;
 
 var string HumanName[4];
 var string ZombieName[4];
@@ -114,8 +95,6 @@ var() globalconfig bool bNoLateJoiners;
 var() localized string BossBattleSong;
 var globalconfig string TmpWavesInf,TmpSquadsInf,TmpMClassInf;
 
-var() string EndGameBossClass; // class of the end game boss, moved to non config - Ramm
-
 // Versions of the config vars that we'll hard code for non-custom
 // game settings, modifying some for each difficulty level;
 
@@ -123,7 +102,6 @@ var()   int     StartingCashBeginner, StartingCashNormal, StartingCashHard, Star
 var()   int     MinRespawnCashBeginner, MinRespawnCashNormal, MinRespawnCashHard, MinRespawnCashSuicidal, MinRespawnCashHell; // The starting cash for the different difficulty levels
 var()   int     TimeBetweenWavesBeginner, TimeBetweenWavesNormal, TimeBetweenWavesHard, TimeBetweenWavesSuicidal, TimeBetweenWavesHell;
 
-var()   array<MClassTypes>  StandardMonsterClasses; // The standard monster classed
 var()   array<string>       StandardMonsterSquads;  // The standard monster squads
 var()   int                 StandardMaxZombiesOnce; // Standard max zombies that can be in play at once
 
@@ -216,6 +194,38 @@ var	array<class<Weapon> >	InstancedWeaponClasses;
 
 /* AI -- Should ZED controllers query the pawns they are attacking to assess threat priority?   -  NOTE:   currently only enabled in story mode gametype*/
 var bool                    bUseZEDThreatAssessment;
+
+/* Mod support for steam based events */
+
+struct MClassTypes
+{
+	var() config string MClassName,MID;
+};
+var() globalconfig array<MClassTypes> MonsterClasses;
+var() string EndGameBossClass;
+
+
+// Store info for a special squad we want to spawn outside of the normal wave system
+struct SpecialSquad
+{
+	var array<string> ZedClass;
+	var array<int> NumZeds;
+};
+
+// Special squads are used to spawn a squad outside of the normal wave system so
+// we have a bit more control. Basically. these will only spawn towards the
+// end of the normal squad list. This way you don't end up with a bunch of really
+// beast Zeds spawning one right after the other> It also guarantees that this
+// squad will always get used - Ramm
+var     array<SpecialSquad>     SpecialSquads;          // The currently used SpecialSquad array
+var     array<SpecialSquad>     ShortSpecialSquads;     // The special squad array for a short game
+var     array<SpecialSquad>     NormalSpecialSquads;    // The special squad array for a normal game
+var     array<SpecialSquad>     LongSpecialSquads;      // The special squad array for a long game
+
+var     array<SpecialSquad>     FinalSquads;            // Squads that spawn with the Patriarch
+
+var()   array<MClassTypes>  StandardMonsterClasses; // The standard monster classed
+
 
 
 // Stub
@@ -508,6 +518,80 @@ function bool AllowBecomeActivePlayer(PlayerController P)
 	return true;
 }
 
+function array<IMClassList> LoadUpMonsterListFromGameType()
+{
+	local array<IMClassList> InitMList;
+	local int i,j;
+	local Class<KFMonster> MC;
+
+	for( i=0; i<MonsterClasses.Length; i++ )
+	{
+		if( MonsterClasses[i].MClassName=="" || MonsterClasses[i].MID=="" )
+		{
+			Continue;
+		}
+
+   		MC = Class<KFMonster>(DynamicLoadObject(MonsterClasses[i].MClassName,Class'Class'));
+
+
+        //override the monster with its event version, assuming it's one of our own Zombies
+        if(MC.default.EventClasses.Length > eventNum && InStr(MonsterClasses[i].MClassName, "KFChar.Zombie")  != -1 )
+        {
+            MC = Class<KFMonster>(DynamicLoadObject(MC.default.EventClasses[eventNum],Class'Class'));
+        }
+
+
+		if( MC==None )
+		{
+			Continue;
+		}
+
+        MC.static.PreCacheAssets(Level);
+
+		InitMList.Length = j+1;
+		InitMList[j].MClass = MC;
+		InitMList[j].ID = MonsterClasses[i].MID;
+		j++;
+	}
+	//precache the boss
+	/*MC = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
+	if(MC.default.EventClasses.Length > eventNum)
+    {
+        MC = Class<KFMonster>(DynamicLoadObject(MC.default.EventClasses[eventNum],Class'Class'));
+    }
+    MC.static.PreCacheAssets(Level);
+    InitMList.Length = j+1;
+	InitMList[j].MClass = MC;*/
+
+	return InitMList;
+}
+
+function array<IMClassList> LoadUpMonsterListFromCollection()
+{
+	local array<IMClassList> InitMList;
+	local int i,j;
+	local Class<KFMonster> MC;
+
+	for( i=0; i<MonsterCollection.default.MonsterClasses.Length; i++ )
+	{
+		if( MonsterCollection.default.MonsterClasses[i].MClassName=="" || MonsterCollection.default.MonsterClasses[i].MID=="" )
+			Continue;
+
+   		MC = Class<KFMonster>(DynamicLoadObject(MonsterCollection.default.MonsterClasses[i].MClassName,Class'Class'));
+
+		if( MC==None )
+			Continue;
+
+        MC.static.PreCacheAssets(Level);
+
+		InitMList.Length = j+1;
+		InitMList[j].MClass = MC;
+		InitMList[j].ID = MonsterCollection.default.MonsterClasses[i].MID;
+		j++;
+	}
+	return InitMList;
+}
+
 function LoadUpMonsterList()
 {
 	local int i,j,q,c,n;
@@ -516,19 +600,15 @@ function LoadUpMonsterList()
 	local bool bInitSq;
 	local array<IMClassList> InitMList;
 
-	//Log("Loading up monster classes...",'Init');
-	for( i=0; i<MonsterClasses.Length; i++ )
-	{
-		if( MonsterClasses[i].MClassName=="" || MonsterClasses[i].MID=="" )
-			Continue;
-		MC = Class<KFMonster>(DynamicLoadObject(MonsterClasses[i].MClassName,Class'Class'));
-		if( MC==None )
-			Continue;
-		InitMList.Length = j+1;
-		InitMList[j].MClass = MC;
-		InitMList[j].ID = MonsterClasses[i].MID;
-		j++;
-	}
+    if( KFGameLength != GL_Custom )
+    {
+        InitMList = LoadUpMonsterListFromCollection();
+    }
+    else
+    {
+        InitMList = LoadUpMonsterListFromGameType();
+    }
+
 	//Log("Got"@j@"monsters. Loading up monster squads...",'Init');
 	for( i=0; i<MonsterSquad.Length; i++ )
 	{
@@ -580,7 +660,6 @@ event InitGame( string Options, out string Error )
 	local ShopVolume SH;
 	local ZombieVolume ZZ;
 	local string InOpt;
-	local int i;
 
 	Super.InitGame(Options, Error);
 
@@ -617,7 +696,6 @@ event InitGame( string Options, out string Error )
         // Set up the default game type settings
         bUseEndGameBoss = true;
         bRespawnOnBoss = true;
-        MonsterClasses = StandardMonsterClasses;
         MonsterSquad = StandardMonsterSquads;
         MaxZombiesOnce = StandardMaxZombiesOnce;
         bCustomGameLength = false;
@@ -657,34 +735,7 @@ event InitGame( string Options, out string Error )
 
         InitialWave = 0;
 
-        if( KFGameLength == GL_Short )
-        {
-            FinalWave = 4;
-
-        	for( i=0; i<FinalWave; i++ )
-        	{
-        		Waves[i] = ShortWaves[i];
-        		SpecialSquads[i] = ShortSpecialSquads[i];
-        	}
-        }
-        else if( KFGameLength == GL_Normal )
-        {
-            FinalWave = 7;
-        	for( i=0; i<FinalWave; i++ )
-        	{
-        		Waves[i] = NormalWaves[i];
-        		SpecialSquads[i] = NormalSpecialSquads[i];
-        	}
-        }
-        else if( KFGameLength == GL_Long )
-        {
-            FinalWave = 10;
-        	for( i=0; i<FinalWave; i++ )
-        	{
-        		Waves[i] = LongWaves[i];
-        		SpecialSquads[i] = LongSpecialSquads[i];
-        	}
-        }
+        PrepareSpecialSquads();
     }
     else
     {
@@ -693,6 +744,128 @@ event InitGame( string Options, out string Error )
     }
 
 	LoadUpMonsterList();
+}
+
+function NotifyGameEvent(int EventNumIn)
+{
+    if( KFGameLength != GL_Custom )
+    {
+        if(MonsterCollection != class'KFMonstersCollection' )
+        {//we already have an event
+
+            if(EventNumIn == 3 && MonsterCollection != class'KFMonstersXmas')
+            {
+                log("Was we should be in halloween mode but we aren't!");
+            }
+            if(EventNumIn == 2 && MonsterCollection != class'KFMonstersHalloween')
+            {
+                log("Was we should be in halloween mode but we aren't!");
+            }
+            if(EventNumIn == 0 && MonsterCollection != class'KFMonstersCollection')
+            {
+                log("Was we shouldn't have an event but we do!");
+            }
+            return;
+        }
+    }
+    else
+    {
+        //if we've already decided on doing an event, return
+        if(EventNum != EventNumIn && EventNum != 0)
+        {
+            return;
+        }
+    }
+
+    if(EventNumIn == 2 )
+    {
+        MonsterCollection = class'KFMonstersHalloween';
+    }
+    else if(EventNumIn == 3 )
+    {
+        MonsterCollection = class'KFMonstersXmas';
+    }
+    //EventNum = EventNumIn;
+    PrepareSpecialSquads();
+    LoadUpMonsterList();
+}
+
+simulated function PrepareSpecialSquadsFromGameType()
+{
+    local int i;
+
+    if( KFGameLength == GL_Short )
+    {
+        FinalWave = 4;
+
+       	for( i=0; i<FinalWave; i++ )
+       	{
+       		Waves[i] = ShortWaves[i];
+       		SpecialSquads[i] = ShortSpecialSquads[i];
+      	}
+    }
+    else if( KFGameLength == GL_Normal )
+    {
+        FinalWave = 7;
+       	for( i=0; i<FinalWave; i++ )
+       	{
+       		Waves[i] = NormalWaves[i];
+       		SpecialSquads[i] = NormalSpecialSquads[i];
+       	}
+    }
+    else if( KFGameLength == GL_Long )
+    {
+        FinalWave = 10;
+       	for( i=0; i<FinalWave; i++ )
+       	{
+       		Waves[i] = LongWaves[i];
+       		SpecialSquads[i] = LongSpecialSquads[i];
+     	}
+    }
+}
+
+simulated function PrepareSpecialSquadsFromCollection()
+{
+    local int i;
+    if( KFGameLength == GL_Short )
+    {
+        FinalWave = 4;
+       	for( i=0; i<FinalWave; i++ )
+     	{
+       		Waves[i] = ShortWaves[i];
+  		    MonsterCollection.default.SpecialSquads[i] = MonsterCollection.default.ShortSpecialSquads[i];
+       	}
+    }
+    else if( KFGameLength == GL_Normal )
+    {
+        FinalWave = 7;
+     	for( i=0; i<FinalWave; i++ )
+       	{
+       		Waves[i] = NormalWaves[i];
+            MonsterCollection.default.SpecialSquads[i] = MonsterCollection.default.NormalSpecialSquads[i];
+      	}
+    }
+    else if( KFGameLength == GL_Long )
+    {
+        FinalWave = 10;
+      	for( i=0; i<FinalWave; i++ )
+      	{
+     		Waves[i] = LongWaves[i];
+    	    MonsterCollection.default.SpecialSquads[i] = MonsterCollection.default.LongSpecialSquads[i];
+      	}
+    }
+}
+
+simulated function PrepareSpecialSquads()
+{
+    if( SpecialSquads.Length == 0 )
+    {
+        PrepareSpecialSquadsFromCollection();
+    }
+    else
+    {
+        PrepareSpecialSquadsFromGameType();
+    }
 }
 
 // For the GUI buy menu
@@ -719,56 +892,25 @@ static function PrecacheGameStaticMeshes(LevelInfo myLevel)
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.blood.bloodsplash_1');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.blood.bloodsplash_2');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.blood.bloodsplash_3');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_1');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_2');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_3');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_4');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_5');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.clot.clothead_piece_6');
+
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.gibbs.bloat_explode');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.gibbs.Brain_Chunk_1');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.gibbs.Brain_Chunk_2');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.gibbs.Brain_Chunk_3');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.gibbs.Brain_Full');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.gibbs.clothead');
+
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.gibbs.eyeball');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.gibbs.intestines');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.bloathead');
+
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.britsoldier1head');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.britsoldier3head');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.crawlerhead');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.fleshpoundhead');
+
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.mikehead');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.patriarchhead');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.riotcop1head');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.riotcop2head');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.scrakehead');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.sirenhead');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.stalkerhead');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.chrishead');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.heads.gorefasthead');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.bloat_arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.bloat_head');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.bloat_leg_resource');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.british_riot_police_arm_resource');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.british_riot_police_leg_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.clot_arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.clot_leg_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.crawler_arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.crawler_leg_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.fleshpound_arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.fleshpound_leg_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.gorefast_arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.gorefast_leg_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.patriarch_arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.patriarch_leg_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.patriarch_Gun_Arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.scrake_arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.scrake_leg_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.scrake_chainsaw_Arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.stalker_arm_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.siren_leg_resource');
-	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.limbs.stalker_leg_resource');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'kf_gore_trip_sm.puke.puke_chunk');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'KF_pickups2_Trip.Supers.MP7_Dart');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'KF_generic_sm.Bullet_Shells.Handcannon_Shell');
@@ -783,7 +925,7 @@ static function PrecacheGameStaticMeshes(LevelInfo myLevel)
 	myLevel.AddPrecacheStaticMesh(StaticMesh'KillingFloorStatics.Gib2');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'KillingFloorStatics.Gib2');
 	myLevel.AddPrecacheStaticMesh(StaticMesh'EffectsSM.Ger_Tracer');
-}
+ }
 
 static function PrecacheGameTextures(LevelInfo myLevel)
 {
@@ -970,55 +1112,14 @@ static function PrecacheGameTextures(LevelInfo myLevel)
 	myLevel.AddPrecacheMaterial(Texture'KF_Soldier_Trip_T.heads.chris_head_diff');
 	myLevel.AddPrecacheMaterial(Texture'KF_Soldier_Trip_T.heads.mike_head_diff');
 	myLevel.AddPrecacheMaterial(Texture'KF_Soldier_Trip_T.Uniforms.shopkeeper_diff');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.bloat_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.bloat_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.bloat_diffuse');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.clot_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.clot_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.clot_diffuse');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.clot_spec');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.crawler_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.crawler_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.crawler_diff');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.fleshpound_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.fleshpound_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.fleshpound_diff');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.gatling_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.gatling_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.gatling_D');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.gorefast_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.gorefast_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.gorefast_diff');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.PatGungoInvisible_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.patriarch_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.patriarch_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.patriarch_D');
-	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.patriarch_invisible');
-	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.patriarch_invisible_gun');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.scrake_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.scrake_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.scrake_diff');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.scrake_spec');
-	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.scrake_saw_panner');
-	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.scrake_FB');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.siren_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.siren_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.siren_diffuse');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.siren_hair');
-	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.siren_hair_fb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.stalker_cmb');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.stalker_env_cmb');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.stalker_diff');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.stalker_spec');
-	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.stalker_invisible');
-	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.StalkerCloakOpacity_cmb');
-	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.StalkerCloakEnv_rot');
-	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.stalker_opacity_osc');
-	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.Chainsaw_blade_diff');
+
+
+
+
 	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.reflection_cube');
 	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.reflection_env');
-	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.patriarch_fizzle_FB');
-	myLevel.AddPrecacheMaterial(Material'KFCharacters.StalkerSkin');
+
+
 	myLevel.AddPrecacheMaterial(Material'KFX.CloakGradient');
 	myLevel.AddPrecacheMaterial(Material'KFCharacters.FPDeviceBloomAmber');
 	myLevel.AddPrecacheMaterial(Material'PatchTex.Common.ZedBurnSkin');
@@ -1135,8 +1236,7 @@ static function PrecacheGameTextures(LevelInfo myLevel)
     myLevel.AddPrecacheMaterial(Texture'kf_fx_trip_t.Gore.kf_bloodspray_b_diff');
     myLevel.AddPrecacheMaterial(Texture'kf_fx_trip_t.Gore.kf_bloodspray_diff');
     myLevel.AddPrecacheMaterial(Texture'kf_fx_trip_t.Gore.kf_bloodspray_e_diff');
-    myLevel.AddPrecacheMaterial(Texture'kf_fx_trip_t.Gore.Patriarch_Gore_Limbs_Diff');
-    myLevel.AddPrecacheMaterial(Texture'kf_fx_trip_t.Gore.Patriarch_Gore_Limbs_Spec');
+
     myLevel.AddPrecacheMaterial(Texture'kf_fx_trip_t.Gore.pukechunk_diffuse');
     myLevel.AddPrecacheMaterial(Texture'kf_fx_trip_t.Gore.vomit_16f');
 	myLevel.AddPrecacheMaterial(Texture'Effects_Tex.GoreDecals.Splatter_001');
@@ -1448,6 +1548,7 @@ function ScoreKill(Controller Killer, Controller Other)
 {
 	local PlayerReplicationInfo OtherPRI;
 	local float KillScore;
+	local Controller C;
 
 	OtherPRI = Other.PlayerReplicationInfo;
 	if ( OtherPRI != None )
@@ -1542,6 +1643,31 @@ function ScoreKill(Controller Killer, Controller Other)
 
 	if (Killer.PlayerReplicationInfo !=none && Killer.PlayerReplicationInfo.Score < 0)
 		Killer.PlayerReplicationInfo.Score = 0;
+
+
+    /* Begin Marco's Kill Messages */
+
+        if( Class'HUDKillingFloor'.Default.MessageHealthLimit<=Other.Pawn.Default.Health ||
+        Class'HUDKillingFloor'.Default.MessageMassLimit<=Other.Pawn.Default.Mass )
+		{
+			for( C=Level.ControllerList; C!=None; C=C.nextController )
+			{
+                if( C.bIsPlayer && xPlayer(C)!=None )
+				{
+                    xPlayer(C).ReceiveLocalizedMessage(Class'KillsMessage',1,Killer.PlayerReplicationInfo,,Other.Pawn.Class);
+                }
+            }
+        }
+		else
+        {
+            if( xPlayer(Killer)!=None )
+			{
+                xPlayer(Killer).ReceiveLocalizedMessage(Class'KillsMessage',,,,Other.Pawn.Class);
+            }
+        }
+
+    /* End Marco's Kill Messages */
+
 }
 
 function ScoreKillAssists(float Score, Controller Victim, Controller Killer)
@@ -1549,6 +1675,7 @@ function ScoreKillAssists(float Score, Controller Victim, Controller Killer)
 	local int i;
 	local float GrossDamage, ScoreMultiplier, KillScore;
 	local KFMonsterController MyVictim;
+	local KFPlayerReplicationInfo KFPRI;
 
 	MyVictim = KFMonsterController(Victim);
 
@@ -1567,11 +1694,22 @@ function ScoreKillAssists(float Score, Controller Victim, Controller Killer)
 
 		for ( i = 0; i < MyVictim.KillAssistants.Length; i++  )
 		{
-			if ( MyVictim.KillAssistants[i].PC != none &&  MyVictim.KillAssistants[i].PC.PlayerReplicationInfo != none )
+			if ( MyVictim.KillAssistants[i].PC != none &&
+            MyVictim.KillAssistants[i].PC.PlayerReplicationInfo != none)
 			{
 				KillScore = ScoreMultiplier * MyVictim.KillAssistants[i].Damage;
-				MyVictim.KillAssistants[i].PC.PlayerReplicationInfo.Score += KillScore;
-				KFPlayerReplicationInfo(MyVictim.KillAssistants[i].PC.PlayerReplicationInfo).ThreeSecondScore += KillScore;
+                MyVictim.KillAssistants[i].PC.PlayerReplicationInfo.Score += KillScore;
+
+                KFPRI = KFPlayerReplicationInfo(MyVictim.KillAssistants[i].PC.PlayerReplicationInfo) ;
+                if(KFPRI != none)
+				{
+                    if(MyVictim.KillAssistants[i].PC != Killer)
+                    {
+                        KFPRI.KillAssists ++ ;
+                    }
+
+                    KFPRI.ThreeSecondScore += KillScore;
+                }
 			}
 		}
 	}
@@ -1937,6 +2075,11 @@ auto State PendingMatch
 
 		for ( P = Level.ControllerList; P != None; P = P.NextController )
 		{
+
+            //NotifyGameEvent( KFSteamStatsAndAchievements(KFPlayerController(P).SteamStatsAndAchievements).Stat46.Value );
+
+            //KFPlayerController(P).ClientZedsSpawn(EventNum);
+
 			if ( P.IsA('PlayerController') && P.PlayerReplicationInfo != none && P.bIsPlayer && P.PlayerReplicationInfo.Team != none &&
 				P.PlayerReplicationInfo.bWaitingPlayer && !P.PlayerReplicationInfo.bOnlySpectator)
 			{
@@ -1963,7 +2106,7 @@ auto State PendingMatch
 			{
 				for ( P = Level.ControllerList; P != None; P = P.NextController )
 				{
-					if ( P.PlayerReplicationInfo != none )
+					if ( P.IsA('PlayerController') && P.PlayerReplicationInfo != none )
 						P.PlayerReplicationInfo.bReadyToPlay = True;
 				}
 
@@ -2002,7 +2145,21 @@ auto State PendingMatch
 
 Begin:
 	if ( bQuickStart )
+	{
+	    //this is a hack because we can't declare variables in the Begin label
+		DetermineEvent();
 		StartMatch();
+	}
+}
+
+//this is a hack because we can't declare variables in the Begin label
+function DetermineEvent()
+{
+    local Controller P;
+	for ( P = Level.ControllerList; P != None; P = P.NextController )
+	{
+        NotifyGameEvent( KFSteamStatsAndAchievements(KFPlayerController(P).SteamStatsAndAchievements).Stat46.Value );
+    }
 }
 
 // Added stub function here so the game won't crash when it can't find this  - TODO, maybe just move the function here! - Ramm
@@ -2805,7 +2962,23 @@ State MatchInProgress
 		bHasSetViewYet = False;
 		WaveEndTime = Level.TimeSeconds+60;
 		NextSpawnSquad.Length = 1;
-		NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
+
+		if( KFGameLength != GL_Custom )
+		{
+
+  		    NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(MonsterCollection.default.EndGameBossClass,Class'Class'));
+  		    NextspawnSquad[0].static.PreCacheAssets(Level);
+        }
+        else
+        {
+            NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
+            if(NextSpawnSquad[0].default.EventClasses.Length > eventNum)
+            {
+                NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(NextSpawnSquad[0].default.EventClasses[eventNum],Class'Class'));
+            }
+  		    NextspawnSquad[0].static.PreCacheAssets(Level);
+        }
+
 		if( NextSpawnSquad[0]==None )
 			NextSpawnSquad[0] = Class<KFMonster>(FallbackMonster);
 		KFGameReplicationInfo(Level.Game.GameReplicationInfo).MaxMonsters = 1;
@@ -3072,6 +3245,11 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
             StatsAndAchievements = KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements);
 			if ( StatsAndAchievements != none )
 			{
+                if( Killer.Pawn.Physics == PHYS_FALLING && damageType == class'DamTypeKrissM')
+		        {
+		            StatsAndAchievements.AddAirborneZedKill();
+		        }
+
 				MapName = GetCurrentMapName(Level);
 
 				StatsAndAchievements.AddKill(KFMonster(KilledPawn).bLaserSightedEBRM14Headshotted, class<DamTypeMelee>(damageType) != none, bZEDTimeActive, class<DamTypeM4AssaultRifle>(damageType) != none || class<DamTypeM4203AssaultRifle>(damageType) != none, class<DamTypeBenelli>(damageType) != none, class<DamTypeMagnum44Pistol>(damageType) != none, class<DamTypeMK23Pistol>(damageType) != none, class<DamTypeFNFALAssaultRifle>(damageType) != none, class<DamTypeBullpup>(damageType) != none, MapName);
@@ -3089,9 +3267,27 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 					}
 				}
 
+				if ( KilledPawn.IsA('KFMonster') )
+				{
+				    if( KFMonster(KilledPawn).bZapped )
+				    {
+				        KFSteamStatsAndAchievements(KFPlayerController(KFMonster(KilledPawn).ZappedBy.Controller).SteamStatsAndAchievements).AddZedKilledWhileZapped();
+                    }
+
+                    if ( Killer.Pawn != none && KFWeapon(Killer.Pawn.Weapon) != none && KFWeapon(Killer.Pawn.Weapon).Tier3WeaponGiver != none &&
+					     KFSteamStatsAndAchievements(KFWeapon(Killer.Pawn.Weapon).Tier3WeaponGiver.SteamStatsAndAchievements) != none )
+				    {
+					    KFSteamStatsAndAchievements(KFWeapon(Killer.Pawn.Weapon).Tier3WeaponGiver.SteamStatsAndAchievements).AddDroppedTier3Weapon();
+					    KFWeapon(Killer.Pawn.Weapon).Tier3WeaponGiver = none;
+				    }
+				}
+
 				if ( KilledPawn.IsA('ZombieCrawler') )
 				{
-
+                    if ( class<DamTypeCrossbow>(damageType) != none )
+                    {
+                        StatsAndAchievements.KilledCrawlerWithCrossbow();
+                    }
 					if ( class<DamTypeKSGShotgun>(damageType) != none )
 					{
 						StatsAndAchievements.AddCrawlerKillWithKSG();
@@ -3132,6 +3328,10 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 				}
 				else if ( KilledPawn.IsA('ZombieStalker') )
 				{
+				    if( class<DamTypeWinchester>(damageType) != none )
+                    {
+                        StatsAndAchievements.AddStalkerKillWithLAR();
+                    }
 					if ( class<DamTypeFrag>(damageType) != none )
 					{
 						StatsAndAchievements.AddStalkerKillWithExplosives();
@@ -3165,10 +3365,31 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 					{
 						StatsAndAchievements.AddHuskKillWithKSG();
 					}
+
+					if ( class<DamTypeDeagle>(damageType) != none ||
+                         class<DamTypeMagnum44Pistol>(damageType) != none ||
+                         class<DamTypeDualies>(damageType) != none ||
+                         class<DamTypeFlareProjectileImpact>(damageType) != none ||
+                         class<DamTypeMK23Pistol>(damageType) != none ||
+                         class<DamTypeMagnum44Pistol>(damageType) != none )
+					{
+						StatsAndAchievements.KilledHuskWithPistol();
+					}
+
+                    if( class<DamTypeHuskGun>(damageType) != none ||
+                        class<DamTypeHuskGunProjectileImpact>(damageType) != none )
+                    {
+                        StatsAndAchievements.KilledXMasHuskWithHuskCannon();
+                    }
 				}
 				else if ( KilledPawn.IsA('ZombieScrake') )
 				{
 					KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).AddScrakeKill(MapName);
+
+                    if ( class<DamTypeM203Grenade>(damageType) != none)
+                    {
+                        StatsAndAchievements.AddM203NadeScrakeKill();
+                    }
 				
 					if ( class<DamTypeChainsaw>(damageType) != none )
 					{
@@ -3179,6 +3400,21 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 					{
 						StatsAndAchievements.AddScrakeKillWithKSG();
 					}
+
+					if( class<DamTypeFlareRevolver>(damageType )!= none ||
+					    class<DamTypeHuskGun>(damageType) != none ||
+					    class<DamTypeHuskGunProjectileImpact>(damageType) != none ||
+					    class<DamTypeBurned>(damageType) != none ||
+					    class<DamTypeHuskGunProjectileImpact>(damageType) != none ||
+					    class<DamTypeFlameNade>(damageType) != none ||
+					    class<DamTypeFlamethrower>(damageType) != none ||
+					    class<DamTypeFlameNade>(damageType) != none ||
+					    class<DamTypeFlareProjectileImpact>(damageType) != none ||
+					    class<DamTypeTrenchgun>(damageType) != none )
+	                 {
+                        StatsAndAchievements.ScrakeKilledByFire();
+	                 }
+
 				}
 				else if ( KilledPawn.IsA('ZombieFleshPound') )
 				{
@@ -3188,6 +3424,15 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 					{
 						StatsAndAchievements.AddFleshPoundKillWithKSG();
 					}
+
+					else if ( class<DamTypeDwarfAxe>(damageType) != none )
+					{
+					    if ( KFMonster(KilledPawn).bBackstabbed )
+					    {
+						    StatsAndAchievements.AddFleshpoundAxeKill();
+					    }
+					}
+
 				}
 				else if ( KilledPawn.IsA('ZombieBoss') )
 				{
@@ -3222,6 +3467,11 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 							  class<DamTypeFlareProjectileImpact>(damageType) != none)
 					{
 						StatsAndAchievements.AddKillPoints(StatsAndAchievements.KFACHIEVEMENT_Set3HillbillyGorefastsOnFire);
+					}
+
+					if( KFMonster(KilledPawn).bBackstabbed )
+					{
+					    StatsAndAchievements.AddGorefastBackstab();
 					}
 				}
 
@@ -3495,10 +3745,7 @@ function TryToSpawnInAnotherVolume(optional bool bBossSpawning)
 		LastSpawningVolume = LastZVol;
 }
 
-// Load up a special monster squad. Used outside of the normal system to spawn
-// a group of particularly nasty squad of zeds only once per time through the
-// squad list
-function AddSpecialSquad()
+function AddSpecialSquadFromGameType()
 {
 	local Class<KFMonster> MC;
 	local array< class<KFMonster> > TempSquads;
@@ -3533,6 +3780,55 @@ function AddSpecialSquad()
 	NextSpawnSquad = TempSquads;
 }
 
+function AddSpecialSquadFromCollection()
+{
+	local Class<KFMonster> MC;
+	local array< class<KFMonster> > TempSquads;
+	local int i,j;
+
+	//Log("Loading up Special monster classes...");
+	for( i=0; i<MonsterCollection.default.SpecialSquads[WaveNum].ZedClass.Length; i++ )
+	{
+		if( MonsterCollection.default.SpecialSquads[WaveNum].ZedClass[i]=="" )
+		{
+			//log("Missing a special squad!!!");
+            Continue;
+		}
+		MC = Class<KFMonster>(DynamicLoadObject(MonsterCollection.default.SpecialSquads[WaveNum].ZedClass[i],Class'Class'));
+		if( MC==None )
+		{
+			//log("Couldn't DLO a special squad!!!");
+            Continue;
+		}
+
+        for( j=0; j<MonsterCollection.default.SpecialSquads[WaveNum].NumZeds[i]; j++ )
+        {
+            //log("SpecialSquad!!! Wave "$WaveNum$" Monster "$j$" = "$MC);
+
+            TempSquads[TempSquads.Length] = MC;
+        }
+        //log("****** SpecialSquad");
+	}
+
+    bUsedSpecialSquad = true;
+
+	NextSpawnSquad = TempSquads;
+}
+// Load up a special monster squad. Used outside of the normal system to spawn
+// a group of particularly nasty squad of zeds only once per time through the
+// squad list
+function AddSpecialSquad()
+{
+    if( SpecialSquads.Length == 0 )
+    {
+        AddSpecialSquadFromCollection();
+    }
+    else
+    {
+        AddSpecialSquadFromGameType();
+    }
+}
+
 function bool AddSquad()
 {
 	local int numspawned;
@@ -3543,7 +3839,8 @@ function bool AddSquad()
 	{
         // Throw in the special squad if the time is right
         if( KFGameLength != GL_Custom && !bUsedSpecialSquad &&
-            SpecialSquads.Length >= WaveNum && SpecialSquads[WaveNum].ZedClass.Length > 0
+            (MonsterCollection.default.SpecialSquads.Length >= WaveNum || SpecialSquads.Length >= WaveNum)
+            && MonsterCollection.default.SpecialSquads[WaveNum].ZedClass.Length > 0
             && (SpecialListCounter%2 == 1))
 		{
             AddSpecialSquad();
@@ -3619,7 +3916,19 @@ function bool AddBoss()
 
     // Force this to the final boss class
 	NextSpawnSquad.Length = 1;
-	NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
+	if( KFGameLength != GL_Custom)
+	{
+ 	    NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(MonsterCollection.default.EndGameBossClass,Class'Class'));
+    }
+    else
+    {
+        NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
+        //override the monster with its event version
+        if(NextSpawnSquad[0].default.EventClasses.Length > eventNum)
+        {
+            NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(NextSpawnSquad[0].default.EventClasses[eventNum],Class'Class'));
+        }
+    }
 
 	if( LastZVol==none )
 	{
@@ -3763,8 +4072,7 @@ function AddBossBuddySquad()
     FinalSquadNum++;
 }
 
-// Fill up the special patriarch squad
-function AddSpecialPatriarchSquad()
+function AddSpecialPatriarchSquadFromGameType()
 {
 	local Class<KFMonster> MC;
 	local array< class<KFMonster> > TempSquads;
@@ -3778,7 +4086,9 @@ function AddSpecialPatriarchSquad()
 			//log("Missing a FinalSquads squad!!!");
             Continue;
 		}
-		MC = Class<KFMonster>(DynamicLoadObject(FinalSquads[FinalSquadNum].ZedClass[i],Class'Class'));
+
+	    MC = Class<KFMonster>(DynamicLoadObject(FinalSquads[FinalSquadNum].ZedClass[i],Class'Class'));
+
 		if( MC==None )
 		{
 			//log("Couldn't DLO a FinalSquads squad!!!");
@@ -3795,6 +4105,57 @@ function AddSpecialPatriarchSquad()
 	}
 
 	NextSpawnSquad = TempSquads;
+
+}
+
+
+function AddSpecialPatriarchSquadFromCollection()
+{
+	local Class<KFMonster> MC;
+	local array< class<KFMonster> > TempSquads;
+	local int i,j;
+
+	//Log("Loading up FinalSquads monster classes...");
+	for( i=0; i<MonsterCollection.default.FinalSquads[FinalSquadNum].ZedClass.Length; i++ )
+	{
+		if( MonsterCollection.default.FinalSquads[FinalSquadNum].ZedClass[i]=="" )
+		{
+			//log("Missing a FinalSquads squad!!!");
+            Continue;
+		}
+
+	    MC = Class<KFMonster>(DynamicLoadObject(MonsterCollection.default.FinalSquads[FinalSquadNum].ZedClass[i],Class'Class'));
+
+		if( MC==None )
+		{
+			//log("Couldn't DLO a FinalSquads squad!!!");
+            Continue;
+		}
+
+        for( j=0; j<MonsterCollection.default.FinalSquads[FinalSquadNum].NumZeds[i]; j++ )
+        {
+            //log("FinalSquads!!! FinalSquadNum "$FinalSquadNum$" Monster "$j$" = "$MC);
+
+            TempSquads[TempSquads.Length] = MC;
+        }
+        //log("****** FinalSquads");
+	}
+
+	NextSpawnSquad = TempSquads;
+
+}
+
+// Fill up the special patriarch squad
+function AddSpecialPatriarchSquad()
+{
+    if( FinalSquads.Length == 0 )
+    {
+        AddSpecialPatriarchSquadFromCollection();
+    }
+    else
+    {
+        AddSpecialPatriarchSquadFromGameType();
+    }
 }
 
 // Ramm debugging code
@@ -4498,29 +4859,7 @@ defaultproperties
      LongWaves(7)=(WaveMask=58616303,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(8)=(WaveMask=75393519,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(9)=(WaveMask=90171865,WaveMaxMonsters=45,WaveDuration=255,WaveDifficulty=0.300000)
-     MonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
-     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
-     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
-     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
-     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
-     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
-     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
-     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
-     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
-     ShortSpecialSquads(2)=(ZedClass=("KFChar.ZombieCrawler","KFChar.ZombieGorefast","KFChar.ZombieStalker","KFChar.ZombieScrake"),NumZeds=(2,2,1,1))
-     ShortSpecialSquads(3)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieFleshPound"),NumZeds=(1,2,1))
-     NormalSpecialSquads(3)=(ZedClass=("KFChar.ZombieCrawler","KFChar.ZombieGorefast","KFChar.ZombieStalker","KFChar.ZombieScrake"),NumZeds=(2,2,1,1))
-     NormalSpecialSquads(4)=(ZedClass=("KFChar.ZombieFleshPound"),NumZeds=(1))
-     NormalSpecialSquads(5)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieFleshPound"),NumZeds=(1,1,1))
-     NormalSpecialSquads(6)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieFleshPound"),NumZeds=(1,1,2))
-     LongSpecialSquads(4)=(ZedClass=("KFChar.ZombieCrawler","KFChar.ZombieGorefast","KFChar.ZombieStalker","KFChar.ZombieScrake"),NumZeds=(2,2,1,1))
-     LongSpecialSquads(6)=(ZedClass=("KFChar.ZombieFleshPound"),NumZeds=(1))
-     LongSpecialSquads(7)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieFleshPound"),NumZeds=(1,1,1))
-     LongSpecialSquads(8)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieScrake","KFChar.ZombieFleshPound"),NumZeds=(1,2,1,1))
-     LongSpecialSquads(9)=(ZedClass=("KFChar.ZombieBloat","KFChar.ZombieSiren","KFChar.ZombieScrake","KFChar.ZombieFleshPound"),NumZeds=(1,2,1,2))
-     FinalSquads(0)=(ZedClass=("KFChar.ZombieClot"),NumZeds=(4))
-     FinalSquads(1)=(ZedClass=("KFChar.ZombieClot","KFChar.ZombieCrawler"),NumZeds=(3,1))
-     FinalSquads(2)=(ZedClass=("KFChar.ZombieClot","KFChar.ZombieStalker","KFChar.ZombieCrawler"),NumZeds=(3,1,1))
+     MonsterCollection=Class'KFMod.KFMonstersXmas'
      HumanName(0)="Cpl.McinTyre"
      HumanName(1)="Sgt.Michaels"
      HumanName(2)="Pvt.Davin"
@@ -4565,7 +4904,6 @@ defaultproperties
      bUseEndGameBoss=True
      bRespawnOnBoss=True
      BossBattleSong="KF_Abandon"
-     EndGameBossClass="KFChar.ZombieBoss"
      StartingCashBeginner=300
      StartingCashNormal=250
      StartingCashHard=250
@@ -4581,15 +4919,6 @@ defaultproperties
      TimeBetweenWavesHard=60
      TimeBetweenWavesSuicidal=60
      TimeBetweenWavesHell=60
-     StandardMonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
-     StandardMonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
-     StandardMonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
-     StandardMonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
-     StandardMonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
-     StandardMonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
-     StandardMonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
-     StandardMonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
-     StandardMonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
      StandardMonsterSquads(0)="4A"
      StandardMonsterSquads(1)="4A1G"
      StandardMonsterSquads(2)="2B"
@@ -4709,6 +5038,7 @@ defaultproperties
      AvailableChars(43)="Harold_Lott"
      AvailableChars(44)="ChickenNator"
      AvailableChars(45)="Reaper"
+     AvailableChars(46)="DAR"
      LoadedSkills(0)=Class'KFMod.KFVetFieldMedic'
      LoadedSkills(1)=Class'KFMod.KFVetSupportSpec'
      LoadedSkills(2)=Class'KFMod.KFVetSharpshooter'
@@ -4722,6 +5052,16 @@ defaultproperties
      LastBurnedEnemyMessageTime=-120.000000
      BurnedEnemyMessageDelay=120.000000
      SineWaveFreq=0.040000
+     MonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
+     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
+     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
+     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
+     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
+     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
+     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
+     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
+     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
+     EndGameBossClass="KFChar.ZombieBoss"
      WaveConfigMenu="KFGUI.KFWaveConfigMenu"
      FallbackMonsterClass="KFChar.ZombieStalker"
      FinalWave=10

@@ -69,7 +69,7 @@ function SetMindControlled(bool bNewMindControlled)
 
         if( bNewMindControlled != bZedUnderControl )
         {
-            GroundSpeed = OriginalGroundSpeed * 1.25;
+            SetGroundSpeed(OriginalGroundSpeed * 1.25);
     		Health *= 1.25;
     		HealthMax *= 1.25;
 		}
@@ -158,7 +158,6 @@ simulated function Tick(float DeltaTime)
 	UpdateExhaustEmitter();
 }
 
-
 function RangedAttack(Actor A)
 {
 	if ( bShotAnim || Physics == PHYS_Swimming)
@@ -189,6 +188,13 @@ function RangedAttack(Actor A)
 
 state RunningState
 {
+    // Set the zed to the zapped behavior
+    simulated function SetZappedBehavior()
+    {
+        Global.SetZappedBehavior();
+        GoToState('');
+    }
+
 	// Don't override speed in this state
     function bool CanSpeedAdjust()
     {
@@ -197,17 +203,27 @@ state RunningState
 
 	function BeginState()
 	{
-		GroundSpeed = OriginalGroundSpeed * 3.5;
-		bCharging = true;
-		if( Level.NetMode!=NM_DedicatedServer )
-			PostNetReceive();
+		if( bZapped )
+        {
+            GoToState('');
+        }
+        else
+        {
+    		SetGroundSpeed(OriginalGroundSpeed * 3.5);
+    		bCharging = true;
+    		if( Level.NetMode!=NM_DedicatedServer )
+    			PostNetReceive();
 
-		NetUpdateTime = Level.TimeSeconds - 1;
+    		NetUpdateTime = Level.TimeSeconds - 1;
+		}
 	}
 
 	function EndState()
 	{
-		GroundSpeed = GetOriginalGroundSpeed();
+		if( !bZapped )
+		{
+            SetGroundSpeed(GetOriginalGroundSpeed());
+        }
 		bCharging = False;
 		if( Level.NetMode!=NM_DedicatedServer )
 			PostNetReceive();
@@ -284,7 +300,7 @@ State SawingLoop
         // Randomly have the scrake charge during an attack so it will be less predictable
         if( (Health/HealthMax < 0.5 && FRand() <= RagingChargeChance ) || FRand() <= ChargeChance )
 		{
-            GroundSpeed = OriginalGroundSpeed * AttackChargeRate;
+            SetGroundSpeed(OriginalGroundSpeed * AttackChargeRate);
     		bCharging = true;
     		if( Level.NetMode!=NM_DedicatedServer )
     			PostNetReceive();
@@ -337,7 +353,7 @@ State SawingLoop
 		AmbientSound=default.AmbientSound;
 		MeleeDamage= default.MeleeDamage;
 
-		GroundSpeed = GetOriginalGroundSpeed();
+		SetGroundSpeed(GetOriginalGroundSpeed());
 		bCharging = False;
 		if( Level.NetMode!=NM_DedicatedServer )
 			PostNetReceive();
@@ -622,8 +638,22 @@ simulated function SpawnGibs(Rotator HitRotation, float ChunkPerterbation)
     super.SpawnGibs(HitRotation,ChunkPerterbation);
 }
 
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.scrake_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.scrake_diff');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.scrake_spec');
+	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.scrake_saw_panner');
+	myLevel.AddPrecacheMaterial(Material'KF_Specimens_Trip_T.scrake_FB');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.Chainsaw_blade_diff');
+}
+
 defaultproperties
 {
+     EventClasses(0)="KFChar.ZombieScrake"
+     EventClasses(1)="KFChar.ZombieScrake"
+     EventClasses(2)="KFChar.ZombieScrake_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieScrake_XMAS"
      DetachedArmClass=Class'KFChar.SeveredArmScrake'
      DetachedLegClass=Class'KFChar.SeveredLegScrake'
      DetachedHeadClass=Class'KFChar.SeveredHeadScrake'

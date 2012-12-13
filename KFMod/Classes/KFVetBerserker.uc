@@ -139,8 +139,9 @@ static function int ZedTimeExtensions(KFPlayerReplicationInfo KFPRI)
 // Change the cost of particular items
 static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup> Item)
 {
-	if ( Item == class'ChainsawPickup' || Item == class'KatanaPickup' || Item == class'ClaymoreSwordPickup' || Item == class'CrossbuzzsawPickup'
-        || Item == class'ScythePickup' )
+	if ( Item == class'ChainsawPickup' || Item == class'KatanaPickup' || Item == class'ClaymoreSwordPickup'
+        || Item == class'CrossbuzzsawPickup' || Item == class'ScythePickup' || Item == class'GoldenKatanaPickup'
+        || Item == class'MachetePickup' || Item == class'AxePickup' || Item == class'DwarfAxePickup' )
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on Melee Weapons
 	}
@@ -151,10 +152,16 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 // Give Extra Items as default
 static function AddDefaultInventory(KFPlayerReplicationInfo KFPRI, Pawn P)
 {
-	// If Level 5 or 6, give them Chainsaw
-	if ( KFPRI.ClientVeteranSkillLevel >= 5 )
+	// If Level 5, give them Machete
+	if ( KFPRI.ClientVeteranSkillLevel == 5 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Chainsaw", GetCostScaling(KFPRI, class'ChainsawPickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Machete", GetCostScaling(KFPRI, class'MachetePickup'));
+	}
+
+	// If Level 6, give them an Axe
+	if ( KFPRI.ClientVeteranSkillLevel == 6 )
+	{
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Axe", GetCostScaling(KFPRI, class'AxePickup'));
 	}
 
 	// If Level 6, give them Body Armor(Removed from Suicidal and HoE in Balance Round 7)
@@ -176,6 +183,6 @@ defaultproperties
      LevelEffects(2)="40% extra melee damage|10% faster melee attacks|15% faster melee movement|35% less damage from Bloat Bile|10% resistance to all damage|30% discount on melee weapons|Can't be grabbed by Clots|Zed-Time can be extended by killing an enemy while in slow motion"
      LevelEffects(3)="60% extra melee damage|10% faster melee attacks|20% faster melee movement|50% less damage from Bloat Bile|15% resistance to all damage|40% discount on melee weapons|Can't be grabbed by Clots|Up to 2 Zed-Time Extensions"
      LevelEffects(4)="80% extra melee damage|15% faster melee attacks|20% faster melee movement|65% less damage from Bloat Bile|20% resistance to all damage|50% discount on melee weapons|Can't be grabbed by Clots|Up to 3 Zed-Time Extensions"
-     LevelEffects(5)="100% extra melee damage|20% faster melee attacks|20% faster melee movement|75% less damage from Bloat Bile|30% resistance to all damage|60% discount on melee weapons|Spawn with a Chainsaw|Can't be grabbed by Clots|Up to 4 Zed-Time Extensions"
-     LevelEffects(6)="100% extra melee damage|25% faster melee attacks|30% faster melee movement|80% less damage from Bloat Bile|40% resistance to all damage|70% discount on melee weapons|Spawn with a Chainsaw and Body Armor|Can't be grabbed by Clots|Up to 4 Zed-Time Extensions"
+     LevelEffects(5)="100% extra melee damage|20% faster melee attacks|20% faster melee movement|75% less damage from Bloat Bile|30% resistance to all damage|60% discount on melee weapons|Spawn with a Machete|Can't be grabbed by Clots|Up to 4 Zed-Time Extensions"
+     LevelEffects(6)="100% extra melee damage|25% faster melee attacks|30% faster melee movement|80% less damage from Bloat Bile|40% resistance to all damage|70% discount on melee weapons|Spawn with an Axe and Body Armor|Can't be grabbed by Clots|Up to 4 Zed-Time Extensions"
 }

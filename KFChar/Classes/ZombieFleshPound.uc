@@ -52,7 +52,7 @@ function SetMindControlled(bool bNewMindControlled)
 
         if( bNewMindControlled != bZedUnderControl )
         {
-            GroundSpeed = OriginalGroundSpeed * 1.25;
+            SetGroundSpeed(OriginalGroundSpeed * 1.25);
     		Health *= 1.25;
     		HealthMax *= 1.25;
 		}
@@ -194,7 +194,7 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
 	TwoSecondDamageTotal += OldHealth - Health; // Corrected issue where only the Base Health is counted toward the FP's Rage in Balance Round 6(second attempt)
 
 	if (!bDecapitated && TwoSecondDamageTotal > RageDamageThreshold && !bChargingPlayer &&
-        (!(bCrispified && bBurnified) || bFrustrated) )
+        !bZapped && (!(bCrispified && bBurnified) || bFrustrated) )
 		StartCharging();
 
 }
@@ -244,6 +244,13 @@ state BeginRaging
 {
     Ignores StartCharging;
 
+    // Set the zed to the zapped behavior
+    simulated function SetZappedBehavior()
+    {
+        Global.SetZappedBehavior();
+        GoToState('');
+    }
+
     function bool CanGetOutOfWay()
     {
         return false;
@@ -281,6 +288,13 @@ state RageCharging
 {
 Ignores StartCharging;
 
+    // Set the zed to the zapped behavior
+    simulated function SetZappedBehavior()
+    {
+        Global.SetZappedBehavior();
+       	GoToState('');
+    }
+
     function PlayDirectionalHit(Vector HitLoc)
     {
         if( !bShotAnim )
@@ -304,30 +318,37 @@ Ignores StartCharging;
 	{
         local float DifficultyModifier;
 
-        bChargingPlayer = true;
-		if( Level.NetMode!=NM_DedicatedServer )
-			ClientChargingAnims();
+		if( bZapped )
+        {
+            GoToState('');
+        }
+        else
+        {
+            bChargingPlayer = true;
+    		if( Level.NetMode!=NM_DedicatedServer )
+    			ClientChargingAnims();
 
-        // Scale rage length by difficulty
-        if( Level.Game.GameDifficulty < 2.0 )
-        {
-            DifficultyModifier = 0.85;
-        }
-        else if( Level.Game.GameDifficulty < 4.0 )
-        {
-            DifficultyModifier = 1.0;
-        }
-        else if( Level.Game.GameDifficulty < 5.0 )
-        {
-            DifficultyModifier = 1.25;
-        }
-        else // Hardest difficulty
-        {
-            DifficultyModifier = 3.0; // Doubled Fleshpound Rage time for Suicidal and HoE in Balance Round 1
-        }
+            // Scale rage length by difficulty
+            if( Level.Game.GameDifficulty < 2.0 )
+            {
+                DifficultyModifier = 0.85;
+            }
+            else if( Level.Game.GameDifficulty < 4.0 )
+            {
+                DifficultyModifier = 1.0;
+            }
+            else if( Level.Game.GameDifficulty < 5.0 )
+            {
+                DifficultyModifier = 1.25;
+            }
+            else // Hardest difficulty
+            {
+                DifficultyModifier = 3.0; // Doubled Fleshpound Rage time for Suicidal and HoE in Balance Round 1
+            }
 
-		RageEndTime = (Level.TimeSeconds + 5 * DifficultyModifier) + (FRand() * 6 * DifficultyModifier);
-		NetUpdateTime = Level.TimeSeconds - 1;
+    		RageEndTime = (Level.TimeSeconds + 5 * DifficultyModifier) + (FRand() * 6 * DifficultyModifier);
+    		NetUpdateTime = Level.TimeSeconds - 1;
+		}
 	}
 
 	function EndState()
@@ -337,9 +358,9 @@ Ignores StartCharging;
 
         FleshPoundZombieController(Controller).RageFrustrationTimer = 0;
 
-		if( Health>0 )
+		if( Health>0 && !bZapped )
 		{
-			GroundSpeed = GetOriginalGroundSpeed();
+			SetGroundSpeed(GetOriginalGroundSpeed());
 		}
 
 		if( Level.NetMode!=NM_DedicatedServer )
@@ -352,7 +373,7 @@ Ignores StartCharging;
 	{
 		if( !bShotAnim )
 		{
-			GroundSpeed = OriginalGroundSpeed * 2.3;//2.0;
+			SetGroundSpeed(OriginalGroundSpeed * 2.3);//2.0;
 			if( !bFrustrated && !bZedUnderControl && Level.TimeSeconds>RageEndTime )
 			{
             	GoToState('');
@@ -422,7 +443,7 @@ Ignores StartCharging;
 	{
 		if( !bShotAnim )
 		{
-			GroundSpeed = OriginalGroundSpeed * 2.3;
+			SetGroundSpeed(OriginalGroundSpeed * 2.3);
 			if( !bFrustrated && !bZedUnderControl && Level.TimeSeconds>RageEndTime )
 			{
             	GoToState('');
@@ -444,7 +465,7 @@ Ignores StartCharging;
 
 simulated function PostNetReceive()
 {
-	if( bClientCharge!=bChargingPlayer )
+	if( bClientCharge!=bChargingPlayer && !bZapped )
 	{
 		bClientCharge = bChargingPlayer;
 		if (bChargingPlayer)
@@ -662,8 +683,20 @@ simulated function Destroyed()
 	Super.Destroyed();
 }
 
+
+static simulated function PreCacheMaterials(LevelInfo myLevel)
+{//should be derived and used.
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.fleshpound_cmb');
+	myLevel.AddPrecacheMaterial(Combiner'KF_Specimens_Trip_T.fleshpound_env_cmb');
+	myLevel.AddPrecacheMaterial(Texture'KF_Specimens_Trip_T.fleshpound_diff');
+}
+
 defaultproperties
 {
+     EventClasses(0)="KFChar.ZombieFleshPound"
+     EventClasses(1)="KFChar.ZombieFleshPound"
+     EventClasses(2)="KFChar.ZombieFleshPound_HALLOWEEN"
+     EventClasses(3)="KFChar.ZombieFleshPound_XMAS"
      DetachedArmClass=Class'KFChar.SeveredArmPound'
      DetachedLegClass=Class'KFChar.SeveredLegPound'
      DetachedHeadClass=Class'KFChar.SeveredHeadPound'

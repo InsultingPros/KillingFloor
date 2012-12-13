@@ -5,6 +5,7 @@ class Trenchgun extends KFWeaponShotgun;
 
 defaultproperties
 {
+     ForceZoomOutOnFireTime=0.010000
      MagCapacity=6
      ReloadRate=0.700000
      ReloadAnim="Reload"

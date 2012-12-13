@@ -6,7 +6,6 @@ class KatanaPickup extends KFWeaponPickup;
 defaultproperties
 {
      Weight=3.000000
-     cost=1000
      PowerValue=60
      SpeedValue=60
      RangeValue=-21

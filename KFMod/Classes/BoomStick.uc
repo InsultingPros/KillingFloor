@@ -152,6 +152,8 @@ defaultproperties
 {
      ReloadCountDown=2.500000
      SingleShotCount=2
+     ForceZoomOutOnFireTime=0.010000
+     ForceZoomOutOnAltFireTime=0.010000
      MagCapacity=2
      ReloadRate=0.010000
      ReloadAnim="Reload"

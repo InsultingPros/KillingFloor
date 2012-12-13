@@ -114,6 +114,9 @@ function string GetWeaponDLCPackName(int AppID);
 // Opens the Steam Overlay directly to the Game's Steam Workshop page
 native final function ShowWorkshopContent();
 
+// Fetches a user ID for the owning PC
+native final function string GetSteamUserID();
+
 // (cpptext)
 // (cpptext)
 // (cpptext)
@@ -236,6 +239,8 @@ simulated event SetLocalAchievementCompleted(int Index);
 
 // Called when the owner of this Stats Actor dies(used in subclasses to reset "in one life" stats)
 function PlayerDied();
+
+native function SteamAPICall(string callString);
 
 defaultproperties
 {

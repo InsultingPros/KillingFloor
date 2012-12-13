@@ -57,6 +57,7 @@ simulated function ZoomOut(bool bAnimateTransition)
 
 defaultproperties
 {
+     ForceZoomOutOnFireTime=0.100000
      MagCapacity=1
      ReloadRate=3.000000
      WeaponReloadAnim="Reload_LAW"

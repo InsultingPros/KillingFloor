@@ -51,6 +51,8 @@ var		string			ReloadSoundRef;
 var		string			NoAmmoSoundRef;
 var     array<string>	MeleeHitSoundRefs;
 
+var float WideDamageMinHitAngle; // The angle to do sweeping strikes in front of the player. If zero do no strikes
+
 static function PreloadAssets(optional KFMeleeFire Spawned)
 {
 	local int i;
@@ -110,6 +112,9 @@ simulated function Timer()
 	local rotator PointRot;
 	local int MyDamage;
 	local bool bBackStabbed;
+	local Pawn Victims;
+	local vector dir, lookdir;
+	local float DiffAngle, VictimDist;
 
 	MyDamage = MeleeDamage;
 
@@ -190,8 +195,57 @@ simulated function Timer()
 		        //Weapon.IncrementFlashCount(ThisModeNum);
 			}
 		}
+
+		if( WideDamageMinHitAngle > 0 )
+		{
+            foreach Weapon.VisibleCollidingActors( class 'Pawn', Victims, (weaponRange * 2), StartTrace ) //, RadiusHitLocation
+    		{
+                if( (HitActor != none && Victims == HitActor) || Victims.Health <= 0 )
+                {
+                    continue;
+                }
+
+            	if( Victims != Instigator )
+    			{
+    				VictimDist = VSizeSquared(Instigator.Location - Victims.Location);
+
+                    //log("VictimDist = "$VictimDist$" Weaponrange = "$(weaponRange*Weaponrange));
+
+                            //Instigator.ClearStayingDebugLines();
+                    //Instigator.DrawStayingDebugLine( Instigator.Location, EndTrace,0, 255, 0);
+
+                    if( VictimDist > (((weaponRange * 1.1) * (weaponRange * 1.1)) + (Victims.CollisionRadius * Victims.CollisionRadius)) )
+                    {
+                        continue;
+                    }
+
+    	  			lookdir = Normal(Vector(Instigator.GetViewRotation()));
+    				dir = Normal(Victims.Location - Instigator.Location);
+
+    	           	DiffAngle = lookdir dot dir;
+
+    	           	if( DiffAngle > WideDamageMinHitAngle )
+    	           	{
+    	           		//Instigator.DrawStayingDebugLine( Victims.Location + vect(0,0,10), Instigator.Location,255, 0, 0);
+                        //log("Shot would hit "$Victims$" DiffAngle = "$DiffAngle$" WideDamageMinHitAngle = "$WideDamageMinHitAngle$" for damage of: "$(MyDamage*DiffAngle));
+    	           		Victims.TakeDamage(MyDamage*DiffAngle, Instigator, (Victims.Location + Victims.CollisionHeight * vect(0,0,0.7)), vector(PointRot), hitDamageClass) ;
+
+                    	if(MeleeHitSounds.Length > 0)
+                    	{
+                    		Victims.PlaySound(MeleeHitSounds[Rand(MeleeHitSounds.length)],SLOT_None,MeleeHitVolume,,,,false);
+                    	}
+    	           	}
+    	           	//else
+    	           	//{
+                        //Instigator.DrawStayingDebugLine( Victims.Location, Instigator.Location,255, 255, 0);
+                        //log("Shot would miss "$Victims$" DiffAngle = "$DiffAngle$" WideDamageMinHitAngle = "$WideDamageMinHitAngle);
+    	           	//}
+    			}
+    		}
+		}
 	}
 }
+
 function float GetFireSpeed()
 {
 	if ( KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo) != none && KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo).ClientVeteranSkill != none )
@@ -270,9 +324,11 @@ simulated event ModeDoFire()
 		Weapon.PutDown();
 	}
 
-
-	Weapon.Owner.Velocity.x *= KFMeleeGun(Weapon).ChopSlowRate;
-	Weapon.Owner.Velocity.y *= KFMeleeGun(Weapon).ChopSlowRate;
+    if( Weapon.Owner != none && Weapon.Owner.Physics != PHYS_Falling )
+    {
+        Weapon.Owner.Velocity.x *= KFMeleeGun(Weapon).ChopSlowRate;
+        Weapon.Owner.Velocity.y *= KFMeleeGun(Weapon).ChopSlowRate;
+    }
 }
 
 function DoFireEffect()

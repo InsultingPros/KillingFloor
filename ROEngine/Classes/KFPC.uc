@@ -9,6 +9,17 @@ replication
 {
 	reliable if ( Role == ROLE_Authority )
 		bChangedVeterancyThisWave;
+		
+	reliable if( Role < ROLE_Authority )
+		ServerSetCanGetAxe;
+}
+
+function ServerSetCanGetAxe()
+{
+	if ( SteamStatsAndAchievements != none && Role == ROLE_Authority )
+	{
+		KFSteamStatsAndAchievements(SteamStatsAndAchievements).SetCanGetAxe();
+	}
 }
 
 defaultproperties

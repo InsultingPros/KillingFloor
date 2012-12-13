@@ -20,6 +20,8 @@ var	texture					SelectedItemBackgroundRight;
 var texture					DisabledItemBackgroundLeft;
 var	texture					DisabledItemBackgroundRight;
 
+var texture                 NoPerkIcon;
+
 var array<string>			PrimaryStrings;
 var	array<string>			SecondaryStrings;
 var array<byte>             CanBuys;
@@ -37,6 +39,8 @@ var	int						MouseOverIndex;
 
 var bool					bNeedsUpdate;
 var int						UpdateCounter;
+
+var	localized string		WeaponDLCMessage;
 
 event InitComponent(GUIController MyController, GUIComponent MyOwner)
 {
@@ -67,24 +71,17 @@ event Closed(GUIComponent Sender, bool bCancelled)
 	super.Closed(Sender, bCancelled);
 }
 
-function UpdateForSaleBuyables()
+function int PopulateBuyablesbyPerk(int Perk, bool HasPerk, int currentIndex)
 {
 	local class<KFVeterancyTypes> PlayerVeterancy;
     local KFPlayerReplicationInfo KFPRI;
 	local KFLevelRules KFLR, KFLRit;
 	local GUIBuyable ForSaleBuyable;
 	local class<KFWeaponPickup> ForSalePickup;
-	local int i, j, DualDivider, ForSaleArrayIndex;
+	local int i, j, DualDivider;
 	local bool bZeroWeight;
 
 	DualDivider = 1;
-
-	// Grab the items for sale
-    foreach PlayerOwner().DynamicActors(class'KFLevelRules', KFLRit)
-    {
-        KFLR = KFLRit;
-        Break;
-	}
 
 	// Grab Players Veterancy for quick reference
 	if ( KFPlayerController(PlayerOwner()) != none && KFPlayerReplicationInfo(PlayerOwner().PlayerReplicationInfo).ClientVeteranSkill != none )
@@ -96,22 +93,41 @@ function UpdateForSaleBuyables()
 		PlayerVeterancy = class'KFVeterancyTypes';
 	}
 
+	// Grab the items for sale
+    foreach PlayerOwner().DynamicActors(class'KFLevelRules', KFLRit)
+    {
+        KFLR = KFLRit;
+        Break;
+	}
+
 	KFPRI = KFPlayerReplicationInfo(PlayerOwner().PlayerReplicationInfo);
 
 	//Grab the perk's weapons first
 	for ( j = 0; j < KFLR.MAX_BUYITEMS; j++ )
     {
+
     	if ( KFLR.ItemForSale[j] != none )
         {
 			//Let's see if this is a vest, first aid kit, ammo or stuff we already have
 			if ( class<Vest>(KFLR.ItemForSale[j]) != none || class<FirstAidKit>(KFLR.ItemForSale[j]) != none ||
                  class<KFWeapon>(KFLR.ItemForSale[j].default.InventoryType) == none || KFLR.ItemForSale[j].IsA('Ammunition') ||
 				 class<KFWeapon>(KFLR.ItemForSale[j].default.InventoryType).default.bKFNeverThrow ||
-                 IsInInventory(KFLR.ItemForSale[j]) ||
-				 class<KFWeaponPickup>(KFLR.ItemForSale[j]).default.CorrespondingPerkIndex != PlayerVeterancy.default.PerkIndex)
+                 IsInInventory(KFLR.ItemForSale[j]) )
         	{
         		continue;
 			}
+
+		   	if( (class<KFWeaponPickup>(KFLR.ItemForSale[j]).default.CorrespondingPerkIndex != Perk) == HasPerk)
+		   	{
+		   	    continue;
+		   	}
+
+
+            //to prevent the double-display of perkless weapons
+		   	if( Perk != 7 && class<KFWeaponPickup>(KFLR.ItemForSale[j]).default.CorrespondingPerkIndex == 7)
+            {
+                continue;
+            }
 
             if ( class<Deagle>(KFLR.ItemForSale[j].default.InventoryType) != none )
             {
@@ -173,17 +189,17 @@ function UpdateForSaleBuyables()
 				bZeroWeight = false;
 			}
 
-			if ( ForSaleArrayIndex >= ForSaleBuyables.Length )
+			if ( currentIndex >= ForSaleBuyables.Length )
 			{
 				ForSaleBuyable = new class'GUIBuyable';
 				ForSaleBuyables[ForSaleBuyables.Length] = ForSaleBuyable;
 			}
 			else
 			{
-				ForSaleBuyable = ForSaleBuyables[ForSaleArrayIndex];
+				ForSaleBuyable = ForSaleBuyables[currentIndex];
 			}
 
-			ForSaleArrayIndex++;
+			currentIndex++;
 
 			ForSalePickup =  class<KFWeaponPickup>(KFLR.ItemForSale[j]);
 
@@ -233,136 +249,30 @@ function UpdateForSaleBuyables()
 			bZeroWeight = false;
 		}
 	}
+	return currentIndex;
+}
 
-	// now the rest
-	for ( j = KFLR.MAX_BUYITEMS - 1; j >= 0; j-- )
-    {
-    	if ( KFLR.ItemForSale[j] != none )
-        {
-        	//Let's see if this is a vest, first aid kit, ammo or stuff we already have
-            if ( class<Vest>(KFLR.ItemForSale[j]) != none || class<FirstAidKit>(KFLR.ItemForSale[j]) != none ||
-                 class<KFWeapon>(KFLR.ItemForSale[j].default.InventoryType) == none || KFLR.ItemForSale[j].IsA('Ammunition') ||
-				 class<KFWeapon>(KFLR.ItemForSale[j].default.InventoryType).default.bKFNeverThrow ||
-                 IsInInventory(KFLR.ItemForSale[j]) ||
-				 class<KFWeaponPickup>(KFLR.ItemForSale[j]).default.CorrespondingPerkIndex == PlayerVeterancy.default.PerkIndex )
-        	{
-        		continue;
-			}
+function UpdateForSaleBuyables()
+{
+	local class<KFVeterancyTypes> PlayerVeterancy;
+    local KFPlayerReplicationInfo KFPRI;
+	local int ForSaleArrayIndex;
 
-            if ( class<Deagle>(KFLR.ItemForSale[j].default.InventoryType) != none )
-            {
-				if ( IsInInventory(class'DualDeaglePickup') )
-				{
-					continue;
-				}
-			}
-
-            if ( class<Magnum44Pistol>(KFLR.ItemForSale[j].default.InventoryType) != none )
-            {
-				if ( IsInInventory(class'Dual44MagnumPickup') )
-				{
-					continue;
-				}
-			}
-
-            if ( class<MK23Pistol>(KFLR.ItemForSale[j].default.InventoryType) != none )
-            {
-				if ( IsInInventory(class'DualMK23Pickup') )
-				{
-					continue;
-				}
-			}
-
-            if ( class<FlareRevolver>(KFLR.ItemForSale[j].default.InventoryType) != none )
-            {
-				if ( IsInInventory(class'DualFlareRevolverPickup') )
-				{
-					continue;
-				}
-			}
-
-			if ( class<DualDeagle>(KFLR.ItemForSale[j].default.InventoryType) != none
-                || class<Dual44Magnum>(KFLR.ItemForSale[j].default.InventoryType) != none
-                || class<DualMK23Pistol>(KFLR.ItemForSale[j].default.InventoryType) != none
-                || class<DualFlareRevolver>(KFLR.ItemForSale[j].default.InventoryType) != none )
-            {
-				if ( IsInInventory(class'DeaglePickup') )
-				{
-					DualDivider = 2;
-					bZeroWeight = true;
-				}
-				else if ( IsInInventory(class'Magnum44Pickup') )
-				{
-					DualDivider = 2;
-				}
-				else if ( IsInInventory(class'MK23Pickup') )
-				{
-					DualDivider = 2;
-				}
-				else if ( IsInInventory(class'FlareRevolverPickup') )
-				{
-					DualDivider = 2;
-				}
-			}
-			else
-			{
-				DualDivider = 1;
-				bZeroWeight = false;
-			}
-
-			if ( ForSaleArrayIndex >= ForSaleBuyables.Length )
-			{
-				ForSaleBuyable = new class'GUIBuyable';
-				ForSaleBuyables[ForSaleBuyables.Length] = ForSaleBuyable;
-			}
-			else
-			{
-				ForSaleBuyable = ForSaleBuyables[ForSaleArrayIndex];
-			}
-
-			ForSaleArrayIndex++;
-
-			ForSalePickup =  class<KFWeaponPickup>(KFLR.ItemForSale[j]);
-
-   			ForSaleBuyable.ItemName 		= ForSalePickup.default.ItemName;
-    		ForSaleBuyable.ItemDescription 	= ForSalePickup.default.Description;
-    		ForSaleBuyable.ItemCategorie	= KFLR.EquipmentCategories[i].EquipmentCategoryName;
-
-    		if ( class<KFWeapon>(ForSalePickup.default.InventoryType) != none )
-    		{
-				ForSaleBuyable.ItemImage		= class<KFWeapon>(ForSalePickup.default.InventoryType).default.TraderInfoTexture;
-				ForSaleBuyable.ItemWeaponClass	= class<KFWeapon>(ForSalePickup.default.InventoryType);
-				ForSaleBuyable.ItemAmmoClass	= class<KFWeapon>(ForSalePickup.default.InventoryType).default.FireModeClass[0].default.AmmoClass;
-			}
-
-			ForSaleBuyable.ItemPickupClass	= ForSalePickup;
-			ForSaleBuyable.ItemCost			= int((float(ForSalePickup.default.Cost)
-										  	  * PlayerVeterancy.static.GetCostScaling(KFPRI, ForSalePickup)) / DualDivider);
-			ForSaleBuyable.ItemAmmoCost		= 0;
-			ForSaleBuyable.ItemFillAmmoCost	= 0;
-
-			if ( bZeroWeight)
-			{
-				ForSaleBuyable.ItemWeight 	= 0.f;
-			}
-			else
-			{
-				ForSaleBuyable.ItemWeight	= ForSalePickup.default.Weight;
-			}
-
-			ForSaleBuyable.ItemPower		= ForSalePickup.default.PowerValue;
-			ForSaleBuyable.ItemRange		= ForSalePickup.default.RangeValue;
-			ForSaleBuyable.ItemSpeed		= ForSalePickup.default.SpeedValue;
-			ForSaleBuyable.ItemAmmoCurrent	= 0;
-			ForSaleBuyable.ItemAmmoMax		= 0;
-			ForSaleBuyable.ItemPerkIndex	= ForSalePickup.default.CorrespondingPerkIndex;
-
-			// Make sure we mark the list as a sale list
-			ForSaleBuyable.bSaleList = true;
-
-			bZeroWeight = false;
-		}
+	// Grab Players Veterancy for quick reference
+	if ( KFPlayerController(PlayerOwner()) != none && KFPlayerReplicationInfo(PlayerOwner().PlayerReplicationInfo).ClientVeteranSkill != none )
+	{
+		PlayerVeterancy = KFPlayerReplicationInfo(PlayerOwner().PlayerReplicationInfo).ClientVeteranSkill;
 	}
+	else
+	{
+		PlayerVeterancy = class'KFVeterancyTypes';
+	}
+
+	KFPRI = KFPlayerReplicationInfo(PlayerOwner().PlayerReplicationInfo);
+
+    ForSaleArrayIndex = PopulateBuyablesByPerk( 7, true, 0 );
+    ForSaleArrayIndex = PopulateBuyablesByPerk( PlayerVeterancy.default.PerkIndex, true, ForSaleArrayIndex );
+    ForSaleArrayIndex = PopulateBuyablesByPerk( PlayerVeterancy.default.PerkIndex, false, ForSaleArrayIndex );
 
 	if ( ForSaleArrayIndex < ForSaleBuyables.Length )
 	{
@@ -376,6 +286,7 @@ function UpdateForSaleBuyables()
 function UpdateList()
 {
 	local int i;
+	local bool unlockedByAchievement, unlockedByApp;
 
 	// Clear the arrays
 	if ( ForSaleBuyables.Length < ItemPerkIndexes.Length )
@@ -395,14 +306,11 @@ function UpdateList()
 		PrimaryStrings[i] = ForSaleBuyables[i].ItemName;
 		SecondaryStrings[i] = "£" @ int(ForSaleBuyables[i].ItemCost);
 
+        //controls which icon to put up
 		ItemPerkIndexes[i] = ForSaleBuyables[i].ItemPerkIndex;
 
-        if ( ForSaleBuyables[i].ItemWeaponClass.Default.AppID > 0 && !PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(ForSaleBuyables[i].ItemWeaponClass.Default.AppID) )
-		{
-			CanBuys[i] = 0;
-			SecondaryStrings[i] = "DLC";
-		}
-		else if ( ForSaleBuyables[i].ItemCost > PlayerOwner().PlayerReplicationInfo.Score ||
+
+        if ( ForSaleBuyables[i].ItemCost > PlayerOwner().PlayerReplicationInfo.Score ||
 			 ForSaleBuyables[i].ItemWeight + KFHumanPawn(PlayerOwner().Pawn).CurrentWeight > KFHumanPawn(PlayerOwner().Pawn).MaxCarryWeight )
 		{
 			CanBuys[i] = 0;
@@ -411,6 +319,41 @@ function UpdateList()
 		{
 			CanBuys[i] = 1;
 		}
+		
+		unlockedByAchievement = false;
+		unlockedByApp = false;
+		
+        if( KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements) != none )
+        {
+            if( ForSaleBuyables[i].ItemWeaponClass.Default.UnlockedByAchievement != -1 )
+            {
+
+                unlockedByAchievement = KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements).Achievements[ForSaleBuyables[i].ItemWeaponClass.Default.UnlockedByAchievement].bCompleted == 1;
+            }
+            if( ForSaleBuyables[i].ItemWeaponClass.Default.AppID > 0 )
+            {
+
+                unlockedByApp = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(ForSaleBuyables[i].ItemWeaponClass.Default.AppID);
+            }
+        }
+        //lock the weapon if it requires an achievement that they don't have.
+        if ( ForSaleBuyables[i].ItemWeaponClass.Default.UnlockedByAchievement != -1 )
+		{
+		    if( !unlockedByAchievement && !unlockedByApp)
+            {
+		        CanBuys[i] = 0;
+		        SecondaryStrings[i] = "LOCKED";
+		    }
+		}
+        else if ( ForSaleBuyables[i].ItemWeaponClass.Default.AppID > 0 && !unlockedByApp )
+		{
+		    if( !unlockedByAchievement )
+		    {
+			    CanBuys[i] = 0;
+			    SecondaryStrings[i] = "DLC";
+		    }
+		}
+
 	}
 
 	if ( bNotify )
@@ -518,7 +461,15 @@ function DrawInvItem(Canvas Canvas, int CurIndex, float X, float Y, float Width,
 	}
 
 	Canvas.SetPos(X + 4, Y + 4);
-	Canvas.DrawTile(class'KFGameType'.default.LoadedSkills[ItemPerkIndexes[CurIndex]].default.OnHUDIcon, Height - 8, Height - 8, 0, 0, 256, 256);
+	//controls the icon
+	if(ItemPerkIndexes[CurIndex] != 7 )
+	{
+        Canvas.DrawTile(class'KFGameType'.default.LoadedSkills[ItemPerkIndexes[CurIndex]].default.OnHUDIcon, Height - 8, Height - 8, 0, 0, 256, 256);
+    }
+    else
+    {
+        Canvas.DrawTile(NoPerkIcon, Height - 8, Height - 8, 0, 0, 256, 256);
+    }
 
 	// Select Text color
 	if ( CurIndex == MouseOverIndex )
@@ -552,7 +503,19 @@ function IndexChanged(GUIComponent Sender)
 {
 	if ( CanBuys[Index] == 0 )
 	{
-	    if ( ForSaleBuyables[Index].ItemCost > PlayerOwner().PlayerReplicationInfo.Score )
+		if ( ForSaleBuyables[Index].ItemWeaponClass.Default.AppID > 0 &&
+             KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements) != none &&
+			!PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(ForSaleBuyables[Index].ItemWeaponClass.Default.AppID) )
+		{
+			// TODO: Play "Purchase DLC" voice clip?
+		}
+		else if ( ForSaleBuyables[Index].ItemWeaponClass.Default.UnlockedByAchievement != -1 &&
+		          KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements) != none &&
+                  KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements).Achievements[ForSaleBuyables[index].ItemWeaponClass.Default.UnlockedByAchievement].bCompleted == 1)
+		{
+
+		}
+		else if ( ForSaleBuyables[Index].ItemCost > PlayerOwner().PlayerReplicationInfo.Score )
 		{
 			PlayerOwner().Pawn.DemoPlaySound(TraderSoundTooExpensive, SLOT_Interface, 2.0);
 		}
@@ -574,6 +537,7 @@ defaultproperties
      SelectedItemBackgroundRight=Texture'KF_InterfaceArt_tex.Menu.Item_box_bar_Highlighted'
      DisabledItemBackgroundLeft=Texture'KF_InterfaceArt_tex.Menu.Item_box_box_Disabled'
      DisabledItemBackgroundRight=Texture'KF_InterfaceArt_tex.Menu.Item_box_bar_Disabled'
+     NoPerkIcon=Texture'KillingFloor2HUD.Perk_Icons.No_Perk_Icon'
      DarkRedColor=(B=96,G=96,R=96,A=255)
      TraderSoundTooExpensive=SoundGroup'KF_Trader.TooExpensive'
      TraderSoundTooHeavy=SoundGroup'KF_Trader.TooHeavy'
