@@ -2633,6 +2633,7 @@ function KilledEnemyWithBloatAcid()
 
 function KilledFleshpound(bool bWithMeleeAttack, bool bWithAA12, bool bWithKnife, bool bWithClaymore)
 {
+    log(bWithClaymore);
 	if ( bWithMeleeAttack )
 	{
 		if ( bDebugStats )
@@ -2898,7 +2899,7 @@ function AddGorefastBackstab()
 	if ( bDebugStats )
 		log("STEAMSTATS: Adding Gorefast Backstab Kill - NewValue="$GorefastBackstabKills.Value @ "Player="$PCOwner.PlayerReplicationInfo.PlayerName);
 
-	if ( Achievements[KFACHIEVEMENT_MeleeKill2ChristmasGorefastFromBack].bCompleted == 0 && GorefastBackstabKills.Value >= 5 )
+	if ( Achievements[KFACHIEVEMENT_MeleeKill2ChristmasGorefastFromBack].bCompleted == 0 && GorefastBackstabKills.Value >= 2 )
 	{
 		SetSteamAchievementCompleted(KFACHIEVEMENT_MeleeKill2ChristmasGorefastFromBack);
 		CheckChristmasAchievementsCompleted();
@@ -3801,7 +3802,7 @@ simulated function OnAchievementReport( bool HasAchievement, string Achievement,
     log(steamIDIn, 'DevNet');
     if( HasAchievement && Achievement == "NotAWarhammer" && gameID == 213650 )
     {
-        log("webapi correct achievement", 'DevNet'); 
+        log("webapi correct achievement", 'DevNet');
         if( Achievements[KFACHIEVEMENT_CanGetAxe].bCompleted != 1 )
         {
             log("webapi unlocking achievement", 'DevNet');

@@ -696,6 +696,10 @@ event InitGame( string Options, out string Error )
         // Set up the default game type settings
         bUseEndGameBoss = true;
         bRespawnOnBoss = true;
+        if( StandardMonsterClasses.Length > 0 )
+        {
+            MonsterClasses = StandardMonsterClasses;
+        }
         MonsterSquad = StandardMonsterSquads;
         MaxZombiesOnce = StandardMaxZombiesOnce;
         bCustomGameLength = false;
@@ -3307,6 +3311,8 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 					{
 						StatsAndAchievements.AddCrawlerKilledInMidair();
 					}
+
+					StatsAndAchievements.AddXMasCrawlerKill();
 				}
 				else if ( KilledPawn.IsA('ZombieBloat') )
 				{
@@ -3353,6 +3359,8 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 					{
 						StatsAndAchievements.AddKillPoints(StatsAndAchievements.KFACHIEVEMENT_Kill4StalkersNailgun);
 					}
+
+					StatsAndAchievements.AddXMasStalkerKill();
 				}
 				else if ( KilledPawn.IsA('ZombieHusk') )
 				{
@@ -3390,7 +3398,7 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                     {
                         StatsAndAchievements.AddM203NadeScrakeKill();
                     }
-				
+
 					if ( class<DamTypeChainsaw>(damageType) != none )
 					{
 						StatsAndAchievements.AddChainsawScrakeKill();
@@ -3414,6 +3422,11 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 	                 {
                         StatsAndAchievements.ScrakeKilledByFire();
 	                 }
+
+	                 if(class<DamTypeClaymoreSword>(damageType) != none)
+	                 {
+	                     StatsAndAchievements.AddXMasClaymoreScrakeKill();
+                     }
 
 				}
 				else if ( KilledPawn.IsA('ZombieFleshPound') )
@@ -3451,6 +3464,7 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 				}
 				else if ( KilledPawn.IsA('ZombieClot') )
 				{
+				    StatsAndAchievements.AddClotKill();
 					if ( class<DamTypeKSGShotgun>(damageType) != none )
 					{
 						StatsAndAchievements.AddClotKillWithKSG();
