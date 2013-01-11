@@ -34,10 +34,6 @@ defaultproperties
      DetachedHeadClass=Class'KFChar.SeveredHeadPound_XMas'
      HitSound(0)=SoundGroup'KF_EnemiesFinalSnd_Xmas.Fleshpound.FP_Pain'
      DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd_Xmas.Fleshpound.FP_Death'
-     ChallengeSound(0)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Challenge'
-     ChallengeSound(1)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Challenge'
-     ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Challenge'
-     ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Challenge'
      MenuName="Christmas Flesh Pound"
      AmbientSound=SoundGroup'KF_EnemiesFinalSnd_Xmas.Fleshpound.FP_Idle'
      Mesh=SkeletalMesh'KF_Freaks_Trip_Xmas.NutPound'

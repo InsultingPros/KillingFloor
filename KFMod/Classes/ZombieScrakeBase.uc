@@ -28,10 +28,13 @@ replication
 
 defaultproperties
 {
+     SawAttackLoopSound=Sound'KF_BaseScrake.Chainsaw.Scrake_Chainsaw_Impale'
+     ChainSawOffSound=SoundGroup'KF_ChainsawSnd.Chainsaw_Deselect'
      AttackChargeRate=2.500000
      ExhaustEffectClass=Class'KFMod.ChainsawExhaust'
      MeleeAnims(0)="SawZombieAttack1"
      MeleeAnims(1)="SawZombieAttack2"
+     MoanVoice=SoundGroup'KF_EnemiesFinalSnd.Scrake.Scrake_Talk'
      StunsRemaining=1
      BleedOutDuration=6.000000
      ZapThreshold=1.250000
@@ -41,6 +44,8 @@ defaultproperties
      damageForce=-75000
      bFatAss=True
      KFRagdollName="Scrake_Trip"
+     MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd.Scrake.Scrake_Chainsaw_HitPlayer'
+     JumpSound=SoundGroup'KF_EnemiesFinalSnd.Scrake.Scrake_Jump'
      bMeleeStunImmune=True
      Intelligence=BRAINS_Mammal
      bUseExtendedCollision=True
@@ -56,6 +61,12 @@ defaultproperties
      HeadHealth=650.000000
      PlayerNumHeadHealthScale=0.300000
      MotionDetectorThreat=3.000000
+     HitSound(0)=SoundGroup'KF_EnemiesFinalSnd.Scrake.Scrake_Pain'
+     DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd.Scrake.Scrake_Death'
+     ChallengeSound(0)=SoundGroup'KF_EnemiesFinalSnd.Scrake.Scrake_Challenge'
+     ChallengeSound(1)=SoundGroup'KF_EnemiesFinalSnd.Scrake.Scrake_Challenge'
+     ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd.Scrake.Scrake_Challenge'
+     ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd.Scrake.Scrake_Challenge'
      ScoringValue=75
      IdleHeavyAnim="SawZombieIdle"
      IdleRifleAnim="SawZombieIdle"
@@ -77,8 +88,12 @@ defaultproperties
      IdleCrouchAnim="SawZombieIdle"
      IdleWeaponAnim="SawZombieIdle"
      IdleRestAnim="SawZombieIdle"
+     AmbientSound=Sound'KF_BaseScrake.Chainsaw.Scrake_Chainsaw_Idle'
+     Mesh=SkeletalMesh'KF_Freaks_Trip.Scrake_Freak'
      DrawScale=1.050000
      PrePivot=(Z=3.000000)
+     Skins(0)=Shader'KF_Specimens_Trip_T.scrake_FB'
+     Skins(1)=TexPanner'KF_Specimens_Trip_T.scrake_saw_panner'
      SoundVolume=175
      SoundRadius=100.000000
      Mass=500.000000

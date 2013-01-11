@@ -126,7 +126,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 	bOwnsWeaponDLC = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC( WeaponDLCID );
 	bOwnsCharacterDLC = PlayerOwner().CharacterAvailable("DAR");
 
-	eventNum = 3;//KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements).Stat46.Value;
+	eventNum = 0;//KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements).Stat46.Value;
 
     if( eventNum == 2 )
     {

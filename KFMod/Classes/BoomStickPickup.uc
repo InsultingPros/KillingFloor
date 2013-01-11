@@ -3,14 +3,32 @@
 //=============================================================================
 class BoomStickPickup extends KFWeaponPickup;
 
+var int SingleShotCount;
+
 function ShowShotgunInfo(Canvas C)
 {
 	C.SetPos((C.SizeX - C.SizeY) / 2,0);
 	C.DrawTile( Texture'KillingfloorHUD.ClassMenu.Shotgun', C.SizeY, C.SizeY, 0.0, 0.0, 256, 256);
 }
 
+function InitDroppedPickupFor(Inventory Inv)
+{
+	local KFWeapon W;
+	local Inventory InvIt;
+	local byte bSaveAmmo[2];
+	local int m;
+
+    Super.InitDroppedPickupFor(Inv);
+
+	if ( Boomstick(Inv) != none )
+	{
+        SingleShotCount = BoomStick(Inv).SingleShotCount;
+	}
+}
+
 defaultproperties
 {
+     SingleShotCount=2
      cost=750
      AmmoCost=15
      BuyClipSize=6

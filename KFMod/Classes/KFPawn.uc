@@ -3327,6 +3327,7 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 	local KFWeapon KW;
 	local int c;
 	local float UsedMagCapacity;
+	local Boomstick DBShotty;
 
 	if ( !CanBuyNow() || AClass == None )
 	{
@@ -3351,6 +3352,8 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 		SetTraderUpdate();
 		return;
 	}
+
+    DBShotty = Boomstick(KW);
 
 	AM.MaxAmmo = AM.default.MaxAmmo;
 
@@ -3417,6 +3420,11 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 		}
 
 		AM.AddAmmo(c);
+		if( DBShotty != none )
+		{
+            DBShotty.AmmoPickedUp();
+		}
+
 		PlayerReplicationInfo.Score = Max(PlayerReplicationInfo.Score - (float(c) / UsedMagCapacity * Price), 0);
 
 		SetTraderUpdate();
@@ -3426,6 +3434,10 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 
 	PlayerReplicationInfo.Score = int(PlayerReplicationInfo.Score-Price);
 	AM.AddAmmo(c);
+	if( DBShotty != none )
+	{
+        DBShotty.AmmoPickedUp();
+	}
 
 	SetTraderUpdate();
 }

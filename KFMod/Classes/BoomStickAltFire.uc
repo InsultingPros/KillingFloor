@@ -11,6 +11,8 @@ var()   Emitter     Flash2Emitter;
 var()   name        MuzzleBoneLeft;
 var()   name        MuzzleBoneRight;
 
+var     bool        bVeryLastShotAnim;
+
 simulated function InitEffects()
 {
     // don't even spawn on server
@@ -57,7 +59,7 @@ function FlashMuzzleFlash()
 
 simulated function bool AllowFire()
 {
-	return (BoomStick(Weapon).SingleShotCount >= 1 && Weapon.AmmoAmount(ThisModeNum) >= AmmoPerFire);
+	return (BoomStick(Weapon).SingleShotCount >= 1);
 }
 
 // Overridden to support special anim functionality of the double barreled shotgun
@@ -100,7 +102,7 @@ function PlayFiring()
 		{
             if( KFWeap.bAimingRifle )
 			{
-                if( BoomStick(Weapon).SingleShotCount == 0 && Weapon.HasAnim(FireLastAimedAnim))
+                if( !bVeryLastShotAnim && BoomStick(Weapon).SingleShotCount == 0 && Weapon.HasAnim(FireLastAimedAnim))
                 {
                     Weapon.PlayAnim(FireLastAimedAnim, FireAnimRate, TweenTime);
                 }
@@ -115,7 +117,7 @@ function PlayFiring()
 			}
 			else
 			{
-                if( BoomStick(Weapon).SingleShotCount == 0 && Weapon.HasAnim(FireLastAnim))
+                if( !bVeryLastShotAnim && BoomStick(Weapon).SingleShotCount == 0 && Weapon.HasAnim(FireLastAnim))
                 {
                     Weapon.PlayAnim(FireLastAnim, FireAnimRate, TweenTime);
                 }
@@ -196,16 +198,19 @@ event ModeDoFire()
 
     BoomStick(Weapon).SingleShotCount--;
 
-    if( BoomStick(Weapon).SingleShotCount < 1 )
-    {
-        BoomStick(Weapon).SetPendingReload();
-    }
+    bVeryLastShotAnim = Weapon.AmmoAmount(0) <= AmmoPerFire;
 
     // server
     if (Weapon.Role == ROLE_Authority)
     {
+        if( BoomStick(Weapon).SingleShotCount < 1 )
+        {
+            BoomStick(Weapon).SetPendingReload();
+        }
+
         Weapon.ConsumeAmmo(ThisModeNum, Load);
         DoFireEffect();
+        BoomStick(Weapon).SetSingleShotReplication();
 		HoldTime = 0;	// if bot decides to stop firing, HoldTime must be reset first
         if ( (Instigator == None) || (Instigator.Controller == None) )
 			return;
@@ -219,12 +224,6 @@ event ModeDoFire()
     // client
     if (Instigator.IsLocallyControlled())
     {
-		// Need to consume ammo client side to make sure the right anims play
-        if( Weapon.Role < ROLE_Authority )
-		{
-	        Weapon.ConsumeAmmo(ThisModeNum, Load);
-        }
-
         ShakeView();
         PlayFiring();
         FlashMuzzleFlash();

@@ -44,6 +44,7 @@ defaultproperties
      HitAnims(0)="HitReactionF"
      HitAnims(1)="HitReactionF"
      HitAnims(2)="HitReactionF"
+     MoanVoice=SoundGroup'KF_EnemiesFinalSnd.siren.Siren_Talk'
      ZapThreshold=0.500000
      ZappedDamageMod=1.500000
      ZombieFlag=1
@@ -53,6 +54,7 @@ defaultproperties
      ZombieDamType(0)=Class'KFMod.DamTypeSlashingAttack'
      ZombieDamType(1)=Class'KFMod.DamTypeSlashingAttack'
      ZombieDamType(2)=Class'KFMod.DamTypeSlashingAttack'
+     JumpSound=SoundGroup'KF_EnemiesFinalSnd.siren.Siren_Jump'
      ScreamDamage=8
      CrispUpThreshhold=7
      bCanDistanceAttackDoors=True
@@ -68,6 +70,12 @@ defaultproperties
      HeadHealth=200.000000
      PlayerNumHeadHealthScale=0.050000
      MotionDetectorThreat=2.000000
+     HitSound(0)=SoundGroup'KF_EnemiesFinalSnd.siren.Siren_Pain'
+     DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd.siren.Siren_Death'
+     ChallengeSound(0)=SoundGroup'KF_EnemiesFinalSnd.siren.Siren_Challenge'
+     ChallengeSound(1)=SoundGroup'KF_EnemiesFinalSnd.siren.Siren_Challenge'
+     ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd.siren.Siren_Challenge'
+     ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd.siren.Siren_Challenge'
      ScoringValue=25
      SoundGroupClass=Class'KFMod.KFFemaleZombieSounds'
      IdleHeavyAnim="Siren_Idle"
@@ -91,7 +99,11 @@ defaultproperties
      IdleCrouchAnim="Siren_Idle"
      IdleWeaponAnim="Siren_Idle"
      IdleRestAnim="Siren_Idle"
+     AmbientSound=Sound'KF_BaseSiren.Siren_IdleLoop'
+     Mesh=SkeletalMesh'KF_Freaks_Trip.Siren_Freak'
      DrawScale=1.050000
      PrePivot=(Z=3.000000)
+     Skins(0)=FinalBlend'KF_Specimens_Trip_T.siren_hair_fb'
+     Skins(1)=Combiner'KF_Specimens_Trip_T.siren_cmb'
      RotationRate=(Yaw=45000,Roll=0)
 }

@@ -7,16 +7,127 @@ var()   Emitter     Flash2Emitter;
 var()   name        MuzzleBoneLeft;
 var()   name        MuzzleBoneRight;
 
+var()   name    FireLastAnim;
+var()   name    FireLastAimedAnim;
+
+var     bool        bVeryLastShotAnim;
+
 event ModeDoFire()
 {
 	if (!AllowFire())
 		return;
 
+    bVeryLastShotAnim = Weapon.AmmoAmount(0) <= AmmoPerFire;
+
     super.ModeDoFire();
 
-    BoomStick(Weapon).ClientSetSingleShotCount( 0 );
+    // server
+    if (Weapon.Role == ROLE_Authority)
+    {
+        BoomStick(Weapon).SingleShotCount = 0;
+        BoomStick(Weapon).SetSingleShotReplication();
+        BoomStick(Weapon).SetPendingReload();
+    }
+}
 
-    BoomStick(Weapon).SetPendingReload();
+// Overridden to support special anim functionality of the double barreled shotgun
+function PlayFiring()
+{
+    local float RandPitch;
+
+	if ( Weapon.Mesh != None )
+	{
+		if ( FireCount > 0 )
+		{
+			if( KFWeap.bAimingRifle )
+			{
+                if ( Weapon.HasAnim(FireLoopAimedAnim) )
+    			{
+    				Weapon.PlayAnim(FireLoopAimedAnim, FireLoopAnimRate, 0.0);
+    			}
+    			else if( Weapon.HasAnim(FireAimedAnim) )
+    			{
+    				Weapon.PlayAnim(FireAimedAnim, FireAnimRate, TweenTime);
+    			}
+    			else
+    			{
+                    Weapon.PlayAnim(FireAnim, FireAnimRate, TweenTime);
+    			}
+			}
+			else
+			{
+                if ( Weapon.HasAnim(FireLoopAnim) )
+    			{
+    				Weapon.PlayAnim(FireLoopAnim, FireLoopAnimRate, 0.0);
+    			}
+    			else
+    			{
+    				Weapon.PlayAnim(FireAnim, FireAnimRate, TweenTime);
+    			}
+			}
+		}
+		else
+		{
+            if( KFWeap.bAimingRifle )
+			{
+                if( bVeryLastShotAnim && Weapon.HasAnim(FireLastAimedAnim))
+                {
+                    Weapon.PlayAnim(FireLastAimedAnim, FireAnimRate, TweenTime);
+                }
+                else if( Weapon.HasAnim(FireAimedAnim) )
+    			{
+                    Weapon.PlayAnim(FireAimedAnim, FireAnimRate, TweenTime);
+    			}
+    			else
+    			{
+                    Weapon.PlayAnim(FireAnim, FireAnimRate, TweenTime);
+    			}
+			}
+			else
+			{
+                if( bVeryLastShotAnim && Weapon.HasAnim(FireLastAnim))
+                {
+                    Weapon.PlayAnim(FireLastAnim, FireAnimRate, TweenTime);
+                }
+                else
+                {
+                    Weapon.PlayAnim(FireAnim, FireAnimRate, TweenTime);
+                }
+			}
+		}
+	}
+	if( Weapon.Instigator != none && Weapon.Instigator.IsLocallyControlled() &&
+	   Weapon.Instigator.IsFirstPerson() && StereoFireSound != none )
+	{
+        if( bRandomPitchFireSound )
+        {
+            RandPitch = FRand() * RandomPitchAdjustAmt;
+
+            if( FRand() < 0.5 )
+            {
+                RandPitch *= -1.0;
+            }
+        }
+
+        Weapon.PlayOwnedSound(StereoFireSound,SLOT_Interact,TransientSoundVolume * 0.85,,TransientSoundRadius,(1.0 + RandPitch),false);
+    }
+    else
+    {
+        if( bRandomPitchFireSound )
+        {
+            RandPitch = FRand() * RandomPitchAdjustAmt;
+
+            if( FRand() < 0.5 )
+            {
+                RandPitch *= -1.0;
+            }
+        }
+
+        Weapon.PlayOwnedSound(FireSound,SLOT_Interact,TransientSoundVolume,,TransientSoundRadius,(1.0 + RandPitch),false);
+    }
+    ClientPlayForceFeedback(FireForce);  // jdf
+
+    FireCount++;
 }
 
 simulated function InitEffects()
@@ -59,7 +170,7 @@ function FlashMuzzleFlash()
 
 simulated function bool AllowFire()
 {
-	return (BoomStick(Weapon).SingleShotCount >= 1 && Weapon.AmmoAmount(ThisModeNum) >= AmmoPerFire);
+	return (BoomStick(Weapon).SingleShotCount >= 2);
 }
 
 // Handle setting new recoil
@@ -124,6 +235,8 @@ defaultproperties
 {
      MuzzleBoneLeft="Tip_Left"
      MuzzleBoneRight="Tip_Right"
+     FireLastAnim="Fire"
+     FireLastAimedAnim="Fire_Iron"
      KickMomentum=(X=-105.000000,Z=55.000000)
      RecoilRate=0.070000
      maxVerticalRecoilAngle=3200

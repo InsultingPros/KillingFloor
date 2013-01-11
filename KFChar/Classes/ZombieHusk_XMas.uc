@@ -35,5 +35,4 @@ defaultproperties
      AmbientSound=Sound'KF_BaseHusk_Xmas.Husk_IdleLoop'
      Mesh=SkeletalMesh'KF_Freaks2_Trip_XMas.JackFrost'
      Skins(0)=Shader'KF_Specimens_Trip_XMAS_T_Two.Husk_Snowman.husk_snowman_shdr'
-     Skins(1)=Shader'KF_Specimens_Trip_T_Two.burns.burns_shdr'
 }

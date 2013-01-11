@@ -144,6 +144,7 @@ simulated function UnCloakStalker()
 
 		Visibility = default.Visibility;
 		bCloaked = false;
+		bUnlit = false;
 
 		// 25% chance of our Enemy saying something about us being invisible
 		if( Level.NetMode!=NM_Client && !KFGameType(Level.Game).bDidStalkerInvisibleMessage && FRand()<0.25 && Controller.Enemy!=none &&
@@ -174,6 +175,8 @@ simulated function UnCloakStalker()
 simulated function SetZappedBehavior()
 {
     super.SetZappedBehavior();
+
+    bUnlit = false;
 
 	// Handle setting the zed to uncloaked so the zapped overlay works properly
     if( Level.Netmode != NM_DedicatedServer )

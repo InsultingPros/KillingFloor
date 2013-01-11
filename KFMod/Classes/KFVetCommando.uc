@@ -39,7 +39,7 @@ static function SpecialHUDInfo(KFPlayerReplicationInfo KFPRI, Canvas C)
 
 		foreach C.ViewPort.Actor.DynamicActors(class'KFMonster',KFEnemy)
 		{
-			if ( KFEnemy.Health > 0 && !KFEnemy.Cloaked() && VSizeSquared(KFEnemy.Location - C.ViewPort.Actor.Pawn.Location) < MaxDistanceSquared )
+			if ( KFEnemy.Health > 0 && (!KFEnemy.Cloaked() || KFEnemy.bZapped || KFEnemy.bSpotted) && VSizeSquared(KFEnemy.Location - C.ViewPort.Actor.Pawn.Location) < MaxDistanceSquared )
 			{
 				HKF.DrawHealthBar(C, KFEnemy, KFEnemy.Health, KFEnemy.HealthMax , 50.0);
 			}

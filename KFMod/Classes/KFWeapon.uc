@@ -1335,34 +1335,40 @@ simulated function WeaponTick(float dt)
 {
 	local float LastSeenSeconds,ReloadMulti;
 
-    if( bForceLeaveIronsights )
-    {
-    	ZoomOut(true);
-
-    	if( Role < ROLE_Authority)
-			ServerZoomOut(false);
-
-        bForceLeaveIronsights = false;
-    }
-
-    if( ForceZoomOutTime > 0 )
-    {
-        if( bAimingRifle )
+	if( bHasAimingMode )
+	{
+        if( bForceLeaveIronsights )
         {
-    	    if( Level.TimeSeconds - ForceZoomOutTime > 0 )
-    	    {
-                ForceZoomOutTime = 0;
-
-            	ZoomOut(true);
+        	if( bAimingRifle )
+        	{
+                ZoomOut(true);
 
             	if( Role < ROLE_Authority)
         			ServerZoomOut(false);
+            }
+
+            bForceLeaveIronsights = false;
+        }
+
+        if( ForceZoomOutTime > 0 )
+        {
+            if( bAimingRifle )
+            {
+        	    if( Level.TimeSeconds - ForceZoomOutTime > 0 )
+        	    {
+                    ForceZoomOutTime = 0;
+
+                	ZoomOut(true);
+
+                	if( Role < ROLE_Authority)
+            			ServerZoomOut(false);
+        		}
     		}
-		}
-		else
-		{
-            ForceZoomOutTime = 0;
-		}
+    		else
+    		{
+                ForceZoomOutTime = 0;
+    		}
+    	}
 	}
 
 	 if ( (Level.NetMode == NM_Client) || Instigator == None || KFFriendlyAI(Instigator.Controller) == none && Instigator.PlayerReplicationInfo == None)
@@ -1547,7 +1553,8 @@ function GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)
 					addAmount = Ammo[m].InitialAmount * (float(MagCapacity) / float(default.MagCapacity));
 			}
 
-			if ( WP != none && WP.Class == class'BoomstickPickup' && m > 0 )
+			// Don't double add ammo if primary and secondary fire modes share the same ammo class
+            if ( WP != none && m > 0 && (FireMode[m].AmmoClass == FireMode[0].AmmoClass) )
 			{
 				return;
 			}

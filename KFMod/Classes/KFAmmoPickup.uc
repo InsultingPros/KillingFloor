@@ -23,13 +23,20 @@ state Pickup
 		local Inventory CurInv;
 		local bool bPickedUp;
 		local int AmmoPickupAmount;
+		local Boomstick DBShotty;
+		local bool bResuppliedBoomstick;
 
 		if ( Pawn(Other) != none && Pawn(Other).bCanPickupInventory && Pawn(Other).Controller != none &&
 			 FastTrace(Other.Location, Location) )
 		{
 			for ( CurInv = Other.Inventory; CurInv != none; CurInv = CurInv.Inventory )
 			{
-				if ( KFAmmunition(CurInv) != none && KFAmmunition(CurInv).bAcceptsAmmoPickups )
+				if( Boomstick(CurInv) != none )
+				{
+				    DBShotty = Boomstick(CurInv);
+				}
+
+                if ( KFAmmunition(CurInv) != none && KFAmmunition(CurInv).bAcceptsAmmoPickups )
 				{
 					if ( KFAmmunition(CurInv).AmmoPickupAmount > 1 )
 					{
@@ -45,6 +52,10 @@ state Pickup
 							}
 
 							KFAmmunition(CurInv).AmmoAmount = Min(KFAmmunition(CurInv).MaxAmmo, KFAmmunition(CurInv).AmmoAmount + AmmoPickupAmount);
+							if( DBShotgunAmmo(CurInv) != none )
+							{
+                                bResuppliedBoomstick = true;
+							}
 							bPickedUp = true;
 						}
 					}
@@ -62,7 +73,12 @@ state Pickup
 
 			if ( bPickedUp )
 			{
-				AnnouncePickup(Pawn(Other));
+                if( bResuppliedBoomstick && DBShotty != none )
+                {
+                    DBShotty.AmmoPickedUp();
+                }
+
+                AnnouncePickup(Pawn(Other));
 				GotoState('Sleeping', 'Begin');
 
 				if ( KFGameType(Level.Game) != none )

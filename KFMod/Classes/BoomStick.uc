@@ -9,6 +9,7 @@ var     bool        bWaitingToLoadShotty;
 var     float       CurrentReloadCountDown;
 var()   float       ReloadCountDown;
 var     int         SingleShotCount;
+var     float       SingleShotReplicateCountdown;
 
 replication
 {
@@ -20,21 +21,47 @@ simulated function WeaponTick(float dt)
 {
     super.WeaponTick(dt);
 
-    if( bWaitingToLoadShotty )
+    if( Role == ROLE_Authority )
     {
-        CurrentReloadCountDown -= dt;
-
-        if( CurrentReloadCountDown <= 0 )
+        if( bWaitingToLoadShotty )
         {
-            if( AmmoAmount(0) > 0 )
+            CurrentReloadCountDown -= dt;
+
+            if( CurrentReloadCountDown <= 0 )
             {
-                MagAmmoRemaining = Min(AmmoAmount(0), 2);
-                SingleShotCount = MagAmmoRemaining;
-                ClientSetSingleShotCount(SingleShotCount);
-                NetUpdateTime = Level.TimeSeconds - 1;
-				bWaitingToLoadShotty = false;
+                if( AmmoAmount(0) > 0 )
+                {
+                    MagAmmoRemaining = Min(AmmoAmount(0), 2);
+                    SingleShotCount = MagAmmoRemaining;
+                    ClientSetSingleShotCount(SingleShotCount);
+                    NetUpdateTime = Level.TimeSeconds - 1;
+    				bWaitingToLoadShotty = false;
+                }
             }
         }
+
+        if( SingleShotReplicateCountdown > 0 )
+        {
+            SingleShotReplicateCountdown -= dt;
+
+            if( SingleShotReplicateCountdown <= 0 )
+            {
+                ClientSetSingleShotCount(SingleShotCount);
+            }
+        }
+    }
+}
+
+// When someone holding an empty gun picks up ammo, make sure and tell the
+// weapon that is has some shots it can take
+function AmmoPickedUp()
+{
+    if( SingleShotCount == 0 )
+    {
+        MagAmmoRemaining = Min(AmmoAmount(0), 2);
+        SingleShotCount = MagAmmoRemaining;
+        ClientSetSingleShotCount(SingleShotCount);
+        NetUpdateTime = Level.TimeSeconds - 1;
     }
 }
 
@@ -42,6 +69,15 @@ simulated function SetPendingReload()
 {
     bWaitingToLoadShotty = true;
     CurrentReloadCountDown = ReloadCountDown;
+}
+
+// Replicate the SingleShotCount on a slight delay. This prevents
+// it from replicating from the server before the client does
+// its shooting animation/sound effects which would prevent
+// those from playing
+function SetSingleShotReplication()
+{
+    SingleShotReplicateCountdown=0.05;
 }
 
 simulated function ClientSetSingleShotCount(float NewSingleShotCount)
@@ -146,6 +182,26 @@ function bool AllowReload()
 	}
 
 	return super.AllowReload();
+}
+
+function GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)
+{
+    super.GiveAmmo(m,WP,bJustSpawned);
+
+    // Update the singleshotcount if we pick this weapon up
+    if( WP != none )
+    {
+        if( m == 0 && AmmoAmount(0) < 2 )
+        {
+            SingleShotCount = AmmoAmount(0);
+            ClientSetSingleShotCount(SingleShotCount);
+        }
+        else if( BoomStickPickup(WP) != none )
+        {
+            SingleShotCount = BoomStickPickup(WP).SingleShotCount;
+            ClientSetSingleShotCount(SingleShotCount);
+        }
+    }
 }
 
 defaultproperties
