@@ -483,26 +483,28 @@ simulated function HurtRadius( float DamageAmount, float DamageRadius, class<Dam
 // Alex
 function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> damageType, optional int HitIndex)
 {
-    if( damageType == class'DamTypePipeBomb' ||  (Damage < 25 && damageType != class'SirenScreamDamage') )
+    if ( damageType == class'DamTypePipeBomb' ||
+         ClassIsChildOf(damageType, class'DamTypeMelee') ||
+         (Damage < 25 && damageType.IsA('SirenScreamDamage')) )
     {
         return;
     }
 
     // Don't let our own explosives blow this up!!!
-    if( InstigatedBy == none || InstigatedBy != none && InstigatedBy.PlayerReplicationInfo != none
-        && InstigatedBy.PlayerReplicationInfo.Team != none
-        && InstigatedBy.PlayerReplicationInfo.Team.TeamIndex == PlacedTeam
-        && Class<KFWeaponDamageType>(damageType) != none &&
-        (Class<KFWeaponDamageType>(damageType).default.bIsExplosive
-        || InstigatedBy != Instigator) )
+    if ( InstigatedBy == none || InstigatedBy != none &&
+         InstigatedBy.PlayerReplicationInfo != none &&
+         InstigatedBy.PlayerReplicationInfo.Team != none &&
+         InstigatedBy.PlayerReplicationInfo.Team.TeamIndex == PlacedTeam &&
+         Class<KFWeaponDamageType>(damageType) != none &&
+         (Class<KFWeaponDamageType>(damageType).default.bIsExplosive ||
+         InstigatedBy != Instigator) )
     {
         return;
     }
 
-
-    if( damageType == class'SirenScreamDamage')
+     if ( damageType == class'SirenScreamDamage')
     {
-        if( Damage >= 5 )
+        if ( Damage >= 5 )
         {
             Disintegrate(HitLocation, vect(0,0,1));
         }

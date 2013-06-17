@@ -2019,43 +2019,164 @@ function WonGame(string MapName, float Difficulty, bool bLong)
 	{
 		if ( MapName ~= "KF-WestLondon" )
 		{
-			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinWestLondonNormal);
+			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinWestLondonNormal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWestLondonNormal);
+			}
+			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinWestLondonHard].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWestLondonHard);
+			}
+			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinWestLondonSuicidal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWestLondonSuicidal);
+			}
+			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinWestLondonHell].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWestLondonHell);
+			}
 		}
 		else if ( MapName ~= "KF-Manor" )
 		{
-			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinManorNormal);
+			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinManorNormal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinManorNormal);
+			}
+			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinManorHard].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinManorHard);
+			}
+			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinManorSuicidal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinManorSuicidal);
+			}
+			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinManorHell].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinManorHell);
+			}
 		}
 		else if ( MapName ~= "KF-BioticsLab" )
 		{
-			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinBioticsLabNormal);
+			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinBioticsLabNormal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBioticsLabNormal);
+			}
+			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinBioticsLabHard].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBioticsLabHard);
+			}
+			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinBioticsLabSuicidal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBioticsLabSuicidal);
+			}
+			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinBioticsLabHell].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinBioticsLabHell);
+			}
 		}
 		else if ( MapName ~= "KF-Farm" )
 		{
-			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinFarmNormal);
+			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinFarmNormal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFarmNormal);
+			}
+			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinFarmHard].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFarmHard);
+			}
+			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinFarmSuicidal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFarmSuicidal);
+			}
+			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinFarmHell].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFarmHell);
+			}
 		}
 		else if ( MapName ~= "KF-Offices" )
 		{
-			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinOfficesNormal);
+			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinOfficesNormal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinOfficesNormal);
+			}
+			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinOfficesHard].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinOfficesHard);
+			}
+			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinOfficesSuicidal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinOfficesSuicidal);
+			}
+			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinOfficesHell].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinOfficesHell);
+			}
 		}
 		else if ( MapName ~= "KF-Foundry" )
 		{
-			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinFoundryNormal);
+			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinFoundryNormal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFoundryNormal);
+			}
+			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinFoundryHard].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFoundryHard);
+			}
+			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinFoundrySuicidal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFoundrySuicidal);
+			}
+			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinFoundryHell].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinFoundryHell);
+			}
 		}
 		else if ( MapName ~= "KF-Bedlam" )
 		{
-            if ( Difficulty == 4.0 )
+			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinAsylumNormal].bCompleted == 0 )
 			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinAsylumNormal);
+			}
+			else if ( Difficulty == 4.0 )
+			{
+				if ( Achievements[KFACHIEVEMENT_WinAsylumHard].bCompleted == 0 )
+				{
+					SetSteamAchievementCompleted(KFACHIEVEMENT_WinAsylumHard);
+				}
+
 				if ( Achievements[KFACHIEVEMENT_WinBedlamHardHalloween].bCompleted == 0 )
 				{
 					SetSteamAchievementCompleted(KFACHIEVEMENT_WinBedlamHardHalloween);
 					CheckHalloweenAchievementsCompleted();
 				}
 			}
-			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinAsylumNormal);
+			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinAsylumSuicidal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinAsylumSuicidal);
+			}
+			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinAsylumHell].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinAsylumHell);
+			}
 		}
 		else if ( MapName ~= "KF-Wyre" )
 		{
-			CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinWyreNormal);
+			if ( Difficulty == 2.0 && Achievements[KFACHIEVEMENT_WinWyreNormal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWyreNormal);
+			}
+			else if ( Difficulty == 4.0 && Achievements[KFACHIEVEMENT_WinWyreHard].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWyreHard);
+			}
+			else if ( Difficulty == 5.0 && Achievements[KFACHIEVEMENT_WinWyreSuicidal].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWyreSuicidal);
+			}
+			else if ( Difficulty == 7.0 && Achievements[KFACHIEVEMENT_WinWyreHell].bCompleted == 0 )
+			{
+				SetSteamAchievementCompleted(KFACHIEVEMENT_WinWyreHell);
+			}
 		}
 		else if ( MapName ~= "KF-Biohazard" )
 		{

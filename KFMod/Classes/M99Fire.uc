@@ -27,8 +27,6 @@ function DoFireEffect()
 defaultproperties
 {
      EffectiveRange=25000.000000
-     KickMomentum=(X=-150.000000,Z=85.000000)
-     LowGravKickMomentumScale=7.000000
      RecoilRate=0.100000
      maxVerticalRecoilAngle=4000
      maxHorizontalRecoilAngle=90

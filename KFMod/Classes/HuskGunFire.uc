@@ -181,7 +181,7 @@ function projectile SpawnProjectile(Vector Start, Rotator Dir)
     else
     {
         ProjectileClass = StrongProjectileClass;
-    }
+}
 
     p = super.SpawnProjectile(Start, Dir);
 

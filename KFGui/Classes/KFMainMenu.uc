@@ -671,7 +671,7 @@ function bool CharacterDLCButtonClicked(GUIComponent Sender)
 {
 	if ( !bOwnsCharacterDLC )
 	{
-		PlayerOwner().PurchaseCharacter("ChickenNator");
+		PlayerOwner().PurchaseCharacter("DAR");
 		return true;
 	}
 
