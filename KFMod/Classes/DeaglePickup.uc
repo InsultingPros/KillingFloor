@@ -17,7 +17,10 @@ function inventory SpawnCopy(pawn Other)
 
 	for ( I = Other.Inventory; I != none; I = I.Inventory )
 	{
-		if ( Deagle(I) != none )
+        // can't just cast to Deagle to check, because golden deagle is a deagle
+        // but we don't want to take your golden deagle and give you dual
+        // normal deagles
+		if( I.Class == class'Deagle' )
 		{
 			if( Inventory != none )
 				Inventory.Destroy();
@@ -50,6 +53,7 @@ defaultproperties
      showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Handcannon_3rd'
      CorrespondingPerkIndex=2
      EquipmentCategoryID=1
+     GoldenVariantClass=Class'KFMod.GoldenDeaglePickup'
      InventoryType=Class'KFMod.Deagle'
      PickupMessage="You got the Handcannon"
      PickupSound=Sound'KF_HandcannonSnd.50AE_Pickup'

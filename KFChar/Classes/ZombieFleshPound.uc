@@ -130,7 +130,8 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
 	// Frags and LAW rockets will bring him down way faster than bullets and shells.
 	if ( DamageType != class 'DamTypeFrag' && DamageType != class 'DamTypeLaw' && DamageType != class 'DamTypePipeBomb'
         && DamageType != class 'DamTypeM79Grenade' && DamageType != class 'DamTypeM32Grenade'
-        && DamageType != class 'DamTypeM203Grenade' && DamageType != class 'DamTypeMedicNade')
+        && DamageType != class 'DamTypeM203Grenade' && DamageType != class 'DamTypeMedicNade'
+        && DamageType != class 'DamTypeSPGrenade')
 	{
 		// Don't reduce the damage so much if its a high headshot damage weapon
 		if( bIsHeadShot && class<KFWeaponDamageType>(damageType)!=none &&
@@ -155,7 +156,7 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
     // A little extra damage from the grenade launchers, they are HE not shrapnel,
     // and its shrapnel that REALLY hurts the FP ;)
     else if( DamageType == class 'DamTypeM79Grenade' || DamageType == class 'DamTypeM32Grenade'
-         || DamageType == class 'DamTypeM203Grenade' )
+         || DamageType == class 'DamTypeM203Grenade' || DamageType == class 'DamTypeSPGrenade' )
     {
         Damage *= 1.25;
     }

@@ -79,6 +79,11 @@ static function float AddExtraAmmoFor(KFPlayerReplicationInfo KFPRI, Class<Ammun
 		return 1.0 + (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 60% increase in Flare gun ammo carry
 	}
 
+	if ( AmmoType == class'GoldenFlameAmmo' && KFPRI.ClientVeteranSkillLevel > 0 )
+	{
+		return 1.0 + (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 60% increase in Flare gun ammo carry
+	}
+
 	return 1.0;
 }
 
@@ -199,7 +204,7 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 {
 	if ( Item == class'FlameThrowerPickup' || Item == class'MAC10Pickup'
         || Item == class'HuskGunPickup' || Item == class'TrenchgunPickup' || Item == class'FlareRevolverPickup'
-        || Item == class'DualFlareRevolverPickup' )
+        || Item == class'DualFlareRevolverPickup' || Item == class'GoldenFTPickup' )
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on Flame Weapons
 	}

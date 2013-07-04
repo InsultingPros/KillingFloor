@@ -110,6 +110,8 @@ simulated function InitMaterials()
 
 simulated function Tick(float dt)
 {
+    local KFDoorMover LastDoorHitActor;
+
 	if (FireMode[0].bIsFiring)
 		FireModeArray = 0;
 	else if (FireMode[1].bIsFiring)
@@ -120,7 +122,13 @@ simulated function Tick(float dt)
 	if (WeldFire(FireMode[FireModeArray]).LastHitActor != none && VSize(WeldFire(FireMode[FireModeArray]).LastHitActor.Location - Owner.Location) <= (weaponRange * 1.5) )
 	{
 		bNoTarget = false;
-		ScreenWeldPercent = ((WeldFire(FireMode[FireModeArray]).LastHitActor.WeldStrength) / (WeldFire(FireMode[FireModeArray]).LastHitActor.MaxWeld)) * 100;
+		LastDoorHitActor = KFDoorMover(WeldFire(FireMode[FireModeArray]).LastHitActor);
+
+        if(LastDoorHitActor != none)
+        {
+            ScreenWeldPercent = (LastDoorHitActor.WeldStrength / LastDoorHitActor.MaxWeld) * 100;
+        }
+
 		if( ScriptedScreen==None )
 			InitMaterials();
 		ScriptedScreen.Revision++;

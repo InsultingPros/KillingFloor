@@ -10,6 +10,7 @@ var() float MaxAccuracyBonus,CrouchedAccuracyBonus;  // Lower number = higher bo
 var() float EffectiveRange;
 
 var() vector KickMomentum;
+var() float LowGravKickMomentumScale;   // How much to scale up kick momentum in low grav so guys fly around hilariously :)
 var() bool bFiringDoesntAffectMovement;
 
 var(Recoil)		float			RecoilRate;					// Time in seconds each recoil should take to be applied. Must be less than the fire rate or the full recoil wont be applied
@@ -154,9 +155,20 @@ function DoFireEffect()
         SpawnProjectile(StartProj, Aim);
     }
 
-	if (Instigator != none && Instigator.Physics != PHYS_Falling)
+	if (Instigator != none )
+	{
+        if( Instigator.Physics != PHYS_Falling  )
+        {
             Instigator.AddVelocity(KickMomentum >> Instigator.GetViewRotation());
 		}
+		// Really boost the momentum for low grav
+        else if( Instigator.Physics == PHYS_Falling
+            && Instigator.PhysicsVolume.Gravity.Z > class'PhysicsVolume'.default.Gravity.Z)
+        {
+            Instigator.AddVelocity((KickMomentum * LowGravKickMomentumScale) >> Instigator.GetViewRotation());
+        }
+	}
+}
 
 function float GetFireSpeed()
 {
@@ -216,6 +228,8 @@ simulated function HandleRecoil(float Rec)
 	local rotator NewRecoilRotation;
 	local KFPlayerController KFPC;
 	local KFPawn KFPwn;
+	local vector AdjustedVelocity;
+	local float AdjustedSpeed;
 
     if( Instigator != none )
     {
@@ -236,8 +250,26 @@ simulated function HandleRecoil(float Rec)
           	if( Rand( 2 ) == 1 )
              	NewRecoilRotation.Yaw *= -1;
 
+            if( Weapon.Owner != none && Weapon.Owner.Physics == PHYS_Falling &&
+                Weapon.Owner.PhysicsVolume.Gravity.Z > class'PhysicsVolume'.default.Gravity.Z )
+            {
+                AdjustedVelocity = Weapon.Owner.Velocity;
+                // Ignore Z velocity in low grav so we don't get massive recoil
+                AdjustedVelocity.Z = 0;
+                AdjustedSpeed = VSize(AdjustedVelocity);
+                //log("AdjustedSpeed = "$AdjustedSpeed$" scale = "$(AdjustedSpeed* RecoilVelocityScale * 0.5));
+
+                // Reduce the falling recoil in low grav
+                NewRecoilRotation.Pitch += (AdjustedSpeed* 3 * 0.5);
+        	    NewRecoilRotation.Yaw += (AdjustedSpeed* 3 * 0.5);
+    	    }
+    	    else
+    	    {
+                //log("Velocity = "$VSize(Weapon.Owner.Velocity)$" scale = "$(VSize(Weapon.Owner.Velocity)* RecoilVelocityScale));
         	    NewRecoilRotation.Pitch += (VSize(Weapon.Owner.Velocity)* 3);
         	    NewRecoilRotation.Yaw += (VSize(Weapon.Owner.Velocity)* 3);
+    	    }
+
     	    NewRecoilRotation.Pitch += (Instigator.HealthMax / Instigator.Health * 5);
     	    NewRecoilRotation.Yaw += (Instigator.HealthMax / Instigator.Health * 5);
     	    NewRecoilRotation *= Rec;
@@ -398,6 +430,7 @@ defaultproperties
 {
      CrouchedAccuracyBonus=0.600000
      EffectiveRange=700.000000
+     LowGravKickMomentumScale=10.000000
      RecoilRate=0.050000
      bRandomPitchFireSound=True
      RandomPitchAdjustAmt=0.050000

@@ -21,6 +21,7 @@ defaultproperties
      ItemShortName="Chainsaw"
      showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Chainsaw_3rd'
      CorrespondingPerkIndex=4
+     GoldenVariantClass=Class'KFMod.GoldenChainsawPickup'
      InventoryType=Class'KFMod.Chainsaw'
      PickupMessage="You got the Chainsaw."
      PickupSound=Sound'KF_ChainsawSnd.Chainsaw_Pickup'

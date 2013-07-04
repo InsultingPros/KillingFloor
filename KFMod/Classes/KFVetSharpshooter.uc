@@ -15,6 +15,7 @@ static function float GetHeadShotDamMulti(KFPlayerReplicationInfo KFPRI, KFPawn 
 		  DmgType == class'DamTypeMagnum44Pistol' || DmgType == class'DamTypeDual44Magnum'
           || DmgType == class'DamTypeMK23Pistol' || DmgType == class'DamTypeDualMK23Pistol'
           || DmgType == class'DamTypeM99SniperRifle' || DmgType == class'DamTypeM99HeadShot' ||
+          DmgType == class'DamTypeSPSniper' ||
 		 (DmgType == class'DamTypeDualies' && KFPRI.Level.Game.GameDifficulty < 7.0) )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel <= 3 )
@@ -57,7 +58,8 @@ static function float ModifyRecoilSpread(KFPlayerReplicationInfo KFPRI, WeaponFi
 	if ( Crossbow(Other.Weapon) != none || Winchester(Other.Weapon) != none
         || Single(Other.Weapon) != none || Dualies(Other.Weapon) != none
         || Deagle(Other.Weapon) != none || DualDeagle(Other.Weapon) != none
-		|| M14EBRBattleRifle(Other.Weapon) != none || M99SniperRifle(Other.Weapon) != none )
+		|| M14EBRBattleRifle(Other.Weapon) != none || M99SniperRifle(Other.Weapon) != none
+        || SPSniperRifle(Other.Weapon) != none )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel == 1)
 		{
@@ -82,7 +84,8 @@ static function float ModifyRecoilSpread(KFPlayerReplicationInfo KFPRI, WeaponFi
 // Modify fire speed
 static function float GetFireSpeedMod(KFPlayerReplicationInfo KFPRI, Weapon Other)
 {
-	if ( Winchester(Other) != none || Crossbow(Other) != none || M99SniperRifle(Other) != none)
+	if ( Winchester(Other) != none || Crossbow(Other) != none || M99SniperRifle(Other) != none
+        || SPSniperRifle(Other) != none )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel == 0 )
 		{
@@ -102,7 +105,7 @@ static function float GetReloadSpeedModifier(KFPlayerReplicationInfo KFPRI, KFWe
          || Deagle(Other) != none || DualDeagle(Other) != none
          || MK23Pistol(Other) != none || DualMK23Pistol(Other) != none
          || M14EBRBattleRifle(Other) != none || Magnum44Pistol(Other) != none
-         || Dual44Magnum(Other) != none )
+         || Dual44Magnum(Other) != none || SPSniperRifle(Other) != none )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel == 0 )
 		{
@@ -121,7 +124,9 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 	if ( Item == class'DeaglePickup' || Item == class'DualDeaglePickup' ||
 	    Item == class'MK23Pickup' || Item == class'DualMK23Pickup' ||
         Item == class'Magnum44Pickup' || Item == class'Dual44MagnumPickup'
-        || Item == class'M14EBRPickup' || Item == class'M99Pickup'  )
+        || Item == class'M14EBRPickup' || Item == class'M99Pickup'
+        || Item == class'SPSniperPickup' || Item == class'GoldenDeaglePickup'
+        || Item == class'GoldenDualDeaglePickup' )
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on Handcannon/Dual Handcannons/EBR/44 Magnum(s)
 	}
@@ -161,12 +166,12 @@ defaultproperties
      OnHUDIcon=Texture'KillingFloorHUD.Perks.Perk_SharpShooter'
      OnHUDGoldIcon=Texture'KillingFloor2HUD.Perk_Icons.Perk_SharpShooter_Gold'
      VeterancyName="Sharpshooter"
-     Requirements(0)="Get %x headshot kills with Pistols, Rifle, Crossbow, M14, or M99"
+     Requirements(0)="Get %x headshot kills with Pistols, Rifle, Crossbow, M14, M99, or S.P. Musket"
      LevelEffects(0)="5% more damage with Pistols, Rifle, Crossbow, M14, and M99|5% extra Headshot damage with all weapons|10% discount on Handcannon/M14/M99"
-     LevelEffects(1)="10% more damage with Pistols, Rifle, Crossbow, M14, and M99|25% less recoil with Pistols, Rifle, Crossbow, M14, and M99|10% faster reload with Pistols, Rifle, Crossbow, M14, and M99|10% extra headshot damage|20% discount on Handcannon/44 Magnum/M14/M99"
-     LevelEffects(2)="15% more damage with Pistols, Rifle, Crossbow, M14, and M99|50% less recoil with Pistols, Rifle, Crossbow, M14, and M99|20% faster reload with Pistols, Rifle, Crossbow, M14, and M99|20% extra headshot damage|30% discount on Handcannon/44 Magnum/M14/M99"
-     LevelEffects(3)="20% more damage with Pistols, Rifle, Crossbow, M14, and M99|75% less recoil with Pistols, Rifle, Crossbow, M14, and M99|30% faster reload with Pistols, Rifle, Crossbow, M14, and M99|30% extra headshot damage|40% discount on Handcannon/44 Magnum/M14/M99"
-     LevelEffects(4)="30% more damage with Pistols, Rifle, Crossbow, M14, and M99|75% less recoil with Pistols, Rifle, Crossbow, M14, and M99|40% faster reload with Pistols, Rifle, Crossbow, M14, and M99|40% extra headshot damage|50% discount on Handcannon/44 Magnum/M14/M99"
-     LevelEffects(5)="50% more damage with Pistols, Rifle, Crossbow, M14, and M99|75% less recoil with Pistols, Rifle, Crossbow, M14, and M99|50% faster reload with Pistols, Rifle, Crossbow, M14, and M99|50% extra headshot damage|60% discount on Handcannon/44 Magnum/M14/M99|Spawn with a Lever Action Rifle"
-     LevelEffects(6)="60% more damage with Pistols, Rifle, Crossbow, M14, and M99|75% less recoil with Pistols, Rifle, Crossbow, M14, and M99|60% faster reload with Pistols, Rifle, Crossbow, M14, and M99|50% extra headshot damage|70% discount on Handcannon/44 Magnum/M14/M99|Spawn with a Crossbow"
+     LevelEffects(1)="10% more damage with Pistols, Rifle, Crossbow, M14, and M99|25% less recoil with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|10% faster reload with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|10% extra headshot damage|20% discount on Handcannon/44 Magnum/M14/M99/S.P. Musket"
+     LevelEffects(2)="15% more damage with Pistols, Rifle, Crossbow, M14, and M99|50% less recoil with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|20% faster reload with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|20% extra headshot damage|30% discount on Handcannon/44 Magnum/M14/M99/S.P. Musket"
+     LevelEffects(3)="20% more damage with Pistols, Rifle, Crossbow, M14, and M99|75% less recoil with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|30% faster reload with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|30% extra headshot damage|40% discount on Handcannon/44 Magnum/M14/M99/S.P. Musket"
+     LevelEffects(4)="30% more damage with Pistols, Rifle, Crossbow, M14, and M99|75% less recoil with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|40% faster reload with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|40% extra headshot damage|50% discount on Handcannon/44 Magnum/M14/M99/S.P. Musket"
+     LevelEffects(5)="50% more damage with Pistols, Rifle, Crossbow, M14, and M99|75% less recoil with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|50% faster reload with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|50% extra headshot damage|60% discount on Handcannon/44 Magnum/M14/M99/S.P. Musket|Spawn with a Lever Action Rifle"
+     LevelEffects(6)="60% more damage with Pistols, Rifle, Crossbow, M14, and M99|75% less recoil with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|60% faster reload with Pistols, Rifle, Crossbow, M14, M99, and S.P. Musket|50% extra headshot damage|70% discount on Handcannon/44 Magnum/M14/M99/S.P. Musket|Spawn with a Crossbow"
 }

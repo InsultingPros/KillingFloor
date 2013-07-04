@@ -913,6 +913,12 @@ state() TriggerToggle
 		{
 			if( EventInstigator.Controller != none && AIController(EventInstigator.Controller) == none )
 				GotoState( 'TriggerToggle', 'Close' );
+// KFO Mod
+			else if(EventInstigator == none)     // always, always toggle this mover, even when there's no instigator.
+		    {
+				GotoState( 'TriggerToggle', 'Close' );
+		    }
+// END KFO
 			//else
 			//	log("Don't let bots close doors!!! bClosed = "$bClosed);
 		}

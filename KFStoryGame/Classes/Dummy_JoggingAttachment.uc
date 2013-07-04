@@ -1,0 +1,31 @@
+class Dummy_JoggingAttachment extends KFMeleeAttachment;
+
+defaultproperties
+{
+     MovementAnims(0)="JogF_Pipe"
+     MovementAnims(1)="JogB_Pipe"
+     MovementAnims(2)="JogL_Pipe"
+     MovementAnims(3)="JogR_Pipe"
+     TurnLeftAnim="TurnL_Pipe"
+     TurnRightAnim="TurnR_Pipe"
+     CrouchAnims(0)="CHwalkF_Pipe"
+     CrouchAnims(1)="CHwalkB_Pipe"
+     CrouchAnims(2)="CHwalkL_Pipe"
+     CrouchAnims(3)="CHwalkR_Pipe"
+     CrouchTurnRightAnim="CH_TurnR_Pipe"
+     CrouchTurnLeftAnim="CH_TurnL_Pipe"
+     IdleCrouchAnim="CHIdle_Pipe"
+     IdleWeaponAnim="Idle_Pipe"
+     IdleRestAnim="Idle_Pipe"
+     IdleChatAnim="Idle_Pipe"
+     IdleHeavyAnim="Idle_Pipe"
+     IdleRifleAnim="Idle_Pipe"
+     FireAnims(0)="Attack1_Pipe"
+     FireAnims(1)="Attack2_Pipe"
+     FireAnims(2)="Attack3_Pipe"
+     FireAnims(3)="Attack4_Pipe"
+     FireAltAnims(0)="Attack1_Pipe"
+     FireAltAnims(1)="Attack2_Pipe"
+     FireAltAnims(2)="Attack3_Pipe"
+     FireAltAnims(3)="Attack4_Pipe"
+}

@@ -166,27 +166,27 @@ function Timer()
     }
 }
 
-function projectile SpawnProjectile(Vector Start, Rotator Dir)
+/* Accessor function that returns the type of projectile we want this weapon to fire right now. */
+function class<Projectile> GetDesiredProjectileClass()
 {
-    local Projectile p;
-
     if( HoldTime < (MaxChargeTime * 0.33) )
     {
-        ProjectileClass = WeakProjectileClass;
+        return WeakProjectileClass;
     }
     else if( HoldTime < (MaxChargeTime * 0.66) )
     {
-        ProjectileClass = default.ProjectileClass;
+        return default.ProjectileClass;
     }
     else
     {
-        ProjectileClass = StrongProjectileClass;
+        return StrongProjectileClass;
+    }
 }
 
-    p = super.SpawnProjectile(Start, Dir);
-
-    if( p == None )
-        return None;
+/* Convenient place to perform changes to a newly spawned projectile */
+function PostSpawnProjectile(Projectile P)
+{
+    Super.PostSpawnProjectile(P);
 
     if( HoldTime < MaxChargeTime )
     {
@@ -200,7 +200,6 @@ function projectile SpawnProjectile(Vector Start, Rotator Dir)
         HuskGunProjectile(p).Damage *= 2.0;// up to double damage
         HuskGunProjectile(p).DamageRadius *= 3.0;// up 3x the damage radius
     }
-    return p;
 }
 
 // Handle setting new recoil

@@ -11,24 +11,15 @@ function InitEffects()
 {
 }
 
-function projectile SpawnProjectile(Vector Start, Rotator Dir)
+/* Convenient place to perform changes to a newly spawned projectile */
+function PostSpawnProjectile(Projectile P)
 {
-    local Projectile p;
-
-    if( ProjectileClass != None )
-        p = Weapon.Spawn(ProjectileClass,,, Start, Dir);
-
-    if( p == None )
-        return None;
-
-    p.Damage *= DamageAtten;
+    Super.PostSpawnProjectile(P);
 
     if( PipeBombProjectile(p) != none && Instigator != none )
     {
         PipeBombProjectile(p).PlacedTeam = Instigator.PlayerReplicationInfo.Team.TeamIndex;
     }
-
-    return p;
 }
 
 function Timer()

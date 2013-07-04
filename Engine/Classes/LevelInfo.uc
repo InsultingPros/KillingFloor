@@ -60,6 +60,10 @@ var(Bloom) float BloomRatioMaximum;
 // end _RO_
 //END RO BLOOM
 
+/* KFO */
+var(Rules_Objectives)	const	array<name>		StoryObjectives;
+/* END KFO*/
+
 var(SinglePlayer) int   SinglePlayerTeamSize;
 
 var(RadarMap) Material RadarMapImage;
@@ -496,7 +500,7 @@ simulated event PreBeginPlay()
 	Super.PreBeginPlay();
 
 	ObjectPool = new(xLevel) class'ObjectPool';
-	
+
 // if _KF_
 	switch ( rand(2) )
 	{

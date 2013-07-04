@@ -26,7 +26,8 @@ static function int AddDamage(KFPlayerReplicationInfo KFPRI, KFMonster Injured, 
 {
 	if ( class<DamTypeFrag>(DmgType) != none || class<DamTypePipeBomb>(DmgType) != none ||
 		 class<DamTypeM79Grenade>(DmgType) != none || class<DamTypeM32Grenade>(DmgType) != none
-         || class<DamTypeM203Grenade>(DmgType) != none || class<DamTypeRocketImpact>(DmgType) != none )
+         || class<DamTypeM203Grenade>(DmgType) != none || class<DamTypeRocketImpact>(DmgType) != none
+         || class<DamTypeSPGrenade>(DmgType) != none )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel == 0 )
 		{
@@ -43,7 +44,8 @@ static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, 
 {
 	if ( class<DamTypeFrag>(DmgType) != none || class<DamTypePipeBomb>(DmgType) != none ||
 		 class<DamTypeM79Grenade>(DmgType) != none || class<DamTypeM32Grenade>(DmgType) != none
-         || class<DamTypeM203Grenade>(DmgType) != none || class<DamTypeRocketImpact>(DmgType) != none )
+         || class<DamTypeM203Grenade>(DmgType) != none || class<DamTypeRocketImpact>(DmgType) != none
+         || class<DamTypeSPGrenade>(DmgType) != none )
 	{
 		return float(InDamage) * (0.75 - (0.05 * float(KFPRI.ClientVeteranSkillLevel)));
 	}
@@ -61,7 +63,7 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 	}
 	else if ( Item == class'M79Pickup' || Item == class 'M32Pickup'
         || Item == class 'LawPickup' || Item == class 'M4203Pickup'
-        || Item == class'GoldenM79Pickup' )
+        || Item == class'GoldenM79Pickup' || Item == class'SPGrenadePickup' )
 	{
 		return 0.90 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on M79/M32
 	}
@@ -78,7 +80,7 @@ static function float GetAmmoCostScaling(KFPlayerReplicationInfo KFPRI, class<Pi
 	}
 	else if ( Item == class'M79Pickup' || Item == class'M32Pickup'
         || Item == class'LAWPickup' || Item == class'M4203Pickup'
-        || Item == class'GoldenM79Pickup' )
+        || Item == class'GoldenM79Pickup' || Item == class'SPGrenadePickup' )
 	{
 		return 1.0 - (0.05 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 30% discount on Grenade Launcher and LAW Ammo(Balance Round 5)
 	}

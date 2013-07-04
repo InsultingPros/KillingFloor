@@ -1,6 +1,16 @@
 class DamTypeM14EBR extends KFProjectileWeaponDamageType
 	abstract;
 
+static function ScoredHeadshot(KFSteamStatsAndAchievements KFStatsAndAchievements, class<KFMonster> MonsterClass, bool bLaserSightedM14EBRKill)
+{
+	super.ScoredHeadshot( KFStatsAndAchievements, MonsterClass, bLaserSightedM14EBRKill );
+
+	if ( KFStatsAndAchievements != none )
+	{
+     	KFStatsAndAchievements.AddHeadshotsWithSPSOrM14( MonsterClass );
+	}
+}
+
 defaultproperties
 {
      HeadShotDamageMult=2.250000

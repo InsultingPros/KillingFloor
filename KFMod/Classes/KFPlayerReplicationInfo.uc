@@ -99,6 +99,17 @@ function FakePlayerPawn GetBlamePawn()
 	BlamePawn.Controller = Controller(Owner);
 }
 
+function ReceiveRewardForHealing( int MedicReward, KFPawn Healee )
+{
+    // only give reward if healee is not Ringmaster
+    if( !Healee.IsA('KF_RingMasterNPC') )
+    {
+        Score += MedicReward;
+    	ThreeSecondScore += MedicReward;
+    	Team.Score += MedicReward;
+    }
+}
+
 defaultproperties
 {
      PlayerHealth=100

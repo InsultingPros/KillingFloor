@@ -72,14 +72,60 @@ function projectile SpawnProjectile(Vector Start, Rotator Dir)
 {
     local Projectile p;
 
-    if( ProjectileClass != None )
-        p = Weapon.Spawn(ProjectileClass,,, Start, Dir);
+    if( GetDesiredProjectileClass() != None )
+        p = Weapon.Spawn(GetDesiredProjectileClass(),,, Start, Dir);
 
+    /* First attempt at spawning failed, try an non zero extent trace to position it */
     if( p == None )
-        return None;
+    {
+        P = ForceSpawnProjectile(Start,Dir);
+    }
 
-    p.Damage *= DamageAtten;
+    /* second trace failed.  give up */
+    if( p == None)
+    {
+        return none;
+    }
+
+    PostSpawnProjectile(P);
+
     return p;
+}
+
+/* If the first projectile spawn failed it's probably because we're trying to spawn inside the collision bounds
+of an object with properties that ignore zero extent traces.  We need to do a non-zero extent trace so we can
+find a safe spawn loc for our projectile .. */
+
+function projectile ForceSpawnProjectile(Vector Start, Rotator Dir)
+{
+    local Vector HitLocation, HitNormal;
+    local Actor Other;
+    local Projectile p;
+
+    /* perform the second trace .. */
+    Other = Weapon.Trace(HitLocation, HitNormal, Start, Instigator.Location + Instigator.EyePosition(), false,vect(0,0,1));
+
+    if (Other != None)
+    {
+        Start = HitLocation;
+    }
+
+    if( GetDesiredProjectileClass() != None )
+        p = Weapon.Spawn(GetDesiredProjectileClass(),,, Start, Dir);
+
+    return P;
+}
+
+/* Accessor function that returns the type of projectile we want this weapon to fire right now*/
+function class<Projectile> GetDesiredProjectileClass()
+{
+    return ProjectileClass;
+}
+
+/* Convenient place to perform changes to a newly spawned projectile */
+function PostSpawnProjectile(Projectile P)
+{
+    P.Damage *= DamageAtten;
 }
 
 simulated function vector GetFireStart(vector X, vector Y, vector Z)

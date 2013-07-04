@@ -73,42 +73,47 @@ simulated function ReturnToIdle()
 
 }
 
-function projectile SpawnProjectile(Vector Start, Rotator Dir)
+/* Accessor function that returns the type of projectile we want this weapon to fire right now. */
+function class<Projectile> GetDesiredProjectileClass()
+{
+	if ( KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo) != none &&
+    KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo).ClientVeteranSkill != none )
+	{
+		return KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo).ClientVeteranSkill.Static.GetNadeType(KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo));
+	}
+
+	return Super.GetDesiredProjectileClass();
+}
+
+/* Convenient place to perform changes to a newly spawned projectile */
+function PostSpawnProjectile(Projectile P)
 {
 	local Grenade g;
 	local vector X, Y, Z;
 	local float pawnSpeed;
 
-	if ( KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo) != none && KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo).ClientVeteranSkill != none )
-	{
-		g = Weapon.Spawn(KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo).ClientVeteranSkill.Static.GetNadeType(KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo)),,, Start, Dir);
-	}
-	else
-	{
-		g = Weapon.Spawn(class'Nade',,, Start, Dir);
-	}
+	G = Grenade(P);
 
-	if (g != None)
+	if(G != none)
 	{
 		Weapon.GetViewAxes(X,Y,Z);
 		pawnSpeed = X dot Instigator.Velocity;
 
 		if ( Bot(Instigator.Controller) != None )
 		{
-			g.Speed = mHoldSpeedMax;
+			G.Speed = mHoldSpeedMax;
 		}
 		else
 		{
-			g.Speed = mHoldSpeedMin + HoldTime*mHoldSpeedGainPerSec;
+			G.Speed = mHoldSpeedMin + HoldTime*mHoldSpeedGainPerSec;
 		}
 
-		g.Speed = FClamp(g.Speed, mHoldSpeedMin, mHoldSpeedMax);
-		g.Speed = pawnSpeed + g.Speed;
-		g.Velocity = g.Speed * Vector(Dir);
-		g.Damage *= DamageAtten;
-	}
+		G.Speed = FClamp(g.Speed, mHoldSpeedMin, mHoldSpeedMax);
+		G.Speed = pawnSpeed + G.Speed;
+		G.Velocity = G.Speed * Vector(G.Rotation);
 
-	return g;
+        Super.PostSpawnProjectile(G);
+	}
 }
 
 function InitEffects()

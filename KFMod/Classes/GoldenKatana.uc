@@ -20,5 +20,5 @@ defaultproperties
      Description="Stunning craftsmanship, taking decades to perfect. And then someone just has to go and gold plate it... Pretty, ain't it?"
      PickupClass=Class'KFMod.GoldenKatanaPickup'
      AttachmentClass=Class'KFMod.GoldenKatanaAttachment'
-     ItemName="Gold Katana"
+     ItemName="Golden Katana"
 }

@@ -65,7 +65,7 @@ defaultproperties
      CurrentRating=0.650000
      Description="A classic Vietnam era grenade launcher. Launches single high explosive grenades."
      DisplayFOV=65.000000
-     Priority=55
+     Priority=162
      InventoryGroup=3
      GroupOffset=11
      PickupClass=Class'KFMod.M79Pickup'

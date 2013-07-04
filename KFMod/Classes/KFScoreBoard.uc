@@ -186,6 +186,11 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 	MaxNamePos = 0.9 * (KillsXPos - NameXPos);
 	for (i = 0; i < PlayerCount; i++)
 	{
+	    if( GRI.PRIArray[i].bOnlySpectator )
+	    {
+	       continue;
+	    }
+
 		Canvas.StrLen(GRI.PRIArray[i].PlayerName, XL, YL);
 
 		if ( XL > MaxNamePos )
@@ -209,6 +214,11 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 
 	for (i = 0; i < PlayerCount; i++)
 	{
+	    if( GRI.PRIArray[i].bOnlySpectator )
+	    {
+	       continue;
+	    }
+
 		Canvas.SetPos(NameXPos, (PlayerBoxSizeY + BoxSpaceY)*i + BoxTextOffsetY);
 
 		if( i == OwnerOffset )
@@ -237,6 +247,11 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 	// Draw each player's information
 	for (i = 0; i < PlayerCount; i++)
 	{
+	    if( GRI.PRIArray[i].bOnlySpectator )
+	    {
+	       continue;
+	    }
+
         KFPRI = KFPlayerReplicationInfo(GRI.PRIArray[i]) ;
 		Canvas.DrawColor = HUDClass.default.WhiteColor;
 

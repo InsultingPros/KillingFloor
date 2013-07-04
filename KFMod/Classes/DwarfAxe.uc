@@ -38,5 +38,5 @@ defaultproperties
      BobDamping=8.000000
      AttachmentClass=Class'KFMod.DwarfAxeAttachment'
      IconCoords=(X1=246,Y1=80,X2=332,Y2=106)
-     ItemName="Dwarf Axe"
+     ItemName="Dwarfs!? Axe"
 }

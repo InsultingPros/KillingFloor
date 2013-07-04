@@ -79,16 +79,37 @@ function InitTeleports()
 function bool BootPlayers()
 {
 	local KFHumanPawn Bootee;
-	local int i;
+	local int i,idx;
 	local bool bResult;
+	local int NumTouching,NumBooted;
+	local array<Teleporter> UnusedSpots;
+	local bool bBooted;
 
 	if( !bTelsInit )
 		InitTeleports();
 	if( !bHasTeles )
 		Return False; // Wtf?
 
-	foreach TouchingActors(class'KFHumanPawn', Bootee)
+    UnusedSpots = TelList;
+
+//    log("******************************************************");
+
+    /* TouchingActors iterator doesn't work here because the players leave the array when being teleported which
+    means that the array length changes *while* being iterated and produces incorrect results.  As a solution we're gonna
+    use the Touching array and back the index up after each successful port. */
+
+	for ( idx = Touching.length-1 ; idx >= 0 ; idx -- )
 	{
+        Bootee = KFHumanPawn(Touching[idx]);
+        if(Bootee == none)
+        {
+            continue ;
+        }
+
+//       log(self@"CONTROLLERLIST :: "@Bootee);
+
+        NumTouching ++ ;
+
 		if( PlayerController(Bootee.Controller)!=none )
 		{
 			PlayerController(Bootee.Controller).ReceiveLocalizedMessage(Class'KFMainMessages');
@@ -96,12 +117,23 @@ function bool BootPlayers()
 		}
 
 		// Teleport to a random teleporter in this local area, if more than one pick random.
-		i = Rand(TelList.Length);
+		i = Rand(UnusedSpots.Length);
+
 		if ( Bootee.IsA('Pawn') )
 			Bootee.PlayTeleportEffect(false, true);
-		TelList[i].Accept( Bootee, self );
-		bResult = True;
+
+        bBooted = UnusedSpots[i].Accept( Bootee, self ) ;
+		if(bBooted)
+		{
+            NumBooted ++;
+            UnusedSpots.Remove(i,1);   // someone is being teleported here. We can't have the next guy spawning on top of him.
+        }
+
+//		log(" Successful Boot ? : "@bBooted);
 	}
+
+	bResult = NumBooted >= NumTouching;
+
 	Return bResult;
 }
 

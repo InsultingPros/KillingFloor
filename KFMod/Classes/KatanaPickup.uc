@@ -14,6 +14,7 @@ defaultproperties
      ItemShortName="Katana"
      showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Katana_3rd'
      CorrespondingPerkIndex=4
+     GoldenVariantClass=Class'KFMod.GoldenKatanaPickup'
      InventoryType=Class'KFMod.Katana'
      PickupMessage="You got the Katana."
      PickupSound=Sound'KF_AxeSnd.Axe_Pickup'

@@ -19,6 +19,7 @@ var string KFBSkin;
 var string KFFSkin;
 var mesh  KFSMesh;
 
+var bool bCanBeHealed;
 var float healthToGive, lastHealTime;
 
 var bool bResetingAnimAct;
@@ -130,6 +131,27 @@ var         float               NadeThrowTimeout;       // Little hack to timeou
 
 var     Emitter    AttachedEmitter;
 
+/* === Replicated Custom Animation Struct.
+
+Used with ACTION_PlayKFReplicatedAnim Objects to
+allow level designers to play replicated scripted
+animations on pawns */
+
+struct SScriptedAnimRepInfo
+{
+    var         name                BaseAnim;
+    var         float               BlendInTime;
+    var         float               BlendOutTime;
+    var         float               AnimRate;
+    var         byte                AnimIterations;
+    var         bool                bLoopAnim;
+    var         float               StartFrame;
+};
+
+var SScriptedAnimRepInfo            ScriptedAnimData;
+
+
+
 // Hit detection debugging - Only use when debugging
 /*var vector DrawLocation;
 var rotator DrawRotation;
@@ -152,6 +174,9 @@ replication
 
 	reliable if ( bNetDirty && (Role == Role_Authority) && bNetOwner )
 		bMovementDisabled;
+
+	reliable if(Role == ROLE_Authority && bNetDirty && !bNetOwner)
+	   ScriptedAnimData;
 
     // Hit detection debugging - Only use when debugging
     /*reliable if (Role == ROLE_Authority)
@@ -352,8 +377,54 @@ simulated function UpdateShadow()
 
 simulated function DoDerezEffect();
 
+function SetScriptedAnimData(
+name BaseAnim,
+float BlendInTime,
+float BlendOutTime,
+float AnimRate,
+byte AnimIterations,
+bool bLoopAnim,
+float StartFrame)
+{
+    ScriptedAnimData.BaseAnim       = BaseAnim;
+    ScriptedAnimData.BlendInTime    = BlendInTime;
+    ScriptedAnimData.BlendOutTime   = BlendOutTime;
+    ScriptedAnimdata.AnimRate       = AnimRate;
+    ScriptedAnimData.AnimIterations = AnimIterations;
+    ScriptedAnimData.bLoopAnim      = bLoopAnim;
+    ScriptedAnimData.StartFrame     = StartFrame;
+
+    /* Play the anim on the server too*/
+    if(Role == Role_Authority)
+    {
+        PlayScriptedAnim(ScriptedAnimData);
+    }
+
+}
+
+simulated function PlayScriptedAnim( SScriptedAnimRepInfo  AnimData)
+{
+    if(AnimData.bLoopAnim)
+    {
+        LoopAnim(AnimData.BaseAnim, AnimData.AnimRate, AnimData.BlendInTime);
+    }
+    else
+    {
+        PlayAnim(AnimData.baseAnim,AnimData.AnimRate,AnimData.BlendInTime);
+    }
+
+	if( AnimData.StartFrame > 0.0 )
+	   SetAnimFrame(AnimData.StartFrame, 0, 1);
+}
+
 simulated event PostNetReceive()
 {
+    if( ScriptedAnimData.BaseAnim != '')
+    {
+        PlayScriptedAnim(ScriptedAnimData);
+        ScriptedAnimData.BaseAnim = '';
+    }
+
 	if ( PlayerReplicationInfo != None )
 	{
 		Setup(class'xUtil'.static.FindPlayerRecord(PlayerReplicationInfo.CharacterName));
@@ -409,7 +480,7 @@ function TakeFallingDamage()
 
     // Higher max fall speed in low grav so that weapons that push you around
     // don't cause you to die
-    if( Instigator.PhysicsVolume.Gravity.Z > class'PhysicsVolume'.default.Gravity.Z )
+    if( Instigator != none && Instigator.PhysicsVolume.Gravity.Z > class'PhysicsVolume'.default.Gravity.Z )
     {
         UsedMaxFallSpeed *= 2.0;
     }
@@ -1590,7 +1661,7 @@ simulated function HandleNadeThrowAnim()
         {
             SetAnimAction('Frag_Single9mm');
         }
-        else if( M14EBRBattleRifle(Weapon) != none )
+        else if( M14EBRBattleRifle(Weapon) != none || SPSniperRifle(Weapon) != none )
         {
             SetAnimAction('Frag_M14');
         }
@@ -1598,7 +1669,8 @@ simulated function HandleNadeThrowAnim()
         {
             SetAnimAction('Frag_SCAR');
         }
-        else if( AA12AutoShotgun(Weapon) != none || FNFAL_ACOG_AssaultRifle(Weapon) != none )
+        else if( AA12AutoShotgun(Weapon) != none || FNFAL_ACOG_AssaultRifle(Weapon) != none
+            || SPAutoShotgun(Weapon) != none )
         {
             SetAnimAction('Frag_AA12');
         }
@@ -1645,6 +1717,10 @@ simulated function HandleNadeThrowAnim()
         else if( NailGun(Weapon) != none )
         {
             SetAnimAction('Frag_Bullpup');
+        }
+        else if( SPThompsonSMG(Weapon) != none || ThompsonDrumSMG(Weapon) != none)
+        {
+            SetAnimAction('Frag_IJC_spThompson_Drum');
         }
         else if( ThompsonSMG(Weapon) != none )
         {
@@ -1910,7 +1986,8 @@ simulated event SetAnimAction(name NewAction)
             || AnimAction == 'Frag_M4203' || AnimAction == 'Frag_MP5'
             || AnimAction == 'Frag_HuskGun' || AnimAction == 'Frag_Kriss'
             || AnimAction == 'Frag_Thompson' || AnimAction == 'Frag_scythe'
-            || AnimAction == 'Frag_Cheetah' || AnimAction == 'Frag_Zed')
+            || AnimAction == 'Frag_Cheetah' || AnimAction == 'Frag_Zed'
+            || AnimAction == 'Frag_IJC_spThompson_Drum')
 		{
             AnimBlendParams(1, 1.0, 0.0, 0.2, FireRootBone);
 			PlayAnim(NewAction,, 0.0, 1);
@@ -1939,7 +2016,8 @@ simulated event SetAnimAction(name NewAction)
             || AnimAction == 'Reload_KSG' || AnimAction == 'Reload_Flare'
             || AnimAction == 'Reload_DualFlare' || AnimAction == 'Reload_Cheetah'
             || AnimAction == 'Reload_Thompson' || AnimAction == 'Reload_Kriss'
-            || AnimAction == 'Reload_Zed')
+            || AnimAction == 'Reload_Zed' || AnimAction == 'Reload_IJC_spJackHammer'
+            || AnimAction == 'Reload_spSinper' || AnimAction == 'Reload_IJC_spThompson_Drum' )
 		{
 			AnimBlendParams(1, 1.0, 0.0, 0.2, FireRootBone);
 			PlayAnim(NewAction,, 0.1, 1);
@@ -2215,6 +2293,20 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 			}
 		}
 	}
+	else if ( class<SirenScreamDamage>(DamageType) != none )
+	{
+		if ( Level.Game != none && Level.Game.GameDifficulty >= 4.0 && KFPlayerController(Controller) != none &&
+			 !KFPlayerController(Controller).bScreamedAt)
+		{
+			KFPlayerController(Controller).bScreamedAt = true;
+			KFPlayerController(Controller).ScreamTime = Level.TimeSeconds;
+
+			if ( Controller.TimerRate == 0.0 )
+			{
+				Controller.SetTimer(10.0, false);
+			}
+		}
+	}
 }
 
 function TakeBileDamage()
@@ -2360,10 +2452,6 @@ function PlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<Dama
 // On the momentum of the bullet, not out from the center of the player
 function OldPlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<DamageType> damageType, vector Momentum, optional int HitIndex)
 {
-    local Vector HitNormal;
-	local vector BloodOffset, Mo;
-	local class<Effects> DesiredEffect;
-	local class<Emitter> DesiredEmitter;
 	local PlayerController Hearer;
 
 	if ( DamageType == None )
@@ -2373,36 +2461,7 @@ function OldPlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<D
 
 	if (Damage > DamageType.Default.DamageThreshold) //spawn some blood
 	{
-
-		HitNormal = Normal(HitLocation - Location);
-
-		// Play any set effect
-		if ( EffectIsRelevant(Location,true) )
-		{
-			DesiredEffect = DamageType.static.GetPawnDamageEffect(HitLocation, Damage, Momentum, self, (Level.bDropDetail || Level.DetailMode == DM_Low));
-
-			if ( DesiredEffect != None )
-			{
-				BloodOffset = 0.2 * CollisionRadius * HitNormal;
-				BloodOffset.Z = BloodOffset.Z * 0.5;
-
-				Mo = Momentum;
-				if ( Mo.Z > 0 )
-					Mo.Z *= 0.5;
-				spawn(DesiredEffect,self,,HitLocation + BloodOffset, rotator(Mo));
-			}
-
-			// Spawn any preset emitter
-
-			DesiredEmitter = DamageType.Static.GetPawnDamageEmitter(HitLocation, Damage, Momentum, self, (Level.bDropDetail || Level.DetailMode == DM_Low));
-			if (DesiredEmitter != None)
-			{
-			    if( InstigatedBy != none )
-			        HitNormal = Normal((InstigatedBy.Location+(vect(0,0,1)*InstigatedBy.EyeHeight))-HitLocation);
-
-				spawn(DesiredEmitter,,,HitLocation+HitNormal + (-HitNormal * CollisionRadius), Rotator(HitNormal));
-			}
-		}
+    	SpawnHitEmitter( Damage, InstigatedBy, HitLocation, damageType, Momentum );
 	}
 	if ( Health <= 0 )
 	{
@@ -2421,6 +2480,42 @@ function OldPlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<D
 		if ( Hearer != None )
 			Hearer.bAcuteHearing = false;
 		LastPainTime = Level.TimeSeconds;
+	}
+}
+
+function SpawnHitEmitter( float Damage, Pawn InstigatedBy, vector HitLocation, class<DamageType> damageType, vector Momentum )
+{
+    local Vector HitNormal;
+   	local class<Effects> DesiredEffect;
+	local class<Emitter> DesiredEmitter;
+	local vector BloodOffset, Mo;
+
+  	// Play any set effect
+	if ( EffectIsRelevant(Location,true) )
+	{
+		HitNormal = Normal(HitLocation - Location);
+		DesiredEffect = DamageType.static.GetPawnDamageEffect(HitLocation, Damage, Momentum, self, (Level.bDropDetail || Level.DetailMode == DM_Low));
+
+		if ( DesiredEffect != None )
+		{
+			BloodOffset = 0.2 * CollisionRadius * HitNormal;
+			BloodOffset.Z = BloodOffset.Z * 0.5;
+
+			Mo = Momentum;
+			if ( Mo.Z > 0 )
+				Mo.Z *= 0.5;
+			spawn(DesiredEffect,self,,HitLocation + BloodOffset, rotator(Mo));
+		}
+
+		// Spawn any preset emitter
+		DesiredEmitter = DamageType.Static.GetPawnDamageEmitter(HitLocation, Damage, Momentum, self, (Level.bDropDetail || Level.DetailMode == DM_Low));
+		if (DesiredEmitter != None)
+		{
+		    if( InstigatedBy != none )
+		        HitNormal = Normal((InstigatedBy.Location+(vect(0,0,1)*InstigatedBy.EyeHeight))-HitLocation);
+
+			spawn(DesiredEmitter,,,HitLocation+HitNormal + (-HitNormal * CollisionRadius), Rotator(HitNormal));
+		}
 	}
 }
 
@@ -2739,9 +2834,9 @@ function Died(Controller Killer, class<DamageType> damageType, vector HitLocatio
 		if ( Controller != None )
 			Controller.LastPawnWeapon = Weapon.Class;
 		Weapon.HolderDied();
-		TossVel = Vector(GetViewRotation());
-		TossVel = TossVel * ((Velocity Dot TossVel) + 500) + Vect(0,0,200);
-		TossWeapon(TossVel);
+   		TossVel = Vector(GetViewRotation());
+    	TossVel = TossVel * ((Velocity Dot TossVel) + 500) + Vect(0,0,200);
+    	TossWeapon(TossVel);
 	}
 	if ( DrivenVehicle != None )
 	{
@@ -2995,7 +3090,6 @@ function ServerBuyWeapon( Class<Weapon> WClass )
 	local float Price;
 	local bool bIsDualWeapon, bHasDual9mms, bHasDualHCs, bHasDualRevolvers;
 	local bool bIgnoreDualWeaponWeight;
-	local bool isLocked;
 
 	if ( !CanBuyNow() || Class<KFWeapon>(WClass) == none || Class<KFWeaponPickup>(WClass.Default.PickupClass) == none )
 	{
@@ -3048,7 +3142,7 @@ function ServerBuyWeapon( Class<Weapon> WClass )
 		{
 			bHasDual9mms = true;
 		}
-		else if ( I.Class == class'DualDeagle' )
+		else if ( I.Class == class'DualDeagle' || I.Class == class'GoldenDualDeagle' )
 		{
 			bHasDualHCs = true;
 		}
@@ -3063,6 +3157,28 @@ function ServerBuyWeapon( Class<Weapon> WClass )
 		for ( J = Inventory; J != None; J = J.Inventory )
 		{
 			if ( J.class == class'Deagle' )
+			{
+				Price = Price / 2;
+				// Due to the way the old KF Mod weapon weights were set up, the
+				// dual deagles never added any additional weight above the
+				// weight of a single deagle. Additionally, the single 9mm
+				// had zero weight, so its total weight was equal to 2 9mms.
+				// All other dual weild weapons don't need to do this
+				bIgnoreDualWeaponWeight = true;
+
+				break;
+			}
+		}
+
+		bIsDualWeapon = true;
+		bHasDualHCs = true;
+	}
+
+	if ( WClass == class'GoldenDualDeagle' )
+	{
+		for ( J = Inventory; J != None; J = J.Inventory )
+		{
+			if ( J.class == class'GoldenDeagle' )
 			{
 				Price = Price / 2;
 				// Due to the way the old KF Mod weapon weights were set up, the
@@ -3204,7 +3320,14 @@ function ServerSellWeapon( Class<Weapon> WClass )
 
 			if ( DualDeagle(I) != none )
 			{
-				NewDeagle = Spawn(class'Deagle');
+			    if( GoldenDualDeagle(I) != none )
+			    {
+			        NewDeagle = Spawn(class'GoldenDeagle');
+			    }
+			    else
+			    {
+				    NewDeagle = Spawn(class'Deagle');
+				}
 				NewDeagle.GiveTo(self);
 				Price = Price / 2;
 			}
@@ -3935,7 +4058,7 @@ function GiveWeapon(string aClassName )
 		{
 			bHasDual9mms = true;
 		}
-		else if ( I.Class == class'DualDeagle' )
+		else if ( I.Class == class'DualDeagle' || I.Class == class'GoldenDualDeagle' )
 		{
 			bHasDualHCs = true;
 		}
@@ -3950,7 +4073,7 @@ function GiveWeapon(string aClassName )
 	{
 		newWeapon.GiveTo(self);
 
-		if ( WeaponClass == class'Dualies' || WeaponClass == class'DualDeagle' || WeaponClass == class'Dual44Magnum' )
+		if ( WeaponClass == class'Dualies' || WeaponClass == class'DualDeagle' || WeaponClass == class'GoldenDualDeagle' || WeaponClass == class'Dual44Magnum' )
 		{
 			KFSteamStatsAndAchievements(PlayerReplicationInfo.SteamStatsAndAchievements).OnDualsAddedToInventory(bHasDual9mms, bHasDualHCs, bHasDualRevolvers);
 		}
@@ -3976,9 +4099,20 @@ function bool DoJump( bool bUpdating )
     return false;
 }
 
+function string GetPlayerName()
+{
+    if( PlayerReplicationInfo != none )
+    {
+        return PlayerReplicationInfo.PlayerName;
+    }
+
+    return "";
+}
+
 defaultproperties
 {
      GibGroupClass=Class'KFMod.KFHumanGibGroup'
+     bCanBeHealed=True
      BileFrequency=0.500000
      BurnEffect=Class'KFMod.KFMonsterFlame'
      bDetailedShadows=True

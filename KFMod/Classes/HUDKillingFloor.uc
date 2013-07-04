@@ -376,6 +376,17 @@ simulated function Destroyed()
 	Super.Destroyed();
 }
 
+/* toggles displaying properties of player's current viewtarget
+*/
+exec function ShowDebug()
+{
+	if( Level.NetMode != NM_Standalone && !class'ROEngine.ROLevelInfo'.static.RODebugMode() )
+		return;
+
+    bShowDebugInfo = !bShowDebugInfo;
+}
+
+
 // Take it out.
 exec function ShowHud()
 {
@@ -1218,7 +1229,8 @@ simulated function UpdateHud()
 
 	if ( LAW(PawnOwner.Weapon) != none || Crossbow(PawnOwner.Weapon) != none
         || M79GrenadeLauncher(PawnOwner.Weapon) != none || PipeBombExplosive(PawnOwner.Weapon) != none
-        || HuskGun(PawnOwner.Weapon) != none || CrossBuzzSaw(PawnOwner.Weapon) != none )
+        || HuskGun(PawnOwner.Weapon) != none || CrossBuzzSaw(PawnOwner.Weapon) != none
+        || SPGrenadeLauncher(PawnOwner.Weapon) != none  )
 	{
 		ClipsDigits.Value = KFWeapon(PawnOwner.Weapon).AmmoAmount(0);
 	}
@@ -1637,7 +1649,7 @@ simulated function DrawHudPassA (Canvas C)
 				{
                     DrawSpriteWidget(C, PipeBombIcon);
 				}
-				else if ( M79GrenadeLauncher(PawnOwner.Weapon) != none )
+				else if ( M79GrenadeLauncher(PawnOwner.Weapon) != none || SPGrenadeLauncher(PawnOwner.Weapon) != none )
 				{
 					DrawSpriteWidget(C, M79Icon);
 				}
@@ -2355,7 +2367,7 @@ simulated function DrawModOverlay( Canvas C )
 	local float MaxRBrighten, MaxGBrighten, MaxBBrighten;
 	local PlayerReplicationInfo PRI;
 	local bool bHasDefaultPhysicsVolume, bHasKFPhysicsVolume;
-	
+
 	C.SetPos(0, 0);
 
 	// We want the overlay to start black, and fade in, almost like the player opened their eyes
@@ -2367,7 +2379,7 @@ simulated function DrawModOverlay( Canvas C )
 		{
 			return;
 		}
-		
+
 		PRI = PlayerOwner.PlayerReplicationInfo;
 
 		// if critical, pulsate.  otherwise, dont.
@@ -2461,8 +2473,9 @@ simulated function DrawModOverlay( Canvas C )
 			// This block of code here just makes sure that if we've already got a tint, and we step into a zone/volume without
 			// bDistanceFog, our current tint is not affected.
 			// a.  If I'm in a zone and its not bDistanceFog. AND IM NOT IN A PHYSICSVOLUME. Just a zone.
-			// b.  If I'm in a Volume			
-			if( DefaultPhysicsVolume( PlayerOwner.Pawn.PhysicsVolume ) != none )
+			// b.  If I'm in a Volume
+			if( DefaultPhysicsVolume( PlayerOwner.Pawn.PhysicsVolume ) != none ||
+				PlayerOwner.Pawn.PhysicsVolume.IsA( 'KF_StoryCheckPointVolume' ) )
 			{
 				bHasDefaultPhysicsVolume = true;
 			}
@@ -2479,7 +2492,7 @@ simulated function DrawModOverlay( Canvas C )
 				{
 					return;
 				}
-			}		
+			}
 		}
 
 		if ( PlayerOwner != none && !bZoneChanged && PlayerOwner.Pawn != none )
@@ -2487,7 +2500,7 @@ simulated function DrawModOverlay( Canvas C )
 			// Grab the most recent zone info from our PRI
 			// Only update if it's different
 			// EDIT:  AND HAS bDISTANCEFOG true
-			if ( CurrentZone != PlayerOwner.PlayerReplicationInfo.PlayerZone || ( !bHasDefaultPhysicsVolume 
+			if ( CurrentZone != PlayerOwner.PlayerReplicationInfo.PlayerZone || ( !bHasDefaultPhysicsVolume
 				&& !bHasKFPhysicsVolume ) && CurrentVolume != PlayerOwner.Pawn.PhysicsVolume )
 			{
 				if ( CurrentZone != none )
@@ -2539,7 +2552,7 @@ simulated function DrawModOverlay( Canvas C )
     					LastB = LastZone.DistanceFogColor.B;
 					}
 				}
-				else if ( LastVolume != none ) 
+				else if ( LastVolume != none )
 				{
 					if( LastVolume.bNewKFColorCorrection )
 					{
@@ -2682,7 +2695,7 @@ simulated final function DrawPortrait( Canvas C )
 // Comment Out for Release
 simulated function DrawCrosshair (Canvas C)
 {
-	/*local float NormalScale;
+	local float NormalScale;
 	local int i, CurrentCrosshair;
 	local float OldScale,OldW, CurrentCrosshairScale;
 	local color CurrentCrosshairColor;
@@ -2735,7 +2748,7 @@ simulated function DrawCrosshair (Canvas C)
 	DrawSpriteWidget (C, CHTexture);
 	C.ColorModulate.W = OldW;
 	HudScale=OldScale;
-	CHTexture.TextureScale = NormalScale;*/
+	CHTexture.TextureScale = NormalScale;
 
 	//DrawEnemyName(C);
 }
@@ -3014,7 +3027,7 @@ function DrawDoorHealthBars(Canvas C)
 	{
 		DoorCache.Remove(0, DoorCache.Length);
 
-		foreach CollidingActors(class'KFDoorMover', DamageDoor, 300.00, PlayerOwner.Pawn.Location)
+		foreach VisibleCollidingActors(class'KFDoorMover', DamageDoor, 300.00, PlayerOwner.Pawn.Location)
 		{
 			if ( DamageDoor.WeldStrength > 0 )
 			{
@@ -3636,17 +3649,21 @@ function NextWeapon()
 	}
 }
 
+/* Lol, why is the HUD initating weapon changes for the player?  o_ 0*/
 function SelectWeapon()
 {
 	local Inventory I;
-	local bool bFoundItem;
+	local bool bFoundItem,bAllowSelect;
+	local KFHumanPawn KFHP;
 
 	HideInventory();
 
-	if( PawnOwner == none )
+	if( PawnOwner == none)
 	{
 		return;
 	}
+
+    KFHP = KFHumanPawn(PawnOwner);
 
 	for ( I = PawnOwner.Inventory; I != none; I = I.Inventory )
 	{
@@ -3660,6 +3677,14 @@ function SelectWeapon()
 	{
 		return;
 	}
+
+    bAllowSelect = KFHP.AllowHoldWeapon(KFWeapon(SelectedInventory));
+//    log("Allow Select : "@SelectedInventory@"?"@bAllowSelect);
+    if(!bAllowSelect)
+    {
+//        log("you cannnot select : "@SelectedInventory);
+        return;
+    }
 
 	PawnOwner.PendingWeapon = Weapon(SelectedInventory);
 

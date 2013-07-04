@@ -45,8 +45,8 @@ defaultproperties
      HitAnims(3)="HitR_Single9mm"
      PostFireBlendStandAnim="Blend_Single9mm"
      PostFireBlendCrouchAnim="CHBlend_Single9mm"
+     MeshRef="KF_Weapons3rd_Trip.Handcannon_3rd"
      bHeavy=True
      SplashEffect=Class'ROEffects.BulletSplashEmitter'
      CullDistance=5000.000000
-     Mesh=SkeletalMesh'KF_Weapons3rd_Trip.Handcannon_3rd'
 }

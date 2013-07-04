@@ -5,6 +5,32 @@ var bool bDroppedCash;  // if true, its been dropped. dont randomize the amount
 var float TossTimer;
 var Controller DroppedBy;
 
+/* If true, only the guy who threw this dosh is allowed to pick it up */
+var bool bOnlyOwnerCanPickup;
+
+var bool bPreventFadeOut;
+
+event Landed(vector HitNormal)
+{
+    local StaticMeshActor SMBase;
+    local Actor HitActor;
+    local vector HitLoc,HitNorm;
+    local vector StartTrace,EndTrace;
+
+    Super.Landed(HitNormal);
+
+    StartTrace = Location - (vect(0,0,1)*(CollisionHeight/2));
+    EndTrace = StartTrace + Vect(0,0,-8) ;
+
+    HitActor = Trace(HitLoc,HitNorm,EndTrace,StartTrace,true);
+    SMBase = StaticMeshActor(HitActor);
+    if(SMBase != none)
+    {
+        SetBase(SMBase);
+        SMBase.OnActorLanded(self);
+    }
+}
+
 function GiveCashTo( Pawn Other )
 {
 	// You all love the mental-mad typecasting XD
@@ -43,6 +69,26 @@ auto state Pickup
 			GiveCashTo(Pawn(Other));
 		}
 	}
+
+	function bool ValidTouch(Actor Other)
+	{
+        if(bOnlyOwnerCanPickup && Pawn(Other) != none &&
+        DroppedBy != none && Pawn(Other).Controller != DroppedBy)
+        {
+            return false;
+        }
+
+        return Super.ValidTouch(Other);
+	}
+
+	function Timer()
+	{
+        if(bDropped &&
+        !bPreventFadeOut)
+        {
+            GotoState('FadeOut');
+        }
+    }
 }
 state FallingPickup
 {
@@ -51,6 +97,14 @@ state FallingPickup
 		if( ValidTouch(Other) )
 			GiveCashTo(Pawn(Other));
 	}
+
+	function Timer()
+	{
+        if(!bPreventFadeOut)
+        {
+            GotoState('FadeOut');
+        }
+    }
 }
 State FadeOut
 {

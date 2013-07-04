@@ -33,8 +33,14 @@ var(Events)							name						ZombieSpawnTag;
 /* Death Event to set on all Zombies spawned by this volume */
 var(Events)							name						ZombieDeathEvent;
 
+/* Event to fire off every time this volume spawns any ZED*/
+var(Events)                         name                        ZombieSpawnEvent;
+
 /* array of all living Zombies spawned by this volume */
 var									array<KFMonster>			ZEDList;
+
+/* if true, ignore the lineofsight check in SpawnInHere() so that zombies can spawn in plain sight  */
+var()		                        bool						bAllowPlainSightSpawns;
 
 
 // Init the spawn points of this actor
@@ -79,12 +85,36 @@ function bool CanSpawnInHere( array< class<KFMonster> > zombies )
 	{
 		//LastCheckTime = Level.TimeSeconds+CanRespawnTime;
 		if( !bVolumeIsEnabled )
-			return false;
-		if( SpawnPos.Length==0 )
+		{
+            if(bDebugZoneSelection)
+            {
+                log("!CanSpawnInHere -> Reason =  !bVolumeIsEnabled ");
+            }
+
+        	return false;
+        }
+
+        if( SpawnPos.Length==0 )
+        {
+            if(bDebugZoneSelection)
+            {
+                log("!CanSpawnInHere -> Reason =  SpawnPos.Length == 0 ");
+            }
+
 			return false; // Failed to find ANY possible spawn points.
+		}
+
 		return SpawnInHere(zombies,true);
 	}
-	else return false;
+	else
+    {
+        if(bDebugZoneSelection)
+        {
+            log("!CanSpawnInHere -> Reason =  LastCheckTime >= Level.TimeSeconds");
+        }
+
+        return false;
+    }
 }
 
 //Experimental volume for spawning squads of zombies.
@@ -127,7 +157,14 @@ RemoveEntry:
 LoopEnd:
 	}
 	if( l==0 )
-		return false;
+	{
+	    if(bDebugZoneSelection)
+        {
+            log("!SpawnInHere -> Reason =  Zombie Squad array is empty! ");
+        }
+
+        return false;
+    }
 
 	if( !test )
 	{
@@ -167,6 +204,8 @@ LoopEnd:
                     NumTries = 3;
                 }
 
+                /* We need to clear this every time. */
+                Act = none;
 
                 for( j=0; j<NumTries; j++ )
 		        {
@@ -186,43 +225,245 @@ LoopEnd:
 
     				if(Act!=None)
     				{
-    				     // Triggers & Event Tracking
-    				    /* ========================================================================*/
-
-						if(ZombieSpawnTag != '')
-						{
-							Act.Tag = ZombieSpawnTag ;
-						}
-
-						if(ZombieDeathEvent != '')
-						{
-							Act.Event = ZombieDeathEvent;
-						}
-
-                        AddZEDToSpawnList(Act);
-
-						/*==========================================================================*/
-
-                        if( bDebugSpawnSelection )
-                        {
-                            DrawDebugCylinder(Act.Location,vect(1,0,0),vect(0,1,0),vect(0,0,1),Act.CollisionRadius,Act.CollisionHeight,5,0, 255, 0);
-                        }
-
-    					if( bDebugZoneSelection )
-    					{
-                            log("Spawned "$zombies[i]$" on attempt "$j);
-                        }
                         break;
     				}
 				}
 
 				if(Act!=None)
 				{
+                    // Triggers & Event Tracking
+    				/* ========================================================================*/
+
+					if(ZombieSpawnTag != '')
+					{
+						Act.Tag = ZombieSpawnTag ;
+					}
+
+					if(ZombieDeathEvent != '')
+					{
+						Act.Event = ZombieDeathEvent;
+					}
+
+					if(ZombieSpawnEvent != '')
+					{
+						TriggerEvent(ZombieSpawnEvent,self,Act);
+					}
+
+                    AddZEDToSpawnList(Act);
+
+					/*==========================================================================*/
+
+                    if( bDebugSpawnSelection )
+                    {
+                        DrawDebugCylinder(Act.Location,vect(1,0,0),vect(0,1,0),vect(0,0,1),Act.CollisionRadius,Act.CollisionHeight,5,0, 255, 0);
+                    }
+
+    				if( bDebugZoneSelection )
+    				{
+                        log(self@"Spawned "$zombies[i]$" on attempt "$j);
+                    }
+
 					TotalMaxMonsters--;
 					MaxMonstersAtOnceLeft--;
 					numspawned++;
 					TotalZombiesValue += Act.ScoringValue;
 				}
+    			else if( bDebugZoneSelection )
+    			{
+                    log(self@" completely failed spawning "$zombies[i]$" on attempt "$j);
+    			}
+			}
+		}
+		if( numspawned>0 )
+		{
+            LastSpawnTime = Level.TimeSeconds;
+            LastFailedSpawnTime = 0;
+            return true;
+		}
+		else
+		{
+            LastFailedSpawnTime = Level.TimeSeconds;
+            return false;
+		}
+	}
+
+	return true;
+}
+
+//Spawn squads of zombies in story mode. Has special handling to make sure the
+// whole squad gets spawned properly.
+function bool StorySpawnInHere( out array< class<KFMonster> > NextSpawnSquad, optional bool test,
+    optional out int numspawned, optional out int TotalMaxMonsters, optional int MaxMonstersAtOnceLeft,
+    optional out int TotalZombiesValue, optional bool bTryAllSpawns )
+{
+	local int i,l,j,zc,yc;
+	local KFMonster Act;
+	local byte fl;
+	local rotator RandRot;
+	local vector TrySpawnPoint;
+	local int NumTries;
+	Local array< class<KFMonster> > zombies;
+	//local array int RemovedIndexes;
+	local int k;
+
+	zombies = NextSpawnSquad;
+
+	/* First make sure there are any zombie types allowed to spawn in here */
+	l = zombies.Length;
+	zc = DisallowedZeds.Length;
+	yc = OnlyAllowedZeds.Length;
+	for( i=0; i<l; i++ )
+	{
+		fl = zombies[i].Default.ZombieFlag;
+		if( (!bNormalZeds && fl==0) || (!bRangedZeds && fl==1) || (!bLeapingZeds && fl==2) || (!bMassiveZeds && fl==3) )
+			goto'RemoveEntry';
+		if( zc==0 && yc==0 )
+			continue;
+		for( j=0; j<zc; j++ )
+			if( ClassIsChildOf(zombies[i],DisallowedZeds[j]) )
+				goto'RemoveEntry';
+
+		if( yc>0 )
+		{
+			for( j=0; j<yc; j++ )
+				if( ClassIsChildOf(zombies[i],OnlyAllowedZeds[j]) )
+					goto'LoopEnd';
+RemoveEntry:
+			zombies.Remove(i,1);
+			l--;
+			i--;
+		}
+LoopEnd:
+	}
+	if( l==0 )
+	{
+	    if(bDebugZoneSelection)
+        {
+            log("!SpawnInHere -> Reason =  Zombie Squad array is empty! ");
+        }
+
+        return false;
+    }
+
+	if( !test )
+	{
+		if( ZombieCountMulti<1 )
+			zombies.Length = Max(zombies.Length*ZombieCountMulti,1); // Decrease the size.
+		else if( ZombieCountMulti>1 )
+		{
+			// Increase the size and scramble zombie spawn types.
+			zombies.Length = Max(zombies.Length*(ZombieCountMulti/2+ZombieCountMulti*FRand()),zombies.Length);
+			l = zombies.Length;
+			for( i=0; i<l; i++ )
+				if( zombies[i]==None )
+					zombies[i] = zombies[Rand(i)];
+		}
+		if( zombies.Length==0 )
+			return false;
+	}
+
+	/* Now do the actual spawning */
+	if( !test )
+	{
+		l = zombies.Length;
+		for( i=0; i<l; i++ )
+		{
+			if( TotalMaxMonsters>0 && MaxMonstersAtOnceLeft>0) // Always make sure we are allowed to spawn em.
+			{
+				RandRot.Yaw = Rand(65536);
+
+                if( bTryAllSpawns )
+                {
+                    // Try spawning in all the points
+                    NumTries = SpawnPos.Length;
+                }
+                else
+                {
+                    // Try spawning 3 times in 3 dif points.
+                    NumTries = 3;
+                }
+
+                /* We need to clear this every time. */
+                Act = none;
+
+                for( j=0; j<NumTries; j++ )
+		        {
+                    TrySpawnPoint = SpawnPos[Rand(SpawnPos.Length)];
+    				if( !PlayerCanSeePoint(TrySpawnPoint, zombies[i]) )
+    				{
+                        Act = Spawn(zombies[i],,,TrySpawnPoint,RandRot);
+                    }
+                    else
+                    {
+                        if( bDebugZoneSelection )
+                        {
+                            log("Failed trying to spawn "$zombies[i]$" attempt "$j);
+                        }
+                        continue;
+                    }
+
+    				if(Act!=None)
+    				{
+                        break;
+    				}
+				}
+
+				if(Act!=None)
+				{
+                    // Triggers & Event Tracking
+    				/* ========================================================================*/
+
+					if(ZombieSpawnTag != '')
+					{
+						Act.Tag = ZombieSpawnTag ;
+					}
+
+					if(ZombieDeathEvent != '')
+					{
+						Act.Event = ZombieDeathEvent;
+					}
+
+					if(ZombieSpawnEvent != '')
+					{
+						TriggerEvent(ZombieSpawnEvent,self,Act);
+					}
+
+                    AddZEDToSpawnList(Act);
+
+					/*==========================================================================*/
+
+                    if( bDebugSpawnSelection )
+                    {
+                        DrawDebugCylinder(Act.Location,vect(1,0,0),vect(0,1,0),vect(0,0,1),Act.CollisionRadius,Act.CollisionHeight,5,0, 255, 0);
+                    }
+
+    				if( bDebugZoneSelection )
+    				{
+                        log(self@"Spawned "$zombies[i]$" on attempt "$j);
+                    }
+
+					TotalMaxMonsters--;
+					MaxMonstersAtOnceLeft--;
+					numspawned++;
+					TotalZombiesValue += Act.ScoringValue;
+
+                    for(k=0; k < NextSpawnSquad.length ; k++)
+                    {
+                        if( NextSpawnSquad[k] == zombies[i] )
+                        {
+                            NextSpawnSquad.Remove(k, 1);
+                            if( bDebugZoneSelection )
+                            {
+                                log(self@" Removed: zombie "$zombies[i]$" from NextSpawnSquad because we spawned it");
+                            }
+                            break;
+                        }
+                    }
+				}
+    			else if( bDebugZoneSelection )
+    			{
+                    log(self@" completely failed spawning "$zombies[i]$" on attempt "$j);
+    			}
 			}
 		}
 		if( numspawned>0 )
@@ -286,6 +527,11 @@ function bool PlayerCanSeePoint(vector TestLocation, class <KFMonster> TestMonst
     local float dist;
     local vector Right, Test;
     local float CollRadius;
+
+    if(bAllowPlainSightSpawns)
+    {
+        return false;
+    }
 
 	// Now make sure no player sees the spawn point.
 	for ( C=Level.ControllerList; C!=None; C=C.NextController )
@@ -658,7 +904,7 @@ function float RateZombieVolume(KFGameType KFGT, ZombieVolume LastSpawnedVolume,
 
 			// Do individual checks for spawn locations now, maybe add this back in later as an optimization
             // if fog doesn't hide spawn & lineofsight possible
-			if( (!C.Pawn.Region.Zone.bDistanceFog || (dist < C.Pawn.Region.Zone.DistanceFogEnd)) && FastTrace(Location,C.Pawn.Location + C.Pawn.EyePosition()) )
+			if( !bAllowPlainSightSpawns && ((!C.Pawn.Region.Zone.bDistanceFog || (dist < C.Pawn.Region.Zone.DistanceFogEnd)) && FastTrace(Location,C.Pawn.Location + C.Pawn.EyePosition())) )
 			{
                 if( bDebugZoneSelection )
                 {

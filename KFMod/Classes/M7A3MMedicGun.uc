@@ -72,7 +72,7 @@ simulated function ClientSuccessfulHeal(String HealedName)
 {
     if( PlayerController(Instigator.Controller) != none )
     {
-        PlayerController(Instigator.controller).ClientMessage(SuccessfulHealMessage@HealedName, 'CriticalEvent');
+        PlayerController(Instigator.controller).ClientMessage(SuccessfulHealMessage$HealedName, 'CriticalEvent');
     }
 }
 

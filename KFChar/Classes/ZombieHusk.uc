@@ -414,7 +414,8 @@ function PlayHit(float Damage, Pawn InstigatedBy, vector HitLocation, class<Dama
 	}
 	else if( Health > 0 && (damageType == class'DamTypeCrossbow' || damageType == class'DamTypeCrossbowHeadShot' ||
 		 damageType == class'DamTypeWinchester' || damageType == class'DamTypeM14EBR'
-         || damageType == class'DamTypeM99HeadShot' || damageType == class'DamTypeM99SniperRifle' )
+         || damageType == class'DamTypeM99HeadShot' || damageType == class'DamTypeM99SniperRifle'
+         || damageType == class'DamTypeSPSniper' )
          &&  Damage > 200 ) // 200 Damage will be a headshot with the Winchester or EBR, or a hit with the Crossbow
 	{
         FlipOver();

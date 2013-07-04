@@ -18,7 +18,7 @@ defaultproperties
      RangeValue=-23
      Description="A battle axe like you might see in a game called Dwarfs!?"
      ItemName="Dwarfs!? Axe"
-     ItemShortName="Dwarfs Axe"
+     ItemShortName="Dwarfs!? Axe"
      CorrespondingPerkIndex=4
      InventoryType=Class'KFMod.DwarfAxe'
      PickupMessage="You got the Dwarfs!? Axe."

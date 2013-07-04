@@ -124,7 +124,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 
     WeaponDLCID = DetermineWeaponDLC();
 	bOwnsWeaponDLC = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC( WeaponDLCID );
-	bOwnsCharacterDLC = PlayerOwner().CharacterAvailable("DAR");
+	bOwnsCharacterDLC = PlayerOwner().CharacterAvailable("Mrs_Foster");
 
 	eventNum = 0;//KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements).Stat46.Value;
 
@@ -671,7 +671,7 @@ function bool CharacterDLCButtonClicked(GUIComponent Sender)
 {
 	if ( !bOwnsCharacterDLC )
 	{
-		PlayerOwner().PurchaseCharacter("DAR");
+		PlayerOwner().PurchaseCharacter("Mrs_Foster");
 		return true;
 	}
 
@@ -728,10 +728,10 @@ defaultproperties
      End Object
      KFWorkshopDownload=GUILabel'KFGui.KFMainMenu.WorkshopDownloadLabel'
 
-     WeaponBundle=210938
-     WeaponDLCs(0)=210938
+     WeaponBundle=210944
+     WeaponDLCs(0)=210944
      Begin Object Class=GUIImage Name=WeaponDLCImage
-         Image=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Gold-Pack'
+         Image=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Gold-Pack2'
          ImageStyle=ISTY_Scaled
          WinTop=0.651389
          WinLeft=0.053125
@@ -761,11 +761,11 @@ defaultproperties
      End Object
      KFWeaponDLCOverlay=GUIImage'KFGui.KFMainMenu.WeaponDLCOverlay'
 
-     KFWeaponDLCOwnedTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Gold-Pack'
+     KFWeaponDLCOwnedTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Gold-Pack2'
      KFWeaponDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFWeaponDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
      Begin Object Class=GUIImage Name=CharacterDLCImage
-         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Robot'
+         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_MrsFoster'
          ImageStyle=ISTY_Scaled
          WinTop=0.811111
          WinLeft=0.053125
@@ -794,7 +794,7 @@ defaultproperties
      End Object
      KFCharacterDLCOverlay=GUIImage'KFGui.KFMainMenu.CharacterDLCOverlay'
 
-     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Robot'
+     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_MrsFoster'
      KFCharacterDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFCharacterDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
      Begin Object Class=BackgroundImage Name=ImgBkChar

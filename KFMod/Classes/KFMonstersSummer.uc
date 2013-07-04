@@ -1,0 +1,39 @@
+class KFMonstersSummer extends KFMonstersCollection;
+
+defaultproperties
+{
+     MonsterClasses(0)=(MClassName="KFChar.ZombieClot_CIRCUS")
+     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_CIRCUS")
+     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_CIRCUS")
+     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker_CIRCUS")
+     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake_CIRCUS")
+     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_CIRCUS")
+     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat_CIRCUS")
+     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_CIRCUS")
+     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_CIRCUS")
+     StandardMonsterClasses(0)=(MClassName="KFChar.ZombieClot_CIRCUS")
+     StandardMonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_CIRCUS")
+     StandardMonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_CIRCUS")
+     StandardMonsterClasses(3)=(MClassName="KFChar.ZombieStalker_CIRCUS")
+     StandardMonsterClasses(4)=(MClassName="KFChar.ZombieScrake_CIRCUS")
+     StandardMonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_CIRCUS")
+     StandardMonsterClasses(6)=(MClassName="KFChar.ZombieBloat_CIRCUS")
+     StandardMonsterClasses(7)=(MClassName="KFChar.ZombieSiren_CIRCUS")
+     StandardMonsterClasses(8)=(MClassName="KFChar.ZombieHusk_CIRCUS")
+     ShortSpecialSquads(2)=(ZedClass=("KFChar.ZombieCrawler_CIRCUS","KFChar.ZombieGorefast_CIRCUS","KFChar.ZombieStalker_CIRCUS","KFChar.ZombieScrake_CIRCUS"))
+     ShortSpecialSquads(3)=(ZedClass=("KFChar.ZombieBloat_CIRCUS","KFChar.ZombieSiren_CIRCUS","KFChar.ZombieFleshPound_CIRCUS"))
+     NormalSpecialSquads(3)=(ZedClass=("KFChar.ZombieCrawler_CIRCUS","KFChar.ZombieGorefast_CIRCUS","KFChar.ZombieStalker_CIRCUS","KFChar.ZombieScrake_CIRCUS"))
+     NormalSpecialSquads(4)=(ZedClass=("KFChar.ZombieFleshPound_CIRCUS"))
+     NormalSpecialSquads(5)=(ZedClass=("KFChar.ZombieBloat_CIRCUS","KFChar.ZombieSiren_CIRCUS","KFChar.ZombieFleshPound_CIRCUS"))
+     NormalSpecialSquads(6)=(ZedClass=("KFChar.ZombieBloat_CIRCUS","KFChar.ZombieSiren_CIRCUS","KFChar.ZombieFleshPound_CIRCUS"))
+     LongSpecialSquads(4)=(ZedClass=("KFChar.ZombieCrawler_CIRCUS","KFChar.ZombieGorefast_CIRCUS","KFChar.ZombieStalker_CIRCUS","KFChar.ZombieScrake_CIRCUS"))
+     LongSpecialSquads(6)=(ZedClass=("KFChar.ZombieFleshPound_CIRCUS"))
+     LongSpecialSquads(7)=(ZedClass=("KFChar.ZombieBloat_CIRCUS","KFChar.ZombieSiren_CIRCUS","KFChar.ZombieFleshPound_CIRCUS"))
+     LongSpecialSquads(8)=(ZedClass=("KFChar.ZombieBloat_CIRCUS","KFChar.ZombieSiren_CIRCUS","KFChar.ZombieScrake_CIRCUS","KFChar.ZombieFleshPound_CIRCUS"))
+     LongSpecialSquads(9)=(ZedClass=("KFChar.ZombieBloat_CIRCUS","KFChar.ZombieSiren_CIRCUS","KFChar.ZombieScrake_CIRCUS","KFChar.ZombieFleshPound_CIRCUS"))
+     FinalSquads(0)=(ZedClass=("KFChar.ZombieClot_CIRCUS"))
+     FinalSquads(1)=(ZedClass=("KFChar.ZombieClot_CIRCUS","KFChar.ZombieCrawler_CIRCUS"))
+     FinalSquads(2)=(ZedClass=("KFChar.ZombieClot_CIRCUS","KFChar.ZombieStalker_CIRCUS","KFChar.ZombieCrawler_CIRCUS"))
+     FallbackMonsterClass="KFChar.ZombieStalker_CIRCUS"
+     EndGameBossClass="KFChar.ZombieBoss_CIRCUS"
+}

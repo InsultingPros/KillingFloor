@@ -10,6 +10,10 @@ class StaticMeshActor extends Actor
 
 var() bool bExactProjectileCollision;		// nonzero extent projectiles should shrink to zero when hitting this actor
 
+/* This interface was added for the roulette minigame in the summer sideshow map.
+Implemented in KF_Roulette_Bet_Zone */
+function OnActorLanded(Actor FallingActor){}
+
 defaultproperties
 {
      bExactProjectileCollision=True

@@ -208,54 +208,54 @@ function HealOrHurt(float DamageAmount, float DamageRadius, class<DamageType> Da
 			{
                 if( Instigator != none && KFP.Health > 0 && KFP.Health < KFP.HealthMax )
                 {
-					PlayersHealed += 1;
-            		MedicReward = HealBoostAmount;
+	                if ( KFP.bCanBeHealed )
+					{
+						PlayersHealed += 1;
+	            		MedicReward = HealBoostAmount;
 
-            		PRI = KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo);
+	            		PRI = KFPlayerReplicationInfo(Instigator.PlayerReplicationInfo);
 
-            		if ( PRI != none && PRI.ClientVeteranSkill != none )
-            		{
-            			MedicReward *= PRI.ClientVeteranSkill.Static.GetHealPotency(PRI);
-            		}
+	            		if ( PRI != none && PRI.ClientVeteranSkill != none )
+	            		{
+	            			MedicReward *= PRI.ClientVeteranSkill.Static.GetHealPotency(PRI);
+	            		}
 
-                    HealSum = MedicReward;
+	                    HealSum = MedicReward;
 
-            		if ( (KFP.Health + KFP.healthToGive + MedicReward) > KFP.HealthMax )
-            		{
-                        MedicReward = KFP.HealthMax - (KFP.Health + KFP.healthToGive);
-            			if ( MedicReward < 0 )
-            			{
-            				MedicReward = 0;
-            			}
-            		}
+	            		if ( (KFP.Health + KFP.healthToGive + MedicReward) > KFP.HealthMax )
+	            		{
+	                        MedicReward = KFP.HealthMax - (KFP.Health + KFP.healthToGive);
+	            			if ( MedicReward < 0 )
+	            			{
+	            				MedicReward = 0;
+	            			}
+	            		}
 
-                    //log(Level.TimeSeconds@"Healing "$KFP$" for "$HealSum$" base healamount "$HealBoostAmount$" health");
-                    KFP.GiveHealth(HealSum, KFP.HealthMax);
+	                    //log(Level.TimeSeconds@"Healing "$KFP$" for "$HealSum$" base healamount "$HealBoostAmount$" health");
+	                    KFP.GiveHealth(HealSum, KFP.HealthMax);
 
-             		if ( PRI != None )
-            		{
-            			if ( MedicReward > 0 && KFSteamStatsAndAchievements(PRI.SteamStatsAndAchievements) != none )
-            			{
-            				KFSteamStatsAndAchievements(PRI.SteamStatsAndAchievements).AddDamageHealed(MedicReward, false, true);
-            			}
+	             		if ( PRI != None )
+	            		{
+	            			if ( MedicReward > 0 && KFSteamStatsAndAchievements(PRI.SteamStatsAndAchievements) != none )
+	            			{
+	            				KFSteamStatsAndAchievements(PRI.SteamStatsAndAchievements).AddDamageHealed(MedicReward, false, true);
+	            			}
 
-                        // Give the medic reward money as a percentage of how much of the person's health they healed
-            			MedicReward = int((FMin(float(MedicReward),KFP.HealthMax)/KFP.HealthMax) * 60);
+	                        // Give the medic reward money as a percentage of how much of the person's health they healed
+	            			MedicReward = int((FMin(float(MedicReward),KFP.HealthMax)/KFP.HealthMax) * 60);
 
-            			PRI.Score += MedicReward;
-            			PRI.ThreeSecondScore += MedicReward;
+	            			PRI.ReceiveRewardForHealing( MedicReward, KFP );
 
-            			PRI.Team.Score += MedicReward;
+	            			if ( KFHumanPawn(Instigator) != none )
+	            			{
+	            				KFHumanPawn(Instigator).AlphaAmount = 255;
+	            			}
 
-            			if ( KFHumanPawn(Instigator) != none )
-            			{
-            				KFHumanPawn(Instigator).AlphaAmount = 255;
-            			}
-
-                        if( PlayerController(Instigator.Controller) != none )
-                        {
-                            PlayerController(Instigator.Controller).ClientMessage(SuccessfulHealMessage@KFP.PlayerReplicationInfo.PlayerName, 'CriticalEvent');
-                        }
+	                        if( PlayerController(Instigator.Controller) != none )
+	                        {
+	                            PlayerController(Instigator.Controller).ClientMessage(SuccessfulHealMessage$KFP.GetPlayerName(), 'CriticalEvent');
+	                        }
+	            		}
             		}
                 }
 			}

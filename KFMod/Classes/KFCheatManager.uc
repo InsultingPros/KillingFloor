@@ -408,6 +408,7 @@ exec function Arsenal(optional bool bMaxAmmo)
     Pawn.GiveWeapon("KFmod.M32GrenadeLauncher");
     Pawn.GiveWeapon("KFmod.M79GrenadeLauncher");
     Pawn.GiveWeapon("KFmod.PipeBombExplosive");
+    Pawn.GiveWeapon("KFmod.SPGrenadeLauncher");
     Pawn.GiveWeapon("KFmod.MP7MMedicGun");
     Pawn.GiveWeapon("KFmod.MP5MMedicGun");
     Pawn.GiveWeapon("KFmod.M7A3MMedicGun");
@@ -454,9 +455,13 @@ exec function Arsenal(optional bool bMaxAmmo)
 	Pawn.GiveWeapon("KFmod.NailGun");
 	Pawn.GiveWeapon("KFMod.FlareRevolver");
 	Pawn.GiveWeapon("KFMod.ThompsonSMG");
+	Pawn.GiveWeapon("KFMod.SPThompsonSMG");
+	Pawn.GiveWeapon("KFMod.ThompsonDrumSMG");
 	Pawn.GiveWeapon("KFmod.Scythe");
 	Pawn.GiveWeapon("KFmod.Crossbuzzsaw");
 	Pawn.GiveWeapon("KFmod.KrissMMedicGun");
+	Pawn.GiveWeapon("KFmod.SPAutoShotgun");
+	Pawn.GiveWeapon("KFmod.SPSniperRifle");
 
     if( bMaxAmmo )
     {
@@ -486,6 +491,7 @@ exec function RifleMe()
 	Pawn.GiveWeapon("KFmod.Crossbow");
 	Pawn.GiveWeapon("KFmod.M4AssaultRifle");
 	Pawn.GiveWeapon("KFmod.FNFAL_ACOG_AssaultRifle");
+	Pawn.GiveWeapon("KFmod.SPSniperRifle");
 
 	ReportCheat("RifleMe");
 	ClientMessage("Rifle Weapons.");
@@ -501,6 +507,7 @@ exec function Sniper()
 	Pawn.GiveWeapon("KFmod.Winchester");
 	Pawn.GiveWeapon("KFmod.Crossbow");
 	Pawn.GiveWeapon("KFmod.M99SniperRifle");
+	Pawn.GiveWeapon("KFmod.SPSniperRifle");
 
 	ReportCheat("Sniper");
 	ClientMessage("Sniper Weapons.");
@@ -535,6 +542,8 @@ exec function SMG()
     Pawn.GiveWeapon("KFMod.MAC10MP");
     Pawn.GiveWeapon("KFmod.ThompsonSMG");
     Pawn.GiveWeapon("KFmod.KrissMMedicGun");
+    Pawn.GiveWeapon("KFMod.SPThompsonSMG");
+	Pawn.GiveWeapon("KFMod.ThompsonDrumSMG");
 
 	ReportCheat("SMG");
 	ClientMessage("SMG Weapons.");
@@ -600,6 +609,7 @@ exec function Shotty()
 	Pawn.GiveWeapon("KFmod.AA12AutoShotgun");
 	Pawn.GiveWeapon("KFmod.BenelliShotgun");
 	Pawn.GiveWeapon("KFmod.KSGShotgun");
+	Pawn.GiveWeapon("KFmod.SPAutoShotgun");
 
 	ReportCheat("Shotty");
 	ClientMessage("Shotguns.");
@@ -649,6 +659,7 @@ exec function Bombs(optional bool bMaxAmmo)
 	Pawn.GiveWeapon("KFmod.M79GrenadeLauncher");
 	Pawn.GiveWeapon("KFmod.M32GrenadeLauncher");
 	Pawn.GiveWeapon("KFmod.M4203AssaultRifle");
+	Pawn.GiveWeapon("KFmod.SPGrenadeLauncher");
 
     if( bMaxAmmo )
     {
@@ -747,16 +758,19 @@ exec function MopUp()
 	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
 		return;
 
-   forEach AllActors(class 'KFMonster',LevelMonster)
-   {
-	LevelMonsterTotal++;
-	LevelMonster.KilledBy(Pawn);
-   }
+	forEach AllActors(class 'KFMonster',LevelMonster)
+	{
+		LevelMonsterTotal++;
+		LevelMonster.KilledBy(Pawn);
+	}
 
 	ReportCheat("MopUp");
 	ClientMessage("The number of zombies in this map was : "$LevelMonsterTotal);
 }
 
+// Removed - the reference to ZombieBossBass caused the patriach content to be
+// always loaded.  For some reason we have lots of content refs in this class
+/*
 exec function PatRage()
 {
 	local ZombieBossBase LevelMonster;
@@ -765,14 +779,15 @@ exec function PatRage()
 	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
 		return;
 
-   forEach AllActors(class'ZombieBossBase',LevelMonster)
-   {
-        LevelMonster.GotoState('RadialAttack');
-   }
+	forEach AllActors(class'ZombieBossBase',LevelMonster)
+	{
+		LevelMonster.GotoState('RadialAttack');
+	}
 
 	ReportCheat("PatRage");
 	ClientMessage("Forcing the Patriarch to do his radial attack");
 }
+*/
 
 exec function BurnEm()
 {
@@ -782,19 +797,19 @@ exec function BurnEm()
 	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
 		return;
 
-   forEach AllActors(class'KFMonster',LevelMonster)
-   {
-        LevelMonster.bBurnified = true;
-        LevelMonster.ZombieCrispUp();
+	forEach AllActors(class'KFMonster',LevelMonster)
+	{
+		LevelMonster.bBurnified = true;
+		LevelMonster.ZombieCrispUp();
 
 		LevelMonster.LastBurnDamage = 15;
 		LevelMonster.FireDamageClass = class'DamTypeFlamethrower';
 
-        LevelMonster.BurnDown = 10; // Inits burn tick count to 10
-        LevelMonster.GroundSpeed *= 0.80; // Lowers movement speed by 20%
-        LevelMonster.BurnInstigator = Pawn;
-        LevelMonster.SetTimer(1.0,false); // Sets timer function to be executed each second
-   }
+		LevelMonster.BurnDown = 10; // Inits burn tick count to 10
+		LevelMonster.GroundSpeed *= 0.80; // Lowers movement speed by 20%
+		LevelMonster.BurnInstigator = Pawn;
+		LevelMonster.SetTimer(1.0,false); // Sets timer function to be executed each second
+	}
 
 	ReportCheat("BurnEm");
 	ClientMessage("Forcing Zeds to Burn!!!");
@@ -893,6 +908,19 @@ exec function Bond()
     Pawn.GiveWeapon("KFmod.GoldenKatana");
     Pawn.GiveWeapon("KFmod.GoldenM79GrenadeLauncher");
     Pawn.GiveWeapon("KFmod.GoldenAK47AssaultRifle");
+}
+
+exec function Bond2()
+{
+    if (!areCheatsEnabled()) return;
+	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+		return;
+
+    Pawn.GiveWeapon("KFmod.GoldenAA12AutoShotgun");
+    Pawn.GiveWeapon("KFmod.GoldenDeagle");
+    Pawn.GiveWeapon("KFmod.GoldenChainsaw");
+    Pawn.GiveWeapon("KFmod.GoldenFlamethrower");
+    Pawn.GiveWeapon("KFmod.GoldenDualDeagle");
 }
 
 exec function GrantAchievement(int achievement)

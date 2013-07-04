@@ -109,14 +109,28 @@ function GameTypeChanged(UT2K4Browser_ServersList NewList)
 	// Display any found servers of the current game type
 	for (i = 0; i < AllServers.Length; i++)
 	{
-		if (AllServers[i].GameType == CurrentGameType ||
-			Browser.co_GameType.GetComponentValue() == KFServerBrowser(Browser).AllTypesClassName)
+    	if (AllServers[i].GameType == CurrentGameType ||
+    	    InterchangeableGameTypes(AllServers[i].GameType,CurrentGameType) ||
+			Browser.co_GameType.GetComponentValue() == KFServerBrowser(Browser).AllTypesClassName )
 		{
 			DisplayServers(AllServers[i]);
 		}
 	}
 
 	InitServerList();
+}
+
+/* Returns true if the supplied Server is running a gametype that should display even though it is not
+what we are filtering for (currently only used in ObjectiveMode / KF Vanilla) */
+
+function bool        InterchangeableGameTypes(string GT1, string GT2)
+{
+    if(GT1 ~= "Objective Mode" && GT2 == "Killing Floor")
+    {
+        return true;
+    }
+
+    return false;
 }
 
 function AddQueryTerm(coerce string Key, coerce string Value, MasterServerClient.EQueryType QueryType)

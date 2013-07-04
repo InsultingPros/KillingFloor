@@ -317,8 +317,10 @@ simulated function CalcAmbientRelevancyScale()
 	CustomAmbientRelevancyScale = 500/(100 * SoundRadius);
 }
 
+// empty functions to avoid casting
 function StartCharging(){}
 function DebugLog(){}
+function BreakGrapple(){}
 
 //-----------------------------------------------------------------------------
 // PostBeginPlay
@@ -1270,7 +1272,8 @@ simulated function PlayTakeHit(vector HitLocation, int Damage, class<DamageType>
 		|| DamageType.name == 'DamTypePipeBomb' || DamageType.name == 'DamTypeM79Grenade'
 		|| DamageType.name == 'DamTypeM32Grenade' || DamageType.name == 'DamTypeM203Grenade'
         || DamageType.name == 'DamTypeBenelli' || DamageType.name == 'DamTypeKSGShotgun'
-        || DamageType.name == 'DamTypeTrenchgun' || DamageType.name == 'DamTypeNailgun')
+        || DamageType.name == 'DamTypeTrenchgun' || DamageType.name == 'DamTypeNailgun'
+        || DamageType.name == 'DamTypeSPShotgun' || DamageType.name == 'DamTypeSPGrenade')
 			PlayDirectionalHit(HitLocation);
 		else if (DamageType.name == 'DamTypeClaws')
 		{
@@ -2702,7 +2705,7 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 			if( bDecapitated && Class<KFWeaponDamageType>(damageType) != none && instigatedBy != none && KFPlayerController(instigatedBy.Controller) != none )
 			{
 				bLaserSightedEBRM14Headshotted = M14EBRBattleRifle(instigatedBy.Weapon) != none && M14EBRBattleRifle(instigatedBy.Weapon).bLaserActive;
-				Class<KFWeaponDamageType>(damageType).Static.ScoredHeadshot(KFSteamStatsAndAchievements(PlayerController(instigatedBy.Controller).SteamStatsAndAchievements), bLaserSightedEBRM14Headshotted);
+				Class<KFWeaponDamageType>(damageType).Static.ScoredHeadshot(KFSteamStatsAndAchievements(PlayerController(instigatedBy.Controller).SteamStatsAndAchievements), self.Class, bLaserSightedEBRM14Headshotted);
 			}
 		}
 	}
@@ -2712,7 +2715,8 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 
 	if( Health-Damage > 0 && DamageType!=class'DamTypeFrag' && DamageType!=class'DamTypePipeBomb'
 		&& DamageType!=class'DamTypeM79Grenade' && DamageType!=class'DamTypeM32Grenade'
-        && DamageType!=class'DamTypeM203Grenade' && DamageType!=class'DamTypeDwarfAxe')
+        && DamageType!=class'DamTypeM203Grenade' && DamageType!=class'DamTypeDwarfAxe'
+        && DamageType!=class'DamTypeSPGrenade')
 	{
 		Momentum = vect(0,0,0);
 	}

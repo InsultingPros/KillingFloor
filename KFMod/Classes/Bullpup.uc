@@ -114,6 +114,31 @@ simulated function SetZoomBlendColor(Canvas c)
 	c.DrawColor = clr;
 }
 
+simulated function AddReloadedAmmo()
+{
+	super.AddReloadedAmmo();
+
+	ResetReloadAchievement();
+}
+
+function ResetReloadAchievement()
+{
+	local PlayerController PC;
+	local KFSteamStatsAndAchievements KFSteamStats;
+
+	PC = PlayerController( Instigator.Controller );
+
+	if ( PC != none )
+	{
+		KFSteamStats = KFSteamStatsAndAchievements(PC.SteamStatsAndAchievements);
+
+		if ( KFSteamStats != none )
+		{
+         	KFSteamStats.OnReloadSPTorBullpup();
+		}
+	}
+}
+
 defaultproperties
 {
      MagCapacity=40

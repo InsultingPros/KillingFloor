@@ -21,5 +21,5 @@ defaultproperties
      Description="Gold plating. Gold filigree inlay on the woodwork. You probably want the rounds gold as well. Bosh! "
      PickupClass=Class'KFMod.GoldenM79Pickup'
      AttachmentClass=Class'KFMod.GoldenM79Attachment'
-     ItemName="Gold M79 Grenade Launcher"
+     ItemName="Golden M79 Grenade Launcher"
 }

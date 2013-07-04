@@ -127,6 +127,7 @@ struct BatchReference
 			ElementIndex;
 };
 
+
 var const native array<BatchReference>	StaticSectionBatches;
 
 var(Display) const name	ForcedVisibilityZoneTag; // Makes the visibility code treat the actor as if it was in the zone with the given tag.
@@ -255,6 +256,7 @@ struct PointRegion
 	var byte     ZoneNumber; // Zone number.
 };
 
+
 //-----------------------------------------------------------------------------
 // Major actor properties.
 
@@ -273,6 +275,7 @@ var transient MeshInstance MeshInstance;	// Mesh instance.
 var(Display) float		  LODBias;
 var(Object) name InitialState;
 var(Object) name Group;
+
 
 // Internal.
 var const array<Actor>    Touching;		 // List of touching actors.
@@ -1157,6 +1160,30 @@ event UnTrigger( Actor Other, Pawn EventInstigator );
 event BeginEvent();
 event EndEvent();
 
+/* begin KFO *================*/
+
+/* Returns a list of all events this actor can trigger as well as
+receive.  In a basic actor this would simply be the 'Event'  and 'Tag' names.
+Objective mode actors override this function because they have more elaborate
+event arrays.*/
+
+event GetEvents(out array<name> TriggeredEvents,  out array<name>  ReceivedEvents)
+{
+    if(Event != '')
+    {
+        TriggeredEvents[TriggeredEvents.length] = Event;
+    }
+
+    ReceivedEvents[ReceivedEvents.length]   = Tag;
+}
+
+event color GetEventColor()
+{
+    return class'Canvas'.static.MakeColor(25,25,255);
+}
+
+/* end KFO ===================*/
+
 //
 // Physics & world interaction.
 //
@@ -1468,6 +1495,7 @@ native(551) static final operator(20) color +     ( color A, color B );
 native(552) static final operator(16) color *     ( color A, float B );
 
 //=============================================================================
+
 // Scripted Actor functions.
 
 event RecoverFromBadStateCode();
@@ -1882,12 +1910,33 @@ simulated event TriggerEvent( Name EventName, Actor Other, Pawn EventInstigator 
 	if ( EventName == '' )
 		return;
 
+	// KF_Begin
+    CheckAchievementEvents( EventName, EventInstigator );
+	// KF_End
+
 	ForEach DynamicActors( class 'Actor', A, EventName )
 		A.Trigger(Other, EventInstigator);
 
 	For ( N=Level.NavigationPointList; N!=None; N=N.NextNavigationPoint )
 		if ( N.bStatic && N.Tag == EventName )
 			N.Trigger(Other, EventInstigator);
+}
+
+/** This function was created specifically to check achievement events in a KF level
+*	- Greg Felber	*/
+simulated function CheckAchievementEvents( Name EventName, Pawn EventInstigator )
+{
+	local Controller C;
+	local PlayerController PC;
+
+	For ( C=Level.ControllerList; C!=None; C=C.NextController )
+	{
+		PC = PlayerController(C);
+		if ( (PC != None) && ( PC.SteamStatsAndAchievements != none ) )
+		{
+         	PC.SteamStatsAndAchievements.CheckEvents( EventName );
+		}
+	}
 }
 
 /*
@@ -1907,6 +1956,9 @@ function UntriggerEvent( Name EventName, Actor Other, Pawn EventInstigator )
 		if ( N.bStatic && N.Tag == EventName )
 			N.Untrigger(Other, EventInstigator);
 }
+
+/* Triggered by class KFEventListener - Greg Felber */
+simulated function ReceivedEvent( name EventName );
 
 function bool IsInVolume(Volume aVolume)
 {

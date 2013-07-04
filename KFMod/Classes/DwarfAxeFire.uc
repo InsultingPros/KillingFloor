@@ -100,6 +100,12 @@ simulated function Timer()
 
                 HitActor.TakeDamage(MyDamage, Instigator, HitLocation, dir * AppliedMomentum, hitDamageClass) ;
 
+                // Break thier grapple if you are knocking them back!
+                if( KFMonster(HitActor) != none )
+                {
+                    KFMonster(HitActor).BreakGrapple();
+                }
+
             	if(MeleeHitSounds.Length > 0)
             	{
             		Weapon.PlaySound(MeleeHitSounds[Rand(MeleeHitSounds.length)],SLOT_None,MeleeHitVolume,,,,false);
@@ -155,6 +161,12 @@ simulated function Timer()
 
     	           		//log("Shot would hit "$Victims$" DiffAngle = "$DiffAngle$" for damage of: "$(MyDamage*DiffAngle));
     	           		Victims.TakeDamage(MyDamage*DiffAngle, Instigator, (Victims.Location + Victims.CollisionHeight * vect(0,0,0.7)), dir * AppliedMomentum, hitDamageClass) ;
+
+                        // Break thier grapple if you are knocking them back!
+                        if( KFMonster(Victims) != none )
+                        {
+                            KFMonster(Victims).BreakGrapple();
+                        }
 
                     	if(MeleeHitSounds.Length > 0)
                     	{

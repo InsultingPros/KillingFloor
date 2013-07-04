@@ -42,6 +42,9 @@ var int						UpdateCounter;
 
 var	localized string		WeaponDLCMessage;
 
+var bool                    bHasGoldWeaponPack1;
+var bool                    bHasGoldWeaponPack2;
+
 event InitComponent(GUIController MyController, GUIComponent MyOwner)
 {
 	Super.InitComponent(MyController, MyOwner);
@@ -57,6 +60,10 @@ function Timer()
 event Opened(GUIComponent Sender)
 {
 	super.Opened(Sender);
+
+	bHasGoldWeaponPack1 = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(210938);
+	bHasGoldWeaponPack2 = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(210944);
+
 	UpdateForSaleBuyables();
 }
 
@@ -108,28 +115,45 @@ function int PopulateBuyablesbyPerk(int Perk, bool HasPerk, int currentIndex)
 
     	if ( KFLR.ItemForSale[j] != none )
         {
+            ForSalePickup = class<KFWeaponPickup>(KFLR.ItemForSale[j]);
+
+			if( ForSalePickup.default.GoldenVariantClass != none )
+            {
+                // golden guns pack 1 - hide normal if gold is unlocked, or show normal if gold is not unlocked
+                if( bHasGoldWeaponPack1 &&
+                    class<KFWeapon>(ForSalePickup.default.GoldenVariantClass.default.InventoryType).default.AppID == 210938 )
+                {
+                    ForSalePickup = class<KFWeaponPickup>(ForSalePickup.default.GoldenVariantClass);
+                }
+                // golden guns pack 2
+                else if( bHasGoldWeaponPack2 &&
+                         class<KFWeapon>(ForSalePickup.default.GoldenVariantClass.default.InventoryType).default.AppID == 210944 )
+                {
+                    ForSalePickup = class<KFWeaponPickup>(ForSalePickup.default.GoldenVariantClass);
+                }
+            }
+
 			//Let's see if this is a vest, first aid kit, ammo or stuff we already have
 			if ( class<Vest>(KFLR.ItemForSale[j]) != none || class<FirstAidKit>(KFLR.ItemForSale[j]) != none ||
                  class<KFWeapon>(KFLR.ItemForSale[j].default.InventoryType) == none || KFLR.ItemForSale[j].IsA('Ammunition') ||
 				 class<KFWeapon>(KFLR.ItemForSale[j].default.InventoryType).default.bKFNeverThrow ||
-                 IsInInventory(KFLR.ItemForSale[j]) )
+                 IsInInventory(ForSalePickup) )
         	{
         		continue;
 			}
 
-		   	if( (class<KFWeaponPickup>(KFLR.ItemForSale[j]).default.CorrespondingPerkIndex != Perk) == HasPerk)
+		   	if( (ForSalePickup.default.CorrespondingPerkIndex != Perk) == HasPerk)
 		   	{
 		   	    continue;
 		   	}
 
-
             //to prevent the double-display of perkless weapons
-		   	if( Perk != 7 && class<KFWeaponPickup>(KFLR.ItemForSale[j]).default.CorrespondingPerkIndex == 7)
+		   	if( Perk != 7 && ForSalePickup.default.CorrespondingPerkIndex == 7)
             {
                 continue;
             }
 
-            if ( class<Deagle>(KFLR.ItemForSale[j].default.InventoryType) != none )
+            if ( class<Deagle>(ForSalePickup.default.InventoryType) != none )
             {
 				if ( IsInInventory(class'DualDeaglePickup') )
 				{
@@ -137,7 +161,15 @@ function int PopulateBuyablesbyPerk(int Perk, bool HasPerk, int currentIndex)
 				}
 			}
 
-            if ( class<Magnum44Pistol>(KFLR.ItemForSale[j].default.InventoryType) != none )
+			if ( class<GoldenDeagle>(ForSalePickup.default.InventoryType) != none )
+            {
+				if ( IsInInventory(class'GoldenDualDeaglePickup') )
+				{
+					continue;
+				}
+			}
+
+            if ( class<Magnum44Pistol>(ForSalePickup.default.InventoryType) != none )
             {
 				if ( IsInInventory(class'Dual44MagnumPickup') )
 				{
@@ -145,7 +177,7 @@ function int PopulateBuyablesbyPerk(int Perk, bool HasPerk, int currentIndex)
 				}
 			}
 
-            if ( class<MK23Pistol>(KFLR.ItemForSale[j].default.InventoryType) != none )
+            if ( class<MK23Pistol>(ForSalePickup.default.InventoryType) != none )
             {
 				if ( IsInInventory(class'DualMK23Pickup') )
 				{
@@ -153,7 +185,7 @@ function int PopulateBuyablesbyPerk(int Perk, bool HasPerk, int currentIndex)
 				}
 			}
 
-            if ( class<FlareRevolver>(KFLR.ItemForSale[j].default.InventoryType) != none )
+            if ( class<FlareRevolver>(ForSalePickup.default.InventoryType) != none )
             {
 				if ( IsInInventory(class'DualFlareRevolverPickup') )
 				{
@@ -161,12 +193,17 @@ function int PopulateBuyablesbyPerk(int Perk, bool HasPerk, int currentIndex)
 				}
 			}
 
-			if ( class<DualDeagle>(KFLR.ItemForSale[j].default.InventoryType) != none
-                || class<Dual44Magnum>(KFLR.ItemForSale[j].default.InventoryType) != none
-                || class<DualMK23Pistol>(KFLR.ItemForSale[j].default.InventoryType) != none
-                || class<DualFlareRevolver>(KFLR.ItemForSale[j].default.InventoryType) != none )
+			if ( class<DualDeagle>(ForSalePickup.default.InventoryType) != none
+			    || class<GoldenDualDeagle>(ForSalePickup.default.InventoryType) != none
+                || class<Dual44Magnum>(ForSalePickup.default.InventoryType) != none
+                || class<DualMK23Pistol>(ForSalePickup.default.InventoryType) != none
+                || class<DualFlareRevolver>(ForSalePickup.default.InventoryType) != none )
             {
 				if ( IsInInventory(class'DeaglePickup') )
+				{
+					DualDivider = 2;
+				}
+				else if ( IsInInventory(class'GoldenDeaglePickup') )
 				{
 					DualDivider = 2;
 				}
@@ -200,8 +237,6 @@ function int PopulateBuyablesbyPerk(int Perk, bool HasPerk, int currentIndex)
 			}
 
 			currentIndex++;
-
-			ForSalePickup =  class<KFWeaponPickup>(KFLR.ItemForSale[j]);
 
    			ForSaleBuyable.ItemName 		= ForSalePickup.default.ItemName;
     		ForSaleBuyable.ItemDescription 	= ForSalePickup.default.Description;
@@ -319,10 +354,10 @@ function UpdateList()
 		{
 			CanBuys[i] = 1;
 		}
-		
+
 		unlockedByAchievement = false;
 		unlockedByApp = false;
-		
+
         if( KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements) != none )
         {
             if( ForSaleBuyables[i].ItemWeaponClass.Default.UnlockedByAchievement != -1 )

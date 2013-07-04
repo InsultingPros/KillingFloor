@@ -1,5 +1,4 @@
 class KFNewTracer extends Emitter;
-
 //#exec OBJ LOAD FILE=..\Textures\AW-2004Particles.utx
 
 simulated function SpawnParticle( int Amount )

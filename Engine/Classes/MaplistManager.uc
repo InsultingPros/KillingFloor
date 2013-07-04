@@ -938,6 +938,7 @@ defaultproperties
      Games(11)=(GameType="ROEngine.ROTeamGame",ActiveMaplist="Default RO")
      Games(12)=(GameType="KFmod.KFGameType",ActiveMaplist="Default KF")
      Games(13)=(GameType="KFmod.KFGameTypePvP",ActiveMaplist="Default KFP")
+     Games(14)=(GameType="KFStoryGame.KFstoryGameInfo",ActiveMaplist="Default KFO")
      DefaultListName="Default"
      InvalidGameType="could not be loaded.  Normally, this means an .u file has been deleted, but the .int file has not."
      ReallyInvalidGameType="The requested gametype '%gametype%' could not be loaded."

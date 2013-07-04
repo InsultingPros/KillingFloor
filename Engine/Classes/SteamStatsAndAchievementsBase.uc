@@ -242,6 +242,8 @@ function PlayerDied();
 
 native function SteamAPICall(string callString);
 
+function CheckEvents( Name EventName );
+
 defaultproperties
 {
      FlushStatsToClientDelay=10.000000

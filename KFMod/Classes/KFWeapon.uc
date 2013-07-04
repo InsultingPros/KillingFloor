@@ -1178,7 +1178,7 @@ simulated function BringUp(optional Weapon PrevWeapon)
 			Player.CheckForHint(22);
 			Player.WeaponPulloutRemark(24);
 		}
-		else if ( class == class'DualDeagle' )
+		else if ( class == class'DualDeagle' || class == class'GoldenDualDeagle' )
 		{
 			Player.WeaponPulloutRemark(22);
 		}

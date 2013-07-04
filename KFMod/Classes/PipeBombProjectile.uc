@@ -144,7 +144,8 @@ function Timer()
                     else
                     {
                         if( (CheckPawn != Instigator) && (CheckPawn.Role == ROLE_Authority) &&
-                            CheckPawn.PlayerReplicationInfo == none || CheckPawn.PlayerReplicationInfo.Team.TeamIndex != PlacedTeam )
+                            ((CheckPawn.PlayerReplicationInfo != none && CheckPawn.PlayerReplicationInfo.Team.TeamIndex != PlacedTeam) ||
+                            CheckPawn.GetTeamNum() != PlacedTeam))
                 		{
                             if( KFMonster(CheckPawn) != none )
                             {

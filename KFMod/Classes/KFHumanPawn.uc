@@ -60,6 +60,9 @@ var int TempScore; // temporary score.
 var float LastDyingMessageTime;
 var float DyingMessageDelay;
 
+/* Should this pawn be allowed to switch Weapons ? */
+var bool bLockWeaponSelection;
+
 replication
 {
 	reliable if ( bNetDirty && (Role == Role_Authority) )
@@ -73,7 +76,7 @@ replication
 		DoHitCamEffects, StopHitCamEffects;
 
 	reliable if(Role < ROLE_Authority)
-		SetAiming;
+		SetAiming,ServerTossCarriedItems;
 }
 
 simulated function Setup(xUtil.PlayerRecord rec, optional bool bLoadNow)
@@ -153,24 +156,32 @@ event PreBeginPlay()
 // Just changed to pendingWeapon
 simulated function ChangedWeapon()
 {
-    super.ChangedWeapon();
+    if(PendingWeapon != none &&
+    AllowHoldWeapon(KFWeapon(PendingWeapon)))
+    {
+        Super.ChangedWeapon();
 
-	// Experience Level relate stuff .
-	if ( Weapon != none && KFWeapon(Weapon).bSpeedMeUp )
-	{
-		// Adjust Melee weapon speed bonuses depending on perk.
-		BaseMeleeIncrease = default.BaseMeleeIncrease;
+    	// Experience Level relate stuff .
+	   if ( Weapon != none && KFWeapon(Weapon).bSpeedMeUp )
+	   {
+	   	   // Adjust Melee weapon speed bonuses depending on perk.
+	   	   BaseMeleeIncrease = default.BaseMeleeIncrease;
 
-		if ( KFPlayerReplicationInfo(PlayerReplicationInfo) != none && KFPlayerReplicationInfo(PlayerReplicationInfo).ClientVeteranSkill != none )
-		{
+		  if ( KFPlayerReplicationInfo(PlayerReplicationInfo) != none && KFPlayerReplicationInfo(PlayerReplicationInfo).ClientVeteranSkill != none )
+		  {
 			BaseMeleeIncrease += KFPlayerReplicationInfo(PlayerReplicationInfo).ClientVeteranSkill.Static.GetMeleeMovementSpeedModifier(KFPlayerReplicationInfo(PlayerReplicationInfo));
-		}
+		  }
 
-        InventorySpeedModifier = ((default.GroundSpeed * BaseMeleeIncrease) - (KFWeapon(Weapon).Weight * 2));
+            InventorySpeedModifier = ((default.GroundSpeed * BaseMeleeIncrease) - (KFWeapon(Weapon).Weight * 2));
+	   }
+	   else if ( Weapon == none || !KFWeapon(Weapon).bSpeedMeUp )
+	   {
+	   	   InventorySpeedModifier = 0;
+	   }
 	}
-	else if ( Weapon == none || !KFWeapon(Weapon).bSpeedMeUp )
+	else
 	{
-		InventorySpeedModifier = 0;
+	   PendingWeapon = none;
 	}
 }
 
@@ -201,6 +212,7 @@ simulated event ModifyVelocity(float DeltaTime, vector OldVelocity)
 {
     local float WeightMod, HealthMod;
     local float EncumbrancePercentage;
+    local Inventory Inv;
 
     super.ModifyVelocity(DeltaTime, OldVelocity);
 
@@ -222,6 +234,12 @@ simulated event ModifyVelocity(float DeltaTime, vector OldVelocity)
 		{
 			GroundSpeed *= KFPlayerReplicationInfo(PlayerReplicationInfo).ClientVeteranSkill.static.GetMovementSpeedModifier(KFPlayerReplicationInfo(PlayerReplicationInfo), KFGameReplicationInfo(Level.GRI));
 		}
+
+        /* Give the pawn's inventory items a chance to modify his movement speed */
+		for( Inv=Inventory; Inv!=None; Inv=Inv.Inventory )
+		{
+            GroundSpeed *= Inv.GetMovementModifierFor(self);
+        }
 	}
 }
 
@@ -655,8 +673,6 @@ simulated function RemoveCameraEffect(CameraEffect CameraEffect)
 }
 
 
-
-
 simulated function PrevWeapon()
 {
     if ( Level.Pauser != None )
@@ -739,6 +755,7 @@ function bool AddInventory( inventory NewItem )
 	{
 		CurrentWeight += KFWeapon(NewItem).Weight;
 	}
+
 	return true;
 }
 
@@ -923,17 +940,140 @@ function float GetStalkerViewDistanceMulti()
 Clamped from -1 to 100, where 100 is the most threatening ==================================
 ===========================================================================================*/
 
-function  float AssessThreatTo(KFMonsterController  Monster)
+function  float AssessThreatTo(KFMonsterController  Monster, optional bool CheckDistance)
 {
-   local float ValMax;
+    local float ValMax;
+    local float TotalThreat;
 
-   if(Monster == none || Monster.Pawn == none)
-   {
-       return -1.f;
-   }
+    if(Monster == none || Monster.Pawn == none)
+    {
+        return -1.f;
+    }
 
-    ValMax = Square(100.f);
-    return (ValMax -(VSizeSquared(Monster.Pawn.Location - Location)/ ValMax))/100.f ;
+    if(CheckDistance)
+    {
+        ValMax = Square(100.f);
+        TotalThreat = (ValMax -(VSizeSquared(Monster.Pawn.Location - Location)/ ValMax))/100.f ;
+    }
+
+    return TotalThreat;
+}
+
+/* Returns true if this pawn is able to hold a weapon of the supplied type */
+simulated function bool AllowHoldWeapon(Weapon InWeapon)
+{
+    return true;
+}
+
+// The player wants to switch to weapon group number F.
+simulated function SwitchWeapon(byte F)
+{
+    local Weapon DesiredWeap;
+    local bool AllowSwitch;
+
+    DesiredWeap = Weapon.Inventory.WeaponChange(F, false);
+    if(DesiredWeap == none )
+    {
+        DesiredWeap = Inventory.WeaponChange(F, true);
+    }
+
+    if(DesiredWeap != none)
+    {
+        AllowSwitch = AllowHoldWeapon(DesiredWeap);
+    }
+
+    if(AllowSwitch)
+    {
+        Super.SwitchWeapon(F);
+    }
+}
+
+function bool AllowWeaponSwitching()
+{
+    return !bLockWeaponSelection ;
+}
+
+/* @todo - unique bools ? */
+function bool AllowGrenadeTossing()
+{
+    return !bLockWeaponSelection ;
+}
+
+/* @todo - unique bools ? */
+function bool AllowQuickHealing()
+{
+    return !bLockWeaponSelection;
+}
+
+simulated exec function QuickHeal()
+{
+    if(AllowQuickHealing())
+    {
+        Super.QuickHeal();
+    }
+}
+
+simulated function TossCarriedItems()
+{
+    if(Role < Role_Authority)
+    {
+        ServerTossCarriedItems();
+    }
+    else
+    {
+        InternalTossCarriedItems();
+    }
+}
+
+function ServerTossCarriedItems()
+{
+    InternalTossCarriedItems();
+}
+
+simulated function InternalTossCarriedItems()
+{
+    local Inventory Inv;
+	local Vector X,Y,Z;
+
+	GetAxes(Rotation,X,Y,Z);
+
+    for( Inv=Inventory; Inv!=None; Inv=Inv.Inventory )
+    {
+        if(Inv.IsThrowable())
+        {
+            Inv.Velocity = Vector(Rotation)* 250.f ;
+            Inv.DropFrom(Location + 0.8 * CollisionRadius * X - 0.5 * CollisionRadius * Y);
+        }
+    }
+}
+
+simulated function bool IsCarryingThrowableInventory()
+{
+    local Inventory Inv;
+    for( Inv=Inventory; Inv!=None; Inv=Inv.Inventory )
+    {
+        if(Inv.IsThrowable())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function ThrowGrenade()
+{
+    if(AllowGrenadeTossing())
+    {
+        Super.ThrowGrenade();
+    }
+}
+
+// toss out a weapon
+function TossWeapon(Vector TossVel)
+{
+    TossCarriedItems();
+    Super.TossWeapon(TossVel);
 }
 
 defaultproperties

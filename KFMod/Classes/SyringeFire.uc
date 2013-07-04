@@ -18,13 +18,25 @@ simulated function DestroyEffects()
 function AttemptHeal()
 {
 	local KFHumanPawn Healtarget;
+	local string HealeeName;
 
     CachedHealee = none;
 
     if( AllowFire() && CanFindHealee() )
     {
         super.ModeDoFire();
-        Syringe(Weapon).ClientSuccessfulHeal(CachedHealee.PlayerReplicationInfo.PlayerName);
+
+        if(CachedHealee.PlayerReplicationInfo != none &&
+        CachedHealee.PlayerReplicationInfo.PlayerName != "")
+        {
+            HealeeName =  CachedHealee.PlayerReplicationInfo.PlayerName;
+        }
+        else     /* We're healing someone without a PRI.  Grab the menu name of their pawn */
+        {
+            HealeeName =  CachedHealee.MenuName;
+        }
+
+        Syringe(Weapon).ClientSuccessfulHeal(HealeeName);
     }
     else
     {
@@ -113,9 +125,7 @@ Function Timer()
             // Give the medic reward money as a percentage of how much of the person's health they healed
 			MedicReward = int((FMin(float(MedicReward),Healed.HealthMax)/Healed.HealthMax) * 60); // Increased to 80 in Balance Round 6, reduced to 60 in Round 7
 
-			PRI.Score += MedicReward;
-			PRI.ThreeSecondScore += MedicReward;
-			PRI.Team.Score += MedicReward;
+			PRI.ReceiveRewardForHealing( MedicReward, Healed );
 
 			if ( KFHumanPawn(Instigator) != none )
 			{
@@ -135,7 +145,10 @@ function KFHumanPawn GetHealee()
 
 	foreach Instigator.VisibleCollidingActors(class'KFHumanPawn', KFHP, 80.0)
 	{
-		if ( KFHP.Health < 100 && KFHP.Health > 0 )
+		if ( !KFHP.bCanBeHealed )
+			continue;
+
+		if ( KFHP.Health < KFHP.HealthMax && KFHP.Health > 0 )
 		{
 			TempDot = Dir dot (KFHP.Location - Instigator.Location);
 			if ( TempDot > 0.7 && TempDot > BestDot )

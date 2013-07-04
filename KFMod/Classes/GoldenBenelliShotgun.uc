@@ -20,5 +20,5 @@ defaultproperties
      Description="Gold plating, polished until it shines and twinkles. Just the thing for the serious Zed-slayer."
      PickupClass=Class'KFMod.GoldenBenelliPickup'
      AttachmentClass=Class'KFMod.GoldenBenelliAttachment'
-     ItemName="Gold Combat Shotgun"
+     ItemName="Golden Combat Shotgun"
 }

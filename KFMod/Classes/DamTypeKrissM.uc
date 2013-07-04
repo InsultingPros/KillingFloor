@@ -13,7 +13,7 @@ class DamTypeKrissM extends KFProjectileWeaponDamageType
 defaultproperties
 {
      WeaponClass=Class'KFMod.KrissMMedicGun'
-     DeathString="%k killed %o (KrissM)."
+     DeathString="%k killed %o (Schneidzekk)."
      FemaleSuicide="%o shot herself in the foot."
      MaleSuicide="%o shot himself in the foot."
      bRagdollBullet=True

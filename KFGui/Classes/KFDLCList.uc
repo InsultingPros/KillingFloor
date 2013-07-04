@@ -42,7 +42,7 @@ function InitList(PlayerController PCOwner, SteamStatsAndAchievementsBase StatsA
 		// Hold onto our references
 		MyPCOwner = PCOwner;
 		MyStatsAndAchievements = StatsAndAchievements;
-		
+
 		// Set up the Unowned Weapon DLC items
 		if ( bShowWeapons )
 		{
@@ -58,7 +58,6 @@ function InitList(PlayerController PCOwner, SteamStatsAndAchievementsBase StatsA
 				}
 			}
 		}
-
 
 		// Set up the Unowned Character DLC items
 		if ( bShowCharacters )
@@ -233,6 +232,7 @@ defaultproperties
      CharacterNames(8)="Ash_Harding"
      CharacterNames(9)="ChickenNator"
      CharacterNames(10)="DAR"
+     CharacterNames(11)="Mrs_Foster"
      CharacterUnownedTextures(0)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Outbreak'
      CharacterUnownedTextures(1)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Nightfall'
      CharacterUnownedTextures(2)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_PostMortem'
@@ -244,6 +244,7 @@ defaultproperties
      CharacterUnownedTextures(8)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Ash'
      CharacterUnownedTextures(9)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Chickenator'
      CharacterUnownedTextures(10)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Robot'
+     CharacterUnownedTextures(11)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_MrsFoster'
      CharacterOwnedTextures(0)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Outbreak'
      CharacterOwnedTextures(1)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Nightfall'
      CharacterOwnedTextures(2)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_PostMortem'
@@ -255,12 +256,19 @@ defaultproperties
      CharacterOwnedTextures(8)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Ash'
      CharacterOwnedTextures(9)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Chickenator'
      CharacterOwnedTextures(10)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Robot'
+     CharacterOwnedTextures(11)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_MrsFoster'
      WeaponAppIDs(0)=210934
      WeaponAppIDs(1)=210938
+     WeaponAppIDs(2)=210943
+     WeaponAppIDs(3)=210944
      WeaponUnownedTextures(0)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Community'
      WeaponUnownedTextures(1)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Gold-Pack'
+     WeaponUnownedTextures(2)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_CommunitySteamP'
+     WeaponUnownedTextures(3)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Gold-Pack2'
      WeaponOwnedTextures(0)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Community'
      WeaponOwnedTextures(1)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Gold-Pack'
+     WeaponOwnedTextures(2)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_CommunitySteamP'
+     WeaponOwnedTextures(3)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Gold-Pack2'
      OverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      HoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
      GetItemHeight=KFDLCList.DLCItemHeight

@@ -51,6 +51,9 @@ var int SellValue; // Stores the value for weapons that were purchased, then dro
 var	PlayerController	DroppedBy;
 var	bool				bPreviouslyDropped;
 
+// Golden variant class
+var class<Pickup>       GoldenVariantClass;
+
 simulated function PostNetBeginPlay()
 {
 	// decide which type of shadow to spawn
@@ -155,6 +158,7 @@ function InitDroppedPickupFor(Inventory Inv)
 			if ( !KFWeapon(Inventory).bPreviouslyDropped && PlayerController(Pawn(Inventory.Owner).Controller) != none )
 			{
 				KFWeapon(Inventory).bPreviouslyDropped = true;
+				KFSteamStatsAndAchievements(PlayerController(Pawn(Inventory.Owner).Controller).SteamStatsAndAchievements).AddDroppedTier2Weapon();
 			}
 		}
 		else

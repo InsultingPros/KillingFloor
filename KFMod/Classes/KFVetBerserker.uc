@@ -141,7 +141,8 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 {
 	if ( Item == class'ChainsawPickup' || Item == class'KatanaPickup' || Item == class'ClaymoreSwordPickup'
         || Item == class'CrossbuzzsawPickup' || Item == class'ScythePickup' || Item == class'GoldenKatanaPickup'
-        || Item == class'MachetePickup' || Item == class'AxePickup' || Item == class'DwarfAxePickup' )
+        || Item == class'MachetePickup' || Item == class'AxePickup' || Item == class'DwarfAxePickup'
+        || Item == class'GoldenChainsawPickup' )
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on Melee Weapons
 	}

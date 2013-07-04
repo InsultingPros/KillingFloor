@@ -20,5 +20,5 @@ defaultproperties
      Description="Take a classic AK. Gold plate every visible piece of metal. Engrave the wood for good measure. Serious blingski."
      PickupClass=Class'KFMod.GoldenAK47pickup'
      AttachmentClass=Class'KFMod.GoldenAK47Attachment'
-     ItemName="Gold AK47"
+     ItemName="Golden AK47"
 }

@@ -390,93 +390,51 @@ function bool FindFreshBody()
 function bool FindNewEnemy()
 {
 	local Pawn BestEnemy;
-	local bool bSeeNew, bSeeBest;
+	local bool bSeeBest;
 	local float BestDist, NewDist;
 	local Controller PC;
-	local KFHumanPawn C;
+	local KFHumanPawn Human;
 	local float HighestThreatLevel,ThreatLevel;
 
 	if( KFM.bNoAutoHuntEnemies )
 		Return False;
-	if ( KFM.bCannibal && pawn.Health < (1.0-KFM.FeedThreshold)*pawn.HealthMax || Level.Game.bGameEnded )
-	{
-		for ( PC=Level.ControllerList; PC!=None; PC=PC.NextController )
-		{
-			C = KFHumanPawn(PC.Pawn);
-			if( C==None || C.Health<=0 )
-				Continue;
-			if ( BestEnemy == None )
-			{
-				BestEnemy = C;
-				BestDist = VSize(BestEnemy.Location - Pawn.Location);
-				bSeeBest = CanSee(C);
-			}
-			else
-			{
-				NewDist = VSize(C.Location - Pawn.Location);
-				if ( !bSeeBest || (NewDist < BestDist) )
-				{
-					bSeeNew = CanSee(C);
-					if ( NewDist < BestDist)
-					{
-						BestEnemy = C;
-						BestDist = NewDist;
-						bSeeBest = bSeeNew;
-					}
-				}
-			}
-		}
-	}
-	else
-	{
-		for ( PC=Level.ControllerList; PC!=None; PC=PC.NextController )
-		{
-		    if(PC.Pawn != none)
-		    {
-                /* New Monster Threat logic ------------------------------------------
 
-                currently only used in story mode missions -  Gives the pawn a chance to
-                adjust the amount of interest ZEDs take in attacking him.
-                */
+	for ( PC=Level.ControllerList; PC!=None; PC=PC.NextController )
+	{
+        Human = KFHumanPawn(PC.Pawn);
 
-                C = KFHumanPawn(PC.Pawn);
-                if(C != none && bUseThreatAssessment)
+		if(Human != none &&
+          Human.Health > 0 &&
+          !Human.bPendingDelete)
+		{
+            /* New Monster Threat logic ------------------------------------------
+
+            currently only used in story mode missions -  Gives the pawn a chance to
+            adjust the amount of interest ZEDs take in attacking him.
+            */
+
+            if(bUseThreatAssessment)
+            {
+                ThreatLevel = Human.AssessThreatTo(self,true);
+                if(ThreatLevel <= 0)
                 {
-		             ThreatLevel = C.AssessThreatTo(self);
-                     if(ThreatLevel > HighestThreatLevel)
-                     {
-                        HighestThreatLevel = ThreatLevel;
-                        BestEnemy = C;
-                     }
+                    continue;
                 }
-                else  // no KF Pawn , or advanced threat assessment is disabled.  Fall back on the old Distance stuff.
+                else if(ThreatLevel > HighestThreatLevel)
                 {
-			        if ( PC.bIsPlayer && (PC.Pawn!=None) && PC.Pawn.Health>0 )
-			        {
-				        if ( BestEnemy == None )
-				        {
-					        BestEnemy = PC.Pawn;
-					        if(BestEnemy != none)
-					        {
-						        BestDist = VSize(BestEnemy.Location - Pawn.Location);
-						        bSeeBest = CanSee(BestEnemy);
-					        }
-				        }
-				        else
-				        {
-					        NewDist = VSize(PC.Pawn.Location - Pawn.Location);
-					        if ( !bSeeBest || (NewDist < BestDist) )
-					        {
-						        bSeeNew = CanSee(PC.Pawn);
-						        if ( NewDist < BestDist)
-					         	{
-							        BestEnemy = PC.Pawn;
-							        BestDist = NewDist;
-							        bSeeBest = bSeeNew;
-						        }
-					        }
-				        }
-			        }
+                    HighestThreatLevel = ThreatLevel;
+                    BestEnemy = Human;
+                    bSeeBest = CanSee(Human);
+                }
+            }
+            else  // Dont use threat assessment.  Fall back on the old Distance based stuff.
+            {
+			    NewDist = VSizeSquared(Human.Location - Pawn.Location);
+				if ( BestEnemy == none || (NewDist < BestDist) || !bSeeBest )
+				{
+                    BestEnemy = Human;
+                    BestDist = NewDist;
+					bSeeBest = CanSee(Human);
                 }
 		    }
 		}
@@ -487,9 +445,10 @@ function bool FindNewEnemy()
 
 	if ( BestEnemy != None )
 	{
-		ChangeEnemy(BestEnemy,CanSee(BestEnemy));
+		ChangeEnemy(BestEnemy,bSeeBest);
 		return true;
 	}
+
 	return false;
 }
 
@@ -594,6 +553,51 @@ function bool FindBestPathToward(Actor A, bool bCheckedReach, bool bAllowDetour)
 	}
 	return false;
 }
+
+/* Threat Assessment Logic - Returns true if there's a player nearby who has a higher threat level
+than the current enemy.  Probably means this ZED should break off and attack it */
+
+function bool EnemyThreatChanged()
+{
+    local Controller PC;
+    local KFHumanPawn C;
+    local float NewThreat,CurrentThreat;
+    local bool Result;
+
+    if(!bUseThreatAssessment)
+    {
+        return false;
+    }
+
+    if(KFHumanPawn(Enemy) != none)
+    {
+        CurrentThreat = KFHumanPawn(Enemy).AssessThreatTo(self);
+	}
+
+    /* Current Enemy is of no threat suddenly */
+	if(CurrentThreat <= 0)
+	{
+        Result = true;
+	}
+
+    /* There's another guy nearby with a greater threat than me */
+    for ( PC=Level.ControllerList; PC!=None; PC=PC.NextController )
+	{
+		C = KFHumanPawn(PC.Pawn);
+		if(C == none || C == Enemy)
+		{
+		    continue;
+		}
+		NewThreat = C.AssessThreatTo(self);
+        if(NewThreat > CurrentThreat)
+		{
+            Result = true;
+        }
+    }
+
+    return Result;
+}
+
 function FightEnemy(bool bCanCharge)
 {
 	if( KFM.bShotAnim )
@@ -604,7 +608,7 @@ function FightEnemy(bool bCanCharge)
 	if (KFM.MeleeRange != KFM.default.MeleeRange)
 		KFM.MeleeRange = KFM.default.MeleeRange;
 
-	if ( Enemy == none || Enemy.Health <= 0 )
+	if ( Enemy == none || Enemy.Health <= 0 || EnemyThreatChanged())
 		FindNewEnemy();
 
 	if ( (Enemy == FailedHuntEnemy) && (Level.TimeSeconds == FailedHuntTime) )
@@ -1527,6 +1531,13 @@ Begin:
 
 function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster )
 {
+    /* This enemy is of absolutely no threat currently, ignore it */
+    if(bUseThreatAssessment && KFHumanpawn(NewEnemy) != none &&
+    KFHumanpawn(NewEnemy).AssessThreatTo(self) <= 0)
+    {
+        return false;
+    }
+
 	if( !bHateMonster && KFHumanPawnEnemy(NewEnemy)!=None && KFHumanPawnEnemy(NewEnemy).AttitudeToSpecimen<=ATTITUDE_Ignore )
 		Return False; // In other words, dont attack human pawns as long as they dont damage me or hates me.
 	if( KFM.Intelligence>=BRAINS_Mammal && Enemy!=None && NewEnemy!=None && NewEnemy!=Enemy && NewEnemy.Controller!=None && NewEnemy.Controller.bIsPlayer )

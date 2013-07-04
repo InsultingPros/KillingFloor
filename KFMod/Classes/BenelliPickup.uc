@@ -23,6 +23,7 @@ defaultproperties
      AmmoItemName="12-gauge shells"
      CorrespondingPerkIndex=1
      EquipmentCategoryID=2
+     GoldenVariantClass=Class'KFMod.GoldenBenelliPickup'
      InventoryType=Class'KFMod.BenelliShotgun'
      PickupMessage="You got the combat shotgun."
      PickupSound=Sound'KF_M4ShotgunSnd.foley.WEP_Benelli_Foley_Pickup'

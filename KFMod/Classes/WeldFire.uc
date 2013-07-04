@@ -1,7 +1,7 @@
 // Weld Fire //
 class WeldFire extends KFMeleeFire;
 
-var 			KFDoorMover LastHitActor;
+var 			Actor LastHitActor;
 var localized 	string 		NoWeldTargetMessage;
 var localized 	string 		CantWeldTargetMessage;
 var 			float 		FailTime;
@@ -71,7 +71,7 @@ simulated Function Timer()
             Weapon.bBlockHitPointTraces = Weapon.default.bBlockHitPointTraces;
 		}
 
-		LastHitActor = KFDoorMover(HitActor);
+		LastHitActor = HitActor;
 
 		if( LastHitActor!=none && Level.NetMode!=NM_Client )
 		{

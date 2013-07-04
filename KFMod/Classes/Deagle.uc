@@ -58,8 +58,6 @@ defaultproperties
      ReloadAnim="Reload"
      ReloadAnimRate=1.000000
      WeaponReloadAnim="Reload_Single9mm"
-     HudImage=Texture'KillingFloorHUD.WeaponSelect.handcannon_unselected'
-     SelectedHudImage=Texture'KillingFloorHUD.WeaponSelect.handcannon'
      Weight=4.000000
      bHasAimingMode=True
      IdleAimAnim="Idle_Iron"
@@ -67,6 +65,10 @@ defaultproperties
      bModeZeroCanDryFire=True
      TraderInfoTexture=Texture'KillingFloorHUD.Trader_Weapon_Images.Trader_Handcannon'
      bIsTier2Weapon=True
+     MeshRef="KF_Weapons_Trip.Handcannon_Trip"
+     SkinRefs(0)="KF_Weapons_Trip_T.Pistols.deagle_cmb"
+     HudImageRef="KillingFloorHUD.WeaponSelect.handcannon_unselected"
+     SelectedHudImageRef="KillingFloorHUD.WeaponSelect.handcannon"
      ZoomedDisplayFOV=50.000000
      FireModeClass(0)=Class'KFMod.DeagleFire'
      FireModeClass(1)=Class'KFMod.NoFire'
@@ -88,7 +90,5 @@ defaultproperties
      IconCoords=(X1=250,Y1=110,X2=330,Y2=145)
      ItemName="Handcannon"
      bUseDynamicLights=True
-     Mesh=SkeletalMesh'KF_Weapons_Trip.Handcannon_Trip'
-     Skins(0)=Combiner'KF_Weapons_Trip_T.Pistols.deagle_cmb'
      TransientSoundVolume=1.000000
 }

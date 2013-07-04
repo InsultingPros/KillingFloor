@@ -205,6 +205,8 @@ var	float 					HillbillySKilledIn10SecsTime;
 var int						HillbillyGorefastsOnFire;
 var int						HuskAndZedOneShotTotalKills;
 var int						HuskAndZedOneShotZedKills;
+var array< class<Actor> >	HeadShottedMonsters;
+var int						ZedsKilledInZedTime;
 
 var const SteamStatInt		OwnedWeaponDLC;
 
@@ -212,6 +214,8 @@ var int						NullValue;
 
 var bool                    CanGetAxe;
 var int                     ZEDpiecesObtained;
+
+var bool					bObjAchievementFailed;	// Used for objective mode achievements
 
 //=============================================================================
 // Achievements
@@ -419,6 +423,7 @@ const KFACHIEVEMENT_Kill1Hillbilly1HuskAndZedIn1Shot	= 197;
 const KFACHIEVEMENT_Kill5HillbillyZedsIn10SecsSythOrAxe	= 198;
 const KFACHIEVEMENT_Set3HillbillyGorefastsOnFire		= 199;
 
+// Moonbase Achievements
 const KFACHIEVEMENT_HaveMyAxe					        = 200;
 const KFACHIEVEMENT_OneSmallStepForMan			     	= 201;
 const KFACHIEVEMENT_ButItsAllRed			    	    = 202;
@@ -429,6 +434,27 @@ const KFACHIEVEMENT_WinMoonbaseSuicidal			    	= 206;
 const KFACHIEVEMENT_WinMoonbaseHell					    = 207;
 
 const KFACHIEVEMENT_CanGetAxe   					    = 208;//this is a dummy achievement
+
+// Steamland Achievements
+const KFACHIEVEMENT_WinSteamLandNormal					= 209;
+const KFACHIEVEMENT_WinSteamLandHard			     	= 210;
+const KFACHIEVEMENT_WinSteamLandSuicidal			    = 211;
+const KFACHIEVEMENT_WinSteamLandHell				    = 212;
+const KFACHIEVEMENT_WinSteamLandObjNormal				= 213;
+const KFACHIEVEMENT_WinSteamLandObjHard			     	= 214;
+const KFACHIEVEMENT_WinSteamLandObjSuicidal			    = 215;
+const KFACHIEVEMENT_WinSteamLandObjHell					= 216;
+const KFACHIEVEMENT_DestroyPukeyDolls					= 217;
+const KFACHIEVEMENT_CompleteArcadeGames					= 218;
+const KFACHIEVEMENT_AllBreakersActive					= 219;
+const KFACHIEVEMENT_EscortRingmaster					= 220;
+const KFACHIEVEMENT_DefendRingmaster					= 221;
+const KFACHIEVEMENT_NoCarrierDamageGoldBars				= 222;
+const KFACHIEVEMENT_GetHeadshotsOn4ZedsSPS				= 223;
+const KFACHIEVEMENT_PushScrakeSPJ						= 224;
+const KFACHIEVEMENT_KillZedWithImpactSPG				= 225;
+const KFACHIEVEMENT_Kill5ZedsInZedTimeNoReloadSPT		= 226;
+const KFACHIEVEMENT_CompleteSPMrsFosterAchievements		= 227;
 
 struct native export KFAchievement
 {
@@ -446,6 +472,21 @@ struct native export KFAchievement
 };
 
 var	array<KFAchievement>	Achievements;
+
+//=============================================================================
+// Event Names
+//=============================================================================
+var name HillBillyGnomesEventName;
+var name SteamLandClownsEventName;
+var name SteamLandGamesEventName;
+var name SteamLandBreakersEventName;
+
+//=============================================================================
+// Objective Names
+//=============================================================================
+var name SteamLandEscortObjName;
+var name SteamLandDefendObjName;
+var name SteamLandGoldObjName;
 
 //=============================================================================
 // Perks
@@ -1065,6 +1106,8 @@ simulated event OnStatsAndAchievementsReady()
 	HillbillyGorefastsOnFire = 0;
 	HuskAndZedOneShotTotalKills = 0;
 	HuskAndZedOneShotZedKills = 0;
+        ZedsKilledInZedTime = 0;
+	HeadShottedMonsters.Remove( 0, HeadShottedMonsters.Length );
 
 	InitStatInt(OwnedWeaponDLC, GetOwnedWeaponDLC());
 	PCOwner.ServerInitializeSteamStatInt(KFSTAT_OwnedWeaponDLC, OwnedWeaponDLC.Value);
@@ -1288,9 +1331,6 @@ function InitializeSteamStatInt(int Index, int Value)
 			InitStatInt(OwnedWeaponDLC, Value);
 			break;
 	}
-
-	// Tag changed so the function Trigger would respond to the event of the same name
-   	Tag = 'GnomeSoulsCompleted';
 }
 
 simulated function bool PlayerOwnsWeaponDLC(int AppID)
@@ -2385,6 +2425,16 @@ function WonGame(string MapName, float Difficulty, bool bLong)
 	{
 		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinMoonBaseNormal);
 	}
+	else if ( MapName ~= "KF-SteamLand" )
+	{
+		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinSteamLandNormal);
+                CheckSteamLandAchievementsCompleted();
+	}
+	else if ( MapName ~= "KFO-SteamLand" )
+	{
+		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinSteamLandObjNormal);
+                CheckSteamLandAchievementsCompleted();
+	}
 }
 
 /* Checks what difficulty you completed the game on and sets the appropriate achievement to true */
@@ -2754,7 +2804,6 @@ function KilledEnemyWithBloatAcid()
 
 function KilledFleshpound(bool bWithMeleeAttack, bool bWithAA12, bool bWithKnife, bool bWithClaymore)
 {
-    log(bWithClaymore);
 	if ( bWithMeleeAttack )
 	{
 		if ( bDebugStats )
@@ -3657,6 +3706,58 @@ function CheckHillbillyAchievementsCompleted()
 	}
 }
 
+function CheckSteamLandAchievementsCompleted()
+{
+	local int i;
+	local int FirstSteamLandAchievement, LastSteamLandAchievement;
+	local int TotalSteamLandAchievements;
+
+	// If you already have this achievement, or do not have steampunk MR foster, return
+	if ( Achievements[KFACHIEVEMENT_CompleteSPMrsFosterAchievements].bCompleted == 1 ||
+		Achievements[KFACHIEVEMENT_Unlock10ofSideshowAchievements].bCompleted == 0 )
+	{
+		return;
+	}
+
+	if ( !HasAchievementInRangeCompleted( KFACHIEVEMENT_WinSteamLandNormal, KFACHIEVEMENT_WinSteamLandHell ) ||
+			!HasAchievementInRangeCompleted( KFACHIEVEMENT_WinSteamLandObjNormal, KFACHIEVEMENT_WinSteamLandObjHell ) )
+	{
+     	return;
+	}
+
+	FirstSteamLandAchievement = KFACHIEVEMENT_DestroyPukeyDolls;
+	LastSteamLandAchievement = KFACHIEVEMENT_NoCarrierDamageGoldBars;
+
+	for (i = FirstSteamLandAchievement; i <= LastSteamLandAchievement; i++)
+	{
+		if ( Achievements[i].bCompleted == 1 )
+		{
+         	TotalSteamLandAchievements += 1;
+		}
+	}
+
+	if ( TotalSteamLandAchievements >= Achievements[KFACHIEVEMENT_CompleteSPMrsFosterAchievements].ProgressDenominator )
+	{
+		SetSteamAchievementCompleted( KFACHIEVEMENT_CompleteSPMrsFosterAchievements );
+	}
+}
+
+function bool HasAchievementInRangeCompleted( int StartingAchievementIndex, int EndingAchievementIndex )
+{
+	local int i;
+
+	for (i = StartingAchievementIndex; i <= EndingAchievementIndex; i++)
+	{
+		if ( Achievements[i].bCompleted == 1 )
+		{
+         	return true;
+		}
+	}
+
+	return false;
+}
+
+
 /** Pass in the achievement ID and add a case for it to increment the score and check if it's complete */
 function AddKillPoints(int AchievementID)
 {
@@ -3750,6 +3851,22 @@ function OneShotBuzzOrM99()
 	HuskAndZedOneShotTotalKills = 0;
 }
 
+function OnReloadSPSorM14()
+{
+	if ( bDebugStats )
+		log("STEAMSTATS: Resetting SPS / M14 Kills");
+
+    HeadShottedMonsters.Remove( 0, HeadShottedMonsters.Length );
+}
+
+function OnReloadSPTorBullpup()
+{
+	if ( bDebugStats )
+		log("STEAMSTATS: Resetting SPT / Bullpup Kills");
+
+    ZedsKilledInZedTime = 0;
+}
+
 function HealedTeamWithMedicGrenade()
 {
 	if ( Achievements[KFACHIEVEMENT_HealAllPlayersWith1MedicNade].bCompleted == 0 && !bUsedCheats)
@@ -3800,21 +3917,58 @@ function AddHuskAndZedOneShotKill(bool HuskKill, bool ZedKill)
 	}
 }
 
-// Activated when all 25 gnomes have been killed, event is interpreted through "Tag"
-function Trigger(actor Other, pawn EventInstigator )
+function AddHeadshotsWithSPSOrM14( class<Actor> MonsterClass )
 {
-    log("----------");
-    log(Other);
-    log("trigger");
-    if( Other.IsA( 'KF_GnomeSmashable' ) )
-    {
-	    if ( Achievements[KFACHIEVEMENT_Destroy25GnomesInHillbilly].bCompleted == 0 && !bUsedCheats)
+	local int ProgressDenominator;
+	local bool bAlreadyKilledMonster;
+	local int i;
+
+	for ( i=0; i<HeadShottedMonsters.Length; i++ )
+	{
+	 	if ( HeadShottedMonsters[ i ] == MonsterClass )
+		{
+			bAlreadyKilledMonster = true;
+		}
+	}
+
+	if ( !bAlreadyKilledMonster )
+	{
+     	HeadShottedMonsters[ HeadShottedMonsters.Length ] = MonsterClass;
+	}
+
+	if ( bDebugStats )
+		log("STEAMSTATS: Headshot with SPS or M14" @HeadShottedMonsters.Length);
+
+	ProgressDenominator = Achievements[KFACHIEVEMENT_GetHeadshotsOn4ZedsSPS].ProgressDenominator;
+	if ( Achievements[KFACHIEVEMENT_GetHeadshotsOn4ZedsSPS].bCompleted == 0 && HeadShottedMonsters.Length >= ProgressDenominator )
+	{
+     	SetSteamAchievementCompleted(KFACHIEVEMENT_GetHeadshotsOn4ZedsSPS);
+		CheckSteamLandAchievementsCompleted();
+	}
+}
+
+simulated function CheckEvents( Name EventName )
+{
+	if ( EventName == HillBillyGnomesEventName )
+	{
+		if ( Achievements[KFACHIEVEMENT_Destroy25GnomesInHillbilly].bCompleted == 0 )
 	    {
 		    SetSteamAchievementCompleted(KFACHIEVEMENT_Destroy25GnomesInHillbilly);
 		    CheckHillbillyAchievementsCompleted();
 	    }
-    }
-
+	}
+	else if ( EventName == SteamLandClownsEventName )
+	{
+		CheckAndSetAchievementComplete(KFACHIEVEMENT_DestroyPukeyDolls);
+	}
+	else if ( EventName == SteamLandGamesEventName )
+	{
+		CheckAndSetAchievementComplete(KFACHIEVEMENT_CompleteArcadeGames);
+	}
+	else if ( EventName == SteamLandBreakersEventName )
+	{
+		CheckAndSetAchievementComplete(KFACHIEVEMENT_AllBreakersActive);
+	}
 }
 
 function OnWeaponReloaded()
@@ -3935,6 +4089,9 @@ simulated function OnAchievementReport( bool HasAchievement, string Achievement,
             {
 				KFPC(PCOwner).ServerSetCanGetAxe();
             }
+
+            CanGetAxe = true;
+            SetSteamAchievementCompleted(KFACHIEVEMENT_CanGetAxe);
         }
     }
 }
@@ -3954,6 +4111,72 @@ function ZEDPieceGrabbed()
     {
         SetSteamAchievementCompleted(KFACHIEVEMENT_ButItsAllRed);
     }
+}
+
+function AddZedTimeKill()
+{
+	local int ProgressDenominator;
+
+	ZedsKilledInZedTime += 1;
+
+	if ( bDebugStats )
+		log( "Stat!!! adding Zed time kill with SPT / Bullpup - NewValue="$ZedsKilledInZedTime @ " / " @ProgressDenominator );
+
+	ProgressDenominator = Achievements[ KFACHIEVEMENT_Kill5ZedsInZedTimeNoReloadSPT ].ProgressDenominator;
+
+	if ( Achievements[ KFACHIEVEMENT_Kill5ZedsInZedTimeNoReloadSPT ].bCompleted == 0 && ZedsKilledInZedTime >= ProgressDenominator )
+	{
+        SetSteamAchievementCompleted( KFACHIEVEMENT_Kill5ZedsInZedTimeNoReloadSPT );
+	}
+}
+
+function CheckAndSetAchievementComplete(int Index)
+{
+	if( Achievements[ Index ].bCompleted == 0 )
+    {
+		SetSteamAchievementCompleted( Index );
+	}
+
+	CheckSteamLandAchievementsCompleted();
+}
+
+// Called if a player fails to meet the achivement of a specific objective, it is reset at the end of each objective
+function SetObjAchievementFailed( bool bFailed )
+{
+	if ( bDebugStats && bFailed )
+	{
+		log("&&&&&&&&&&&&&&&&");
+		log("FAILED OBJECTIVE");
+	}
+
+	bObjAchievementFailed = bFailed;
+}
+
+function OnObjectiveCompleted( name ObjectiveName )
+{
+	if ( ObjectiveName == SteamLandEscortObjName )
+	{
+	 	UnlockObjectiveAchievement( KFACHIEVEMENT_EscortRingmaster );
+	}
+	else if ( ObjectiveName == SteamLandDefendObjName )
+	{
+     	UnlockObjectiveAchievement( KFACHIEVEMENT_DefendRingmaster );
+	}
+	else if ( ObjectiveName == SteamLandGoldObjName )
+	{
+     	UnlockObjectiveAchievement( KFACHIEVEMENT_NoCarrierDamageGoldBars );
+	}
+
+    // Make sure we can unlock the achievement for the defense mission
+	SetObjAchievementFailed( false );
+}
+
+function UnlockObjectiveAchievement( int Index )
+{
+ 	if ( !bObjAchievementFailed )
+	{
+		CheckAndSetAchievementComplete( Index );
+	}
 }
 
 defaultproperties
@@ -4168,6 +4391,32 @@ defaultproperties
      Achievements(206)=(SteamName="AmusingDeath",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_206',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(207)=(SteamName="AGiantStepBackForHumanity",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_207',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(208)=(SteamName="DwarfAxe",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_208',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(209)=(SteamName="WinSteamLandNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_209',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(210)=(SteamName="WinSteamLandHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_210',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(211)=(SteamName="WinSteamLandSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_211',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(212)=(SteamName="WinSteamLandHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_212',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(213)=(SteamName="WinSteamLandObjNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_213',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(214)=(SteamName="WinSteamLandObjHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_214',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(215)=(SteamName="WinSteamLandObjSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_215',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(216)=(SteamName="WinSteamLandObjHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_216',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(217)=(SteamName="DestroyPukeyDolls",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_217',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(218)=(SteamName="CompleteArcadeGames",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_219',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(219)=(SteamName="AllBreakersActive",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_220',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(220)=(SteamName="EscortRingmaster",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_221',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(221)=(SteamName="DefendRingmaster",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_222',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(222)=(SteamName="NoCarrierDamageGoldBars",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_223',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(223)=(SteamName="GetHeadshotsOn4ZedsSPS",ProgressDenominator=4,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_224',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(224)=(SteamName="PushScrakeSPJ",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_225',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(225)=(SteamName="KillZedWithImpactSPG",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_226',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(226)=(SteamName="Kill5ZedsInZedTimeNoReloadSPT",ProgressDenominator=5,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_227',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(227)=(SteamName="CompleteSPMrsFosterAchievements",ProgressDenominator=4,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_228',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     HillBillyGnomesEventName="GnomeSoulsCompleted"
+     SteamLandClownsEventName="ClownSoulsCompleted"
+     SteamLandGamesEventName="MiniGamesCompleted"
+     SteamLandBreakersEventName="AllBreakersRepaired"
+     SteamLandEscortObjName="EscortRingMaster"
+     SteamLandDefendObjName="DefendRingMaster"
+     SteamLandGoldObjName="GoldStashObj"
      SteamNameStat(0)="DamageHealed"
      SteamNameStat(1)="WeldingPoints"
      SteamNameStat(2)="ShotgunDamage"
@@ -4420,4 +4669,23 @@ defaultproperties
      SteamNameAchievement(206)="AmusingDeath"
      SteamNameAchievement(207)="AGiantStepBackForHumanity"
      SteamNameAchievement(208)="DwarfAxe"
+     SteamNameAchievement(209)="WinSteamLandNormal"
+     SteamNameAchievement(210)="WinSteamLandHard"
+     SteamNameAchievement(211)="WinSteamLandSuicidal"
+     SteamNameAchievement(212)="WinSteamLandHell"
+     SteamNameAchievement(213)="WinSteamLandObjNormal"
+     SteamNameAchievement(214)="WinSteamLandObjHard"
+     SteamNameAchievement(215)="WinSteamLandObjSuicidal"
+     SteamNameAchievement(216)="WinSteamLandObjHell"
+     SteamNameAchievement(217)="DestroyPukeyDolls"
+     SteamNameAchievement(218)="CompleteArcadeGames"
+     SteamNameAchievement(219)="AllBreakersActive"
+     SteamNameAchievement(220)="EscortRingmaster"
+     SteamNameAchievement(221)="DefendRingmaster"
+     SteamNameAchievement(222)="NoCarrierDamageGoldBars"
+     SteamNameAchievement(223)="GetHeadshotsOn4ZedsSPS"
+     SteamNameAchievement(224)="PushScrakeSPJ"
+     SteamNameAchievement(225)="KillZedWithImpactSPG"
+     SteamNameAchievement(226)="Kill5ZedsInZedTimeNoReloadSPT"
+     SteamNameAchievement(227)="CompleteSPMrsFosterAchievements"
 }

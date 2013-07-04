@@ -91,7 +91,7 @@ function UpdateMyBuyables()
 	local GUIBuyable MyBuyable, KnifeBuyable, FragBuyable, SecondaryAmmoBuyable;
 	local Inventory CurInv;
 	local KFLevelRules KFLR;
-	local bool bHasDual, bHasDualCannon, bHasDual44, bhasDualM23, bHasDualFlareGuns;
+	local bool bHasDual, bHasDualCannon, bHasDual44, bhasDualM23, bHasDualFlareGuns, bHasGoldDualCannon;
 	local float CurAmmo, MaxAmmo;
 	local class<KFWeaponPickup> MyPickup, MyPrimaryPickup;
 	local int DualDivider, NumInvItems;
@@ -129,6 +129,11 @@ function UpdateMyBuyables()
 			if ( KFWeapon(CurInv).default.PickupClass == class'DualDeaglePickup' )
 	    	{
 				bHasDualCannon = true;
+			}
+
+			if ( KFWeapon(CurInv).default.PickupClass == class'GoldenDualDeaglePickup' )
+	    	{
+				bHasGoldDualCannon = true;
 			}
 
 			if ( KFWeapon(CurInv).default.PickupClass == class'DualiesPickup' )
@@ -187,6 +192,7 @@ function UpdateMyBuyables()
         // if we already own dualies, we do not need the single 9mm in the list
         if ( (bHasDual && MyPickup == class'SinglePickup') ||
 			 (bHasDualCannon && MyPickup == class'DeaglePickup') ||
+			 (bHasGoldDualCannon && MyPickup == class'GoldenDeaglePickup') ||
 			 (bHasDual44 && MyPickup == class'Magnum44Pickup') ||
 			 (bhasDualM23 && MyPickup == class'MK23Pickup') ||
              (bHasDualFlareGuns && MyPickup == class'FlareRevolverPickup'))

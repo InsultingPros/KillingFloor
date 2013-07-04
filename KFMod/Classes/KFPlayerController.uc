@@ -44,6 +44,8 @@ var		float		TransitionTimeTotal;            // How long it should take to transi
 var	config class<KFVeterancyTypes>	SelectedVeterancy;	// Current Desired Perk/Veterancy(during a wave, use KFPRI.ClientVeterancySkill as the Perk/Veterancy being used)
 var	bool							bVomittedOn;
 var	float							VomittedOnTime;
+var	bool							bScreamedAt;
+var	float							ScreamTime;
 
 var	localized string	YouAreNowPerkString;			// You are now the selected Perk string
 var	localized string	YouWillBecomePerkString;		// You will become the selected Perk at the end of this Wave string
@@ -113,6 +115,7 @@ simulated event PreBeginPlay()
 	class'BullpupFire'.static.PreloadAssets(Level);
 	class'DeagleFire'.static.PreloadAssets(Level);
 	class'DualDeagleFire'.static.PreloadAssets(Level);
+	class'GoldenDualDeagleFire'.static.PreloadAssets(Level);
 	class'DualiesFire'.static.PreloadAssets(Level);
 	class'ShotgunFire'.static.PreloadAssets(Level);
 	class'SingleFire'.static.PreloadAssets(Level);
@@ -689,8 +692,8 @@ event PreClientTravel()
 function Possess(Pawn aPawn)
 {
 	bSpawnedThisWave = true;
-
 	bVomittedOn = false;
+	bScreamedAt = false;
 
 	super.Possess(aPawn);
 }
@@ -1254,7 +1257,7 @@ auto state PlayerWaiting
     simulated function EndState()
     {
         super.EndState();
-        
+
         if (Level.NetMode != NM_DedicatedServer)
         {
 			SetupWebAPI();
@@ -1281,8 +1284,8 @@ simulated function SetupWebAPI()
 	if( Player != None  && webAPIAccessor == none && SteamStatsAndAchievements != none )
     {
     	webAPIAccessor = Spawn(class'KFSteamWebAPI', self);
-		webAPIAccessor.AchievementReport = KFSteamStatsAndAchievements(SteamStatsAndAchievements).OnAchievementReport;	
-				
+		webAPIAccessor.AchievementReport = KFSteamStatsAndAchievements(SteamStatsAndAchievements).OnAchievementReport;
+
 		if ( SteamStatsAndAchievements.PCowner == None )
 			SteamStatsAndAchievements.PCOwner= self;
 
@@ -1293,7 +1296,7 @@ simulated function SetupWebAPI()
 			log(Player.GUIController.SteamGetUserID(), 'DevNet');
         }
 		else
-		{	
+		{
 	        webAPIAccessor.GetAchievements(SteamStatsAndAchievements.GetSteamUserID());
 	        log(SteamStatsAndAchievements.GetSteamUserID(), 'DevNet');
         }
@@ -1515,6 +1518,22 @@ function Timer()
 		else if ( !bTimerLoop || TimerRate == 0.0 )
 		{
 			SetTimer(10.0 - (Level.TimeSeconds - VomittedOnTime), false);
+		}
+	}
+
+	if ( Role == ROLE_Authority && bScreamedAt && Pawn != none && Pawn.Health > 0 )
+	{
+		if ( Level.TimeSeconds - ScreamTime > 10.0 )
+		{
+			if ( KFSteamStatsAndAchievements(SteamStatsAndAchievements) != none )
+			{
+				KFSteamStatsAndAchievements(SteamStatsAndAchievements).Survived10SecondsAfterScream();
+				bScreamedAt = false;
+			}
+		}
+		else if ( !bTimerLoop || TimerRate == 0.0 )
+		{
+			SetTimer(10.0 - (Level.TimeSeconds - ScreamTime), false);
 		}
 	}
 }
@@ -1997,6 +2016,19 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'AA12Attachment'.static.PreloadAssets();
 			break;
 
+		case class'GoldenAA12AutoShotgun':
+			class'GoldenAA12AutoShotgun'.static.PreloadAssets(Inv);
+			class'GoldenAA12Fire'.static.PreloadAssets(Level);
+			class'GoldenAA12Attachment'.static.PreloadAssets();
+			break;
+
+		case class'SPAutoShotgun':
+			class'SPAutoShotgun'.static.PreloadAssets(Inv);
+			class'SPShotgunFire'.static.PreloadAssets(Level);
+			class'SPShotgunAltFire'.static.PreloadAssets(Level);
+			class'SPShotgunAttachment'.static.PreloadAssets();
+			break;
+
 		case class'AK47AssaultRifle':
 			class'AK47AssaultRifle'.static.PreloadAssets(Inv);
 			class'AK47Fire'.static.PreloadAssets(Level);
@@ -2028,6 +2060,11 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'ChainsawAttachment'.static.PreloadAssets();
 			break;
 
+		case class'GoldenChainsaw':
+			class'GoldenChainsaw'.static.PreloadAssets(Inv);
+			class'GoldenChainsawAttachment'.static.PreloadAssets();
+			break;
+
 		case class'Crossbow':
 			class'Crossbow'.static.PreloadAssets(Inv);
 			class'CrossbowArrow'.static.PreloadAssets();
@@ -2039,6 +2076,12 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'FlameThrower'.static.PreloadAssets(Inv);
 			class'FlameBurstFire'.static.PreloadAssets(Level);
 			class'FlameThrowerAttachment'.static.PreloadAssets();
+			break;
+
+		case class'GoldenFlameThrower':
+			class'GoldenFlameThrower'.static.PreloadAssets(Inv);
+			class'GoldenFlameBurstFire'.static.PreloadAssets(Level);
+			class'GoldenFTAttachment'.static.PreloadAssets();
 			break;
 
 		case class'BoomStick':
@@ -2249,11 +2292,36 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'ThompsonAttachment'.static.PreloadAssets();
 			break;
 
+		case class'ThompsonDrumSMG':
+			class'ThompsonDrumSMG'.static.PreloadAssets(Inv);
+			class'ThompsonDrumFire'.static.PreloadAssets(Level);
+			class'ThompsonDrumAttachment'.static.PreloadAssets();
+			break;
+
 		case class'Scythe':
 			class'Scythe'.static.PreloadAssets(Inv);
 			class'ScytheFire'.static.PreloadAssets();
 			class'ScytheFireB'.static.PreloadAssets();
 			class'ScytheAttachment'.static.PreloadAssets();
+			break;
+
+		case class'SPGrenadeLauncher':
+			class'SPGrenadeLauncher'.static.PreloadAssets(Inv);
+			class'SPGrenadeFire'.static.PreloadAssets(Level);
+			class'SPGrenadeProjectile'.static.PreloadAssets();
+			class'SPGrenadeAttachment'.static.PreloadAssets();
+			break;
+
+		case class'SPSniperRifle':
+			class'SPSniperRifle'.static.PreloadAssets(Inv);
+			class'SPSniperFire'.static.PreloadAssets(Level);
+			class'SPSniperAttachment'.static.PreloadAssets();
+			break;
+
+		case class'SPThompsonSMG':
+			class'SPThompsonSMG'.static.PreloadAssets(Inv);
+			class'SPThompsonFire'.static.PreloadAssets(Level);
+			class'SPThompsonAttachment'.static.PreloadAssets();
 			break;
 
  		case class'Crossbuzzsaw':
@@ -2269,6 +2337,20 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'FlareRevolverProjectile'.static.PreloadAssets();
 			class'FlareRevolverAttachment'.static.PreloadAssets();
 			break;
+
+		case class'Deagle':
+			class'Deagle'.static.PreloadAssets(Inv);
+			class'DeagleFire'.static.PreloadAssets(Level);
+			class'DeagleAltFire'.static.PreloadAssets(Level);
+			class'DeagleAttachment'.static.PreloadAssets();
+			break;
+
+		case class'GoldenDeagle':
+			class'GoldenDeagle'.static.PreloadAssets(Inv);
+			class'GoldenDeagleFire'.static.PreloadAssets(Level);
+			class'GoldenDeagleAltFire'.static.PreloadAssets(Level);
+			class'GoldenDeagleAttachment'.static.PreloadAssets();
+			break;
 	}
 }
 
@@ -2281,6 +2363,23 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			{
 				class'AA12Fire'.static.UnloadAssets();
 				class'AA12Attachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'GoldenAA12AutoShotgun':
+			if ( class'GoldenAA12AutoShotgun'.static.UnloadAssets() )
+			{
+				class'GoldenAA12Fire'.static.UnloadAssets();
+				class'GoldenAA12Attachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'SPAutoShotgun':
+			if ( class'SPAutoShotgun'.static.UnloadAssets() )
+			{
+				class'SPShotgunFire'.static.UnloadAssets();
+				class'SPShotgunAltFire'.static.UnloadAssets();
+				class'SPShotgunAttachment'.static.UnloadAssets();
 			}
 			break;
 
@@ -2325,6 +2424,13 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			}
 			break;
 
+		case class'GoldenChainsaw':
+			if ( class'GoldenChainsaw'.static.UnloadAssets() )
+			{
+				class'GoldenChainsawAttachment'.static.UnloadAssets();
+			}
+			break;
+
 		case class'Crossbow':
 			if ( class'Crossbow'.static.UnloadAssets() )
 			{
@@ -2339,6 +2445,14 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			{
 				class'FlameBurstFire'.static.UnloadAssets();
 				class'FlameThrowerAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'GoldenFlameThrower':
+			if ( class'GoldenFlameThrower'.static.UnloadAssets() )
+			{
+				class'GoldenFlameBurstFire'.static.UnloadAssets();
+				class'GoldenFTAttachment'.static.UnloadAssets();
 			}
 			break;
 
@@ -2607,6 +2721,14 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			}
 			break;
 
+		case class'ThompsonDrumSMG':
+			if ( class'ThompsonDrumSMG'.static.UnloadAssets() )
+			{
+				class'ThompsonDrumFire'.static.UnloadAssets();
+				class'ThompsonDrumAttachment'.static.UnloadAssets();
+			}
+			break;
+
 		case class'Crossbuzzsaw':
 			if ( class'Crossbuzzsaw'.static.UnloadAssets() )
 			{
@@ -2622,6 +2744,31 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			{
 				class'ScytheFire'.static.UnloadAssets();
 				class'ScytheAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'SPGrenadeLauncher':
+			if ( class'SPGrenadeLauncher'.static.UnloadAssets() )
+			{
+				class'SPGrenadeFire'.static.UnloadAssets();
+				class'SPGrenadeProjectile'.static.UnloadAssets();
+				class'SPGrenadeAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'SPSniperRifle':
+			if ( class'SPSniperRifle'.static.UnloadAssets() )
+			{
+				class'SPSniperFire'.static.UnloadAssets();
+				class'SPSniperAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'SPThompsonSMG':
+			if ( class'SPThompsonSMG'.static.UnloadAssets() )
+			{
+				class'SPThompsonFire'.static.UnloadAssets();
+				class'SPThompsonAttachment'.static.UnloadAssets();
 			}
 			break;
 

@@ -7721,7 +7721,7 @@ simulated event OnSubscribedFilesEnumerated(int FileCount)
     TotalSubscribedFiles = FileCount;
     NextSubscribedFileToFetch = 1;
 
-	log("KFPlayerController.OnSubscribedFilesEnumerated" @ FileCount,'Workshop_Debug');
+	//log("KFPlayerController.OnSubscribedFilesEnumerated" @ FileCount,'Workshop_Debug');
     if ( FileCount > 0 )
 	{
         GetSubscribedSteamWorkshopFileDetails(0);
@@ -7730,7 +7730,7 @@ simulated event OnSubscribedFilesEnumerated(int FileCount)
 
 simulated event OnGetSubscribedFileDetailsCompleted(int SubscribedFileIndex, string Title, bool bFileExistsLocally)
 {
-	log("KFPlayerController.OnGetSubscribedFileDetailsCompleted" @ SubscribedFileIndex @ Title @ bFileExistsLocally,'Workshop_Debug');
+	//log("KFPlayerController.OnGetSubscribedFileDetailsCompleted" @ SubscribedFileIndex @ Title @ bFileExistsLocally,'Workshop_Debug');
     if ( !bFileExistsLocally )
 	{
 		SubscribedFileDownloadIndex = SubscribedFileIndex;
@@ -7747,7 +7747,7 @@ simulated event OnSubscribedFileDownloadUpdate(float DownloadProgress)
 {
 	// TODO: Update UI Output using SubscribedFileDownloadIndex
 
-	log("KFPlayerController.OnSubscribedFileDownloadUpdate" @ SubscribedFileDownloadIndex @ SubscribedFileDownloadTitle @ DownloadProgress,'Workshop_Debug');
+	//log("KFPlayerController.OnSubscribedFileDownloadUpdate" @ SubscribedFileDownloadIndex @ SubscribedFileDownloadTitle @ DownloadProgress,'Workshop_Debug');
 	DownloadFileProgress = DownloadProgress;
     if ( DownloadProgress >= 1.0 )
 	{

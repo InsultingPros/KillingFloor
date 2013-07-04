@@ -24,7 +24,7 @@ static function AwardDamage(KFSteamStatsAndAchievements KFStatsAndAchievements, 
         KFStatsAndAchievements.AddExplosivesDamage(Amount);
     }
 }
-static function ScoredHeadshot(KFSteamStatsAndAchievements KFStatsAndAchievements, bool bLaserSightedM14EBRKill)
+static function ScoredHeadshot(KFSteamStatsAndAchievements KFStatsAndAchievements, class<KFMonster> MonsterClass, bool bLaserSightedM14EBRKill)
 {
 	if ( KFStatsAndAchievements != none && Default.bSniperWeapon )
 		KFStatsAndAchievements.AddHeadshotKill(bLaserSightedM14EBRKill);

@@ -18,6 +18,15 @@ replication
 		bGrappling;
 }
 
+function BreakGrapple()
+{
+	if( DisabledPawn != none )
+	{
+	     DisabledPawn.bMovementDisabled = false;
+	     DisabledPawn = none;
+	}
+}
+
 //-------------------------------------------------------------------------------
 // NOTE: All Code resides in the child class(this class was only created to
 //         eliminate hitching caused by loading default properties during play)

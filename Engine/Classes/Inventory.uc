@@ -337,6 +337,21 @@ static function string StaticItemName()
 	return Default.ItemName;
 }
 
+/* Begin KFStory Mod*/
+
+/* Modifier to apply to carrying pawn's movement speed */
+simulated function float GetMovementModifierFor(Pawn InPawn)
+{
+    return 1.f;
+}
+
+simulated function bool IsThrowable()
+{
+    return false;
+}
+
+/* end KFStory Mod */
+
 defaultproperties
 {
      BobDamping=0.960000
