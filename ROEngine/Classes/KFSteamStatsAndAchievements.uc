@@ -1534,6 +1534,7 @@ function ServerSteamStatsAndAchievementsInitialized()
 	CheckSideshowAchievementsCompleted();
 	CheckHillbillyAchievementsCompleted();
 	CheckHalloweenAchievementsCompleted();
+	CheckSteamLandAchievementsCompleted();
 
 	super.ServerSteamStatsAndAchievementsInitialized();
 }
