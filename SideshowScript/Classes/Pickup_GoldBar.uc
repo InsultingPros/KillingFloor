@@ -69,7 +69,8 @@ defaultproperties
 {
      MaxHeldCopies=1
      CarriedMaterial=Texture'Pier_T.Icons.Goldbar_Icon_64'
-     MovementSpeedModifier=0.650000
+     GroundMaterial=Texture'Pier_T.Icons.Goldbar_Icon_64'
+     bRender1PMesh=False
      AIThreatModifier=1.500000
      InventoryType=Class'SideShowScript.Inv_GoldBar'
      LightType=LT_Steady

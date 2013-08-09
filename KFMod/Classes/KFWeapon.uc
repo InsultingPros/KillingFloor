@@ -1495,6 +1495,14 @@ function GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)
 {
 	local bool bJustSpawnedAmmo;
 	local int addAmount, InitialAmount;
+	local KFPawn KFP;
+    local KFPlayerReplicationInfo KFPRI;
+
+    KFP = KFPawn(Instigator);
+    if( KFP != none )
+    {
+        KFPRI = KFPlayerReplicationInfo(KFP.PlayerReplicationInfo);
+    }
 
 	UpdateMagCapacity(Instigator.PlayerReplicationInfo);
 
@@ -1558,6 +1566,13 @@ function GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)
 			{
 				return;
 			}
+
+            // AddAmmo caps at MaxAmmo, but veterancy might allow for more than max,
+            // so take that into account
+			if( KFPRI != none && KFPRI.ClientVeteranSkill != none )
+            {
+                Ammo[m].MaxAmmo = float(Ammo[m].MaxAmmo) * KFPRI.ClientVeteranSkill.Static.AddExtraAmmoFor(KFPRI, Ammo[m].Class);
+        	}
 
 			Ammo[m].AddAmmo(addAmount);
 			Ammo[m].GotoState('');

@@ -8,7 +8,8 @@
 	--------------------------------------------------------------
 */
 
-class KF_StoryNPC_Spawnable extends KF_StoryNPC;
+class KF_StoryNPC_Spawnable extends KF_StoryNPC
+notplaceable;
 
 function Reset()
 {

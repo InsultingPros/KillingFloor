@@ -23,7 +23,7 @@ const HintCharLimit = 35;
 
 
 /* Pawn responsible for Activating and / or completing this condition. */
-var                                     Pawn              Instigator;
+var         protected                   Pawn              Instigator;
 
 var                                     bool              bComplete,SavedbComplete;
 
@@ -151,6 +151,7 @@ function SaveState()
 function ClearActorReferences()
 {
     HUD_World.World_Location = none;
+    Instigator = none;
 }
 
 function Reset()
@@ -448,6 +449,7 @@ function ConditionTick(float DeltaTime)
 
     /* Timed HUD Update - replicated , so do it only when the values actually change.*/
     UnreliableConditionUpdate();
+
 }
 
 /* Progress Event updates -  Fired off at different stages in the condition's completion */
@@ -455,7 +457,7 @@ function TriggerProgressEvents(float PctComplete)
 {
     local int EventIdx;
 
-    for(EventIdx = 0 ; EventIdx < ProgressEvents.length ;EventIdx ++)
+    for(EventIdx = 0 ; EventIdx < ProgressEvents.length ; EventIdx ++)
     {
 		if(PctComplete  >= ProgressEvents[EventIdx].ProgressPct &&
 		(!ProgressEvents[EventIdx].bWasTriggered ||
@@ -463,9 +465,10 @@ function TriggerProgressEvents(float PctComplete)
         PctComplete != ProgressEvents[EventIdx].LastTriggeredPct ) ) )
 		{
 			ProgressEvents[EventIdx].bWasTriggered = true;
-			ProgressEvents[EventIdx].LastTriggeredPct = PctComplete;
-			GetObjOwner().TriggerEvent( ProgressEvents[EventIdx].EventName,GetObjOwner(),GetObjOwner().Instigator);
+			GetObjOwner().TriggerEvent( ProgressEvents[EventIdx].EventName,GetObjOwner(),Instigator);
 		}
+
+		ProgressEvents[EventIdx].LastTriggeredPct = PctComplete;
 	}
 }
 
@@ -639,6 +642,12 @@ function SetObjOwner(KF_StoryObjective NewOwner)
 function KF_StoryObjective             GetObjOwner()
 {
     return ObjOwner;
+}
+
+/* Returns a reference to the pawn which instigated this condition last */
+function Pawn                          GetInstigator()
+{
+    return Instigator;
 }
 
 function int                           GetOwnerArrayIndex()

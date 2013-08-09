@@ -1728,7 +1728,7 @@ simulated function DrawHudPassA (Canvas C)
 		KFPRI.ClientVeteranSkill.Static.SpecialHUDInfo(KFPRI, C);
 	}
 
-	if ( KFSGameReplicationInfo(PlayerOwner.GameReplicationInfo) == none || KFSGameReplicationInfo(PlayerOwner.GameReplicationInfo).bHUDShowCash )
+	if ( KFGameReplicationInfo(PlayerOwner.GameReplicationInfo) == none || KFGameReplicationInfo(PlayerOwner.GameReplicationInfo).bHUDShowCash )
 	{
 		DrawSpriteWidget(C, CashIcon);
 		DrawNumericWidget(C, CashDigits, DigitsBig);

@@ -19,7 +19,29 @@ var     int                         MaxHeldCopies;
 
 var     Material                    CarriedMaterial;
 
+/* Icon to render over top of this Pickup while it's sitting on the ground */
+var     Material                    GroundMaterial;
+
 var     float                       MovementSpeedModifier;
+
+var     class<DamageType>           ImpactDamType;
+
+var     int                         ImpactDamage;
+
+var     rotator                     ViewRotationOffset;
+
+var     vector                      ViewLocationOffset;
+
+/* If we want the pawn to go a specific speed when carrying this item (ignoring all other modifiers) , here's where we do it */
+var     float                       ForcedGroundSpeed;
+
+var     bool                        bUseForcedGroundSpeed;
+
+var     float                       Pickup_TossVelocity;
+
+var     bool                        bDropFromCameraLoc;
+
+var     bool                        bRender1PMesh;
 
 var     float                       JumpZModifier;
 
@@ -36,6 +58,9 @@ var     float                       AIThreatModifier;
 
 var     name                        InvAttachmentBone;
 
+/* When holding this item, display it with an 'X-Ray' shader in first person */
+var     bool                        bUseFirstPersonXRayEffect;
+
 /* List of weapons which cannot be used when this Item is carrieed */
 var                                 array< Class<Weapon> >             AllowedWeapons;
 
@@ -51,6 +76,9 @@ replication
 {
     reliable if( Role==ROLE_Authority)
         MovementSpeedModifier,CarriedMaterial,ClientGiveTo,AllowHoldWeapon,StoryPickupBase;
+
+    reliable if(Role == Role_Authority && bNetInitial)
+        bRender1PMesh,bUseFirstPersonXRayEffect;
 }
 
 function GiveTo( pawn Other, optional Pickup Pickup )
@@ -124,33 +152,60 @@ simulated function ClientGiveTo(pawn Other,Pickup OwningPickup)
 }
 
 
-/* Draw floating icons overtop of pickups, on request
-simulated event RenderOverlays( canvas Canvas )
+/* Render first person Model for Inventory item */
+simulated event RenderOverlays( canvas Canvas)
 {
-    local rotator BoneRot;
-    local vector BoneLoc;
+    local int i;
+    local int NumSkins;
+    local vector ViewLoc, Locoffset;
+    local Rotator ViewRot,RotOffset,PawnRot;
 
-	if ( (Instigator == None) || (Instigator.Controller == None) || ThirdPersonActor == none )
-		return;
+    /* Orient the model to the holder's camera and draw it */
 
-     Only draw first person model if no 3P model is being rendered
-	if(InvAttachmentBone != '' )
-	{
-        BoneRot = Instigator.GetBoneRotation(InvAttachmentBone);
-        BoneLoc = Instigator.GetBoneCoords(InvAttachmentBone).Origin;;
+    if(bRender1PMesh &&
+    Instigator != none && PlayerController(Instigator.Controller) != none &&
+    !PlayerController(Instigator.Controller).bBehindView)
+    {
+        /* X-Ray vision effect  */
 
-    	SetLocation( Instigator.Location + Instigator.CalcDrawOffset(self));
-        SetRotation( Instigator.GetViewRotation());
+        NumSkins = 3;
+        Skins.length = Max(Skins.length,NumSkins);
 
+        for(i = 0 ; i < Skins.length  ; i ++)
+        {
+            if(bUseFirstPersonXRayEffect)
+            {
+                Skins[i] = Shader 'KFStoryGame_Tex.Shaders.SeethruPickup_shdr' ;
+            }
+        }
+
+        if(StoryPickupBase != none)
+        {
+            LocOffset = StoryPickupBase.ViewLocationOffset;
+            RotOffset = StoryPickupbase.ViewRotationOffset;
+        }
+
+        PawnRot = Instigator.Rotation;
+        ViewRot = Instigator.GetViewRotation() ;
+        ViewLoc = (Instigator.Location + PlayerController(Instigator.Controller).CalcViewLocation) /2 ;
+
+        SetLocation(ViewLoc + (vector(ViewRot) * (CollisionRadius + Instigator.CollisionRadius)));
+        SetRotation(ViewRot);
+        SetRelativeLocation(Location + LocOffset);
+        SetRelativeRotation(ViewRot + RotOffset);
+
+        Canvas.DrawActor(None, false, true); // clear Z Buffer.
         bDrawingFirstPerson = true;
         Canvas.DrawActor(self, false, false, 90.f);
         bDrawingFirstPerson = false;
     }
-}    */
+}
 
 function AttachToPawn(Pawn P)
 {
 	local name BoneName;
+    local vector LocOffset;
+    local rotator RotOffset;
 
     /* NO attachment for this item, early out */
 	if(AttachmentClass == none)
@@ -158,10 +213,24 @@ function AttachToPawn(Pawn P)
 	   return;
 	}
 
+
+    /* If attaching to a bone on the mesh, make sure to use relative values */
+    if(StoryPickupBase != none )
+    {
+        LocOffset = StoryPickupBase.Attachment_Offset;
+        RotOffset = StoryPickupBase.Attachment_Rotation;
+    }
+
 	Instigator = P;
 	if ( ThirdPersonActor == None )
 	{
 		ThirdPersonActor = Spawn(AttachmentClass,Owner);
+
+        if(ThirdPersonActor == none)
+        {
+            return;
+        }
+
 		InventoryAttachment(ThirdPersonActor).InitFor(self);
 	}
 	else
@@ -169,17 +238,17 @@ function AttachToPawn(Pawn P)
 	BoneName = InvAttachmentBone;
 	if ( BoneName == '' )
 	{
-		ThirdPersonActor.SetLocation(P.Location);
-		ThirdPersonActor.SetBase(P);
+        // no attachment bone.  Dont render in third person.
+        ThirdPersonActor.SetBase(P);
+        ThirdPersonActor.bHidden = true;
 	}
 	else
+    {
 		P.AttachToBone(ThirdPersonActor,BoneName);
 
-	if(StoryPickupBase != none && ThirdPersonActor != none)
-	{
-        ThirdPersonActor.SetRelativeLocation(StoryPickupBase.Attachment_Offset);
-        ThirdPersonActor.SetRelativeRotation(StoryPickupBase.Attachment_Rotation);
-	}
+        ThirdPersonActor.SetRelativeLocation(LocOffset);
+        ThirdPersonActor.SetRelativeRotation(RotOffset);
+    }
 }
 
 simulated function CopyPropertiesFrom(KF_StoryInventoryPickup  OwningPickup)
@@ -192,8 +261,18 @@ simulated function CopyPropertiesFrom(KF_StoryInventoryPickup  OwningPickup)
     PickupSM                = OwningPickup.StaticMesh;
     Weight                  = OwningPickup.Weight;
     CarriedMaterial         = OwningPickup.CarriedMaterial ;
+    GroundMaterial          = OwningPickup.GroundMaterial;
     PrePivot                = OwningPickup.PrePivot;
     AmbientGlow             = OwningPickup.AmbientGlow;
+    UV2Texture              = OwningPickup.UV2Texture;
+    bUseFirstPersonXRayEffect = OwningPickup.bUseFirstPersonXRayEffect;
+    bRender1PMesh           = OwningPickup.bRender1PMesh;
+    ViewLocationOffset      = OwningPickup.ViewLocationOffset;
+    ViewRotationOffset      = OwningPickup.ViewRotationOffset;
+    Pickup_TossVelocity     = OwningPickup.Pickup_TossVelocity;
+    bDropFromCameraLoc    = OwningPickup.bDropFromCameraLoc;
+    ImpactDamType           = OwningPickup.ImpactDamType;
+    ImpactDamage            = OwningPickup.ImpactDamage;
 
     SetDrawScale(OwningPickup.DrawScale);
     SetStaticMesh(OwningPickup.StaticMesh);
@@ -373,6 +452,8 @@ simulated function bool IsThrowable()
 defaultproperties
 {
      MovementSpeedModifier=1.000000
+     ImpactDamType=Class'Engine.Crushed'
+     Pickup_TossVelocity=250.000000
      JumpZModifier=1.000000
      AIThreatModifier=1.000000
      InvAttachmentBone="CHR_LArmForeArm"

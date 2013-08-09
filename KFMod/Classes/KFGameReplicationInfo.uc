@@ -25,84 +25,88 @@ var bool bHUDShowCash;
 
 var ShopVolume CurrentShop;
 
+var bool bObjectiveAchievementFailed; // used in objective mode
+
 replication
 {
-	reliable if(Role == ROLE_Authority)
-		MaxMonstersOn, bWaveInProgress, TimeToNextWave, LobbyTimeout,
-		MaxMonsters, PendingBots, LastBotName, TempBotName, EndGameType, CurrentShop;
+    reliable if(Role == ROLE_Authority)
+        MaxMonstersOn, bWaveInProgress, TimeToNextWave, LobbyTimeout,
+        MaxMonsters, PendingBots, LastBotName, TempBotName, EndGameType, CurrentShop,
+        bObjectiveAchievementFailed;
 
-	reliable if ( bNetInitial && (Role == ROLE_Authority) )
-		GameDiff, bEnemyHealthBars, bNoBots, bHUDShowCash;
+    reliable if ( bNetInitial && (Role == ROLE_Authority) )
+        GameDiff, bEnemyHealthBars, bNoBots, bHUDShowCash;
 }
 
 simulated function PostNetBeginPlay()
 {
-	local PlayerReplicationInfo PRI;
+    local PlayerReplicationInfo PRI;
 
-	Level.GRI = self;
+    Level.GRI = self;
 
-	if ( VoiceReplicationInfo == None )
-		foreach DynamicActors(class'VoiceChatReplicationInfo', VoiceReplicationInfo)
-			break;
+    if ( VoiceReplicationInfo == None )
+        foreach DynamicActors(class'VoiceChatReplicationInfo', VoiceReplicationInfo)
+            break;
 
-	SetTimer(1.0, true);
+    SetTimer(1.0, true);
 
-	foreach DynamicActors(class'PlayerReplicationInfo',PRI)
-		AddPRI(PRI);
+    foreach DynamicActors(class'PlayerReplicationInfo',PRI)
+        AddPRI(PRI);
 
-	if ( Level.NetMode == NM_Client )
-		TeamSymbolNotify();
+    if ( Level.NetMode == NM_Client )
+        TeamSymbolNotify();
 }
 
 simulated function Timer()
 {
-	if ( Level.NetMode == NM_Client && bMatchHasBegun )
-	{
-		ElapsedTime++;
-		if ( RemainingMinute != 0 )
-		{
-			RemainingTime = RemainingMinute;
-			RemainingMinute = 0;
-		}
-		if ( (RemainingTime > 0) && !bStopCountDown )
-			RemainingTime--;
-		if ( !bTeamSymbolsUpdated )
-			TeamSymbolNotify();
-		SetTimer(Level.TimeDilation, true);
-	}
+    if ( Level.NetMode == NM_Client && bMatchHasBegun )
+    {
+        ElapsedTime++;
+        if ( RemainingMinute != 0 )
+        {
+            RemainingTime = RemainingMinute;
+            RemainingMinute = 0;
+        }
+        if ( (RemainingTime > 0) && !bStopCountDown )
+            RemainingTime--;
+        if ( !bTeamSymbolsUpdated )
+            TeamSymbolNotify();
+        SetTimer(Level.TimeDilation, true);
+    }
 }
 
 simulated function AddKFPRI(PlayerReplicationInfo PRI)
 {
-	local byte NewVoiceID;
-	local int i;
-	local bool bIgnoreMe;
+    local byte NewVoiceID;
+    local int i;
+    local bool bIgnoreMe;
 
-	if ( Level.NetMode == NM_ListenServer || Level.NetMode == NM_DedicatedServer )
-	{
-		for (i = 0; i < PRIArray.Length; i++)
-		{
-			if ( PRIArray[i]==None || PRIArray[i]==PRI )
-			{
-				PRIArray[i] = PRI;
-				bIgnoreMe = True;
-			}
-			if ( PRIArray[i].VoiceID == NewVoiceID )
-			{
-				i = -1;
-				NewVoiceID++;
-				continue;
-			}
-		}
-		if ( NewVoiceID >= 32 )
-			NewVoiceID = 0;
-		PRI.VoiceID = NewVoiceID;
-	}
-	if(!bIgnoreMe)
-		PRIArray[PRIArray.Length] = PRI;
+    if ( Level.NetMode == NM_ListenServer || Level.NetMode == NM_DedicatedServer )
+    {
+        for (i = 0; i < PRIArray.Length; i++)
+        {
+            if ( PRIArray[i]==None || PRIArray[i]==PRI )
+            {
+                PRIArray[i] = PRI;
+                bIgnoreMe = True;
+            }
+            if ( PRIArray[i].VoiceID == NewVoiceID )
+            {
+                i = -1;
+                NewVoiceID++;
+                continue;
+            }
+        }
+        if ( NewVoiceID >= 32 )
+            NewVoiceID = 0;
+        PRI.VoiceID = NewVoiceID;
+    }
+    if(!bIgnoreMe)
+        PRIArray[PRIArray.Length] = PRI;
 }
 
 defaultproperties
 {
      LobbyTimeout=-1
+     bHUDShowCash=True
 }

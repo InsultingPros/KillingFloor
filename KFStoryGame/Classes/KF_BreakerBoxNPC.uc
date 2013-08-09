@@ -145,6 +145,8 @@ simulated event PostRender2D(Canvas C, float ScreenLocX, float ScreenLocY)  // c
 	local vector ScreenPos;
 	local float HealthPct;
 	local Material RenderMat;
+    local vector CameraLocation,CamDir;
+    local rotator CameraRotation;
 
 	if(!bShowHealthBar ||
 	!bActive ||
@@ -161,6 +163,15 @@ simulated event PostRender2D(Canvas C, float ScreenLocX, float ScreenLocY)  // c
         KFHUD = HUDKillingFloor(PC.myHUD);
         if(KFHUD != none)
         {
+            C.GetCameraLocation(CameraLocation, CameraRotation);
+            CamDir  = vector(CameraRotation);
+
+            /* Dont render stuff behind the camera */
+            if ( (Normal(Location - CameraLocation) dot vector(CameraRotation)) < 0 )
+            {
+                return;
+            }
+
             if(bRepaired)
             {
                 RenderMat = FixedMat ;

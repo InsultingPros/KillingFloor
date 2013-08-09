@@ -25,7 +25,7 @@ var    ZoneInfo              AssociatedZone;
 
 enum EAreaConditionType
 {
-   Method_StayInArea,
+   Method_LeaveArea,
    Method_EnterArea,
 };
 
@@ -198,7 +198,7 @@ function ConditionTick(Float DeltaTime)
 /* returns the percentage of completion for this condition */
 function       float        GetCompletionPct()
 {
-	if(CompletionMethod == Method_StayInArea)
+	if(CompletionMethod == Method_LeaveArea)
 	{
 		return 	FClamp(((GetObjOwner().Level.TimeSeconds - LastInAreaTime) / Duration),0.f,1.f);
     }
@@ -235,7 +235,7 @@ function        string      GetHUDHint()
      return Super.GetHUDHint();
 
 
-     if( (CompletionMethod == Method_StayInArea && bTimingOut) ||
+     if( (CompletionMethod == Method_LeaveArea && bTimingOut) ||
      (CompletionMethod == Method_EnterArea && !bTimingOut) )
      {
         HintString = Super.GetHUDHint();

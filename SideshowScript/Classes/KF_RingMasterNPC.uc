@@ -194,6 +194,7 @@ function CheckObjectiveAchievements( class<DamageType> damageType )
 {
 	local KFSteamStatsAndAchievements KFSteamStats;
 	local Controller C;
+	local KFGameReplicationInfo KFGRI;
 
 	if ( class<DamTypeBleedOut>( damageType ) == none )
 	{
@@ -202,17 +203,10 @@ function CheckObjectiveAchievements( class<DamageType> damageType )
 		{
 			bFailedAchievement = true;
 
-			for ( C=Level.ControllerList; C!=None; C=C.NextController )
+			KFGRI = KFGameReplicationInfo( Level.GRI );
+			if( KFGRI != none )
 			{
-				if ( C.PlayerReplicationInfo != none )
-				{
-					KFSteamStats = KFSteamStatsAndAchievements(C.PlayerReplicationInfo.SteamStatsAndAchievements);
-
-					if ( KFSteamStats != none )
-					{
-	                 	KFSteamStats.SetObjAchievementFailed( true );
-					}
-				}
+			    KFGRI.bObjectiveAchievementFailed = true;
 			}
 		}
 	}

@@ -2878,6 +2878,16 @@ simulated function ClientZedsSpawn(int eventNum)
    }
 }
 
+event ClientSetViewTarget( Actor a )
+{
+    // once the player leaves the spectating state, his view target shouldn't be
+    // switched to another player (could happen between spectating and respawning)
+    if( IsInState('Spectating') || a == self || Controller(a) == none || Pawn == none )
+    {
+        Super.ClientSetViewTarget( a );
+    }
+}
+
 defaultproperties
 {
      BuyListHeaders(0)="My Inventory"

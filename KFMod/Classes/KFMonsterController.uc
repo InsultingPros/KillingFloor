@@ -562,7 +562,6 @@ function bool EnemyThreatChanged()
     local Controller PC;
     local KFHumanPawn C;
     local float NewThreat,CurrentThreat;
-    local bool Result;
 
     if(!bUseThreatAssessment)
     {
@@ -577,7 +576,7 @@ function bool EnemyThreatChanged()
     /* Current Enemy is of no threat suddenly */
 	if(CurrentThreat <= 0)
 	{
-        Result = true;
+        return true;
 	}
 
     /* There's another guy nearby with a greater threat than me */
@@ -591,11 +590,11 @@ function bool EnemyThreatChanged()
 		NewThreat = C.AssessThreatTo(self);
         if(NewThreat > CurrentThreat)
 		{
-            Result = true;
+            return true;
         }
     }
 
-    return Result;
+    return false;
 }
 
 function FightEnemy(bool bCanCharge)

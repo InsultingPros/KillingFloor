@@ -404,6 +404,8 @@ function int ReduceDamage( int Damage, pawn injured, pawn instigatedBy, vector H
 function Killed( Controller Killer, Controller Killed, Pawn KilledPawn, class<DamageType> damageType )
 {
 	local TeamPlayerReplicationInfo TPRI;
+	local Skaarj LevelMonster;
+	local int LevelMonsterTotal;
 
 	if ( (MonsterController(Killed) != None) || (Monster(KilledPawn) != None) )
 	{

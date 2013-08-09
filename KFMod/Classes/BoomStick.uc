@@ -204,6 +204,20 @@ function GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)
     }
 }
 
+function GiveTo( pawn Other, optional Pickup Pickup )
+{
+	super.GiveTo( Other, Pickup );
+
+	if( MagAmmoRemaining == 0 && AmmoAmount(0) > 0 )
+	{
+	    MagAmmoRemaining = Min(AmmoAmount(0), 2);
+        SingleShotCount = MagAmmoRemaining;
+        ClientSetSingleShotCount(SingleShotCount);
+        NetUpdateTime = Level.TimeSeconds - 1;
+		bWaitingToLoadShotty = false;
+	}
+}
+
 defaultproperties
 {
      ReloadCountDown=2.500000

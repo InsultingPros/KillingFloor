@@ -125,7 +125,7 @@ enum	EHintDisplayStyle
 	HDS_Combination,
 };
 
-struct SConditionDifficultyScale
+struct long SConditionDifficultyScale
 {
     var ()     float                                      Scale_Beginner;
     var ()     float                                      Scale_Hard;
@@ -133,6 +133,22 @@ struct SConditionDifficultyScale
     var ()     float                                      Scale_HellOnEarth;
 };
 
+struct long SConditionPlayerCountScale
+{
+    var()      float                                      Scale_1P;
+    var()      float                                      Scale_2P;
+    var()      float                                      Scale_3P;
+    var()      float                                      Scale_4P;
+    var()      float                                      Scale_5P;
+    var()      float                                      Scale_6P;
+};
+
+
+struct long SDifficultyWrapper
+{
+    var ()  SConditionDifficultyScale                     Scale_GameDifficulty;
+    var ()  SConditionPlayerCountScale                    Scale_PlayerCount;
+};
 
 struct SConditionHintInfoHUD
 {
@@ -386,7 +402,7 @@ event InitGame( string Options, out string Error )
 	local KFTraderDoor TraderDoor;
 
 
-//    ConsoleCommand("Suppress Story_Debug");
+    ConsoleCommand("Suppress Story_Debug");
 
 
 	Super.InitGame(Options, Error);
@@ -559,6 +575,7 @@ function PostBeginPlay()
         {
             StoryGRI.SetVictorymaterial(StoryRules.VictoryMaterial) ;
             StoryGRI.SetDefeatMaterial(StoryRules.DefeatMaterial) ;
+            StoryGRI.bHUDShowCash = StoryRules.bShowCash;
 
             foreach AllActors(class 'KF_HUDStyleManager',NewManager)
             {
@@ -786,28 +803,28 @@ function EndGame(PlayerReplicationInfo	Winner, string  Reason)
 
 		if ( Reason ~= "WinAction" )
 		{
-		if ( GameDifficulty >= 2.0 )
-		{
-			bSetAchievement = true;
-
-			// Get the MapName out of the URL
-			MapName = GetCurrentMapName(Level);
-		}
-
-		for ( P = Level.ControllerList; P != none; P = P.nextController )
-		{
-			Player = PlayerController(P);
-			if ( Player != none )
+			if ( GameDifficulty >= 2.0 )
 			{
-				Player.ClientSetBehindView(true);
-				Player.ClientGameEnded();
+				bSetAchievement = true;
 
-				if ( bSetAchievement && KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements) != none )
+				// Get the MapName out of the URL
+				MapName = GetCurrentMapName(Level);
+			}
+
+			for ( P = Level.ControllerList; P != none; P = P.nextController )
+			{
+				Player = PlayerController(P);
+				if ( Player != none )
 				{
-					KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements).WonGame(MapName, GameDifficulty, KFGameLength == GL_Long);
+					Player.ClientSetBehindView(true);
+					Player.ClientGameEnded();
+
+					if ( bSetAchievement && KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements) != none )
+					{
+						KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements).WonGame(MapName, GameDifficulty, KFGameLength == GL_Long);
+					}
 				}
 			}
-		}
 		}
 
 		P.GameHasEnded();
@@ -1959,6 +1976,7 @@ function	bool	 SpawnZEDsInVolume(ZombieVolume 	V,  int DesiredSquadSize, optiona
 		NumZEDsSpawned  = numSpawned;
 		NumMonsters    += numspawned;
 		WaveMonsters   += numspawned;
+
 //      TotalMaxMonsters = DesiredMaxZEDs - NumMonsters;
 
         // Log what the squad is after spawning
@@ -1978,72 +1996,56 @@ function	bool	 SpawnZEDsInVolume(ZombieVolume 	V,  int DesiredSquadSize, optiona
 /* Returns modifiers to use with the max zombie spawn count
 */
 
-function float GetGameDifficultyModifier()
-{
-	local float DifficultyMod;
-
-	// scale number of zombies by difficulty
-	if ( GameDifficulty >= 7.0 ) // Hell on Earth
-	{
-		DifficultyMod=1.7;
-	}
-	else if ( GameDifficulty >= 5.0 ) // Suicidal
-	{
-		DifficultyMod=1.5;
-	}
-	else if ( GameDifficulty >= 4.0 ) // Hard
-	{
-		DifficultyMod=1.3;
-	}
-	else if ( GameDifficulty >= 2.0 ) // Normal
-	{
-		DifficultyMod=1.0;
-	}
-	else //if ( GameDifficulty == 1.0 ) // Beginner
-	{
-		DifficultyMod=0.7;
-	}
-
-	return DifficultyMod;
-}
-
-
-function float GetPlayerCountModifier()
+/* We're gonna pull the difficulty / player count multipliers from the editor from now on instead of hard-coding them*/
+function float GetZEDCountModifier()
 {
 	local int UsedNumPlayers;
-	local float NumPlayersMod;
+	local float PlayerCountMultiplier,DifficultyMultiplier;
 
-	UsedNumPlayers = NumPlayers + NumBots;
+    PlayerCountMultiplier = 1.f;
+    DifficultyMultiplier = 1.f;
+    UsedNumPlayers = NumPlayers + NumBots ;
 
-	// Scale the number of zombies by the number of players. Don't want to
-	// do this exactly linear, or it just gets to be too many zombies and too
-	// long of waves at higher levels - Ramm
-	switch ( UsedNumPlayers )
-	{
-		case 1:
-			NumPlayersMod=1;
-			break;
-		case 2:
-			NumPlayersMod=2;
-			break;
-		case 3:
-			NumPlayersMod=2.75;
-			break;
-		case 4:
-			NumPlayersMod=3.5;
-			break;
-		case 5:
-			NumPlayersMod=4;
-			break;
-		case 6:
-			NumPlayersMod=4.5;
-			break;
-		default:
-			NumPlayersMod=UsedNumPlayers*0.8; // in case someone makes a mutator with > 6 players
-	}
+    if(StoryRules != none)
+    {
+        // Set difficulty based values
+        if ( GameDifficulty >= 7.0 ) // Hell on Earth
+        {
+            DifficultyMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_GameDifficulty.Scale_HellOnEarth;
+        }
+        else if ( GameDifficulty >= 5.0 ) // Suicidal
+        {
+            DifficultyMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_GameDifficulty.Scale_Suicidal;
+        }
+        else if ( GameDifficulty >= 4.0 ) // Hard
+        {
+            DifficultyMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_GameDifficulty.Scale_Hard;
+        }
+        else if ( GameDifficulty >= 2.0 ) // Normal
+        {
+        }
+        else  // Beginner
+        {
+            DifficultyMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_GameDifficulty.Scale_Beginner;
+        }
 
-	return NumPlayersMod;
+        switch(UsedNumPlayers)
+        {
+            case 1  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_PlayerCount.Scale_1P;       break;
+            case 2  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_PlayerCount.Scale_2P;       break;
+            case 3  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_PlayerCount.Scale_3P;       break;
+            case 4  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_PlayerCount.Scale_4P;       break;
+            case 5  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_PlayerCount.Scale_5P;       break;
+            case 6  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.NumberOfEnemies.Scale_PlayerCount.Scale_6P;       break;
+            default :   PlayerCountMultiplier = 0.8 * UsedNumPlayers; break;   // >  6 players.
+        };
+    }
+
+//    log("GetZEDCountModifier ::: GameDifficultyModifier = "@DifficultyMultiplier@" Player Count Modifier = "@PlayerCountMultiplier);
+
+	return DifficultyMultiplier * PlayerCountMultiplier;
 }
+
 
 /* Returns a modifier to apply to ZED SpawnIntervals (Wave Designer & Story Volumes) */
 function float GetAdjustedSpawnInterval(float BaseInterval, float UsedWaveTimeElapsed, bool bIgnoreSineMod)
@@ -2058,38 +2060,47 @@ function float GetAdjustedSpawnInterval(float BaseInterval, float UsedWaveTimeEl
 	SineMod                = 1.0 - Abs(sin(UsedWaveTimeElapsed * SineWaveFreq));
     DifficultyMultiplier   = 1.f;
 
-    // Make the zeds come a little faster at all times on harder and above
-    if ( GameDifficulty >= 4.0 ) // Hard
-    {
-        DifficultyMultiplier = 0.85;
-    }
 
     /* Scale the spawn interval by the number of players */
     TotalnumPlayers = NumPlayers + NumBots ;
-    if( TotalnumPlayers == 1 )
+
+    /* We're gonna pull the difficulty / player count multipliers from the editor from now on instead of hard-coding them*/
+    if(StoryRules != none)
     {
-        PlayerCountMultiplier = 3.0;
+        switch(TotalnumPlayers)
+        {
+            case 1  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_PlayerCount.Scale_1P;       break;
+            case 2  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_PlayerCount.Scale_2P;       break;
+            case 3  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_PlayerCount.Scale_3P;       break;
+            case 4  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_PlayerCount.Scale_4P;       break;
+            case 5  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_PlayerCount.Scale_5P;       break;
+            case 6  :   PlayerCountMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_PlayerCount.Scale_6P;       break;
+        };
+
+        // Set difficulty based values
+        if ( GameDifficulty >= 7.0 ) // Hell on Earth
+        {
+            DifficultyMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_GameDifficulty.Scale_HellOnEarth;
+        }
+        else if ( GameDifficulty >= 5.0 ) // Suicidal
+        {
+            DifficultyMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_GameDifficulty.Scale_Suicidal;
+        }
+        else if ( GameDifficulty >= 4.0 ) // Hard
+        {
+            DifficultyMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_GameDifficulty.Scale_Hard;
+        }
+        else if ( GameDifficulty >= 2.0 ) // Normal
+        {
+        }
+        else  // Beginner
+        {
+            DifficultyMultiplier = StoryRules.Spawn_Difficulty_Scaling.EnemySpawnRate.Scale_GameDifficulty.Scale_Beginner;
+        }
     }
-    else if( TotalnumPlayers == 2 )
-    {
-        PlayerCountMultiplier = 1.5;
-    }
-    else if( TotalnumPlayers == 3 )
-    {
-        PlayerCountMultiplier = 1.0;
-    }
-    else if( TotalnumPlayers == 4 )
-    {
-        PlayerCountMultiplier = 0.85;
-    }
-    else if( TotalnumPlayers == 5 )
-    {
-         PlayerCountMultiplier = 0.65;
-    }
-    else if( TotalnumPlayers >= 6 )
-    {
-         PlayerCountMultiplier = 0.3;
-    }
+
+    DifficultyMultiplier = 1.f / DifficultyMultiplier;
+    PlayerCountMultiplier  = 1.f / PlayerCountMultiplier;
 
     //log("Base Spawn Interval    : "@BaseInterval,'Story_Debug');
     if( bIgnoreSineMod )
@@ -2111,6 +2122,7 @@ function float GetAdjustedSpawnInterval(float BaseInterval, float UsedWaveTimeEl
 	return FinalInterval;
 
 }
+
 
 /*==================================================================================
 ====================================================================================*/

@@ -229,6 +229,11 @@ function StartCharging()
 {
     local float RageAnimDur;
 
+    if( Health <= 0 )
+    {
+        return;
+    }
+
 	SetAnimAction('PoundRage');
 	Acceleration = vect(0,0,0);
 	bShotAnim = true;

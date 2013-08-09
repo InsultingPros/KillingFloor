@@ -886,6 +886,7 @@ function ObjectiveCompleted(Controller Scorer, optional bool SkipActions)
 	local Controller C;
 	local PlayerController PC;
 	local KFSteamStatsAndAchievements KFSteamStats;
+	local KFGameReplicationInfo KFGRI;
 
 	if(IsValidForActivation())
 	{
@@ -915,13 +916,22 @@ function ObjectiveCompleted(Controller Scorer, optional bool SkipActions)
 					PC.ClientMessage( SuccessText, 'CriticalEvent');
 				}
 
-				KFSteamStats = KFSteamStatsAndAchievements( PC.SteamStatsAndAchievements );
-				if ( KFSteamStats != none )
-				{
-                 	KFSteamStats.OnObjectiveCompleted( ObjectiveName );
-				}
+                KFGRI = KFGameReplicationInfo( Level.GRI );
+                if( KFGRI != none )
+                {
+                    if( !KFGRI.bObjectiveAchievementFailed )
+                    {
+        				KFSteamStats = KFSteamStatsAndAchievements( PC.SteamStatsAndAchievements );
+        				if ( KFSteamStats != none )
+        				{
+                         	KFSteamStats.OnObjectiveCompleted( ObjectiveName );
+        				}
+        			}
+    		    }
 			}
 		}
+
+		KFGRI.bObjectiveAchievementFailed = false;
 
 		if(!SkipActions)
 		{
@@ -1211,7 +1221,7 @@ function	bool	 CheckConditions()
 
             if(bNewFailedObj)
             {
-                SetHumanInstigator(FailureConditions[i].Instigator);
+                SetHumanInstigator(FailureConditions[i].GetInstigator());
                 break;
             }
         }
@@ -1249,7 +1259,7 @@ function	bool	 CheckConditions()
 
             if(bNewComplete)
             {
-                SetHumanInstigator(SuccessConditions[i].Instigator);
+                SetHumanInstigator(SuccessConditions[i].GetInstigator());
                 break;
             }
         }

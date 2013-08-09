@@ -364,6 +364,8 @@ State SawingLoop
 function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> damageType, optional int HitIndex)
 {
 	local bool bIsHeadShot;
+	local PlayerController PC;
+	local KFSteamStatsAndAchievements Stats;
 
 	bIsHeadShot = IsHeadShot(Hitlocation, normal(Momentum), 1.0);
 
@@ -377,6 +379,19 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
 	// Added in Balance Round 3 to make the Scrake "Rage" more reliably when his health gets low(limited to Suicidal and HoE in Round 7)
 	if ( Level.Game.GameDifficulty >= 5.0 && !IsInState('SawingLoop') && !IsInState('RunningState') && float(Health) / HealthMax < 0.75 )
 		RangedAttack(InstigatedBy);
+
+    if( damageType == class'DamTypeDBShotgun' )
+    {
+    	PC = PlayerController( InstigatedBy.Controller );
+    	if( PC != none )
+    	{
+    	    Stats = KFSteamStatsAndAchievements( PC.SteamStatsAndAchievements );
+    	    if( Stats != none )
+    	    {
+    	        Stats.CheckAndSetAchievementComplete( Stats.KFACHIEVEMENT_PushScrakeSPJ );
+    	    }
+    	}
+    }
 }
 
 function PlayTakeHit(vector HitLocation, int Damage, class<DamageType> DamageType)

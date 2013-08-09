@@ -13,24 +13,12 @@
 
 class Inv_GoldBar extends KF_StoryInventoryItem;
 
-function GiveTo( pawn Other, optional Pickup Pickup )
-{
-    local Controller C;
-    local PlayerController PC;
-
-	super.GiveTo( Other, Pickup );
-
-	PC = PlayerController( Other.Controller );
-	if( PC != none )
-	{
-	   BroadcastLocalizedMessage(class'Msg_GoldBarNotification', 1, PC.PlayerReplicationInfo);
-	}
-}
-
 defaultproperties
 {
      CarriedMaterial=Texture'Pier_T.Icons.Goldbar_Icon_64'
-     MovementSpeedModifier=0.650000
+     GroundMaterial=Texture'Pier_T.Icons.Goldbar_Icon_64'
+     ForcedGroundSpeed=120.000000
+     bUseForcedGroundSpeed=True
      PickupClass=Class'SideShowScript.Pickup_GoldBar'
      AttachmentClass=None
 }

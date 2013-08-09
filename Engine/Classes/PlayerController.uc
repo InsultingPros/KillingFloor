@@ -845,6 +845,7 @@ function ServerVerifyViewTarget()
 		return;
 	if ( ViewTarget == None )
 		return;
+
 	ClientSetViewTarget(ViewTarget);
 }
 
@@ -5891,7 +5892,6 @@ function ServerViewNextPlayer()
 
 function ServerViewSelf()
 {
-
 	SetLocation(ViewTarget.Location);
 	ClientSetLocation(ViewTarget.Location, Rotation);
 

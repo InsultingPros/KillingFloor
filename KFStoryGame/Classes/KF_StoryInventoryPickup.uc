@@ -17,13 +17,25 @@ notplaceable;
 /* Number of items of this class which can be held by a pawn at once */
 var                                     int                                 MaxHeldCopies;
 
-var(Pickup_Feedback)                    Material                            CarriedMaterial;
+var                                     Material                            CarriedMaterial;
 
-var(Pickup_Restrictions)                float                               MovementSpeedModifier;
+var                                     Material                            GroundMaterial;
 
-var(Pickup_Feedback)                    string                              DroppedMessage; // Human readable description when dropped.
+var                                     float                               MovementSpeedModifier;
 
-var(Pickup_Feedback)                    string                              UseMeMessage;
+var                                     float                               Pickup_TossVelocity;
+
+var                                     class<DamageType>                   ImpactDamType;
+
+var                                     int                                 ImpactDamage;
+
+var                                     bool                                bDropFromCameraLoc;
+
+var                                     string                              DroppedMessage; // Human readable description when dropped.
+
+var                                     string                              UseMeMessage;
+
+var                                     bool                                bRender1PMesh;
 
 var                                     Rotator                             PlacedRotation;
 
@@ -31,11 +43,18 @@ var                                     float                               Last
 
 var                                     bool                                bRenderIconThroughWalls;
 
+var                                     rotator                             ViewRotationOffset;
+
+var                                     vector                              ViewLocationOffset;
+
+/* When holding this item, display it with an 'X-Ray' shader in first person */
+var                                     bool                                bUseFirstPersonXRayEffect;
+
 /* Sound this pickup makes when it falls to the floor */
-var(Pickup_Audio)                       Sound                               DroppedSound;
+var                                     Sound                               DroppedSound;
 
 /* Number of inventory blocks this item takes up when carried */
-var(Pickup_Restrictions)                int                                 Weight;
+var                                     int                                 Weight;
 
 /* Changes the amount of interest ZEDs will show in the player holding this item */
 var                                     float                               AIThreatModifier;
@@ -45,7 +64,7 @@ var                                     KF_PlaceableStoryPickup             Stor
 replication
 {
     reliable if (Role== Role_Authority)
-        CarriedMaterial,bRenderIconThroughWalls;
+        GroundMaterial,bRenderIconThroughWalls;
 }
 
 
@@ -70,6 +89,10 @@ state FallingPickup
 	// Story Inventory pickups can't be grabbed by walking over them.
 	function Touch( actor Other )
 	{
+        if(ImpactDamage > 0 && Other != Instigator)
+        {
+            Other.TakeDamage(ImpactDamage,Instigator,Other.Location,Velocity,ImpactDamType);
+        }
 	}
 
 	event Landed( vector HitNormal )
@@ -135,7 +158,6 @@ auto state Pickup
 		if ( !FastTrace(Other.Location, Location) )
 			return false;
 
-		TriggerEvent(Event, self, Pawn(Other));
 		return true;
 	}
 
@@ -164,6 +186,8 @@ auto state Pickup
             SetRespawn();
             if ( Copy != None )
 				Copy.PickupFunction(user);
+
+    		TriggerEvent(Event, self, user);
 		}
 	}
 }
@@ -233,7 +257,7 @@ simulated event RenderOverlays( canvas Canvas )
 
     Super.RenderOverlays(Canvas);
 
-	if(CarriedMaterial == none)
+	if(GroundMaterial == none)
 	{
         return;
 	}
@@ -254,8 +278,8 @@ simulated event RenderOverlays( canvas Canvas )
         return;
     }
 
-    RenderMat = CarriedMaterial ;
-	IconSize = CarriedMaterial.MaterialUSize();
+    RenderMat = GroundMaterial ;
+	IconSize = GroundMaterial.MaterialUSize();
 
     ScreenPos = Canvas.WorldToScreen(Location + CollisionHeight * Vect(0,0,1));
 
@@ -327,8 +351,11 @@ function inventory SpawnCopy( pawn Other )
 defaultproperties
 {
      MovementSpeedModifier=1.000000
+     Pickup_TossVelocity=250.000000
+     ImpactDamType=Class'Engine.Crushed'
      DroppedMessage="You dropped the gold bars."
      UseMeMessage="Press USE key to Pick up"
+     bRender1PMesh=True
      bRenderIconThroughWalls=True
      DroppedSound=SoundGroup'Inf_Player.RagdollImpacts.BodyImpact'
      AIThreatModifier=1.000000

@@ -32,9 +32,10 @@ function bool InitActionFor(ScriptedController C)
 {
     local Inventory DelInv;
     local Pawn P;
-    local PlayerController PC;
+    local PlayerController PC, OPC;
     local class<Pickup> PickupClass;
     local bool bSwitchWeapons;
+    local Controller CLC;
 
     P = GetInvHolder(C,DelInv);
     if( P == none || DelInv == none)
@@ -72,22 +73,26 @@ function bool InitActionFor(ScriptedController C)
     //    Weapon( DelInv ).DeleteAmmo();
     //}
 
-    PC = PlayerController(P.Controller);
-    if( PC != none )
+    OPC = PlayerController(P.Controller);
+    if( OPC != none && bSwitchWeapons )
     {
-        // JDR: there is no unified way to retrieve a "dropped" message currently,
-        // so this only displays the correct message for the gold bar for now,
-        // which is all we're using this for, for now...
-        PickupClass = InventoryType.default.PickupClass;
-        if( PickupClass != none )
-        {
-        	PC.ReceiveLocalizedMessage(PickupClass.default.MessageClass,3,PC.PlayerReplicationInfo,,PickupClass);
-        }
+        OPC.ClientSwitchToBestWeapon();
+    }
 
-        if( bSwitchWeapons )
-        {
-            PC.ClientSwitchToBestWeapon();
-        }
+    PickupClass = InventoryType.default.PickupClass;
+    if( PickupClass != none )
+    {
+        for( CLC = P.Level.ControllerList; CLC != None; CLC = CLC.NextController )
+    	{
+            PC = PlayerController(CLC);
+            if(PC != none)
+            {
+                // JDR: there is no unified way to retrieve a "dropped" message currently,
+                // so this only displays the correct message for the gold bar for now,
+                // which is all we're using this for, for now...
+                PC.ReceiveLocalizedMessage(PickupClass.default.MessageClass,3,OPC.PlayerReplicationInfo);
+            }
+    	}
     }
 
 	return false;

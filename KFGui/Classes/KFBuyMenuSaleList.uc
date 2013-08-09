@@ -153,7 +153,8 @@ function int PopulateBuyablesbyPerk(int Perk, bool HasPerk, int currentIndex)
                 continue;
             }
 
-            if ( class<Deagle>(ForSalePickup.default.InventoryType) != none )
+            // only check deagle (i.e. NOT golden deagle, like casting would do)
+            if ( ForSalePickup.default.InventoryType == class'Deagle' )
             {
 				if ( IsInInventory(class'DualDeaglePickup') )
 				{

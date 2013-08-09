@@ -15,9 +15,8 @@ class KFHumanPawn_Story extends KFHumanPawn ;
 /* true if this pawn has had its currently held gear stored at a checkpoint */
 var bool    bSavedLoadout;
 
+/* Pawn is currently holding a KF_StoryInventoryItem actor */
 var bool	bHasStoryItem;
-
-var float	HasItemSpeed;	// Speed a player moves if carrying an item
 
 replication
 {
@@ -78,14 +77,19 @@ function SetHasStoryItem( bool bHasItem )
 
 simulated event ModifyVelocity(float DeltaTime, vector OldVelocity)
 {
-	if ( !bHasStoryItem )
+    local inventory I;
+    local KF_StoryInventoryItem Storyinv;
+
+    Super.ModifyVelocity(DeltaTime,OldVelocity);
+
+	for ( I = Inventory; I != none; I = I.Inventory )
 	{
-	 	super.ModifyVelocity( DeltaTime, OldVelocity );
- 	}
- 	else
- 	{
- 	 	GroundSpeed = HasItemSpeed;
- 	}
+        StoryInv = KF_StoryInventoryItem(I);
+        if(StoryInv != none && StoryInv.bUseForcedGroundSpeed)
+        {
+            GroundSpeed = StoryInv.ForcedGroundSpeed ;
+        }
+	}
 }
 
 simulated function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> damageType, optional int HitIndex)
@@ -97,21 +101,15 @@ simulated function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation
 
 function HandleStoryAchievements()
 {
-	local KFSteamStatsAndAchievements KFSteamStats;
-	local KFPlayerController MyKFPC;
+	local KFGameReplicationInfo KFGRI;
 
 	if ( bHasStoryItem )
 	{
-		MyKFPC = KFPlayerController( Controller );
-   		if ( MyKFPC != none )
-		{
-			KFSteamStats = KFSteamStatsAndAchievements( KFPC.SteamStatsAndAchievements );
-
-			if ( KFSteamStats != none )
-			{
-             	KFSteamStats.SetObjAchievementFailed( true );
-			}
-		}
+        KFGRI = KFGameReplicationInfo( Level.GRI );
+        if( KFGRI != none )
+        {
+            KFGRI.bObjectiveAchievementFailed = true;
+        }
 	}
 }
 
@@ -501,6 +499,46 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 	SetTraderUpdate();
 }
 
+simulated function InternalTossCarriedItems()
+{
+    local Inventory Inv;
+    local KF_StoryinventoryItem StoryInv;
+	local Vector X,Y,Z;
+    local Vector TossDir;
+    local float TossSpeed;
+    local vector DropLoc;
+
+	GetAxes(Rotation,X,Y,Z);
+
+    TossDir = vector(Rotation);
+    TossSpeed = 250.f;
+    DropLoc = Location + 0.8 * CollisionRadius * X - 0.5 * CollisionRadius * Y;
+
+    for( Inv=Inventory; Inv!=None; Inv=Inv.Inventory )
+    {
+        if(Inv.IsThrowable())
+        {
+            StoryInv = KF_StoryInventoryItem(Inv);
+            if(StoryInv != none)
+            {
+                if(StoryInv.bDropFromCameraLoc)
+                {
+                    TossDir = Vector(GetViewRotation());
+                    if(PlayerController(Controller) != none)
+                    {
+                        DropLoc = PlayerController(Controller).CalcViewLocation;
+                    }
+                }
+
+                TossSpeed = StoryInv.Pickup_TossVelocity;
+            }
+
+            Inv.Velocity = TossDir * TossSpeed;
+            Inv.DropFrom(DropLoc);
+        }
+    }
+}
+
 /* ============ AI -  Monster threat assessment functionality ==============================
 Clamped from -1 to 100, where 100 is the most threatening ==================================
 ===========================================================================================*/
@@ -528,5 +566,4 @@ function  float AssessThreatTo(KFMonsterController  Monster, optional bool Check
 
 defaultproperties
 {
-     HasItemSpeed=120.000000
 }

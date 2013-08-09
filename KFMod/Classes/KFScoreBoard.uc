@@ -76,6 +76,7 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 	local float CashX;
 	local string CashString,HealthString;
 	local float OutX;
+	local array<PlayerReplicationInfo> TeamPRIArray;
 
 	OwnerPRI = KFPlayerController(Owner).PlayerReplicationInfo;
 	OwnerOffset = -1;
@@ -90,6 +91,7 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 				OwnerOffset = i;
 
 			PlayerCount++;
+			TeamPRIArray[ TeamPRIArray.Length ] = PRI;
 		}
 	}
 
@@ -186,12 +188,7 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 	MaxNamePos = 0.9 * (KillsXPos - NameXPos);
 	for (i = 0; i < PlayerCount; i++)
 	{
-	    if( GRI.PRIArray[i].bOnlySpectator )
-	    {
-	       continue;
-	    }
-
-		Canvas.StrLen(GRI.PRIArray[i].PlayerName, XL, YL);
+		Canvas.StrLen(TeamPRIArray[i].PlayerName, XL, YL);
 
 		if ( XL > MaxNamePos )
 		{
@@ -214,11 +211,6 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 
 	for (i = 0; i < PlayerCount; i++)
 	{
-	    if( GRI.PRIArray[i].bOnlySpectator )
-	    {
-	       continue;
-	    }
-
 		Canvas.SetPos(NameXPos, (PlayerBoxSizeY + BoxSpaceY)*i + BoxTextOffsetY);
 
 		if( i == OwnerOffset )
@@ -232,7 +224,7 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 			Canvas.DrawColor.B = 255;
 		}
 
-		Canvas.DrawTextClipped(GRI.PRIArray[i].PlayerName);
+		Canvas.DrawTextClipped(TeamPRIArray[i].PlayerName);
 	}
 
 	Canvas.ClipX = MaxNamePos;
@@ -247,12 +239,7 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 	// Draw each player's information
 	for (i = 0; i < PlayerCount; i++)
 	{
-	    if( GRI.PRIArray[i].bOnlySpectator )
-	    {
-	       continue;
-	    }
-
-        KFPRI = KFPlayerReplicationInfo(GRI.PRIArray[i]) ;
+        KFPRI = KFPlayerReplicationInfo(TeamPRIArray[i]) ;
 		Canvas.DrawColor = HUDClass.default.WhiteColor;
 
 		// Display perks.
@@ -309,11 +296,11 @@ simulated event UpdateScoreBoard(Canvas Canvas)
             Canvas.DrawText(KFPRI.KillAssists, true);
     	}
 		// draw cash
-		CashString = "£"@string(int(GRI.PRIArray[i].Score)) ;
+		CashString = "£"@string(int(TeamPRIArray[i].Score)) ;
 
-		if(GRI.PRIArray[i].Score >= 1000)
+		if(TeamPRIArray[i].Score >= 1000)
 		{
-            CashString = "£"@string(GRI.PRIArray[i].Score/1000.f)$"K" ;
+            CashString = "£"@string(TeamPRIArray[i].Score/1000.f)$"K" ;
 		}
 
 		Canvas.StrLen(CashString,CashX,YL);
@@ -328,7 +315,7 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 		Canvas.StrLen(HealthString,HealthWidthX,YL);
 		Canvas.SetPos(HealthXpos - HealthWidthX/2, (PlayerBoxSizeY + BoxSpaceY) * i + BoxTextOffsetY);
 
-		if ( GRI.PRIArray[i].bOutOfLives )
+		if ( TeamPRIArray[i].bOutOfLives )
 		{
             Canvas.StrLen(OutText,OutX,YL);
 			Canvas.DrawColor = HUDClass.default.RedColor;

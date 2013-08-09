@@ -24,13 +24,15 @@ function bool InitActionFor(ScriptedController C)
 {
     local Controller CC;
     local PlayerController PC;
+    local Actor TestActor;
 
     if(ViewActorTag != '')
     {
-        foreach AllObjects(class 'Actor', ViewActor)
+        foreach AllObjects(class 'Actor', TestActor)
         {
-            if(ViewActor.Tag == ViewActorTag)
+            if(TestActor.Tag == ViewActorTag)
             {
+                ViewActor = TestActor;
                 break;
             }
         }

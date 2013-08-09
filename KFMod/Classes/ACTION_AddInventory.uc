@@ -8,7 +8,8 @@ function bool InitActionFor(ScriptedController C)
     local Inventory NewInv;
     local Pawn P;
     local class<Pickup> PickupClass;
-    local PlayerController PC;
+    local PlayerController PC, OPC;
+    local Controller CLC;
 
     if( InventoryType == none )
     {
@@ -29,14 +30,21 @@ function bool InitActionFor(ScriptedController C)
 
 	NewInv.GiveTo( P );
 
-	PickupClass = InventoryType.default.PickupClass;
-	PC = PlayerController(P.Controller);
+	OPC = PlayerController( P.Controller );
 
-	if( PickupClass != none && PC != none )
+	PickupClass = InventoryType.default.PickupClass;
+	if( PickupClass != none )
 	{
-	    PC.ReceiveLocalizedMessage(PickupClass.default.MessageClass,1,PC.PlayerReplicationInfo,,PickupClass);
 	    P.PlaySound( PickupClass.default.PickupSound, SLOT_Interact );
-	}
+    	for( CLC = P.Level.ControllerList; CLC != None; CLC = CLC.NextController )
+    	{
+            PC = PlayerController(CLC);
+            if(PC != none)
+            {
+                PC.ReceiveLocalizedMessage(PickupClass.default.MessageClass,1,OPC.PlayerReplicationInfo);
+            }
+    	}
+    }
 
 	return false;
 }

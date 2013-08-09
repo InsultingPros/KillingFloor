@@ -300,10 +300,11 @@ function AbortWave(optional Actor TriggeringActor)
    /* We're trying to end this wave but the spawning hasn't yet finished. Cut it off */
     AllSpawningFinished();
 
-    if(GetOwningManager().Waves[WaveIndex].bKillStragglers)
+/*    if(GetOwningManager().Waves[WaveIndex].bKillStragglers)
     {
         KillStragglers();
     }
+*/
 }
 
 /* Timed ZED spawning*/
@@ -794,7 +795,7 @@ function int GetCycleMaxZEDs(int CycleIndex)
 
     if(!AllSpawnCycles[CycleIndex].bNoDifficultyScaling)
     {
-        AdjustedMaxZEDs *= StoryGI.GetPlayerCountModifier() * StoryGI.GetGameDifficultymodifier() ;
+        AdjustedMaxZEDs *= StoryGI.GetZEDCountModifier() ;
     }
 
     AdjustedMaxZEDs = Max(AdjustedMaxZEDs,1);

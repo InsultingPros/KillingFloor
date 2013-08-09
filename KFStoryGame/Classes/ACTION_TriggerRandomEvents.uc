@@ -32,7 +32,8 @@ function bool InitActionFor(ScriptedController C)
 
     for(i = 0 ; i < NumToTrigger; i ++)
     {
-        RandIdx = RandRange(0,EventList.length-1);
+        RandIdx = Rand(EventList.length);
+
         PendingEvents.length = PendingEvents.length + 1;
         PendingEvents[PendingEvents.length - 1] = EventList[RandIdx];
 

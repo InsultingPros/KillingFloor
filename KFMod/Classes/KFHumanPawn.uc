@@ -942,9 +942,6 @@ Clamped from -1 to 100, where 100 is the most threatening ======================
 
 function  float AssessThreatTo(KFMonsterController  Monster, optional bool CheckDistance)
 {
-    local float ValMax;
-    local float TotalThreat;
-
     if(Monster == none || Monster.Pawn == none)
     {
         return -1.f;
@@ -952,11 +949,11 @@ function  float AssessThreatTo(KFMonsterController  Monster, optional bool Check
 
     if(CheckDistance)
     {
-        ValMax = Square(100.f);
-        TotalThreat = (ValMax -(VSizeSquared(Monster.Pawn.Location - Location)/ ValMax))/100.f ;
+        // 5000 == 100m, gives us a nice range of values
+        return 5000.f / VSize(Monster.Pawn.Location - Location);
     }
 
-    return TotalThreat;
+    return -1.f;
 }
 
 /* Returns true if this pawn is able to hold a weapon of the supplied type */

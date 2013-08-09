@@ -14,12 +14,10 @@
 */
 
 class KFLevelRules_Story extends KFLevelRules
-hidecategories(Sound,Events) ;
+hidecategories(Sound,Events)
+dependson(KFStoryGameInfo) ;
 
 #exec OBJ LOAD FILE=KFStoryGame_Tex.utx
-
-/* array of Objectives, arranged by LD in the order he wants them completed */
-var(Rules_Objectives)     	array<name>					 StoryObjectives;
 
 /* should the first objective in the StoryObjectives array activate as soon as the match begins ? */
 var(Rules_Objectives)       bool                         bAutoStartObjectives;
@@ -40,7 +38,17 @@ var(Rules_Monsters)			int						     MaxEnemiesAtOnce;
 var(Rules_Monsters)         bool                         bAutoKillStragglers;
 
 /* Auto Kill threshold if bAutoKilLStragglers is true */
-var(Rules_MonsterS)         int                          MaxStragglers;
+var(Rules_Monsters)         int                          MaxStragglers;
+
+/* Struct for controlling attributes which affect enemy spawning base on game difficulty and player count */
+struct SMonsterSpawnScaling
+{
+    var () KFStoryGameInfo.SDifficultyWrapper            EnemySpawnRate;
+
+    var () KFStoryGameInfo.SDifficultyWrapper            NumberOfEnemies;
+};
+
+var(Rules_Monsters)         SMonsterSpawnScaling         Spawn_Difficulty_Scaling;
 
 /* should bots be allowed to spawn ? */
 var(Rules_Bots)				bool						 bAllowBots;
@@ -111,6 +119,7 @@ defaultproperties
      MaxEnemiesAtOnce=32
      bAutoKillStragglers=True
      MaxStragglers=5
+     Spawn_Difficulty_Scaling=(EnemySpawnRate=(Scale_GameDifficulty=(Scale_Beginner=1.000000,Scale_Hard=1.170000,Scale_Suicidal=1.170000,Scale_HellOnEarth=1.170000),Scale_PlayerCount=(Scale_1P=1.000000,Scale_2P=1.000000,Scale_3P=1.000000,Scale_4P=1.170000,Scale_5P=1.530000,Scale_6P=3.300000)),NumberOfEnemies=(Scale_GameDifficulty=(Scale_Beginner=0.700000,Scale_Hard=1.300000,Scale_Suicidal=1.500000,Scale_HellOnEarth=1.700000),Scale_PlayerCount=(Scale_1P=1.000000,Scale_2P=2.000000,Scale_3P=2.750000,Scale_4P=3.500000,Scale_5P=4.000000,Scale_6P=4.500000)))
      VictoryMaterial=Combiner'KFMapEndTextures.VictoryCombiner'
      DefeatMaterial=Combiner'KFMapEndTextures.DefeatCombiner'
      CheckpointResetClasses(0)=Class'KFMod.ZombieVolume'

@@ -236,37 +236,37 @@ simulated function DrawStoryHUDInfo(Canvas C)
     }
 }
 
-/*
-function CanvasDrawActors(Canvas C, bool bClearedZBuffer)
+/* Specific function to use Canvas.DrawActor()
+ Clear Z-Buffer once, prior to rendering all actors */
+function CanvasDrawActors( Canvas C, bool bClearedZBuffer )
+{
+    PostRenderStoryInventory(C);
+    Super.CanvasDrawActors(C,bClearedZBuffer);
+}
+
+function PostRenderStoryInventory(Canvas C)
 {
 	local Inventory CurInv;
 	local KF_StoryInventoryItem StoryInv;
 
-	Super.CanvasDrawActors(C,bClearedZBuffer);
-
-	if ( PawnOwner!= none && !PlayerOwner.bBehindView )
-	{
-        /* Draw little HUD Icons on the owning player's HUD */
-        for ( CurInv = PawnOwner.Inventory; CurInv != none; CurInv = CurInv.Inventory )
-        {
-            StoryInv = KF_StoryInventoryItem(CurInv);
-            if(StoryInv != none )
-            {
-                if ( !bClearedZBuffer )
-                {
-                    C.DrawActor(None, false, true); // Clear the z-buffer here
-                }
-
-                StoryInv.RenderOverlays(C);
-            }
-        }
+    if(PawnOwner == none)
+    {
+        return;
     }
-} */
+
+	for ( CurInv = PawnOwner.Inventory; CurInv != none; CurInv = CurInv.Inventory )
+	{
+        StoryInv = KF_StoryInventoryItem(CurInv);
+        if(StoryInv != none )
+        {
+            StoryInv.RenderOverlays(C);
+        }
+	}
+}
 
 /* Draws overlays for Pickup-able or currently carried items in story missions */
 simulated function RenderStoryItems(Canvas C)
 {
-    local KF_StoryInventoryPickup Pickup;
 	local Inventory CurInv;
 	local KF_StoryInventoryItem StoryInv;
 	local float PosX,PosY;
@@ -289,6 +289,7 @@ simulated function RenderStoryItems(Canvas C)
 	local vector MovementDir;
 	local float DistMax;
 	local float InterpSpeed,InterpDist;
+    local KF_StoryInventoryPickup Pickup;
 
     /* Render icons over players heads while they are carrying Story Items*/
     if(PlayerOwner != none && PlayerOwner.GameReplicationinfo != none)
@@ -384,6 +385,12 @@ simulated function RenderStoryItems(Canvas C)
         }
 	}
 
+
+    if( PawnOwner == none )
+	{
+		return;
+	}
+
     /* Draw Projected World Icons */
 
     foreach DynamicActors(class 'KF_StoryInventoryPickup', Pickup)
@@ -391,10 +398,6 @@ simulated function RenderStoryItems(Canvas C)
         Pickup.RenderOverlays(C);
     }
 
-    if( PawnOwner == none )
-	{
-		return;
-	}
 
     PosX = C.ClipX * 0.3  ;
     PosY = C.ClipY * 0.9  ;

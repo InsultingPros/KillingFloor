@@ -14,8 +14,16 @@
 class   KF_PlaceableStoryPickup extends xPickupBase
 hidecategories(PickupBase);
 
-var(Pickup_Feedback)        Material                    HUDMaterial;
+/* Icon to render for this Pickup on the holding player's HUD */
+var(Pickup_HUD)        Material                         HUDMaterial;
 
+/* Icon to render over top of this Pickup while it's sitting on the ground */
+var(Pickup_HUD)        Material                         GroundMaterial;
+
+/* If true, don't perform line traces to determine if we should render the GroundMaterial  (setting this true is an optimization) */
+var(Pickup_HUD)             bool                        bRenderIconThroughWalls;
+
+/* Modifier to apply to the holding player's groundspeed */
 var(Pickup_PawnModifiers)   float                       MovementSpeedModifier;
 
 var(Pickup_Feedback)        localized string            Message_Dropped; // Human readable description when dropped.
@@ -24,15 +32,22 @@ var(Pickup_Feedback)        localized string            Message_PickedUp;
 
 var(Pickup_Feedback)        localized string            Message_Use;
 
-var(Pickup_Feedback)        bool                        bRenderIconThroughWalls;
-
 var(Pickup_Audio)           Sound                       Sound_Dropped,Sound_PickedUp;
 
-var(Pickup_Attachment)      vector                      Attachment_Offset;
+var(Pickup_3P)      vector                              Attachment_Offset;
 
-var(Pickup_Attachment)      name                        Attachment_Bone;
+var(Pickup_3P)      name                                Attachment_Bone;
 
-var(Pickup_Attachment)      rotator                     Attachment_Rotation;
+var(Pickup_3P)      rotator                             Attachment_Rotation;
+
+var(Pickup_1P)      bool                                bRender1PMesh;
+
+/* When holding this item, display it with an 'X-Ray' shader in first person */
+var(Pickup_1P)      bool                                bUseFirstPersonXRayEffect;
+
+var(Pickup_1P)      rotator                             ViewRotationOffset;
+
+var(Pickup_1P)      vector                              ViewLocationOffset;
 
 /* Multiplies the height of the player's jumpZ by this amount */
 var(Pickup_PawnModifiers)   float                       JumpZModifier;
@@ -49,7 +64,18 @@ var(Pickup_PawnModifiers)   float                       AIThreatModifier;
 /* Number of items of this class which can be held by a pawn at once */
 var(Pickup_Restrictions)    int                         MaxHeldCopies;
 
+/* Number of Inventory blocks this item takes up of the holder's weight allowance */
 var(Pickup_Restrictions)    int                         InventoryWeight;
+
+/* Determines when the pickup actor should be spawned for this pickupspot */
+enum EPickupSpawnMethod
+{
+    Spawn_OnMapLoad,
+    Spawn_OnMatchBegin,
+    Spawn_OnTrigger,
+};
+
+var(Pickup_Spawning)        EPickupSpawnMethod          SpawnMethod;
 
 var                         KF_StoryInventoryPickup     MyStoryPickup;
 
@@ -66,6 +92,45 @@ var(Events)          array<SCarriedEvent>               CarriedEvents;
 
 var(Events)          name                               DroppedEvent;
 
+/* UUs per second this pickup should travel at when tossed by a player */
+var(Pickup_Tossing)         float                       Pickup_TossVelocity;
+
+/* If true, orient this pickup's toss direction from the players camera instead of his pawn rotation */
+var(Pickup_Tossing)         bool                        bDropFromCameraLoc;
+
+/* Type of damage this pickup does when it smacks into something :- )  */
+var(Pickup_Tossing)         class<DamageType>           ImpactDamType;
+
+var(Pickup_Tossing)         int                         ImpactDamage;
+
+
+simulated event PostBeginPlay()
+{
+    if(SpawnMethod == Spawn_OnMapLoad)
+    {
+	   Super.PostBeginPlay();
+    }
+}
+
+function MatchStarting()
+{
+    Super.MatchStarting();
+
+    if(SpawnMethod == Spawn_OnMatchBegin)
+    {
+        SpawnPickup();
+    }
+}
+
+event Trigger( Actor Other, Pawn EventInstigator )
+{
+    Super.Trigger(Other,EventInstigator);
+
+    if(SpawnMethod == Spawn_OnTrigger)
+    {
+        SpawnPickup();
+    }
+}
 
 simulated function CopyPropertiesTo(KF_StoryInventoryPickup  NewPickup)
 {
@@ -86,6 +151,7 @@ simulated function CopyPropertiesTo(KF_StoryInventoryPickup  NewPickup)
     NewPickup.SetDrawScale(DrawScale);
     NewPickup.SetDrawScale3D(DrawScale3D);
     NewPickup.bRenderIconThroughWalls = bRenderIconThroughWalls;
+    NewPickup.bUseFirstPersonXRayEffect = bUseFirstPersonXRayEffect;
     NewPickup.MovementSpeedModifier = MovementSpeedModifier;
     NewPickup.AIThreatModifier = AIThreatModifier;
     NewPickup.Weight = InventoryWeight;
@@ -93,8 +159,17 @@ simulated function CopyPropertiesTo(KF_StoryInventoryPickup  NewPickup)
     NewPickup.default.UseMeMessage = Message_Use;
     NewPickup.default.PickupMessage = Message_PickedUp;
     NewPickup.CarriedMaterial = HUDMaterial ;
+    Newpickup.GroundMaterial = GroundMaterial;
     NewPickup.PickupSound = Sound_PickedUp;
     NewPickup.DroppedSound = Sound_Dropped;
+    NewPickup.UV2Texture = UV2Texture;
+    NewPickup.bRender1PMesh = bRender1PMesh;
+    NewPickup.ViewLocationOffset = ViewLocationOffset;
+    NewPickup.ViewRotationOffset = ViewRotationOffset;
+    NewPickup.Pickup_TossVelocity = Pickup_TossVelocity;
+    NewPickup.bDropFromCameraLoc = bDropFromCameraLoc;
+    NewPickup.ImpactDamType = ImpactDamType;
+    NewPickup.ImpactDamage = ImpactDamage;
 
     // Lighting
 
@@ -113,7 +188,7 @@ simulated function CopyPropertiesTo(KF_StoryInventoryPickup  NewPickup)
 
 function SpawnPickup()
 {
-    if( PowerUp == None )
+    if( myPickUp != none || PowerUp == None || Level.NetMode == NM_Client )
         return;
 
     myPickUp = Spawn(PowerUp,,,Location,Rotation);
@@ -140,17 +215,21 @@ function SpawnPickup()
 
 defaultproperties
 {
+     bRenderIconThroughWalls=True
      MovementSpeedModifier=1.000000
      Message_Use="Press USE key to Pick up"
-     bRenderIconThroughWalls=True
      Sound_Dropped=SoundGroup'Inf_Player.RagdollImpacts.BodyImpact'
      Sound_PickedUp=SoundGroup'KF_AxeSnd.Axe_Select'
+     bRender1PMesh=True
      JumpZModifier=1.000000
      AIThreatModifier=1.000000
+     Pickup_TossVelocity=250.000000
+     ImpactDamType=Class'Engine.Crushed'
      PowerUp=Class'KFStoryGame.KF_StoryInventoryPickup'
      DrawType=DT_StaticMesh
      StaticMesh=StaticMesh'DetailSM.Crates.WoodBox_B'
      bUseDynamicLights=True
+     bStatic=False
      bHidden=True
      bNoDelete=True
      bNetInitialRotation=True
