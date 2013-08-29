@@ -390,7 +390,7 @@ function bool FindFreshBody()
 function bool FindNewEnemy()
 {
 	local Pawn BestEnemy;
-	local bool bSeeBest;
+	local bool bSeeBest, bSeeNew, bNewCloser;
 	local float BestDist, NewDist;
 	local Controller PC;
 	local KFHumanPawn Human;
@@ -430,11 +430,14 @@ function bool FindNewEnemy()
             else  // Dont use threat assessment.  Fall back on the old Distance based stuff.
             {
 			    NewDist = VSizeSquared(Human.Location - Pawn.Location);
-				if ( BestEnemy == none || (NewDist < BestDist) || !bSeeBest )
+			    bSeeNew = CanSee(Human);
+			    bNewCloser = NewDist < BestDist;
+				if( (BestEnemy == none) ||
+                    ((bNewCloser || bSeeNew) && !bSeeBest) )
 				{
                     BestEnemy = Human;
                     BestDist = NewDist;
-					bSeeBest = CanSee(Human);
+					bSeeBest = bSeeNew;
                 }
 		    }
 		}
