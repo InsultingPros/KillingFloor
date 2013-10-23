@@ -5,7 +5,7 @@ class DualDeagle extends Dualies;
 
 function bool HandlePickupQuery( pickup Item )
 {
-	if ( Item.InventoryType==Class'Deagle' )
+	if ( Item.InventoryType==Class'Deagle' || Item.InventoryType==Class'GoldenDeagle' )
 	{
 		if( LastHasGunMsgTime < Level.TimeSeconds && PlayerController(Instigator.Controller) != none )
 		{

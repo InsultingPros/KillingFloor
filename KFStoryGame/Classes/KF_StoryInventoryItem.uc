@@ -75,10 +75,8 @@ var     bool                        bDisableCollisionOnDrop;
 replication
 {
     reliable if( Role==ROLE_Authority)
-        MovementSpeedModifier,CarriedMaterial,ClientGiveTo,AllowHoldWeapon,StoryPickupBase;
+        MovementSpeedModifier,CarriedMaterial,ClientGiveTo,AllowHoldWeapon,StoryPickupBase,bRender1PMesh,bUseFirstPersonXRayEffect;
 
-    reliable if(Role == Role_Authority && bNetInitial)
-        bRender1PMesh,bUseFirstPersonXRayEffect;
 }
 
 function GiveTo( pawn Other, optional Pickup Pickup )

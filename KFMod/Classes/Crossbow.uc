@@ -155,7 +155,7 @@ simulated function UpdateScopeMode()
 			scopePortalFOV = default.scopePortalFOV;
 			ZoomedDisplayFOV = CalcAspectRatioAdjustedFOV(default.ZoomedDisplayFOV);
 			//bPlayerFOVZooms = false;
-			if (bUsingSights)
+			if (bAimingRifle)
 			{
 				PlayerViewOffset = XoffsetScoped;
 			}
@@ -196,7 +196,7 @@ simulated function UpdateScopeMode()
 			scopePortalFOV = scopePortalFOVHigh;
 			ZoomedDisplayFOV = CalcAspectRatioAdjustedFOV(default.ZoomedDisplayFOVHigh);
 			//bPlayerFOVZooms = false;
-			if (bUsingSights)
+			if (bAimingRifle)
 			{
 				PlayerViewOffset = XoffsetHighDetail;
 			}

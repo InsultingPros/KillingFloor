@@ -22,6 +22,8 @@ var 	automated			GUILabel				HeaderBG_Left_Label;
 
 var		automated			KFQuickPerkSelect		QuickPerkSelect;
 
+var     automated           KFBuyMenuFilter         BuyMenuFilter;
+
 var 	automated			GUIButton				StoreTabButton;
 var 	automated			GUIButton				PerkTabButton;
 
@@ -262,7 +264,7 @@ defaultproperties
      Begin Object Class=GUILabel Name=Perk
          TextAlign=TXTA_Center
          TextColor=(B=158,G=176,R=175)
-         WinTop=0.029248
+         WinTop=0.010000
          WinLeft=0.665000
          WinWidth=0.329761
          WinHeight=0.050000
@@ -312,6 +314,15 @@ defaultproperties
          OnDraw=QS.MyOnDraw
      End Object
      QuickPerkSelect=KFQuickPerkSelect'KFGui.GUIBuyMenu.QS'
+
+     Begin Object Class=KFBuyMenuFilter Name=filter
+         WinTop=0.051000
+         WinLeft=0.670000
+         WinWidth=0.305000
+         WinHeight=0.082460
+         OnDraw=filter.MyOnDraw
+     End Object
+     BuyMenuFilter=KFBuyMenuFilter'KFGui.GUIBuyMenu.filter'
 
      Begin Object Class=GUIButton Name=StoreTabB
          Caption="Store"

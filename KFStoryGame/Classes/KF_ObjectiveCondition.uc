@@ -23,7 +23,7 @@ const HintCharLimit = 35;
 
 
 /* Pawn responsible for Activating and / or completing this condition. */
-var         protected                   Pawn              Instigator;
+var         const                       name              InstigatorName;
 
 var                                     bool              bComplete,SavedbComplete;
 
@@ -32,7 +32,7 @@ var                                     float             LastActivatedTime;
 var                                     float             LastRepTime;
 
 /* Minimum time between client updates of condition data */
-var                                     float             ConditionRepInterval;
+var (Network)                           float             ConditionRepInterval;
 
 /* HUD properties ======================================================================
 =======================================================================================*/
@@ -50,8 +50,6 @@ var                                     bool              OldComplete,NewComplet
 var                                     string            OldDataString,NewDataString;
 
 var                                     vector            OldWorldLoc,NewLocation;
-
-var                                     Actor             OldLocActor,NewLocActor;
 
 
 /* =====================================================================================
@@ -78,6 +76,8 @@ var() bool                                                  bCompleteOnce;
 
 var   bool                                                  bLockCompletion;
 
+var   bool                                                  bForceReliableUpdate;
+
 /* Difficulty Modifiers ============================================================*/
 
 enum	EKFGameDifficulty
@@ -102,7 +102,7 @@ var(Difficulty)                         KFStoryGameInfo.SConditionDifficultyScal
 /* Scales the Condition's requirements based on the number of players on the server */
 var(Difficulty)                         float                                               Scale_PlayerCount;
 
-var          private   transient        KF_StoryObjective ObjOwner;
+var          private   transient        KF_StoryObjective                                   ObjOwner;
 
 /* =====================================================================================
 =======================================================================================*/
@@ -112,9 +112,9 @@ var(Events)						        array<KFStoryGameInfo.SObjectiveProgressEvent>	    Prog
 /* =====================================================================================
 =======================================================================================*/
 
-var                                     KF_Objective_EventListener   Eventlistener;
+var          private                    KF_Objective_EventListener                    Eventlistener;
 
-var(Events)                             name              Tag;
+var(Events)                             name                                          Tag;
 
 var()                                   KFStoryGameInfo.EConditionInitialState        InitialState;
 
@@ -122,7 +122,7 @@ var()                                   KFStoryGameInfo.EConditionActivationMeth
 
 var()                                   KFStoryGameInfo.EProgressImportance           ProgressImportance;
 
-var         private                     Actor                                         InitialWorldLocActor;
+var         const                       name                                          InitialWorldLocActorName, WorldLocActorName;
 
 
 /*========== AUDIO =====================================================================*/
@@ -133,11 +133,16 @@ var(Audio)                              sound                                   
 function StoppedUsing(pawn User){}
 function StartedUsing(pawn User){}
 
-function PostBeginPlay()
+function PostBeginPlay(KF_StoryObjective MyOwner)
 {
+    SpawnEventListener(MyOwner);
+
+    // cache and clear.
     if(HUD_World.World_Location != none)
     {
-        InitialWorldLocActor = HUD_World.World_Location;
+        SetTargetActor(InitialWorldLocActorName,HUD_World.World_Location);
+        SetTargetActor(WorldLocActorName,HUD_World.World_Location);
+        HUD_World.World_Location = none;
     }
 }
 
@@ -148,10 +153,23 @@ function SaveState()
     SavedbWasTriggered  = bWasTriggered;
 }
 
-function ClearActorReferences()
+function Actor GetTargetActor(name TargetName)
 {
-    HUD_World.World_Location = none;
-    Instigator = none;
+    local Actor TargetActor;
+
+    EventListener.FindAssociatedActor(TargetName,TargetActor);
+    return TargetActor;
+}
+
+
+function SetTargetActor(name NewTargetName, Actor NewValue)
+{
+    Eventlistener.AddAssociatedActor(NewTargetName,NewValue);
+}
+
+function ReleaseTargetActor(name ReleaseTargetName)
+{
+    EventListener.RemoveAssociatedActor(ReleaseTargetname);
 }
 
 function Reset()
@@ -188,22 +206,22 @@ function Trigger(actor Other, pawn EventInstigator)
 {
     if(ConditionIsValid())
     {
-        Instigator = EventInstigator;
+        SetTargetActor(InstigatorName,EventInstigator);
 
         switch(ActivationMethod)
         {
             case TriggerToggled :
             if(!bActive)
             {
-                log("**********************************************");
-                log("Activating Condition By Trigger - :"@name);
+ //               log("**********************************************");
+//                log("Activating Condition By Trigger - :"@name);
                 GetObjOwner().ActivateCondition(self);
                 return;
             }
             else
             {
-                log("**********************************************");
-                log("Deactivating Condition By Trigger - :"@name);
+//                log("**********************************************");
+//                log("Deactivating Condition By Trigger - :"@name);
                 GetObjOwner().DeActivateCondition(self);
                 return;
             }
@@ -240,7 +258,7 @@ function bool               ConditionIsRelevant()
 function bool               ConditionIsActive()
 {
 //  log(self@"Owner : "@GetObjOwner().ObjectiveName@" Complete ? : "@bComplete@" Active ? : "@bActive,'Story_Debug');
-    return GetObjOwner() != none && bActive;
+    return GetObjOwner() != none && bActive && (!bCompleteOnce || !bComplete);
 }
 
 /* Returns true if this condition should initialize automatically when its owning objective becomes active
@@ -359,14 +377,14 @@ function float GetTotalDifficultyModifier()
 
 function ConditionActivated(pawn ActivatingPlayer)
 {
-    Instigator = ActivatingPlayer;
+    SetTargetActor(InstigatorName,ActivatingPlayer);
 
     LastActivatedTime = GetObjOwner().Level.TimeSeconds;
     bActive = true;
 
-    if(InitialWorldLocActor != none)
+    if(GetTargetActor(InitialWorldLocActorName) != none)
     {
-        HUD_World.World_Location = InitialWorldLocActor;
+        SetTargetActor(WorldLocActorName,GetTargetActor(InitialWorldLocActorName));
     }
 
     ReliableConditionUpdate();
@@ -374,7 +392,6 @@ function ConditionActivated(pawn ActivatingPlayer)
 
 function ConditionDeActivated()
 {
-    ClearActorReferences();
     Reset();
 }
 
@@ -384,11 +401,11 @@ function     bool IsOptionalCondition()
 }
 
 
-function SpawnEventListener()
+function SpawnEventListener(KF_StoryObjective MyOwner)
 {
-    if(GetObjOwner() != none && Eventlistener == none )
+    if(Eventlistener == none )
     {
-        EventListener = GetObjOwner().Spawn(class 'KF_Objective_EventListener');
+        EventListener = MyOwner.Spawn(class 'KF_Objective_EventListener');
         EventListener.SetConditionOwner(self);
     }
 }
@@ -405,7 +422,7 @@ function    bool AllowCompletion()
     for(i = 0 ; i < DependentConditions.length ; i ++)
     {
         if(!DependentConditions[i].bComplete ||
-        !DependentConditions[i].FindInstigator(Instigator))
+        !DependentConditions[i].FindInstigator(GetInstigatorList()))
         {
             Result = false;
             break;
@@ -417,9 +434,33 @@ function    bool AllowCompletion()
 }
 
 /* Some conditions may have multiple instigators */
-function bool   FindInstigator(Pawn TestInstigator)
+function bool   FindInstigator(array<Pawn> TestInstigators)
 {
-    return Instigator == TestInstigator;
+    local int i,idx;
+    local array<Pawn> MyInstigatorList;
+
+    MyInstigatorList = GetInstigatorList();
+
+    for(i = 0 ; i < TestInstigators.length ; i ++)
+    {
+        for(idx = 0 ; idx < MyInstigatorList.length ; idx ++)
+        {
+            if(TestInstigators[i] == MyInstigatorList[idx])
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function array<Pawn> GetInstigatorList()
+{
+    local array<Pawn> Instigators;
+
+    Instigators[Instigators.length] = Pawn(GetTargetActor(InstigatorName));
+    return Instigators;
 }
 
 function ConditionTick(float DeltaTime)
@@ -448,8 +489,7 @@ function ConditionTick(float DeltaTime)
     }
 
     /* Timed HUD Update - replicated , so do it only when the values actually change.*/
-    UnreliableConditionUpdate();
-
+    ConditionTickHUDUpdate();
 }
 
 /* Progress Event updates -  Fired off at different stages in the condition's completion */
@@ -465,7 +505,7 @@ function TriggerProgressEvents(float PctComplete)
         PctComplete != ProgressEvents[EventIdx].LastTriggeredPct ) ) )
 		{
 			ProgressEvents[EventIdx].bWasTriggered = true;
-			GetObjOwner().TriggerEvent( ProgressEvents[EventIdx].EventName,GetObjOwner(),Instigator);
+			GetObjOwner().TriggerEvent( ProgressEvents[EventIdx].EventName,GetObjOwner(),Pawn(GetTargetActor(InstigatorName)));
 		}
 
 		ProgressEvents[EventIdx].LastTriggeredPct = PctComplete;
@@ -492,24 +532,23 @@ function ReliableConditionUpdate(optional KFPlayerController_Story TargetPlayer)
     local Controller C;
     local float CompletionPct;
     local string HUDHint;
+    local Actor NewLocActor;
 
     GetLocation(NewLocActor);
     CompletionPct = GetCompletionPct();
-    HUDHint = GetHUDHint();
 
     if(HUD_Screen.Screen_CountStyle != Hide_Counter)
     {
-        HUDHint @=GetDataString();
+        HUDHint = GetDataString();
     }
 
     /* We want to update a specific Client's HUD */
     if(TargetPlayer != none)
     {
         TargetPlayer.ReliableConditionUpdate(self,
-        GetObjOwner().name,
+        GetObjOwner(),
         CompletionPct,
         NewLocActor,
-        NewLocActor.Tag,
         HUDHint,
         bComplete);
     }
@@ -521,10 +560,9 @@ function ReliableConditionUpdate(optional KFPlayerController_Story TargetPlayer)
             if(StoryPC != none)
             {
                 StoryPC.ReliableConditionUpdate(self,
-                GetObjOwner().name,
+                GetObjOwner(),
                 CompletionPct,
                 NewLocActor,
-                NewLocActor.Tag,
                 HUDHint,
                 bComplete);
             }
@@ -541,35 +579,33 @@ set to replicate dirty values
 
 */
 
-function UnreliableConditionUpdate()
+function ConditionTickHUDUpdate()
 {
     local KFPlayerController_Story StoryPC;
     local Controller C;
     local bool bUpdateHUD;
+    local Actor NewLocActor;
 
     if((GetObjOwner().AllowConditionRepUpdate() &&  AllowConditionRepUpdate()) )
     {
+        GetLocation(NewLocActor);
+
         OldComplete = NewComplete;
         NewComplete = bComplete || !bActive;
 
         OldDataString = NewDataString;
-        NewDataString = GetHUDHint();
 
         if(HUD_Screen.Screen_CountStyle != Hide_Counter)
         {
-            NewDataString @=GetDataString();
+            NewDataString = GetDataString();
         }
 
         OldCompletionPct = NewCompletionPct;
         NewCompletionPct = GetCompletionPct();
 
-        OldLocActor = NewLocActor;
-        GetLocation(NewLocActor);
-
-        bUpdateHUD  =   (OldLocActor      != NewLocActor        ||
-                        NewCompletionPct != OldCompletionPct    ||
+        bUpdateHUD  =   NewCompletionPct != OldCompletionPct    ||
                         NewComplete      != OldComplete         ||
-                        NewDataString    != OldDataString);
+                        NewDataString    != OldDataString;
 
         if(bUpdateHUD)
         {
@@ -581,12 +617,24 @@ function UnreliableConditionUpdate()
                 StoryPC = KFPlayerController_Story(C);
                 if(StoryPC != none)
                 {
-                    StoryPC.UnreliableConditionUpdate(self,
-                    GetObjOwner().name,
-                    NewCompletionPct,
-                    NewLocActor,
-                    NewDataString,
-                    NewComplete);
+                    if( bForceReliableUpdate )
+                    {
+                        StoryPC.ReliableConditionUpdate(self,
+                            GetObjOwner(),
+                            NewCompletionPct,
+                            NewLocActor,
+                            NewDataString,
+                            bComplete);
+                    }
+                    else
+                    {
+                        StoryPC.UnreliableConditionUpdate(self,
+                            GetObjOwner(),
+                            NewCompletionPct,
+                            NewLocActor,
+                            NewDataString,
+                            NewComplete);
+                    }
                 }
             }
         }
@@ -647,7 +695,7 @@ function KF_StoryObjective             GetObjOwner()
 /* Returns a reference to the pawn which instigated this condition last */
 function Pawn                          GetInstigator()
 {
-    return Instigator;
+    return Pawn(GetTargetActor(InstigatorName));
 }
 
 function int                           GetOwnerArrayIndex()
@@ -704,12 +752,16 @@ function        vector       GetLocation(optional out Actor LocActor)
 
 function       bool        GetWorldLocActor(out Actor LocActor)
 {
+    local Actor HUDWorldActor;
+
+    HUDWorldActor = GetTargetActor(WorldLocActorName);
+
     if(ConditionIsActive() &&
-    HUD_World.World_Location != none &&
-    !HUD_World.World_Location.bPendingDelete &&
-    !HUD_World.World_Location.bDeleteMe)
+    HUDWorldActor != none &&
+    !HUDWorldActor.bPendingDelete &&
+    !HUDWorldActor.bDeleteMe)
     {
-        LocActor = HUD_World.World_Location;
+        LocActor = HUDWorldActor;
         return true; ;
     }
 
@@ -776,10 +828,13 @@ function String FormatTime( int Seconds )
 
 defaultproperties
 {
+     InstigatorName="Instigator"
      ConditionRepInterval=0.500000
      HUD_World=(World_Texture_Scale=1.000000,World_Clr=(B=50,G=50,R=255,A=255),Whisp_Clr=(B=50,G=50,R=255,A=255))
-     HUD_Screen=(Screen_ProgressStyle=HDS_Combination,FontScale=Font_Medium,Screen_ProgressBarBG=Texture'KFStoryGame_Tex.HUD.Hud_Rectangel_W_Stroke_Neutral',Screen_ProgressBarFill=Texture'KFStoryGame_Tex.HUD.Hud_Rectangle_W_Stroke_Fill',Screen_Clr=(B=50,G=50,R=255,A=255))
+     HUD_Screen=(Screen_ProgressStyle=HDS_Combination,FontScale=Font_Medium,bShowStrikethrough=True,Screen_ProgressBarBG=Texture'KFStoryGame_Tex.HUD.Hud_Rectangel_W_Stroke_Neutral',Screen_ProgressBarFill=Texture'KFStoryGame_Tex.HUD.Hud_Rectangle_W_Stroke_Fill',Screen_Clr=(B=50,G=50,R=255,A=255))
      Scale_GameDifficulty=(Scale_Beginner=1.000000,Scale_Hard=1.000000,Scale_Suicidal=1.000000,Scale_HellOnEarth=1.000000)
      Scale_PlayerCount=1.000000
      InitialState=Active
+     InitialWorldLocActorName="InitialHUDWorldActor"
+     WorldLocActorName="HUDWorldActor"
 }

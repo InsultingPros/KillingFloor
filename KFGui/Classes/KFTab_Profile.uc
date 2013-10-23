@@ -315,7 +315,7 @@ function SaveSettings()
 
 	if ( KFPlayerController(PC) != none )
 	{
-		KFPlayerController(PC).SelectedVeterancy = class'KFGameType'.default.LoadedSkills[lb_PerkSelect.GetIndex()];
+		KFPlayerController(PC).SetSelectedVeterancy( class'KFGameType'.default.LoadedSkills[lb_PerkSelect.GetIndex()] );
 		KFPlayerController(PC).SendSelectedVeterancyToServer();
 		PC.SaveConfig();
 	}

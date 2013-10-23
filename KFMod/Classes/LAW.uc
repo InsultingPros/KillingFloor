@@ -55,6 +55,23 @@ simulated function ZoomOut(bool bAnimateTransition)
     }
 }
 
+// Overridden to reset achievement
+simulated function bool StartFire(int Mode)
+{
+    if ( super.StartFire(Mode) )
+    {
+        if ( Instigator != none && PlayerController(Instigator.Controller) != none &&
+			  KFSteamStatsAndAchievements(PlayerController(Instigator.Controller).SteamStatsAndAchievements) != none )
+		{
+			KFSteamStatsAndAchievements(PlayerController(Instigator.Controller).SteamStatsAndAchievements).OneShotLawOrHarpoon();
+		}
+
+        return true;
+    }
+
+    return false;
+}
+
 defaultproperties
 {
      ForceZoomOutOnFireTime=0.100000

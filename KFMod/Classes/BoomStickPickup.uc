@@ -13,11 +13,6 @@ function ShowShotgunInfo(Canvas C)
 
 function InitDroppedPickupFor(Inventory Inv)
 {
-	local KFWeapon W;
-	local Inventory InvIt;
-	local byte bSaveAmmo[2];
-	local int m;
-
     Super.InitDroppedPickupFor(Inv);
 
 	if ( Boomstick(Inv) != none )

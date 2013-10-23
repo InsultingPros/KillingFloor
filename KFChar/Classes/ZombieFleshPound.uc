@@ -131,7 +131,8 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
 	if ( DamageType != class 'DamTypeFrag' && DamageType != class 'DamTypeLaw' && DamageType != class 'DamTypePipeBomb'
         && DamageType != class 'DamTypeM79Grenade' && DamageType != class 'DamTypeM32Grenade'
         && DamageType != class 'DamTypeM203Grenade' && DamageType != class 'DamTypeMedicNade'
-        && DamageType != class 'DamTypeSPGrenade')
+        && DamageType != class 'DamTypeSPGrenade' && DamageType != class 'DamTypeSealSquealExplosion'
+        && DamageType != class 'DamTypeSeekerSixRocket' )
 	{
 		// Don't reduce the damage so much if its a high headshot damage weapon
 		if( bIsHeadShot && class<KFWeaponDamageType>(damageType)!=none &&
@@ -156,7 +157,8 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
     // A little extra damage from the grenade launchers, they are HE not shrapnel,
     // and its shrapnel that REALLY hurts the FP ;)
     else if( DamageType == class 'DamTypeM79Grenade' || DamageType == class 'DamTypeM32Grenade'
-         || DamageType == class 'DamTypeM203Grenade' || DamageType == class 'DamTypeSPGrenade' )
+         || DamageType == class 'DamTypeM203Grenade' || DamageType == class 'DamTypeSPGrenade'
+         || DamageType == class 'DamTypeSealSquealExplosion' || DamageType == class 'DamTypeSeekerSixRocket')
     {
         Damage *= 1.25;
     }
@@ -188,7 +190,14 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
 	// Log (Damage);
 
 	if (damageType == class 'DamTypeVomit')
+	{
 		Damage = 0; // nulled
+	}
+	else if( damageType == class 'DamTypeBlowerThrower' )
+	{
+	   // Reduced damage from the blower thrower bile, but lets not zero it out entirely
+       Damage *= 0.25;
+	}
 
 	Super.takeDamage(Damage, instigatedBy, hitLocation, momentum, damageType,HitIndex) ;
 

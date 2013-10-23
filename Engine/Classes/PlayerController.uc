@@ -5856,6 +5856,11 @@ function ServerViewNextPlayer()
     local bool bFound, bRealSpec, bWasSpec;
 	local TeamInfo RealTeam;
 
+	if( !IsInState('Spectating') )
+	{
+	    return;
+	}
+
     bRealSpec = PlayerReplicationInfo.bOnlySpectator;
     bWasSpec = !bBehindView && (ViewTarget != Pawn) && (ViewTarget != self);
     PlayerReplicationInfo.bOnlySpectator = true;

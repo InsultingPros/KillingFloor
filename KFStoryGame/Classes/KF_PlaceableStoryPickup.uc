@@ -134,8 +134,8 @@ event Trigger( Actor Other, Pawn EventInstigator )
 
 simulated function CopyPropertiesTo(KF_StoryInventoryPickup  NewPickup)
 {
-    log("*******************************************************");
-    log("Client Copy properties from : "@self@" to - :"@NewPickup);
+//    log("*******************************************************");
+//    log("Client Copy properties from : "@self@" to - :"@NewPickup);
 
     NewPickup.StoryPickupBase = self;
 

@@ -9,16 +9,16 @@
 //=============================================================================
 
 class SteamStatsAndAchievementsBase extends Actor
-	native;
+    native;
 
 struct native export SteamStatInt
 {
-	var	const int	Value;	// Value of this Stat(can be set by calling SetStatInt)
+    var const int   Value;  // Value of this Stat(can be set by calling SetStatInt)
 };
 
 struct native export SteamStatFloat
 {
-	var	const float	Value;	// Value of this Stat(can be set by calling SetStatFloat)
+    var const float Value;  // Value of this Stat(can be set by calling SetStatFloat)
 };
 
 // Steam updates an Averaging stat by adding SessionNumerator to the existing Numerator in the Steam Database and SessionDenominator
@@ -30,31 +30,31 @@ struct native export SteamStatFloat
 // considered reliable outside of that function.
 struct native export SteamStatAverage
 {
-	var	const float	NumeratorValue;		// Numerator Value of this Stat during this Session
-	var	const float	DenominatorValue;	// Denominator Value of this Stat during this Session
+    var const float NumeratorValue;     // Numerator Value of this Stat during this Session
+    var const float DenominatorValue;   // Denominator Value of this Stat during this Session
 };
 
 // Set to true once we've pulled Stats from the Database(prevents Steam screwing up and erasing Stats in Single Player)
-var	bool				bInitialized;
+var bool                bInitialized;
 
 // Owner of these Stats and Achievements
-var	PlayerController	PCOwner;
+var PlayerController    PCOwner;
 
 // Set to true by the Timer function to allow us to completely control replication
-var	bool				bFlushStatsToClient;
+var bool                bFlushStatsToClient;
 
 // Number of seconds between sending Stats to client
-var	float				FlushStatsToClientDelay;
+var float               FlushStatsToClientDelay;
 
 // Steam Names
-var	array<string>		SteamNameStat;
-var	array<string>		SteamNameAchievement;
+var array<string>       SteamNameStat;
+var array<string>       SteamNameAchievement;
 
 // Used to track if God Mode, weapon cheats, summoning, and others have ever been used
-var	bool				bUsedCheats;
+var bool                bUsedCheats;
 
 // Debug
-var	globalconfig bool bResetStats;
+var globalconfig bool bResetStats;
 var globalconfig bool bDebugStats;
 
 // Delegate callback for Stats and Achievements data initialization completion
@@ -67,10 +67,10 @@ native final function bool Initialize(PlayerController MyOwner);
 native final function GetStatsAndAchievements();
 
 // Functions to grab individual Stats and Achievements from Steam by name(generally done from the OnStatsAndAchievementsReady callback)
-native final function 		GetStatInt(SteamStatInt Stat, string SteamName);
-native final function		GetStatFloat(SteamStatFloat Stat, string SteamName);
-native final function float	GetStatAverage(string SteamName);
-native final function bool	GetAchievementCompleted(string SteamName);
+native final function       GetStatInt(SteamStatInt Stat, string SteamName);
+native final function       GetStatFloat(SteamStatFloat Stat, string SteamName);
+native final function float GetStatAverage(string SteamName);
+native final function bool  GetAchievementCompleted(string SteamName);
 
 // Used to natively Initialize the const Stat Variables(Server-side only)
 native final function InitStatInt(SteamStatInt Stat, int NewValue);
@@ -98,6 +98,8 @@ native final function FlushStatsToSteamDatabase();
 // Returns the displayable information set in the SteamWork's Database
 native final function GetAchievementDescription(string SteamName, out string DisplayName, out string Description);
 
+native simulated final function bool    DoPotato();
+
 // Returns an integer representation of Owned Weapon DLC Packs
 native final function int GetOwnedWeaponDLC();
 
@@ -124,37 +126,37 @@ native final function string GetSteamUserID();
 
 replication
 {
-	reliable if ( Role == ROLE_Authority )
-		bUsedCheats;
+    reliable if ( Role == ROLE_Authority )
+        bUsedCheats;
 }
 
 // Called via Client to Server function in PlayerController to start the FlushStatsToClient timing
 function ServerSteamStatsAndAchievementsInitialized()
 {
-	if ( bDebugStats )
-		log("STEAMSTATS: ServerSteamStatsAndAchievementsInitialized called");
+    if ( bDebugStats )
+        log("STEAMSTATS: ServerSteamStatsAndAchievementsInitialized called");
 
-	bInitialized = true;
-	SetTimer(FlushStatsToClientDelay, false);
+    bInitialized = true;
+    SetTimer(FlushStatsToClientDelay, false);
 }
 
 event PostBeginPlay()
 {
-	PlayerDied();
+    PlayerDied();
 }
 
 // Overridden to Grab the Stats and Achievements from Steam on the Client
 simulated event PostNetBeginPlay()
 {
-	if ( Level.NetMode == NM_Client )
-	{
-		if ( bDebugStats )
-			log("STEAMSTATS: PostNetBeginPlay grabbing Stats - StatsObject="$self);
+    if ( Level.NetMode == NM_Client )
+    {
+        if ( bDebugStats )
+            log("STEAMSTATS: PostNetBeginPlay grabbing Stats - StatsObject="$self);
 
-		GetStatsAndAchievements();
+        GetStatsAndAchievements();
 
-		PCOwner = Level.GetLocalPlayerController();
-	}
+        PCOwner = Level.GetLocalPlayerController();
+    }
 }
 
 // Overridden in subclasses to send the Stats/Achievements that have changed to Steam
@@ -164,57 +166,57 @@ simulated event PostNetBeginPlay()
 // NETWORK: Server only
 event Timer()
 {
-	// We use bFlushStatsToClient to control when things are sent
-	if ( !bFlushStatsToClient )
-	{
-		FlushStatsToClient();
-	}
+    // We use bFlushStatsToClient to control when things are sent
+    if ( !bFlushStatsToClient )
+    {
+        FlushStatsToClient();
+    }
 
-	// Soon after FlushStatsToClientw is called above, Timer gets called again to clear bFlushStatsToClient
-	else
-	{
-		bFlushStatsToClient = false;
-		SetTimer(FlushStatsToClientDelay, false);
-	}
+    // Soon after FlushStatsToClientw is called above, Timer gets called again to clear bFlushStatsToClient
+    else
+    {
+        bFlushStatsToClient = false;
+        SetTimer(FlushStatsToClientDelay, false);
+    }
 }
 
 // Called on Server(via Timer) to push all Stats to Client
 // NETWORK: Server only
 function FlushStatsToClient()
 {
-	// if it's a local player, just send stuff off to Steam from here
-	if ( Level.NetMode == NM_Standalone || (Level.NetMode == NM_ListenServer && PCOwner == Level.GetLocalPlayerController()) )
-	{
-		PostNetReceive();
-		SetTimer(FlushStatsToClientDelay, false);
-	}
-	else
-	{
-		if ( bDebugStats )
-			log("STEAMSTATS: Flushing Stats to Client");
+    // if it's a local player, just send stuff off to Steam from here
+    if ( Level.NetMode == NM_Standalone || (Level.NetMode == NM_ListenServer && PCOwner == Level.GetLocalPlayerController()) )
+    {
+        PostNetReceive();
+        SetTimer(FlushStatsToClientDelay, false);
+    }
+    else
+    {
+        if ( bDebugStats )
+            log("STEAMSTATS: Flushing Stats to Client");
 
-		// Force Stats to be sent to Client immediately
-		NetUpdateTime = Level.TimeSeconds - 1.0;
-		bFlushStatsToClient = true;
-		SetNetDirty();
+        // Force Stats to be sent to Client immediately
+        NetUpdateTime = Level.TimeSeconds - 1.0;
+        bFlushStatsToClient = true;
+        SetNetDirty();
 
-		// Clear bFlushStatsToClient once completed
-		SetTimer(0.1, false);
-	}
+        // Clear bFlushStatsToClient once completed
+        SetTimer(0.1, false);
+    }
 }
 
 // Event Callback for GetStatsAndAchievements call(Call PCOwner.ServerSteamStatsAndAchievementsInitialized when done)
 // NETWORK: Client only
 simulated event OnStatsAndAchievementsReady()
 {
-	if ( PCOwner != none && PCOwner.PlayerReplicationInfo != none )
-	{
-		PCOwner.PlayerReplicationInfo.SteamStatsAndAchievements = self;
-	}
+    if ( PCOwner != none && PCOwner.PlayerReplicationInfo != none )
+    {
+        PCOwner.PlayerReplicationInfo.SteamStatsAndAchievements = self;
+    }
 
-	bInitialized = true;
-	PCOwner.ServerSteamStatsAndAchievementsInitialized();
-	OnDataInitialized();
+    bInitialized = true;
+    PCOwner.ServerSteamStatsAndAchievementsInitialized();
+    OnDataInitialized();
 }
 
 // Called on Server to initialize Stats from Client replication, because Servers can't access Steam Stats directly
@@ -226,12 +228,12 @@ function InitializeSteamStatFloat(int Index, float Value);
 // Sets the specified Steam Achievement as completed; also, flushes all Stats and Achievements to the client
 function SetSteamAchievementCompleted(int Index)
 {
-	if ( bDebugStats )
-		log("STEAMSTATS: SetSteamAchievementCompleted called - Name="$SteamNameAchievement[Index] @ "Player="$PCOwner.PlayerReplicationInfo.PlayerName);
+    if ( bDebugStats )
+        log("STEAMSTATS: SetSteamAchievementCompleted called - Name="$SteamNameAchievement[Index] @ "Player="$PCOwner.PlayerReplicationInfo.PlayerName);
 
-	FlushStatsToClient();
-	SetLocalAchievementCompleted(Index);
-	SetAchievementCompleted(SteamNameAchievement[Index]);
+    FlushStatsToClient();
+    SetLocalAchievementCompleted(Index);
+    SetAchievementCompleted(SteamNameAchievement[Index]);
 }
 
 // Called from multiple locations on Client and Server to set Achievement booleans for later use

@@ -10,7 +10,7 @@ function bool FindNewEnemy()
     //local KFOBJMover Bashdoor;
 
     if ( Level.Game.bGameEnded )
-        return false;             
+        return false;
 
      ForEach AllActors(class 'KFMonsterController', C)
     {
@@ -54,7 +54,7 @@ function bool FindNewEnemy()
 }
 
 
-function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster )
+function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster, optional float MonsterHateChanceOverride )
 {
     local float EnemyDist;
     local bool bNewMonsterEnemy;
@@ -63,7 +63,7 @@ function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster )
         return false;
 
     bNewMonsterEnemy = bHateMonster && (Level.Game.NumPlayers < 4) && !Monster(Pawn).SameSpeciesAs(NewEnemy) && !NewEnemy.Controller.bIsPlayer;
-  
+
     if ( NewEnemy == class 'KFHumanPawn' )
             return false;
 
@@ -93,7 +93,7 @@ function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster )
 
 event SeePlayer(Pawn SeenPlayer)
 {
-   
+
     if ( Enemy == SeenPlayer )
     {
         Enemy = none;

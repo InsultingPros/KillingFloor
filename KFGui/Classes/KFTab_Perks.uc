@@ -30,7 +30,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 event Closed(GUIComponent Sender, bool bCancelled)
 {
 	KFStatsAndAchievements = none;
-		
+
 	super.Closed(Sender, bCancelled);
 }
 
@@ -85,7 +85,7 @@ function bool OnSaveButtonClicked(GUIComponent Sender)
 		else
 		{
 			class'KFPlayerController'.default.SelectedVeterancy = class'KFGameType'.default.LoadedSkills[lb_PerkSelect.GetIndex()];
-			KFPlayerController(PC).SelectedVeterancy = class'KFGameType'.default.LoadedSkills[lb_PerkSelect.GetIndex()];
+			KFPlayerController(PC).SetSelectedVeterancy( class'KFGameType'.default.LoadedSkills[lb_PerkSelect.GetIndex()] );
 			KFPlayerController(PC).SendSelectedVeterancyToServer();
 			PC.SaveConfig();
 		}

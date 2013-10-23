@@ -6,7 +6,7 @@ class MP7MPickup extends MedicGunPickup;
 defaultproperties
 {
      Weight=3.000000
-     cost=3000
+     cost=825
      AmmoCost=10
      BuyClipSize=20
      PowerValue=22

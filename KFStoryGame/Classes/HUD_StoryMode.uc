@@ -92,6 +92,7 @@ struct SConditionHint
 	var      float                                      HintHeight;
 	var      name                                       ObjOwner;
 	var      bool                                       bShowCheckBox;
+    var      bool                                       bShowStrikeThrough;
 	var      float                                      World_Texture_Scale;
 	var 	 name										PendingLocActorTag ;   	// we want to cache an actor, but have no reference to it yet .
 };
@@ -1064,6 +1065,7 @@ name PendingLocActorTag)
     ConditionHints[ConditionHints.length - 1].HintStyle                 = NewCondition.HUD_Screen.Screen_ProgressStyle;
     ConditionHints[ConditionHints.length - 1].DisplayStyle              = NewCondition.HUD_Screen.Screen_CountStyle;
     ConditionHints[ConditionHints.length - 1].bShowCheckBox             = NewCondition.HUD_Screen.bShowCheckBox;
+    ConditionHints[ConditionHints.length - 1].bShowStrikeThrough        = NewCondition.HUD_Screen.bShowStrikethrough;
     ConditionHints[ConditionHints.length - 1].bIgnoreWorldHidden        = NewCondition.HUD_World.bIgnoreWorldLocHidden;
     ConditionHints[ConditionHints.length - 1].bComplete                 = int(bComplete);
     ConditionHints[ConditionHints.length - 1].PendingLocActorTag 		= PendingLocActorTag;
@@ -1258,7 +1260,7 @@ simulated final function DrawObjectiveHints(Canvas C, KF_StoryObjective CurrentO
 		    C.FontScaleX      = HeaderScale;
 		    C.FontScaleY      = HeaderScale;
 		    C.Font            = GetWaitingFontSizeIndex(C,CurrentObj.HUD_Header.Header_Scale);//LoadFont(FontSize);
-		    C.StrLen(CurrentObj.HUD_Header.Header_Text,HeaderX,HeaderY);
+		    C.TextSize(CurrentObj.HUD_Header.Header_Text,HeaderX,HeaderY);
 		    WidestX           = FMax(WidestX,HeaderX);
 		    WidestStringX     = WidestX;
 
@@ -1454,32 +1456,36 @@ simulated final function DrawObjectiveHints(Canvas C, KF_StoryObjective CurrentO
 		        SuccessWidth  *= ScalingValue;
 		        SuccessHeight *= ScalingValue;
 
+                C.DrawColor = ConditionHints[i].ProgressBar_Clr ;
+                StrikeThroughWidth = WidestX;
+                BarBGWidth = WidestX;
+
+                if(Conditionhints[i].bShowCheckBox)
+                {
+                    CheckBoxSize = ConditionHints[i].ProgBarheight * CheckboxScale;
+                    BarBGWidth -= CheckboxSize;
+                    StrikeThroughWidth -= CheckBoxSize;
+                }
+
+                // Render a strike-through if requested.  (defaults to on)
+                if(ConditionHints[i].bShowStrikeThrough &&
+                GetCheckBoxMaterialFor(ConditionHints[i]) != none )
+                {
+                    OpacityModifier = 0.5f ;
+                    C.DrawColor.A = (KFHUDAlpha * FadeValue) * OpacityModifier  ;
+                    C.SetPos(PosX + (BGWidth-WidestX)/2 , PosY);
+                    C.DrawTileStretched(Texture'KFStoryGame_Tex.HUD.Objective_Strikethrough', StrikeThroughWidth,ConditionHints[i].ProgbarHeight );
+                }
+
+                /* Progess Bar Background Material */
+
                 if((ConditionHints[i].HintStyle == 1 ||
                 ConditionHints[i].HintStyle >= 3) &&
                 ConditionHints[i].Material_ProgressBarBG != none)
                 {
-                    C.DrawColor = ConditionHints[i].ProgressBar_Clr ;
-                    StrikeThroughWidth = WidestX;
-                    BarBGWidth = WidestX;
-
-                    if(Conditionhints[i].bShowCheckBox)
-                    {
-                        CheckBoxSize = ConditionHints[i].ProgBarheight * CheckboxScale;
-                        BarBGWidth -= CheckboxSize;
-                        StrikeThroughWidth -= CheckBoxSize;
-                    }
-
-                    if(ConditionHints[i].bComplete == 1 && ConditionHints[i].bShowCheckBox )
-			        {
-                        OpacityModifier = 0.5f ;
-				        C.DrawColor.A = (KFHUDAlpha * FadeValue) * OpacityModifier  ;
-				        C.SetPos(PosX + (BGWidth-WidestX)/2 , PosY);
-				        C.DrawTileStretched(Texture'KFStoryGame_Tex.HUD.Objective_Strikethrough', StrikeThroughWidth,ConditionHints[i].ProgbarHeight );
-                    }
-
-		            C.DrawColor.A = ((ConditionHints[i].ProgressBar_Clr.A * FadeValue) * (KFHUDAlpha/255.f)) * OpacityModifier ;
-				    C.SetPos(PosX + (BGWidth-WidestX)/2, PosY );
-		            C.DrawTileStretched(ConditionHints[i].Material_ProgressBarBG, BarBGWidth,ConditionHints[i].ProgBarheight );
+                    C.DrawColor.A = ((ConditionHints[i].ProgressBar_Clr.A * FadeValue) * (KFHUDAlpha/255.f)) * OpacityModifier ;
+                    C.SetPos(PosX + (BGWidth-WidestX)/2, PosY );
+                    C.DrawTileStretched(ConditionHints[i].Material_ProgressBarBG, BarBGWidth,ConditionHints[i].ProgBarheight );
 		        }
 
                 /* Progess Bar Fill Material */
@@ -1763,7 +1769,7 @@ simulated function DrawDialogue(Canvas C)
 		    PortraitAspect = float(DlgPortrait.MaterialUSize()) /  float(DlgPortrait.MaterialVsize())   ;
             // make sure the protrait is scaled to the background widget
             PortraitSizeY = FMin(DlgPortrait.MaterialVsize(),BGSizeY);
-            PortraitSizeX = PortraitSizeY * 0.6;//PortraitSizeY * PortraitAspect;
+            PortraitSizeX = PortraitSizeY * PortraitAspect;
 		}
 
 		coords.width = (DialogueCoords.XL * C.ClipX)  ;

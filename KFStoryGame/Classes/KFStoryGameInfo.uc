@@ -157,6 +157,7 @@ struct SConditionHintInfoHUD
     var ()     EHintDisplayStyle                          Screen_ProgressStyle;
     var ()     KFStoryGameInfo.EFontScale                 FontScale;
     var ()     bool                                       bShowCheckBox;
+    var ()     bool                                       bShowStrikethrough;
     var ()     Material                                   Screen_ProgressBarBG;
     var ()     Material                                   Screen_ProgressBarFill;
     var ()     color                                      Screen_Clr;
@@ -401,7 +402,7 @@ event InitGame( string Options, out string Error )
 	local KF_StoryWaveDesigner Wave;
 	local KFTraderDoor TraderDoor;
 
-
+    bUsingObjectiveMode = true;
     ConsoleCommand("Suppress Story_Debug");
 
 
@@ -810,24 +811,24 @@ function EndGame(PlayerReplicationInfo	Winner, string  Reason)
 				// Get the MapName out of the URL
 				MapName = GetCurrentMapName(Level);
 			}
-
-			for ( P = Level.ControllerList; P != none; P = P.nextController )
-			{
-				Player = PlayerController(P);
-				if ( Player != none )
-				{
-					Player.ClientSetBehindView(true);
-					Player.ClientGameEnded();
-
-					if ( bSetAchievement && KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements) != none )
-					{
-						KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements).WonGame(MapName, GameDifficulty, KFGameLength == GL_Long);
-					}
-				}
-			}
 		}
 
-		P.GameHasEnded();
+		for ( P = Level.ControllerList; P != none; P = P.nextController )
+		{
+			Player = PlayerController(P);
+			if ( Player != none )
+			{
+				Player.ClientSetBehindView(true);
+				Player.ClientGameEnded();
+
+				if ( bSetAchievement && KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements) != none )
+				{
+					KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements).WonGame(MapName, GameDifficulty, KFGameLength == GL_Long);
+				}
+			}
+
+			P.GameHasEnded();
+		}
 
 		if ( CurrentGameProfile != none )
 		{
@@ -908,14 +909,6 @@ function	KF_StoryCheckPointVolume		FindCheckPointNamed(string CheckPointName)
 	}
 
 	return none;
-}
-
-function NotifyObjectiveFinished(KF_StoryObjective Obj)
-{
-    if(Obj == CurrentObjective)
-    {
-        SetActiveObjective(none);
-    }
 }
 
 function SetActiveObjective( KF_StoryObjective NewObjective, optional pawn ObjInstigator)
@@ -1421,7 +1414,6 @@ function RestartPlayer( Controller aPlayer )
 }
 
 /* Overriden to add allow LDs to toggle certain features of the cash reward / penalty setup for their story maps*/
-
 function ScoreKill(Controller Killer, Controller Other)
 {
 	local PlayerReplicationInfo OtherPRI;
@@ -1779,7 +1771,7 @@ function int ReduceDamage(int Damage, pawn injured, pawn instigatedBy, vector Hi
 	{
 		if ( KFPlayerReplicationInfo(Injured.PlayerReplicationInfo) != none && KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill != none )
 		{
-			Damage = KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill.Static.ReduceDamage(KFPlayerReplicationInfo(Injured.PlayerReplicationInfo), KFPawn(Injured), KFMonster(instigatedBy), Damage, DamageType);
+			Damage = KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill.Static.ReduceDamage(KFPlayerReplicationInfo(Injured.PlayerReplicationInfo), KFPawn(Injured), instigatedBy, Damage, DamageType);
 		}
 	}
 
@@ -2191,6 +2183,16 @@ function DramaticEvent(float BaseZedTimePossibility, optional float DesiredZedTi
 	}
 
 	Super.DramaticEvent(BaseZedTimePOssibility);
+}
+
+function int GetCurrentWaveNum()
+{
+    return 0;
+}
+
+function int GetFinalWaveNum()
+{
+    return 0;
 }
 
 defaultproperties

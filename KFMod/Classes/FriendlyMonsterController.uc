@@ -64,7 +64,7 @@ function bool FindNewEnemy()
     return false;
 }
 
-function bool SetEnemy(Pawn NewEnemy, optional bool bThisIsNeverUsed)
+function bool SetEnemy(Pawn NewEnemy, optional bool bThisIsNeverUsed, optional float MonsterHateChanceOverride)
 {
     local float EnemyDist;
 

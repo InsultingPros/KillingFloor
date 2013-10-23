@@ -23,6 +23,13 @@ var   float poundTime;
 // Called at start of gameplay.
 simulated function BeginPlay()
 {
+	if( PlatformIsOpenGL() )
+	{
+		bHidden = true;
+		bDynamicLight = false;
+		return;	
+	}
+
 	// Remember initial light type and set new one.
 	InitialBrightness = LightBrightness;
 	if( bInitiallyOn )
@@ -201,7 +208,6 @@ simulated state() TriggerPound
 
 defaultproperties
 {
-     bStatic=False
      bHidden=False
      bDynamicLight=True
      RemoteRole=ROLE_SimulatedProxy

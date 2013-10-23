@@ -128,6 +128,7 @@ defaultproperties
      EditPackages(26)="KFStoryGame"
      EditPackages(27)="KFStoryUI"
      EditPackages(28)="SideShowScript"
+     EditPackages(29)="FrightScript"
      CutdownPackages(0)="Core"
      CutdownPackages(1)="Editor"
      CutdownPackages(2)="Engine"

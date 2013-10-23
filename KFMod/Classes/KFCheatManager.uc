@@ -41,6 +41,28 @@ exec function EnableCheats()
 	}
 }
 
+exec function ToggleZeds()
+{
+    KFGameType(Level.Game).bDisableZedSpawning = !KFGameType(Level.Game).bDisableZedSpawning;
+    Level.Game.SaveConfig();
+}
+
+exec function FragZeds()
+{
+    local KFMonster Monster;
+
+    if ( areCheatsEnabled() )
+    {
+        foreach DynamicActors(class 'KFMonster', Monster)
+        {
+            if(Monster.Health > 0 && !Monster.bDeleteMe)
+            {
+                Monster.TakeDamage(10000, Pawn, Monster.Location, Pawn.Velocity * Monster.Mass, class'DamTypeFrag');
+            }
+        }
+    }
+}
+
 exec function ShowPaths()
 {
 	local NavigationPoint P;
@@ -293,13 +315,14 @@ exec function LaidLaw()
 	{
 		ClientMessage("Lay down the LAW!");
 		ReportCheat("LAW");
+		Pawn.GiveWeapon("KFmod.LAW");
 	}
 }
 
 exec function ImRich()
 {
 	if (!areCheatsEnabled()) return;
-	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+	if( (Pawn == None) || (Vehicle(Pawn) != None) )
 		return;
 
     Pawn.PlayerReplicationInfo.Score += 10000;
@@ -321,6 +344,32 @@ exec function HugeGnome()
 	{
     	Gnome.SetDrawScale3D(NewScale);
 	}
+}
+
+exec function FrightPack(optional bool bMaxAmmo)
+{
+	local Inventory Inv;
+
+	if (!areCheatsEnabled()) return;
+	if( (Pawn == None) || (Vehicle(Pawn) != None) )
+		return;
+
+	Pawn.GiveWeapon("KFMod.BlowerThrower");
+	Pawn.GiveWeapon("KFmod.SealSquealHarpoonBomber");
+	Pawn.GiveWeapon("KFMod.SeekerSixRocketLauncher");
+	Pawn.GiveWeapon("KFMod.ZEDMKIIWeapon");
+
+    if( bMaxAmmo )
+    {
+    	for( Inv=Pawn.Inventory; Inv!=None; Inv=Inv.Inventory )
+    	{
+    		if ( Weapon(Inv)!=None )
+    			Weapon(Inv).SuperMaxOutAmmo();
+    	}
+	}
+
+	ReportCheat("Fright Pack");
+	ClientMessage("Give Fright Yard Weapon Pack Weapons.");
 }
 
 exec function FlameUp(optional bool bMaxAmmo)
@@ -921,6 +970,18 @@ exec function Bond2()
     Pawn.GiveWeapon("KFmod.GoldenChainsaw");
     Pawn.GiveWeapon("KFmod.GoldenFlamethrower");
     Pawn.GiveWeapon("KFmod.GoldenDualDeagle");
+}
+
+exec function Camo()
+{
+	if (!areCheatsEnabled()) return;
+	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+		return;
+
+    Pawn.GiveWeapon("KFmod.CamoM4AssaultRifle");
+    Pawn.GiveWeapon("KFmod.CamoMP5MMedicGun");
+    Pawn.GiveWeapon("KFmod.CamoM32GrenadeLauncher");
+    Pawn.GiveWeapon("KFmod.CamoShotgun");
 }
 
 exec function GrantAchievement(int achievement)

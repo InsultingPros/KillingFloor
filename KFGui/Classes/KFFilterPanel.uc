@@ -102,6 +102,25 @@ function StartUp()
 		if ( FilterItem.Key~="difficulty" )
 			cb_Difficulty.MyComboBox.SetIndex(int(FilterItem.Value));
 	}
+
+	AdjustDifficultyForPerk();
+}
+
+function AdjustDifficultyForPerk()
+{
+    local int HPL;
+
+    HPL = class'KFServerBrowser'.static.CalcPlayerHighestPerkLevel( PlayerOwner() );
+    if( HPL == 0 )
+    {
+        cb_Difficulty.MyComboBox.SetIndex(1); // beginner
+	    InternalOnChange( cb_Difficulty );
+    }
+    else if( HPL == 1 )
+    {
+        cb_Difficulty.MyComboBox.SetIndex(2); // normal
+	    InternalOnChange( cb_Difficulty );
+    }
 }
 
 function bool CancelClick(GUIComponent Sender)

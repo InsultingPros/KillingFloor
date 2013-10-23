@@ -23,24 +23,19 @@ var ()									float					HoldUseSeconds;
 /* if true, any progress made 'Using' this objective will be kept if the player stops holding the use key. only relevant if HoldUseSeconds is > 0 */
 var ()									bool					bKeepUseProgress;
 
-/* Actor who we are actually 'interacting with'. We only need this guy for location & collision properties */
-var ()           private                Actor                   UseActor;
-
-var              private                Actor                   InitialUseActor;
-
 var ()                                  name                    UsePawn_Tag;
 
 var                                     float                   FinishedUseSeconds;
 
-var              private                pawn                    CurrentUser;
-
 var                                     float                   LastUseTime;
-
-var              private                KF_UseableMover         ControlledMover;
 
 var                                     bool                    bAcquiredPawn;
 
 var                                     bool                    bWasUsed;
+
+var              const                  name                    UseActorName,InitialUseActorName,CurrentUserName,ControlledMoverName;
+
+var ()   edfindable  private            Actor                   UseActor;    // this exists only for level designers.
 
 
 function Reset()
@@ -50,33 +45,27 @@ function Reset()
     bWasUsed = false;
 }
 
-function PostBeginPlay()
+function PostBeginPlay(KF_StoryObjective MyOwner)
 {
-    Super.PostBeginPlay();
+    Super.PostBeginPlay(MyOwner);
+
+    // Ditch any reference to this actor ASAP.
     if(UseActor != none)
     {
-        InitialUseActor = UseActor;
+        SetTargetActor(InitialUseActorName,UseActor);
+        SetTargetActor(UseActorName,UseActor);
+        UseActor = none;
     }
-}
-
-/* Objects shouldn't have references to Actors for any longer than they need to.
-- Manually clear these vars when the condition is disabled so they dont access
-none and crash the game.
-*/
-function ClearActorReferences()
-{
-    Super.ClearActorReferences();
-    bAcquiredPawn = false;
-    CurrentUser = none;
-    UseActor = none;
-    ControlledMover = none;
 }
 
 function SetObjOwner(KF_StoryObjective NewOwner)
 {
-    if(UseActor == none || (NewOwner != UseActor && GetObjOwner() == UseActor))
+    local Actor MyUseActor;
+
+    MyUseActor = GetTargetActor(UseActorName);
+    if(MyUseActor == none || (NewOwner != MyUseActor && GetObjOwner() == MyUseActor))
     {
-        UseActor = NewOwner;
+        SetTargetActor(UseActorName,NewOwner);
     }
 
     Super.SetObjOwner(NewOwner);
@@ -84,16 +73,26 @@ function SetObjOwner(KF_StoryObjective NewOwner)
 
 function ConditionActivated(pawn ActivatingPlayer)
 {
+    local Actor InitialUseActor,MyUseActor;
+    local KF_UseableMover ControlledMover;
+
     Super.ConditionActivated(ActivatingPlayer);
+
+    InitialUseActor = GetTargetActor(InitialUseActorName);
+    MyUseActor = GetTargetActor(UseActorName);
 
     if(InitialuseActor != none &&
     !InitialuseActor.bPendingDelete)
     {
-        UseActor = InitialUseActor ;
-        if(KF_UseableMover(UseActor) != none)
+        SetTargetActor('UseActorName',InitialUseActor);
+        if(KF_UseableMover(MyUseActor) != none)
         {
-            ControlledMover = KF_UseableMover(UseActor);
-            ControlledMover.Notify_Controlled(self);
+            SetTargetActor(ControlledMoverName,KF_UseableMover(MyUseActor));
+            ControlledMover = KF_UseableMover(GetTargetActor(ControlledMoverName));
+            if(ControlledMover != none)
+            {
+                ControlledMover.Notify_Controlled(self);
+            }
         }
     }
 }
@@ -101,16 +100,13 @@ function ConditionActivated(pawn ActivatingPlayer)
 function ConditionTick(float DeltaTime)
 {
     local float RemainingHoldUseTime;
+    local Actor MyUseActor;
+    local Pawn CurrentUser;
 
     UpdateUseablePawnList();
 
-    if(bAcquiredPawn &&
-    UseActor == none ||
-    UseActor.bDeleteMe ||
-    UseActor.bPendingDelete)
-    {
-        ClearActorReferences();
-    }
+    MyUseActor = GetTargetActor(UseActorName);
+    CurrentUser = Pawn(GetTargetActor(CurrentUserName));
 
     /* Important we call this before the Range checks or it won't register completion */
     Super.ConditionTick(DeltaTime);
@@ -128,10 +124,13 @@ function ConditionTick(float DeltaTime)
 function UpdateUseablePawnList()
 {
 	local Controller C;
+    local Actor MyUseActor;
+
+    MyUseActor = GetTargetActor(UseActorName);
 
 	if(UsePawn_Tag == '' ||
-    (UseActor != none &&
-    UseActor.Tag == UsePawn_Tag))
+    (MyUseActor != none &&
+    MyUseActor.Tag == UsePawn_Tag))
 	{
         return;
 	}
@@ -144,7 +143,7 @@ function UpdateUseablePawnList()
         C.Pawn.Health > 0 &&
         C.Pawn.Tag == UsePawn_Tag)
         {
-            UseActor = C.Pawn;
+            SetTargetActor(UseActorName,C.Pawn);
             break;
         }
 	}
@@ -154,7 +153,14 @@ function bool  InRangeAndView()
 {
     local bool bhasLOS;
     local bool bInRange;
+    local Pawn CurrentUser;
 
+    CurrentUser = Pawn(GetTargetActor(CurrentUserName));
+
+    if(CurrentUser == none)
+    {
+        return false;
+    }
 
     bHasLOS = (!bMaintainUseLOS ||
 	KFPlayerController_Story(CurrentUser.Controller) != none &&
@@ -169,21 +175,24 @@ function bool     IsTouchingUseActor(pawn Toucher)
 {
     local Actor A;
     local float DistSq;
+    local Actor MyUseActor;
 
-    if(Toucher != none && UseActor != none)
+    MyUseActor = GetTargetActor(UseActorName);
+
+    if(Toucher != none && MyUseActor != none)
     {
         foreach Toucher.TouchingActors(class 'Actor', A)
         {
-            if(A == UseActor)
+            if(A == MyUseActor)
             {
                 return true;
             }
         }
 
-        if(UseActor.bBlockActors)
+        if(MyUseActor.bBlockActors)
         {
-            DistSq = VsizeSquared(UseActor.Location - Toucher.Location) ;
-            if(DistSq <= Square( (UseActor.CollisionRadius + (Toucher.CollisionRadius)) * 1.25 )  )
+            DistSq = VsizeSquared(MyUseActor.Location - Toucher.Location) ;
+            if(DistSq <= Square( (MyUseActor.CollisionRadius + (Toucher.CollisionRadius)) * 1.25 )  )
             {
                 return true;
             }
@@ -195,10 +204,16 @@ function bool     IsTouchingUseActor(pawn Toucher)
 
 function Startedusing(pawn User)
 {
+    local Pawn CurrentUser;
+    local KF_UseableMover ControlledMover;
+
+    ControlledMover = KF_UseableMover(GetTargetActor(ControlledMoverName));
+    CurrentUser = Pawn(GetTargetActor(CurrentUserName));
+
 	if(CurrentUser == none && IsTouchingUseActor(User))
     {
-        Instigator  = user;
-	    CurrentUser = user;
+        SetTargetActor(InstigatorName,User);
+        SetTargetActor(CurrentUserName,User);
 		LastUseTime = User.Level.TimeSeconds;
 
 		if(AllowCompletion())
@@ -215,6 +230,10 @@ function Startedusing(pawn User)
 
 function StoppedUsing(pawn User)
 {
+    local KF_UseableMover ControlledMover;
+
+    ControlledMover = KF_USeableMover(GetTargetActor(ControlledMoverName));
+
     StopusingObj(User);
     if(ControlledMover != none)
     {
@@ -224,6 +243,9 @@ function StoppedUsing(pawn User)
 
 function StopUsingObj(pawn User)
 {
+    local Pawn CurrentUser;
+
+    CurrentUser = Pawn(GetTargetActor(CurrentUserName));
     if(CurrentUser != none &&
     User == CurrentUser)
     {
@@ -233,19 +255,23 @@ function StopUsingObj(pawn User)
    			FinishedUseSeconds += (User.Level.TimeSeconds - LastUseTime) ;
 		}
 
-        CurrentUser = none;
+        SetTargetActor(CurrentUserName,none);
     }
 }
 
 function vector    GetLocation(optional out actor LocActor)
 {
+    local Actor MyUseActor;
+
     if(ConditionIsActive())
     {
-        if(UseActor != none &&
-        !UseActor.bPendingDelete)
+        MyUseActor = GetTargetActor(UseActorName);
+
+        if(MyUseActor != none &&
+        !MyUseActor.bPendingDelete)
         {
-            LocActor = UseActor;
-            return UseActor.Location;
+            LocActor = MyUseActor;
+            return MyUseActor.Location;
         }
 
         return Super.GetLocation(LocActor);
@@ -269,6 +295,9 @@ function       float        GetCompletionPct()
 /* Wrapper for finding the amount of time a player needs to hold down the USE key to complete this condition */
 function	float		GetRemainingUseTime()
 {
+    local Pawn CurrentUser;
+
+    CurrentUser = Pawn(GetTargetActor(CurrentUserName));
     if(CurrentUser != none)
     {
 	     return	FMax(HoldUseSeconds - ((GetObjOwner().Level.TimeSeconds - LastUseTime) + FinishedUseSeconds), 0.f)  ;
@@ -289,4 +318,8 @@ function        string      GetDataString()
 
 defaultproperties
 {
+     UseActorName="UseActor"
+     InitialUseActorName="InitialUseActor"
+     CurrentUserName="CurrentUser"
+     ControlledMoverName="ControlledMover"
 }

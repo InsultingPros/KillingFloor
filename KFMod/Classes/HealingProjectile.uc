@@ -316,7 +316,22 @@ simulated function ProcessTouch(Actor Other, Vector HitLocation)
 	Explode(HitLocation,-vector(Rotation));
 }
 
-function AddDamagedHealStats( int MedicReward ){}
+function AddDamagedHealStats( int MedicReward )
+{
+    local KFSteamStatsAndAchievements KFSteamStats;
+
+	if ( Instigator == none || Instigator.PlayerReplicationInfo == none )
+	{
+		return;
+	}
+
+	KFSteamStats = KFSteamStatsAndAchievements( Instigator.PlayerReplicationInfo.SteamStatsAndAchievements );
+
+	if ( KFSteamStats != none )
+	{
+	 	KFSteamStats.AddDamageHealed(MedicReward);
+	}
+}
 
 defaultproperties
 {

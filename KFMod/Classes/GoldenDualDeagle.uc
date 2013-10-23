@@ -3,24 +3,6 @@
 //=============================================================================
 class GoldenDualDeagle extends DualDeagle;
 
-function bool HandlePickupQuery( pickup Item )
-{
-	if ( Item.InventoryType==Class'GoldenDeagle' )
-	{
-		if( LastHasGunMsgTime < Level.TimeSeconds && PlayerController(Instigator.Controller) != none )
-		{
-			LastHasGunMsgTime = Level.TimeSeconds + 0.5;
-			PlayerController(Instigator.Controller).ReceiveLocalizedMessage(Class'KFMainMessages', 1);
-		}
-
-		return True;
-	}
-
-    // skip over DualDeagles, because otherwise querying a Deagle will tell
-    // us that we already have it
-	return Super(Dualies).HandlePickupQuery(Item);
-}
-
 function GiveTo( pawn Other, optional Pickup Pickup )
 {
 	local Inventory I;
@@ -31,7 +13,7 @@ function GiveTo( pawn Other, optional Pickup Pickup )
 
 	For( I = Other.Inventory; I != None; I =I.Inventory )
 	{
-		if ( GoldenDeagle(I) != none )
+		if ( Deagle(I) != none )
 		{
 			if( WeaponPickup(Pickup)!= none )
 			{
@@ -43,7 +25,7 @@ function GiveTo( pawn Other, optional Pickup Pickup )
 				bNoPickup = true;
 			}
 
-			MagAmmoRemaining = GoldenDeagle(I).MagAmmoRemaining;
+			MagAmmoRemaining = Deagle(I).MagAmmoRemaining;
 
 			I.Destroyed();
 			I.Destroy();

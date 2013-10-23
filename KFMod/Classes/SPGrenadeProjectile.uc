@@ -126,7 +126,6 @@ function ShakeView()
 simulated function HitWall( vector HitNormal, actor Wall )
 {
     local Vector VNorm;
-	local PlayerController PC;
 
     if( Instigator != none )
     {
@@ -217,7 +216,6 @@ simulated function Disintegrate(vector HitLocation, vector HitNormal)
 
 simulated function PostBeginPlay()
 {
-    local rotator SmokeRotation;
     local vector Dir;
 
 	if ( Level.NetMode != NM_DedicatedServer )

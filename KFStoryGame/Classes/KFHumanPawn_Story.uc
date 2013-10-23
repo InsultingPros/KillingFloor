@@ -375,7 +375,7 @@ simulated function vector GetHoverIconPosition()
 
 /* Fixing a problem where Perk-Less players dont get charged for ammo */
 
-function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
+function bool ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 {
 	local Inventory I;
 	local float Price;
@@ -388,7 +388,7 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 	if ( !CanBuyNow() || AClass == None )
 	{
 		SetTraderUpdate();
-		return;
+		return false;
 	}
 
 	// Grab Players Veterancy for quick reference
@@ -418,7 +418,7 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 	if ( KW == none || AM == none )
 	{
 		SetTraderUpdate();
-		return;
+		return false;
 	}
 
 	AM.MaxAmmo = AM.default.MaxAmmo;
@@ -431,7 +431,7 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 	if ( AM.AmmoAmount >= AM.MaxAmmo )
 	{
 		SetTraderUpdate();
-		return;
+		return false;
 	}
 
 	Price = class<KFWeaponPickup>(KW.PickupClass).default.AmmoCost * PlayerVeterancy.static.GetAmmoCostScaling(KFPlayerReplicationInfo(PlayerReplicationInfo), KW.PickupClass); // Clip price.
@@ -482,7 +482,7 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 		if ( c == 0 )
 		{
 			SetTraderUpdate();
-			return; // Couldn't even afford 1 bullet.
+			return false; // Couldn't even afford 1 bullet.
 		}
 
 		AM.AddAmmo(c);
@@ -490,19 +490,48 @@ function ServerBuyAmmo( Class<Ammunition> AClass, bool bOnlyClip )
 
 		SetTraderUpdate();
 
-		return;
+		return false;
 	}
 
 	PlayerReplicationInfo.Score = int(PlayerReplicationInfo.Score-Price);
 	AM.AddAmmo(c);
 
 	SetTraderUpdate();
+
+	return true;
 }
 
+// Drops All Story Items
 simulated function InternalTossCarriedItems()
 {
-    local Inventory Inv;
-    local KF_StoryinventoryItem StoryInv;
+    local Inventory Inv, NextInv;
+	local Vector X,Y,Z;
+    local Vector TossDir;
+    local float TossSpeed;
+    local vector DropLoc;
+
+	GetAxes(Rotation,X,Y,Z);
+
+
+    TossSpeed = 250.f;
+    DropLoc = Location + 0.8 * CollisionRadius * X - 0.5 * CollisionRadius * Y;
+
+	// Throws all your story items
+    for( Inv=Inventory; Inv!=None; Inv=NextInv )
+    {
+    	NextInv = Inv.Inventory;
+    	TossDir = VRand();
+        TossStoryItem( Inv, TossDir, TossSpeed, DropLoc );
+    }
+
+	// Throws your weapon
+    super.InternalTossCarriedItems();
+}
+
+// Drops a single story item
+simulated function TossSingleCarriedItem()
+{
+	local Inventory Inv;
 	local Vector X,Y,Z;
     local Vector TossDir;
     local float TossSpeed;
@@ -514,28 +543,33 @@ simulated function InternalTossCarriedItems()
     TossSpeed = 250.f;
     DropLoc = Location + 0.8 * CollisionRadius * X - 0.5 * CollisionRadius * Y;
 
-    for( Inv=Inventory; Inv!=None; Inv=Inv.Inventory )
+    for( Inv=Inventory; Inv!=None; Inv=Inv.Inventory)
     {
-        if(Inv.IsThrowable())
-        {
-            StoryInv = KF_StoryInventoryItem(Inv);
-            if(StoryInv != none)
-            {
-                if(StoryInv.bDropFromCameraLoc)
-                {
-                    TossDir = Vector(GetViewRotation());
-                    if(PlayerController(Controller) != none)
-                    {
-                        DropLoc = PlayerController(Controller).CalcViewLocation;
-                    }
-                }
+        TossStoryItem( Inv, TossDir, TossSpeed, DropLoc );
+    }
+}
 
-                TossSpeed = StoryInv.Pickup_TossVelocity;
+simulated function TossStoryItem( Inventory Inv, Vector TossDir, float TossSpeed, vector DropLoc )
+{
+	local KF_StoryinventoryItem StoryInv;
+	if(Inv.IsThrowable())
+    {
+        StoryInv = KF_StoryInventoryItem(Inv);
+        if(StoryInv != none)
+        {
+            if(StoryInv.bDropFromCameraLoc)
+            {
+                TossDir = Vector(GetViewRotation());
+                if(PlayerController(Controller) != none)
+                {
+                    DropLoc = PlayerController(Controller).CalcViewLocation;
+                }
             }
 
-            Inv.Velocity = TossDir * TossSpeed;
-            Inv.DropFrom(DropLoc);
+            TossSpeed = StoryInv.Pickup_TossVelocity;
         }
+        Inv.Velocity = TossDir * TossSpeed;
+        Inv.DropFrom(DropLoc);
     }
 }
 

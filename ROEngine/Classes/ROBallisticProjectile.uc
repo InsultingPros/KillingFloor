@@ -54,7 +54,7 @@ simulated function PostBeginPlay()
 	Velocity = Vector(Rotation) * Speed;
 	BCInverse = 1 / BallisticCoefficient;
 
-	if (Role == ROLE_Authority && Instigator.HeadVolume.bWaterVolume)
+	if (Role == ROLE_Authority && Instigator != none && Instigator.HeadVolume.bWaterVolume)
 		Velocity *= 0.5;
 
 	if (bDebugBallistics)

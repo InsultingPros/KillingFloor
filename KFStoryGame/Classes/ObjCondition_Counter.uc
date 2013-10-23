@@ -73,9 +73,9 @@ function Trigger( actor Other, pawn EventInstigator)
     Super.Trigger(Other,EventInstigator);
 
 	/* each trigger increments the 'counter' for objectives of that type */
-	if(ValidForCounting(EventInstigator))
+	if(ConditionIsActive() && ValidForCounting(EventInstigator))
 	{
-        Instigator = EventInstigator;
+        SetTargetActor(InstigatorName,EventInstigator);
 		NumCounted = Min(NumCounted + 1,Round(NumToCount * GetTotalDifficultyModifier())) ;
 	}
 }

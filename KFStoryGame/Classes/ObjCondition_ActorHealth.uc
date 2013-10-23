@@ -20,28 +20,30 @@ enum EHealthMethod
     Health_Full,
 };
 
-/* array of actors we need to defend or we wiwwwll fail this objective */
-	var	()		   edfindable private   	Actor		        TargetActor;
+var	()		   edfindable private   	Actor		        TargetActor;
 
-	var            bool                     bAcquiredPawn;
-
+var            bool                     bAcquiredPawn;
 /* if we are defending a pawn, this is the minimum health that pawn can drop to before we fail */
-	var	()									float				MinHealthPct;
+var	()									float				MinHealthPct;
 /* tag for actors that are spawned at runtime which we must also defend */
-	var ()									Name    			TargetPawnTag;
+var ()									Name    			TargetPawnTag;
 
-	var            private                  Actor               InitialActor;
+var ()                                  EHealthMethod       HealthCondition;
 
-	var ()                                  EHealthMethod       HealthCondition;
+var            float                    CurrentHealth,HealthMax;
 
-	var            float                    CurrentHealth,HealthMax;
+var   const    name                     InitialHealthActorName,HealthActorName;
 
-function PostBeginPlay()
+function PostBeginPlay(KF_StoryObjective MyOwner)
 {
-    Super.PostBeginPlay();
+    Super.PostBeginPlay(MyOwner);
+
+    // Ditch any reference to this actor ASAP.
     if(TargetActor != none)
     {
-        InitialActor = TargetActor;
+        SetTargetActor(HealthActorName,TargetActor);
+        SetTargetActor(InitialHealthActorName,TargetActor);
+        TargetActor = none;
     }
 }
 
@@ -51,54 +53,55 @@ function Reset()
     Super.Reset();
     CurrentHealth = 0;
     HealthMax = 0;
+    bAcquiredPawn = false;
 }
 
 function ConditionActivated(pawn ActivatingPlayer)
 {
+    local Actor InitialActor;
+
     Super.ConditionActivated(ActivatingPlayer);
+
+    InitialActor = GetTargetActor(InitialHealthActorName) ;
 
     if(InitialActor != none &&
     !InitialActor.bPendingDelete)
     {
-        TargetActor = InitialActor ;
+        SetTargetActor(HealthActorName,InitialActor);
     }
 }
 
 function bool               ConditionIsRelevant()
 {
-    if(TargetActor != none &&
-    KF_StoryNPC(TargetActor) != none)
+    local Actor MyTargetActor;
+
+    MyTargetActor = GetTargetActor(HealthActorName);
+
+    if(MyTargetActor != none &&
+    KF_StoryNPC(MyTargetActor) != none)
     {
-        return KF_StoryNPC(TargetActor).bActive ;
+        return KF_StoryNPC(MyTargetActor).bActive ;
     }
 
     return true;
-}
-
-/* Objects shouldn't have references to Actors for any longer than they need to.
-- Manually clear these vars when the condition is disabled so they dont access
-none and crash the game.
-*/
-function ClearActorReferences()
-{
-    bAcquiredPawn = false;
-    TargetActor = none;
-    Super.ClearActorReferences();
 }
 
 function ConditionTick(float DeltaTime)
 {
 	local KFDoorMover 	DoorActor;
 	local Pawn			PawnActor;
+    local Actor         MyTargetActor;
 
     UpdatePawnList();
 
-    if(TargetActor != none &&
-    !TargetActor.bDeleteMe &&
-    !TargetActor.bPendingDelete)
+    MyTargetActor = GetTargetActor(HealthActorName);
+
+    if(MyTargetActor != none &&
+    !MyTargetActor.bDeleteMe &&
+    !MyTargetActor.bPendingDelete)
     {
-        PawnActor 	= Pawn(TargetActor);
-        DoorActor	= KFDoorMover(TargetActor);
+        PawnActor 	= Pawn(MyTargetActor);
+        DoorActor	= KFDoorMover(MyTargetActor);
 
         if(DoorActor != none && DoorActor.MyTrigger != none )
         {
@@ -114,19 +117,12 @@ function ConditionTick(float DeltaTime)
         else
         {
             HealthMax 		=	100.f;
-            CurrentHealth	=   float(TargetActor != none && !TargetActor.bHidden && !TargetActor.bPendingDelete) * 100.f ;
+            CurrentHealth	=   float(MyTargetActor != none && !MyTargetActor.bHidden && !MyTargetActor.bPendingDelete) * 100.f ;
         }
     }
     else
     {
-        /* So if we get to this point it probably means that our target pawn was destroyed quite abruptly
-        We need to shut the condition down before it crashes the game by looking up a non existant actor
-        */
-        if(bAcquiredPawn)
-        {
-            CurrentHealth = 0;
-            ClearActorReferences();
-        }
+        CurrentHealth = 0;
     }
 
     Super.ConditionTick(DeltaTime);
@@ -136,11 +132,14 @@ function ConditionTick(float DeltaTime)
 function UpdatePawnList()
 {
 	local Controller C;
+    local Actor MyTargetActor;
+
+    MyTargetActor = GetTargetActor(HealthActorName);
 
 	if(bAcquiredPawn ||
     TargetpawnTag == '' ||
-    (TargetActor != none &&
-    TargetActor.Tag == TargetPawnTag))
+    (MyTargetActor != none &&
+    MyTargetActor.Tag == TargetPawnTag))
 	{
         return;
 	}
@@ -153,7 +152,7 @@ function UpdatePawnList()
         C.Pawn.Health > 0 &&
         C.Pawn.Tag == TargetpawnTag)
         {
-            TargetActor = C.Pawn;
+            SetTargetActor(HealthActorName,C.Pawn);
             bAcquiredPawn = true;
             break;
         }
@@ -163,20 +162,25 @@ function UpdatePawnList()
 
 function        vector       GetLocation(optional out Actor LocActor)
 {
+    local Actor MyTargetActor;
+    local Actor HUDWorldLocActor;
 
     if(ConditionIsActive())
     {
-        if(TargetActor != none &&
-        !TargetActor.bPendingDelete)
+        MyTargetActor = GetTargetActor(HealthActorName);
+
+        if(MyTargetActor != none &&
+        !MyTargetActor.bPendingDelete)
         {
-            LocActor = TargetActor;
-            return TargetActor.Location ;
+            LocActor = MyTargetActor;
+            return MyTargetActor.Location ;
         }
 
-        if( HUD_World.World_Location != none)
+        HUDWorldLocActor = GetTargetActor(WorldLocActorName);
+        if( HUDWorldLocActor != none)
         {
-            LocActor = HUD_World.World_Location ;
-            return HUD_World.World_Location.Location ;
+            LocActor = HUDWorldLocActor ;
+            return HUDWorldLocActor.Location ;
         }
     }
 
@@ -222,4 +226,6 @@ function        string      GetDataString()
 
 defaultproperties
 {
+     InitialHealthActorName="InitialHealthActor"
+     HealthActorName="HealthActor"
 }

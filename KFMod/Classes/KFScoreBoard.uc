@@ -66,11 +66,10 @@ simulated event UpdateScoreBoard(Canvas Canvas)
 	local PlayerReplicationInfo PRI, OwnerPRI;
 	local int i,j, FontReduction, NetXPos, PlayerCount, HeaderOffsetY, HeadFoot, MessageFoot, PlayerBoxSizeY, BoxSpaceY, NameXPos, BoxTextOffsetY, OwnerOffset, HealthXPos, BoxXPos,KillsXPos, TitleYPos, BoxWidth, VetXPos, TempVetXPos, VetYPos;
 	local float XL,YL, MaxScaling;
-	local float deathsXL, KillsXL, netXL,HealthXL, MaxNamePos, KillWidthX, HealthWidthX, TimeXL, TimeWidthX, TimeXPos, ScoreXPos, ScoreXL;
+	local float deathsXL, KillsXL, netXL,HealthXL, MaxNamePos, KillWidthX, HealthWidthX, TimeXL, ScoreXPos, ScoreXL;
 	local bool bNameFontReduction;
 	local Material VeterancyBox, StarMaterial;
-	local int TempLevel, TempY;
-	local string PlayerTime;
+	local int TempLevel;
 	local KFPlayerReplicationInfo KFPRI;
 	local float AssistsXPos,AssistsWidthX;
 	local float CashX;

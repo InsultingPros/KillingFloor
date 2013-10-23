@@ -3023,13 +3023,13 @@ function DrawDoorHealthBars(Canvas C)
 
 
 	if ( Level.TimeSeconds > LastDoorBarHealthUpdate + 0.2 ||
-        (PlayerOwner.Pawn.Weapon != none && PlayerOwner.Pawn.Weapon.class == class'Welder' && PlayerOwner.bFire == 1) )
+        (PlayerOwner.Pawn.Weapon != none && PlayerOwner.Pawn.Weapon.class == class'Welder' && PlayerOwner.bFire == 1 ))
 	{
 		DoorCache.Remove(0, DoorCache.Length);
 
-		foreach VisibleCollidingActors(class'KFDoorMover', DamageDoor, 300.00, PlayerOwner.Pawn.Location)
+		foreach CollidingActors(class'KFDoorMover', DamageDoor, 300.00, PlayerOwner.Pawn.Location)
 		{
-			if ( DamageDoor.WeldStrength > 0 )
+			if ( DamageDoor.WeldStrength > 0 && !DamageDoor.bHidden)
 			{
 				DoorCache.Insert(0, 1);
 				DoorCache[0] = DamageDoor;
@@ -3074,7 +3074,7 @@ function DrawDoorBar(Canvas C, float XCentre, float YCentre, float BarPercentage
 	local float TextWidth, TextHeight;
 	local string IntegrityText;
 
-	IntegrityText = int(BarPercentage * 100) $ "%";
+	IntegrityText = int(FClamp(BarPercentage,0.f,1.f) * 100) $ "%";
 
 	if ( !bLightHud )
 	{
@@ -3114,7 +3114,8 @@ simulated function DisplayHit(vector HitDir, int Damage, class<DamageType> damag
 	if( class<DamTypeZombieAttack>(HUDHitDamage) != none )
 	{
 		DamageStartTime = class<DamTypeZombieAttack>(HUDHitDamage).default.HUDTime;
-		if ( HUDHitDamage==Class'DamTypeVomit' )
+
+		if ( class<DamTypeVomit>(HUDHitDamage) != none )
 		{
 			VomitHudTimer = Level.TimeSeconds + 0.8;
 		}
@@ -3150,9 +3151,12 @@ simulated function DrawDamageIndicators(Canvas C)
 		{
 			if ( DamageIsUber )
 			{
-				C.DrawTile( ZHUDDam.default.HUDUberDamageTex, C.SizeX, C.SizeY, 0.0, 0.0, ZHUDDam.default.HUDUberDamageTex.MaterialUSize(), ZHUDDam.default.HUDUberDamageTex.MaterialVSize());
+				if( ZHUDDam.default.HUDUberDamageTex != none )
+				{
+                    C.DrawTile( ZHUDDam.default.HUDUberDamageTex, C.SizeX, C.SizeY, 0.0, 0.0, ZHUDDam.default.HUDUberDamageTex.MaterialUSize(), ZHUDDam.default.HUDUberDamageTex.MaterialVSize());
+                }
 			}
-			else
+			else if( ZHUDDam.default.HUDDamageTex != none )
 			{
 				C.DrawTile( ZHUDDam.default.HUDDamageTex, C.SizeX, C.SizeY, 0.0, 0.0, ZHUDDam.default.HUDDamageTex.MaterialUSize(), ZHUDDam.default.HUDDamageTex.MaterialVSize());
 			}

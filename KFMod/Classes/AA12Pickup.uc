@@ -18,7 +18,7 @@ defaultproperties
      showMesh=SkeletalMesh'KF_Weapons3rd2_Trip.AA12_3rd'
      CorrespondingPerkIndex=1
      EquipmentCategoryID=3
-     GoldenVariantClass=Class'KFMod.GoldenAA12Pickup'
+     VariantClasses(0)=Class'KFMod.GoldenAA12Pickup'
      InventoryType=Class'KFMod.AA12AutoShotgun'
      PickupMessage="You got the AA12 auto shotgun."
      PickupSound=Sound'KF_AA12Snd.AA12_Pickup'

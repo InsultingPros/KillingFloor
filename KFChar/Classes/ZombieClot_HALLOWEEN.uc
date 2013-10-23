@@ -47,6 +47,15 @@ simulated function SpawnSeveredGiblet( class<SeveredAppendage> GibClass, Vector 
 
 }
 
+simulated function SetOverlayMaterial( Material mat, float time, bool bOverride )
+{
+    // temporary fix for halloween zed to suppress the blood overlay so we can have great variation
+    if(mat != Material'Effects_Tex.PlayerDeathOverlay')
+	{
+        Super.SetOverlayMaterial(mat,time,bOverride);
+    }
+}
+
 defaultproperties
 {
      ClotSkins(0)=Shader'KF_Specimens_Trip_HALLOWEEN_T.clot.Clot_RedneckZombie_Blood01_Shdr'

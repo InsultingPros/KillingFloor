@@ -23,8 +23,29 @@ var()   		bool 		bEnabled;
 
 var()           bool        bAllowZEDInteraction;
 
+var()           bool        bShouldBeEnabledInWaveMode;
+
+function PostBeginPlay()
+{
+    Super.PostBeginPlay();
+    if(KFStoryGameinfo(Level.Game) == none)
+    {
+        bEnabled = bShouldBeEnabledInWaveMode;
+    }
+}
+
+function bool TriggerIsUseable()
+{
+    return bEnabled && bCollideActors;
+}
+
 function AddWeld( float ExtraWeld, bool bZombieAttacking, Pawn WelderInst )
 {
+    if(!TriggerIsUseable() && WelderInst != none)
+    {
+        return;
+    }
+
 	Super.AddWeld(ExtraWeld,bZombieAttacking,WelderInst);
 
 	if(WeldStrength >= MaxWeldStrength)
@@ -33,10 +54,20 @@ function AddWeld( float ExtraWeld, bool bZombieAttacking, Pawn WelderInst )
 	}
 }
 
+function UnWeld(float DeWeldage,bool bZombieAttacking, Pawn WelderInst)
+{
+    if(!TriggerIsUseable() && WelderInst != none)
+    {
+        return;
+    }
+
+    Super.UnWeld(DeWeldage,bZombieAttacking,WelderInst);
+}
+
 function UsedBy(Pawn user)
 {
-	if(!bEnabled)
-	{
+    if(!TriggerIsUseable())
+    {
 		return;
 	}
 
@@ -70,4 +101,5 @@ function Trigger( actor Other, pawn EventInstigator )
 defaultproperties
 {
      bEnabled=True
+     bShouldBeEnabledInWaveMode=True
 }

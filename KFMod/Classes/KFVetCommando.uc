@@ -101,7 +101,8 @@ static function float GetAmmoPickupMod(KFPlayerReplicationInfo KFPRI, KFAmmuniti
         SCARMK17Ammo(Other) != none || M4Ammo(Other) != none
         || FNFALAmmo(Other) != none || MKb42Ammo(Other) != none
         || ThompsonAmmo(Other) != none || GoldenAK47Ammo(Other) != none
-        || ThompsonDrumAmmo(Other) != none || SPThompsonAmmo(Other) != none ) &&
+        || ThompsonDrumAmmo(Other) != none || SPThompsonAmmo(Other) != none
+        || CamoM4Ammo(Other) != none ) &&
         KFPRI.ClientVeteranSkillLevel > 0 )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel == 1 )
@@ -125,7 +126,8 @@ static function float AddExtraAmmoFor(KFPlayerReplicationInfo KFPRI, Class<Ammun
         AmmoType == class'SCARMK17Ammo' || AmmoType == class'M4Ammo'
         || AmmoType == class'FNFALAmmo' || AmmoType == class'MKb42Ammo'
         || AmmoType == class'ThompsonAmmo' || AmmoType == class'GoldenAK47Ammo'
-        || AmmoType == class'ThompsonDrumAmmo' || AmmoType == class'SPThompsonAmmo' )
+        || AmmoType == class'ThompsonDrumAmmo' || AmmoType == class'SPThompsonAmmo'
+        || AmmoType == class'CamoM4Ammo' )
         && KFPRI.ClientVeteranSkillLevel > 0 )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel == 1 )
@@ -213,7 +215,8 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
         Item == class'SCARMK17Pickup' || Item == class'M4Pickup'
         || Item == class'FNFAL_ACOG_Pickup' || Item == class'MKb42Pickup'
         || Item == class'ThompsonPickup' || Item == class'GoldenAK47Pickup'
-        || Item == class'ThompsonDrumPickup' || Item == class'SPThompsonPickup' )
+        || Item == class'ThompsonDrumPickup' || Item == class'SPThompsonPickup'
+        || Item == class'CamoM4Pickup' )
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on Assault Rifles
 	}
@@ -227,13 +230,13 @@ static function AddDefaultInventory(KFPlayerReplicationInfo KFPRI, Pawn P)
 	// If Level 5, give them Bullpup
 	if ( KFPRI.ClientVeteranSkillLevel == 5 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Bullpup", GetCostScaling(KFPRI, class'BullpupPickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Bullpup", default.StartingWeaponSellPriceLevel5);
 	}
 
 	// If Level 6, give them an AK47
 	if ( KFPRI.ClientVeteranSkillLevel == 6 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.AK47AssaultRifle", GetCostScaling(KFPRI, class'AK47Pickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.AK47AssaultRifle", default.StartingWeaponSellPriceLevel6);
 	}
 }
 

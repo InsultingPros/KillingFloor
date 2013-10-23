@@ -206,7 +206,13 @@ var int						HillbillyGorefastsOnFire;
 var int						HuskAndZedOneShotTotalKills;
 var int						HuskAndZedOneShotZedKills;
 var array< class<Actor> >	HeadShottedMonsters;
+var array< class<Actor> > 	SpeciesKilledWithBile;
 var int						ZedsKilledInZedTime;
+var byte					ScrakeKilledWithLaw;
+var byte					FPKilledWithLaw;
+
+var int						ZedsKilledM32OrSeekerIn5Secs;
+var int						ZedsKilledM32OrSeekerIn5SecsTime;
 
 var const SteamStatInt		OwnedWeaponDLC;
 
@@ -215,7 +221,7 @@ var int						NullValue;
 var bool                    CanGetAxe;
 var int                     ZEDpiecesObtained;
 
-var bool					bObjAchievementFailed;	// Used for objective mode achievements
+var bool					bEventAchievementFailed;	// Used for objective mode achievements that are triggered to fail by an event
 
 //=============================================================================
 // Achievements
@@ -456,6 +462,23 @@ const KFACHIEVEMENT_KillZedWithImpactSPG				= 225;
 const KFACHIEVEMENT_Kill5ZedsInZedTimeNoReloadSPT		= 226;
 const KFACHIEVEMENT_CompleteSPMrsFosterAchievements		= 227;
 
+// Frightyard Achievements
+const KFACHIEVEMENT_WinFrightyardNormal					= 228;
+const KFACHIEVEMENT_WinFrightyardHard			     	= 229;
+const KFACHIEVEMENT_WinFrightyardSuicidal			    = 230;
+const KFACHIEVEMENT_WinFrightyardHell				    = 231;
+const KFACHIEVEMENT_WinFrightyardObjNormal				= 232;
+const KFACHIEVEMENT_WinFrightyardObjHard		     	= 233;
+const KFACHIEVEMENT_WinFrightyardObjSuicidal		    = 234;
+const KFACHIEVEMENT_WinFrightyardObjHell			    = 235;
+const KFACHIEVEMENT_ClawMachineMaster				    = 236;
+const KFACHIEVEMENT_ExScientist						    = 237;
+const KFACHIEVEMENT_777								    = 238;
+const KFACHIEVEMENT_BlindingBigBrother				    = 239;
+const KFACHIEVEMENT_ScrakeAndFP1ShotLawHarpoon			= 240;
+const KFACHIEVEMENT_BileOrFlameEachZed	     			= 241;
+const KFACHIEVEMENT_Kill10ZedsSeekerOrM32In5Secs		= 242;
+
 struct native export KFAchievement
 {
 	var	string	SteamName;
@@ -480,6 +503,10 @@ var name HillBillyGnomesEventName;
 var name SteamLandClownsEventName;
 var name SteamLandGamesEventName;
 var name SteamLandBreakersEventName;
+var name GoldenPotatoEventName;
+var name FrightyardCamerasEventName;
+var name FrightyardClawMasterFailedEventName;
+var name FrightyardContaminationFailedEventName;
 
 //=============================================================================
 // Objective Names
@@ -487,6 +514,8 @@ var name SteamLandBreakersEventName;
 var name SteamLandEscortObjName;
 var name SteamLandDefendObjName;
 var name SteamLandGoldObjName;
+var name FrightyardCraneObjName;
+var name FrightyardContaminationObjName;
 
 //=============================================================================
 // Perks
@@ -1106,8 +1135,9 @@ simulated event OnStatsAndAchievementsReady()
 	HillbillyGorefastsOnFire = 0;
 	HuskAndZedOneShotTotalKills = 0;
 	HuskAndZedOneShotZedKills = 0;
-        ZedsKilledInZedTime = 0;
+    ZedsKilledInZedTime = 0;
 	HeadShottedMonsters.Remove( 0, HeadShottedMonsters.Length );
+	SpeciesKilledWithBile.Remove( 0, SpeciesKilledWithBile.Length );
 
 	InitStatInt(OwnedWeaponDLC, GetOwnedWeaponDLC());
 	PCOwner.ServerInitializeSteamStatInt(KFSTAT_OwnedWeaponDLC, OwnedWeaponDLC.Value);
@@ -2053,8 +2083,15 @@ function AddExplosivesDamage(int Amount)
 
 function WonGame(string MapName, float Difficulty, bool bLong)
 {
+	local bool bIsStoryGame;
+
 	if ( bDebugStats )
 		log("STEAMSTATS: Won Long Game - MapName="$MapName @ "Difficulty="$Difficulty @ "Player="$PCOwner.PlayerReplicationInfo.PlayerName);
+
+	if ( Level.Game.IsA('KFStoryGameInfo') )
+	{
+		bIsStoryGame = true;
+	}
 
 	if ( bLong )
 	{
@@ -2426,15 +2463,25 @@ function WonGame(string MapName, float Difficulty, bool bLong)
 	{
 		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinMoonBaseNormal);
 	}
-	else if ( MapName ~= "KF-SteamLand" )
+	else if ( MapName ~= "KF-SteamLand" && !bIsStoryGame )
 	{
 		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinSteamLandNormal);
-                CheckSteamLandAchievementsCompleted();
+        CheckSteamLandAchievementsCompleted();
 	}
-	else if ( MapName ~= "KFO-SteamLand" )
+	else if ( MapName ~= "KFO-SteamLand" && bIsStoryGame )
 	{
 		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinSteamLandObjNormal);
-                CheckSteamLandAchievementsCompleted();
+        CheckSteamLandAchievementsCompleted();
+	}
+	else if ( MapName ~= "KF-FrightYard" && !bIsStoryGame )
+	{
+		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinFrightyardNormal);
+        // CheckFrightyardAchievementsCompleted();
+	}
+	else if ( MapName ~= "KFO-FrightYard" && bIsStoryGame )
+	{
+		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinFrightyardObjNormal);
+        CheckFrightyardAchievementsCompleted();
 	}
 }
 
@@ -3743,6 +3790,12 @@ function CheckSteamLandAchievementsCompleted()
 	}
 }
 
+// Frightyard Achievements
+function CheckFrightyardAchievementsCompleted()
+{
+
+}
+
 function bool HasAchievementInRangeCompleted( int StartingAchievementIndex, int EndingAchievementIndex )
 {
 	local int i;
@@ -3791,7 +3844,6 @@ function AddKillPoints(int AchievementID)
 		case KFACHIEVEMENT_Set3HillbillyGorefastsOnFire:
 			CheckAchievementPoints(AchievementID, "Adding Hillbilly Gorefast on Fire", HillbillyGorefastsOnFire);
 			break;
-
 		case KFACHIEVEMENT_HaveMyAxe:
 			CheckAchievementPoints(AchievementID, "Adding Fleshpound killed in back by Axe", HuskAndZedOneShotTotalKills);
 			break;
@@ -3801,6 +3853,10 @@ function AddKillPoints(int AchievementID)
 			break;
 		case KFACHIEVEMENT_GameOverMan:
 			CheckAchievementPoints(AchievementID, "Adding Hillbilly Gorefast on Fire", HillbillyGorefastsOnFire);
+			break;
+		case KFACHIEVEMENT_Kill10ZedsSeekerOrM32In5Secs:
+			CheckResetKillsWithM32OrSeekerIn5Secs();
+			CheckAchievementPoints(AchievementID, "Adding Zed Sploded with Seeker or M32", ZedsKilledM32OrSeekerIn5Secs);
 			break;
 
 	}
@@ -3852,6 +3908,14 @@ function OneShotBuzzOrM99()
 	HuskAndZedOneShotTotalKills = 0;
 }
 
+function OneShotLawOrHarpoon()
+{
+	if ( bDebugStats )
+		log("STEAMSTATS: Resetting one shot Law and Harpoon kills");
+	ScrakeKilledWithLaw = 0;
+	ScrakeKilledWithLaw = 0;
+}
+
 function OnReloadSPSorM14()
 {
 	if ( bDebugStats )
@@ -3889,6 +3953,16 @@ function KillHillbillyZedsIn10Seconds()
 	}
 }
 
+function CheckResetKillsWithM32OrSeekerIn5Secs()
+{
+	if (ZedsKilledM32OrSeekerIn5SecsTime <= 0.0 || Level.TimeSeconds - ZedsKilledM32OrSeekerIn5SecsTime > 5)
+	{
+		ZedsKilledM32OrSeekerIn5Secs = 0;
+		ZedsKilledM32OrSeekerIn5SecsTime = Level.TimeSeconds;
+		if ( bDebugStats )
+			log("STEAMSTATS: RESETTING M32 / Seeker zed kills in 5 secs - NewValue="$ZedsKilledM32OrSeekerIn5Secs @ "Player="$PCOwner.PlayerReplicationInfo.PlayerName);
+	}
+}
 
 function AddHuskAndZedOneShotKill(bool HuskKill, bool ZedKill)
 {
@@ -3915,6 +3989,32 @@ function AddHuskAndZedOneShotKill(bool HuskKill, bool ZedKill)
 	{
      	SetSteamAchievementCompleted(KFACHIEVEMENT_Kill1Hillbilly1HuskAndZedIn1Shot);
 		CheckHillbillyAchievementsCompleted();
+		CheckFrightyardAchievementsCompleted();
+	}
+}
+
+function AddScrakeAndFPOneShotKill(bool ScrakeKill, bool FPKill)
+{
+	local int ProgressDenominator, TotalKillsWithLawOrHarpoon;
+
+	if (!bUsedCheats)
+	{
+		if (ScrakeKill)
+		{
+			ScrakeKilledWithLaw = 1;
+		}
+		else if (FPKill)
+		{
+			FPKilledWithLaw = 1;
+		}
+	}
+    TotalKillsWithLawOrHarpoon = ScrakeKilledWithLaw + FPKilledWithLaw;
+
+	ProgressDenominator = Achievements[KFACHIEVEMENT_ScrakeAndFP1ShotLawHarpoon].ProgressDenominator;
+	if ( Achievements[KFACHIEVEMENT_ScrakeAndFP1ShotLawHarpoon].bCompleted == 0 && TotalKillsWithLawOrHarpoon >= ProgressDenominator)
+	{
+     	SetSteamAchievementCompleted(KFACHIEVEMENT_ScrakeAndFP1ShotLawHarpoon);
+		CheckFrightyardAchievementsCompleted();
 	}
 }
 
@@ -3948,6 +4048,35 @@ function AddHeadshotsWithSPSOrM14( class<Actor> MonsterClass )
 	}
 }
 
+function AddMonsterKillsWithBileOrFlame( class<Actor> MonsterClass )
+{
+	local int i, ProgressDenominator;
+	local bool bAlreadyKilledMonster;
+
+	for ( i=0; i<SpeciesKilledWithBile.Length; i++ )
+	{
+	 	if ( SpeciesKilledWithBile[ i ] == MonsterClass )
+		{
+			bAlreadyKilledMonster = true;
+		}
+	}
+
+	if ( !bAlreadyKilledMonster )
+	{
+     	SpeciesKilledWithBile[ SpeciesKilledWithBile.Length ] = MonsterClass;
+	}
+
+	if ( bDebugStats )
+		log("STEAMSTATS: Kills with Bile or Flame" @SpeciesKilledWithBile.Length);
+
+	ProgressDenominator = Achievements[KFACHIEVEMENT_BileOrFlameEachZed].ProgressDenominator;
+	if ( Achievements[KFACHIEVEMENT_BileOrFlameEachZed].bCompleted == 0 && SpeciesKilledWithBile.Length >= ProgressDenominator )
+	{
+     	SetSteamAchievementCompleted(KFACHIEVEMENT_BileOrFlameEachZed);
+		CheckFrightyardAchievementsCompleted();
+	}
+}
+
 simulated function CheckEvents( Name EventName )
 {
 	if ( EventName == HillBillyGnomesEventName )
@@ -3969,6 +4098,22 @@ simulated function CheckEvents( Name EventName )
 	else if ( EventName == SteamLandBreakersEventName )
 	{
 		CheckAndSetAchievementComplete(KFACHIEVEMENT_AllBreakersActive);
+	}
+	else if ( EventName == GoldenPotatoEventName )
+	{
+		CheckAndSetAchievementComplete(KFACHIEVEMENT_GoldenPotato);
+	}
+	else if ( EventName == FrightyardCamerasEventName )
+	{
+		CheckAndSetAchievementComplete(KFACHIEVEMENT_BlindingBigBrother);
+	}
+	else if ( EventName == FrightyardClawMasterFailedEventName )
+	{
+	    bEventAchievementFailed = true;
+	}
+	else if ( EventName == FrightyardContaminationFailedEventName )
+	{
+     	bEventAchievementFailed = true;
 	}
 }
 
@@ -4141,42 +4286,33 @@ function CheckAndSetAchievementComplete(int Index)
 	CheckSteamLandAchievementsCompleted();
 }
 
-// Called if a player fails to meet the achivement of a specific objective, it is reset at the end of each objective
-function SetObjAchievementFailed( bool bFailed )
-{
-	if ( bDebugStats && bFailed )
-	{
-		log("&&&&&&&&&&&&&&&&");
-		log("FAILED OBJECTIVE");
-	}
-
-	bObjAchievementFailed = bFailed;
-}
-
 function OnObjectiveCompleted( name ObjectiveName )
 {
+	if ( bEventAchievementFailed )
+	{
+		bEventAchievementFailed = false;
+    	return;
+	}
+
 	if ( ObjectiveName == SteamLandEscortObjName )
 	{
-	 	UnlockObjectiveAchievement( KFACHIEVEMENT_EscortRingmaster );
+	 	CheckAndSetAchievementComplete( KFACHIEVEMENT_EscortRingmaster );
 	}
 	else if ( ObjectiveName == SteamLandDefendObjName )
 	{
-     	UnlockObjectiveAchievement( KFACHIEVEMENT_DefendRingmaster );
+     	CheckAndSetAchievementComplete( KFACHIEVEMENT_DefendRingmaster );
 	}
 	else if ( ObjectiveName == SteamLandGoldObjName )
 	{
-     	UnlockObjectiveAchievement( KFACHIEVEMENT_NoCarrierDamageGoldBars );
+     	CheckAndSetAchievementComplete( KFACHIEVEMENT_NoCarrierDamageGoldBars );
 	}
-
-    // Make sure we can unlock the achievement for the defense mission
-	SetObjAchievementFailed( false );
-}
-
-function UnlockObjectiveAchievement( int Index )
-{
- 	if ( !bObjAchievementFailed )
+	else if ( ObjectiveName == FrightyardCraneObjName )
 	{
-		CheckAndSetAchievementComplete( Index );
+     	CheckAndSetAchievementComplete( KFACHIEVEMENT_ClawMachineMaster );
+	}
+	else if ( ObjectiveName == FrightyardContaminationObjName )
+	{
+     	CheckAndSetAchievementComplete( KFACHIEVEMENT_ExScientist );
 	}
 }
 
@@ -4226,28 +4362,28 @@ defaultproperties
      Achievements(40)=(SteamName="KillPatriarchBeforeHeHeals",Icon=Texture'KillingFloorHUD.Achievements.Achievement_40',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(41)=(SteamName="KillPatriarchWithLAW",Icon=Texture'KillingFloorHUD.Achievements.Achievement_41',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(42)=(SteamName="DefeatPatriarchOnSuicidal",Icon=Texture'KillingFloorHUD.Achievements.Achievement_42',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(43)=(SteamName="WinFoundryNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_44',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(44)=(SteamName="WinFoundryHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_45',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(45)=(SteamName="WinFoundrySuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_46',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(46)=(SteamName="WinAsylumNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_47',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(47)=(SteamName="WinAsylumHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_48',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(48)=(SteamName="WinAsylumSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_49',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(49)=(SteamName="WinWyreNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_50',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(50)=(SteamName="WinWyreHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_51',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(51)=(SteamName="WinWyreSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_52',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(52)=(SteamName="WinAll3SummerMapsNormal",bShowProgress=1,ProgressDenominator=3,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_53',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(53)=(SteamName="WinAll3SummerMapsHard",bShowProgress=1,ProgressDenominator=3,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_54',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(54)=(SteamName="WinAll3SummerMapsSuicidal",bShowProgress=1,ProgressDenominator=3,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_55',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(55)=(SteamName="Kill1000EnemiesWithPipebomb",bShowProgress=1,ProgressDenominator=1000,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_56',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(56)=(SteamName="KillHuskWithFlamethrower",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_57',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(57)=(SteamName="KillPatriarchOnlyCrossbows",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_58',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(58)=(SteamName="Gib500ZedsWithM79",bShowProgress=1,ProgressDenominator=500,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_59',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(59)=(SteamName="LaserSightedEBRHeadshots25InARow",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_60',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(60)=(SteamName="Kill1000ZedsWithSCAR",bShowProgress=1,ProgressDenominator=1000,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_62',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(61)=(SteamName="Heal200TeammatesWithMP7",bShowProgress=1,ProgressDenominator=200,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_63',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(62)=(SteamName="Kill100FleshpoundsWithAA12",bShowProgress=1,ProgressDenominator=100,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_64',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(63)=(SteamName="Kill20CrawlersKilledInAir",bShowProgress=1,ProgressDenominator=20,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_65',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(64)=(SteamName="Obliterate10ZedsWithPipebomb",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_61',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(43)=(SteamName="WinFoundryNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_43',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(44)=(SteamName="WinFoundryHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_44',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(45)=(SteamName="WinFoundrySuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_45',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(46)=(SteamName="WinAsylumNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_46',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(47)=(SteamName="WinAsylumHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_47',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(48)=(SteamName="WinAsylumSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_48',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(49)=(SteamName="WinWyreNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_49',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(50)=(SteamName="WinWyreHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_50',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(51)=(SteamName="WinWyreSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_51',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(52)=(SteamName="WinAll3SummerMapsNormal",bShowProgress=1,ProgressDenominator=3,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_52',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(53)=(SteamName="WinAll3SummerMapsHard",bShowProgress=1,ProgressDenominator=3,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_53',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(54)=(SteamName="WinAll3SummerMapsSuicidal",bShowProgress=1,ProgressDenominator=3,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_54',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(55)=(SteamName="Kill1000EnemiesWithPipebomb",bShowProgress=1,ProgressDenominator=1000,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_55',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(56)=(SteamName="KillHuskWithFlamethrower",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_56',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(57)=(SteamName="KillPatriarchOnlyCrossbows",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_57',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(58)=(SteamName="Gib500ZedsWithM79",bShowProgress=1,ProgressDenominator=500,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_58',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(59)=(SteamName="LaserSightedEBRHeadshots25InARow",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_59',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(60)=(SteamName="Kill1000ZedsWithSCAR",bShowProgress=1,ProgressDenominator=1000,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_60',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(61)=(SteamName="Heal200TeammatesWithMP7",bShowProgress=1,ProgressDenominator=200,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_61',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(62)=(SteamName="Kill100FleshpoundsWithAA12",bShowProgress=1,ProgressDenominator=100,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_62',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(63)=(SteamName="Kill20CrawlersKilledInAir",bShowProgress=1,ProgressDenominator=20,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_63',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(64)=(SteamName="Obliterate10ZedsWithPipebomb",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_64',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(65)=(SteamName="WinWestLondonHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_65',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(66)=(SteamName="WinManorHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_66',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(67)=(SteamName="WinFarmHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_67',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
@@ -4401,23 +4537,44 @@ defaultproperties
      Achievements(215)=(SteamName="WinSteamLandObjSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_215',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(216)=(SteamName="WinSteamLandObjHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_216',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(217)=(SteamName="DestroyPukeyDolls",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_217',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(218)=(SteamName="CompleteArcadeGames",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_219',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(219)=(SteamName="AllBreakersActive",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_220',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(220)=(SteamName="EscortRingmaster",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_221',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(221)=(SteamName="DefendRingmaster",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_222',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(222)=(SteamName="NoCarrierDamageGoldBars",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_223',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(223)=(SteamName="GetHeadshotsOn4ZedsSPS",ProgressDenominator=4,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_224',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(224)=(SteamName="PushScrakeSPJ",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_225',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(225)=(SteamName="KillZedWithImpactSPG",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_226',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(226)=(SteamName="Kill5ZedsInZedTimeNoReloadSPT",ProgressDenominator=5,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_227',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
-     Achievements(227)=(SteamName="CompleteSPMrsFosterAchievements",ProgressDenominator=4,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_228',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(218)=(SteamName="CompleteArcadeGames",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_218',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(219)=(SteamName="AllBreakersActive",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_219',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(220)=(SteamName="EscortRingmaster",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_220',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(221)=(SteamName="DefendRingmaster",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_221',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(222)=(SteamName="NoCarrierDamageGoldBars",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_222',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(223)=(SteamName="GetHeadshotsOn4ZedsSPS",ProgressDenominator=4,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_223',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(224)=(SteamName="PushScrakeSPJ",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_224',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(225)=(SteamName="KillZedWithImpactSPG",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_225',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(226)=(SteamName="Kill5ZedsInZedTimeNoReloadSPT",ProgressDenominator=5,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_226',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(227)=(SteamName="CompleteSPMrsFosterAchievements",ProgressDenominator=4,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_227',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(228)=(SteamName="WinFrightyardNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_228',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(229)=(SteamName="WinFrightyardHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_229',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(230)=(SteamName="WinFrightyardSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_230',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(231)=(SteamName="WinFrightyardHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_231',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(232)=(SteamName="WinFrightyardObjNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_232',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(233)=(SteamName="WinFrightyardObjHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_233',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(234)=(SteamName="WinFrightyardObjSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_234',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(235)=(SteamName="WinFrightyardObjHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_235',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(236)=(SteamName="ClawMachineMaster",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_236',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(237)=(SteamName="ExScientist",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_237',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(238)=(SteamName="777",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_238',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(239)=(SteamName="BlindingBigBrother",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_239',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(240)=(SteamName="ScrakeAndFP1ShotLawHarpoon",ProgressDenominator=2,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_240',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(241)=(SteamName="BileOrFlameEachZed",ProgressDenominator=10,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_241',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(242)=(SteamName="Kill10ZedsSeekerOrM32In5Secs",ProgressDenominator=10,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_242',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      HillBillyGnomesEventName="GnomeSoulsCompleted"
      SteamLandClownsEventName="ClownSoulsCompleted"
      SteamLandGamesEventName="MiniGamesCompleted"
      SteamLandBreakersEventName="AllBreakersRepaired"
+     GoldenPotatoEventName="PotatoCompleted"
+     FrightyardCamerasEventName="CreepyCamerasCompleted"
+     FrightyardClawMasterFailedEventName="ClawMasterFailed"
+     FrightyardContaminationFailedEventName="ContaminationFailed"
      SteamLandEscortObjName="EscortRingMaster"
      SteamLandDefendObjName="DefendRingMaster"
      SteamLandGoldObjName="GoldStashObj"
+     FrightyardCraneObjName="AssembleRemote"
+     FrightyardContaminationObjName="CollectBloatBile"
      SteamNameStat(0)="DamageHealed"
      SteamNameStat(1)="WeldingPoints"
      SteamNameStat(2)="ShotgunDamage"
@@ -4689,4 +4846,19 @@ defaultproperties
      SteamNameAchievement(225)="KillZedWithImpactSPG"
      SteamNameAchievement(226)="Kill5ZedsInZedTimeNoReloadSPT"
      SteamNameAchievement(227)="CompleteSPMrsFosterAchievements"
+     SteamNameAchievement(228)="WinFrightyardNormal"
+     SteamNameAchievement(229)="WinFrightyardHard"
+     SteamNameAchievement(230)="WinFrightyardSuicidal"
+     SteamNameAchievement(231)="WinFrightyardHell"
+     SteamNameAchievement(232)="WinFrightyardObjNormal"
+     SteamNameAchievement(233)="WinFrightyardObjHard"
+     SteamNameAchievement(234)="WinFrightyardObjSuicidal"
+     SteamNameAchievement(235)="WinFrightyardObjHell"
+     SteamNameAchievement(236)="ClawMachineMaster"
+     SteamNameAchievement(237)="ExScientist"
+     SteamNameAchievement(238)="777"
+     SteamNameAchievement(239)="BlindingBigBrother"
+     SteamNameAchievement(240)="ScrakeAndFP1ShotLawHarpoon"
+     SteamNameAchievement(241)="BileOrFlameEachZed"
+     SteamNameAchievement(242)="Kill10ZedsSeekerOrM32In5Secs"
 }

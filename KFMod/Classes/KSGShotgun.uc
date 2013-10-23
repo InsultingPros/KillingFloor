@@ -12,12 +12,6 @@ class KSGShotgun extends KFWeapon;
 // Whether or not to use the wide spread setting
 var bool bWideSpread;
 
-replication
-{
-	reliable if(Role < ROLE_Authority)
-		ServerChangeFireMode;
-}
-
 // Use alt fire to switch fire modes
 simulated function AltFire(float F)
 {
@@ -45,7 +39,7 @@ simulated function DoToggle ()
         }
 	}
 
-	Super.DoToggle();
+	PlayOwnedSound(ToggleSound,SLOT_None,2.0,,,,false);
 
 	ServerChangeFireMode(bWideSpread);
 }

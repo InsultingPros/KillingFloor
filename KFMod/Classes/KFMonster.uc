@@ -38,6 +38,7 @@ var(Sounds)     float   MoanVolume;// The volume to use for the zombie moaning
 var float NextBileTime, BileFrequency;
 var int BileCount;
 var Pawn BileInstigator;
+var class<DamTypeVomit> LastBileDamagedByType;
 
 var name KFHitFront;
 var name KFHitBack;
@@ -81,6 +82,15 @@ var()   float   ZappedDamageMod;    // How much to scale damage by when this zed
 var()   float   ZapResistanceScale; // Every time the zed gets zapped, scale his resistance up by this modifier. This prevent zeds from getting constantly raped by zap (like the fleshpound)
 var     Pawn    ZappedBy;  //who did the zapping
 
+var     bool    bHarpoonStunned;    // This zed has been stunned by a harpoon
+var     bool    bOldHarpoonStunned; // The last state of the bHarpoonStunned flag
+var()   bool    bHarpoonToHeadStuns;// A harpoon to this zeds head will stun it
+var()   bool    bHarpoonToBodyStuns;// A harpoon to this zeds body will stun it
+var     int     NumHarpoonsAttached;// The number of harpoons stuck in us
+
+var     float   DamageToMonsterScale;// How much to scale up damage for this zed damaging other monsters. Monsters have much higher health than humans, so when monsters duke it out they need to do more damage to each other
+var     float   HumanBileAggroChance;// What random percentage chance (0.15-1.0) to have a zed go attack the nearest bloat when a human sprays them with a bloat bile weapon
+
 // Zombie flags:
 // 0 - Normal zombie
 // 1 - Ranged zombie
@@ -112,6 +122,8 @@ var float FeedThreshold; // OBSOLOTE.
 var float CorpseStaticTime;   // The level.timeseconds record of when the corpse has stopped moving, and should soon go static.  1 second later, it will.
 var bool bCorpsePositionSet;
 var float CorpseLifeSpan;  // The time the zombie corpse will be around for.
+var bool bDestroyNextTick; // Destroy this pawn next tick because destroying it now will cause problems
+var float TimeSetDestroyNextTickTime; // The time we set the bDestroyNextTick flag
 
 var pawn LastDamagedBy;
 var class<damagetype> LastDamagedByType;
@@ -297,7 +309,7 @@ replication
 		bCrispified,bZedUnderControl;
 
 	reliable if(bNetDirty && Role == ROLE_Authority)
-		bZapped;
+		bZapped, bHarpoonStunned;
 
 // Headshot debugging
 //	reliable if(Role == ROLE_Authority)
@@ -903,6 +915,12 @@ simulated function Tick(float DeltaTime)
 //        IsHeadShot(vect(0,0,0), vect(0,0,0), 1.0);
 //    }
 
+    // If we've flagged this character to be destroyed next tick, handle that
+    if( bDestroyNextTick && TimeSetDestroyNextTickTime < Level.TimeSeconds )
+    {
+        Destroy();
+    }
+
 	// Make Zeds move faster if they aren't net relevant, or noone has seen them
 	// in a while. This well get the Zeds to the player in larger groups, and
 	// quicker - Ramm
@@ -1081,6 +1099,20 @@ simulated function Tick(float DeltaTime)
 
         bOldZapped = bZapped;
     }
+
+    if( bHarpoonStunned != bOldHarpoonStunned )
+    {
+        if( bHarpoonStunned )
+        {
+            SetBurningBehavior();
+        }
+        else
+        {
+            UnSetBurningBehavior();
+        }
+
+        bOldHarpoonStunned = bHarpoonStunned;
+    }
 }
 
 // Apply "Zap" to the Zed
@@ -1176,7 +1208,7 @@ simulated function UnSetZappedBehavior()
 
 function TakeBileDamage()
 {
-	Super.TakeDamage(2 + Rand(3), BileInstigator, Location, vect(0,0,0), class'DamTypeVomit');
+	Super.TakeDamage(2 + Rand(3), BileInstigator, Location, vect(0,0,0), LastBileDamagedByType);
 }
 
 simulated function StartBurnFX()
@@ -1273,7 +1305,8 @@ simulated function PlayTakeHit(vector HitLocation, int Damage, class<DamageType>
 		|| DamageType.name == 'DamTypeM32Grenade' || DamageType.name == 'DamTypeM203Grenade'
         || DamageType.name == 'DamTypeBenelli' || DamageType.name == 'DamTypeKSGShotgun'
         || DamageType.name == 'DamTypeTrenchgun' || DamageType.name == 'DamTypeNailgun'
-        || DamageType.name == 'DamTypeSPShotgun' || DamageType.name == 'DamTypeSPGrenade')
+        || DamageType.name == 'DamTypeSPShotgun' || DamageType.name == 'DamTypeSPGrenade'
+        || DamageType.name == 'DamTypeSealSquealExplosion' || DamageType.name == 'DamTypeSeekerSixRocket')
 			PlayDirectionalHit(HitLocation);
 		else if (DamageType.name == 'DamTypeClaws')
 		{
@@ -1650,12 +1683,30 @@ ignores AnimEnd, Trigger, Bump, HitWall, HeadVolumeChange, PhysicsVolumeChange, 
 	{
 		//SetPhysics(PHYS_None);
 		SetCollision(false, false, false);
-		Disable('Tick');
+		if( !bDestroyNextTick )
+		{
+            Disable('Tick');
+		}
 	}
 
 	simulated function Timer()
 	{
-		local KarmaParamsSkel skelParams;
+        local KarmaParamsSkel skelParams;
+
+        if( bDestroyNextTick )
+        {
+            // If we've flagged this character to be destroyed next tick, handle that
+            if( TimeSetDestroyNextTickTime < Level.TimeSeconds )
+            {
+                Destroy();
+            }
+            else
+            {
+                SetTimer(0.01, false);
+            }
+
+            return;
+        }
 
 		if ( !PlayerCanSeeMe() )
 		{
@@ -1681,10 +1732,25 @@ ignores AnimEnd, Trigger, Bump, HitWall, HeadVolumeChange, PhysicsVolumeChange, 
 
 	simulated function BeginState()
 	{
-		if ( bTearOff && (Level.NetMode == NM_DedicatedServer) || class'GameInfo'.static.UseLowGore() )
-			LifeSpan = 1.0;
-		else
-			SetTimer(2.0, false);
+        if( bDestroyNextTick )
+        {
+            // If we've flagged this character to be destroyed next tick, handle that
+            if( TimeSetDestroyNextTickTime < Level.TimeSeconds )
+            {
+                Destroy();
+            }
+            else
+            {
+                SetTimer(0.01, false);
+            }
+        }
+        else
+        {
+            if ( bTearOff && (Level.NetMode == NM_DedicatedServer) || class'GameInfo'.static.UseLowGore() )
+                LifeSpan = 1.0;
+            else
+                SetTimer(2.0, false);
+		}
 
 		SetPhysics(PHYS_Falling);
 		if ( Controller != None )
@@ -1832,9 +1898,19 @@ simulated function ProcessHitFX()
 
 		if( HitFX[SimHitFxTicker].bone == 'obliterate' && !class'GameInfo'.static.UseLowGore())
 		{
-			SpawnGibs( HitFX[SimHitFxTicker].rotDir, 1);
+            SpawnGibs( HitFX[SimHitFxTicker].rotDir, 1);
 			bGibbed = true;
-			Destroy();
+
+			// Wait a tick on a listen server so the obliteration can replicate before the pawn is destroyed
+            if( Level.NetMode == NM_ListenServer )
+			{
+                bDestroyNextTick = true;
+                TimeSetDestroyNextTickTime = Level.TimeSeconds;
+            }
+            else
+            {
+                Destroy();
+			}
 			return;
 		}
 
@@ -2593,7 +2669,7 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
     }
 
 	// Zeds and fire dont mix.
-	if ( class<KFWeaponDamageType>(damageType).default.bDealBurningDamage )
+	if ( class<KFWeaponDamageType>(damageType) != none && class<KFWeaponDamageType>(damageType).default.bDealBurningDamage )
     {
         if( BurnDown<=0 || Damage > LastBurnDamage )
         {
@@ -2716,7 +2792,8 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 	if( Health-Damage > 0 && DamageType!=class'DamTypeFrag' && DamageType!=class'DamTypePipeBomb'
 		&& DamageType!=class'DamTypeM79Grenade' && DamageType!=class'DamTypeM32Grenade'
         && DamageType!=class'DamTypeM203Grenade' && DamageType!=class'DamTypeDwarfAxe'
-        && DamageType!=class'DamTypeSPGrenade')
+        && DamageType!=class'DamTypeSPGrenade' && DamageType!=class'DamTypeSealSquealExplosion'
+        && DamageType!=class'DamTypeSeekerSixRocket')
 	{
 		Momentum = vect(0,0,0);
 	}
@@ -2725,6 +2802,7 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 	{
 		BileCount=7;
 		BileInstigator = instigatedBy;
+		LastBileDamagedByType=class<DamTypeVomit>(DamageType);
 		if(NextBileTime< Level.TimeSeconds )
 			NextBileTime = Level.TimeSeconds+BileFrequency;
 	}
@@ -3170,7 +3248,13 @@ function bool MeleeDamageTarget(int hitdamage, vector pushdir)
 		}
 		else if (Controller.target != None)
 		{
-			Controller.Target.TakeDamage(hitdamage, self ,HitLocation,pushdir, CurrentDamType); //class 'KFmod.ZombieMeleeDamage');
+			// Do more damage if you are attacking another zed so that zeds don't just stand there whacking each other forever! - Ramm
+            if( KFMonster(Controller.Target) != none )
+			{
+                hitdamage *= DamageToMonsterScale;
+			}
+
+            Controller.Target.TakeDamage(hitdamage, self ,HitLocation,pushdir, CurrentDamType); //class 'KFmod.ZombieMeleeDamage');
 		}
 
 		return true;
@@ -3208,14 +3292,32 @@ simulated function PlayDyingAnimation(class<DamageType> DamageType, vector HitLo
 			if( Level.PhysicsDetailLevel != PDL_High && !PlayersRagdoll && (Level.TimeSeconds-LastSeenOrRelevantTime)>3 ||
 				bGibbed )
 			{
-				Destroy();
+    			// Wait a tick on a listen server so the obliteration can replicate before the pawn is destroyed
+                if( Level.NetMode == NM_ListenServer )
+    			{
+                    bDestroyNextTick = true;
+                    TimeSetDestroyNextTickTime = Level.TimeSeconds;
+                }
+                else
+                {
+                    Destroy();
+    			}
 				return;
 			}
 		}
 		else if( Level.PhysicsDetailLevel!=PDL_High && !PlayersRagdoll && (Level.TimeSeconds-LastRenderTime)>3 ||
 			bGibbed)
 		{
-			Destroy();
+			// Wait a tick on a listen server so the obliteration can replicate before the pawn is destroyed
+            if( Level.NetMode == NM_ListenServer )
+			{
+                bDestroyNextTick = true;
+                TimeSetDestroyNextTickTime = Level.TimeSeconds;
+            }
+            else
+            {
+                Destroy();
+			}
 			return;
 		}
 
@@ -3427,16 +3529,40 @@ function bool DoJump( bool bUpdating )
 	return false;
 }
 
+
+// Overridden to handle making attached explosives explode when this pawn dies
+function Died(Controller Killer, class<DamageType> damageType, vector HitLocation)
+{
+	local int i;
+
+ 	for( i=0; i<Attached.length; i++ )
+	{
+		if( SealSquealProjectile(Attached[i])!=None )
+		{
+			SealSquealProjectile(Attached[i]).HandleBasePawnDestroyed();
+		}
+	}
+
+    super.Died(Killer,damageType,HitLocation);
+}
+
+// Overridden to handle making attached explosives explode when this pawn dies
 simulated function Destroyed()
 {
 	local int i;
 
 	for( i=0; i<Attached.length; i++ )
 	{
-		 if( Emitter(Attached[i])!=None && Attached[i].IsA('DismembermentJet') )
+		if( Emitter(Attached[i])!=None && Attached[i].IsA('DismembermentJet') )
 		{
 			Emitter(Attached[i]).Kill();
 			Attached[i].LifeSpan = 2;
+		}
+
+		// Make attached explosives blow up when this pawn dies
+        if( SealSquealProjectile(Attached[i])!=None )
+		{
+			SealSquealProjectile(Attached[i]).HandleBasePawnDestroyed();
 		}
 	}
 
@@ -3541,6 +3667,12 @@ simulated function SetBurningBehavior()
 simulated function UnSetBurningBehavior()
 {
 	local int i;
+
+    // Don't turn off this behavior until the harpoon stun is over
+    if( bHarpoonStunned )
+    {
+        return;
+    }
 
 	if ( Role == Role_Authority )
 	{
@@ -3744,8 +3876,8 @@ static simulated function DynamicLoadMeshAndSkins()
 
 static simulated function DynamicLoadSounds()
 {
-    local int i;
-    /*
+    /*    local int i;
+
     if( default.AmbientSoundRef == "" )
     {
        log("don't have sound refs, bailing out");
@@ -3834,6 +3966,10 @@ defaultproperties
      ZapThreshold=0.250000
      ZappedDamageMod=2.000000
      ZapResistanceScale=2.000000
+     bHarpoonToHeadStuns=True
+     bHarpoonToBodyStuns=True
+     DamageToMonsterScale=3.000000
+     HumanBileAggroChance=0.750000
      MaxSpineVariation=1000
      MaxContortionPercentage=0.250000
      MinTimeBetweenPainAnims=0.500000

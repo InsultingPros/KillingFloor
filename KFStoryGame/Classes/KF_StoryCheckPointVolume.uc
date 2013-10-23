@@ -88,10 +88,13 @@ var							Controller					ActivatingPlayer;
 var							Controller					LastRespawnedPlayer;
 
 /* If true,  teleport stragglers to a playerstart inside this volume */
-var(StoryCheckPoint)		bool						bTeleportStragglers;
+var(Stragglers)		        bool						bTeleportStragglers;
 
 /* Max distance a player can be from this volume before being consider a straggler */
-var(StoryCheckPoint)		float						TeleportStragglerDist;
+var(Stragglers)		       float						TeleportStragglerDist;
+
+// if bTeleportStragglers, any living players not inside this volume will be teleported to a playerstart in the checkpoitn volume.
+var(Stragglers)   const     Volume                      TeleportExclusionVolume;
 
 /* 	If true this checkpoint can only be set as the active checkpoint in the map a single time
 	Should probably be set true by default as most story maps will probably have a linear progression.
@@ -512,7 +515,7 @@ function CheckPointActivated( Pawn CheckPointInstigator, bool bForceActivate, op
 		return;
 	}
 
-	if(!bIsActive || bForceActivate)
+	if(!bIsActive || bForceActivate || !bSingleActivationOnly)
 	{
         log("===============================================",'Story_Debug');
 	    log("CheckPointActivated! - "@CheckPointName,'Story_Debug');
@@ -713,9 +716,12 @@ function TeleportLivingPlayers()
 {
 	local NavigationPoint	TeleportSpot;
 	local Controller		C;
+    local bool bTeleportMe;
 
 	For ( C= Level.ControllerList; C!=None; C=C.NextController )
 	{
+        bTeleportMe = false;
+
 		if ( C.PlayerReplicationInfo != none )
 		{
 			if(C.bIsPlayer &&
@@ -724,13 +730,22 @@ function TeleportLivingPlayers()
 			C.Pawn != none && C.Pawn.Health > 0 &&
 			C.Pawn.PhysicsVolume != self )
 			{
-				if(VSize(C.Pawn.Location - Location) >= TeleportStragglerDist)
-				{
-					TeleportSpot = Level.Game.FindPlayerStart(C,C.GetTeamNum());
-					if(TeleportSpot != none)
-					{
-						C.Pawn.SetLocation(TeleportSpot.Location);
-					}
+                if(TeleportExclusionVolume != none)
+                {
+                    bTeleportMe = !TeleportExclusionVolume.Encompasses(C.Pawn);
+                }
+                else
+                {
+                    bTeleportMe = VSize(C.Pawn.Location - Location) >= TeleportStragglerDist;
+                }
+
+                if(bTeleportMe)
+                {
+                    TeleportSpot = Level.Game.FindPlayerStart(C,C.GetTeamNum());
+                    if(TeleportSpot != none)
+                    {
+                        C.Pawn.SetLocation(TeleportSpot.Location);
+                    }
 				}
 			}
 		}

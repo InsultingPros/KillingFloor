@@ -38,7 +38,8 @@ static function float AddExtraAmmoFor(KFPlayerReplicationInfo KFPRI, Class<Ammun
 	}
 	else if ( AmmoType == class'ShotgunAmmo' || AmmoType == class'DBShotgunAmmo' || AmmoType == class'AA12Ammo'
         || AmmoType == class'BenelliAmmo' || AmmoType == class'KSGAmmo' || AmmoType == class'NailGunAmmo'
-        || AmmoType == class'GoldenBenelliAmmo' || AmmoType == class'SPShotgunAmmo' || AmmoType == class'GoldenAA12Ammo' )
+        || AmmoType == class'GoldenBenelliAmmo' || AmmoType == class'SPShotgunAmmo' || AmmoType == class'GoldenAA12Ammo'
+        || AmmoType == class'CamoShotgunAmmo' )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel > 0 )
 		{
@@ -108,7 +109,8 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 {
 	if ( Item == class'ShotgunPickup' || Item == class'BoomstickPickup' || Item == class'AA12Pickup'
         || Item == class'BenelliPickup' || Item == class'KSGPickup' || Item == class'NailGunPickup'
-        || Item == class'GoldenBenelliPickup' || Item == class'SPShotgunPickup' || Item == class'GoldenAA12Pickup' )
+        || Item == class'GoldenBenelliPickup' || Item == class'SPShotgunPickup' || Item == class'GoldenAA12Pickup'
+        || Item == class'CamoShotgunPickup' )
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on Shotguns
 	}
@@ -122,13 +124,13 @@ static function AddDefaultInventory(KFPlayerReplicationInfo KFPRI, Pawn P)
 	// If Level 5, give them Assault Shotgun
 	if ( KFPRI.ClientVeteranSkillLevel == 5 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Shotgun", GetCostScaling(KFPRI, class'ShotgunPickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Shotgun", default.StartingWeaponSellPriceLevel5);
 	}
 
 	// If Level 6, give them Hunting Shotgun
 	if ( KFPRI.ClientVeteranSkillLevel == 6 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.BoomStick", GetCostScaling(KFPRI, class'BoomStickPickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.BoomStick", default.StartingWeaponSellPriceLevel6);
 	}
 }
 

@@ -4,6 +4,8 @@ var private ROMasterServerClient  ROMSC;
 var localized string AllTypesString;
 var string AllTypesClassName;
 
+var localized string ServerPerkGatedHeading;
+
 function InitializeGameTypeCombo(optional bool ClearFirst)
 {
 	local int i, j;
@@ -92,6 +94,52 @@ function bool ComboOnPreDraw(Canvas Canvas)
 	co_GameType.WinTop = co_GameType.RelativeTop(t_Header.ActualTop() + t_Header.ActualHeight() + float(Controller.ResY) / 100.0);
 	co_GameType.WinLeft = co_GameType.RelativeLeft((c_Tabs.ActualLeft() + c_Tabs.ActualWidth()) - (co_GameType.ActualWidth() + 12));
 	return false;
+}
+
+function JoinClicked()
+{
+    local int InternetPageIndex, CurrentServerDifficulty, PlayerHighestPerkLevel;
+    local KFServerListPageInternet InternetPage;
+    local string PerkLevels;
+
+    InternetPageIndex = c_Tabs.TabIndex( PanelCaption[4] );
+    InternetPage = KFServerListPageInternet( c_Tabs.TabStack[InternetPageIndex].MyPanel );
+    CurrentServerDifficulty = InternetPage.GetCurrentServerDifficulty();
+    PlayerHighestPerkLevel = CalcPlayerHighestPerkLevel( PlayerOwner() );
+
+    if( PlayerHighestPerkLevel < 2 && CurrentServerDifficulty > 1 ) // 0 - beginner, 1 - normal
+    {
+        Controller.OpenMenu("GUI2K4.UT2K4GenericMessageBox",ServerPerkGatedHeading,"");
+    }
+    else
+    {
+        super.JoinClicked();
+    }
+}
+
+static function int CalcPlayerHighestPerkLevel( PlayerController P )
+{
+    local int i, HPL, NumPerks;
+    local array< class<KFVeterancyTypes> > PerkClasses;
+    local KFSteamStatsAndAchievements KFSS;
+
+    HPL = -1;
+
+    if( P != none )
+	{
+	    KFSS = KFSteamStatsAndAchievements(P.SteamStatsAndAchievements);
+	    if ( KFSS != none )
+    	{
+    	    PerkClasses = class'KFGameType'.default.LoadedSkills;
+            NumPerks = class'KFGameType'.default.LoadedSkills.Length;
+            for( i = 0; i < class'KFGameType'.default.LoadedSkills.Length; ++i )
+            {
+                HPL = Max(HPL, KFSS.PerkHighestLevelAvailable(class'KFGameType'.default.LoadedSkills[i].default.PerkIndex) );
+            }
+        }
+	}
+
+	return HPL;
 }
 
 defaultproperties

@@ -9,6 +9,9 @@ var automated 	KFFilterPanel	FilterPanel;
 
 var array<GameInfo.ServerResponseLine> AllServers;
 
+var bool bFilterEmptyServers;
+var bool bFilterFullServers;
+
 function ShowPanel(bool bShow)
 {
 	if ( bShow )
@@ -150,6 +153,15 @@ function AddQueryTerm(coerce string Key, coerce string Value, MasterServerClient
 	QD.QueryType	= QueryType;
 
 	Uplink().Query[i] = QD;
+
+	if( Key == "freespace" )
+    {
+        bFilterFullServers = true;
+    }
+    else if( Key == "currentplayers" )
+    {
+        bFilterEmptyServers = true;
+    }
 }
 
 function bool ValidateQueryItem(CustomFilter.EDataType FilterType, MasterServerClient.QueryData Data)
@@ -272,11 +284,30 @@ function MyOnReceivedServer(GameInfo.ServerResponseLine s)
 	SetFooterCaption(Repl(ServerCountString, "%NumServers%", Uplink().ResultCount));
 }
 
-function DisplayServers(GameInfo.ServerResponseLine s)
+function DisplayServers(out GameInfo.ServerResponseLine s)
 {
 	li_Server.MyOnReceivedServer(s);
 	li_Server.AddedItem();
 	li_Server.SortList();
+}
+
+function PruneServerIfInvalid( int ServerID, out GameInfo.ServerResponseLine s )
+{
+    if( bFilterFullServers )
+    {
+        if( s.CurrentPlayers >= s.MaxPlayers )
+        {
+            li_Server.RemoveServerAt( ServerID );
+        }
+    }
+
+    if( bFilterEmptyServers )
+    {
+        if( s.CurrentPlayers == 0 )
+        {
+            li_Server.RemoveServerAt( ServerID );
+        }
+    }
 }
 
 // We have list of servers from master server and are going to start pinging
@@ -312,6 +343,18 @@ function QueryComplete( MasterServerClient.EResponseInfo ResponseInfo, int Info 
 	}
 
 	li_Server.SortList();
+}
+
+function ReceivedPingInfo( int ServerID, ServerQueryClient.EPingCause PingCause, GameInfo.ServerResponseLine s )
+{
+	Super.ReceivedPingInfo( ServerID, PingCause, S);
+
+	// only remove servers that have been updated by auto-ping as opposed to clicking,
+	// because we don't want clicked servers to disappear
+	if( PingCause == PC_AutoPing )
+	{
+	    PruneServerIfInvalid( ServerID, s );
+	}
 }
 
 event Timer()
@@ -386,6 +429,14 @@ function Refresh()
 	SetFooterCaption(StartQueryString);
 }
 
+function ResetQueryClient( ServerQueryClient Client )
+{
+    Super.ResetQueryClient( Client );
+
+    bFilterFullServers = false;
+    bFilterEmptyServers = false;
+}
+
 function UpdateStatusPingCount()
 {
     CheckJoinButton(li_Server.IsValid());
@@ -413,6 +464,37 @@ function CloseMSConnection()
 		Uplink().CancelPings();
 	    Uplink().Stop();
 	}
+}
+
+function int GetCurrentServerDifficulty()
+{
+    local int Flags;
+
+    // Beginner        32
+    // Normal          64
+    // Hard            128
+    // Suicidal        256
+    // Hell On Earth   512
+
+    Flags = li_Server.Servers[ li_Server.CurrentListId() ].Flags;
+    if( (Flags & 512) != 0 )
+    {
+        return 4;
+    }
+    else if( (Flags & 256) != 0 )
+    {
+        return 3;
+    }
+    else if( (Flags & 128) != 0 )
+    {
+        return 2;
+    }
+    else if( (Flags & 64) != 0 )
+    {
+        return 1;
+    }
+
+    return 0;
 }
 
 defaultproperties

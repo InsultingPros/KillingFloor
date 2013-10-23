@@ -26,6 +26,7 @@ defaultproperties
      showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Shotgun_3rd'
      CorrespondingPerkIndex=1
      EquipmentCategoryID=2
+     VariantClasses(0)=Class'KFMod.CamoShotgunPickup'
      InventoryType=Class'KFMod.Shotgun'
      PickupMessage="You got the Shotgun."
      PickupSound=Sound'KF_PumpSGSnd.SG_Pickup'

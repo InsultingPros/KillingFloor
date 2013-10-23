@@ -12,7 +12,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 	if ( DefaultListClass != "" )
 	{
 		List = KFBuyMenuSaleList(AddComponent(DefaultListClass));
-		
+
 		if (List == None)
 		{
 			log(Class$".InitComponent - Could not create default list ["$DefaultListClass$"]");
@@ -31,7 +31,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 
 function GUIBuyable GetSelectedBuyable()
 {
-	return List.ForSaleBuyables[List.Index];
+    return List.BuyableToDisplay;
 }
 
 defaultproperties

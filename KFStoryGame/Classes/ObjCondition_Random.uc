@@ -82,7 +82,6 @@ function AssignRandomCondition()
 
      RandomConditions[RandIdx].Condition.ConditionType = ConditionType;
      RandomConditions[RandIdx].Condition.SetObjOwner(GetObjOwner());
-     RandomConditions[RandIdx].Condition.SpawnEventListener();
 
     if(RandomConditions[RandIdx].Condition.ShouldInitOnActivation())
     {

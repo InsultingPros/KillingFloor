@@ -51,8 +51,8 @@ var int SellValue; // Stores the value for weapons that were purchased, then dro
 var	PlayerController	DroppedBy;
 var	bool				bPreviouslyDropped;
 
-// Golden variant class
-var class<Pickup>       GoldenVariantClass;
+// potential variants (gold, camo, etc.)
+var array< class<Pickup> > VariantClasses;
 
 simulated function PostNetBeginPlay()
 {

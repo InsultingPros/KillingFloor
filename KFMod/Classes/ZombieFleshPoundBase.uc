@@ -50,18 +50,17 @@ defaultproperties
      MeleeAnims(0)="PoundAttack1"
      MeleeAnims(1)="PoundAttack2"
      MeleeAnims(2)="PoundAttack3"
-     MoanVoice=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Talk'
      StunsRemaining=1
      BleedOutDuration=7.000000
      ZapThreshold=1.750000
      ZappedDamageMod=1.250000
+     bHarpoonToBodyStuns=False
+     DamageToMonsterScale=5.000000
      ZombieFlag=3
      MeleeDamage=35
      damageForce=15000
      bFatAss=True
      KFRagdollName="FleshPound_Trip"
-     MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_HitPlayer'
-     JumpSound=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Jump'
      SpinDamConst=20.000000
      SpinDamRand=20.000000
      bMeleeStunImmune=True
@@ -80,12 +79,6 @@ defaultproperties
      PlayerNumHeadHealthScale=0.300000
      MotionDetectorThreat=5.000000
      bBoss=True
-     HitSound(0)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Pain'
-     DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Death'
-     ChallengeSound(0)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Challenge'
-     ChallengeSound(1)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Challenge'
-     ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Challenge'
-     ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd.Fleshpound.FP_Challenge'
      ScoringValue=200
      IdleHeavyAnim="PoundIdle"
      IdleRifleAnim="PoundIdle"
@@ -107,10 +100,7 @@ defaultproperties
      IdleCrouchAnim="PoundIdle"
      IdleWeaponAnim="PoundIdle"
      IdleRestAnim="PoundIdle"
-     AmbientSound=Sound'KF_BaseFleshpound.FP_IdleLoop'
-     Mesh=SkeletalMesh'KF_Freaks_Trip.FleshPound_Freak'
      PrePivot=(Z=0.000000)
-     Skins(0)=Combiner'KF_Specimens_Trip_T.fleshpound_cmb'
      Skins(1)=Shader'KFCharacters.FPAmberBloomShader'
      Mass=600.000000
      RotationRate=(Yaw=45000,Roll=0)

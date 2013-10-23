@@ -19,7 +19,7 @@ defaultproperties
      AmmoMesh=StaticMesh'KillingFloorStatics.FT_AmmoMesh'
      CorrespondingPerkIndex=5
      EquipmentCategoryID=3
-     GoldenVariantClass=Class'KFMod.GoldenFTPickup'
+     VariantClasses(0)=Class'KFMod.GoldenFTPickup'
      InventoryType=Class'KFMod.FlameThrower'
      PickupMessage="You got the FlameThrower"
      PickupSound=Sound'KF_FlamethrowerSnd.FT_Pickup'

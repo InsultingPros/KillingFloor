@@ -103,6 +103,9 @@ function bool CloseCurrentShop()
     bSuccessfulBoot = GetCurrentShop().BootPlayers();
     GetCurrentShop().CloseShop();
 
+	// wait for doors to close before BootPlayers (see KFGameInfo.Timer)
+	SetTimer(1.f, false);
+
     if( KFGameType(Level.Game) != none)
     {
         KFGameType(Level.Game).bTradingDoorsOpen = false;
@@ -143,6 +146,14 @@ function bool CloseCurrentShop()
 
     return bSuccessfulBoot;
 
+}
+
+function Timer()
+{
+	if(GetCurrentShop() != none && !GetCurrentShop().bCurrentlyOpen)
+    {
+		GetCurrentShop().BootPlayers();
+    }
 }
 
 function FindNewShop()

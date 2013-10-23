@@ -47,7 +47,7 @@ defaultproperties
      FireAnim="LightOn"
      FireSound=Sound'KF_9MMSnd.Ninemm_AltFire1'
      FireForce="AssaultRifleFire"
-     AmmoClass=Class'KFMod.SingleAmmo'
+     AmmoClass=Class'KFMod.FlashlightAmmo'
      BotRefireRate=0.500000
      aimerror=0.000000
 }

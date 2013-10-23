@@ -2,6 +2,7 @@
 //
 //-----------------------------------------------------------
 class KFLevelRules extends ReplicationInfo
+    config
 	placeable;
 
 const       MAX_CATEGORY        = 5;
@@ -14,9 +15,69 @@ struct EquipmentCategory
 };
 
 var()       EquipmentCategory   EquipmentCategories[MAX_CATEGORY];
-var(Shop)   class<Pickup>       ItemForSale[MAX_BUYITEMS];
+//var(Shop)   class<Pickup>       ItemForSale[MAX_BUYITEMS];
+var         array< class<Pickup> >      ItemForSale;
+
+var(Shop)   array< class<Pickup> >      MediItemForSale;
+var(Shop)   array< class<Pickup> >      SuppItemForSale;
+var(Shop)   array< class<Pickup> >      ShrpItemForSale;
+var(Shop)   array< class<Pickup> >      CommItemForSale;
+var(Shop)   array< class<Pickup> >      BersItemForSale;
+var(Shop)   array< class<Pickup> >      FireItemForSale;
+var(Shop)   array< class<Pickup> >      DemoItemForSale;
+var(Shop)   array< class<Pickup> >      NeutItemForSale;
+
+var config  array< class<Pickup> >      FaveItemForSale;
 
 var() float WaveSpawnPeriod;
+
+function bool IsFavorited( class<Pickup> Item )
+{
+    local int i;
+
+    for( i = 0; i < FaveItemForSale.Length; ++i )
+    {
+        if( Item == FaveItemForSale[i] )
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function AddToFavorites( class<Pickup> Item )
+{
+    local class<KFWeaponPickup> WeaponPickupClass;
+
+    WeaponPickupClass = class<KFWeaponPickup>( Item );
+    if( WeaponPickupClass != none )
+    {
+        FaveItemForSale[ FaveItemForSale.Length ] = WeaponPickupClass;
+        SaveFavorites();
+    }
+}
+
+function RemoveFromFavorites( class<Pickup> Item )
+{
+    local int i;
+
+    for( i = 0; i < FaveItemForSale.Length; ++i )
+    {
+        if( Item == FaveItemForSale[i] )
+        {
+            FaveItemForSale.Remove(i, 1);
+            break;
+        }
+    }
+
+    SaveFavorites();
+}
+
+function SaveFavorites()
+{
+    SaveConfig();
+}
 
 defaultproperties
 {
@@ -25,60 +86,78 @@ defaultproperties
      EquipmentCategories(2)=(EquipmentCategoryID=2,EquipmentCategoryName="Primary")
      EquipmentCategories(3)=(EquipmentCategoryID=3,EquipmentCategoryName="Specials")
      EquipmentCategories(4)=(EquipmentCategoryID=4,EquipmentCategoryName="Equipment")
-     ItemForSale(0)=Class'KFMod.MP7MPickup'
-     ItemForSale(1)=Class'KFMod.MP5MPickup'
-     ItemForSale(2)=Class'KFMod.M7A3MPickup'
-     ItemForSale(3)=Class'KFMod.KrissMPickup'
-     ItemForSale(4)=Class'KFMod.ShotgunPickup'
-     ItemForSale(5)=Class'KFMod.BoomStickPickup'
-     ItemForSale(6)=Class'KFMod.KSGPickup'
-     ItemForSale(7)=Class'KFMod.NailGunPickup'
-     ItemForSale(8)=Class'KFMod.SPShotgunPickup'
-     ItemForSale(9)=Class'KFMod.BenelliPickup'
-     ItemForSale(10)=Class'KFMod.AA12Pickup'
-     ItemForSale(11)=Class'KFMod.SinglePickup'
-     ItemForSale(12)=Class'KFMod.DualiesPickup'
-     ItemForSale(13)=Class'KFMod.WinchesterPickup'
-     ItemForSale(14)=Class'KFMod.Magnum44Pickup'
-     ItemForSale(15)=Class'KFMod.DeaglePickup'
-     ItemForSale(16)=Class'KFMod.MK23Pickup'
-     ItemForSale(17)=Class'KFMod.CrossbowPickup'
-     ItemForSale(18)=Class'KFMod.Dual44MagnumPickup'
-     ItemForSale(19)=Class'KFMod.DualMK23Pickup'
-     ItemForSale(20)=Class'KFMod.DualDeaglePickup'
-     ItemForSale(21)=Class'KFMod.SPSniperPickup'
-     ItemForSale(22)=Class'KFMod.M14EBRPickup'
-     ItemForSale(23)=Class'KFMod.M99Pickup'
-     ItemForSale(24)=Class'KFMod.BullpupPickup'
-     ItemForSale(25)=Class'KFMod.ThompsonPickup'
-     ItemForSale(26)=Class'KFMod.SPThompsonPickup'
-     ItemForSale(27)=Class'KFMod.ThompsonDrumPickup'
-     ItemForSale(28)=Class'KFMod.AK47Pickup'
-     ItemForSale(29)=Class'KFMod.M4Pickup'
-     ItemForSale(30)=Class'KFMod.MKb42Pickup'
-     ItemForSale(31)=Class'KFMod.SCARMK17Pickup'
-     ItemForSale(32)=Class'KFMod.FNFAL_ACOG_Pickup'
-     ItemForSale(33)=Class'KFMod.KnifePickup'
-     ItemForSale(34)=Class'KFMod.MachetePickup'
-     ItemForSale(35)=Class'KFMod.AxePickup'
-     ItemForSale(36)=Class'KFMod.KatanaPickup'
-     ItemForSale(37)=Class'KFMod.ScythePickup'
-     ItemForSale(38)=Class'KFMod.ChainsawPickup'
-     ItemForSale(39)=Class'KFMod.DwarfAxePickup'
-     ItemForSale(40)=Class'KFMod.ClaymoreSwordPickup'
-     ItemForSale(41)=Class'KFMod.CrossbuzzsawPickup'
-     ItemForSale(42)=Class'KFMod.MAC10Pickup'
-     ItemForSale(43)=Class'KFMod.FlareRevolverPickup'
-     ItemForSale(44)=Class'KFMod.FlameThrowerPickup'
-     ItemForSale(45)=Class'KFMod.DualFlareRevolverPickup'
-     ItemForSale(46)=Class'KFMod.TrenchgunPickup'
-     ItemForSale(47)=Class'KFMod.HuskGunPickup'
-     ItemForSale(48)=Class'KFMod.M79Pickup'
-     ItemForSale(49)=Class'KFMod.SPGrenadePickup'
-     ItemForSale(50)=Class'KFMod.PipeBombPickup'
-     ItemForSale(51)=Class'KFMod.M32Pickup'
-     ItemForSale(52)=Class'KFMod.LAWPickup'
-     ItemForSale(53)=Class'KFMod.M4203Pickup'
-     ItemForSale(54)=Class'KFMod.ZEDGunPickup'
+     MediItemForSale(0)=Class'KFMod.MP7MPickup'
+     MediItemForSale(1)=Class'KFMod.BlowerThrowerPickup'
+     MediItemForSale(2)=Class'KFMod.MP5MPickup'
+     MediItemForSale(3)=Class'KFMod.CamoMP5MPickup'
+     MediItemForSale(4)=Class'KFMod.M7A3MPickup'
+     MediItemForSale(5)=Class'KFMod.KrissMPickup'
+     SuppItemForSale(0)=Class'KFMod.ShotgunPickup'
+     SuppItemForSale(1)=Class'KFMod.CamoShotgunPickup'
+     SuppItemForSale(2)=Class'KFMod.BoomStickPickup'
+     SuppItemForSale(3)=Class'KFMod.KSGPickup'
+     SuppItemForSale(4)=Class'KFMod.NailGunPickup'
+     SuppItemForSale(5)=Class'KFMod.SPShotgunPickup'
+     SuppItemForSale(6)=Class'KFMod.BenelliPickup'
+     SuppItemForSale(7)=Class'KFMod.GoldenBenelliPickup'
+     SuppItemForSale(8)=Class'KFMod.AA12Pickup'
+     SuppItemForSale(9)=Class'KFMod.GoldenAA12Pickup'
+     ShrpItemForSale(0)=Class'KFMod.SinglePickup'
+     ShrpItemForSale(1)=Class'KFMod.DualiesPickup'
+     ShrpItemForSale(2)=Class'KFMod.WinchesterPickup'
+     ShrpItemForSale(3)=Class'KFMod.Magnum44Pickup'
+     ShrpItemForSale(4)=Class'KFMod.DeaglePickup'
+     ShrpItemForSale(5)=Class'KFMod.GoldenDeaglePickup'
+     ShrpItemForSale(6)=Class'KFMod.MK23Pickup'
+     ShrpItemForSale(7)=Class'KFMod.CrossbowPickup'
+     ShrpItemForSale(8)=Class'KFMod.Dual44MagnumPickup'
+     ShrpItemForSale(9)=Class'KFMod.DualMK23Pickup'
+     ShrpItemForSale(10)=Class'KFMod.DualDeaglePickup'
+     ShrpItemForSale(11)=Class'KFMod.GoldenDualDeaglePickup'
+     ShrpItemForSale(12)=Class'KFMod.SPSniperPickup'
+     ShrpItemForSale(13)=Class'KFMod.M14EBRPickup'
+     ShrpItemForSale(14)=Class'KFMod.M99Pickup'
+     CommItemForSale(0)=Class'KFMod.BullpupPickup'
+     CommItemForSale(1)=Class'KFMod.ThompsonPickup'
+     CommItemForSale(2)=Class'KFMod.SPThompsonPickup'
+     CommItemForSale(3)=Class'KFMod.ThompsonDrumPickup'
+     CommItemForSale(4)=Class'KFMod.AK47Pickup'
+     CommItemForSale(5)=Class'KFMod.GoldenAK47pickup'
+     CommItemForSale(6)=Class'KFMod.M4Pickup'
+     CommItemForSale(7)=Class'KFMod.CamoM4Pickup'
+     CommItemForSale(8)=Class'KFMod.MKb42Pickup'
+     CommItemForSale(9)=Class'KFMod.SCARMK17Pickup'
+     CommItemForSale(10)=Class'KFMod.FNFAL_ACOG_Pickup'
+     BersItemForSale(0)=Class'KFMod.KnifePickup'
+     BersItemForSale(1)=Class'KFMod.MachetePickup'
+     BersItemForSale(2)=Class'KFMod.AxePickup'
+     BersItemForSale(3)=Class'KFMod.KatanaPickup'
+     BersItemForSale(4)=Class'KFMod.GoldenKatanaPickup'
+     BersItemForSale(5)=Class'KFMod.ScythePickup'
+     BersItemForSale(6)=Class'KFMod.ChainsawPickup'
+     BersItemForSale(7)=Class'KFMod.GoldenChainsawPickup'
+     BersItemForSale(8)=Class'KFMod.DwarfAxePickup'
+     BersItemForSale(9)=Class'KFMod.ClaymoreSwordPickup'
+     BersItemForSale(10)=Class'KFMod.CrossbuzzsawPickup'
+     FireItemForSale(0)=Class'KFMod.MAC10Pickup'
+     FireItemForSale(1)=Class'KFMod.FlareRevolverPickup'
+     FireItemForSale(2)=Class'KFMod.FlameThrowerPickup'
+     FireItemForSale(3)=Class'KFMod.GoldenFTPickup'
+     FireItemForSale(4)=Class'KFMod.DualFlareRevolverPickup'
+     FireItemForSale(5)=Class'KFMod.TrenchgunPickup'
+     FireItemForSale(6)=Class'KFMod.HuskGunPickup'
+     DemoItemForSale(0)=Class'KFMod.M79Pickup'
+     DemoItemForSale(1)=Class'KFMod.GoldenM79Pickup'
+     DemoItemForSale(2)=Class'KFMod.SPGrenadePickup'
+     DemoItemForSale(3)=Class'KFMod.PipeBombPickup'
+     DemoItemForSale(4)=Class'KFMod.SealSquealPickup'
+     DemoItemForSale(5)=Class'KFMod.SeekerSixPickup'
+     DemoItemForSale(6)=Class'KFMod.M4203Pickup'
+     DemoItemForSale(7)=Class'KFMod.LAWPickup'
+     DemoItemForSale(8)=Class'KFMod.M32Pickup'
+     DemoItemForSale(9)=Class'KFMod.CamoM32Pickup'
+     NeutItemForSale(0)=Class'KFMod.ZEDMKIIPickup'
+     NeutItemForSale(1)=Class'KFMod.ZEDGunPickup'
+     NeutItemForSale(2)=Class'KFMod.Potato'
      WaveSpawnPeriod=2.000000
 }

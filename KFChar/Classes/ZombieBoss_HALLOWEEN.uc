@@ -11,6 +11,12 @@ simulated function CloakBoss()
 	local Controller C;
 	local int Index;
 
+    // No cloaking if zapped
+    if( bZapped )
+    {
+        return;
+    }
+
 	if ( bSpotted )
 	{
 		Visibility = 120;
@@ -156,6 +162,8 @@ Begin:
 defaultproperties
 {
      RocketFireSound=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Patriarch.Kev_FireRocket'
+     MiniGunFireSound=Sound'KF_BasePatriarch.Attack.Kev_MG_GunfireLoop'
+     MiniGunSpinSound=Sound'KF_BasePatriarch.Attack.Kev_MG_TurbineFireLoop'
      MeleeImpaleHitSound=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Patriarch.Kev_HitPlayer_Impale'
      MoanVoice=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Patriarch.Kev_Talk'
      MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Patriarch.Kev_HitPlayer_Fist'
@@ -168,5 +176,6 @@ defaultproperties
      MenuName="HALLOWEEN Patriarch"
      AmbientSound=Sound'KF_BasePatriarch_HALLOWEEN.Kev_IdleLoop'
      Mesh=SkeletalMesh'KF_Freaks_Trip_HALLOWEEN.Patriarch_Halloween'
+     Skins(0)=Combiner'KF_Specimens_Trip_T.gatling_cmb'
      Skins(1)=Combiner'KF_Specimens_Trip_HALLOWEEN_T.Patriarch.Patriarch_RedneckZombie_CMB'
 }

@@ -13,7 +13,6 @@
 class ACTION_ChangeViewTarget extends ScriptedAction;
 
 var() name ViewActorTag;
-var   Actor ViewActor;
 var   bool bViewingActor;
 
 
@@ -24,7 +23,7 @@ function bool InitActionFor(ScriptedController C)
 {
     local Controller CC;
     local PlayerController PC;
-    local Actor TestActor;
+    local Actor TestActor, ViewActor;
 
     if(ViewActorTag != '')
     {

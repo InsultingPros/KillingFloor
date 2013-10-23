@@ -40,6 +40,7 @@ var	array<KillAssistant>	KillAssistants;	// List of Controllers who damaged the 
 
 /* Should this monster query the pawns he is attacking to assess threat priority?   -  NOTE:   currently only enabled in story mode gametype*/
 var bool                    bUseThreatAssessment;
+var PathNode                ScriptedMoveTarget;
 
 function Restart()
 {
@@ -101,6 +102,39 @@ function AvoidThisMonster(KFMonster Feared)
 	GoalString = "VEHICLE AVOID!";
 	AvoidMonster = Feared;
 	GotoState('MonsterAvoid');
+}
+
+// This state currently only used in KFO-FrightYard to force Zeds into the toxic pit.
+// State is activated by KFVolume_ZedPit, when touched by a Zed.
+state ScriptedMoveTo
+{
+    ignores TakeDamage, SeePlayer, HearNoise, SeeMonster, Bump, HitWall, Touch;
+
+    function BeginState()
+    {
+        //log( self$" MoveToNodeGoal BeginState" );
+    }
+
+Begin:
+    if( Pawn.Physics == PHYS_Falling )
+    {
+        WaitForLanding();
+    }
+    if( ActorReachable( ScriptedMoveTarget ) )
+    {
+        MoveToward( ScriptedMoveTarget );
+        Goto( 'Begin' );
+    }
+    else if( FindBestPathToward( ScriptedMoveTarget, false, false ) )
+    {
+        MoveToward( MoveTarget );
+        Goto( 'Begin' );
+    }
+    else
+    {
+        Sleep( 0.1f );
+        Goto( 'Begin' );
+    }
 }
 
 // State for being scared of something, the bot attempts to move away from it
@@ -390,7 +424,7 @@ function bool FindFreshBody()
 function bool FindNewEnemy()
 {
 	local Pawn BestEnemy;
-	local bool bSeeBest, bSeeNew, bNewCloser;
+	local bool bSeeBest;
 	local float BestDist, NewDist;
 	local Controller PC;
 	local KFHumanPawn Human;
@@ -430,14 +464,10 @@ function bool FindNewEnemy()
             else  // Dont use threat assessment.  Fall back on the old Distance based stuff.
             {
 			    NewDist = VSizeSquared(Human.Location - Pawn.Location);
-			    bSeeNew = CanSee(Human);
-			    bNewCloser = NewDist < BestDist;
-				if( (BestEnemy == none) ||
-                    ((bNewCloser || bSeeNew) && !bSeeBest) )
+				if( BestEnemy == none || (NewDist < BestDist) )
 				{
                     BestEnemy = Human;
                     BestDist = NewDist;
-					bSeeBest = bSeeNew;
                 }
 		    }
 		}
@@ -798,6 +828,29 @@ state ZombieHunt extends Hunting
     }
 }
 
+function NotifyTakeHit(pawn InstigatedBy, vector HitLocation, int Damage, class<DamageType> damageType, vector Momentum)
+{
+	local KFMonster Monster;
+
+    // Get ticked and attack nearby bloats because you think they puked on you!
+    if(class<DamTypeBlowerThrower>(DamageType)!=none && Damage > 0)
+    {
+        foreach VisibleCollidingActors( class 'KFMonster', Monster, 1000, Pawn.Location )
+     	{
+    	   if( Monster.IsA('ZombieBloatBase') && Monster != Pawn && KFHumanPawn(instigatedBy) != none )
+    	   {
+    	        if( KFMonster(Pawn) != none )
+    	        {
+                    SetEnemy(Monster,true,KFMonster(Pawn).HumanBileAggroChance);
+    	        }
+    	        return;
+    	   }
+    	}
+    }
+
+	Super.NotifyTakeHit(InstigatedBy,HitLocation,Damage,DamageType,Momentum);
+}
+
 state ZombieCharge extends Charging
 {
 	function SeePlayer( Pawn Seen )
@@ -825,6 +878,29 @@ state ZombieCharge extends Charging
 	{
 		return false;
 	}
+
+	function NotifyTakeHit(pawn InstigatedBy, vector HitLocation, int Damage, class<DamageType> damageType, vector Momentum)
+	{
+		local KFMonster Monster;
+
+        // Get ticked and attack nearby bloats because you think they puked on you!
+        if(class<DamTypeBlowerThrower>(DamageType)!=none && Damage > 0)
+        {
+            foreach VisibleCollidingActors( class 'KFMonster', Monster, 1000, Pawn.Location )
+         	{
+        	   if( Monster.IsA('ZombieBloatBase') && Monster != Pawn && KFHumanPawn(instigatedBy) != none )
+        	   {
+        	        if( KFMonster(Pawn) != none )
+        	        {
+                        SetEnemy(Monster,true,KFMonster(Pawn).HumanBileAggroChance);
+        	        }
+        	        return;
+        	   }
+        	}
+        }
+
+		Super.NotifyTakeHit(InstigatedBy,HitLocation, Damage,DamageType,Momentum);
+    }
 
 Begin:
 	if (Pawn.Physics == PHYS_Falling)
@@ -1531,7 +1607,7 @@ Begin:
 	WhatToDoNext(99);
 }
 
-function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster )
+function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster, optional float MonsterHateChanceOverride )
 {
     /* This enemy is of absolutely no threat currently, ignore it */
     if(bUseThreatAssessment && KFHumanpawn(NewEnemy) != none &&
@@ -1542,19 +1618,26 @@ function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster )
 
 	if( !bHateMonster && KFHumanPawnEnemy(NewEnemy)!=None && KFHumanPawnEnemy(NewEnemy).AttitudeToSpecimen<=ATTITUDE_Ignore )
 		Return False; // In other words, dont attack human pawns as long as they dont damage me or hates me.
+
 	if( KFM.Intelligence>=BRAINS_Mammal && Enemy!=None && NewEnemy!=None && NewEnemy!=Enemy && NewEnemy.Controller!=None && NewEnemy.Controller.bIsPlayer )
 	{
 		if( LineOfSightTo(Enemy) && VSize(Enemy.Location-Pawn.Location)<VSize(NewEnemy.Location-Pawn.Location) )
 			Return False;
 		Enemy = None;
 	}
-	if( bHateMonster && KFMonster(NewEnemy)!=None && NewEnemy.Controller!=None && (NewEnemy.Controller.Target==Self || FRand()<0.15)
+
+	if( MonsterHateChanceOverride == 0 )
+	{
+	   MonsterHateChanceOverride = 0.15;
+	}
+
+	if( bHateMonster && KFMonster(NewEnemy)!=None && NewEnemy.Controller!=None && (NewEnemy.Controller.Target==Self || FRand()<MonsterHateChanceOverride)
 	 && NewEnemy.Health>0 && VSize(NewEnemy.Location-Pawn.Location)<1500 && LineOfSightTo(NewEnemy) ) // Get pissed at this fucker..
 	{
-		ChangeEnemy(NewEnemy,CanSee(NewEnemy));
+        ChangeEnemy(NewEnemy,CanSee(NewEnemy));
 		return true;
 	}
-	if( Super.SetEnemy(NewEnemy,bHateMonster) )
+	if( Super.SetEnemy(NewEnemy,bHateMonster,MonsterHateChanceOverride) )
 	{
 		if( !bTriggeredFirstEvent )
 		{
@@ -1577,11 +1660,11 @@ Ignores Tick,Timer,FindNewEnemy,NotifyLanded,DoWaitForLanding;
 		SetEnemy(EventInstigator,True);
 		WhatToDoNext(56);
 	}
-	function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster )
+	function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster, optional float MonsterHateChanceOverride )
 	{
 		if( Level.TimeSeconds<1 )
 			Return False;
-		Return Global.SetEnemy(NewEnemy,bHateMonster);
+		Return Global.SetEnemy(NewEnemy,bHateMonster,MonsterHateChanceOverride);
 	}
 	function EndState()
 	{

@@ -329,7 +329,8 @@ simulated function HitWall( vector HitNormal, actor Wall )
 
 		if( Fear == none )
 		{
-		    Fear = Spawn(class'AvoidMarker');
+		    //(jc) Changed to use MedicNade-specific grenade that's overridden to not make the ringmaster fear it
+		    Fear = Spawn(class'AvoidMarker_MedicNade');
     		Fear.SetCollisionSize(DamageRadius,DamageRadius);
     		Fear.StartleBots();
 		}

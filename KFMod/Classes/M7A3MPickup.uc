@@ -12,7 +12,7 @@ class M7A3MPickup extends MedicGunPickup;
 defaultproperties
 {
      Weight=6.000000
-     cost=7500
+     cost=2050
      AmmoCost=10
      BuyClipSize=15
      PowerValue=45

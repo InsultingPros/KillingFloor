@@ -16,20 +16,40 @@ var automated	GUIWeaponBar 	b_power,b_range,b_speed; //Weapon stats bars
 var automated	localized 	String Weight;
 var				class<Pickup> 	OldPickupClass;
 
+var automated   GUIButton       FavoriteButton;
+
+var             bool            bFavorited;
+
+var localized   string          FavoriteString;
+var localized   string          UnfavoriteString;
+
+// cache it!
+var KFLevelRules KFLR;
+
 function InitComponent( GUIController MyController, GUIComponent MyOwner )
 {
 	Super.InitComponent(MyController,MyOwner);
-	
+
 	b_power.SetValue(0);
 	b_power.SetVisibility(false);
 	b_speed.SetValue(0);
 	b_speed.SetVisibility(false);
 	b_range.SetValue(0);
 	b_range.SetVisibility(false);
-	
+
 	ItemPower.SetVisibility(false);
 	ItemRange.SetVisibility(false);
-	ItemSpeed.SetVisibility(false);		
+	ItemSpeed.SetVisibility(false);
+}
+
+function Opened( GUIComponent Sender )
+{
+    super.Opened( Sender );
+
+    foreach PlayerOwner().DynamicActors(class'KFLevelRules', KFLR)
+    {
+        break;
+	}
 }
 
 function Display(GUIBuyable NewBuyable)
@@ -42,39 +62,52 @@ function Display(GUIBuyable NewBuyable)
 		b_speed.SetVisibility(false);
 		b_range.SetValue(0);
 		b_range.SetVisibility(false);
-		
+
 		ItemPower.SetVisibility(false);
 		ItemRange.SetVisibility(false);
 		ItemSpeed.SetVisibility(false);
 
 		WeightLabel.SetVisibility(false);
 		WeightLabelBG.SetVisibility(false);
-	} 
+
+		FavoriteButton.SetVisibility(false);
+	}
 	else
 	{
 		b_power.SetValue(NewBuyable.ItemPower);
 		b_speed.SetValue(NewBuyable.ItemSpeed);
 		b_range.SetValue(NewBuyable.ItemRange);
-		
+
 		b_power.SetVisibility(true);
 		b_speed.SetVisibility(true);
 		b_range.SetVisibility(true);
-		
+
 		ItemPower.SetVisibility(true);
 		ItemRange.SetVisibility(true);
 		ItemSpeed.SetVisibility(true);
-		
+
 		WeightLabel.SetVisibility(true);
-		WeightLabelBG.SetVisibility(true);		
+		WeightLabelBG.SetVisibility(true);
+
+        if( NewBuyable.bSaleList )
+        {
+    		FavoriteButton.SetVisibility(true);
+    	}
+    	else
+    	{
+    	   FavoriteButton.SetVisibility(false);
+    	}
+    	bFavorited = KFLR.IsFavorited( NewBuyable.ItemPickupClass );
+    	RefreshFavoriteButton();
 	}
-	
+
 	if ( NewBuyable != none )
 	{
 		ItemName.Caption = NewBuyable.ItemName;
 		ItemNameBG.bVisible = true;
 		ItemImage.Image = NewBuyable.ItemImage;
-		WeightLabel.Caption = Repl(Weight, "%i", int(NewBuyable.ItemWeight));		
-		
+		WeightLabel.Caption = Repl(Weight, "%i", int(NewBuyable.ItemWeight));
+
 		OldPickupClass = NewBuyable.ItemPickupClass;
 	}
 	else
@@ -82,10 +115,45 @@ function Display(GUIBuyable NewBuyable)
 		ItemName.Caption = "";
 		ItemNameBG.bVisible = false;
 		ItemImage.Image = none;
-		WeightLabel.Caption = "";	
+		WeightLabel.Caption = "";
 	}
-	
+
 	Super.Display(NewBuyable);
+}
+
+function RefreshFavoriteButton()
+{
+    if( bFavorited )
+	{
+	    FavoriteButton.Caption = UnfavoriteString;
+	}
+	else
+	{
+	    FavoriteButton.Caption = FavoriteString;
+	}
+}
+
+function bool InternalOnClick( GUIComponent Sender )
+{
+    if( Sender == FavoriteButton )
+    {
+        if( OldPickupClass != none )
+        {
+            if( bFavorited )
+            {
+                KFLR.RemoveFromFavorites( OldPickupClass );
+            }
+            else
+            {
+                KFLR.AddToFavorites( OldPickupClass );
+            }
+
+            bFavorited = !bFavorited;
+            RefreshFavoriteButton();
+        }
+    }
+
+    return true;
 }
 
 defaultproperties
@@ -224,4 +292,18 @@ defaultproperties
      b_speed=GUIWeaponBar'KFGui.GUIBuyWeaponInfoPanel.SpeedBar'
 
      Weight="Weight: %i blocks"
+     Begin Object Class=GUIButton Name=FavoriteB
+         Caption="Favorite"
+         WinTop=1.000000
+         WinLeft=0.250000
+         WinWidth=0.500000
+         WinHeight=0.080000
+         RenderWeight=0.900000
+         OnClick=GUIBuyWeaponInfoPanel.InternalOnClick
+         OnKeyEvent=FavoriteB.InternalOnKeyEvent
+     End Object
+     FavoriteButton=GUIButton'KFGui.GUIBuyWeaponInfoPanel.FavoriteB'
+
+     FavoriteString="Favorite"
+     UnfavoriteString="Un-favorite"
 }

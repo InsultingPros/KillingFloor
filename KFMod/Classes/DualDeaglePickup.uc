@@ -20,7 +20,7 @@ defaultproperties
      AmmoMesh=StaticMesh'KillingFloorStatics.DeagleAmmo'
      CorrespondingPerkIndex=2
      EquipmentCategoryID=1
-     GoldenVariantClass=Class'KFMod.GoldenDualDeaglePickup'
+     VariantClasses(0)=Class'KFMod.GoldenDualDeaglePickup'
      InventoryType=Class'KFMod.DualDeagle'
      PickupMessage="You found another Handcannon"
      PickupSound=Sound'KF_HandcannonSnd.50AE_Pickup'

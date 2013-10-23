@@ -3,7 +3,6 @@ class DamTypeZEDGun extends KFProjectileWeaponDamageType
 
 defaultproperties
 {
-     bIsPowerWeapon=True
      WeaponClass=Class'KFMod.ZEDGun'
      DeathString="%k killed %o (ZEDGun)."
      FemaleSuicide="%o shot herself in the foot."

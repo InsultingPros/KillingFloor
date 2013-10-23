@@ -11,7 +11,7 @@ class M4203Pickup extends M4Pickup;
 
 defaultproperties
 {
-     cost=3500
+     cost=2750
      BuyClipSize=1
      PowerValue=90
      RangeValue=75

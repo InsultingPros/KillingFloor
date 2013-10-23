@@ -20,7 +20,7 @@ defaultproperties
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      CorrespondingPerkIndex=3
      EquipmentCategoryID=2
-     GoldenVariantClass=Class'KFMod.GoldenAK47pickup'
+     VariantClasses(0)=Class'KFMod.GoldenAK47pickup'
      InventoryType=Class'KFMod.AK47AssaultRifle'
      PickupMessage="You got the AK47"
      PickupSound=Sound'KF_AK47Snd.AK47_Pickup'

@@ -42,6 +42,9 @@ var									array<KFMonster>			ZEDList;
 /* if true, ignore the lineofsight check in SpawnInHere() so that zombies can spawn in plain sight  */
 var()		                        bool						bAllowPlainSightSpawns;
 
+/* This volume is only used for spawning in Objective Mode */
+var(Advanced)                       bool                        bObjectiveModeOnly;
+
 
 // Init the spawn points of this actor
 function PostBeginPlay()
@@ -54,6 +57,11 @@ function PostBeginPlay()
 function Reset()
 {
 	LastCheckTime = 0;
+}
+
+event Trigger( Actor Other, Pawn EventInstigator )
+{
+    bVolumeIsEnabled = !bVolumeIsEnabled;
 }
 
 function NotifyNewWave( int CurWave )
@@ -81,6 +89,11 @@ function NotifyNewWave( int CurWave )
 // at the cost of possibly returning occasional inaccurate values
 function bool CanSpawnInHere( array< class<KFMonster> > zombies )
 {
+    if(bObjectiveModeOnly && !Level.Game.IsA('KFStoryGameInfo'))
+    {
+        return false;
+    }
+
 	if( LastCheckTime < Level.TimeSeconds )
 	{
 		//LastCheckTime = Level.TimeSeconds+CanRespawnTime;

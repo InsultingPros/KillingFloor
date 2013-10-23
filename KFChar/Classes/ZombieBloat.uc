@@ -484,8 +484,18 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
 	// Bloats are volatile. They burn faster than other zeds.
 	if (DamageType == class 'DamTypeBurned')
 		Damage *= 1.5;
-	if( damageType!=Class'DamTypeVomit' )
-		Super.TakeDamage(Damage,instigatedBy,hitlocation,momentum,damageType,HitIndex);
+
+	if (damageType == class 'DamTypeVomit')
+	{
+		return;
+	}
+	else if( damageType == class 'DamTypeBlowerThrower' )
+	{
+	   // Reduced damage from the blower thrower bile, but lets not zero it out entirely
+       Damage *= 0.25;
+	}
+
+	Super.TakeDamage(Damage,instigatedBy,hitlocation,momentum,damageType,HitIndex);
 }
 
 simulated function ProcessHitFX()
@@ -519,7 +529,16 @@ simulated function ProcessHitFX()
 		{
 			SpawnGibs( HitFX[SimHitFxTicker].rotDir, 1);
 			bGibbed = true;
-			Destroy();
+			// Wait a tick on a listen server so the obliteration can replicate before the pawn is destroyed
+            if( Level.NetMode == NM_ListenServer )
+			{
+                bDestroyNextTick = true;
+                TimeSetDestroyNextTickTime = Level.TimeSeconds;
+            }
+            else
+            {
+                Destroy();
+			}
 			return;
 		}
 

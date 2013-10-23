@@ -343,7 +343,7 @@ defaultproperties
      PlayersListBoxClass="GUI2K4.UT2K4Browser_PlayersListBox"
      MainSplitterPosition=0.665672
      DetailSplitterPosition=0.460938
-     HeaderColumnSizes(0)=(ColumnSizes=(0.096562,0.446875,0.292812,0.110625,0.150000))
+     HeaderColumnSizes(0)=(ColumnSizes=(0.100000,0.400000,0.200000,0.100000,0.100000,0.100000))
      HeaderColumnSizes(1)=(ColumnSizes=(0.564287,0.500000))
      HeaderColumnSizes(2)=(ColumnSizes=(0.340000,0.220000,0.286591,0.220000))
      bAllowUpdates=True

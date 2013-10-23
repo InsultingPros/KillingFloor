@@ -17,7 +17,7 @@ defaultproperties
      AmmoMesh=StaticMesh'KillingFloorStatics.XbowAmmo'
      CorrespondingPerkIndex=6
      EquipmentCategoryID=2
-     GoldenVariantClass=Class'KFMod.GoldenM79Pickup'
+     VariantClasses(0)=Class'KFMod.GoldenM79Pickup'
      MaxDesireability=0.790000
      InventoryType=Class'KFMod.M79GrenadeLauncher'
      PickupMessage="You got the M79 Grenade Launcher."

@@ -227,7 +227,7 @@ function AllSpawningFinished()
     }
 
     NumStragglers = StoryGi.NumMonsters;
-    log("Number of stragglers at the time this Wave ended was : "@NumStragglers,'Story_Debug');
+    //log("Number of stragglers at the time this Wave ended was : "@NumStragglers,'Story_Debug');
 }
 
 
@@ -450,16 +450,16 @@ function DoSquadSpawn()
     /* Make sure the squad size never exceeds the total max enemies value in the level rules */
     if(IgnoreZEDLimit == 0 && MaxMonstersAtOnce(NumToSpawn,ClampedMonsters))
     {
-        log("DoSquadSpawn want to spawn "$NumToSpawn$" can only spawn "$ClampedMonsters,'Story_Debug');
+        //log("DoSquadSpawn want to spawn "$NumToSpawn$" can only spawn "$ClampedMonsters,'Story_Debug');
         for(i=0; i < NextSpawnSquad.length ; i ++)
         {
             if( i < ClampedMonsters )
             {
-                log("DoSquadSpawn wants to spawn "$NextSpawnSquad[i],'Story_Debug');
+                //log("DoSquadSpawn wants to spawn "$NextSpawnSquad[i],'Story_Debug');
             }
             else
             {
-                log("DoSquadSpawn wants to spawn "$NextSpawnSquad[i]$" but can't because there are too many monsters already",'Story_Debug');
+                //log("DoSquadSpawn wants to spawn "$NextSpawnSquad[i]$" but can't because there are too many monsters already",'Story_Debug');
             }
         }
         NumToSpawn = ClampedMonsters;
@@ -468,7 +468,7 @@ function DoSquadSpawn()
     {
         for(i=0; i < NextSpawnSquad.length ; i ++)
         {
-            log("DoSquadSpawn wants to spawn "$NextSpawnSquad[i],'Story_Debug');
+            //log("DoSquadSpawn wants to spawn "$NextSpawnSquad[i],'Story_Debug');
         }
     }
 
@@ -490,7 +490,7 @@ function bool SpawnASquad(int NumDesired, optional string SquadName)
 
     for(i=0; i < NextSpawnSquad.length ; i ++)
     {
-        log("SpawnASquad wants to spawn "$NextSpawnSquad[i],'Story_Debug');
+        //log("SpawnASquad wants to spawn "$NextSpawnSquad[i],'Story_Debug');
     }
 
     StoryGI.NextSpawnSquad = NextSpawnSquad;         // needs to be set *before* we look for a Zombie Volume, as RateZombieVolume() checks this array
@@ -590,7 +590,7 @@ function OnSquadSpawnComplete(optional string SquadName)
 {
     local int SquadIdx;
 
-    log(SquadName@" just spawned successfully!", 'Story_Debug');
+    //log(SquadName@" just spawned successfully!", 'Story_Debug');
 
     bFinishedLastSquadSpawn=true;
 
@@ -741,7 +741,7 @@ function KFStoryGameInfo.SZEDSquadType     FindSquadByName(string SquadName, opt
 
     if(ExportSquad.Squad_Name == "")
     {
-       log("Warning - could not find a suitable struct for Squad of Name : "@SquadName);
+       //log("Warning - could not find a suitable struct for Squad of Name : "@SquadName);
     }
 
     return ExportSquad;
@@ -853,7 +853,7 @@ function array<class <KFMonster> > BuildNextSpawnSquad(optional out int bIgnoreZ
         if( CurrentSpawnCycle.SquadList.length == CurrentSpawnCycle.SpawnedSquads.Length )
         {
             CurrentSpawnCycle.SpawnedSquads.Length = 0;
-            log("Resetting SpawnedSquad list as we've already been through every squad",'Story_Debug');
+            //log("Resetting SpawnedSquad list as we've already been through every squad",'Story_Debug');
         }
 
         for(i = 0 ; i < CurrentSpawnCycle.SquadList.length ; i ++)
@@ -873,18 +873,18 @@ function array<class <KFMonster> > BuildNextSpawnSquad(optional out int bIgnoreZ
             {
                 SquadsToRate[SquadsToRate.length] = CurrentSpawnCycle.SquadList[i];
                 SquadIndexes[SquadsToRate.length - 1] = i;
-                log(">> Adding Squad to Randomly Cycle Through :: "@CurrentSpawnCycle.SquadList[i],'Story_Debug');
+                //log(">> Adding Squad to Randomly Cycle Through :: "@CurrentSpawnCycle.SquadList[i],'Story_Debug');
             }
             else
             {
-                log("<< Skipping already used Squad :: "@CurrentSpawnCycle.SquadList[i],'Story_Debug');
+                //log("<< Skipping already used Squad :: "@CurrentSpawnCycle.SquadList[i],'Story_Debug');
             }
         }
 
         BestIdx = Rand(SquadsToRate.length);
         // Add this squad to the list of squads that already have been used
         CurrentSpawnCycle.SpawnedSquads[CurrentSpawnCycle.SpawnedSquads.length] = SquadIndexes[BestIdx];
-        log("** Used Squad :: "@SquadsToRate[BestIdx],'Story_Debug');
+        //log("** Used Squad :: "@SquadsToRate[BestIdx],'Story_Debug');
     }
     else
     {
@@ -896,12 +896,12 @@ function array<class <KFMonster> > BuildNextSpawnSquad(optional out int bIgnoreZ
         for(i = 0 ; i < CurrentSpawnCycle.SquadList.length ; i ++)
         {
             ZSquad = FindSquadByName(CurrentSpawnCycle.SquadList[i]);
-            log(CurrentSpawnCycle.SquadList[i]@" Last Spawned time : "@ZSquad.LastSquadSpawnTime@" :: MinSpawnInterval : "@ZSquad.MinTimeBetweenSpawns);
+//            log(CurrentSpawnCycle.SquadList[i]@" Last Spawned time : "@ZSquad.LastSquadSpawnTime@" :: MinSpawnInterval : "@ZSquad.MinTimeBetweenSpawns);
 
             /* Has enough time passed between spawns of this squad? */
             if(ZSquad.LastSquadSpawnTime > 0 && Level.TimeSeconds - ZSquad.LastSquadSpawnTime < ZSquad.MinTimeBetweenSpawns)
             {
-                log("Rejected Spawn of : "@CurrentSpawnCycle.SquadList[i]@" because it spawned : "@Level.TimeSeconds-ZSquad.LastSquadSpawnTime@" seconds ago.  Next Allowed Spawn in : "@ZSquad.MinTimeBetweenSpawns - (Level.TimeSeconds - ZSquad.LastSquadSpawnTime));
+//                log("Rejected Spawn of : "@CurrentSpawnCycle.SquadList[i]@" because it spawned : "@Level.TimeSeconds-ZSquad.LastSquadSpawnTime@" seconds ago.  Next Allowed Spawn in : "@ZSquad.MinTimeBetweenSpawns - (Level.TimeSeconds - ZSquad.LastSquadSpawnTime));
                 continue;   // not long enough, skip this one.
             }
 
@@ -982,7 +982,7 @@ function array<class <KFMonster> > BuildNextSpawnSquad(optional out int bIgnoreZ
         /* Iterate the squad ratings and pick the highest one.  We'll be spawning that */
         for(i = 0 ; i < SquadRatings.length ; i ++)
         {
-            log("GetNextSquad ::: "@SquadsToRate[i]@" rolled a : "@SquadRatings[i],'Story_Debug');
+            //log("GetNextSquad ::: "@SquadsToRate[i]@" rolled a : "@SquadRatings[i],'Story_Debug');
 
             if(i == 0 ||
             SquadRatings[i] > BestRating)
@@ -992,7 +992,7 @@ function array<class <KFMonster> > BuildNextSpawnSquad(optional out int bIgnoreZ
             }
         }
 
-        log("GetNextSquad ::: "@"Selected -> "@SquadsToRate[BestIdx]@" to spawn.  It's priority is : "@string(GetEnum(Enum 'KFStoryGameInfo.EZEDSpawnPriority',FindSquadByName(SquadsToRate[BestIdx]).Squad_Priority)),'Story_Debug');
+        //log("GetNextSquad ::: "@"Selected -> "@SquadsToRate[BestIdx]@" to spawn.  It's priority is : "@string(GetEnum(Enum 'KFStoryGameInfo.EZEDSpawnPriority',FindSquadByName(SquadsToRate[BestIdx]).Squad_Priority)),'Story_Debug');
     }
 
     RandIdx = BestIdx;

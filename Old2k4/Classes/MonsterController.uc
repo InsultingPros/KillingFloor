@@ -192,7 +192,7 @@ function ChangeEnemy(Pawn NewEnemy, bool bCanSeeNewEnemy)
 	EnemyChanged(bCanSeeNewEnemy);
 }
 
-function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster )
+function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster, optional float MonsterHateChanceOverride )
 {
 	local float EnemyDist;
 	local bool bNewMonsterEnemy;
@@ -869,7 +869,7 @@ event bool NotifyBump(actor Other)
 function SetFall()
 {
 	if (Pawn.bCanFly)
-	{	
+	{
 		Pawn.SetPhysics(PHYS_Flying);
 		return;
 	}
@@ -895,15 +895,15 @@ function SetFall()
 //				Pawn.Velocity.Z = min( Pawn.JumpZ, Pawn.Velocity.Z );
 //				log( self$" SetFall modified Pawn Velocity.Z to "$Pawn.Velocity.Z );
 //				}
-			
+
 			bPlannedJump = true;
 			Pawn.Acceleration = vect(0,0,0);
-		}		
+		}
 		else
 		{
 			Pawn.Velocity = EAdjustJump(Pawn.Velocity.Z,Pawn.GroundSpeed);
 			Pawn.Acceleration = vect(0,0,0);
-		}		
+		}
 	}
 }
 

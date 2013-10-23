@@ -12,4 +12,9 @@ var	int Index;
 defaultproperties
 {
      bAcceptsInput=True
+     bCaptureMouse=True
+     bMouseOverSound=True
+     ToolTip=GUIToolTip'XInterface.GUIButton.GUIButtonToolTip'
+
+     OnClickSound=CS_Click
 }

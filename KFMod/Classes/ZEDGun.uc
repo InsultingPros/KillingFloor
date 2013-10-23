@@ -67,6 +67,22 @@ static function PreloadAssets(Inventory Inv, optional bool bSkipRefCount)
 	}
 }
 
+static function bool UnloadAssets()
+{
+	if ( super.UnloadAssets() )
+	{
+		default.ScriptedScreenBack = none;
+		default.ScreenWeakEnemyTexture = none;
+		default.ScreenMediumEnemyTexture = none;
+		default.ScreenStrongEnemyTexture = none;
+		default.ScreenBossEnemyTexture = none;
+
+		return true;
+	}
+
+	return false;
+}
+
 simulated function PostBeginPlay()
 {
 	super.PostBeginPlay();
@@ -699,7 +715,7 @@ defaultproperties
      DisplayFOV=65.000000
      Priority=205
      InventoryGroup=4
-     GroupOffset=15
+     GroupOffset=17
      PickupClass=Class'KFMod.ZEDGunPickup'
      PlayerViewOffset=(X=18.000000,Y=20.000000,Z=-6.000000)
      BobDamping=6.000000

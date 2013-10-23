@@ -25,6 +25,7 @@ defaultproperties
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      CorrespondingPerkIndex=3
      EquipmentCategoryID=2
+     VariantClasses(0)=Class'KFMod.CamoM4Pickup'
      InventoryType=Class'KFMod.M4AssaultRifle'
      PickupMessage="You got the M4"
      PickupSound=Sound'KF_M4RifleSnd.foley.WEP_M4_Foley_Pickup'

@@ -297,7 +297,16 @@ simulated function ProcessHitFX()
 		{
 			SpawnGibs( HitFX[SimHitFxTicker].rotDir, 1);
 			bGibbed = true;
-			Destroy();
+			// Wait a tick on a listen server so the obliteration can replicate before the pawn is destroyed
+            if( Level.NetMode == NM_ListenServer )
+			{
+                bDestroyNextTick = true;
+                TimeSetDestroyNextTickTime = Level.TimeSeconds;
+            }
+            else
+            {
+                Destroy();
+			}
 			return;
 		}
 

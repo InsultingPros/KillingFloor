@@ -118,7 +118,7 @@ static function int ExtraRange(KFPlayerReplicationInfo KFPRI)
 	return 2; // 100% Longer Range
 }
 
-static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, KFMonster Instigator, int InDamage, class<DamageType> DmgType)
+static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, Pawn Instigator, int InDamage, class<DamageType> DmgType)
 {
 	if ( class<DamTypeBurned>(DmgType) != none || class<DamTypeFlamethrower>(DmgType) != none
         || class<DamTypeHuskGunProjectileImpact>(DmgType) != none || class<DamTypeFlareProjectileImpact>(DmgType) != none )
@@ -218,7 +218,7 @@ static function AddDefaultInventory(KFPlayerReplicationInfo KFPRI, Pawn P)
 	// If Level 5, give them a Flame Thrower
 	if ( KFPRI.ClientVeteranSkillLevel >= 5 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.FlameThrower", GetCostScaling(KFPRI, class'FlamethrowerPickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.FlameThrower", default.StartingWeaponSellPriceLevel5);
 	}
 
 	// If Level 6, add Body Armor

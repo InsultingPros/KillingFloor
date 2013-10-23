@@ -15,12 +15,19 @@
 class ObjCondition_Area extends KF_ObjectiveCondition
 editinlinenew;
 
-var	()	private edfindable   Volume		AreaVolume;
+var	()	private edfindable   Volume		 AreaVolume;
+
+var     const                Name        AreaVolumeName,InitialAreaVolumeName;
+
 var ()                       string      AreaZoneName;
+
 var     private              Volume      InitialVolume;
+
 var ()	float		         Duration;
+
 var ()  bool		         bRequiresWholeTeam;
-var    ZoneInfo              AssociatedZone;
+
+var  private  ZoneInfo        AssociatedZone;    // Zones are NoDelete so having a reference in here should be O.K
 
 
 enum EAreaConditionType
@@ -35,7 +42,17 @@ var () name                     ProximityTag;
 
 var ()EAreaConditionType        CompletionMethod;
 
+var ()              bool        bKeepProgress;
+
 var                 float       LastInAreaTime;
+
+var                 float       TimeInArea;
+
+var                 float       TimeOutOfArea;
+
+var                 float       TimeStep;
+
+var                 float       LastIncrementOOATime,LastIncrementIATime;
 
 var                 float       LastOutOfAreaTime;
 
@@ -43,17 +60,19 @@ var                 bool        bTimingOut;
 
 var                 int         NumInVolume;
 
-/* Array of pawns which are currently activating this Area condition */
-var array<Pawn>                 PawnInstigators;
+var    private     array<name>  PawnInstigatorNames;
 
-function PostBeginPlay()
+function PostBeginPlay(KF_StoryObjective MyOwner)
 {
     local ZoneInfo Zone;
 
-    Super.PostBeginPlay();
+    Super.PostBeginPlay(MyOwner);
+
     if(AreaVolume != none)
     {
-        InitialVolume = AreaVolume;
+        SetTargetActor(InitialAreaVolumeName,AreaVolume);
+        SetTargetActor(AreaVolumeName,AreaVolume);
+        AreaVolume = none;
     }
     else if(AreaZoneName != "")
     {
@@ -68,22 +87,18 @@ function PostBeginPlay()
     }
 }
 
-/* Some conditions may have multiple instigators */
-function bool   FindInstigator(Pawn TestInstigator)
+function array<Pawn> GetInstigatorList()
 {
+    local array<Pawn> PawnInstigators;
     local int i;
 
-    for(i = 0 ; i < PawnInstigators.length ; i ++)
+    for(i = 0 ; i < PawnInstigatorNames.length ; i ++)
     {
-        if(PawnInstigators[i] == TestInstigator)
-        {
-            return true;
-        }
+        PawnInstigators[PawnInstigators.length] = Pawn(GetTargetActor(PawnInstigatorNames[i])) ;
     }
 
-    return false;
+    return PawnInstigators;
 }
-
 
 function AdjustToDifficulty(float Difficulty)
 {
@@ -93,41 +108,45 @@ function AdjustToDifficulty(float Difficulty)
 function Reset()
 {
     Super.Reset();
-    bTimingOut = false;
-    LastInAreaTime = 0.f;
-    LastOutOfAreaTime = 0.f;
-}
 
-function ClearActorReferences()
-{
-    Super.ClearActorReferences();
-    AreaVolume = none;
+    bTimingOut = false;
+    TimeInArea = 0.f;
+    TimeOutOfArea = 0.f;
 }
 
 function ConditionActivated(pawn ActivatingPlayer)
 {
-     Super.ConditionActivated(ActivatingPlayer);
-     LastOutOfAreaTime = GetObjOwner().Level.TimeSeconds;
-     Duration = FMax(Duration,0.1f);
+    Super.ConditionActivated(ActivatingPlayer);
 
-     if(InitialVolume != none &&
-     !InitialVolume.bPendingDelete)
-     {
-        AreaVolume = InitialVolume ;
-     }
+    Duration = FMax(Duration,0.1f);
+
+    if(GetTargetActor(InitialAreaVolumeName) != none)
+    {
+        SetTargetActor(AreaVolumeName,GetTargetActor(InitialAreaVolumeName));
+    }
 }
 
 function ConditionTick(Float DeltaTime)
 {
     local controller AController;
     local Actor ProximityActor;
+    local Volume MyAreaVolume;
+    local int i;
 
     NumInVolume = 0;
-    PawnInstigators.length = 0;
 
-	if(AreaVolume != none || AreaZoneName != "" )
+    for(i = 0 ; i < PawnInstigatorNames.length ; i ++)
+    {
+        ReleaseTargetActor(PawnInstigatorNames[i]);
+    }
+
+    PawnInstigatorNames.length = 0;
+
+
+    MyAreaVolume = Volume(GetTargetActor(AreaVolumeName));
+	if(MyAreaVolume != none || AreaZoneName != "" )
 	{
-        if(AreaVolume != none)
+        if(MyAreaVolume != none)
         {
             if(ClassIsChildOf(ProximityTriggerType,class 'Controller'))
             {
@@ -135,11 +154,12 @@ function ConditionTick(Float DeltaTime)
                 {
                     if(AController.Pawn != none &&
                     AController.Pawn.Health > 0 &&
-                    AreaVolume.Encompasses(AController.Pawn))
+                    MyAreaVolume.Encompasses(AController.Pawn))
                     {
                         if(ClassIsChildOf(AController.class,ProximityTriggerType))
                         {
-                            PawnInstigators[PawnInstigators.length] = AController.Pawn;
+                            PawnInstigatorNames[PawnInstigatorNames.length] = AController.Pawn.name;
+                            SetTargetActor(AController.Pawn.name,AController.Pawn);
 				            NumInVolume ++ ;
                         }
                     }
@@ -147,12 +167,18 @@ function ConditionTick(Float DeltaTime)
             }
             else
             {
-                foreach AreaVolume.TouchingActors(class 'Actor', ProximityActor)
+                foreach MyAreaVolume.TouchingActors(class 'Actor', ProximityActor)
                 {
                     if(ProximityActor.IsA(ProximityTriggerType.name) &&
                     !ProximityActor.bPendingDelete && (ProximityTag == '' ||
                     ProximityActor.Tag == ProximityTag))
                     {
+                        if(ProximityActor.Instigator != none)
+                        {
+                            PawnInstigatorNames[PawnInstigatorNames.length] = ProximityActor.Instigator.name;
+                            SetTargetActor(ProximityActor.Instigator.name,ProximityActor.Instigator);
+                        }
+
                         NumInVolume ++ ;
                     }
                 }
@@ -170,27 +196,62 @@ function ConditionTick(Float DeltaTime)
                 {
                     if(AController.Pawn.Region.Zone.LocationName == AreaZoneName)
                     {
-                        PawnInstigators[PawnInstigators.length] = AController.Pawn;
+                        PawnInstigatorNames[PawnInstigatorNames.length] = AController.Pawn.name;
+                        SetTargetActor(AController.Pawn.name,AController.Pawn);
                         NumInVolume ++ ;
                     }
                 }
             }
         }
 
-
   		if(NumInVolume == 0 ||
 		(bRequiresWholeTeam && NumInVolume < GetObjOwner().StoryGI.GetTotalActivePlayers()))
 		{
 		    bTimingOut = true;
-		    LastOutofAreaTime = GetObjOwner().Level.TimeSeconds;
+
+            if(bKeepProgress)
+            {
+                if(GetObjOwner().Level.TimeSeconds - LastIncrementIATime > TimeStep)
+                {
+                    LastIncrementIATime = GetObjOwner().Level.TimeSeconds;
+                    TimeInArea = FMax( TimeInArea - TimeStep,0);
+                }
+            }
+            else
+            {
+                TimeInArea = 0.f;
+            }
+
+            if(GetObjOwner().Level.TimeSeconds - LastIncrementOOATime > TimeStep)
+            {
+                LastIncrementOOATime = GetObjOwner().Level.TimeSeconds;
+                TimeOutOfArea = FMin( TimeOutOfArea + TimeStep,Duration);
+            }
         }
 		else
 		{
 		    bTimingOut = false;
-		    LastInAreaTime = GetObjOwner().Level.TimeSeconds;
+
+            if(GetObjOwner().Level.TimeSeconds - LastIncrementIATime > TimeStep)
+            {
+                LastIncrementIATime = GetObjOwner().Level.TimeSeconds;
+                TimeInArea = FMin( TimeInArea + TimeStep,Duration);
+            }
+
+            if(bKeepProgress)
+            {
+                if(GetObjOwner().Level.TimeSeconds - LastIncrementOOATime > TimeStep)
+                {
+                    LastIncrementOOATime = GetObjOwner().Level.TimeSeconds;
+                    TimeOutOfArea = FMax( TimeOutOfArea - TimeStep,0);
+                }
+            }
+            else
+            {
+                TimeOutOfArea = 0.f;
+            }
 		}
     }
-
 
     Super.ConditionTick(DeltaTime);
 }
@@ -200,32 +261,30 @@ function       float        GetCompletionPct()
 {
 	if(CompletionMethod == Method_LeaveArea)
 	{
-		return 	FClamp(((GetObjOwner().Level.TimeSeconds - LastInAreaTime) / Duration),0.f,1.f);
+		return 	FClamp(TimeOutOfArea / Duration,0.f,1.f);
     }
     else
     {
-		return 	FClamp(((GetObjOwner().Level.TimeSeconds - LastOutOfAreaTime) / Duration),0.f,1.f);
+		return 	FClamp(TimeInArea / Duration,0.f,1.f);
     }
 }
 
 
 function        string      GetDataString()
 {
-     local string DataString;
+    local string DataString;
+    local int NumActivePlayers;
 
-/*   if( (CompletionMethod == Method_StayInArea && bTimingOut) ||
-     (CompletionMethod == Method_EnterArea && !bTimingOut) )
-     {
-        DataString = FormatTime(FMax(Duration - (GetObjOwner().Level.TimeSeconds - LastInAreaTime),0.f))  ;
-     }
-*/
+    if(bRequiresWholeTeam )
+    {
+        NumActivePlayers = GetObjOwner().StoryGI.GetTotalActivePlayers() ;
+        if(NumActivePlayers > 1)
+        {
+            DataString@="["$NumInVolume$"/"$NumActivePlayers$"]" ;
+        }
+    }
 
-     if(bRequiresWholeTeam)
-     {
-        DataString@="["$NumInVolume$"/"$GetObjOwner().StoryGI.GetTotalActivePlayers()$"]" ;
-     }
-
-     return DataString ;
+    return DataString ;
 }
 
 function        string      GetHUDHint()
@@ -246,11 +305,24 @@ function        string      GetHUDHint()
 
 function        vector       GetLocation(optional out Actor LocActor)
 {
+    local Actor WorldLocActor;
+    local Vector WorldLocation;
+    local Volume MyAreaVolume;
+
     if(ConditionIsActive())
     {
-        if(AreaVolume != none)
+        MyAreaVolume = Volume(GetTargetActor(AreaVolumeName));
+
+        WorldLocation = Super.GetLocation(WorldLocActor);
+        if(WorldLocActor != none)
         {
-            LocActor = AreaVolume;
+            LocActor = WorldLocActor;
+            return WorldLocation;
+        }
+
+        if(MyAreaVolume != none)
+        {
+            LocActor = MyAreaVolume;
             return LocActor.Location;
         }
         else
@@ -259,14 +331,15 @@ function        vector       GetLocation(optional out Actor LocActor)
             LocActor = AssociatedZone;
             return LocActor.Location;
         }
-
-        return Super.GetLocation(LocActor);
     }
 }
 
 defaultproperties
 {
+     AreaVolumeName="AreaVolume"
+     InitialAreaVolumeName="InitialAreaVolume"
      ProximityTriggerType=Class'Engine.PlayerController'
      CompletionMethod=Method_EnterArea
+     TimeStep=0.100000
      HUD_World=(bIgnoreWorldLocHidden=True)
 }

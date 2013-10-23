@@ -27,7 +27,8 @@ static function int AddDamage(KFPlayerReplicationInfo KFPRI, KFMonster Injured, 
 	if ( class<DamTypeFrag>(DmgType) != none || class<DamTypePipeBomb>(DmgType) != none ||
 		 class<DamTypeM79Grenade>(DmgType) != none || class<DamTypeM32Grenade>(DmgType) != none
          || class<DamTypeM203Grenade>(DmgType) != none || class<DamTypeRocketImpact>(DmgType) != none
-         || class<DamTypeSPGrenade>(DmgType) != none )
+         || class<DamTypeSPGrenade>(DmgType) != none || class<DamTypeSealSquealExplosion>(DmgType) != none
+         || class<DamTypeSeekerSixRocket>(DmgType) != none)
 	{
 		if ( KFPRI.ClientVeteranSkillLevel == 0 )
 		{
@@ -40,12 +41,13 @@ static function int AddDamage(KFPlayerReplicationInfo KFPRI, KFMonster Injured, 
 	return InDamage;
 }
 
-static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, KFMonster Instigator, int InDamage, class<DamageType> DmgType)
+static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, Pawn Instigator, int InDamage, class<DamageType> DmgType)
 {
 	if ( class<DamTypeFrag>(DmgType) != none || class<DamTypePipeBomb>(DmgType) != none ||
 		 class<DamTypeM79Grenade>(DmgType) != none || class<DamTypeM32Grenade>(DmgType) != none
          || class<DamTypeM203Grenade>(DmgType) != none || class<DamTypeRocketImpact>(DmgType) != none
-         || class<DamTypeSPGrenade>(DmgType) != none )
+         || class<DamTypeSPGrenade>(DmgType) != none || class<DamTypeSealSquealExplosion>(DmgType) != none
+         || class<DamTypeSeekerSixRocket>(DmgType) != none)
 	{
 		return float(InDamage) * (0.75 - (0.05 * float(KFPRI.ClientVeteranSkillLevel)));
 	}
@@ -63,7 +65,9 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 	}
 	else if ( Item == class'M79Pickup' || Item == class 'M32Pickup'
         || Item == class 'LawPickup' || Item == class 'M4203Pickup'
-        || Item == class'GoldenM79Pickup' || Item == class'SPGrenadePickup' )
+        || Item == class'GoldenM79Pickup' || Item == class'SPGrenadePickup'
+        || Item == class'CamoM32Pickup' || Item == class'SealSquealPickup'
+        || Item == class'SeekerSixPickup' )
 	{
 		return 0.90 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on M79/M32
 	}
@@ -80,7 +84,9 @@ static function float GetAmmoCostScaling(KFPlayerReplicationInfo KFPRI, class<Pi
 	}
 	else if ( Item == class'M79Pickup' || Item == class'M32Pickup'
         || Item == class'LAWPickup' || Item == class'M4203Pickup'
-        || Item == class'GoldenM79Pickup' || Item == class'SPGrenadePickup' )
+        || Item == class'GoldenM79Pickup' || Item == class'SPGrenadePickup'
+        || Item == class'CamoM32Pickup' || Item == class'SealSquealPickup'
+        || Item == class'SeekerSixPickup' )
 	{
 		return 1.0 - (0.05 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 30% discount on Grenade Launcher and LAW Ammo(Balance Round 5)
 	}
@@ -94,14 +100,14 @@ static function AddDefaultInventory(KFPlayerReplicationInfo KFPRI, Pawn P)
 	// If Level 5, give them a pipe bomb
 	if ( KFPRI.ClientVeteranSkillLevel == 5 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.PipeBombExplosive", GetCostScaling(KFPRI, class'PipeBombPickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.PipeBombExplosive", default.StartingWeaponSellPriceLevel5);
 	}
 
 	// If Level 6, give them a M79Grenade launcher and pipe bomb
 	if ( KFPRI.ClientVeteranSkillLevel == 6 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.PipeBombExplosive", GetCostScaling(KFPRI, class'PipeBombPickup'));
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.M79GrenadeLauncher", GetCostScaling(KFPRI, class'M79Pickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.PipeBombExplosive", default.StartingWeaponSellPriceLevel6);
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.M79GrenadeLauncher", default.StartingWeaponSellPriceLevel6);
 	}
 }
 

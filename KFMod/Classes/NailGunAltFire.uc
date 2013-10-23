@@ -47,7 +47,7 @@ defaultproperties
      TransientSoundVolume=1.800000
      FireAnim="LightOn"
      FireForce="AssaultRifleFire"
-     AmmoClass=Class'KFMod.SingleAmmo'
+     AmmoClass=Class'KFMod.FlashlightAmmo'
      BotRefireRate=0.500000
      aimerror=0.000000
 }

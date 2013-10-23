@@ -4,7 +4,6 @@ class KFVetBerserker extends KFVeterancyTypes
 static function int AddDamage(KFPlayerReplicationInfo KFPRI, KFMonster Injured, KFPawn Instigator, int InDamage, class<DamageType> DmgType)
 {
 	local float ret;
-	local KFPawn Friendly;
 
 	if( class<KFWeaponDamageType>(DmgType) != none && class<KFWeaponDamageType>(DmgType).default.bIsMeleeDamage )
 	{
@@ -74,9 +73,9 @@ static function float GetMeleeMovementSpeedModifier(KFPlayerReplicationInfo KFPR
 	return 0.20; // 20% increase in movement speed while wielding Melee Weapon
 }
 
-static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, KFMonster Instigator, int InDamage, class<DamageType> DmgType)
+static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, Pawn Instigator, int InDamage, class<DamageType> DmgType)
 {
-	if ( DmgType == class'DamTypeVomit' )
+	if ( class<DamTypeVomit>(DmgType) != none )
 	{
 		switch ( KFPRI.ClientVeteranSkillLevel )
 		{
@@ -156,13 +155,13 @@ static function AddDefaultInventory(KFPlayerReplicationInfo KFPRI, Pawn P)
 	// If Level 5, give them Machete
 	if ( KFPRI.ClientVeteranSkillLevel == 5 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Machete", GetCostScaling(KFPRI, class'MachetePickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Machete", default.StartingWeaponSellPriceLevel5);
 	}
 
 	// If Level 6, give them an Axe
 	if ( KFPRI.ClientVeteranSkillLevel == 6 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Axe", GetCostScaling(KFPRI, class'AxePickup'));
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.Axe", default.StartingWeaponSellPriceLevel6);
 	}
 
 	// If Level 6, give them Body Armor(Removed from Suicidal and HoE in Balance Round 7)

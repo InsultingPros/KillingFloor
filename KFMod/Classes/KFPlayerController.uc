@@ -94,6 +94,8 @@ var	vector					EnemyLocation[16];	// Location of all enemies within 100 meter ra
 var int						RandXOffset;
 var int						RandYOffset;
 
+var int                     BuyMenuFilterIndex;
+
 replication
 {
 	reliable if(REMOTEROLE == ROLE_AUTONOMOUSPROXY)
@@ -1167,14 +1169,17 @@ event PlayerTick( float DeltaTime )
 	if( bHasDelayedSong && Player!=None )
 		NetPlayMusic(DelayedSongToPlay,0.5,0);
 
-	if ( KFGameReplicationInfo(Level.GRI) != None && KFGameReplicationInfo(Level.GRI).EndGameType > 0)
-	{
-		Advertising_EnterZone("mp_lobby");
-	}
-	else if (Level.GRI.bMatchHasBegun )
-	{
-		Advertising_ExitZone();
-	}
+    if( Level.GRI != none )
+    {
+    	if ( KFGameReplicationInfo(Level.GRI) != None && KFGameReplicationInfo(Level.GRI).EndGameType > 0)
+    	{
+    		Advertising_EnterZone("mp_lobby");
+    	}
+    	else if (Level.GRI.bMatchHasBegun )
+    	{
+    		Advertising_ExitZone();
+    	}
+    }
 
 	Super.PlayerTick(DeltaTime);
 }
@@ -1406,7 +1411,7 @@ function SelectVeterancy(class<KFVeterancyTypes> VetSkill, optional bool bForceC
 
 	if ( KFSteamStatsAndAchievements(SteamStatsAndAchievements) != none )
 	{
-		SelectedVeterancy = VetSkill;
+		SetSelectedVeterancy( VetSkill );
 
 		if ( KFGameReplicationInfo(GameReplicationInfo).bWaveInProgress && VetSkill != KFPlayerReplicationInfo(PlayerReplicationInfo).ClientVeteranSkill )
 		{
@@ -1438,6 +1443,22 @@ function SelectVeterancy(class<KFVeterancyTypes> VetSkill, optional bool bForceC
 			ClientMessage(PerkChangeOncePerWaveString);
 		}
 	}
+}
+
+function SetSelectedVeterancy( class<KFVeterancyTypes> VetSkill )
+{
+    local int i;
+
+    SelectedVeterancy = VetSkill;
+
+    for( i = 0; i < class'KFGameType'.default.LoadedSkills.Length; ++i )
+    {
+        if( class'KFGameType'.default.LoadedSkills[i] == VetSkill )
+        {
+            BuyMenuFilterIndex = i;
+            break;
+        }
+    }
 }
 
 function SetPawnClass(string inClass, string inCharacter)
@@ -1629,8 +1650,6 @@ state PlayerWalking
         // Unzoom if we were zoomed
         TransitionFOV(DefaultFOV,0.);
 	}
-
-
 }
 
 function HandleWalking()
@@ -2047,6 +2066,13 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'BenelliAttachment'.static.PreloadAssets();
 			break;
 
+		case class'BlowerThrower':
+			class'BlowerThrower'.static.PreloadAssets(Inv);
+			class'BlowerThrowerFire'.static.PreloadAssets(Level);
+			class'BlowerThrowerAltFire'.static.PreloadAssets(Level);
+			class'BlowerThrowerAttachment'.static.PreloadAssets();
+			break;
+
 		case class'GoldenBenelliShotgun':
 			class'GoldenBenelliShotgun'.static.PreloadAssets(Inv);
 			class'GoldenBenelliFire'.static.PreloadAssets(Level);
@@ -2112,6 +2138,15 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'ZEDGunAltFire'.static.PreloadAssets(Level);
 			class'ZEDGunProjectile'.static.PreloadAssets();
 			class'ZEDGunAttachment'.static.PreloadAssets();
+			break;
+
+		case class'ZEDMKIIWeapon':
+			class'ZEDMKIIWeapon'.static.PreloadAssets(Inv);
+			class'ZEDMKIIFire'.static.PreloadAssets(Level);
+			class'ZEDMKIIAltFire'.static.PreloadAssets(Level);
+			class'ZEDMKIIPrimaryProjectile'.static.PreloadAssets();
+			class'ZEDMKIISecondaryProjectile'.static.PreloadAssets();
+			class'ZEDMKIIAttachment'.static.PreloadAssets();
 			break;
 
 		case class'Katana':
@@ -2269,6 +2304,21 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'SCARMK17AssaultRifle'.static.PreloadAssets(Inv);
 			class'SCARMK17Fire'.static.PreloadAssets(Level);
 			class'SCARMK17Attachment'.static.PreloadAssets();
+			break;
+
+		case class'SealSquealHarpoonBomber':
+			class'SealSquealHarpoonBomber'.static.PreloadAssets(Inv);
+			class'SealSquealProjectile'.static.PreloadAssets();
+			class'SealSquealFire'.static.PreloadAssets(Level);
+			class'SealSquealAttachment'.static.PreloadAssets();
+			break;
+
+		case class'SeekerSixRocketLauncher':
+			class'SeekerSixRocketLauncher'.static.PreloadAssets(Inv);
+			class'SeekerSixRocketProjectile'.static.PreloadAssets();
+			class'SeekerSixSeekingRocketProjectile'.static.PreloadAssets();
+			class'SeekerSixFire'.static.PreloadAssets(Level);
+			class'SeekerSixAttachment'.static.PreloadAssets();
 			break;
 
 		case class'Trenchgun':
@@ -2448,6 +2498,15 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			}
 			break;
 
+		case class'BlowerThrower':
+			if ( class'BlowerThrower'.static.UnloadAssets() )
+			{
+				class'BlowerThrowerFire'.static.UnloadAssets();
+				class'BlowerThrowerAltFire'.static.UnloadAssets();
+				class'BlowerThrowerAttachment'.static.UnloadAssets();
+			}
+			break;
+
 		case class'GoldenFlameThrower':
 			if ( class'GoldenFlameThrower'.static.UnloadAssets() )
 			{
@@ -2489,6 +2548,17 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 				class'ZEDGunAltFire'.static.UnloadAssets();
 				class'ZEDGunProjectile'.static.UnloadAssets();
 				class'ZEDGunAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'ZEDMKIIWeapon':
+			if ( class'ZEDMKIIWeapon'.static.UnloadAssets() )
+			{
+				class'ZEDMKIIFire'.static.UnloadAssets();
+				class'ZEDMKIIAltFire'.static.UnloadAssets();
+				class'ZEDMKIIPrimaryProjectile'.static.UnloadAssets();
+				class'ZEDMKIISecondaryProjectile'.static.UnloadAssets();
+				class'ZEDMKIIAttachment'.static.UnloadAssets();
 			}
 			break;
 
@@ -2695,6 +2765,23 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 			}
 			break;
 
+		case class'SealSquealHarpoonBomber':
+			if ( class'SealSquealHarpoonBomber'.static.UnloadAssets() )
+			{
+				class'SealSquealFire'.static.UnloadAssets();
+				class'SealSquealProjectile'.static.UnloadAssets();
+				class'SealSquealAttachment'.static.UnloadAssets();
+			}
+
+		case class'SeekerSixRocketLauncher':
+			if ( class'SeekerSixRocketLauncher'.static.UnloadAssets() )
+			{
+				class'SeekerSixFire'.static.UnloadAssets();
+				class'SeekerSixRocketProjectile'.static.UnloadAssets();
+				class'SeekerSixSeekingRocketProjectile'.static.UnloadAssets();
+				class'SeekerSixAttachment'.static.UnloadAssets();
+			}
+
 		case class'Trenchgun':
 			if ( class'Trenchgun'.static.UnloadAssets() )
 			{
@@ -2878,14 +2965,51 @@ simulated function ClientZedsSpawn(int eventNum)
    }
 }
 
-event ClientSetViewTarget( Actor a )
+function bool IsVariantInInventory(class<Pickup> PickupToCheck)
 {
-    // once the player leaves the spectating state, his view target shouldn't be
-    // switched to another player (could happen between spectating and respawning)
-    if( IsInState('Spectating') || a == self || Controller(a) == none || Pawn == none )
+    local Inventory CurInv;
+    local class<KFWeaponPickup> InvPickupClass;
+    local class<KFWeaponPickup> CheckPickupClass;
+    local class<KFWeaponPickup> VariantPickupClass;
+    local int i;
+
+    for ( CurInv = Pawn.Inventory; CurInv != none; CurInv = CurInv.Inventory )
     {
-        Super.ClientSetViewTarget( a );
+        if ( CurInv.default.PickupClass == PickupToCheck )
+        {
+            return true;
+        }
+
+        // check if Item is variant of normal inventory item
+        InvPickupClass = class<KFWeaponPickup>(CurInv.default.PickupClass);
+        if( InvPickupClass != none )
+        {
+            for( i = 0; i < InvPickupClass.default.VariantClasses.Length; ++i )
+            {
+                VariantPickupClass = class<KFWeaponPickup>(InvPickupClass.default.VariantClasses[i]);
+                if( VariantPickupClass != none && VariantPickupClass == PickupToCheck )
+                {
+                    return true;
+                }
+            }
+        }
+
+        // check if Item is normal version of variant inventory item
+        CheckPickupClass = class<KFWeaponPickup>(PickupToCheck);
+        if( CheckPickupClass != none )
+        {
+            for( i = 0; i < CheckPickupClass.default.VariantClasses.Length; ++i )
+            {
+                VariantPickupClass = class<KFWeaponPickup>(CheckPickupClass.default.VariantClasses[i]);
+                if( VariantPickupClass != none && VariantPickupClass == CurInv.default.PickupClass )
+                {
+                    return true;
+                }
+            }
+        }
     }
+
+    return false;
 }
 
 defaultproperties

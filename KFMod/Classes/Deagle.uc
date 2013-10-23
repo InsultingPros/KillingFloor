@@ -7,12 +7,6 @@ function bool HandlePickupQuery( pickup Item )
 {
 	if ( Item.InventoryType == Class )
 	{
-		/*if ( KFHumanPawn(Owner) != none && !KFHumanPawn(Owner).CanCarry(Class'DualDeagle'.Default.Weight) )
-		{
-			PlayerController(Instigator.Controller).ReceiveLocalizedMessage(Class'KFMainMessages', 2);
-			return true;
-		}*/
-
 		if ( KFPlayerController(Instigator.Controller) != none )
 		{
 			KFPlayerController(Instigator.Controller).PendingAmmo = WeaponPickup(Item).AmmoAmount[0];

@@ -50,5 +50,6 @@ defaultproperties
      ShakeOffsetTime=3.000000
      ProjectileClass=Class'KFMod.LAWProj'
      BotRefireRate=3.250000
+     FlashEmitterClass=Class'ROEffects.MuzzleFlash1stKar'
      Spread=0.100000
 }

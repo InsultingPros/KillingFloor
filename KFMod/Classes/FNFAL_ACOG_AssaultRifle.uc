@@ -10,13 +10,6 @@
 class FNFAL_ACOG_AssaultRifle extends KFWeapon
 	config(user);
 
-
-replication
-{
-	reliable if(Role < ROLE_Authority)
-		ServerChangeFireMode;
-}
-
 // Use alt fire to switch fire modes
 simulated function AltFire(float F)
 {
@@ -24,31 +17,6 @@ simulated function AltFire(float F)
     {
         DoToggle();
     }
-}
-
-// Toggle semi/auto fire
-simulated function DoToggle ()
-{
-	local PlayerController Player;
-
-	Player = Level.GetLocalPlayerController();
-	if ( Player!=None )
-	{
-		//PlayOwnedSound(sound'Inf_Weapons_Foley.stg44_firemodeswitch01',SLOT_None,2.0,,,,false);
-		FireMode[0].bWaitForRelease = !FireMode[0].bWaitForRelease;
-		if ( FireMode[0].bWaitForRelease )
-			Player.ReceiveLocalizedMessage(class'KFmod.BullpupSwitchMessage',0);
-		else Player.ReceiveLocalizedMessage(class'KFmod.BullpupSwitchMessage',1);
-	}
-	Super.DoToggle();
-
-	ServerChangeFireMode(FireMode[0].bWaitForRelease);
-}
-
-// Set the new fire mode on the server
-function ServerChangeFireMode(bool bNewWaitForRelease)
-{
-    FireMode[0].bWaitForRelease = bNewWaitForRelease;
 }
 
 function bool RecommendRangedAttack()

@@ -923,10 +923,10 @@ defaultproperties
      ScopeLevels(2)="Model (High)"
      RenderModeText(0)="Direct 3D 9.0"
      RenderModeText(1)="Direct 3D"
-     RenderModeText(2)="Software"
+     RenderModeText(2)="OpenGL"
      RenderMode(0)="D3D9Drv.D3D9RenderDevice"
      RenderMode(1)="D3DDrv.D3DRenderDevice"
-     RenderMode(2)="PixoDrv.PixoRenderDevice"
+     RenderMode(2)="OpenGLDrv.OpenGLRenderDevice"
      Begin Object Class=GUISectionBackground Name=sbSection1
          Caption="Resolution"
          WinTop=0.012761

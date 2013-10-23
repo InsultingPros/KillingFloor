@@ -345,7 +345,7 @@ function WhatToDoNext(byte CallingByte)
 function bool WeaponFireAgain(float RefireRate, bool bFinishedFire)
 {
     if ( Target == None )
-        Target = Enemy;  
+        Target = Enemy;
     if ( Target != None )
     {
         if ( !Pawn.IsFiring() )
@@ -710,11 +710,11 @@ function bool IsStrafing()
 	return false;
 }
 
-function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster )
+function bool SetEnemy( Pawn NewEnemy, optional bool bHateMonster , optional float MonsterHateChanceOverride )
 {
 	if ( (NewEnemy == None) || (NewEnemy.Health <= 0) || (NewEnemy.Controller == None) || (NewEnemy == Enemy) )
 		return false;
-        
+
 	if( Monster(NewEnemy)!=None )
 	{
 		if( KFHM.AttitudeToSpecimen>=ATTITUDE_Friendly )
@@ -1136,7 +1136,7 @@ state Fallback extends MoveToGoalWithEnemy
 
         if ( (P == None) || (P.Controller == None) )
             return false;
-        
+
         if ( !SameTeamAs(P.Controller) && (MoveTarget == RouteCache[0]) && (RouteCache[1] != None) && P.ReachedDestination(MoveTarget) )
         {
             MoveTimer = VSize(RouteCache[1].Location - Pawn.Location)/(Pawn.GroundSpeed * Pawn.DesiredSpeed) + 1;

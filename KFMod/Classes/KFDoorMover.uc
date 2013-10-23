@@ -50,6 +50,11 @@ var bool bShouldBeOpen;
 
 var byte DesiredOpenToKey;
 
+// If true, this door does not block actors when in an open state.
+var (Collision) const bool bNoBlockWhileOpen;
+
+var private bool bInitialCollideActors, bInitialBlockActors;
+
 replication
 {
 	reliable if( ROLE==ROLE_AUTHORITY )
@@ -63,6 +68,9 @@ function PostBeginPlay()
 	local int i;
 	local float D;
 	local vector HL,HN;
+
+    bInitialCollideActors = bCollideActors;
+    bInitialBlockActors = bBlockActors;
 
 	if( DoorPathNode==None ) // Attempt to find one passing through this doorway.
 	{
@@ -188,8 +196,8 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
 	else if(bSealed)
 	{
 		if( damageType==class'DamTypeUnWeld' )
-			MyTrigger.UnWeld(damage,bZedHittingDoor,instigatedBy);
-		else if ( !bBlockDamagingOfWeld )
+  	MyTrigger.UnWeld(damage,bZedHittingDoor,instigatedBy);
+  else if ( !bBlockDamagingOfWeld )
 			MyTrigger.DamageWeld(damage,instigatedBy,hitlocation,momentum,damageType);
 	}
 }
@@ -291,7 +299,7 @@ function Tick( float Delta )
 
 function RespawnDoor()
 {
-	if( bHidden )
+	if( bDoorIsDead )
 	{
 		bHidden = false;
 		SetCollision(true, true, true);
@@ -320,6 +328,12 @@ function MakeGroupStop()
 }
 function DoOpen()
 {
+	if(bNoBlockWhileOpen)
+    {
+    	// Remove collision from doors when we open them
+        SetCollision(false,bInitialBlockActors);
+    }
+
 	if( bSealed || bHidden )
 	{
 		bShouldBeOpen = True;
@@ -329,6 +343,12 @@ function DoOpen()
 }
 function DoClose()
 {
+	if(bNoBlockWhileOpen)
+    {
+    	// Add collision to doors when we close them
+        SetCollision(bInitialCollideActors,bInitialBlockActors);
+    }
+
 	if( bSealed || bHidden )
 	{
 		bShouldBeOpen = False;
@@ -352,6 +372,7 @@ function DoOpenToKey( byte KeyNums )
 	TriggerEvent(OpeningEvent, Self, Instigator);
 	if ( Follower != None )
 		Follower.DoOpen();
+
 }
 function DoCloseToFirst()
 {

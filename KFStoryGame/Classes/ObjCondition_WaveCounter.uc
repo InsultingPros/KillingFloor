@@ -4,7 +4,7 @@
 class ObjCondition_WaveCounter extends ObjCondition_Counter
 hidecategories(ObjCondition_Counter);
 
-var      KF_StoryWaveDesigner   WaveDesigner;
+var      const       name       WaveDesignerName;
 
 var      int                    LastWaveIdx;
 
@@ -23,10 +23,14 @@ var      int                    NumStragglers;
 
 function ConditionActivated(pawn ActivatingPlayer)
 {
+    local KF_StoryWaveDesigner WaveDesigner;
+
     NumCounted = 0;
     Super.ConditionActivated(ActivatingPlayer);
+
     foreach GetObjOwner().AllActors(class 'KF_StoryWaveDesigner' , WaveDesigner,DesignerTag)
     {
+        SetTargetActor(WaveDesignerName,WaveDesigner);
         break;
     }
 }
@@ -41,6 +45,9 @@ function ConditionDeActivated()
 /* returns the percentage of completion for this condition */
 function       float        GetCompletionPct()
 {
+    local KF_StoryWaveDesigner WaveDesigner;
+
+    WaveDesigner = KF_StoryWaveDesigner(GetTargetActor(WaveDesignername));
     if(WaveDesigner == none)
     {
 //        log("WARNING - no Wave Designer associated with : "@name,'Story_Debug');
@@ -80,7 +87,7 @@ function    int  GetAssociatedWaveIndex()
 
     if(bUseCurrentWave)
     {
-        WaveIdx = WaveDesigner.CurrentWaveIdx ;
+        WaveIdx = KF_StoryWaveDesigner(GetTargetActor(WaveDesignername)).CurrentWaveIdx ;
     }
     else
     {
@@ -94,8 +101,11 @@ function    int  GetAssociatedWaveIndex()
 function ConditionTick(float DeltaTime)
 {
     local int NewWaveIdx;
+    local KF_StoryWaveDesigner WaveDesigner;
 
     Super.ConditionTick(DeltaTime);
+
+    WaveDesigner = KF_StoryWaveDesigner(GetTargetActor(WaveDesignername));
     if(WaveDesigner != none)
     {
         NewWaveIdx = GetAssociatedWaveIndex();
@@ -128,6 +138,7 @@ function float GetTotalDifficultyModifier()
 
 defaultproperties
 {
+     WaveDesignerName="WaveDesigner"
      bUseCurrentWave=True
      bSumOfAllCycles=True
 }

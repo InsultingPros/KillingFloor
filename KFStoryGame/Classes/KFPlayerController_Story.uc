@@ -115,22 +115,21 @@ exec simulated function ToggleConditionStack()
 /* Called on the client - Updates condition data unreliably */
 simulated function UnreliableConditionUpdate(
 KF_ObjectiveCondition UpdatedCondition,
-name ObjOwner,
+KF_StoryObjective ObjOwner,
 float NewProgressPct,
 Actor NewLocActor,
 string NewDataString,
 bool NewComplete)
 {
-    DoConditionUpdate(UpdatedCondition,ObjOwner,NewProgressPct,NewLocActor,NewDataString,NewComplete, '');
+    DoConditionUpdate(UpdatedCondition,ObjOwner.Name,NewProgressPct,NewLocActor,UpdatedCondition.GetHUDHint()@NewDataString,NewComplete, '');
 }
 
 /* Called on the client - Updates condition data reliably */
 simulated function ReliableConditionUpdate(
 KF_ObjectiveCondition UpdatedCondition,
-name ObjOwner,
+KF_StoryObjective ObjOwner,
 float NewProgressPct,
 Actor NewLocActor,
-name LocActorTag,
 string NewDataString,
 bool NewComplete)
 {
@@ -146,12 +145,19 @@ bool NewComplete)
     // This is pretty much a hack to get around cases where we are trying to grab a reference to an actor which
     // does not yet exist on the client .
 
-	if (NewLocActor == none && LocActorTag != '' )
+	if (NewLocActor == none )
 	{
-		PendingLocActorTag = LocActorTag;
+	    if( UpdatedCondition.IsA('ObjCondition_ActorHealth') )
+	    {
+		    PendingLocActorTag = ObjCondition_ActorHealth(UpdatedCondition).TargetPawnTag;
+		}
+		else if( UpdatedCondition.IsA('ObjCondition_Use') )
+		{
+		    PendingLocActorTag = ObjCondition_Use(UpdatedCondition).UsePawn_Tag;
+		}
     }
 
-    DoConditionUpdate(UpdatedCondition,ObjOwner,NewProgressPct,NewLocActor,NewDataString,NewComplete,PendingLocActorTag);
+    DoConditionUpdate(UpdatedCondition,ObjOwner.Name,NewProgressPct,NewLocActor,UpdatedCondition.GetHUDHint()@NewDataString,NewComplete,PendingLocActorTag);
 }
 
 simulated function DoConditionUpdate(
@@ -299,11 +305,16 @@ exec function StopUsing()
 /* === Server Debug Commands ==================
 ===============================================*/
 
-/* Fasf Forward
+/* Fast Forward*/
 exec function FFObj(name ObjName)
 {
+    if( !class'ROEngine.ROLevelInfo'.static.RODebugMode() )
+    {
+        return;
+    }
+
     ServerFFObj(ObjName);
-} */
+}
 
 /* Helpful function for level Designers testing objectives at different stages in their map
 
@@ -351,11 +362,16 @@ function ServerFFObj(name ObjName)
 }
 
 
-/*
+
 exec function CompleteObj()
 {
+    if( !class'ROEngine.ROLevelInfo'.static.RODebugMode() )
+    {
+        return;
+    }
+
     ServerCompleteObj();
-}   */
+}
 
 function ServerCompleteObj()
 {
@@ -478,21 +494,17 @@ simulated function UpdateHintManagement(bool bUseHints)
     }
 }
 
-/* ThrowWeapon()
-Throw out current weapon, and switch to a new weapon
-*/
-exec function ThrowWeapon()
+function ServerThrowWeapon()
 {
-    if ( (Pawn == None || KFHumanPawn(Pawn) == none) )
-        return;
-
-    if(KFHumanPawn(Pawn).IsCarryingThrowableInventory())
+	// If we have any story items, throw them one at a time
+    if( KFHumanPawn_Story(Pawn) != none &&
+		KFHumanPawn_Story(Pawn).IsCarryingThrowableInventory())
     {
-        KFHumanPawn(Pawn).TossCarriedItems();
+    	KFHumanPawn_Story(Pawn).TossSingleCarriedItem();
     }
     else
     {
-        Super.ThrowWeapon();
+	    super.ServerThrowWeapon();
     }
 }
 
@@ -512,7 +524,7 @@ function SelectVeterancy(class<KFVeterancyTypes> VetSkill, optional bool bForceC
 
 	if ( KFSteamStatsAndAchievements(SteamStatsAndAchievements) != none )
 	{
-		SelectedVeterancy = VetSkill;
+		SetSelectedVeterancy( VetSkill );
 
 		if ( KFStoryGameInfo(Level.Game) != none &&              // another place where we gotta use IsTraderObj()  instead of bWaveInProgress ...
         !KFStoryGameInfo(Level.Game).IsTraderTime() &&

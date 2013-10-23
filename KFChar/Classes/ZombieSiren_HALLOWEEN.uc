@@ -9,7 +9,6 @@ defaultproperties
 {
      MoanVoice=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.siren.Siren_Talk'
      JumpSound=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.siren.Siren_Jump'
-     DetachedArmClass=None
      DetachedLegClass=Class'KFChar.SeveredLegSiren_HALLOWEEN'
      DetachedHeadClass=Class'KFChar.SeveredHeadSiren_HALLOWEEN'
      HitSound(0)=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.siren.Siren_Pain'

@@ -12,7 +12,7 @@ class MP5MPickup extends MedicGunPickup;
 defaultproperties
 {
      Weight=3.000000
-     cost=5000
+     cost=1375
      AmmoCost=10
      BuyClipSize=32
      PowerValue=30
@@ -24,6 +24,7 @@ defaultproperties
      AmmoItemName="9x19mm Ammo"
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      EquipmentCategoryID=3
+     VariantClasses(0)=Class'KFMod.CamoMP5MPickup'
      InventoryType=Class'KFMod.MP5MMedicGun'
      PickupMessage="You got the MP5M Medic Gun"
      PickupSound=Sound'KF_MP5Snd.foley.WEP_MP5_Foley_Pickup'

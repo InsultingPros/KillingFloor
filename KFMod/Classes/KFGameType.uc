@@ -226,6 +226,8 @@ var     array<SpecialSquad>     FinalSquads;            // Squads that spawn wit
 
 var()   array<MClassTypes>  StandardMonsterClasses; // The standard monster classed
 
+var  bool   bUsingObjectiveMode;
+
 
 
 // Stub
@@ -417,10 +419,11 @@ function ShowPathTo(PlayerController P, int TeamNum)
 }
 
 // Kill all the enemy AI. Used for debugging
+// - Updated by Jess Crable 10/08/13
+
 exec function KillZeds()
 {
-    local Controller c, nextC;
-    local int num;
+    local KFMonster Monster;
     local Controller PC;
 
     for ( PC = Level.ControllerList; PC != none; PC = PC.NextController )
@@ -431,35 +434,26 @@ exec function KillZeds()
         }
     }
 
-    num = NumMonsters;
-
-    c = Level.ControllerList;
-
-    while (c != none && num > 0)
+    foreach DynamicActors(class 'KFMonster', Monster)
     {
-        nextC = c.NextController;
-        if (KillZed(c))
-            --num;
-        c = nextC;
+        if(Monster.Health > 0 && !Monster.bDeleteMe)
+        {
+            Monster.Died(Level.GetLocalPlayerController(),class 'DamageType', Monster.Location);
+        }
     }
-}
 
-function bool KillZed(Controller c)
-{
-    local MonsterController b;
-
-    b = MonsterController(c);
-    if (b != None)
-    {
-        if ( (Vehicle(b.Pawn) != None) && (Vehicle(b.Pawn).Driver != None) )
-            Vehicle(b.Pawn).Driver.KilledBy(Vehicle(b.Pawn).Driver);
-        else if (b.Pawn != None)
-            b.Pawn.KilledBy( b.Pawn );
-        if (b != None)
-            b.Destroy();
-        return true;
-    }
-    return false;
+    // PREVIOUS ROUTINE BELOW: (10/8/13)
+    //     num = NumMonsters;
+    //
+    //     c = Level.ControllerList;
+    //
+    //     while (c != none && num > 0)
+    //     {
+    //         nextC = c.NextController;
+    //         if (KillZed(coffee))
+    //             --num;
+    //         c = nextC;
+    //     }
 }
 
 // Force slomo for a longer period of time when the boss dies
@@ -673,9 +667,20 @@ event InitGame( string Options, out string Error )
         else Warn("MULTIPLE KFLEVELRULES FOUND!!!!!");
     }
     foreach AllActors(class'ShopVolume',SH)
-        ShopList[ShopList.Length] = SH;
-    foreach AllActors(class'ZombieVolume',ZZ)
-        ZedSpawnList[ZedSpawnList.Length] = ZZ;
+    {
+        if(!SH.bObjectiveModeOnly || bUsingObjectiveMode )
+        {
+            ShopList[ShopList.Length] = SH;
+        }
+    }
+
+    foreach DynamicActors(class'ZombieVolume',ZZ)
+    {
+        if(!ZZ.bObjectiveModeOnly || bUsingObjectiveMode)
+        {
+            ZedSpawnList[ZedSpawnList.Length] = ZZ;
+        }
+    }
 
     //provide default rules if mapper did not need custom one
     if(KFLRules==none)
@@ -3144,6 +3149,20 @@ state MatchOver
                 Return;
         }
     }
+
+    function bool ChangeTeam(Controller Other, int num, bool bNewTeam)
+	{
+	    // prevents DeathMatch.ChangeTeam from being called so that players aren't
+	    // blocked from joining a server that is in this state
+	    if( Other.PlayerReplicationInfo != none && Other.PlayerReplicationInfo.Team == none )
+	    {
+		    return Global.ChangeTeam( Other, num, bNewTeam );
+		}
+		else
+		{
+		    return Super.ChangeTeam( Other, num, bNewTeam );
+		}
+	}
 }
 
 function PlayStartupMessage()
@@ -3306,6 +3325,12 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
 							StatsAndAchievements.AddZedTimeKill();
 						}
 					}
+
+					if ( class<DamTypeBurned>(damageType) != none || class<DamTypeFlamethrower>(damageType) != none ||
+							class<DamTypeBlowerThrower>(damageType) != none )
+					{
+				     	StatsAndAchievements.AddMonsterKillsWithBileOrFlame( KilledPawn.Class );
+					}
                 }
 
                 if ( KilledPawn.IsA('ZombieCrawler') )
@@ -3427,7 +3452,11 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                 {
                     KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).AddScrakeKill(MapName);
 
-                    if ( class<DamTypeM203Grenade>(damageType) != none)
+					if ( class<DamTypeLAW>(damageType) != none || class<DamTypeSealSquealExplosion>(damageType) != none)
+                    {
+                        StatsAndAchievements.AddScrakeAndFPOneShotKill(true, false);
+                    }
+                    else if ( class<DamTypeM203Grenade>(damageType) != none)
                     {
                         StatsAndAchievements.AddM203NadeScrakeKill();
                     }
@@ -3465,7 +3494,11 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                 {
                     StatsAndAchievements.KilledFleshpound(class<DamTypeMelee>(damageType) != none, class<DamTypeAA12Shotgun>(damageType) != none, class<DamTypeKnife>(damageType) != none, class<DamTypeClaymoreSword>(damageType) != none);
 
-                    if ( class<DamTypeKSGShotgun>(damageType) != none )
+					if ( class<DamTypeLAW>(damageType) != none  || class<DamTypeSealSquealExplosion>(damageType) != none)
+                    {
+                        StatsAndAchievements.AddScrakeAndFPOneShotKill(false, true);
+                    }
+                    else if ( class<DamTypeKSGShotgun>(damageType) != none )
                     {
                         StatsAndAchievements.AddFleshPoundKillWithKSG();
                     }
@@ -3579,6 +3612,12 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                     {
                         StatsAndAchievements.AddKillPoints(StatsAndAchievements.KFACHIEVEMENT_Kill5HillbillyZedsIn10SecsSythOrAxe);
                     }
+					else if ( class<DamTypeM32Grenade>(damageType) != none ||
+								class<DamTypeSeekerRocketImpact>(damageType) != none ||
+					            class<DamTypeSeekerSixRocket>(damageType) != none )
+                    {
+                        StatsAndAchievements.AddKillPoints(StatsAndAchievements.KFACHIEVEMENT_Kill10ZedsSeekerOrM32In5Secs);
+                    }
                 }
                 StatsAndAchievements.AddKillPoints(StatsAndAchievements.KFACHIEVEMENT_Kill1000HillbillyZeds);
             }
@@ -3621,7 +3660,7 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
         }
     }
 
-    if ( KFMonster(KilledPawn) != none && class<DamTypeVomit>(damageType) != none )
+    if ( KFMonster(KilledPawn) != none && damageType == class'DamTypeVomit' )
     {
         for ( C = Level.ControllerList; C != none; C = C.NextController )
         {
@@ -4334,7 +4373,7 @@ function int ReduceDamage(int Damage, pawn injured, pawn instigatedBy, vector Hi
     {
         if ( KFPlayerReplicationInfo(Injured.PlayerReplicationInfo) != none && KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill != none )
         {
-            Damage = KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill.Static.ReduceDamage(KFPlayerReplicationInfo(Injured.PlayerReplicationInfo), KFPawn(Injured), KFMonster(instigatedBy), Damage, DamageType);
+            Damage = KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill.Static.ReduceDamage(KFPlayerReplicationInfo(Injured.PlayerReplicationInfo), KFPawn(Injured), instigatedBy, Damage, DamageType);
         }
     }
 
@@ -4617,6 +4656,16 @@ function GetServerInfo( out ServerResponseLine ServerState )
     {
         ServerState.Flags = ServerState.Flags | 512;
     }
+}
+
+function int GetCurrentWaveNum()
+{
+    return KFGameReplicationInfo( GameReplicationInfo ).WaveNumber + 1;
+}
+
+function int GetFinalWaveNum()
+{
+    return KFGameReplicationInfo( GameReplicationInfo ).FinalWave;
 }
 
 function GetServerDetails( out ServerResponseLine ServerState )
@@ -4929,7 +4978,7 @@ defaultproperties
      LongWaves(7)=(WaveMask=58616303,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(8)=(WaveMask=75393519,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(9)=(WaveMask=90171865,WaveMaxMonsters=45,WaveDuration=255,WaveDifficulty=0.300000)
-     MonsterCollection=Class'KFMod.KFMonstersCollection'
+     MonsterCollection=Class'KFMod.KFMonstersHalloween'
      HumanName(0)="Cpl.McinTyre"
      HumanName(1)="Sgt.Michaels"
      HumanName(2)="Pvt.Davin"
@@ -5113,6 +5162,7 @@ defaultproperties
      AvailableChars(48)="Hayato_Tanaka"
      AvailableChars(49)="Mrs_Foster"
      AvailableChars(50)="Steampunk_Mrs_Foster"
+     AvailableChars(51)="Reggie"
      LoadedSkills(0)=Class'KFMod.KFVetFieldMedic'
      LoadedSkills(1)=Class'KFMod.KFVetSupportSpec'
      LoadedSkills(2)=Class'KFMod.KFVetSharpshooter'
@@ -5126,18 +5176,18 @@ defaultproperties
      LastBurnedEnemyMessageTime=-120.000000
      BurnedEnemyMessageDelay=120.000000
      SineWaveFreq=0.040000
-     MonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
-     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
-     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
-     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
-     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
-     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
-     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
-     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
-     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
-     EndGameBossClass="KFChar.ZombieBoss"
+     MonsterClasses(0)=(MClassName="KFChar.ZombieClot_HALLOWEEN",Mid="A")
+     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_HALLOWEEN",Mid="B")
+     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_HALLOWEEN",Mid="C")
+     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker_HALLOWEEN",Mid="D")
+     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake_HALLOWEEN",Mid="E")
+     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_HALLOWEEN",Mid="F")
+     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat_HALLOWEEN",Mid="G")
+     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_HALLOWEEN",Mid="H")
+     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_HALLOWEEN",Mid="I")
+     EndGameBossClass="KFChar.ZombieBoss_HALLOWEEN"
      WaveConfigMenu="KFGUI.KFWaveConfigMenu"
-     FallbackMonsterClass="KFChar.ZombieStalker"
+     FallbackMonsterClass="KFChar.ZombieStalker_HALLOWEEN"
      FinalWave=10
      InvasionBotNames(1)="Zombie"
      InvasionBotNames(2)="Zombie"

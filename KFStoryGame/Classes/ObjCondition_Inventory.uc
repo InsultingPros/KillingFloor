@@ -54,7 +54,7 @@ function        ConditionTick(float DeltaTime)
                 Inv.tag == DesiredItemTag))
                 {
                     bHeld = true;
-                    Instigator = C.Pawn;
+                    SetTargetActor(InstigatorName,C.Pawn);
                     break;
                 }
             }

@@ -53,7 +53,7 @@ defaultproperties
      showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Handcannon_3rd'
      CorrespondingPerkIndex=2
      EquipmentCategoryID=1
-     GoldenVariantClass=Class'KFMod.GoldenDeaglePickup'
+     VariantClasses(0)=Class'KFMod.GoldenDeaglePickup'
      InventoryType=Class'KFMod.Deagle'
      PickupMessage="You got the Handcannon"
      PickupSound=Sound'KF_HandcannonSnd.50AE_Pickup'

@@ -4,6 +4,9 @@ class KFVeterancyTypes extends Info
 
 var byte PerkIndex;
 
+var const float StartingWeaponSellPriceLevel5;
+var const float StartingWeaponSellPriceLevel6;
+
 // HUD Icon is what appears for other players next to playername, sub hud icon can stand for sergeant or something else..
 var() texture OnHUDIcon, OnHUDGoldIcon;
 var() localized string VeterancyName, Requirements[6];
@@ -38,7 +41,7 @@ static function float GetMeleeMovementSpeedModifier(KFPlayerReplicationInfo KFPR
 }
 
 // Reduce damage zombies can deal to you
-static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, KFMonster Instigator, int InDamage, class<DamageType> DmgType)
+static function int ReduceDamage(KFPlayerReplicationInfo KFPRI, KFPawn Injured, Pawn Instigator, int InDamage, class<DamageType> DmgType)
 {
 	return InDamage;
 }
@@ -192,4 +195,6 @@ static function bool KilledShouldExplode(KFPlayerReplicationInfo KFPRI, KFPawn P
 defaultproperties
 {
      PerkIndex=255
+     StartingWeaponSellPriceLevel5=200.000000
+     StartingWeaponSellPriceLevel6=225.000000
 }

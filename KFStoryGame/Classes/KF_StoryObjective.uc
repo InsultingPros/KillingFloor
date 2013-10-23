@@ -255,15 +255,15 @@ simulated function PostBeginPlay()
 
 	for(i = 0 ; i < SuccessConditions.length ; i ++)
 	{
-	   SuccessConditions[i].PostBeginPlay();
+	   SuccessConditions[i].PostBeginPlay(self);
 	}
 	for(i = 0 ; i < OptionalConditions.length ; i ++)
 	{
-	   OptionalConditions[i].PostBeginPlay();
+	   OptionalConditions[i].PostBeginPlay(self);
 	}
 	for(i = 0 ; i < FailureConditions.length ; i ++)
 	{
-	   FailureConditions[i].PostBeginPlay();
+	   FailureConditions[i].PostBeginPlay(self);
 	}
 
 	SetTimer(1.0,true);
@@ -358,7 +358,6 @@ function InitConditions()
     {
         SuccessConditions[i].ConditionType = 1;
         SuccessConditions[i].SetObjOwner(self);
-        SuccessConditions[i].SpawnEventListener();
 
         if(SuccessConditions[i].ShouldInitOnActivation())
         {
@@ -370,7 +369,6 @@ function InitConditions()
     {
         FailureConditions[i].ConditionType = 0;
         FailureConditions[i].SetObjOwner(self);
-        FailureConditions[i].SpawnEventListener();
 
         if(FailureConditions[i].ShouldInitOnActivation())
         {
@@ -383,7 +381,6 @@ function InitConditions()
     {
         OptionalConditions[i].ConditionType = 2;
         OptionalConditions[i].SetObjOwner(self);
-        OptionalConditions[i].SpawnEventListener();
 
         if(OptionalConditions[i].ShouldInitOnActivation())
         {
@@ -1085,9 +1082,10 @@ function Tick(float DeltaTime)
         /* This would only happen if we didn't have any success / failure action defined
         that transitioned to another objective.*/
 
-    	if(IsCurrentObjective())
+        if(IsCurrentObjective() &&
+        (bCompleted || bFailed))
         {
-            StoryGI.NotifyObjectiveFinished(self);
+            StoryGI.SetActiveObjective(none);
         }
     }
     else
@@ -1428,11 +1426,14 @@ function SetCheckPoint(KF_StoryCheckPointVolume Instigator)
 {
     local int i;
 
-    ActiveCheckPoint = Instigator;
-
-    for(i = 0 ; i < AllConditions.length ; i ++)
+    if(bCheckPointable)
     {
-        AllConditions[i].SaveState();
+        ActiveCheckPoint = Instigator;
+
+        for(i = 0 ; i < AllConditions.length ; i ++)
+        {
+            AllConditions[i].SaveState();
+        }
     }
 }
 

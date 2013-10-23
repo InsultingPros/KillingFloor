@@ -43,7 +43,7 @@ function ConditionTick(float DeltaTime)
 					bHasLOS = (!bPerformLineCheck || GetObjOwner().FastTrace(PlayerController(C).CalcViewLocation, GetLocation()));	//EyePostion() is returning a funny value sometimes.  Not sure why. C.Pawn./*EyePosition()*/Location
 				    if(bHasLOS)
 				    {
-                        Instigator = C.Pawn;
+                        SetTargetActor(InstigatorName,C.Pawn);
                         break;
 				    }
                 }

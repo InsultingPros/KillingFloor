@@ -25,16 +25,14 @@ defaultproperties
      MeleeAnims(0)="Strike"
      MeleeAnims(1)="Strike"
      MeleeAnims(2)="Strike"
-     MoanVoice=SoundGroup'KF_EnemiesFinalSnd.Husk.Husk_Talk'
      BleedOutDuration=6.000000
      ZapThreshold=0.750000
+     bHarpoonToBodyStuns=False
      ZombieFlag=1
      MeleeDamage=15
      damageForce=70000
      bFatAss=True
      KFRagdollName="Burns_Trip"
-     MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_HitPlayer'
-     JumpSound=SoundGroup'KF_EnemiesFinalSnd.Husk.Husk_Jump'
      Intelligence=BRAINS_Mammal
      bCanDistanceAttackDoors=True
      bUseExtendedCollision=True
@@ -48,12 +46,6 @@ defaultproperties
      OnlineHeadshotOffset=(X=20.000000,Z=55.000000)
      HeadHealth=200.000000
      PlayerNumHeadHealthScale=0.050000
-     HitSound(0)=SoundGroup'KF_EnemiesFinalSnd.Husk.Husk_Pain'
-     DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd.Husk.Husk_Death'
-     ChallengeSound(0)=SoundGroup'KF_EnemiesFinalSnd.Husk.Husk_Challenge'
-     ChallengeSound(1)=SoundGroup'KF_EnemiesFinalSnd.Husk.Husk_Challenge'
-     ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd.Husk.Husk_Challenge'
-     ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd.Husk.Husk_Challenge'
      AmmunitionClass=Class'KFMod.BZombieAmmo'
      ScoringValue=17
      IdleHeavyAnim="Idle"
@@ -77,11 +69,8 @@ defaultproperties
      IdleCrouchAnim="Idle"
      IdleWeaponAnim="Idle"
      IdleRestAnim="Idle"
-     AmbientSound=Sound'KF_BaseHusk.Husk_IdleLoop'
-     Mesh=SkeletalMesh'KF_Freaks2_Trip.Burns_Freak'
      DrawScale=1.400000
      PrePivot=(Z=22.000000)
-     Skins(0)=Texture'KF_Specimens_Trip_T_Two.burns.burns_tatters'
      Skins(1)=Shader'KF_Specimens_Trip_T_Two.burns.burns_shdr'
      SoundVolume=200
      Mass=400.000000

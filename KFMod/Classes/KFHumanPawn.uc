@@ -81,7 +81,6 @@ replication
 
 simulated function Setup(xUtil.PlayerRecord rec, optional bool bLoadNow)
 {
-    local KFMaleSoundGroup sg;
     super.Setup(rec, bLoadNow);
 
 	if( class<SoldierSpeciesRobot>(Species) != none )
@@ -474,8 +473,22 @@ simulated function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation
 function TakeBileDamage()
 {
 	local vector BileVect;
+	local int RandBileDamage;
+    local int actualDamage;
+    local vector HitMomentum;
 
-	super.TakeBileDamage();
+	RandBileDamage = 2+Rand(3);
+
+    Super(XPawn).TakeDamage(RandBileDamage, BileInstigator, Location, vect(0,0,0), LastBileDamagedByType);
+    healthtoGive-=5;
+
+    HitMomentum = vect(0,0,0);
+    actualDamage = Level.Game.ReduceDamage(RandBileDamage, self, BileInstigator, Location, HitMomentum, LastBileDamagedByType);
+
+    if( actualDamage <= 0 )
+    {
+        return;
+    }
 
 	//TODO: move this sanity check to DoHitCamEffect?
 	if(Controller == none || PlayerController(Controller) == None)
@@ -487,7 +500,15 @@ function TakeBileDamage()
 	BileVect.X=frand();
 	BileVect.Y=frand();
 	BileVect.Z=frand();
-	DoHitCamEffects( BileVect, 0.35 );
+
+	if( class<DamTypeBileDeckGun>(LastBileDamagedByType) != none )
+	{
+	   DoHitCamEffects( BileVect, 0.25, 0.75, 0.5 );
+	}
+	else
+	{
+	   DoHitCamEffects( BileVect, 0.35, 2.0,1.0 );
+	}
 }
 
 // Overridden to support view shake changes
@@ -526,11 +547,11 @@ function PlayTakeHit(vector HitLocation, int Damage, class<DamageType> DamageTyp
             jarscale = 1.0f;
         }
 
-        DoHitCamEffects(direction,jarscale);
+        DoHitCamEffects(direction,jarscale,2.0,1.0);
     }
 }
 
-simulated function DoHitCamEffects(vector HitDirection, float JarrScale )
+simulated function DoHitCamEffects(vector HitDirection, float JarrScale, float BlurDuration, float JarDurationScale )
 {
     local vector localShakeMoveMag;
     local vector localShakeMoveRate;
@@ -553,7 +574,7 @@ simulated function DoHitCamEffects(vector HitDirection, float JarrScale )
             CurrentBlurIntensity = NewSchoolHitBlurIntensity;
 		}
 
-		AddBlur(2.0,CurrentBlurIntensity);
+		AddBlur(BlurDuration,CurrentBlurIntensity);
 	}
 
     // Shake Moving
@@ -586,10 +607,10 @@ simulated function DoHitCamEffects(vector HitDirection, float JarrScale )
 
     KFPC.ShakeView(localShakeRotateMag*JarrScale,
               localShakeRotateRate*(2.0f-JarrScale),
-              JarrRotateDuration,
+              JarrRotateDuration * JarDurationScale,
               localShakeMoveMag*JarrScale,
               localShakeMoveRate*(2.0f-JarrScale),
-              JarrMoveDuration);
+              JarrMoveDuration * JarDurationScale);
 }
 
 simulated function StopHitCamEffects()
@@ -878,7 +899,7 @@ function AddDefaultInventory()
 	Controller.ClientSwitchToBestWeapon();
 }
 
-function CreateInventoryVeterancy(string InventoryClassName, float SellValueScale)
+function CreateInventoryVeterancy(string InventoryClassName, float SellValue)
 {
 	local Inventory Inv;
 	local class<Inventory> InventoryClass;
@@ -895,7 +916,7 @@ function CreateInventoryVeterancy(string InventoryClassName, float SellValueScal
 
 			if ( KFWeapon(Inv) != none )
 			{
-				KFWeapon(Inv).SellValue = float(class<KFWeaponPickup>(InventoryClass.default.PickupClass).default.Cost) * SellValueScale * 0.75;
+				KFWeapon(Inv).SellValue = SellValue;
 			}
 
 			if ( KFGameType(Level.Game) != none )
@@ -908,6 +929,11 @@ function CreateInventoryVeterancy(string InventoryClassName, float SellValueScal
 
 function bool CanCarry( float Weight )
 {
+    if(Weight <= 0)
+    {
+        return true;
+    }
+
 	return ((CurrentWeight+Weight)<=MaxCarryWeight);
 }
 

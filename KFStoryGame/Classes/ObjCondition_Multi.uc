@@ -81,4 +81,5 @@ function        string      GetDataString()
 
 defaultproperties
 {
+     bForceReliableUpdate=True
 }

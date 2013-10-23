@@ -351,7 +351,7 @@ State SawingLoop
 	function EndState()
 	{
 		AmbientSound=default.AmbientSound;
-		MeleeDamage= default.MeleeDamage;
+		MeleeDamage = Max( DifficultyDamageModifer() * default.MeleeDamage, 1 );
 
 		SetGroundSpeed(GetOriginalGroundSpeed());
 		bCharging = False;
@@ -456,7 +456,7 @@ simulated event SetAnimAction(name NewAction)
 // The animation is full body and should set the bWaitForAnim flag
 simulated function bool AnimNeedsWait(name TestAnim)
 {
-    if( TestAnim == 'SawImpaleLoop' || TestAnim == 'DoorBash' )
+    if( TestAnim == 'SawImpaleLoop' || TestAnim == 'DoorBash' || TestAnim == 'KnockDown' )
     {
         return true;
     }
@@ -534,7 +534,16 @@ simulated function ProcessHitFX()
 		{
 			SpawnGibs( HitFX[SimHitFxTicker].rotDir, 1);
 			bGibbed = true;
-			Destroy();
+			// Wait a tick on a listen server so the obliteration can replicate before the pawn is destroyed
+            if( Level.NetMode == NM_ListenServer )
+			{
+                bDestroyNextTick = true;
+                TimeSetDestroyNextTickTime = Level.TimeSeconds;
+            }
+            else
+            {
+                Destroy();
+			}
 			return;
 		}
 

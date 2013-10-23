@@ -621,6 +621,10 @@ function MyOnDrawItem(Canvas Canvas, int i, float X, float Y, float W, float H, 
         DStyle.DrawText( Canvas, MenuState, CellLeft, Y, CellWidth, H, TXTA_Left, string(Servers[SortData[i].SortItem].CurrentPlayers)$"/"$string((Servers[SortData[i].SortItem].MaxPlayers&255)), FontScale );
 
     GetCellLeftWidth( 4, CellLeft, CellWidth );
+    if( Servers[SortData[i].SortItem].CurrentWave>0 || Servers[SortData[i].SortItem].FinalWave>0 )
+        DStyle.DrawText( Canvas, MenuState, CellLeft, Y, CellWidth, H, TXTA_Left, string(Servers[SortData[i].SortItem].CurrentWave)$"/"$string((Servers[SortData[i].SortItem].FinalWave)), FontScale );
+
+    GetCellLeftWidth( 5, CellLeft, CellWidth );
     if( Servers[SortData[i].SortItem].Ping == 9999 )
         Ping = "?";
     else
@@ -655,6 +659,15 @@ function string GetSortString( int i )
 
         t = string((Servers[i].MaxPlayers&255));
         PadLeft(T, 4, "0");
+        s $= t $ i;
+        break;
+
+    case 4:
+        s = string(Servers[i].CurrentWave);
+        PadLeft(s, 4, "0");
+
+        t = string(Servers[i].FinalWave);
+        PadLeft(t, 4, "0");
         s $= t $ i;
         break;
 
@@ -788,12 +801,14 @@ defaultproperties
      ColumnHeadings(1)="Server Name"
      ColumnHeadings(2)="Map"
      ColumnHeadings(3)="Players"
-     ColumnHeadings(4)="Ping"
+     ColumnHeadings(4)="Wave"
+     ColumnHeadings(5)="Ping"
      InitColumnPerc(0)=0.100000
-     InitColumnPerc(1)=0.370000
-     InitColumnPerc(2)=0.250000
-     InitColumnPerc(3)=0.130000
-     InitColumnPerc(4)=0.150000
+     InitColumnPerc(1)=0.400000
+     InitColumnPerc(2)=0.200000
+     InitColumnPerc(3)=0.100000
+     InitColumnPerc(4)=0.100000
+     InitColumnPerc(5)=0.100000
      SortColumn=4
      OnDrawItem=UT2k4Browser_ServersList.MyOnDrawItem
      WinHeight=1.000000

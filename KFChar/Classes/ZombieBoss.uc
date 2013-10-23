@@ -27,9 +27,9 @@ simulated function CalcAmbientRelevancyScale()
 function vector ComputeTrajectoryByTime( vector StartPosition, vector EndPosition, float fTimeEnd  )
 {
 	local vector NewVelocity;
-	
+
 	NewVelocity = Super.ComputeTrajectoryByTime( StartPosition, EndPosition, fTimeEnd );
-	
+
 	if( PhysicsVolume.IsA( 'KFPhysicsVolume' ) && StartPosition.Z < EndPosition.Z )
 	{
 		if( PhysicsVolume.Gravity.Z < class'PhysicsVolume'.default.Gravity.Z )
@@ -41,7 +41,7 @@ function vector ComputeTrajectoryByTime( vector StartPosition, vector EndPositio
 				NewVelocity.Z += 90;
 			}
 		}
-	}	
+	}
 	return NewVelocity;
 }
 
@@ -1867,7 +1867,16 @@ simulated function ProcessHitFX()
 		{
 			SpawnGibs( HitFX[SimHitFxTicker].rotDir, 1);
 			bGibbed = true;
-			Destroy();
+			// Wait a tick on a listen server so the obliteration can replicate before the pawn is destroyed
+            if( Level.NetMode == NM_ListenServer )
+			{
+                bDestroyNextTick = true;
+                TimeSetDestroyNextTickTime = Level.TimeSeconds;
+            }
+            else
+            {
+                Destroy();
+			}
 			return;
 		}
 

@@ -150,6 +150,9 @@ replication
 	reliable if(Role == ROLE_Authority)
 		ClientReload, ClientFinishReloading, ClientReloadEffects, FlashLight,
 		ClientInterruptReload, ClientForceKFAmmoUpdate;
+
+	reliable if(Role < ROLE_Authority)
+		ServerChangeFireMode;
 }
 
 static function PreloadAssets(Inventory Inv, optional bool bSkipRefCount)
@@ -521,7 +524,7 @@ simulated function vector GetEffectStart()
 
 function bool HandlePickupQuery( pickup Item )
 {
-	if ( Item.InventoryType==Class )
+    if( KFPlayerController(Instigator.Controller).IsVariantInInventory(Item.Class) )
 	{
 		if( LastHasGunMsgTime<Level.TimeSeconds && PlayerController(Instigator.Controller)!=none )
 		{
@@ -1474,7 +1477,32 @@ simulated function ClientForceKFAmmoUpdate(int NewMagAmmoRemaining, int TotalAmm
 
 simulated function DoToggle ()
 {
+	local PlayerController Player;
+
+	if( IsFiring() )
+	{
+	   return;
+	}
+
+	Player = Level.GetLocalPlayerController();
+	if ( Player!=None )
+	{
+		//PlayOwnedSound(sound'Inf_Weapons_Foley.stg44_firemodeswitch01',SLOT_None,2.0,,,,false);
+		FireMode[0].bWaitForRelease = !FireMode[0].bWaitForRelease;
+		if ( FireMode[0].bWaitForRelease )
+			Player.ReceiveLocalizedMessage(class'KFmod.BullpupSwitchMessage',0);
+		else Player.ReceiveLocalizedMessage(class'KFmod.BullpupSwitchMessage',1);
+	}
+
 	PlayOwnedSound(ToggleSound,SLOT_None,2.0,,,,false);
+
+	ServerChangeFireMode(FireMode[0].bWaitForRelease);
+}
+
+// Set the new fire mode on the server
+function ServerChangeFireMode(bool bNewWaitForRelease)
+{
+    FireMode[0].bWaitForRelease = bNewWaitForRelease;
 }
 
 // TODO - Decode the purpose of this mangled mess

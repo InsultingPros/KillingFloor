@@ -481,6 +481,10 @@ native final function bool PlatformIsUnix();  // Linux, FreeBSD, etc (NOT OSX!)
 native final function bool PlatformIsWindows();  // Win32, Win64.
 native final function bool PlatformIs64Bit();  // Linux64, Win64.
 
+// if _RO_
+native final function bool PlatformIsOpenGL();
+// end _RO_
+
 //=============================================================================
 // Engine notification functions.
 

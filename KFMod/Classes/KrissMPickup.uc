@@ -12,7 +12,7 @@ class KrissMPickup extends MedicGunPickup;
 defaultproperties
 {
      Weight=3.000000
-     cost=10000
+     cost=2750
      AmmoCost=10
      BuyClipSize=40
      PowerValue=50

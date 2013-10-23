@@ -35,6 +35,9 @@ var 			float						                    SkipDlgRange;
 /* if true, the dialogue will play randomly each time it is triggered rather than in order */
 var()			bool						                    bRandomize;
 
+// if true, this dialogue can be played multiple times.  If not, only allow one play of each dialogue
+var()           bool                                            bAllowRepeatDialogue;
+
 var				bool						                    bDebugDialogue;
 
 var				bool						                    bTraversing;
@@ -102,8 +105,12 @@ function Destroyed()
 function OnDialogueDisplayComplete(int Index)
 {
 //    log("Dialogue - Triggering Displayed Event : "@Dialogues[Index].Events.DisplayedEvent);
-	TriggerEvent(Dialogues[Index].Events.DisplayedEvent,self,DialogueInstigator.Pawn);
-	Dialogues[Index].bWasTriggered = false;
+    if(Dialogues[Index].Events.DisplayedEvent != '')
+    {
+	   TriggerEvent(Dialogues[Index].Events.DisplayedEvent,self,DialogueInstigator.Pawn);
+    }
+
+    Dialogues[Index].bWasTriggered = false;
 }
 
 function PostBeginPlay()
@@ -196,7 +203,7 @@ function TraverseDialogue()
 	local bool bWaitingForEvent ;
 
 	/* Hit the end. early out */
-	if( Dialogues.length <= CurrentMsgIdx  || bTraversing || bFinished)
+	if( Dialogues.length <= CurrentMsgIdx  || bTraversing || (bFinished && !bAllowRepeatDialogue))
 	{
 		return;
 	}
@@ -297,6 +304,7 @@ function ShowDialogue(int DlgIndex)
 	local string SpeakerName;
 	local actor VoiceOverSource;
 	local Material Portrait;
+    local Pawn MyInstigator;
 
 	/* nothing to show, nothing to play ... early out */
 	if(Dialogues[DlgIndex].Display.Dialogue_Text == "" &&
@@ -351,8 +359,8 @@ function ShowDialogue(int DlgIndex)
 
             if(Dialogues[DlgIndex].Events.DisplayingEvent != '')
             {
-//               log("Dialogue - Triggering Displaying Event : "@Dialogues[DlgIndex].Events.DisplayingEvent);
-                TriggerEvent(Dialogues[DlgIndex].Events.DisplayingEvent,self,DialogueInstigator.Pawn);
+                MyInstigator = DialogueInstigator.Pawn;
+                TriggerEvent(Dialogues[DlgIndex].Events.DisplayingEvent,self,MyInstigator);
             }
         }
 	}

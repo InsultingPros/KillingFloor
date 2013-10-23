@@ -9,10 +9,16 @@ class ZombieStalker_HALLOWEEN extends ZombieStalker;
 
 simulated function Tick(float DeltaTime)
 {
+	Super(KFMonster).Tick(DeltaTime);
 	if( Level.NetMode==NM_DedicatedServer )
 		Return; // Servers aren't intrested in this info.
 
-	if( Level.TimeSeconds > NextCheckTime && Health > 0 )
+    if( bZapped )
+    {
+        // Make sure we check if we need to be cloaked as soon as the zap wears off
+        NextCheckTime = Level.TimeSeconds;
+    }
+	else if( Level.TimeSeconds > NextCheckTime && Health > 0 )
 	{
 		NextCheckTime = Level.TimeSeconds + 0.5;
 
@@ -45,7 +51,6 @@ simulated function Tick(float DeltaTime)
 		}
 	}
 }
-
 
 simulated function CloakStalker()
 {
@@ -82,7 +87,6 @@ simulated function CloakStalker()
 		SetOverlayMaterial(Material'KFX.FBDecloakShader', 0.25, true);
 	}
 }
-
 
 simulated function UnCloakStalker()
 {
@@ -121,7 +125,7 @@ simulated function UnCloakStalker()
 
 function RemoveHead()
 {
-	Super.RemoveHead();
+	Super(KFMonster).RemoveHead();
 
 	if (!bCrispified)
 	{
@@ -132,7 +136,7 @@ function RemoveHead()
 
 simulated function PlayDying(class<DamageType> DamageType, vector HitLoc)
 {
-	Super.PlayDying(DamageType,HitLoc);
+	Super(KFMonster).PlayDying(DamageType,HitLoc);
 
 	if(bUnlit)
 		bUnlit=!bUnlit;
@@ -163,6 +167,7 @@ defaultproperties
      ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Stalker.Stalker_Challenge'
      GruntVolume=0.250000
      MenuName="HALLOWEEN Stalker"
+     AmbientSound=Sound'KF_BaseStalker.Stalker_IdleLoop'
      Mesh=SkeletalMesh'KF_Freaks_Trip_HALLOWEEN.Stalker_Halloween'
      Skins(0)=Shader'KF_Specimens_Trip_HALLOWEEN_T.Stalker.stalker_Redneck_invisible'
      Skins(1)=Shader'KF_Specimens_Trip_HALLOWEEN_T.Stalker.stalker_Redneck_invisible'

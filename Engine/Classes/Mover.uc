@@ -914,7 +914,7 @@ state() TriggerToggle
 			if( EventInstigator.Controller != none && AIController(EventInstigator.Controller) == none )
 				GotoState( 'TriggerToggle', 'Close' );
 // KFO Mod
-			else if(EventInstigator == none)     // always, always toggle this mover, even when there's no instigator.
+			else
 		    {
 				GotoState( 'TriggerToggle', 'Close' );
 		    }

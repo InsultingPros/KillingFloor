@@ -70,7 +70,7 @@ defaultproperties
      CurrentRating=0.650000
      Description="An advanced semi automatic grenade launcher. Launches high explosive grenades."
      DisplayFOV=65.000000
-     Priority=185
+     Priority=210
      InventoryGroup=4
      GroupOffset=6
      PickupClass=Class'KFMod.M32Pickup'

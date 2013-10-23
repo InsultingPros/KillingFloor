@@ -46,7 +46,7 @@ event InitComponent(GUIController MyController, GUIComponent MyOwner)
 	if ( PlayerOwner() != none )
 	{
 		KFStatsAndAchievements = KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements);
-		
+
 		if ( KFStatsAndAchievements != none )
 		{
 			CheckPerks(KFStatsAndAchievements);
@@ -57,7 +57,7 @@ event InitComponent(GUIController MyController, GUIComponent MyOwner)
 event Closed(GUIComponent Sender, bool bCancelled)
 {
 	KFStatsAndAchievements = none;
-	
+
 	super.Closed(Sender, bCancelled);
 }
 
@@ -68,53 +68,53 @@ event ResolutionChanged( int ResX, int ResY )
 }
 
 function bool MyOnDraw(Canvas C)
-{                                                                                                         
+{
 	local int i, j;
 
 	super.OnDraw(C);
-	
+
 	C.SetDrawColor(255, 255, 255, 255);
-	
+
 	// make em square
 	if ( !bResized )
 	{
 		ResizeIcons(C);
-	}	
-		
+	}
+
 	// Current perk background
 	C.SetPos(WinLeft * C.ClipX , WinTop * C.ClipY);
 	C.DrawTileScaled(CurPerkBack, (WinHeight * C.ClipY) / CurPerkBack.USize, (WinHeight * C.ClipY) / CurPerkBack.USize);
-    
+
 	// check if the current perk has changed recently
 
 	CheckPerks(KFStatsAndAchievements);
 
 	j = 0;
-	
+
 	// Draw the available perks
 	for ( i = 0; i < MaxPerks; i++ )
 	{
 		if ( i != CurPerk )
-		{		
+		{
 			PerkSelectIcons[j].Image = class'KFGameType'.default.LoadedSkills[i].default.OnHUDIcon;
 			PerkSelectIcons[j].Index = i;
-		
+
 			if ( KFPlayerController(PlayerOwner()).bChangedVeterancyThisWave )
 			{
-				PerkSelectIcons[j].ImageColor.A = 64;	
+				PerkSelectIcons[j].ImageColor.A = 64;
 			}
 			else
 			{
-				PerkSelectIcons[j].ImageColor.A = 255;	
+				PerkSelectIcons[j].ImageColor.A = 255;
 			}
-			
+
 			j++;
 		}
 	}
 
 	// Draw current perk
 	DrawCurrentPerk(C, CurPerk);
-	
+
 	return false;
 }
 
@@ -124,13 +124,13 @@ function bool InternalOnClick(GUIComponent Sender)
 
 	// Grab the Player Controller for later use
 	PC = PlayerOwner();
-	
+
 	if ( Sender.IsA('KFIndexedGUIImage') && !KFPlayerController(PC).bChangedVeterancyThisWave )
 	{
 		if ( KFPlayerController(PC) != none )
 		{
 				class'KFPlayerController'.default.SelectedVeterancy = class'KFGameType'.default.LoadedSkills[KFIndexedGUIImage(Sender).Index];
-				KFPlayerController(PC).SelectedVeterancy = class'KFGameType'.default.LoadedSkills[KFIndexedGUIImage(Sender).Index];
+				KFPlayerController(PC).SetSelectedVeterancy( class'KFGameType'.default.LoadedSkills[KFIndexedGUIImage(Sender).Index] );
 				KFPlayerController(PC).SendSelectedVeterancyToServer();
 				PC.SaveConfig();
 		}
@@ -139,16 +139,16 @@ function bool InternalOnClick(GUIComponent Sender)
 			class'KFPlayerController'.default.SelectedVeterancy = class'KFGameType'.default.LoadedSkills[KFIndexedGUIImage(Sender).Index];
 			class'KFPlayerController'.static.StaticSaveConfig();
 		}
-		
+
 		bPerkChange = true;
 	}
-	
-	return false;	
+
+	return false;
 }
 
 function DrawCurrentPerk(Canvas C, Int PerkIndex)
-{		
-	C.SetPos(WinLeft * C.ClipX , WinTop * C.ClipY);				
+{
+	C.SetPos(WinLeft * C.ClipX , WinTop * C.ClipY);
 	C.DrawTileScaled(class'KFGameType'.default.LoadedSkills[PerkIndex].default.OnHUDIcon, (WinHeight * C.ClipY) / class'KFGameType'.default.LoadedSkills[PerkIndex].default.OnHUDIcon.USize, (WinHeight * C.ClipY) / class'KFGameType'.default.LoadedSkills[PerkIndex].default.OnHUDIcon.USize);
 }
 
@@ -157,24 +157,24 @@ function ResizeIcons(Canvas C)
 	PerkBack0.WinWidth = (C.ClipY / C.ClipX) * BoxSizeX;
 	PerkBack1.WinWidth = (C.ClipY / C.ClipX) * BoxSizeX;
 	PerkBack2.WinWidth = (C.ClipY / C.ClipX) * BoxSizeX;
-	PerkBack3.WinWidth = (C.ClipY / C.ClipX) * BoxSizeX;	
+	PerkBack3.WinWidth = (C.ClipY / C.ClipX) * BoxSizeX;
 	PerkBack4.WinWidth = (C.ClipY / C.ClipX) * BoxSizeX;
-	PerkBack5.WinWidth = (C.ClipY / C.ClipX) * BoxSizeX;  
-	
+	PerkBack5.WinWidth = (C.ClipY / C.ClipX) * BoxSizeX;
+
 	PerkSelectIcon0.WinWidth = (C.ClipY / C.ClipX) * BoxSizeY;
 	PerkSelectIcons[0] = PerkSelectIcon0;
 	PerkSelectIcon1.WinWidth = (C.ClipY / C.ClipX) * BoxSizeY;
 	PerkSelectIcons[1] = PerkSelectIcon1;
 	PerkSelectIcon2.WinWidth = (C.ClipY / C.ClipX) * BoxSizeY;
 	PerkSelectIcons[2] = PerkSelectIcon2;
-	PerkSelectIcon3.WinWidth = (C.ClipY / C.ClipX) * BoxSizeY;	
+	PerkSelectIcon3.WinWidth = (C.ClipY / C.ClipX) * BoxSizeY;
 	PerkSelectIcons[3] = PerkSelectIcon3;
 	PerkSelectIcon4.WinWidth = (C.ClipY / C.ClipX) * BoxSizeY;
 	PerkSelectIcons[4] = PerkSelectIcon4;
 	PerkSelectIcon5.WinWidth = (C.ClipY / C.ClipX) * BoxSizeY;
 	PerkSelectIcons[5] = PerkSelectIcon5;
 
-	bResized = true;	
+	bResized = true;
 }
 
 function CheckPerks(KFSteamStatsAndAchievements StatsAndAchievements)
@@ -184,7 +184,7 @@ function CheckPerks(KFSteamStatsAndAchievements StatsAndAchievements)
 
 	// Grab the Player Controller for later use
 	KFPC = KFPlayerController(PlayerOwner());
-                                                                                         
+
 	// Hold onto our reference
 	KFStatsAndAchievements = StatsAndAchievements;
 
@@ -200,7 +200,7 @@ function CheckPerks(KFSteamStatsAndAchievements StatsAndAchievements)
 			CurPerk = i;
 		}
 	}
-	
+
 	bPerkChange = false;
 }
 

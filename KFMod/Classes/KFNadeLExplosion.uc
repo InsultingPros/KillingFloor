@@ -24,7 +24,7 @@ simulated function Timer()
 
 defaultproperties
 {
-     Begin Object Class=SpriteEmitter Name=SpriteEmitter7
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter6
          RespawnDeadParticles=False
          SpinParticles=True
          UseSizeScale=True
@@ -46,12 +46,13 @@ defaultproperties
          Texture=Texture'kf_fx_trip_t.Misc.smoke_animated'
          TextureUSubdivisions=8
          TextureVSubdivisions=8
+         LifetimeRange=(Min=2.500000,Max=2.500000)
          StartVelocityRange=(X=(Min=-1000.000000,Max=1000.000000),Y=(Min=-1000.000000,Max=1000.000000))
          VelocityLossRange=(X=(Min=8.000000,Max=8.000000),Y=(Min=8.000000,Max=8.000000),Z=(Min=8.000000,Max=8.000000))
      End Object
-     Emitters(0)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter7'
+     Emitters(0)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter6'
 
-     Begin Object Class=SpriteEmitter Name=SpriteEmitter15
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter7
          FadeOut=True
          FadeIn=True
          RespawnDeadParticles=False
@@ -65,8 +66,9 @@ defaultproperties
          Acceleration=(X=50.000000,Y=50.000000,Z=50.000000)
          ColorScale(0)=(Color=(B=128,G=128,R=128,A=255))
          ColorScale(1)=(RelativeTime=1.000000,Color=(B=255,G=255,R=255,A=255))
-         FadeOutStartTime=2.100000
-         FadeInEndTime=1.980000
+         Opacity=0.500000
+         FadeOutStartTime=1.500000
+         FadeInEndTime=1.500000
          MaxParticles=20
          StartLocationRange=(X=(Min=-10.000000,Max=10.000000),Y=(Min=-10.000000,Max=10.000000))
          UseRotationFrom=PTRS_Actor
@@ -81,13 +83,13 @@ defaultproperties
          DrawStyle=PTDS_AlphaBlend
          Texture=Texture'Effects_Tex.explosions.DSmoke_2'
          SecondsBeforeInactive=0.000000
-         LifetimeRange=(Min=4.500000,Max=6.000000)
+         LifetimeRange=(Min=2.500000,Max=3.000000)
          StartVelocityRange=(X=(Min=250.000000,Max=750.000000),Y=(Min=-750.000000,Max=750.000000),Z=(Min=-750.000000,Max=750.000000))
          VelocityLossRange=(X=(Min=4.000000,Max=4.000000),Y=(Min=4.000000,Max=4.000000),Z=(Min=4.000000,Max=4.000000))
      End Object
-     Emitters(1)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter15'
+     Emitters(1)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter7'
 
-     Begin Object Class=SpriteEmitter Name=SpriteEmitter16
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter8
          RespawnDeadParticles=False
          SpinParticles=True
          UseSizeScale=True
@@ -111,12 +113,13 @@ defaultproperties
          Texture=Texture'kf_fx_trip_t.Misc.smoke_animated'
          TextureUSubdivisions=8
          TextureVSubdivisions=8
+         LifetimeRange=(Min=2.500000,Max=2.500000)
          StartVelocityRange=(X=(Min=-100.000000,Max=100.000000),Y=(Min=-100.000000,Max=100.000000))
          VelocityLossRange=(X=(Min=1.000000,Max=1.000000),Y=(Min=1.000000,Max=1.000000),Z=(Min=1.000000,Max=1.000000))
      End Object
-     Emitters(2)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter16'
+     Emitters(2)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter8'
 
-     Begin Object Class=SpriteEmitter Name=SpriteEmitter17
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter9
          UseColorScale=True
          FadeOut=True
          FadeIn=True
@@ -140,9 +143,9 @@ defaultproperties
          Texture=Texture'Effects_Tex.explosions.radialexplosion_1frame'
          LifetimeRange=(Min=0.250000,Max=0.250000)
      End Object
-     Emitters(3)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter17'
+     Emitters(3)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter9'
 
-     Begin Object Class=SpriteEmitter Name=SpriteEmitter18
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter10
          FadeOut=True
          FadeIn=True
          RespawnDeadParticles=False
@@ -168,9 +171,9 @@ defaultproperties
          LifetimeRange=(Min=0.100000,Max=0.100000)
          StartVelocityRange=(Z=(Min=10.000000,Max=10.000000))
      End Object
-     Emitters(4)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter18'
+     Emitters(4)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter10'
 
-     Begin Object Class=SpriteEmitter Name=SpriteEmitter19
+     Begin Object Class=SpriteEmitter Name=SpriteEmitter11
          UseCollision=True
          UseColorScale=True
          FadeOut=True
@@ -206,7 +209,7 @@ defaultproperties
          LifetimeRange=(Min=2.000000,Max=2.000000)
          StartVelocityRange=(X=(Min=-700.000000,Max=700.000000),Y=(Min=-700.000000,Max=700.000000),Z=(Min=100.000000,Max=500.000000))
      End Object
-     Emitters(5)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter19'
+     Emitters(5)=SpriteEmitter'KFMod.KFNadeLExplosion.SpriteEmitter11'
 
      AutoDestroy=True
      LightType=LT_Steady

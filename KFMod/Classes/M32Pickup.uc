@@ -3,7 +3,7 @@ class M32Pickup extends KFWeaponPickup;
 defaultproperties
 {
      Weight=7.000000
-     cost=2500
+     cost=4000
      AmmoCost=60
      BuyClipSize=6
      PowerValue=85
@@ -17,6 +17,7 @@ defaultproperties
      AmmoMesh=StaticMesh'KillingFloorStatics.XbowAmmo'
      CorrespondingPerkIndex=6
      EquipmentCategoryID=2
+     VariantClasses(0)=Class'KFMod.CamoM32Pickup'
      MaxDesireability=0.790000
      InventoryType=Class'KFMod.M32GrenadeLauncher'
      PickupMessage="You got the M32 Multiple Grenade Launcher."

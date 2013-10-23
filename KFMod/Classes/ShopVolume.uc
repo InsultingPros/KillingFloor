@@ -12,6 +12,9 @@ var array<Actor> TriggeringActors;
 var NavigationPoint BotPoint;
 var WeaponLocker MyTrader;
 
+// this shop is only used in the Objective mode gametype.
+var(Advanced) const bool  bObjectiveModeOnly;
+
 function Touch( Actor Other )
 {
 	if( Pawn(Other)!=None && PlayerController(Pawn(Other).Controller)!=None && KFGameType(Level.Game)!=None && !KFGameType(Level.Game).bWaveInProgress )
@@ -103,6 +106,13 @@ function bool BootPlayers()
         Bootee = KFHumanPawn(Touching[idx]);
         if(Bootee == none)
         {
+            if(Touching[idx].IsA('KF_StoryInventoryPickup'))
+            {
+                Touching[idx].SetLocation(TelList[Rand(TelList.length)].Location + (vect(0,0,1) * Touching[idx].CollisionHeight)) ;
+                Touching[idx].SetPhysics(PHYS_Falling);
+                Touching[idx].SetOwner(Touching[idx].Owner);    // to force NetDirty
+            }
+
             continue ;
         }
 
