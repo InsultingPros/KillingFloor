@@ -50,10 +50,6 @@ var                 float       TimeInArea;
 
 var                 float       TimeOutOfArea;
 
-var                 float       TimeStep;
-
-var                 float       LastIncrementOOATime,LastIncrementIATime;
-
 var                 float       LastOutOfAreaTime;
 
 var                 bool        bTimingOut;
@@ -211,40 +207,24 @@ function ConditionTick(Float DeltaTime)
 
             if(bKeepProgress)
             {
-                if(GetObjOwner().Level.TimeSeconds - LastIncrementIATime > TimeStep)
-                {
-                    LastIncrementIATime = GetObjOwner().Level.TimeSeconds;
-                    TimeInArea = FMax( TimeInArea - TimeStep,0);
-                }
+                TimeInArea = FMax( TimeInArea - DeltaTime, 0 );
             }
             else
             {
                 TimeInArea = 0.f;
             }
 
-            if(GetObjOwner().Level.TimeSeconds - LastIncrementOOATime > TimeStep)
-            {
-                LastIncrementOOATime = GetObjOwner().Level.TimeSeconds;
-                TimeOutOfArea = FMin( TimeOutOfArea + TimeStep,Duration);
-            }
+            TimeOutOfArea = FMin( TimeOutOfArea + DeltaTime, Duration );
         }
 		else
 		{
 		    bTimingOut = false;
 
-            if(GetObjOwner().Level.TimeSeconds - LastIncrementIATime > TimeStep)
-            {
-                LastIncrementIATime = GetObjOwner().Level.TimeSeconds;
-                TimeInArea = FMin( TimeInArea + TimeStep,Duration);
-            }
+            TimeInArea = FMin( TimeInArea + DeltaTime, Duration );
 
             if(bKeepProgress)
             {
-                if(GetObjOwner().Level.TimeSeconds - LastIncrementOOATime > TimeStep)
-                {
-                    LastIncrementOOATime = GetObjOwner().Level.TimeSeconds;
-                    TimeOutOfArea = FMax( TimeOutOfArea - TimeStep,0);
-                }
+                TimeOutOfArea = FMax( TimeOutOfArea - DeltaTime, 0 );
             }
             else
             {
@@ -340,6 +320,5 @@ defaultproperties
      InitialAreaVolumeName="InitialAreaVolume"
      ProximityTriggerType=Class'Engine.PlayerController'
      CompletionMethod=Method_EnterArea
-     TimeStep=0.100000
      HUD_World=(bIgnoreWorldLocHidden=True)
 }

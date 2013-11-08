@@ -123,8 +123,8 @@ function int PopulateBuyables()
         {
             ForSalePickup = class<KFWeaponPickup>(KFLR.ItemForSale[j]);
 
-            if( ForSalePickup != class'KFMod.Potato' )
-            {
+            //if( ForSalePickup != class'KFMod.Potato' )
+            //{
                 //Let's see if this is a vest, first aid kit, ammo or stuff we already have
                 if ( class<Vest>(KFLR.ItemForSale[j]) != none || class<FirstAidKit>(KFLR.ItemForSale[j]) != none ||
                      class<KFWeapon>(KFLR.ItemForSale[j].default.InventoryType) == none || KFLR.ItemForSale[j].IsA('Ammunition') ||
@@ -133,7 +133,7 @@ function int PopulateBuyables()
                 {
                     continue;
                 }
-            }
+            //}
 
             if ( class<Deagle>(ForSalePickup.default.InventoryType) != none )
             {
@@ -214,16 +214,16 @@ function int PopulateBuyables()
             ForSaleBuyable.ItemName         = ForSalePickup.default.ItemName;
             ForSaleBuyable.ItemDescription  = ForSalePickup.default.Description;
             ForSaleBuyable.ItemCategorie    = KFLR.EquipmentCategories[i].EquipmentCategoryName;
-            if( ForSalePickup == class'KFMod.Potato' )
+            /*if( ForSalePickup == class'KFMod.Potato' )
             {
                 ForSaleBuyable.ItemImage        = Texture'Potato_T.ui_potato';
                 ForSaleBuyable.ItemAmmoClass    = none;
             }
-            else
-            {
+            else*/
+            //{
                 ForSaleBuyable.ItemImage        = class<KFWeapon>(ForSalePickup.default.InventoryType).default.TraderInfoTexture;
                 ForSaleBuyable.ItemAmmoClass    = class<KFWeapon>(ForSalePickup.default.InventoryType).default.FireModeClass[0].default.AmmoClass;
-            }
+            //}
             ForSaleBuyable.ItemWeaponClass  = class<KFWeapon>(ForSalePickup.default.InventoryType);
             ForSaleBuyable.ItemPickupClass  = ForSalePickup;
             ForSaleBuyable.ItemCost         = int((float(ForSalePickup.default.Cost)
@@ -234,6 +234,11 @@ function int PopulateBuyables()
             if ( bZeroWeight)
             {
                 ForSaleBuyable.ItemWeight   = 1.f;
+            }
+            else if ( (ForSalePickup == class'DualDeaglePickup' || ForSalePickup == class'GoldenDualDeaglePickup')
+                      && (IsInInventory(class'DeaglePickup') || IsInInventory(class'GoldenDeaglePickup')) )
+            {
+                ForSaleBuyable.ItemWeight= ForSalePickup.default.Weight / 2;
             }
             else if ( ForSalePickup == class'Dual44MagnumPickup' && IsInInventory(class'Magnum44Pickup') )
             {
@@ -414,10 +419,10 @@ function UpdateList()
             CanBuys[i] = 1;
         }
 
-        if( ForSaleBuyables[i].ItemPickupClass == class'KFMod.Potato' )
+        /*if( ForSaleBuyables[i].ItemPickupClass == class'KFMod.Potato' )
         {
             continue;
-        }
+        }*/
 
         unlockedByAchievement = false;
         unlockedByApp = false;
@@ -470,22 +475,12 @@ function UpdateList()
 
 function bool IsInInventory(class<Pickup> Item)
 {
-    local Inventory CurInv;
-
-    for ( CurInv = PlayerOwner().Pawn.Inventory; CurInv != none; CurInv = CurInv.Inventory )
-    {
-        if ( CurInv.default.PickupClass == Item )
-        {
-            return true;
-        }
-    }
-
-    return false;
+    return KFPlayerController( PlayerOwner() ).IsInInventory( Item, true, false );
 }
 
 function bool IsVariantInInventory(class<Pickup> PickupForSale)
 {
-    return KFPlayerController( PlayerOwner() ).IsVariantInInventory( PickupForSale );
+    return KFPlayerController( PlayerOwner() ).IsInInventory( PickupForSale, true, true );
 }
 
 function bool PreDraw(Canvas Canvas)
@@ -570,10 +565,10 @@ function DrawInvItem(Canvas Canvas, int CurIndex, float X, float Y, float Width,
     {
         Canvas.DrawTile(class'KFGameType'.default.LoadedSkills[ItemPerkIndexes[CurIndex]].default.OnHUDIcon, Height - 8, Height - 8, 0, 0, 256, 256);
     }
-    else if( ForSaleBuyables.Length > CurIndex && ForSaleBuyables[CurIndex].ItemPickupClass == class'KFMod.Potato' )
+    /*else if( ForSaleBuyables.Length > CurIndex && ForSaleBuyables[CurIndex].ItemPickupClass == class'KFMod.Potato' )
     {
         Canvas.DrawTile(Texture'Potato_T.ui_potato', Height - 8, Height - 8, 0, 0, 256, 256);
-    }
+    }*/
     else
     {
         Canvas.DrawTile(NoPerkIcon, Height - 8, Height - 8, 0, 0, 256, 256);

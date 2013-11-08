@@ -17,7 +17,7 @@ defaultproperties
      SelectedHudImageRef="KillingFloor2HUD.WeaponSelect.MP5Camo"
      AppID=258752
      FireModeClass(0)=Class'KFMod.CamoMP5MFire'
-     Description="Camo MP5 description"
+     Description="Camouflaged MP5 sub machine gun. Modified to fire healing darts. Better damage and healing than MP7M with a larger mag."
      PickupClass=Class'KFMod.CamoMP5MPickup'
      AttachmentClass=Class'KFMod.CamoMP5MAttachment'
      ItemName="Camo MP5M Medic Gun"

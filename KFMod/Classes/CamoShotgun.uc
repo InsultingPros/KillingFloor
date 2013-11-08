@@ -19,5 +19,6 @@ defaultproperties
      Description="A camoflaged, rugged tactical pump action shotgun common to police divisions the world over. It accepts a maximum of 8 shells and can fire in rapid succession. "
      PickupClass=Class'KFMod.CamoShotgunPickup'
      AttachmentClass=Class'KFMod.CamoShotgunAttachment'
+     ItemName="Camo Shotgun"
      Skins(0)=Combiner'KF_Weapons_camo_Trip_T.Weapons.Combat_Shotgun_camo_cmb'
 }

@@ -11,7 +11,7 @@ class CamoMP5MPickup extends MP5MPickup;
 
 defaultproperties
 {
-     Description="Camo MP5 Description"
+     Description="Camouflaged MP5 sub machine gun. Modified to fire healing darts. Better damage and healing than MP7M with a larger mag."
      ItemName="Camo MP5M Medic Gun"
      ItemShortName="Camo MP5M"
      InventoryType=Class'KFMod.CamoMP5MMedicGun'

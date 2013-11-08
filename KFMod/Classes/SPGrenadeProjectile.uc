@@ -490,7 +490,7 @@ defaultproperties
      SmokeTrailEmitterClass=Class'KFMod.SPGrenadeTrail'
      ExplosionEmitterClass=Class'KFMod.SPGrenadeExplosion'
      ArmDistSquared=90000.000000
-     ImpactDamageType=Class'KFMod.DamTypeRocketImpact'
+     ImpactDamageType=Class'KFMod.DamTypeSPGrenadeImpact'
      ImpactDamage=200
      ExplodeTimer=2.500000
      DampenFactor=0.500000

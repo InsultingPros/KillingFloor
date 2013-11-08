@@ -17,7 +17,7 @@ defaultproperties
      SelectedHudImageRef="KillingFloor2HUD.WeaponSelect.M32Camo"
      AppID=258752
      FireModeClass(0)=Class'KFMod.CamoM32Fire'
-     Description="CAMO NADER!"
+     Description="A camouflaged advanced semi automatic grenade launcher. Launches high explosive grenades."
      PickupClass=Class'KFMod.CamoM32Pickup'
      AttachmentClass=Class'KFMod.CamoM32Attachment'
      ItemName="Camo M32 Grenade Launcher"

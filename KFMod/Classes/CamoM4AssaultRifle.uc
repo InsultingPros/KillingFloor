@@ -22,7 +22,7 @@ defaultproperties
      SelectedHudImageRef="KillingFloor2HUD.WeaponSelect.M4Camo"
      AppID=258752
      FireModeClass(0)=Class'KFMod.CamoM4Fire'
-     Description="CAMO BAM BAM BAM"
+     Description="A camouflaged compact assault rifle. Can be fired in semi or full auto with good damage and good accuracy."
      PickupClass=Class'KFMod.CamoM4Pickup'
      AttachmentClass=Class'KFMod.CamoM4Attachment'
      ItemName="Camo M4"

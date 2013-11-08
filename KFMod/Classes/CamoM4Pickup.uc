@@ -11,7 +11,7 @@ class CamoM4Pickup extends M4Pickup;
 
 defaultproperties
 {
-     Description="Camo M4 description"
+     Description="A camouflaged compact assault rifle. Can be fired in semi or full auto with good damage and good accuracy."
      ItemName="Camo M4"
      ItemShortName="Camo M4"
      InventoryType=Class'KFMod.CamoM4AssaultRifle'

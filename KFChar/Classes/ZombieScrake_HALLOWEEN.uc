@@ -9,8 +9,6 @@ class ZombieScrake_HALLOWEEN extends ZombieScrake;
 
 defaultproperties
 {
-     SawAttackLoopSound=Sound'KF_BaseScrake.Chainsaw.Scrake_Chainsaw_Impale'
-     ChainSawOffSound=SoundGroup'KF_ChainsawSnd.Chainsaw_Deselect'
      MoanVoice=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Scrake.Scrake_Talk'
      MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Scrake.Scrake_Chainsaw_HitPlayer'
      JumpSound=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Scrake.Scrake_Jump'
@@ -25,7 +23,6 @@ defaultproperties
      ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Scrake.Scrake_Challenge'
      ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Scrake.Scrake_Challenge'
      MenuName="HALLOWEEN Scrake"
-     AmbientSound=Sound'KF_BaseScrake.Chainsaw.Scrake_Chainsaw_Idle'
      Mesh=SkeletalMesh'KF_Freaks_Trip_HALLOWEEN.Scrake_Halloween'
      Skins(0)=Combiner'KF_Specimens_Trip_HALLOWEEN_T.Scrake.Scrake_RedneckZombie_CMB'
      Skins(1)=Combiner'KF_Specimens_Trip_T.scrake_cmb'

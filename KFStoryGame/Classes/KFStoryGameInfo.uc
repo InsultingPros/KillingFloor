@@ -1,17 +1,17 @@
 /*
-	--------------------------------------------------------------
-	KFStoryGameInfo
-	--------------------------------------------------------------
+    --------------------------------------------------------------
+    KFStoryGameInfo
+    --------------------------------------------------------------
 
-	GameType scripts for 'Story' maps.
+    GameType scripts for 'Story' maps.
 
-	Author :  Alex Quick
+    Author :  Alex Quick
 
-	--------------------------------------------------------------
+    --------------------------------------------------------------
 */
 
 
-class KFStoryGameInfo	extends KFGameType;
+class KFStoryGameInfo   extends KFGameType;
 
 /* ===  Objective Structs & Enums ============================================
 ==============================================================================*/
@@ -62,16 +62,16 @@ struct SObjectiveBackgroundInfo
 
 struct SObjectiveProgressEvent
 {
-	/* name of event to fire off */
-	var	()									name					EventName;
+    /* name of event to fire off */
+    var ()                                  name                    EventName;
 
-	var	()									float					ProgressPct;
+    var ()                                  float                   ProgressPct;
 
-	var ()									bool					bReTriggerable;
+    var ()                                  bool                    bReTriggerable;
 
-	var										bool					bWasTriggered;
+    var                                     bool                    bWasTriggered;
 
-	var                                     float                   LastTriggeredPct;
+    var                                     float                   LastTriggeredPct;
 };
 
 
@@ -117,12 +117,12 @@ enum EDisplayStyle
    Hide_Counter,
 };
 
-enum	EHintDisplayStyle
+enum    EHintDisplayStyle
 {
     HDS_Hide,
-	HDS_BarOnly,
-	HDS_TextOnly,
-	HDS_Combination,
+    HDS_BarOnly,
+    HDS_TextOnly,
+    HDS_Combination,
 };
 
 struct long SConditionDifficultyScale
@@ -153,7 +153,7 @@ struct long SDifficultyWrapper
 struct SConditionHintInfoHUD
 {
     var ()     localized string                           Screen_Hint;
-    var	()	   EDisplayStyle							  Screen_CountStyle;
+    var ()     EDisplayStyle                              Screen_CountStyle;
     var ()     EHintDisplayStyle                          Screen_ProgressStyle;
     var ()     KFStoryGameInfo.EFontScale                 FontScale;
     var ()     bool                                       bShowCheckBox;
@@ -166,8 +166,8 @@ struct SConditionHintInfoHUD
 struct SConditionHintInfoWorld
 {
 
-	var  ()    Material                                   World_Texture;
-	var  ()    float                                      World_Texture_Scale;
+    var  ()    Material                                   World_Texture;
+    var  ()    float                                      World_Texture_Scale;
     var  ()    localized string                           World_Hint;
     var  ()    private edfindable Actor                   World_Location;
     var  ()    bool                                       bShowWhispTrail;
@@ -209,8 +209,8 @@ enum EZEDType
 
 struct SZEDSquadSpawnType
 {
-	var  transient     class<KFMonster>     					ZEDClass;               // assigned dynamically in code, not used by the level designer.
-	var()	           int										NumToSpawn;             // number of zeds to spawn of the supplied type.
+    var  transient     class<KFMonster>                         ZEDClass;               // assigned dynamically in code, not used by the level designer.
+    var()              int                                      NumToSpawn;             // number of zeds to spawn of the supplied type.
     var()              EZEDType                                 ZEDType;                // ZED archetype to spawn.  gets modified if we're running an event.
     var()              class<KFMonster>                         CustomZEDClass;         // if ZEDType is CUSTOM, spawn this class of ZED.
 };
@@ -234,17 +234,17 @@ var         array<SZEDSquadType>                            AllSquads;
 
 struct SVoiceOver
 {
-	var()	    edfindable	actor				             SourceActor;
-	var()		sound						                 VoiceOverSound;
+    var()       edfindable  actor                            SourceActor;
+    var()       sound                                        VoiceOverSound;
 };
 
-enum	EBroadcastScope
+enum    EBroadcastScope
 {
     AllPlayers,                                         // Dialogue shows to all human players on the server.
     InstigatorOnly,                                     // Dialogue only shows to the player who instigated it (Triggered the required event, or DlgActor )
 };
 
-enum	EDialogueAlignment
+enum    EDialogueAlignment
 {
     Left,
     Centered,
@@ -282,10 +282,10 @@ struct SDialogueEntry
     var()       SDialogueDisplayInfo                    Display;
     var()       SDialogueEvent                          Events;
     var()       EBroadCastScope                         BroadcastScope;
-	var() 		SVoiceOver					            VoiceOver;				// voice over to play alongside dialogue text.
-	var()		bool						            bLooping;				// if true, this message will continue to display until Required event happens
-    var			Dialogue_EventListener		            EventListener;			// event listener actor - Used if 'RequiredEvent' is set.  Sets bWasTriggered when it receives the event associated with this Dialgoeu
-	var			bool						            bWasTriggered;			//
+    var()       SVoiceOver                              VoiceOver;              // voice over to play alongside dialogue text.
+    var()       bool                                    bLooping;               // if true, this message will continue to display until Required event happens
+    var         Dialogue_EventListener                  EventListener;          // event listener actor - Used if 'RequiredEvent' is set.  Sets bWasTriggered when it receives the event associated with this Dialgoeu
+    var         bool                                    bWasTriggered;          //
 };
 
 /* ============================================================================
@@ -293,7 +293,7 @@ struct SDialogueEntry
 
 
 /* level rules actored tailored to the story gametype. Can be used by mappers to configure things like Player default equipment */
-var			KFLevelRules_Story				StoryRules;
+var         KFLevelRules_Story              StoryRules;
 
 /* Style manager for our HUD */
 var         KF_HUDStyleManager              HUDManager;
@@ -301,27 +301,27 @@ var         KF_HUDStyleManager              HUDManager;
 /* cached reference to the last activated CheckPoint volume -  if the volume has bRespawnOnWipe,  the game will not end when the last player dies.
 Instead, everyone they will respawn at one of the playerstarts encompassed by this volume */
 
-var			KF_StoryCheckPointVolume		CurrentCheckPoint;
+var         KF_StoryCheckPointVolume        CurrentCheckPoint;
 
-var			array<KF_StoryCheckPointVolume>	AllCheckPoints;
+var         array<KF_StoryCheckPointVolume> AllCheckPoints;
 
 var         array<KF_DialogueSpot>          AllDialogue;
 
 var         array<KF_StoryWaveDesigner>     AllWaveDesigners;
 
 /* reference to the current active Objective in a story mission */
-var			KF_StoryObjective				CurrentObjective,LastObjective;
+var         KF_StoryObjective               CurrentObjective,LastObjective;
 
-var			int								CurrentObjectiveIdx;
+var         int                             CurrentObjectiveIdx;
 
-var			string							CurrentMusicTrack;
+var         string                          CurrentMusicTrack;
 
 /* cached references to Objective Actors in the map so we don't have to use Actor iterators all the time */
-var			array<KF_StoryObjective>		AllObjectives,SortedObjectives;
+var         array<KF_StoryObjective>        AllObjectives,SortedObjectives;
 
-var			class<LocalMessage>				CheckPointMessageClass;
+var         class<LocalMessage>             CheckPointMessageClass;
 
-var			bool							bPendingTeamRespawn;
+var         bool                            bPendingTeamRespawn;
 
 var         bool                            bInitStoryMatch;
 
@@ -332,14 +332,14 @@ var         array<KFTraderDoor>             AllTraderDoors;
 
 /* Matinee Vars  ==============================================================================================*/
 
-var			bool							bPlayingCinematic;
+var         bool                            bPlayingCinematic;
 
 /* ===========================================================================================================*/
 
 /* Debugging *=================================================================================================
 ==============================================================================================================*/
 
-var			bool							bDebugPlayerSpawning;
+var         bool                            bDebugPlayerSpawning;
 
 var         bool                            bSkipDialogue;
 
@@ -370,87 +370,87 @@ function Logout( Controller Exiting )
 
 function OnPlayerJoined(Controller JoiningPlayer)
 {
-	if(CurrentObjective != none)
+    if(CurrentObjective != none)
     {
         CurrentObjective.OnPlayerJoined(JoiningPlayer);
-	}
+    }
 }
 
 function OnPlayerLeft(Controller LeavingPlayer)
 {
-	if(CurrentObjective != none)
+    if(CurrentObjective != none)
     {
         CurrentObjective.OnPlayerLeft(LeavingPlayer);
-	}
+    }
 }
 
 
 function OnObjPopulationComplete()
 {
-	local int i;
+    local int i;
 
-	for(i = 0 ; i < AllObjectives.length ; i ++)
-	{
-		AllObjectives[i].OnObjPopulationComplete();
-	}
+    for(i = 0 ; i < AllObjectives.length ; i ++)
+    {
+        AllObjectives[i].OnObjPopulationComplete();
+    }
 }
 
 event InitGame( string Options, out string Error )
 {
-	local KF_StoryCheckPointVolume	CheckPoint;
-	local KF_DialogueSpot Dlg;
-	local KF_StoryWaveDesigner Wave;
-	local KFTraderDoor TraderDoor;
+    local KF_StoryCheckPointVolume  CheckPoint;
+    local KF_DialogueSpot Dlg;
+    local KF_StoryWaveDesigner Wave;
+    local KFTraderDoor TraderDoor;
 
     bUsingObjectiveMode = true;
     ConsoleCommand("Suppress Story_Debug");
 
 
-	Super.InitGame(Options, Error);
+    Super.InitGame(Options, Error);
 
-	/* Cache the stuff we'll be looking up pretty frequently */
+    /* Cache the stuff we'll be looking up pretty frequently */
 
-	foreach AllActors(class'KFLevelRules_Story',StoryRules)
-	{
-		break;
-	}
+    foreach AllActors(class'KFLevelRules_Story',StoryRules)
+    {
+        break;
+    }
 
-	foreach AllActors(class 'KF_StoryCheckPointVolume', CheckPoint)
-	{
-		AllCheckPoints[AllCheckPoints.length] = CheckPoint ;
-	}
+    foreach AllActors(class 'KF_StoryCheckPointVolume', CheckPoint)
+    {
+        AllCheckPoints[AllCheckPoints.length] = CheckPoint ;
+    }
 
-	foreach AllActors(class 'KF_DialogueSpot', Dlg)
-	{
-	   AllDialogue[AllDialogue.length] = Dlg;
-	}
+    foreach AllActors(class 'KF_DialogueSpot', Dlg)
+    {
+       AllDialogue[AllDialogue.length] = Dlg;
+    }
 
-	foreach AllActors(class 'KFTraderDoor', TraderDoor)
-	{
-	   AllTraderDoors[AllTraderDoors.length] = TraderDoor;
-	}
+    foreach AllActors(class 'KFTraderDoor', TraderDoor)
+    {
+       AllTraderDoors[AllTraderDoors.length] = TraderDoor;
+    }
 
-	foreach AllActors(class 'KF_StoryWaveDesigner', Wave)
-	{
+    foreach AllActors(class 'KF_StoryWaveDesigner', Wave)
+    {
         AllWaveDesigners[AllWaveDesigners.length] = Wave;
-	}
+    }
 
-	if(StoryRules == none)
-	{
-		StoryRules = spawn(class'KFLevelRules_Story');
-	}
+    if(StoryRules == none)
+    {
+        StoryRules = spawn(class'KFLevelRules_Story');
+    }
 
-	KFGameLength = GL_Custom ;
+    KFGameLength = GL_Custom ;
 
-	if(StoryRules != none)
-	{
-		StartingCash = StoryRules.StartingCashSum;
-		bNoBots = !StoryRules.bAllowBots ;
+    if(StoryRules != none)
+    {
+        StartingCash = StoryRules.StartingCashSum;
+        bNoBots = !StoryRules.bAllowBots ;
 
         StartingCash /= (GameDifficulty/2.f) ;
-	}
+    }
 
-	PopulateObjectiveList();
+    PopulateObjectiveList();
 }
 
 /* builds a list of all the spawnable ZED squads in the current map */
@@ -472,7 +472,7 @@ function CacheSquadsFor(KF_StorySquadDesigner Squad)
 function LoadUpMonsterList()
 {
     local int i,idx;
-	local array<IMClassList> InitMList;
+    local array<IMClassList> InitMList;
     local KF_StorySquadDesigner StorySquads;
     local class<KFMonster> NewZEDClass;
 
@@ -523,54 +523,54 @@ function LoadUpMonsterList()
 }
 
 
-/* 	Returns the total cash amount currently held by all living members of the player's team
-	Used by Story Objective actors which are configured to complete when a cash goal is reached
+/*  Returns the total cash amount currently held by all living members of the player's team
+    Used by Story Objective actors which are configured to complete when a cash goal is reached
 */
 
-function int	GetTotalCashSum()
+function int    GetTotalCashSum()
 {
-	local int i;
-	local int Total;
+    local int i;
+    local int Total;
 
-	for(i = 0 ; i < GameReplicationInfo.PRIArray.length ; i ++)
-	{
-		Total +=	GameReplicationInfo.PRIArray[i].Score ;
-	}
+    for(i = 0 ; i < GameReplicationInfo.PRIArray.length ; i ++)
+    {
+        Total +=    GameReplicationInfo.PRIArray[i].Score ;
+    }
 
-	return Total;
+    return Total;
 }
 
 function int GetTotalActivePlayers()
 {
-	local int LivingCount;
-	local Controller C;
+    local int LivingCount;
+    local Controller C;
 
-	for ( C=Level.ControllerList; C!=None; C=C.NextController )
-	{
-		if ((C.PlayerReplicationInfo != None) &&
-		C.bIsPlayer && !C.PlayerReplicationInfo.bOutOfLives &&
-		!C.PlayerReplicationInfo.bOnlySpectator )
-		{
-			LivingCount ++ ;
-		}
-	}
+    for ( C=Level.ControllerList; C!=None; C=C.NextController )
+    {
+        if ((C.PlayerReplicationInfo != None) &&
+        C.bIsPlayer && !C.PlayerReplicationInfo.bOutOfLives &&
+        !C.PlayerReplicationInfo.bOnlySpectator )
+        {
+            LivingCount ++ ;
+        }
+    }
 
-//	log("TOTAL PLAYERS : "@LivingCount);
+//  log("TOTAL PLAYERS : "@LivingCount);
 
-	return LivingCount ;
+    return LivingCount ;
 }
 
 function PostBeginPlay()
 {
-	local KF_HUDStylemanager NewManager;
-	local KF_StoryGRI StoryGRI;
+    local KF_HUDStylemanager NewManager;
+    local KF_StoryGRI StoryGRI;
 
-	Super.PostBeginPlay();
+    Super.PostBeginPlay();
 
-	TriggerEvent('PostBeginPlay',self,none);
+    TriggerEvent('PostBeginPlay',self,none);
 
-	if(GameReplicationInfo != none && StoryRules != none)
-	{
+    if(GameReplicationInfo != none && StoryRules != none)
+    {
         StoryGRI = KF_StoryGRI(GameReplicationInfo);
         if(StoryGRI != none)
         {
@@ -589,9 +589,9 @@ function PostBeginPlay()
                         break;
                     }
                 }
-	       }
+           }
         }
-	}
+    }
 }
 
 /* StartMatch()
@@ -603,64 +603,64 @@ function StartMatch()
     which (if any) playerstarts are associated with starting checkpoints */
     EnableStartingCheckPoints();
 
-	Super.StartMatch();
+    Super.StartMatch();
 
     if(StoryRules.bAutoStartObjectives)
     {
         CurrentObjectiveIdx = 0;
-	    SetActiveObjective(SortedObjectives[CurrentObjectiveIdx], GetAHumanPlayerController().Pawn);
+        SetActiveObjective(SortedObjectives[CurrentObjectiveIdx], GetAHumanPlayerController().Pawn);
     }
 
-	TriggerEvent('MatchInProgress', Self, GetAHumanPlayerPawn());
+    TriggerEvent('MatchInProgress', Self, GetAHumanPlayerPawn());
 }
 
 function EnableStartingCheckPoints()
 {
-	local int i;
+    local int i;
 
-	for( i = 0 ; i < AllCheckPoints.length ; i ++)
-	{
-		if(AllCheckPoints[i].bStartEnabled)
-		{
-			AllCheckPoints[i].CheckPointActivated(GetAHumanPlayerPawn(),true,false);
+    for( i = 0 ; i < AllCheckPoints.length ; i ++)
+    {
+        if(AllCheckPoints[i].bStartEnabled)
+        {
+            AllCheckPoints[i].CheckPointActivated(GetAHumanPlayerPawn(),true,false);
             break;
-		}
-	}
+        }
+    }
 }
 
-/*	 A little hack so that Checkpoints which are automatically activated when the match begins can still have a valid Instigator
-	 If they dont,  activation events this checkpoint fires off may not work correctly.  ie.  If were trying to trigger a mover
-	 with the checkpoint when it activates that would fail, because those actors require a human pawn to trigger them.
+/*   A little hack so that Checkpoints which are automatically activated when the match begins can still have a valid Instigator
+     If they dont,  activation events this checkpoint fires off may not work correctly.  ie.  If were trying to trigger a mover
+     with the checkpoint when it activates that would fail, because those actors require a human pawn to trigger them.
 */
-function	Pawn		 GetAHumanPlayerPawn()
+function    Pawn         GetAHumanPlayerPawn()
 {
-	local Controller C;
+    local Controller C;
 
-	for ( C=Level.ControllerList; C!=None; C=C.NextController )
-	{
-		if ( PlayerController(C) != none &&
-		C.Pawn != none )
-		{
-			return C.Pawn ;
-		}
-	}
+    for ( C=Level.ControllerList; C!=None; C=C.NextController )
+    {
+        if ( PlayerController(C) != none &&
+        C.Pawn != none )
+        {
+            return C.Pawn ;
+        }
+    }
 
-	return none;
+    return none;
 }
 
-function	PlayerController		 GetAHumanPlayerController()
+function    PlayerController         GetAHumanPlayerController()
 {
-	local Controller C;
+    local Controller C;
 
-	for ( C=Level.ControllerList; C!=None; C=C.NextController )
-	{
-		if ( PlayerController(C) != none)
-		{
-		   return PlayerController(C);
-		}
-	}
+    for ( C=Level.ControllerList; C!=None; C=C.NextController )
+    {
+        if ( PlayerController(C) != none)
+        {
+           return PlayerController(C);
+        }
+    }
 
-	return none;
+    return none;
 }
 
 /* Story Objectives =============================================================================================
@@ -671,19 +671,19 @@ everything else gets dumped in the AllObjectives array*/
 
 function PopulateObjectiveList()
 {
-	local KF_StoryObjective	Objective;
+    local KF_StoryObjective Objective;
 
     AllObjectives.length = 0;
 
-	foreach AllActors(class 'KF_StoryObjective', Objective)
-	{
-	   AllObjectives[AllObjectives.length] = Objective;
-	}
+    foreach AllActors(class 'KF_StoryObjective', Objective)
+    {
+       AllObjectives[AllObjectives.length] = Objective;
+    }
 
 
     if(SortMissionObjectives())
     {
-	   OnObjPopulationComplete();
+       OnObjPopulationComplete();
     }
     else
     {
@@ -701,21 +701,21 @@ function bool SortMissionObjectives()
 
     SortedObjectives.Length = 0 ;
 
-	for(i = 0 ; i < Level.StoryObjectives.length ; i ++)
-	{
-		if(Level.StoryObjectives[i] != '')
-		{
+    for(i = 0 ; i < Level.StoryObjectives.length ; i ++)
+    {
+        if(Level.StoryObjectives[i] != '')
+        {
             LastSortedObj = FindObjectiveNamed(Level.StoryObjectives[i],true);
             if(LastSortedObj != none)
             {
-			    SortedObjectives[SortedObjectives.length] = LastSortedObj ;
+                SortedObjectives[SortedObjectives.length] = LastSortedObj ;
             }
             else
             {
                 log("Warning - Could not add : "@Level.StoryObjectives[i]@" to the Sorted Objectives list.  FindObjective() returned none . ",'Story_Debug');
             }
-		}
-	}
+        }
+    }
 
     return SortedObjectives.length == Level.StoryObjectives.length ;
 }
@@ -723,28 +723,28 @@ function bool SortMissionObjectives()
 
 function RewindToLastObjective()
 {
-	if(LastObjective != none && LastObjective != CurrentObjective)
-	{
-		SetActiveObjective(LastObjective,CurrentObjective.Instigator);
-	}
+    if(LastObjective != none && LastObjective != CurrentObjective)
+    {
+        SetActiveObjective(LastObjective,CurrentObjective.Instigator);
+    }
 }
 
 
 function RestartEveryone()
 {
-	local Controller C;
+    local Controller C;
 
-	if(!WholeTeamIsWipedOut())
-	{
-		for ( C=Level.ControllerList; C!=None; C=C.NextController )
-		{
-			if ( (C.PlayerReplicationInfo != None) &&
-			C.bIsPlayer && C.Pawn != none )
-			{
-				C.Pawn.Died(C,class 'Suicided', C.Pawn.Location);
-			}
-		}
-	}
+    if(!WholeTeamIsWipedOut())
+    {
+        for ( C=Level.ControllerList; C!=None; C=C.NextController )
+        {
+            if ( (C.PlayerReplicationInfo != None) &&
+            C.bIsPlayer && C.Pawn != none )
+            {
+                C.Pawn.Died(C,class 'Suicided', C.Pawn.Location);
+            }
+        }
+    }
 }
 
 /* Remove dead zombies from the ZEDList array so fresh ones can spawn */
@@ -760,84 +760,84 @@ function CleanUpZEDs()
 
 function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
 {
-	local bool Result;
+    local bool Result;
 
     /* skip the KFGameType implementation ... */
-	Result = Super(TeamGame).CheckEndGame(Winner,Reason);
+    Result = Super(TeamGame).CheckEndGame(Winner,Reason);
 
-	switch(Reason)
-	{
+    switch(Reason)
+    {
         case "LoseAction" :
-		KFGameReplicationInfo(GameReplicationInfo).EndGameType = 1;
+        KFGameReplicationInfo(GameReplicationInfo).EndGameType = 1;
         Result = true;
         break;
         case "WinAction" :
-		GameReplicationInfo.Winner = Teams[0];
-		KFGameReplicationInfo(GameReplicationInfo).EndGameType = 2;
+        GameReplicationInfo.Winner = Teams[0];
+        KFGameReplicationInfo(GameReplicationInfo).EndGameType = 2;
         Result = true;
         break;
         case "LastMan" :
-		KFGameReplicationInfo(GameReplicationInfo).EndGameType = 1;
+        KFGameReplicationInfo(GameReplicationInfo).EndGameType = 1;
         break;
-	}
+    }
 
-	return Result;
+    return Result;
 }
 
 /* Most of the stuff in here was moved from KFGameType.CheckEndGame()
 Kinda weird that the function designed to Check whether the game should end was
 instead just immediately ending the game ??? */
 
-function EndGame(PlayerReplicationInfo	Winner, string  Reason)
+function EndGame(PlayerReplicationInfo  Winner, string  Reason)
 {
-	local PlayerController Player;
-	local Controller P;
-	local bool bSetAchievement;
-	local string MapName;
+    local PlayerController Player;
+    local Controller P;
+    local bool bSetAchievement;
+    local string MapName;
 
-	Super(GameInfo).EndGame(Winner,Reason);
+    Super(GameInfo).EndGame(Winner,Reason);
 
-	if(bGameEnded)
-	{
+    if(bGameEnded)
+    {
         GotoState('MatchOver');
-		EndTime = Level.TimeSeconds + EndTimeDelay;
+        EndTime = Level.TimeSeconds + EndTimeDelay;
 
-		if ( Reason ~= "WinAction" )
-		{
-			if ( GameDifficulty >= 2.0 )
-			{
-				bSetAchievement = true;
+        if ( Reason ~= "WinAction" )
+        {
+            if ( GameDifficulty >= 2.0 )
+            {
+                bSetAchievement = true;
 
-				// Get the MapName out of the URL
-				MapName = GetCurrentMapName(Level);
-			}
-		}
+                // Get the MapName out of the URL
+                MapName = GetCurrentMapName(Level);
+            }
+        }
 
-		for ( P = Level.ControllerList; P != none; P = P.nextController )
-		{
-			Player = PlayerController(P);
-			if ( Player != none )
-			{
-				Player.ClientSetBehindView(true);
-				Player.ClientGameEnded();
+        for ( P = Level.ControllerList; P != none; P = P.nextController )
+        {
+            Player = PlayerController(P);
+            if ( Player != none )
+            {
+                Player.ClientSetBehindView(true);
+                Player.ClientGameEnded();
 
-				if ( bSetAchievement && KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements) != none )
-				{
-					KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements).WonGame(MapName, GameDifficulty, KFGameLength == GL_Long);
-				}
-			}
+                if ( bSetAchievement && KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements) != none )
+                {
+                    KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements).WonGame(MapName, GameDifficulty, KFGameLength == GL_Long);
+                }
+            }
 
-			P.GameHasEnded();
-		}
+            P.GameHasEnded();
+        }
 
-		if ( CurrentGameProfile != none )
-		{
-			CurrentGameProfile.bWonMatch = false;
-		}
-	}
+        if ( CurrentGameProfile != none )
+        {
+            CurrentGameProfile.bWonMatch = false;
+        }
+    }
 
-	log("========== END GAME : REASON : "@Reason@"::::"@bGameEnded@"===============",'Story_Debug');
-	log("=============================================================================",'Story_Debug');
+    log("========== END GAME : REASON : "@Reason@"::::"@bGameEnded@"===============",'Story_Debug');
+    log("=============================================================================",'Story_Debug');
 
 }
 
@@ -855,30 +855,30 @@ state MatchOver
 }
 
 
-/* 	Helper function for retrieving an Objective with the supplied name
-	optionally returns the Index of the Objective in the supplied array */
+/*  Helper function for retrieving an Objective with the supplied name
+    optionally returns the Index of the Objective in the supplied array */
 
-function KF_StoryObjective FindObjectiveNamed(name	ObjName, optional bool bSearchAll, optional out Int ObjIndex)
+function KF_StoryObjective FindObjectiveNamed(name  ObjName, optional bool bSearchAll, optional out Int ObjIndex)
 {
-	local int i;
-	local array<KF_StoryObjective>      ArrayToUse;
-	local KF_StoryObjective  UnsortedObj;
+    local int i;
+    local array<KF_StoryObjective>      ArrayToUse;
+    local KF_StoryObjective  UnsortedObj;
 
-	/* by default just use the sorted objectives list */
-	ArrayToUse = SortedObjectives ;
-	if(bSearchAll)
-	{
-	     ArrayToUse = AllObjectives;
-	}
+    /* by default just use the sorted objectives list */
+    ArrayToUse = SortedObjectives ;
+    if(bSearchAll)
+    {
+         ArrayToUse = AllObjectives;
+    }
 
-	for(i = 0 ; i < ArrayToUse.length ; i ++)
-	{
-		if(ArrayToUse[i].ObjectiveName == ObjName)
-		{
-			ObjIndex = i;
-			return ArrayToUse[i] ;
-		}
-	}
+    for(i = 0 ; i < ArrayToUse.length ; i ++)
+    {
+        if(ArrayToUse[i].ObjectiveName == ObjName)
+        {
+            ObjIndex = i;
+            return ArrayToUse[i] ;
+        }
+    }
 
     /* Iterate unsorted objectives - Last resort time.  */
 
@@ -890,79 +890,79 @@ function KF_StoryObjective FindObjectiveNamed(name	ObjName, optional bool bSearc
         }
     }
 
-	log(" Warning - Failed to find objective named -"@ObjName,'Story_Debug');
-	return none ;
+    log(" Warning - Failed to find objective named -"@ObjName,'Story_Debug');
+    return none ;
 }
 
 /* Helper function for retrieving a CheckPoint with the supplied name */
 
-function	KF_StoryCheckPointVolume		FindCheckPointNamed(string CheckPointName)
+function    KF_StoryCheckPointVolume        FindCheckPointNamed(string CheckPointName)
 {
-	local int i;
+    local int i;
 
-	for(i = 0 ; i < AllCheckPoints.length ; i ++)
-	{
-		if(AllCheckPoints[i].CheckPointName ~= CheckPointName)
-		{
-			return AllCheckPoints[i];
-		}
-	}
+    for(i = 0 ; i < AllCheckPoints.length ; i ++)
+    {
+        if(AllCheckPoints[i].CheckPointName ~= CheckPointName)
+        {
+            return AllCheckPoints[i];
+        }
+    }
 
-	return none;
+    return none;
 }
 
 function SetActiveObjective( KF_StoryObjective NewObjective, optional pawn ObjInstigator)
 {
-	local KF_StoryGRI 	SGRI;
-	local int NewIndex;
-	local KF_StoryNPC StoryPawn;
-	local Controller C;
-	local name LastObjectiveName,CurrentObjectiveName;
+    local KF_StoryGRI   SGRI;
+    local int NewIndex;
+    local KF_StoryNPC StoryPawn;
+    local Controller C;
+    local name LastObjectiveName,CurrentObjectiveName;
 
-	if(NewObjective != CurrentObjective &&
-	(NewObjective == none ||  FindObjectiveNamed(NewObjective.ObjectiveName) == NewObjective &&
+    if(NewObjective != CurrentObjective &&
+    (NewObjective == none ||  FindObjectiveNamed(NewObjective.ObjectiveName) == NewObjective &&
     NewObjective.IsValidForActivation())  )
-	{
-		SGRI = KF_StoryGRI(GameReplicationInfo);
+    {
+        SGRI = KF_StoryGRI(GameReplicationInfo);
 
-	    if(NewObjective != none && NewObjective.bOptional)
-	    {
+        if(NewObjective != none && NewObjective.bOptional)
+        {
             KFPlayerController(ObjInstigator.Controller).CheckForHint(61);
-	    }
+        }
 
         if(NewObjective != none)
         {
-	       log("Setting active game objective to -"@NewObjective.ObjectiveName,'Story_Debug');
+           log("Setting active game objective to -"@NewObjective.ObjectiveName,'Story_Debug');
         }
 
-		if(CurrentObjective != none)
-		{
-			LastObjective = CurrentObjective;
+        if(CurrentObjective != none)
+        {
+            LastObjective = CurrentObjective;
             if(LastObjective != none)
             {
-			    log("LastObjective was ... "@LastObjective.ObjectiveName,'Story_Debug');
-		        LastObjective.Notify_ObjectiveDeActivated();
-	        }
-		}
+                log("LastObjective was ... "@LastObjective.ObjectiveName,'Story_Debug');
+                LastObjective.Notify_ObjectiveDeActivated();
+            }
+        }
 
-		if((NewObjective == none ||
-		NewObjective.ObjectiveInProgressMusic == "") &&
-		(CurrentObjective == none || CurrentObjective.bStopMusicOnCompletion))
-		{
-			StopGameMusic();
-			CurrentMusicTrack = "" ;
-		}
+        if((NewObjective == none ||
+        NewObjective.ObjectiveInProgressMusic == "") &&
+        (CurrentObjective == none || CurrentObjective.bStopMusicOnCompletion))
+        {
+            StopGameMusic();
+            CurrentMusicTrack = "" ;
+        }
 
-		CurrentObjective = NewObjective;
-		if(CurrentObjective != none)
-		{
-		    NewIndex = GetIndexForObj(CurrentObjective);
-		    if(NewIndex >= 0 && NewIndex < SortedObjectives.Length )
-		    {
-			    CurrentObjectiveIdx = NewIndex;
+        CurrentObjective = NewObjective;
+        if(CurrentObjective != none)
+        {
+            NewIndex = GetIndexForObj(CurrentObjective);
+            if(NewIndex >= 0 && NewIndex < SortedObjectives.Length )
+            {
+                CurrentObjectiveIdx = NewIndex;
             }
 
-			CurrentObjective.Notify_ObjectiveActivated(ObjInstigator);
+            CurrentObjective.Notify_ObjectiveActivated(ObjInstigator);
 
             /* Objective FastFoward Debug */
             if(ForcedTargetObj != none)
@@ -975,7 +975,7 @@ function SetActiveObjective( KF_StoryObjective NewObjective, optional pawn ObjIn
                     bSkipDialogue    = false;
                     ForcedTargetObj  = none;
 
-	              	if(SGRI != none)
+                    if(SGRI != none)
                     {
                         SGRI.SetDebugTargetObj(none);
                     }
@@ -986,17 +986,17 @@ function SetActiveObjective( KF_StoryObjective NewObjective, optional pawn ObjIn
                     GoToForcedObj();   // keep goin'...
                 }
             }
-		}
+        }
 
-		SGRI = KF_StoryGRI(GameReplicationInfo);
-		if(SGRI != none)
-		{
-			SGRI.SetCurrentObjective(NewObjective);
-		}
+        SGRI = KF_StoryGRI(GameReplicationInfo);
+        if(SGRI != none)
+        {
+            SGRI.SetCurrentObjective(NewObjective);
+        }
 
-		/* Let NPCs know that the objective changed .. */
-		for (c = Level.ControllerList; c!=None; c=c.nextController)
-		{
+        /* Let NPCs know that the objective changed .. */
+        for (c = Level.ControllerList; c!=None; c=c.nextController)
+        {
             if(C.Pawn != none)
             {
                 StoryPawn = KF_StoryNPC(C.Pawn);
@@ -1012,10 +1012,10 @@ function SetActiveObjective( KF_StoryObjective NewObjective, optional pawn ObjIn
                         LastObjectiveName = LastObjective.ObjectiveName;
                     }
 
-                  	StoryPawn.OnObjectiveChanged(LastObjectiveName,CurrentObjectiveName);
+                    StoryPawn.OnObjectiveChanged(LastObjectiveName,CurrentObjectiveName);
                 }
             }
-		}
+        }
     }
 }
 
@@ -1029,11 +1029,11 @@ function ShowPathToObj(PlayerController P)
     local vector DestLoc;
     local KFPlayerController_Story StoryPC;
 
-	// Attempt to display the route to the currrent objective
-	if( CurrentObjective != none )
-	{
+    // Attempt to display the route to the currrent objective
+    if( CurrentObjective != none )
+    {
         for(i = 0 ; i < CurrentObjective.AllConditions.length ; i ++)
-	    {
+        {
             if(CurrentObjective.AllConditions[i].ShouldShowWhispTrailFor(P))
             {
                 DestLoc = CurrentObjective.AllConditions[i].GetWhispLocation(TargetActor) ;
@@ -1044,7 +1044,7 @@ function ShowPathToObj(PlayerController P)
                 log("Find Path to location ? "@DestPath);    */
 
                 if(DestPath != none)
-	            {
+                {
                     /* All these values need to be set *before* the whisp is actually spawned as the native code
                     assigns the particular colour from the mColorRange array the moment it is spawned. */
 
@@ -1067,53 +1067,53 @@ function ShowPathToObj(PlayerController P)
     }
 }
 
-function Int		GetIndexForObj(KF_StoryObjective InObj)
+function Int        GetIndexForObj(KF_StoryObjective InObj)
 {
-	local int i;
+    local int i;
 
-	for(i = 0 ; i < SortedObjectives.length ; i ++)
-	{
-		if(SortedOBjectives[i] == InObj)
-		{
-			return i;
-		}
-	}
+    for(i = 0 ; i < SortedObjectives.length ; i ++)
+    {
+        if(SortedOBjectives[i] == InObj)
+        {
+            return i;
+        }
+    }
 
     log("Objective "@InObj.ObjectiveName@"is not in the sorted Objectives array.  Returning invalid index",'Story_Debug');
-	return -1;
+    return -1;
 }
 
 /* ================================================================================================================
 ==================================================================================================================*/
 
-/* 	Returns true if all players are out of lives
+/*  Returns true if all players are out of lives
 
-	Extended because we don't want to end the game if we have an
-	active Checkpoint in the map that can respawn a team when it wipes out ...
+    Extended because we don't want to end the game if we have an
+    active Checkpoint in the map that can respawn a team when it wipes out ...
 
-	NOTE -  this function gets called CONSTANTLY via. MatchInProgress.Timer()
-	so long	as there is more than one active player in the match.  Any code added here
-	should be structured accordingly.
+    NOTE -  this function gets called CONSTANTLY via. MatchInProgress.Timer()
+    so long as there is more than one active player in the match.  Any code added here
+    should be structured accordingly.
 */
 
 function bool CheckMaxLives(PlayerReplicationInfo Scorer)
 {
-	local KF_StoryCheckPointVolume	RespawnPoint;
+    local KF_StoryCheckPointVolume  RespawnPoint;
 
-	/* Team respawn is already taking place .. Don't bother checking anything else*/
-	if(bPendingTeamRespawn)
-	{
-		return false;
-	}
+    /* Team respawn is already taking place .. Don't bother checking anything else*/
+    if(bPendingTeamRespawn)
+    {
+        return false;
+    }
 
-	if(WholeTeamIsWipedOut())
-	{
+    if(WholeTeamIsWipedOut())
+    {
         if(CurrentObjective != none)
         {
             CurrentObjective.ObjectiveFailed(Controller(Scorer.Owner),true);
         }
 
-        if(	CurrentCheckPoint != none &&
+        if( CurrentCheckPoint != none &&
             CurrentCheckPoint.GrantASecondChance(RespawnPoint) )
         {
             bPendingTeamRespawn = true;
@@ -1128,186 +1128,186 @@ function bool CheckMaxLives(PlayerReplicationInfo Scorer)
 
             BroadcastLocalizedMessage( CheckPointMessageClass, 1, none , None, RespawnPoint );
 
-            return	false ;
+            return  false ;
         }
     }
 
-	return Super.CheckMaxLives(Scorer);
+    return Super.CheckMaxLives(Scorer);
 }
 
 
 /* Called by the currently active checkpoint volume when it has just finished respawning a wiped-out team
-	Used to update the objective to what it was at the last checkpoint area*/
+    Used to update the objective to what it was at the last checkpoint area*/
 
 function NotifyTeamRestarted()
 {
-	local KF_StoryObjective		PreviousObjective;
-	local int i;
-	local actor A;
+    local KF_StoryObjective     PreviousObjective;
+    local int i;
+    local actor A;
 
-	/* Everyone should be alive and well now. -  Reset their objective to whatever was current at the time they checkpointed*/
+    /* Everyone should be alive and well now. -  Reset their objective to whatever was current at the time they checkpointed*/
 
-	if(CurrentCheckPoint != none)
-	{
-		if(CurrentCheckPoint.RestartFromObjective != '')
-		{
-			PreviousObjective = FindObjectiveNamed(CurrentCheckPoint.RestartFromObjective) ;
-			if(PreviousObjective != none)
-			{
-				log("TEAM WILL RESTART FROM PREVIOUS OBJECTIVE - "@PreviousObjective.ObjectiveName,'Story_Debug');
+    if(CurrentCheckPoint != none)
+    {
+        if(CurrentCheckPoint.RestartFromObjective != '')
+        {
+            PreviousObjective = FindObjectiveNamed(CurrentCheckPoint.RestartFromObjective) ;
+            if(PreviousObjective != none)
+            {
+                log("TEAM WILL RESTART FROM PREVIOUS OBJECTIVE - "@PreviousObjective.ObjectiveName,'Story_Debug');
 
-				/* Reset the Objective we're restrarting from as well as all objectives which come after it */
-				for(i = GetIndexForObj(PreviousObjective) ; i < SortedObjectives.length ; i ++)
-				{
-					SortedObjectives[i].Reset();
-				}
+                /* Reset the Objective we're restrarting from as well as all objectives which come after it */
+                for(i = GetIndexForObj(PreviousObjective) ; i < SortedObjectives.length ; i ++)
+                {
+                    SortedObjectives[i].Reset();
+                }
 
-				SetActiveObjective(PreviousObjective,CurrentObjective.Instigator);
+                SetActiveObjective(PreviousObjective,CurrentObjective.Instigator);
 
                 // Hack time.
-				if(CurrentCheckPoint.bStartEnabled)
-				{
+                if(CurrentCheckPoint.bStartEnabled)
+                {
                     // tell all actors the game is starting
                     ForEach AllActors(class'Actor', A)
                     {
                         A.MatchStarting();
-				    }
+                    }
                 }
             }
-		}
-		else
-		{
-			log(" WARNING - The checkpoint responsible for restarting this team has no 'RestartObjective'",'Story_Debug');
-		}
-	}
+        }
+        else
+        {
+            log(" WARNING - The checkpoint responsible for restarting this team has no 'RestartObjective'",'Story_Debug');
+        }
+    }
 }
 
 
-/* 	Called by the CheckpointVolume responsible for restarting a team that was wiped out,
-	just before the players actually respawn. 	Resets all checkpoint-approved actors in
-	the map to their initial state and then fires off 'Second chance' events .
+/*  Called by the CheckpointVolume responsible for restarting a team that was wiped out,
+    just before the players actually respawn.   Resets all checkpoint-approved actors in
+    the map to their initial state and then fires off 'Second chance' events .
 */
 
 
 function ResetGameState()
 {
-	local int i;
+    local int i;
 
 
-	log("[CHECKPOINT RESTART -  Resetting Game state . ]",'Story_Debug');
+    log("[CHECKPOINT RESTART -  Resetting Game state . ]",'Story_Debug');
 
-	CleanUpZEDs();
-	SetActiveObjective(none);
+    CleanUpZEDs();
+    SetActiveObjective(none);
 
-	/* Reset all relevant actors to their initial state before doing anything else */
-	ResetCheckPointActors();
+    /* Reset all relevant actors to their initial state before doing anything else */
+    ResetCheckPointActors();
 
-	/* get rid of stuff the players threw / dropped on the floor */
-	if( CurrentCheckPoint.bRemoveDroppedWeapons)
-	{
-		RemoveDroppedWeapons();
-	}
+    /* get rid of stuff the players threw / dropped on the floor */
+    if( CurrentCheckPoint.bRemoveDroppedWeapons)
+    {
+        RemoveDroppedWeapons();
+    }
 
-	// re-activate LD placed ammo & weapons
-	SetupPickups();
+    // re-activate LD placed ammo & weapons
+    SetupPickups();
 
-	for(i = 0 ; i < CurrentCheckPoint.SecondChanceEvents.length ; i ++)
-	{
-		TriggerEvent(CurrentCheckPoint.SecondChanceEvents[i],CurrentCheckPoint, CurrentCheckPoint.ActivatingPlayer.Pawn);
-	}
+    for(i = 0 ; i < CurrentCheckPoint.SecondChanceEvents.length ; i ++)
+    {
+        TriggerEvent(CurrentCheckPoint.SecondChanceEvents[i],CurrentCheckPoint, CurrentCheckPoint.ActivatingPlayer.Pawn);
+    }
 
-	if(bDebugPlayerSpawning)
-	{
-		log("Checkpoint : "$CurrentCheckPoint.CheckPointName@"is giving everyone a second chance!",'Story_Debug');
-	}
+    if(bDebugPlayerSpawning)
+    {
+        log("Checkpoint : "$CurrentCheckPoint.CheckPointName@"is giving everyone a second chance!",'Story_Debug');
+    }
 }
 
 
 /* reset story-relevant actors in the map to their initial state
 - Note : this needs to happen BEFORE we trigger the Second Chance event  */
 
-function	ResetCheckPointActors()
+function    ResetCheckPointActors()
 {
-	local Actor A;
-	local int i,idx;
-	local KFDoorMover	KFDoor;
+    local Actor A;
+    local int i,idx;
+    local KFDoorMover   KFDoor;
 
-	if(StoryRules == none)
-	{
-		log("Warning - No StoryRules actor placed in the level. Cannot reset game state",'Story_Debug');
-		return;
-	}
+    if(StoryRules == none)
+    {
+        log("Warning - No StoryRules actor placed in the level. Cannot reset game state",'Story_Debug');
+        return;
+    }
 
-	foreach AllActors(class 'Actor' , A)
-	{
-		/* reset by class */
-		for( i = 0 ; i < StoryRules.CheckpointResetClasses.length ; i ++)
-		{
-			if(A != none && ClassIsChildOf(A.class,StoryRules.CheckpointResetClasses[i]))
-			{
-				if(AllowReset(A))
-				{
-					A.Reset();
-				}
-			}
-		}
+    foreach AllActors(class 'Actor' , A)
+    {
+        /* reset by class */
+        for( i = 0 ; i < StoryRules.CheckpointResetClasses.length ; i ++)
+        {
+            if(A != none && ClassIsChildOf(A.class,StoryRules.CheckpointResetClasses[i]))
+            {
+                if(AllowReset(A))
+                {
+                    A.Reset();
+                }
+            }
+        }
 
-		/* or object reference */
-		for(idx = 0 ; idx < CurrentCheckPoint.CheckPointResetactors.length ; idx ++ )
-		{
-			if(A != none && A == CurrentCheckPoint.CheckPointResetActors[idx])
-			{
-				if(AllowReset(A))
-				{
-					A.Reset();
-				}
-			}
-		}
+        /* or object reference */
+        for(idx = 0 ; idx < CurrentCheckPoint.CheckPointResetactors.length ; idx ++ )
+        {
+            if(A != none && A == CurrentCheckPoint.CheckPointResetActors[idx])
+            {
+                if(AllowReset(A))
+                {
+                    A.Reset();
+                }
+            }
+        }
 
-		/* re-weld DoorMovers with the 'bStartSealed' flag
-		this should be done in the DoorMover's Reset() function really, but it isn't. */
+        /* re-weld DoorMovers with the 'bStartSealed' flag
+        this should be done in the DoorMover's Reset() function really, but it isn't. */
 
-		KFDoor = KFDoorMover(A);
-		if(KFDoor != none)
-		{
-			KFDoor.RespawnDoor();
-			// - door could also be damaged but not "dead"  need to make sure its @ full weld strength if it was pre-welded
-			if(KFDoor.bStartSealed && KFDoor.MyTrigger != none)
-			{
-				KFDoor.MyTrigger.WeldStrength = 0;
-				KFDoor.MyTrigger.AddWeld(KFDoor.MaxWeld*(KFDoor.StartSealedWeldPrc/100.f),False,None);
-			}
-		}
-	}
+        KFDoor = KFDoorMover(A);
+        if(KFDoor != none)
+        {
+            KFDoor.RespawnDoor();
+            // - door could also be damaged but not "dead"  need to make sure its @ full weld strength if it was pre-welded
+            if(KFDoor.bStartSealed && KFDoor.MyTrigger != none)
+            {
+                KFDoor.MyTrigger.WeldStrength = 0;
+                KFDoor.MyTrigger.AddWeld(KFDoor.MaxWeld*(KFDoor.StartSealedWeldPrc/100.f),False,None);
+            }
+        }
+    }
 }
 
 
-function	bool		AllowReset(Actor A)
+function    bool        AllowReset(Actor A)
 {
-	local int i;
+    local int i;
 
-	if(CurrentCheckPoint != none )
-	{
-		for(i = 0 ; i < CurrentCheckPoint.ResetExcludeActors.length ; i ++)
-		{
-			if(A == CurrentCheckPoint.ResetExcludeActors[i])
-			{
-				return false;
-			}
-		}
+    if(CurrentCheckPoint != none )
+    {
+        for(i = 0 ; i < CurrentCheckPoint.ResetExcludeActors.length ; i ++)
+        {
+            if(A == CurrentCheckPoint.ResetExcludeActors[i])
+            {
+                return false;
+            }
+        }
 
-		if(CurrentCheckPoint.ForcedRestartCheckPoint != none)
-		{
-			return A != CurrentCheckPoint.ForcedRestartCheckPoint;
-		}
-		else
-		{
-			return A != CurrentCheckPoint;
-		}
-	}
+        if(CurrentCheckPoint.ForcedRestartCheckPoint != none)
+        {
+            return A != CurrentCheckPoint.ForcedRestartCheckPoint;
+        }
+        else
+        {
+            return A != CurrentCheckPoint;
+        }
+    }
 
 
-	return true;
+    return true;
 }
 
 
@@ -1315,15 +1315,15 @@ function	bool		AllowReset(Actor A)
 
 function RemoveDroppedWeapons()
 {
-	local WeaponPickup WP;
+    local WeaponPickup WP;
 
-	foreach DynamicActors(class 'WeaponPickup' , WP)
-	{
-		if(WP.bDropped)
-		{
-			WP.Destroy();
-		}
-	}
+    foreach DynamicActors(class 'WeaponPickup' , WP)
+    {
+        if(WP.bDropped)
+        {
+            WP.Destroy();
+        }
+    }
 }
 
 /* Returns true if there are no living players left on the
@@ -1331,20 +1331,20 @@ function RemoveDroppedWeapons()
 
 function bool WholeTeamIsWipedOut()
 {
-	local int LivingCount;
-	local Controller C;
+    local int LivingCount;
+    local Controller C;
 
-	for ( C=Level.ControllerList; C!=None; C=C.NextController )
-	{
-		if ( (C.PlayerReplicationInfo != None) &&
-		C.bIsPlayer && !C.PlayerReplicationInfo.bOutOfLives &&
-		!C.PlayerReplicationInfo.bOnlySpectator )
-		{
-			LivingCount ++ ;
-		}
-	}
+    for ( C=Level.ControllerList; C!=None; C=C.NextController )
+    {
+        if ( (C.PlayerReplicationInfo != None) &&
+        C.bIsPlayer && !C.PlayerReplicationInfo.bOutOfLives &&
+        !C.PlayerReplicationInfo.bOnlySpectator )
+        {
+            LivingCount ++ ;
+        }
+    }
 
-	return LivingCount <= 0;
+    return LivingCount <= 0;
 }
 
 /* Returns true if there is no current objective, or the current objective does
@@ -1364,16 +1364,16 @@ function RestartPlayer( Controller aPlayer )
     if ( aPlayer.PlayerReplicationInfo.bOutOfLives || aPlayer.Pawn!=None )
         return;
 
-	/* temporary hack ... fixme please.*/
-	if(KF_StoryNPC_AI(aPlayer) != none)
-	{
-	    return;
-	}
+    /* temporary hack ... fixme please.*/
+    if(KF_StoryNPC_AI(aPlayer) != none)
+    {
+        return;
+    }
 
-	if(bDebugPlayerSpawning)
-	{
-		ClearStayingDebugLines();
-	}
+    if(bDebugPlayerSpawning)
+    {
+        ClearStayingDebugLines();
+    }
 
     /* So what we're doing here is reproducing the code in KFGameType which checks 'bWaveInProgress'
     Since Objective mode doesn't use that bool, we are checking IsTraderObj() which returns true if
@@ -1390,134 +1390,134 @@ function RestartPlayer( Controller aPlayer )
     log("**********************************************************************",'Story_Debug');
     log(" GAMEINFO  RESTART PLAYER - "@aPlayer.PlayerReplicationInfo.PlayerName,'Story_Debug');
 
-	aPlayer.StartSpot = none;	// If StartSpothas a value all the RatePlayerStart() logic gets skipped ...
+    aPlayer.StartSpot = none;   // If StartSpothas a value all the RatePlayerStart() logic gets skipped ...
 
-	Super.RestartPlayer(aPlayer);
+    Super.RestartPlayer(aPlayer);
 
-	if( aPlayer.Pawn!=None)
-	{
-		if(StoryRules!=none)
-		{
-			StoryRules.ModifyPlayer(aPlayer.Pawn);
-		}
+    if( aPlayer.Pawn!=None)
+    {
+        if(StoryRules!=none)
+        {
+            StoryRules.ModifyPlayer(aPlayer.Pawn);
+        }
 
-		/* 	Some story missions might be focused around survival & scrounging for health
-			This gives LDs the option of adding a health penalty to checkpoint respawns
-		*/
-		if(CurrentCheckPoint != none &&
-		!CurrentCheckPoint.bStartEnabled &&
+        /*  Some story missions might be focused around survival & scrounging for health
+            This gives LDs the option of adding a health penalty to checkpoint respawns
+        */
+        if(CurrentCheckPoint != none &&
+        !CurrentCheckPoint.bStartEnabled &&
         CurrentCheckPoint.LastRespawnedPlayer == aPlayer)
-		{
+        {
             CurrentCheckPoint.ModifyPlayer(aPlayer.Pawn);
-		}
-	}
+        }
+    }
 }
 
 /* Overriden to add allow LDs to toggle certain features of the cash reward / penalty setup for their story maps*/
 function ScoreKill(Controller Killer, Controller Other)
 {
-	local PlayerReplicationInfo OtherPRI;
-	local float KillScore;
+    local PlayerReplicationInfo OtherPRI;
+    local float KillScore;
 
-	OtherPRI = Other.PlayerReplicationInfo;
-	if ( OtherPRI != None )
-	{
-		OtherPRI.NumLives++;
-//		OtherPRI.Score -= ((OtherPRI.Score * (GameDifficulty * 0.05))* StoryRules.CashPenalty_Death_Modifier) ;	// you Lose 35% of your current cash on Hell on Earth, 15% on normal.
-//		OtherPRI.Team.Score -= (OtherPRI.Score * (GameDifficulty * 0.05 * StoryRules.CashPenalty_Death_Modifier));
+    OtherPRI = Other.PlayerReplicationInfo;
+    if ( OtherPRI != None )
+    {
+        OtherPRI.NumLives++;
+//      OtherPRI.Score -= ((OtherPRI.Score * (GameDifficulty * 0.05))* StoryRules.CashPenalty_Death_Modifier) ; // you Lose 35% of your current cash on Hell on Earth, 15% on normal.
+//      OtherPRI.Team.Score -= (OtherPRI.Score * (GameDifficulty * 0.05 * StoryRules.CashPenalty_Death_Modifier));
 
-		OtherPRI.Team.NetUpdateTime = Level.TimeSeconds - 1;
-		OtherPRI.bOutOfLives = true;
-		if( Killer!=None && Killer.PlayerReplicationInfo!=None && Killer.bIsPlayer )
-			BroadcastLocalizedMessage(class'KFInvasionMessage',1,OtherPRI,Killer.PlayerReplicationInfo);
-		else if( Killer==None || Monster(Killer.Pawn)==None )
-			BroadcastLocalizedMessage(class'KFInvasionMessage',1,OtherPRI);
-		else BroadcastLocalizedMessage(class'KFInvasionMessage',1,OtherPRI,,Killer.Pawn.Class);
-		CheckScore(None);
-	}
+        OtherPRI.Team.NetUpdateTime = Level.TimeSeconds - 1;
+        OtherPRI.bOutOfLives = true;
+        if( Killer!=None && Killer.PlayerReplicationInfo!=None && Killer.bIsPlayer )
+            BroadcastLocalizedMessage(class'KFInvasionMessage',1,OtherPRI,Killer.PlayerReplicationInfo);
+        else if( Killer==None || Monster(Killer.Pawn)==None )
+            BroadcastLocalizedMessage(class'KFInvasionMessage',1,OtherPRI);
+        else BroadcastLocalizedMessage(class'KFInvasionMessage',1,OtherPRI,,Killer.Pawn.Class);
+        CheckScore(None);
+    }
 
-	if ( GameRulesModifiers != None )
-		GameRulesModifiers.ScoreKill(Killer, Other);
+    if ( GameRulesModifiers != None )
+        GameRulesModifiers.ScoreKill(Killer, Other);
 
-	if ( MonsterController(Killer) != None )
-		return;
+    if ( MonsterController(Killer) != None )
+        return;
 
-	if( (killer == Other) || (killer == None) )
-	{
-		if ( Other.PlayerReplicationInfo != None )
-		{
-//			Other.PlayerReplicationInfo.Score -= 1;
-			Other.PlayerReplicationInfo.NetUpdateTime = Level.TimeSeconds - 1;
-			ScoreEvent(Other.PlayerReplicationInfo,-1,"self_frag");
-		}
-	}
+    if( (killer == Other) || (killer == None) )
+    {
+        if ( Other.PlayerReplicationInfo != None )
+        {
+//          Other.PlayerReplicationInfo.Score -= 1;
+            Other.PlayerReplicationInfo.NetUpdateTime = Level.TimeSeconds - 1;
+            ScoreEvent(Other.PlayerReplicationInfo,-1,"self_frag");
+        }
+    }
 
-	if ( Killer==None || !Killer.bIsPlayer || (Killer==Other) )
-		return;
+    if ( Killer==None || !Killer.bIsPlayer || (Killer==Other) )
+        return;
 
-	if ( Other.bIsPlayer )
-	{
-		Killer.PlayerReplicationInfo.Score -= 5;
-		Killer.PlayerReplicationInfo.Team.Score -= 2;
-		Killer.PlayerReplicationInfo.NetUpdateTime = Level.TimeSeconds - 1;
-		Killer.PlayerReplicationInfo.Team.NetUpdateTime = Level.TimeSeconds - 1;
-		ScoreEvent(Killer.PlayerReplicationInfo, -5, "team_frag");
-		return;
-	}
-	if ( LastKilledMonsterClass == None )
-		KillScore = 1;
-	else if(Killer.PlayerReplicationInfo !=none)
-	{
-		KillScore = (LastKilledMonsterClass.Default.ScoringValue * StoryRules.CashReward_ZEDKills_Modifier);
+    if ( Other.bIsPlayer )
+    {
+        Killer.PlayerReplicationInfo.Score -= 5;
+        Killer.PlayerReplicationInfo.Team.Score -= 2;
+        Killer.PlayerReplicationInfo.NetUpdateTime = Level.TimeSeconds - 1;
+        Killer.PlayerReplicationInfo.Team.NetUpdateTime = Level.TimeSeconds - 1;
+        ScoreEvent(Killer.PlayerReplicationInfo, -5, "team_frag");
+        return;
+    }
+    if ( LastKilledMonsterClass == None )
+        KillScore = 1;
+    else if(Killer.PlayerReplicationInfo !=none)
+    {
+        KillScore = (LastKilledMonsterClass.Default.ScoringValue * StoryRules.CashReward_ZEDKills_Modifier);
 
-		// Scale killscore by difficulty
-		if ( GameDifficulty >= 5.0 ) // Suicidal and Hell on Earth
-		{
-			KillScore *= 0.65;
-		}
-		else if ( GameDifficulty >= 4.0 ) // Hard
-		{
-			KillScore *= 0.85;
-		}
-		else if ( GameDifficulty >= 2.0 ) // Normal
-		{
-			KillScore *= 1.0;
-		}
-		else //if ( GameDifficulty == 1.0 ) // Beginner
-		{
-			KillScore *= 2.0;
-		}
+        // Scale killscore by difficulty
+        if ( GameDifficulty >= 5.0 ) // Suicidal and Hell on Earth
+        {
+            KillScore *= 0.65;
+        }
+        else if ( GameDifficulty >= 4.0 ) // Hard
+        {
+            KillScore *= 0.85;
+        }
+        else if ( GameDifficulty >= 2.0 ) // Normal
+        {
+            KillScore *= 1.0;
+        }
+        else //if ( GameDifficulty == 1.0 ) // Beginner
+        {
+            KillScore *= 2.0;
+        }
 
-		// Increase score in a short game, so the player can afford to buy cool stuff by the end
-		if( KFGameLength == GL_Short )
-		{
-			KillScore *= 1.75;
-		}
+        // Increase score in a short game, so the player can afford to buy cool stuff by the end
+        if( KFGameLength == GL_Short )
+        {
+            KillScore *= 1.75;
+        }
 
-//		KillScore = Max(1,int(KillScore));    dont clamp it in story mode.  It's likely some story maps will want to do without any kill score / rewards at all.
-		Killer.PlayerReplicationInfo.Kills++;
+//      KillScore = Max(1,int(KillScore));    dont clamp it in story mode.  It's likely some story maps will want to do without any kill score / rewards at all.
+        Killer.PlayerReplicationInfo.Kills++;
 
-		ScoreKillAssists(KillScore, Other, Killer);
+        ScoreKillAssists(KillScore, Other, Killer);
 
-		Killer.PlayerReplicationInfo.Team.Score += KillScore;
-		Killer.PlayerReplicationInfo.NetUpdateTime = Level.TimeSeconds - 1;
-		Killer.PlayerReplicationInfo.Team.NetUpdateTime = Level.TimeSeconds - 1;
-		TeamScoreEvent(Killer.PlayerReplicationInfo.Team.TeamIndex, 1, "tdm_frag");
-	}
+        Killer.PlayerReplicationInfo.Team.Score += KillScore;
+        Killer.PlayerReplicationInfo.NetUpdateTime = Level.TimeSeconds - 1;
+        Killer.PlayerReplicationInfo.Team.NetUpdateTime = Level.TimeSeconds - 1;
+        TeamScoreEvent(Killer.PlayerReplicationInfo.Team.TeamIndex, 1, "tdm_frag");
+    }
 
-	if (Killer.PlayerReplicationInfo !=none && Killer.PlayerReplicationInfo.Score < 0)
-		Killer.PlayerReplicationInfo.Score = 0;
+    if (Killer.PlayerReplicationInfo !=none && Killer.PlayerReplicationInfo.Score < 0)
+        Killer.PlayerReplicationInfo.Score = 0;
 }
 
 
 /* Use the default player load-out specified in our LevelRules actor*/
 function AddGameSpecificInventory(Pawn p)
 {
-	if(KFHumanPawn_Story(P) != none)
-	{
-		if( StoryRules!=none )
-			StoryRules.AddGameInv(p);
-	}
+    if(KFHumanPawn_Story(P) != none)
+    {
+        if( StoryRules!=none )
+            StoryRules.AddGameInv(p);
+    }
 }
 
 
@@ -1531,15 +1531,15 @@ function AddDefaultInventory( pawn PlayerPawn )
         return;
     }
 
-	if (StoryRules != none)
-	{
-		if ( UnrealPawn(PlayerPawn) != None )
-		{
-			UnrealPawn(PlayerPawn).AddDefaultInventory();
-		}
-	}
+    if (StoryRules != none)
+    {
+        if ( UnrealPawn(PlayerPawn) != None )
+        {
+            UnrealPawn(PlayerPawn).AddDefaultInventory();
+        }
+    }
 
-	SetPlayerDefaults(PlayerPawn);
+    SetPlayerDefaults(PlayerPawn);
 }
 
 
@@ -1548,64 +1548,64 @@ function AddDefaultInventory( pawn PlayerPawn )
 
 function NavigationPoint FindPlayerStart( Controller Player, optional byte InTeam, optional string incomingName )
 {
-	local NavigationPoint	Result;
-	local PlayerReplicationinfo	PlayerPRI;
-	local string PlayerName;
+    local NavigationPoint   Result;
+    local PlayerReplicationinfo PlayerPRI;
+    local string PlayerName;
 
-	Result = Super.FindPlayerStart(Player,InTeam,incomingName);
+    Result = Super.FindPlayerStart(Player,InTeam,incomingName);
 
-	if(bDebugPlayerSpawning)
-	{
-		PlayerPRI = Player.PlayerReplicationinfo;
-		if(PlayerPRI != none)
-		{
-			PlayerName = PlayerPRI.PlayerName ;
-		}
-		else
-		{
-			PlayerName = incomingName ;
-		}
+    if(bDebugPlayerSpawning)
+    {
+        PlayerPRI = Player.PlayerReplicationinfo;
+        if(PlayerPRI != none)
+        {
+            PlayerName = PlayerPRI.PlayerName ;
+        }
+        else
+        {
+            PlayerName = incomingName ;
+        }
 
-		log(" Attempting to spawn : "@PlayerName@" at :"@Result,'Story_Debug');
-	}
+        log(" Attempting to spawn : "@PlayerName@" at :"@Result,'Story_Debug');
+    }
 
-	Return Result;
+    Return Result;
 }
 
 
 function float RatePlayerStart(NavigationPoint N, byte Team, Controller Player)
 {
-	local float Score;
+    local float Score;
 
-	if(bDebugPlayerSpawning)
-	{
-		if(PlayerStart(N) != none)
-		{
-			if(PlayerStart(N).bEnabled)
-			{
-				DrawStayingDebugLine(N.Location, N.Location + (100 * vect(0,0,1)), 0,255,0);
-			}
-			else
-			{
-				DrawStayingDebugLine(N.Location, N.Location + (100 * vect(0,0,1)), 255,0,0);
-			}
-		}
-	}
+    if(bDebugPlayerSpawning)
+    {
+        if(PlayerStart(N) != none)
+        {
+            if(PlayerStart(N).bEnabled)
+            {
+                DrawStayingDebugLine(N.Location, N.Location + (100 * vect(0,0,1)), 0,255,0);
+            }
+            else
+            {
+                DrawStayingDebugLine(N.Location, N.Location + (100 * vect(0,0,1)), 255,0,0);
+            }
+        }
+    }
 
-	Score =  Super.RatePlayerStart(N,Team,Player);
-	return Score;
+    Score =  Super.RatePlayerStart(N,Team,Player);
+    return Score;
 }
 
 State MatchInProgress
 {
-	function BeginState()
-	{
-		Super.beginState();
-		SetupPickups();
-	}
+    function BeginState()
+    {
+        Super.beginState();
+        SetupPickups();
+    }
 
-	function SetupPickups()
-	{
+    function SetupPickups()
+    {
         local int i;
 
         if(StoryRules.bRandomizeWeaponPickups)
@@ -1622,41 +1622,41 @@ State MatchInProgress
                 }
             }
         }
-	}
+    }
 
-	/* This is probably a little aggressive but .. It looks like most, if not all of the code crunching away in
-	KFGameType & Invasion's Timer is only really relevant to the waves / Invasion monster spawning setup */
+    /* This is probably a little aggressive but .. It looks like most, if not all of the code crunching away in
+    KFGameType & Invasion's Timer is only really relevant to the waves / Invasion monster spawning setup */
 
-	function Timer()
-	{
+    function Timer()
+    {
         local Controller C;
         local bool OldForceRespawn;
 
-		if(!bPlayingCinematic)
-		{
+        if(!bPlayingCinematic)
+        {
             OldForceRespawn = bForceRespawn;
             bForceRespawn = false;
-			Super(DeathMatch).Timer();
-		    bForceRespawn = OldForceRespawn;
+            Super(DeathMatch).Timer();
+            bForceRespawn = OldForceRespawn;
         }
 
-		/* Kill off stragglers - Copied from KFGameType */
+        /* Kill off stragglers - Copied from KFGameType */
         if ( StoryRules != none &&
         StoryRules.bAutoKillStragglers &&
         NumMonsters <= StoryRules.MaxStragglers &&
         TotalMaxMonsters<=StoryRules.MaxEnemiesAtOnce  )
-		{
+        {
             for ( C = Level.ControllerList; C != None; C = C.NextController )
-			{
+            {
                 if ( KFMonsterController(C)!=None && C.Pawn.Health > 0 && C.Pawn != none &&
                 KFMonsterController(C).CanKillMeYet())
                 {
                     C.Pawn.KilledBy( C.Pawn );
-				    Break;
+                    Break;
                 }
-			}
+            }
         }
-	}
+    }
 
 
     /* Debug function -  quickly jump to a specific objective */
@@ -1743,179 +1743,179 @@ State MatchInProgress
 
 
 
-/* 	KFGameType's implementation of ReduceDamage contains a wealth of bizarre hacks ..
-	for simplicity's sake let's just jump back to Invasion's implementation
+/*  KFGameType's implementation of ReduceDamage contains a wealth of bizarre hacks ..
+    for simplicity's sake let's just jump back to Invasion's implementation
 
 
 function int ReduceDamage(int Damage, pawn injured, pawn instigatedBy, vector HitLocation, out vector Momentum, class<DamageType> DamageType)
 {
-	local int Result;
+    local int Result;
 
-	Result = Super(Invasion).ReduceDamage(Damage,Injured,InstigatedBy,HitLocation,Momentum,DamageType);
-	return	Result;
+    Result = Super(Invasion).ReduceDamage(Damage,Injured,InstigatedBy,HitLocation,Momentum,DamageType);
+    return  Result;
 }
 */
 
-/* 	Differs from KillBots() in that it is not removing the bots from play,  just killing their pawns.
-	Using this to debug Checkpoint spawning /w AIs
+/*  Differs from KillBots() in that it is not removing the bots from play,  just killing their pawns.
+    Using this to debug Checkpoint spawning /w AIs
 */
 
 
 function int ReduceDamage(int Damage, pawn injured, pawn instigatedBy, vector HitLocation, out vector Momentum, class<DamageType> DamageType)
 {
-	local float InstigatorSkill;
-	local KFPlayerController PC;
-	local float DamageBeforeSkillAdjust;
+    local float InstigatorSkill;
+    local KFPlayerController PC;
+    local float DamageBeforeSkillAdjust;
 
-	if ( KFPawn(Injured) != none )
-	{
-		if ( KFPlayerReplicationInfo(Injured.PlayerReplicationInfo) != none && KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill != none )
-		{
-			Damage = KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill.Static.ReduceDamage(KFPlayerReplicationInfo(Injured.PlayerReplicationInfo), KFPawn(Injured), instigatedBy, Damage, DamageType);
-		}
-	}
+    if ( KFPawn(Injured) != none )
+    {
+        if ( KFPlayerReplicationInfo(Injured.PlayerReplicationInfo) != none && KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill != none )
+        {
+            Damage = KFPlayerReplicationInfo(Injured.PlayerReplicationInfo).ClientVeteranSkill.Static.ReduceDamage(KFPlayerReplicationInfo(Injured.PlayerReplicationInfo), KFPawn(Injured), instigatedBy, Damage, DamageType);
+        }
+    }
 
-	// This stuff cuts thru all the B.S
-	if ( DamageType == class'DamTypeVomit' || DamageType == class'DamTypeWelder' || DamageType == class'SirenScreamDamage' )
-	{
-		return damage;
-	}
+    // This stuff cuts thru all the B.S
+    if ( DamageType == class'DamTypeVomit' || DamageType == class'DamTypeWelder' || DamageType == class'SirenScreamDamage' )
+    {
+        return damage;
+    }
 
-	if ( instigatedBy == None )
-	{
-		return Super(xTeamGame).ReduceDamage( Damage,injured,instigatedBy,HitLocation,Momentum,DamageType );
-	}
+    if ( instigatedBy == None )
+    {
+        return Super(xTeamGame).ReduceDamage( Damage,injured,instigatedBy,HitLocation,Momentum,DamageType );
+    }
 
-	if ( Monster(Injured) != None )
-	{
-		if ( instigatedBy != None )
-		{
-			PC = KFPlayerController(instigatedBy.Controller);
-			if ( Class<KFWeaponDamageType>(damageType) != none && PC != none )
-			{
-				Class<KFWeaponDamageType>(damageType).Static.AwardDamage(KFSteamStatsAndAchievements(PC.SteamStatsAndAchievements), Clamp(Damage, 1, Injured.Health));
-			}
-		}
+    if ( Monster(Injured) != None )
+    {
+        if ( instigatedBy != None )
+        {
+            PC = KFPlayerController(instigatedBy.Controller);
+            if ( Class<KFWeaponDamageType>(damageType) != none && PC != none )
+            {
+                Class<KFWeaponDamageType>(damageType).Static.AwardDamage(KFSteamStatsAndAchievements(PC.SteamStatsAndAchievements), Clamp(Damage, 1, Injured.Health));
+            }
+        }
 
-		return Damage;
-	}
+        return Damage;
+    }
 
-	if ( MonsterController(InstigatedBy.Controller) != None )
-	{
-		InstigatorSkill = MonsterController(instigatedBy.Controller).Skill;
-		if ( NumPlayers > 4 )
-			InstigatorSkill += 1.0;
-		if ( (InstigatorSkill < 7) && (Monster(Injured) == None) )
-		{
-			if ( InstigatorSkill <= 3 )
-				Damage = Damage;
-			else Damage = Damage;
-		}
-	}
-	else if ( KFFriendlyAI(InstigatedBy.Controller) != None && KFHumanPawn(Injured) != none  )
-		Damage *= 0.25;
-	else if ( injured == instigatedBy )
-		Damage = Damage * 0.5;
+    if ( MonsterController(InstigatedBy.Controller) != None )
+    {
+        InstigatorSkill = MonsterController(instigatedBy.Controller).Skill;
+        if ( NumPlayers > 4 )
+            InstigatorSkill += 1.0;
+        if ( (InstigatorSkill < 7) && (Monster(Injured) == None) )
+        {
+            if ( InstigatorSkill <= 3 )
+                Damage = Damage;
+            else Damage = Damage;
+        }
+    }
+    else if ( KFFriendlyAI(InstigatedBy.Controller) != None && KFHumanPawn(Injured) != none  )
+        Damage *= 0.25;
+    else if ( injured == instigatedBy )
+        Damage = Damage * 0.5;
 
 
-	if ( InvasionBot(injured.Controller) != None )
-	{
-		if ( !InvasionBot(injured.controller).bDamagedMessage && (injured.Health - Damage < 50) )
-		{
-			InvasionBot(injured.controller).bDamagedMessage = true;
-			if ( FRand() < 0.5 )
-				injured.Controller.SendMessage(None, 'OTHER', 4, 12, 'TEAM');
-			else injured.Controller.SendMessage(None, 'OTHER', 13, 12, 'TEAM');
-		}
-		if ( GameDifficulty <= 3 )
-		{
-			if ( injured.IsPlayerPawn() && (injured == instigatedby) && (Level.NetMode == NM_Standalone) )
-				Damage *= 0.5;
+    if ( InvasionBot(injured.Controller) != None )
+    {
+        if ( !InvasionBot(injured.controller).bDamagedMessage && (injured.Health - Damage < 50) )
+        {
+            InvasionBot(injured.controller).bDamagedMessage = true;
+            if ( FRand() < 0.5 )
+                injured.Controller.SendMessage(None, 'OTHER', 4, 12, 'TEAM');
+            else injured.Controller.SendMessage(None, 'OTHER', 13, 12, 'TEAM');
+        }
+        if ( GameDifficulty <= 3 )
+        {
+            if ( injured.IsPlayerPawn() && (injured == instigatedby) && (Level.NetMode == NM_Standalone) )
+                Damage *= 0.5;
 
-			//skill level modification
-			if ( MonsterController(InstigatedBy.Controller) != None )
-				Damage = Damage;
-		}
-	}
+            //skill level modification
+            if ( MonsterController(InstigatedBy.Controller) != None )
+                Damage = Damage;
+        }
+    }
 
-	if( injured.InGodMode() )
-		return 0;
-	if( instigatedBy!=injured && MonsterController(InstigatedBy.Controller)==None && (instigatedBy.Controller==None || instigatedBy.GetTeamNum()==injured.GetTeamNum()) )
-	{
-		if ( class<WeaponDamageType>(DamageType) != None || class<VehicleDamageType>(DamageType) != None )
-			Momentum *= TeammateBoost;
-		if ( Bot(injured.Controller) != None )
-			Bot(Injured.Controller).YellAt(instigatedBy);
+    if( injured.InGodMode() )
+        return 0;
+    if( instigatedBy!=injured && MonsterController(InstigatedBy.Controller)==None && (instigatedBy.Controller==None || instigatedBy.GetTeamNum()==injured.GetTeamNum()) )
+    {
+        if ( class<WeaponDamageType>(DamageType) != None || class<VehicleDamageType>(DamageType) != None )
+            Momentum *= TeammateBoost;
+        if ( Bot(injured.Controller) != None )
+            Bot(Injured.Controller).YellAt(instigatedBy);
 
-		if ( FriendlyFireScale==0.0 || (Vehicle(injured) != None && Vehicle(injured).bNoFriendlyFire) )
-		{
-			if ( GameRulesModifiers != None )
-				return GameRulesModifiers.NetDamage( Damage, 0,injured,instigatedBy,HitLocation,Momentum,DamageType );
-			else return 0;
-		}
-		Damage *= FriendlyFireScale;
-	}
+        if ( FriendlyFireScale==0.0 || (Vehicle(injured) != None && Vehicle(injured).bNoFriendlyFire) )
+        {
+            if ( GameRulesModifiers != None )
+                return GameRulesModifiers.NetDamage( Damage, 0,injured,instigatedBy,HitLocation,Momentum,DamageType );
+            else return 0;
+        }
+        Damage *= FriendlyFireScale;
+    }
 
-	// Start code from DeathMatch.uc - Had to override this here because it was reducing
-	// bite damage (which is 1) down to zero when the skill settings were low
+    // Start code from DeathMatch.uc - Had to override this here because it was reducing
+    // bite damage (which is 1) down to zero when the skill settings were low
 
-	if ( (instigatedBy != None) && (InstigatedBy != Injured) && (Level.TimeSeconds - injured.SpawnTime < SpawnProtectionTime)
-		&& (class<WeaponDamageType>(DamageType) != None || class<VehicleDamageType>(DamageType) != None) )
-		return 0;
+    if ( (instigatedBy != None) && (InstigatedBy != Injured) && (Level.TimeSeconds - injured.SpawnTime < SpawnProtectionTime)
+        && (class<WeaponDamageType>(DamageType) != None || class<VehicleDamageType>(DamageType) != None) )
+        return 0;
 
-	Damage = super(UnrealMPGameInfo).ReduceDamage( Damage, injured, InstigatedBy, HitLocation, Momentum, DamageType );
+    Damage = super(UnrealMPGameInfo).ReduceDamage( Damage, injured, InstigatedBy, HitLocation, Momentum, DamageType );
 
-	if ( instigatedBy == None)
-		return Damage;
+    if ( instigatedBy == None)
+        return Damage;
 
-	DamageBeforeSkillAdjust = Damage;
+    DamageBeforeSkillAdjust = Damage;
 
-	if ( Level.Game.GameDifficulty <= 3 )
-	{
-		if ( injured.IsPlayerPawn() && (injured == instigatedby) && (Level.NetMode == NM_Standalone) )
-			Damage *= 0.5;
-	}
-	return (Damage * instigatedBy.DamageScaling);
-	// End code from DeathMatch.uc
+    if ( Level.Game.GameDifficulty <= 3 )
+    {
+        if ( injured.IsPlayerPawn() && (injured == instigatedby) && (Level.NetMode == NM_Standalone) )
+            Damage *= 0.5;
+    }
+    return (Damage * instigatedBy.DamageScaling);
+    // End code from DeathMatch.uc
 }
 
 
 /*
 exec function ExplodeBots(int num)
 {
-	local int NumKilled;
-	local Controller C;
+    local int NumKilled;
+    local Controller C;
 
-	For ( C= Level.ControllerList; C!=None; C=C.NextController )
-	{
-		if(NumKilled == Num)
-		{
-			break;
-		}
+    For ( C= Level.ControllerList; C!=None; C=C.NextController )
+    {
+        if(NumKilled == Num)
+        {
+            break;
+        }
 
-		if(AIController(C) != none && C.Pawn != none)
-		{
-   			C.Pawn.Died(C,class 'Gibbed',C.Pawn.Location);
-   			NumKilled ++ ;
-		}
-	}
+        if(AIController(C) != none && C.Pawn != none)
+        {
+            C.Pawn.Died(C,class 'Gibbed',C.Pawn.Location);
+            NumKilled ++ ;
+        }
+    }
 }
 */
 
 /*
 exec function NPCGod(bool On)
 {
-	local Controller C;
+    local Controller C;
 
-	For ( C= Level.ControllerList; C!=None; C=C.NextController )
-	{
+    For ( C= Level.ControllerList; C!=None; C=C.NextController )
+    {
         if(C.IsA('KF_StoryNPC_AI') ||
         C.Pawn != none &&
         C.Pawn.IsA('KF_StoryNPC'))
         {
             C.bGodMode = On;
         }
-	}
+    }
 }
 */
 
@@ -1952,22 +1952,22 @@ exec function FailObj()
 ======================================================================================================================*/
 
 
-function	bool	 SpawnZEDsInVolume(ZombieVolume 	V,  int DesiredSquadSize, optional out int NumZEDsSpawned, optional bool TryOtherVolumesOnFail )
+function    bool     SpawnZEDsInVolume(ZombieVolume     V,  int DesiredSquadSize, optional out int NumZEDsSpawned, optional bool TryOtherVolumesOnFail )
 {
-	local int numspawned;
-	local int TotalZombiesValue;
-	//local int i;
+    local int numspawned;
+    local int TotalZombiesValue;
+    //local int i;
 
-	if(V == none || DesiredSquadSize == 0 || NextSpawnSquad.length == 0)
-	{
-	    return false;
-	}
+    if(V == none || DesiredSquadSize == 0 || NextSpawnSquad.length == 0)
+    {
+        return false;
+    }
 
-	if( V.StorySpawnInHere(NextSpawnSquad,,numspawned,DesiredSquadSize,DesiredSquadSize,TotalZombiesValue) )
-	{
-		NumZEDsSpawned  = numSpawned;
-		NumMonsters    += numspawned;
-		WaveMonsters   += numspawned;
+    if( V.StorySpawnInHere(NextSpawnSquad,,numspawned,DesiredSquadSize,DesiredSquadSize,TotalZombiesValue) )
+    {
+        NumZEDsSpawned  = numSpawned;
+        NumMonsters    += numspawned;
+        WaveMonsters   += numspawned;
 
 //      TotalMaxMonsters = DesiredMaxZEDs - NumMonsters;
 
@@ -1977,8 +1977,8 @@ function	bool	 SpawnZEDsInVolume(ZombieVolume 	V,  int DesiredSquadSize, optiona
             log("SpawnZEDsInVolume NextSpawnSquad after spawn: zombie "$NextSpawnSquad[i]$" number "$i);
         }*/
 
-		return true;
-	}
+        return true;
+    }
 
     return false;
 }
@@ -1991,8 +1991,8 @@ function	bool	 SpawnZEDsInVolume(ZombieVolume 	V,  int DesiredSquadSize, optiona
 /* We're gonna pull the difficulty / player count multipliers from the editor from now on instead of hard-coding them*/
 function float GetZEDCountModifier()
 {
-	local int UsedNumPlayers;
-	local float PlayerCountMultiplier,DifficultyMultiplier;
+    local int UsedNumPlayers;
+    local float PlayerCountMultiplier,DifficultyMultiplier;
 
     PlayerCountMultiplier = 1.f;
     DifficultyMultiplier = 1.f;
@@ -2035,7 +2035,7 @@ function float GetZEDCountModifier()
 
 //    log("GetZEDCountModifier ::: GameDifficultyModifier = "@DifficultyMultiplier@" Player Count Modifier = "@PlayerCountMultiplier);
 
-	return DifficultyMultiplier * PlayerCountMultiplier;
+    return DifficultyMultiplier * PlayerCountMultiplier;
 }
 
 
@@ -2049,7 +2049,7 @@ function float GetAdjustedSpawnInterval(float BaseInterval, float UsedWaveTimeEl
     local float DifficultyMultiplier;
 
     PlayerCountMultiplier  = 1.f;
-	SineMod                = 1.0 - Abs(sin(UsedWaveTimeElapsed * SineWaveFreq));
+    SineMod                = 1.0 - Abs(sin(UsedWaveTimeElapsed * SineWaveFreq));
     DifficultyMultiplier   = 1.f;
 
 
@@ -2111,7 +2111,7 @@ function float GetAdjustedSpawnInterval(float BaseInterval, float UsedWaveTimeEl
     log("Final Interval         : "@FinalInterval);
     log("UsedWaveTimeElapsed    : "@UsedWaveTimeElapsed);*/
 
-	return FinalInterval;
+    return FinalInterval;
 
 }
 
@@ -2147,7 +2147,7 @@ function KFStoryGameInfo.SZEDSquadType     FindSquadByName(string SquadName, opt
 /* looks like this function is only implemented in State MatchInProgress .. adding a stub here so we don't get weird results / crashes */
 function float CalcNextSquadSpawnTime()
 {
-	return 1.f;
+    return 1.f;
 }
 
 /* Matinee Support  ==============================================================================================
@@ -2156,33 +2156,33 @@ function float CalcNextSquadSpawnTime()
 
 event SceneEnded( SceneManager SM, Actor Other )
 {
-	bPlayingCinematic = false ;
+    bPlayingCinematic = false ;
 }
 
 /* cinematic started... */
 event SceneStarted( SceneManager SM, Actor Other )
 {
-	if ( SM != none  )
-	{
-		bPlayingCinematic = true;
-	}
+    if ( SM != none  )
+    {
+        bPlayingCinematic = true;
+    }
 }
 
 function bool IsPlayingMatinee()
 {
-	return bPlayingCinematic ;
+    return bPlayingCinematic ;
 }
 
 
 function DramaticEvent(float BaseZedTimePossibility, optional float DesiredZedTimeDuration)
 {
-	/* No ZED time during matinee */
-	if(IsPlayingMatinee())
-	{
-		return;
-	}
+    /* No ZED time during matinee */
+    if(IsPlayingMatinee())
+    {
+        return;
+    }
 
-	Super.DramaticEvent(BaseZedTimePOssibility);
+    Super.DramaticEvent(BaseZedTimePOssibility);
 }
 
 function int GetCurrentWaveNum()
@@ -2193,6 +2193,16 @@ function int GetCurrentWaveNum()
 function int GetFinalWaveNum()
 {
     return 0;
+}
+
+static event class<GameInfo> SetGameType( string MapName )
+{
+    if ( Left(MapName, InStr(MapName, "-")) ~= "KF")
+	{
+		return class'KFGameType';
+	}
+
+    return super.SetGameType( MapName );
 }
 
 defaultproperties

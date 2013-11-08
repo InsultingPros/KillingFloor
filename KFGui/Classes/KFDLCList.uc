@@ -37,12 +37,12 @@ function InitList(PlayerController PCOwner, SteamStatsAndAchievementsBase StatsA
 
 	OnDrawItem = DrawDLCItem;
 
+	// Hold onto our references
+	MyPCOwner = PCOwner;
+	MyStatsAndAchievements = StatsAndAchievements;
+
 	if ( ItemBackground.Length == 0 )
 	{
-		// Hold onto our references
-		MyPCOwner = PCOwner;
-		MyStatsAndAchievements = StatsAndAchievements;
-
 		// Set up the Unowned Weapon DLC items
 		if ( bShowWeapons )
 		{

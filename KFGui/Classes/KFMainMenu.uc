@@ -23,6 +23,7 @@ var 			Texture				KFWeaponDLCOverlayTexture;
 var 			Texture				KFWeaponDLCHoverTexture;
 
 var	transient	bool				bOwnsCharacterDLC;
+var const       string              CharacterDLCName;
 var automated   GUIImage    		KFCharacterDLCImage;
 var automated   GUIImage    		KFCharacterDLCOverlay;
 var 			Texture				KFCharacterDLCOwnedTexture;
@@ -123,8 +124,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
     i_BkChar.Image = CharShots[rand(CharShots.Length)];
 
     WeaponDLCID = DetermineWeaponDLC();
-	bOwnsWeaponDLC = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC( WeaponDLCID );
-	bOwnsCharacterDLC = PlayerOwner().CharacterAvailable("Reggie");
+    UpdateDLCOwnership();
 
 	eventNum = 0;//KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements).Stat46.Value;
 
@@ -307,6 +307,11 @@ event Opened(GUIComponent Sender)
 {
     Super.Opened(Sender);
 
+    if( !bOwnsWeaponDLC || !bOwnsCharacterDLC )
+    {
+        UpdateDLCOwnership();
+    }
+
 	if ( bOwnsWeaponDLC )
 	{
 		KFWeaponDLCImage.Image = KFWeaponDLCOwnedTexture;
@@ -327,6 +332,12 @@ event Opened(GUIComponent Sender)
 		KFCharacterDLCImage.Image = KFCharacterDLCOwnedTexture;
 		KFCharacterDLCOverlay.SetVisibility(false);
 	}
+}
+
+function UpdateDLCOwnership()
+{
+    bOwnsWeaponDLC = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC( WeaponDLCID );
+    bOwnsCharacterDLC = PlayerOwner().CharacterAvailable(CharacterDLCName);
 }
 
 function MoveOn()
@@ -671,7 +682,7 @@ function bool CharacterDLCButtonClicked(GUIComponent Sender)
 {
 	if ( !bOwnsCharacterDLC )
 	{
-		PlayerOwner().PurchaseCharacter("Reggie");
+		PlayerOwner().PurchaseCharacter(CharacterDLCName);
 		return true;
 	}
 
@@ -731,7 +742,7 @@ defaultproperties
      WeaponBundle=258751
      WeaponDLCs(0)=258751
      Begin Object Class=GUIImage Name=WeaponDLCImage
-         Image=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_CamoWeaponPack'
+         Image=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_UsVSThemWeaponPack'
          ImageStyle=ISTY_Scaled
          WinTop=0.651389
          WinLeft=0.053125
@@ -764,6 +775,7 @@ defaultproperties
      KFWeaponDLCOwnedTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_UsVSThemWeaponPack'
      KFWeaponDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFWeaponDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
+     CharacterDLCName="Reggie"
      Begin Object Class=GUIImage Name=CharacterDLCImage
          Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Reggie'
          ImageStyle=ISTY_Scaled

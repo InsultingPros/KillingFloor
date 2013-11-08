@@ -456,6 +456,27 @@ exec function KillZeds()
     //     }
 }
 
+// Added back in for mod compatibility.
+// We don't use this function.
+
+function bool KillZed(Controller c)
+{
+    local MonsterController b;
+
+    b = MonsterController(c);
+    if (b != None)
+    {
+        if ( (Vehicle(b.Pawn) != None) && (Vehicle(b.Pawn).Driver != None) )
+            Vehicle(b.Pawn).Driver.KilledBy(Vehicle(b.Pawn).Driver);
+        else if (b.Pawn != None)
+            b.Pawn.KilledBy( b.Pawn );
+        if (b != None)
+            b.Destroy();
+        return true;
+    }
+    return false;
+}
+
 // Force slomo for a longer period of time when the boss dies
 function DoBossDeath()
 {
@@ -2273,8 +2294,8 @@ State MatchInProgress
         {
             if( C.Pawn!=None && C.Pawn.Health>0 )
             {
-				// Disable pawn collision during trader time
-				C.Pawn.bBlockActors = false;
+                // Disable pawn collision during trader time
+                C.Pawn.bBlockActors = false;
 
                 if( KFPlayerController(C) !=None )
                 {
@@ -2326,8 +2347,8 @@ State MatchInProgress
         {
             if ( C.Pawn != none && C.Pawn.Health > 0 )
             {
-				// Restore pawn collision during trader time
-				C.Pawn.bBlockActors = C.Pawn.default.bBlockActors;
+                // Restore pawn collision during trader time
+                C.Pawn.bBlockActors = C.Pawn.default.bBlockActors;
 
                 if ( KFPlayerController(C) != none )
                 {
@@ -3109,8 +3130,8 @@ State MatchInProgress
         {
             if( C.Pawn!=None && C.Pawn.Health>0 )
             {
-				// Restore pawn collision during trader time
-				C.Pawn.bBlockActors = C.Pawn.default.bBlockActors;
+                // Restore pawn collision during trader time
+                C.Pawn.bBlockActors = C.Pawn.default.bBlockActors;
 
                 if( KFPlayerController(C) !=None )
                 {
@@ -3151,18 +3172,18 @@ state MatchOver
     }
 
     function bool ChangeTeam(Controller Other, int num, bool bNewTeam)
-	{
-	    // prevents DeathMatch.ChangeTeam from being called so that players aren't
-	    // blocked from joining a server that is in this state
-	    if( Other.PlayerReplicationInfo != none && Other.PlayerReplicationInfo.Team == none )
-	    {
-		    return Global.ChangeTeam( Other, num, bNewTeam );
-		}
-		else
-		{
-		    return Super.ChangeTeam( Other, num, bNewTeam );
-		}
-	}
+    {
+        // prevents DeathMatch.ChangeTeam from being called so that players aren't
+        // blocked from joining a server that is in this state
+        if( Other.PlayerReplicationInfo != none && Other.PlayerReplicationInfo.Team == none )
+        {
+            return Global.ChangeTeam( Other, num, bNewTeam );
+        }
+        else
+        {
+            return Super.ChangeTeam( Other, num, bNewTeam );
+        }
+    }
 }
 
 function PlayStartupMessage()
@@ -3313,24 +3334,24 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                         KFWeapon(Killer.Pawn.Weapon).Tier3WeaponGiver = none;
                     }
 
-					if ( class<DamTypeRocketImpact>(damageType) != none && class<DamTypeLawRocketImpact>(damageType) == none )
-					{
-                     	StatsAndAchievements.CheckAndSetAchievementComplete( StatsAndAchievements.KFACHIEVEMENT_KillZedWithImpactSPG );
-					}
+                    if ( class<DamTypeSPGrenadeImpact>(damageType) != none || class<DamTypeM79GrenadeImpact>(damageType) != none )
+                    {
+                        StatsAndAchievements.CheckAndSetAchievementComplete( StatsAndAchievements.KFACHIEVEMENT_KillZedWithImpactSPG );
+                    }
 
-					if ( bZEDTimeActive )
-					{
-						if ( class<DamTypeSPThompson>(damageType) != none || class<DamTypeBullpup>(damageType) != none )
-						{
-							StatsAndAchievements.AddZedTimeKill();
-						}
-					}
+                    if ( bZEDTimeActive )
+                    {
+                        if ( class<DamTypeSPThompson>(damageType) != none || class<DamTypeBullpup>(damageType) != none )
+                        {
+                            StatsAndAchievements.AddZedTimeKill();
+                        }
+                    }
 
-					if ( class<DamTypeBurned>(damageType) != none || class<DamTypeFlamethrower>(damageType) != none ||
-							class<DamTypeBlowerThrower>(damageType) != none )
-					{
-				     	StatsAndAchievements.AddMonsterKillsWithBileOrFlame( KilledPawn.Class );
-					}
+                    if ( class<DamTypeBurned>(damageType) != none || class<DamTypeFlamethrower>(damageType) != none ||
+                            class<DamTypeBlowerThrower>(damageType) != none )
+                    {
+                        StatsAndAchievements.AddMonsterKillsWithBileOrFlame( KilledPawn.Class );
+                    }
                 }
 
                 if ( KilledPawn.IsA('ZombieCrawler') )
@@ -3360,9 +3381,9 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                     }
 
                     if ( class<DamTypeBullpup>(damageType) != none )
-					{
-						KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).KilledCrawlerWithBullpup();
-					}
+                    {
+                        KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).KilledCrawlerWithBullpup();
+                    }
 
                     StatsAndAchievements.AddXMasCrawlerKill();
                 }
@@ -3413,9 +3434,9 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                     }
 
                     if ( KFMonster(KilledPawn).bBackstabbed )
-					{
-						KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).AddStalkerBackstab();
-					}
+                    {
+                        KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).AddStalkerBackstab();
+                    }
 
                     StatsAndAchievements.AddXMasStalkerKill();
                 }
@@ -3430,29 +3451,29 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                         StatsAndAchievements.AddHuskKillWithKSG();
                     }
                     else if ( class<DamTypeDeagle>(damageType) != none ||
-	                          class<DamTypeMagnum44Pistol>(damageType) != none ||
-	                          class<DamTypeDualies>(damageType) != none ||
-	                          class<DamTypeFlareProjectileImpact>(damageType) != none ||
-	                          class<DamTypeMK23Pistol>(damageType) != none ||
-	                          class<DamTypeMagnum44Pistol>(damageType) != none )
+                              class<DamTypeMagnum44Pistol>(damageType) != none ||
+                              class<DamTypeDualies>(damageType) != none ||
+                              class<DamTypeFlareProjectileImpact>(damageType) != none ||
+                              class<DamTypeMK23Pistol>(damageType) != none ||
+                              class<DamTypeMagnum44Pistol>(damageType) != none )
                     {
                         StatsAndAchievements.KilledHuskWithPistol();
                     }
                     else if( class<DamTypeHuskGun>(damageType) != none ||
-                        	 class<DamTypeHuskGunProjectileImpact>(damageType) != none )
+                             class<DamTypeHuskGunProjectileImpact>(damageType) != none )
                     {
                         StatsAndAchievements.KilledXMasHuskWithHuskCannon();
                     }
                     else if ( class<DamTypeLAW>(damageType) != none )
-					{
-						KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).KilledHuskWithLAW();
-					}
+                    {
+                        KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).KilledHuskWithLAW();
+                    }
                 }
                 else if ( KilledPawn.IsA('ZombieScrake') )
                 {
                     KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).AddScrakeKill(MapName);
 
-					if ( class<DamTypeLAW>(damageType) != none || class<DamTypeSealSquealExplosion>(damageType) != none)
+                    if ( class<DamTypeLAW>(damageType) != none || class<DamTypeSealSquealExplosion>(damageType) != none)
                     {
                         StatsAndAchievements.AddScrakeAndFPOneShotKill(true, false);
                     }
@@ -3469,32 +3490,32 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                         StatsAndAchievements.AddScrakeKillWithKSG();
                     }
                     else if( class<DamTypeFlareRevolver>(damageType )!= none ||
-							 class<DamTypeHuskGun>(damageType) != none ||
-							 class<DamTypeHuskGunProjectileImpact>(damageType) != none ||
-							 class<DamTypeBurned>(damageType) != none ||
-							 class<DamTypeHuskGunProjectileImpact>(damageType) != none ||
-							 class<DamTypeFlameNade>(damageType) != none ||
-							 class<DamTypeFlamethrower>(damageType) != none ||
-							 class<DamTypeFlameNade>(damageType) != none ||
-							 class<DamTypeFlareProjectileImpact>(damageType) != none ||
-							 class<DamTypeTrenchgun>(damageType) != none )
-					{
-						StatsAndAchievements.ScrakeKilledByFire();
-					}
-					else if(class<DamTypeClaymoreSword>(damageType) != none)
-					{
-						StatsAndAchievements.AddXMasClaymoreScrakeKill();
-					}
-					else if ( class<DamTypeCrossbow>(damageType) != none || class<DamTypeCrossbowHeadShot>(damageType) != none )
-					{
-						KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).KilledScrakeWithCrossbow();
-					}
+                             class<DamTypeHuskGun>(damageType) != none ||
+                             class<DamTypeHuskGunProjectileImpact>(damageType) != none ||
+                             class<DamTypeBurned>(damageType) != none ||
+                             class<DamTypeHuskGunProjectileImpact>(damageType) != none ||
+                             class<DamTypeFlameNade>(damageType) != none ||
+                             class<DamTypeFlamethrower>(damageType) != none ||
+                             class<DamTypeFlameNade>(damageType) != none ||
+                             class<DamTypeFlareProjectileImpact>(damageType) != none ||
+                             class<DamTypeTrenchgun>(damageType) != none )
+                    {
+                        StatsAndAchievements.ScrakeKilledByFire();
+                    }
+                    else if(class<DamTypeClaymoreSword>(damageType) != none)
+                    {
+                        StatsAndAchievements.AddXMasClaymoreScrakeKill();
+                    }
+                    else if ( class<DamTypeCrossbow>(damageType) != none || class<DamTypeCrossbowHeadShot>(damageType) != none )
+                    {
+                        KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).KilledScrakeWithCrossbow();
+                    }
                 }
                 else if ( KilledPawn.IsA('ZombieFleshPound') )
                 {
                     StatsAndAchievements.KilledFleshpound(class<DamTypeMelee>(damageType) != none, class<DamTypeAA12Shotgun>(damageType) != none, class<DamTypeKnife>(damageType) != none, class<DamTypeClaymoreSword>(damageType) != none);
 
-					if ( class<DamTypeLAW>(damageType) != none  || class<DamTypeSealSquealExplosion>(damageType) != none)
+                    if ( class<DamTypeLAW>(damageType) != none  || class<DamTypeSealSquealExplosion>(damageType) != none)
                     {
                         StatsAndAchievements.AddScrakeAndFPOneShotKill(false, true);
                     }
@@ -3510,12 +3531,12 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                         }
                     }
                     else if (   class<DamTypeDualies>(damageType) != none ||
-							    class<DamTypeDeagle>(damageType) != none ||
-								class<DamTypeDualDeagle>(damageType) != none ||
-								class<DamTypeMK23Pistol>(damageType) != none )
-					{
-						KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).KilledFleshpoundWithPistol();
-					}
+                                class<DamTypeDeagle>(damageType) != none ||
+                                class<DamTypeDualDeagle>(damageType) != none ||
+                                class<DamTypeMK23Pistol>(damageType) != none )
+                    {
+                        KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).KilledFleshpoundWithPistol();
+                    }
 
                 }
                 else if ( KilledPawn.IsA('ZombieBoss') )
@@ -3541,13 +3562,13 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                         StatsAndAchievements.AddClotKillWithKSG();
                     }
                     else if ( class<DamTypeWinchester>(damageType) != none )
-					{
-						KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).AddClotKillWithLAR();
-					}
-					else if ( class<DamTypeBurned>(damageType) != none || class<DamTypeFlamethrower>(damageType) != none )
-					{
-						KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).ClotKilledByFire();
-					}
+                    {
+                        KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).AddClotKillWithLAR();
+                    }
+                    else if ( class<DamTypeBurned>(damageType) != none || class<DamTypeFlamethrower>(damageType) != none )
+                    {
+                        KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).ClotKilledByFire();
+                    }
                 }
                 else if ( KilledPawn.IsA('ZombieGoreFast') )
                 {
@@ -3556,9 +3577,9 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                         StatsAndAchievements.AddGoreFastKillWithKSG();
                     }
                     else if ( class<DamTypeMelee>(damageType) != none )
-					{
-						KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).MeleedGorefast();
-					}
+                    {
+                        KFSteamStatsAndAchievements(PlayerController(Killer).SteamStatsAndAchievements).MeleedGorefast();
+                    }
                     else if ( class<DamTypeTrenchgun>(damageType) != none ||
                               class<DamTypeFlareRevolver>(damageType) != none ||
                               class<DamTypeFlareProjectileImpact>(damageType) != none)
@@ -3612,9 +3633,9 @@ function Killed(Controller Killer, Controller Killed, Pawn KilledPawn, class<Dam
                     {
                         StatsAndAchievements.AddKillPoints(StatsAndAchievements.KFACHIEVEMENT_Kill5HillbillyZedsIn10SecsSythOrAxe);
                     }
-					else if ( class<DamTypeM32Grenade>(damageType) != none ||
-								class<DamTypeSeekerRocketImpact>(damageType) != none ||
-					            class<DamTypeSeekerSixRocket>(damageType) != none )
+                    else if ( class<DamTypeM32Grenade>(damageType) != none ||
+                                class<DamTypeSeekerRocketImpact>(damageType) != none ||
+                                class<DamTypeSeekerSixRocket>(damageType) != none )
                     {
                         StatsAndAchievements.AddKillPoints(StatsAndAchievements.KFACHIEVEMENT_Kill10ZedsSeekerOrM32In5Secs);
                     }
@@ -4588,11 +4609,11 @@ function RestartPlayer( Controller aPlayer )
         KFHumanPawn(aPlayer.Pawn).VeterancyChanged();
     }
 
-	// Disable pawn collision during trader time
-	if (bTradingDoorsOpen && aPlayer.bIsPlayer)
-	{
-		aPlayer.Pawn.bBlockActors = false;
-	}
+    // Disable pawn collision during trader time
+    if (bTradingDoorsOpen && aPlayer.bIsPlayer)
+    {
+        aPlayer.Pawn.bBlockActors = false;
+    }
 }
 
 function BroadcastDeathMessage(Controller Killer, Controller Other, class<DamageType> damageType)
@@ -4954,6 +4975,16 @@ function WeaponDestroyed(class<Weapon> WeaponClass)
     }
 }
 
+static event class<GameInfo> SetGameType( string MapName )
+{
+    if ( Left(MapName, InStr(MapName, "-")) ~= "KFO")
+	{
+	    return class<GameInfo>( DynamicLoadObject("KFStoryGame.KFStoryGameInfo", class'Class') );
+	}
+
+    return super.SetGameType( MapName );
+}
+
 defaultproperties
 {
      SandboxGroup="Sandbox"
@@ -4978,7 +5009,7 @@ defaultproperties
      LongWaves(7)=(WaveMask=58616303,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(8)=(WaveMask=75393519,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(9)=(WaveMask=90171865,WaveMaxMonsters=45,WaveDuration=255,WaveDifficulty=0.300000)
-     MonsterCollection=Class'KFMod.KFMonstersHalloween'
+     MonsterCollection=Class'KFMod.KFMonstersCollection'
      HumanName(0)="Cpl.McinTyre"
      HumanName(1)="Sgt.Michaels"
      HumanName(2)="Pvt.Davin"
@@ -5176,18 +5207,18 @@ defaultproperties
      LastBurnedEnemyMessageTime=-120.000000
      BurnedEnemyMessageDelay=120.000000
      SineWaveFreq=0.040000
-     MonsterClasses(0)=(MClassName="KFChar.ZombieClot_HALLOWEEN",Mid="A")
-     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_HALLOWEEN",Mid="B")
-     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_HALLOWEEN",Mid="C")
-     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker_HALLOWEEN",Mid="D")
-     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake_HALLOWEEN",Mid="E")
-     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_HALLOWEEN",Mid="F")
-     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat_HALLOWEEN",Mid="G")
-     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_HALLOWEEN",Mid="H")
-     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_HALLOWEEN",Mid="I")
-     EndGameBossClass="KFChar.ZombieBoss_HALLOWEEN"
+     MonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
+     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
+     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
+     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
+     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
+     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
+     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
+     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
+     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
+     EndGameBossClass="KFChar.ZombieBoss"
      WaveConfigMenu="KFGUI.KFWaveConfigMenu"
-     FallbackMonsterClass="KFChar.ZombieStalker_HALLOWEEN"
+     FallbackMonsterClass="KFChar.ZombieStalker"
      FinalWave=10
      InvasionBotNames(1)="Zombie"
      InvasionBotNames(2)="Zombie"

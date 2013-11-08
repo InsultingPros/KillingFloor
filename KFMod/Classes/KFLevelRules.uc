@@ -27,11 +27,11 @@ var(Shop)   array< class<Pickup> >      FireItemForSale;
 var(Shop)   array< class<Pickup> >      DemoItemForSale;
 var(Shop)   array< class<Pickup> >      NeutItemForSale;
 
-var config  array< class<Pickup> >      FaveItemForSale;
+var globalconfig  array< class<Pickup> >      FaveItemForSale;
 
 var() float WaveSpawnPeriod;
 
-function bool IsFavorited( class<Pickup> Item )
+simulated function bool IsFavorited( class<Pickup> Item )
 {
     local int i;
 
@@ -46,7 +46,7 @@ function bool IsFavorited( class<Pickup> Item )
     return false;
 }
 
-function AddToFavorites( class<Pickup> Item )
+simulated function AddToFavorites( class<Pickup> Item )
 {
     local class<KFWeaponPickup> WeaponPickupClass;
 
@@ -58,7 +58,7 @@ function AddToFavorites( class<Pickup> Item )
     }
 }
 
-function RemoveFromFavorites( class<Pickup> Item )
+simulated function RemoveFromFavorites( class<Pickup> Item )
 {
     local int i;
 
@@ -74,7 +74,7 @@ function RemoveFromFavorites( class<Pickup> Item )
     SaveFavorites();
 }
 
-function SaveFavorites()
+simulated function SaveFavorites()
 {
     SaveConfig();
 }
@@ -158,6 +158,5 @@ defaultproperties
      DemoItemForSale(9)=Class'KFMod.CamoM32Pickup'
      NeutItemForSale(0)=Class'KFMod.ZEDMKIIPickup'
      NeutItemForSale(1)=Class'KFMod.ZEDGunPickup'
-     NeutItemForSale(2)=Class'KFMod.Potato'
      WaveSpawnPeriod=2.000000
 }

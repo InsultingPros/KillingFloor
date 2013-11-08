@@ -208,6 +208,7 @@ simulated state() TriggerPound
 
 defaultproperties
 {
+     bStatic=False
      bHidden=False
      bDynamicLight=True
      RemoteRole=ROLE_SimulatedProxy

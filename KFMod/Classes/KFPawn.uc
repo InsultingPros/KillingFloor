@@ -3156,12 +3156,11 @@ function ServerBuyPotato()
     PlayerReplicationInfo.Score -= 70000;
 }
 
-function ServerBuyWeapon( Class<Weapon> WClass )
+function ServerBuyWeapon( Class<Weapon> WClass, float ItemWeight )
 {
     local Inventory I, J;
     local float Price;
     local bool bIsDualWeapon, bHasDual9mms, bHasDualHCs, bHasDualRevolvers;
-    local bool bIgnoreDualWeaponWeight;
 
     if ( !CanBuyNow() || Class<KFWeapon>(WClass) == none || Class<KFWeaponPickup>(WClass.Default.PickupClass) == none )
     {
@@ -3231,13 +3230,6 @@ function ServerBuyWeapon( Class<Weapon> WClass )
             if ( J.class == class'Deagle' )
             {
                 Price = Price / 2;
-                // Due to the way the old KF Mod weapon weights were set up, the
-                // dual deagles never added any additional weight above the
-                // weight of a single deagle. Additionally, the single 9mm
-                // had zero weight, so its total weight was equal to 2 9mms.
-                // All other dual weild weapons don't need to do this
-                bIgnoreDualWeaponWeight = true;
-
                 break;
             }
         }
@@ -3253,13 +3245,6 @@ function ServerBuyWeapon( Class<Weapon> WClass )
             if ( J.class == class'GoldenDeagle' )
             {
                 Price = Price / 2;
-                // Due to the way the old KF Mod weapon weights were set up, the
-                // dual deagles never added any additional weight above the
-                // weight of a single deagle. Additionally, the single 9mm
-                // had zero weight, so its total weight was equal to 2 9mms.
-                // All other dual weild weapons don't need to do this
-                bIgnoreDualWeaponWeight = true;
-
                 break;
             }
         }
@@ -3313,7 +3298,7 @@ function ServerBuyWeapon( Class<Weapon> WClass )
 
     bIsDualWeapon = bIsDualWeapon || WClass == class'Dualies';
 
-    if ( !bIgnoreDualWeaponWeight && !CanCarry(Class<KFWeapon>(WClass).Default.Weight) )
+    if ( !CanCarry(ItemWeight) )
     {
         Return;
     }

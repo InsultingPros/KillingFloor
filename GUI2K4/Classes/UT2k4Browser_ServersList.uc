@@ -809,7 +809,7 @@ defaultproperties
      InitColumnPerc(3)=0.100000
      InitColumnPerc(4)=0.100000
      InitColumnPerc(5)=0.100000
-     SortColumn=4
+     SortColumn=5
      OnDrawItem=UT2k4Browser_ServersList.MyOnDrawItem
      WinHeight=1.000000
      OnDblClick=UT2k4Browser_ServersList.MyOnDblClick

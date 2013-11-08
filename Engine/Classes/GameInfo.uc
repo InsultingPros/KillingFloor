@@ -2771,6 +2771,11 @@ function DisableNextObjective();
 
 function DeadUse(PlayerController PC);
 
+static event class<GameInfo> SetGameType( string MapName )
+{
+    return default.Class;
+}
+
 defaultproperties
 {
      bRestartLevel=True

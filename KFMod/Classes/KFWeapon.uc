@@ -524,7 +524,7 @@ simulated function vector GetEffectStart()
 
 function bool HandlePickupQuery( pickup Item )
 {
-    if( KFPlayerController(Instigator.Controller).IsVariantInInventory(Item.Class) )
+    if( KFPlayerController(Instigator.Controller).IsInInventory(Item.Class, false, true) )
 	{
 		if( LastHasGunMsgTime<Level.TimeSeconds && PlayerController(Instigator.Controller)!=none )
 		{

@@ -489,7 +489,7 @@ defaultproperties
      OffsetRate=(X=300.000000,Y=300.000000,Z=300.000000)
      OffsetTime=3.500000
      ArmDistSquared=90000.000000
-     ImpactDamageType=Class'KFMod.DamTypeRocketImpact'
+     ImpactDamageType=Class'KFMod.DamTypeM79GrenadeImpact'
      ImpactDamage=200
      StraightFlightTime=0.250000
      StaticMeshRef="kf_generic_sm.40mm_Warhead"

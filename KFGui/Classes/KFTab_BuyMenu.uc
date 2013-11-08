@@ -727,7 +727,7 @@ function DoBuy()
 
        else
        {
-            KFPawn(PlayerOwner().Pawn).ServerBuyWeapon(TheBuyable.ItemWeaponClass);
+            KFPawn(PlayerOwner().Pawn).ServerBuyWeapon(TheBuyable.ItemWeaponClass, TheBuyable.ItemWeight);
        }
 
         MakeSomeBuyNoise();

@@ -106,7 +106,8 @@ static function AddDefaultInventory(KFPlayerReplicationInfo KFPRI, Pawn P)
 	// If Level 6, give them a M79Grenade launcher and pipe bomb
 	if ( KFPRI.ClientVeteranSkillLevel == 6 )
 	{
-		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.PipeBombExplosive", default.StartingWeaponSellPriceLevel6);
+	    // use level 5 sell price for the pipe bombs so the demo doesn't start with two things he can sell
+		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.PipeBombExplosive", default.StartingWeaponSellPriceLevel5);
 		KFHumanPawn(P).CreateInventoryVeterancy("KFMod.M79GrenadeLauncher", default.StartingWeaponSellPriceLevel6);
 	}
 }
@@ -114,6 +115,7 @@ static function AddDefaultInventory(KFPlayerReplicationInfo KFPRI, Pawn P)
 defaultproperties
 {
      PerkIndex=6
+     StartingWeaponSellPriceLevel5=0.000000
      OnHUDIcon=Texture'KillingFloor2HUD.Perk_Icons.Perk_Demolition'
      OnHUDGoldIcon=Texture'KillingFloor2HUD.Perk_Icons.Perk_Demolition_Gold'
      VeterancyName="Demolitions"

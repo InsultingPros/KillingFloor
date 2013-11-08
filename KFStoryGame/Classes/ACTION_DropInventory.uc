@@ -3,6 +3,7 @@ class ACTION_DropInventory extends ScriptedAction;
 var() class<Inventory> InventoryType;
 var() name InvTag;
 var() bool bSpawnPickup;
+var() bool bAlwaysDropFromInstigator;  // Should we always drop the pickup from the guy who instigates this action, or do we not care?
 
 /* C.GetInstigator() is unreliable in this case, because a different player than the one who's inventory Item we
 need to remove could be instigating the trigger*/
@@ -11,16 +12,29 @@ function Pawn GetInvHolder( ScriptedController OwningController, out Inventory I
 {
     local Controller C;
 
-    for ( C=OwningController.Level.ControllerList; C!=None; C=C.NextController )
+    if(bAlwaysDropFromInstigator && OwningController.GetInstigator() != none)
     {
-        if(C.Pawn != none && C.Pawn.bCanPickupInventory)
-        {
-            ItemToRemove = C.Pawn.FindInventoryType(InventoryType) ;
+        ItemToRemove = OwningController.GetInstigator().FindInventoryType(InventoryType);
 
-            if(ItemToRemove != none &&
-            (InvTag == '' || ItemToRemove.Tag == InvTag))
+        if(ItemToRemove != none &&
+        (InvTag == '' || ItemToRemove.Tag == InvTag))
+        {
+            return OwningController.GetInstigator();
+        }
+    }
+    else
+    {
+        for ( C=OwningController.Level.ControllerList; C!=None; C=C.NextController )
+        {
+            if(C.Pawn != none && C.Pawn.bCanPickupInventory)
             {
-                return C.Pawn;
+                ItemToRemove = C.Pawn.FindInventoryType(InventoryType) ;
+
+                if(ItemToRemove != none &&
+                (InvTag == '' || ItemToRemove.Tag == InvTag))
+                {
+                    return C.Pawn;
+                }
             }
         }
     }

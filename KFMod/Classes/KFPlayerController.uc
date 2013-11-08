@@ -2965,7 +2965,7 @@ simulated function ClientZedsSpawn(int eventNum)
    }
 }
 
-function bool IsVariantInInventory(class<Pickup> PickupToCheck)
+function bool IsInInventory(class<Pickup> PickupToCheck, bool bCheckForEquivalent, bool bCheckForVariant)
 {
     local Inventory CurInv;
     local class<KFWeaponPickup> InvPickupClass;
@@ -2975,9 +2975,14 @@ function bool IsVariantInInventory(class<Pickup> PickupToCheck)
 
     for ( CurInv = Pawn.Inventory; CurInv != none; CurInv = CurInv.Inventory )
     {
-        if ( CurInv.default.PickupClass == PickupToCheck )
+        if ( bCheckForEquivalent && CurInv.default.PickupClass == PickupToCheck )
         {
             return true;
+        }
+
+        if( !bCheckForVariant )
+        {
+            continue;
         }
 
         // check if Item is variant of normal inventory item

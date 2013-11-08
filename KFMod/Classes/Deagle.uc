@@ -52,7 +52,7 @@ defaultproperties
      ReloadAnim="Reload"
      ReloadAnimRate=1.000000
      WeaponReloadAnim="Reload_Single9mm"
-     Weight=4.000000
+     Weight=2.000000
      bHasAimingMode=True
      IdleAimAnim="Idle_Iron"
      StandardDisplayFOV=60.000000

@@ -1391,6 +1391,11 @@ function string GetWeaponDLCPackName(int AppID)
 // Sets the specified Steam Achievement as completed; also, flushes all Stats and Achievements to the client
 simulated function SetSteamAchievementCompleted(int Index)
 {
+    if( PCOwner.PlayerReplicationInfo.bOnlySpectator )
+    {
+        return;
+    }
+
 	if ( bDebugStats )
 		log("STEAMSTATS: SetSteamAchievementCompleted called - Name="$Achievements[Index].SteamName @ "Player="$PCOwner.PlayerReplicationInfo.PlayerName);
 

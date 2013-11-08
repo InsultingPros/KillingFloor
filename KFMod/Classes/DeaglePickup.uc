@@ -39,7 +39,7 @@ function inventory SpawnCopy(pawn Other)
 
 defaultproperties
 {
-     Weight=4.000000
+     Weight=2.000000
      cost=500
      AmmoCost=15
      BuyClipSize=7

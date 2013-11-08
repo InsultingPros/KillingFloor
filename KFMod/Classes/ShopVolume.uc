@@ -19,6 +19,12 @@ function Touch( Actor Other )
 {
 	if( Pawn(Other)!=None && PlayerController(Pawn(Other).Controller)!=None && KFGameType(Level.Game)!=None && !KFGameType(Level.Game).bWaveInProgress )
 	{
+	    if( !bCurrentlyOpen )
+        {
+            BootPlayers();
+            return;
+        }
+
 		MyTrader.SetOpen(true);
         if( KFPlayerController(Pawn(Other).Controller) !=None )
         {
@@ -37,6 +43,14 @@ function Touch( Actor Other )
 				KFPlayerController(Pawn(Other).Controller).bHasHeardTraderWelcomeMessage = true;
 			}
 		}
+	}
+	else if( Other.IsA('KF_StoryInventoryPickup') )
+	{
+	    if( !bCurrentlyOpen )
+        {
+            BootPlayers();
+            return;
+        }
 	}
 }
 function UnTouch( Actor Other )

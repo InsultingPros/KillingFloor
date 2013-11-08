@@ -228,6 +228,11 @@ function InitializeSteamStatFloat(int Index, float Value);
 // Sets the specified Steam Achievement as completed; also, flushes all Stats and Achievements to the client
 function SetSteamAchievementCompleted(int Index)
 {
+    if( PCOwner.PlayerReplicationInfo.bOnlySpectator )
+    {
+        return;
+    }
+
     if ( bDebugStats )
         log("STEAMSTATS: SetSteamAchievementCompleted called - Name="$SteamNameAchievement[Index] @ "Player="$PCOwner.PlayerReplicationInfo.PlayerName);
 
