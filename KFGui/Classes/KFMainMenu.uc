@@ -775,9 +775,9 @@ defaultproperties
      KFWeaponDLCOwnedTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_UsVSThemWeaponPack'
      KFWeaponDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFWeaponDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
-     CharacterDLCName="Reggie"
+     CharacterDLCName="Harchier_Spebbington_II"
      Begin Object Class=GUIImage Name=CharacterDLCImage
-         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Reggie'
+         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_NewHarchier'
          ImageStyle=ISTY_Scaled
          WinTop=0.811111
          WinLeft=0.053125
@@ -806,7 +806,7 @@ defaultproperties
      End Object
      KFCharacterDLCOverlay=GUIImage'KFGui.KFMainMenu.CharacterDLCOverlay'
 
-     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Reggie'
+     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_NewHarchier'
      KFCharacterDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFCharacterDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
      Begin Object Class=BackgroundImage Name=ImgBkChar

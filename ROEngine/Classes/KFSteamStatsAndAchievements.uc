@@ -479,6 +479,20 @@ const KFACHIEVEMENT_ScrakeAndFP1ShotLawHarpoon			= 240;
 const KFACHIEVEMENT_BileOrFlameEachZed	     			= 241;
 const KFACHIEVEMENT_Kill10ZedsSeekerOrM32In5Secs		= 242;
 
+// Hell Achievements
+const KFACHIEVEMENT_WinHellNormal					    = 243;
+const KFACHIEVEMENT_WinHellHard			     		    = 244;
+const KFACHIEVEMENT_WinHellSuicidal			    	    = 245;
+const KFACHIEVEMENT_WinHellHell					        = 246;
+
+// Forgotten Achievements
+const KFACHIEVEMENT_WinForgottenNormal					= 247;
+const KFACHIEVEMENT_WinForgottenHard			     	= 248;
+const KFACHIEVEMENT_WinForgottenSuicidal			    = 249;
+const KFACHIEVEMENT_WinForgottenHell					= 250;
+
+const KFACHIEVEMENT_PlayAsOrWithBallHero                = 251;
+
 struct native export KFAchievement
 {
 	var	string	SteamName;
@@ -2487,6 +2501,14 @@ function WonGame(string MapName, float Difficulty, bool bLong)
 	{
 		CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinFrightyardObjNormal);
         CheckFrightyardAchievementsCompleted();
+	}
+	else if ( MapName ~= "KF-Hell" )
+	{
+	    CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinHellNormal);
+	}
+	else if ( MapName ~= "KF-Forgotten" )
+	{
+	    CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinForgottenNormal);
 	}
 }
 
@@ -4567,6 +4589,15 @@ defaultproperties
      Achievements(240)=(SteamName="ScrakeAndFP1ShotLawHarpoon",ProgressDenominator=2,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_240',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(241)=(SteamName="BileOrFlameEachZed",ProgressDenominator=10,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_241',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(242)=(SteamName="Kill10ZedsSeekerOrM32In5Secs",ProgressDenominator=10,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_242',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(243)=(SteamName="WinHellNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_243',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(244)=(SteamName="WinHellHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_244',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(245)=(SteamName="WinHellSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_245',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(246)=(SteamName="WinHellHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_246',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(247)=(SteamName="WinForgottenNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_247',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(248)=(SteamName="WinForgottenHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_248',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(249)=(SteamName="WinForgottenSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_249',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(250)=(SteamName="WinForgottenHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_250',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(251)=(SteamName="PlayWithOrAsBallHero",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_251',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      HillBillyGnomesEventName="GnomeSoulsCompleted"
      SteamLandClownsEventName="ClownSoulsCompleted"
      SteamLandGamesEventName="MiniGamesCompleted"
@@ -4866,4 +4897,13 @@ defaultproperties
      SteamNameAchievement(240)="ScrakeAndFP1ShotLawHarpoon"
      SteamNameAchievement(241)="BileOrFlameEachZed"
      SteamNameAchievement(242)="Kill10ZedsSeekerOrM32In5Secs"
+     SteamNameAchievement(243)="WinHellNormal"
+     SteamNameAchievement(244)="WinHellHard"
+     SteamNameAchievement(245)="WinHellSuicidal"
+     SteamNameAchievement(246)="WinHellHell"
+     SteamNameAchievement(247)="WinForgottenNormal"
+     SteamNameAchievement(248)="WinForgottenHard"
+     SteamNameAchievement(249)="WinForgottenSuicidal"
+     SteamNameAchievement(250)="WinForgottenHell"
+     SteamNameAchievement(251)="PlayAsOrWithBallHero"
 }

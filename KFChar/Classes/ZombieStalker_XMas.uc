@@ -108,6 +108,7 @@ simulated function UnCloakStalker()
 
 		Visibility = default.Visibility;
 		bCloaked = false;
+		bUnlit = false;
 
 		// 25% chance of our Enemy saying something about us being invisible
 		if ( Level.NetMode!=NM_Client && !KFGameType(Level.Game).bDidStalkerInvisibleMessage && FRand()<0.25 && Controller.Enemy!=none &&
@@ -143,6 +144,8 @@ simulated function UnCloakStalker()
 simulated function SetZappedBehavior()
 {
     super(KFMonster).SetZappedBehavior();
+
+    bUnlit = false;
 
 	// Handle setting the zed to uncloaked so the zapped overlay works properly
     if( Level.Netmode != NM_DedicatedServer )
@@ -219,6 +222,7 @@ defaultproperties
      ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd_Xmas.Stalker.Stalker_Challenge'
      ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd_Xmas.Stalker.Stalker_Challenge'
      MenuName="Christmas Stalker"
+     AmbientSound=Sound'KF_BaseStalker.Stalker_IdleLoop'
      Mesh=SkeletalMesh'KF_Freaks_Trip_Xmas.StalkerClause'
      Skins(0)=Shader'KF_Specimens_Trip_XMAS_T.StalkerClause.StalkerClause_invisible'
      Skins(1)=Shader'KF_Specimens_Trip_XMAS_T.StalkerClause.StalkerClause_invisible'

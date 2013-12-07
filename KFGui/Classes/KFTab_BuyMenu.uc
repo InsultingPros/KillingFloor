@@ -560,7 +560,7 @@ function SetInfoText()
         // default
         else
         {
-            InfoScrollText.SetContent(InfoText[0]);
+            InfoScrollText.SetContent(TheBuyable.ItemDescription);
         }
 
         bDidBuyableUpdate = false;

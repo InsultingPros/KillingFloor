@@ -234,17 +234,8 @@ simulated event ClientTrigger()
 function bool CheckCanCarry(KFHumanPawn Hm)
 {
 	local Inventory CurInv;
-	local bool bHasHandCannon;
 
-	for ( CurInv = Hm.Inventory; CurInv != none; CurInv = CurInv.Inventory )
-    {
-  		if ( KFWeapon(CurInv) != none && KFWeapon(CurInv).class == class'KFMod.Deagle' )
-        {
-			bHasHandCannon = true;
-        }
-    }
-
-	if ( !Hm.CanCarry(Class<KFWeapon>(InventoryType).Default.Weight) && Class<KFWeapon>(InventoryType) != class'KFMod.Deagle')
+	if ( !Hm.CanCarry(Class<KFWeapon>(InventoryType).Default.Weight) )
 	{
 		if ( LastCantCarryTime < Level.TimeSeconds && PlayerController(Hm.Controller) != none )
 		{
@@ -253,17 +244,6 @@ function bool CheckCanCarry(KFHumanPawn Hm)
 		}
 
 		return false;
-	}
-
-	if ( Class<KFWeapon>(InventoryType) == class'KFMod.Deagle' )
-	{
-		if ( !bHasHandCannon && !Hm.CanCarry(Class<KFWeapon>(InventoryType).Default.Weight) )
-		{
-			LastCantCarryTime = Level.TimeSeconds + 0.5;
-			PlayerController(Hm.Controller).ReceiveLocalizedMessage(Class'KFMainMessages', 2);
-
-			return false;
-		}
 	}
 
 	return true;

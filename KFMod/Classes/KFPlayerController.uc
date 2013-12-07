@@ -2401,6 +2401,33 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'GoldenDeagleAltFire'.static.PreloadAssets(Level);
 			class'GoldenDeagleAttachment'.static.PreloadAssets();
 			break;
+
+		case class'CamoM4AssaultRifle':
+			class'CamoM4AssaultRifle'.static.PreloadAssets(Inv);
+			class'CamoM4Fire'.static.PreloadAssets(Level);
+			class'CamoM4Attachment'.static.PreloadAssets();
+			break;
+
+		case class'CamoM32GrenadeLauncher':
+			class'CamoM32GrenadeLauncher'.static.PreloadAssets(Inv);
+			class'CamoM32Fire'.static.PreloadAssets(Level);
+			class'M32GrenadeProjectile'.static.PreloadAssets();
+			class'CamoM32Attachment'.static.PreloadAssets();
+			break;
+
+		case class'CamoMP5MMedicGun':
+			class'CamoMP5MMedicGun'.static.PreloadAssets(Inv);
+			class'CamoMP5MFire'.static.PreloadAssets(Level);
+			class'MP5MAltFire'.static.PreloadAssets(Level);
+			class'MP5MHealinglProjectile'.static.PreloadAssets();
+			class'CamoMP5MAttachment'.static.PreloadAssets();
+			break;
+
+		case class'CamoShotgun':
+			class'CamoShotgun'.static.PreloadAssets(Inv);
+			class'CamoShotgunFire'.static.PreloadAssets(Level);
+			class'CamoShotgunAttachment'.static.PreloadAssets();
+			break;
 	}
 }
 
@@ -2865,6 +2892,41 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 				class'FlareRevolverFire'.static.UnloadAssets();
 				class'FlareRevolverProjectile'.static.UnloadAssets();
 				class'FlareRevolverAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'CamoM4AssaultRifle':
+			if ( class'CamoM4AssaultRifle'.static.UnloadAssets() )
+			{
+				class'CamoM4Fire'.static.UnloadAssets();
+				class'CamoM4Attachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'CamoM32GrenadeLauncher':
+			if ( class'CamoM32GrenadeLauncher'.static.UnloadAssets() )
+			{
+				class'CamoM32Fire'.static.UnloadAssets();
+				class'M32GrenadeProjectile'.static.UnloadAssets();
+				class'CamoM32Attachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'CamoMP5MMedicGun':
+			if ( class'CamoMP5MMedicGun'.static.UnloadAssets() )
+			{
+				class'CamoMP5MFire'.static.UnloadAssets();
+				class'MP5MAltFire'.static.UnloadAssets();
+				class'MP5MHealinglProjectile'.static.UnloadAssets();
+				class'CamoMP5MAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'CamoShotgun':
+			if ( class'CamoShotgun'.static.UnloadAssets() )
+			{
+				class'CamoShotgunFire'.static.UnloadAssets();
+				class'CamoShotgunAttachment'.static.UnloadAssets();
 			}
 			break;
 	}

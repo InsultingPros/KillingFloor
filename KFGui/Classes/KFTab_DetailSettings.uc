@@ -199,9 +199,10 @@ function InternalOnLoadINI(GUIComponent Sender, string s)
     	case co_Shadows:
         tempStr = GetNativeClassName("Engine.Engine.RenderDevice");
 
-        // No render-to-texture on anything but Direct3D.
+        // No render-to-texture on anything but Direct3D (or OpenGL!).
         if ((tempStr == "D3DDrv.D3DRenderDevice") ||
-            (tempStr == "D3D9Drv.D3D9RenderDevice"))
+            (tempStr == "D3D9Drv.D3D9RenderDevice") ||
+            (tempStr == "OpenGLDrv.OpenGLRenderDevice"))
         {
             a = bool(PC.ConsoleCommand("get UnrealGame.UnrealPawn bPlayerShadows"));
             b = bool(PC.ConsoleCommand("get UnrealGame.UnrealPawn bBlobShadow"));
@@ -565,7 +566,8 @@ function UpdateGlobalDetailsVisibility()
         DisableHDRControlIfNeeded();
 
         // wtf m8 _RO_
-        if (co_RenderDevice.GetExtra() != RenderMode[0])
+        if ((co_RenderDevice.GetExtra() != "D3D9Drv.D3D9RenderDevice") &&
+            (co_RenderDevice.GetExtra() != "OpenGLDrv.OpenGLRenderDevice"))
         {
            co_MultiSamples.DisableMe();
            ch_ForceFSAAScreenshotSupport.DisableMe();
@@ -588,8 +590,11 @@ function UpdateGlobalDetailsVisibility()
 function DisableHDRControlIfNeeded()
 {
     // Bloom only available when using direct3d 9.0
-    if (co_RenderDevice.GetExtra() != RenderMode[0])
+    if ((co_RenderDevice.GetExtra() != "D3D9Drv.D3D9RenderDevice") &&
+        (co_RenderDevice.GetExtra() != "OpenGLDrv.OpenGLRenderDevice"))
+    {
         ch_HDR.DisableMe();
+    }
 }
 
 function SaveSettings()

@@ -4806,12 +4806,71 @@ function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
         P.GameHasEnded();
     }
 
+    // If we won the match
+    if ( KFGameReplicationInfo(GameReplicationInfo).EndGameType == 2 )
+    {
+     	CheckHarchierAchievement();
+    }
+
     if ( CurrentGameProfile != none )
     {
         CurrentGameProfile.bWonMatch = false;
     }
 
     return true;
+}
+
+function CheckHarchierAchievement()
+{
+    local Controller P;
+    local PlayerController Player;
+    local bool bJustPlayedHell, bEarnedHarchierHellAch, bShortRound;
+    local KFSteamStatsAndAchievements KFSS;
+
+    bJustPlayedHell = (GetCurrentMapName(Level) ~= "KF-Hell");
+    bShortRound = (KFGameLength == GL_Short);
+
+    if( !bJustPlayedHell || !bShortRound )
+    {
+        return;
+    }
+
+    for ( P = Level.ControllerList; P != none && !bEarnedHarchierHellAch; P = P.nextController )
+    {
+        Player = PlayerController(P);
+        if( Player == none )
+        {
+            continue;
+        }
+
+        KFSS = KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements);
+        if ( KFSS == none )
+        {
+            continue;
+        }
+
+        bEarnedHarchierHellAch = (KFPawn( Player.Pawn ).Species == class'KFMod.CivilianSpeciesBallHero' || KFPawn( Player.Pawn ).Species == class'KFMod.CivilianSpeciesBallHeroII');
+    }
+
+    if( bEarnedHarchierHellAch )
+    {
+        for ( P = Level.ControllerList; P != none; P = P.nextController )
+        {
+            Player = PlayerController(P);
+            if( Player == none )
+            {
+                continue;
+            }
+
+            KFSS = KFSteamStatsAndAchievements(Player.SteamStatsAndAchievements);
+            if ( KFSS == none )
+            {
+                continue;
+            }
+
+            KFSS.SetSteamAchievementCompleted(KFSS.KFACHIEVEMENT_PlayAsOrWithBallHero);
+        }
+    }
 }
 
 function SendPlayer( PlayerController aPlayer, string URL )
@@ -4985,6 +5044,51 @@ static event class<GameInfo> SetGameType( string MapName )
     return super.SetGameType( MapName );
 }
 
+function string GetEventClotClassName()
+{
+    return "KFChar.ZombieClot_XMas";
+}
+
+function string GetEventGoreFastClassName()
+{
+    return "KFChar.ZombieGoreFast_XMas";
+}
+
+function string GetEventCrawlerClassName()
+{
+    return "KFChar.ZombieCrawler_XMas";
+}
+
+function string GetEventBloatClassName()
+{
+    return "KFChar.ZombieBloat_XMas";
+}
+
+function string GetEventSirenClassName()
+{
+    return "KFChar.ZombieSiren_XMas";
+}
+
+function string GetEventStalkerClassName()
+{
+    return "KFChar.ZombieStalker_XMas";
+}
+
+function string GetEventHuskClassName()
+{
+    return "KFChar.ZombieHusk_XMas";
+}
+
+function string GetEventScrakeClassName()
+{
+    return "KFChar.ZombieScrake_XMas";
+}
+
+function string GetEventFleshpoundClassName()
+{
+    return "KFChar.ZombieFleshpound_XMas";
+}
+
 defaultproperties
 {
      SandboxGroup="Sandbox"
@@ -5009,7 +5113,7 @@ defaultproperties
      LongWaves(7)=(WaveMask=58616303,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(8)=(WaveMask=75393519,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(9)=(WaveMask=90171865,WaveMaxMonsters=45,WaveDuration=255,WaveDifficulty=0.300000)
-     MonsterCollection=Class'KFMod.KFMonstersCollection'
+     MonsterCollection=Class'KFMod.KFMonstersXmas'
      HumanName(0)="Cpl.McinTyre"
      HumanName(1)="Sgt.Michaels"
      HumanName(2)="Pvt.Davin"
@@ -5194,6 +5298,7 @@ defaultproperties
      AvailableChars(49)="Mrs_Foster"
      AvailableChars(50)="Steampunk_Mrs_Foster"
      AvailableChars(51)="Reggie"
+     AvailableChars(52)="Harchier_Spebbington_II"
      LoadedSkills(0)=Class'KFMod.KFVetFieldMedic'
      LoadedSkills(1)=Class'KFMod.KFVetSupportSpec'
      LoadedSkills(2)=Class'KFMod.KFVetSharpshooter'
@@ -5207,18 +5312,18 @@ defaultproperties
      LastBurnedEnemyMessageTime=-120.000000
      BurnedEnemyMessageDelay=120.000000
      SineWaveFreq=0.040000
-     MonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
-     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
-     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
-     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
-     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
-     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
-     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
-     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
-     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
-     EndGameBossClass="KFChar.ZombieBoss"
+     MonsterClasses(0)=(MClassName="KFChar.ZombieClot_XMas",Mid="A")
+     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_XMas",Mid="B")
+     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_XMas",Mid="C")
+     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker_XMas",Mid="D")
+     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake_XMas",Mid="E")
+     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_XMas",Mid="F")
+     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat_XMas",Mid="G")
+     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_XMas",Mid="H")
+     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_XMas",Mid="I")
+     EndGameBossClass="KFChar.ZombieBoss_XMas"
      WaveConfigMenu="KFGUI.KFWaveConfigMenu"
-     FallbackMonsterClass="KFChar.ZombieStalker"
+     FallbackMonsterClass="KFChar.ZombieStalker_XMas"
      FinalWave=10
      InvasionBotNames(1)="Zombie"
      InvasionBotNames(2)="Zombie"

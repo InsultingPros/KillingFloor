@@ -1656,6 +1656,14 @@ State MatchInProgress
                 }
             }
         }
+
+        // this gets called from KFGameType:MatchInProgress::Timer, but we skip over
+        // that function call above by calling Super(DeathMatch).Timer()
+        if( !UpdateMonsterCount() )
+        {
+            EndGame(None,"LoseAction");
+            Return;
+        }
     }
 
 

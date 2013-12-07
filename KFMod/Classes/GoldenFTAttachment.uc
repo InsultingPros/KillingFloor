@@ -16,7 +16,11 @@ static function PreloadAssets(optional KFWeaponAttachment Spawned)
 	for ( i = 0; i < default.SkinRefs.Length; i++ )
 	{
 		default.Skins[i] = Material(DynamicLoadObject(default.SkinRefs[i], class'Material'));
-    	Spawned.Skins[i] = default.Skins[i];
+
+    	if ( Spawned != none )
+    	{
+        	Spawned.Skins[i] = default.Skins[i];
+    	}
 	}
 }
 

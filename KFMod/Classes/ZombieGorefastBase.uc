@@ -23,13 +23,11 @@ defaultproperties
      MeleeAnims(0)="GoreAttack1"
      MeleeAnims(1)="GoreAttack2"
      MeleeAnims(2)="GoreAttack1"
-     MoanVoice=SoundGroup'KF_EnemiesFinalSnd.GoreFast.Gorefast_Talk'
      bCannibal=True
      MeleeDamage=15
      damageForce=5000
      KFRagdollName="GoreFast_Trip"
      MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd.GoreFast.Gorefast_HitPlayer'
-     JumpSound=SoundGroup'KF_EnemiesFinalSnd.GoreFast.Gorefast_Jump'
      CrispUpThreshhold=8
      bUseExtendedCollision=True
      ColOffset=(Z=52.000000)
@@ -42,11 +40,6 @@ defaultproperties
      OnlineHeadshotOffset=(X=5.000000,Z=53.000000)
      OnlineHeadshotScale=1.500000
      MotionDetectorThreat=0.500000
-     DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd.GoreFast.Gorefast_Death'
-     ChallengeSound(0)=SoundGroup'KF_EnemiesFinalSnd.GoreFast.Gorefast_Challenge'
-     ChallengeSound(1)=SoundGroup'KF_EnemiesFinalSnd.GoreFast.Gorefast_Challenge'
-     ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd.GoreFast.Gorefast_Challenge'
-     ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd.GoreFast.Gorefast_Challenge'
      ScoringValue=12
      IdleHeavyAnim="GoreIdle"
      IdleRifleAnim="GoreIdle"
@@ -66,11 +59,8 @@ defaultproperties
      IdleCrouchAnim="GoreIdle"
      IdleWeaponAnim="GoreIdle"
      IdleRestAnim="GoreIdle"
-     AmbientSound=Sound'KF_BaseGorefast.Gorefast_Idle'
-     Mesh=SkeletalMesh'KF_Freaks_Trip.GoreFast_Freak'
      DrawScale=1.200000
      PrePivot=(Z=10.000000)
-     Skins(0)=Combiner'KF_Specimens_Trip_T.gorefast_cmb'
      Mass=350.000000
      RotationRate=(Yaw=45000,Roll=0)
 }

@@ -234,6 +234,7 @@ defaultproperties
      CharacterNames(10)="DAR"
      CharacterNames(11)="Mrs_Foster"
      CharacterNames(12)="Reggie"
+     CharacterNames(13)="Harchier_Spebbington_II"
      CharacterUnownedTextures(0)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Outbreak'
      CharacterUnownedTextures(1)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Nightfall'
      CharacterUnownedTextures(2)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_PostMortem'
@@ -247,6 +248,7 @@ defaultproperties
      CharacterUnownedTextures(10)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Robot'
      CharacterUnownedTextures(11)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_MrsFoster'
      CharacterUnownedTextures(12)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Reggie'
+     CharacterUnownedTextures(13)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_NewHarchier'
      CharacterOwnedTextures(0)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Outbreak'
      CharacterOwnedTextures(1)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Nightfall'
      CharacterOwnedTextures(2)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_PostMortem'
@@ -260,6 +262,7 @@ defaultproperties
      CharacterOwnedTextures(10)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Robot'
      CharacterOwnedTextures(11)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_MrsFoster'
      CharacterOwnedTextures(12)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Reggie'
+     CharacterOwnedTextures(13)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_NewHarchier'
      WeaponAppIDs(0)=210934
      WeaponAppIDs(1)=210938
      WeaponAppIDs(2)=210943

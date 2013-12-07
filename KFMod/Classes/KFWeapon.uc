@@ -524,7 +524,42 @@ simulated function vector GetEffectStart()
 
 function bool HandlePickupQuery( pickup Item )
 {
-    if( KFPlayerController(Instigator.Controller).IsInInventory(Item.Class, false, true) )
+    local int i;
+    local class< KFWeaponPickup > KFWP, VariantPickupClass;
+    local bool bInInventory;
+
+    // check if Item and Self are the same weapon
+    if( Item.InventoryType==Class )
+    {
+        bInInventory = true;
+    }
+
+    // check if Item is a variant of Self
+    KFWP = class< KFWeaponPickup >( PickupClass );
+    for( i = 0; i < KFWP.default.VariantClasses.Length && !bInInventory; ++i )
+    {
+        VariantPickupClass = class<KFWeaponPickup>(KFWP.default.VariantClasses[i]);
+        if( Item.Class == VariantPickupClass )
+        {
+            bInInventory = true;
+        }
+    }
+
+    // check if Self is a variant of Item
+    KFWP = class< KFWeaponPickup >( Item.Class );
+    if( KFWP != none )
+    {
+        for( i = 0; i < KFWP.default.VariantClasses.Length && !bInInventory; ++i )
+        {
+            VariantPickupClass = class<KFWeaponPickup>(KFWP.default.VariantClasses[i]);
+            if( PickupClass == VariantPickupClass )
+            {
+                bInInventory = true;
+            }
+        }
+    }
+
+    if( bInInventory )
 	{
 		if( LastHasGunMsgTime<Level.TimeSeconds && PlayerController(Instigator.Controller)!=none )
 		{
