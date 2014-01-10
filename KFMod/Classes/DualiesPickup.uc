@@ -21,7 +21,6 @@ defaultproperties
      ItemName="Dual 9mms"
      ItemShortName="Dual 9mms"
      AmmoItemName="9mm Rounds"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Single9mm_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.DualiesAmmo'
      CorrespondingPerkIndex=2
      EquipmentCategoryID=1

@@ -16,7 +16,6 @@ defaultproperties
      ItemName="L.A.W"
      ItemShortName="L.A.W"
      AmmoItemName="L.A.W Rockets"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.LAW_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.LAWAmmo'
      CorrespondingPerkIndex=6
      EquipmentCategoryID=3

@@ -5046,47 +5046,47 @@ static event class<GameInfo> SetGameType( string MapName )
 
 function string GetEventClotClassName()
 {
-    return "KFChar.ZombieClot_XMas";
+    return "KFChar.ZombieClot";
 }
 
 function string GetEventGoreFastClassName()
 {
-    return "KFChar.ZombieGoreFast_XMas";
+    return "KFChar.ZombieGoreFast";
 }
 
 function string GetEventCrawlerClassName()
 {
-    return "KFChar.ZombieCrawler_XMas";
+    return "KFChar.ZombieCrawler";
 }
 
 function string GetEventBloatClassName()
 {
-    return "KFChar.ZombieBloat_XMas";
+    return "KFChar.ZombieBloat";
 }
 
 function string GetEventSirenClassName()
 {
-    return "KFChar.ZombieSiren_XMas";
+    return "KFChar.ZombieSiren";
 }
 
 function string GetEventStalkerClassName()
 {
-    return "KFChar.ZombieStalker_XMas";
+    return "KFChar.ZombieStalker";
 }
 
 function string GetEventHuskClassName()
 {
-    return "KFChar.ZombieHusk_XMas";
+    return "KFChar.ZombieHusk";
 }
 
 function string GetEventScrakeClassName()
 {
-    return "KFChar.ZombieScrake_XMas";
+    return "KFChar.ZombieScrake";
 }
 
 function string GetEventFleshpoundClassName()
 {
-    return "KFChar.ZombieFleshpound_XMas";
+    return "KFChar.ZombieFleshpound";
 }
 
 defaultproperties
@@ -5113,7 +5113,7 @@ defaultproperties
      LongWaves(7)=(WaveMask=58616303,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(8)=(WaveMask=75393519,WaveMaxMonsters=40,WaveDuration=255,WaveDifficulty=0.300000)
      LongWaves(9)=(WaveMask=90171865,WaveMaxMonsters=45,WaveDuration=255,WaveDifficulty=0.300000)
-     MonsterCollection=Class'KFMod.KFMonstersXmas'
+     MonsterCollection=Class'KFMod.KFMonstersCollection'
      HumanName(0)="Cpl.McinTyre"
      HumanName(1)="Sgt.Michaels"
      HumanName(2)="Pvt.Davin"
@@ -5312,18 +5312,18 @@ defaultproperties
      LastBurnedEnemyMessageTime=-120.000000
      BurnedEnemyMessageDelay=120.000000
      SineWaveFreq=0.040000
-     MonsterClasses(0)=(MClassName="KFChar.ZombieClot_XMas",Mid="A")
-     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_XMas",Mid="B")
-     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_XMas",Mid="C")
-     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker_XMas",Mid="D")
-     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake_XMas",Mid="E")
-     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_XMas",Mid="F")
-     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat_XMas",Mid="G")
-     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_XMas",Mid="H")
-     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_XMas",Mid="I")
-     EndGameBossClass="KFChar.ZombieBoss_XMas"
+     MonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
+     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
+     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
+     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
+     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
+     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
+     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
+     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
+     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
+     EndGameBossClass="KFChar.ZombieBoss"
      WaveConfigMenu="KFGUI.KFWaveConfigMenu"
-     FallbackMonsterClass="KFChar.ZombieStalker_XMas"
+     FallbackMonsterClass="KFChar.ZombieStalker"
      FinalWave=10
      InvasionBotNames(1)="Zombie"
      InvasionBotNames(2)="Zombie"

@@ -14,7 +14,6 @@ defaultproperties
      Description="A camoflaged, rugged 12-gauge pump action shotgun. "
      ItemName="Camo Shotgun"
      ItemShortName="Camo Shotgun"
-     showMesh=SkeletalMesh'KF_Wp3rdCAMO_Trip.Shotgun_3rd_CAMO'
      InventoryType=Class'KFMod.CamoShotgun'
      PickupMessage="You got the Camo Shotgun."
      StaticMesh=StaticMesh'KF_pickupsCAMO_Trip.Shotgun_CAMO_Pickup'

@@ -50,7 +50,6 @@ defaultproperties
      ItemName="Handcannon"
      ItemShortName="Handcannon"
      AmmoItemName=".300 JHP Ammo"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Handcannon_3rd'
      CorrespondingPerkIndex=2
      EquipmentCategoryID=1
      VariantClasses(0)=Class'KFMod.GoldenDeaglePickup'

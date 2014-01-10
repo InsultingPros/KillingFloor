@@ -16,7 +16,6 @@ defaultproperties
      ItemName="Pipe Bomb"
      ItemShortName="Pipe Bomb"
      AmmoItemName="Pipe Bomb"
-     showMesh=SkeletalMesh'KF_Weapons3rd2_Trip.pipebomb_3rd'
      CorrespondingPerkIndex=6
      EquipmentCategoryID=3
      InventoryType=Class'KFMod.PipeBombExplosive'

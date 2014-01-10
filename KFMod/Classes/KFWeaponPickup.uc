@@ -19,7 +19,6 @@ var string Description;
 var localized string ItemName;
 var localized string ItemShortName;
 var string AmmoItemName;
-var mesh showMesh;
 var staticMesh AmmoMesh;
 var () bool bNoRespawn;
 var () bool bOnePickupOnly; // for static level pickups intended to be used only once.

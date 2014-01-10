@@ -16,7 +16,6 @@ defaultproperties
      ItemName="Buzzsaw Bow"
      ItemShortName="Buzzsaw Bow"
      AmmoItemName="Saw Blades"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Crossbow_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.XbowAmmo'
      CorrespondingPerkIndex=4
      EquipmentCategoryID=3

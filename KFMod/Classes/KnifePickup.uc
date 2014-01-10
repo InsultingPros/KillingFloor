@@ -21,7 +21,6 @@ defaultproperties
      Description="Basic kitchen utensil. Sharp."
      ItemName="Knife"
      ItemShortName="Knife"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Knife_3rd'
      CorrespondingPerkIndex=4
      InventoryType=Class'KFMod.knife'
      PickupMessage="You got the Kitchen Knife."

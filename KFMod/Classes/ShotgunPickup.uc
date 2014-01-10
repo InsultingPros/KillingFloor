@@ -23,7 +23,6 @@ defaultproperties
      ItemName="Shotgun"
      ItemShortName="Shotgun"
      AmmoItemName="12-gauge shells"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Shotgun_3rd'
      CorrespondingPerkIndex=1
      EquipmentCategoryID=2
      VariantClasses(0)=Class'KFMod.CamoShotgunPickup'

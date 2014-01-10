@@ -23,7 +23,6 @@ defaultproperties
      ItemName="Lever Action Rifle"
      ItemShortName="Lever Action"
      AmmoItemName="Rifle bullets"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Winchester_3rd'
      CorrespondingPerkIndex=2
      EquipmentCategoryID=2
      InventoryType=Class'KFMod.Winchester'

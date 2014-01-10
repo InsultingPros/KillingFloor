@@ -732,8 +732,8 @@ defaultproperties
          bMultiLine=True
          FontScale=FNS_Small
          WinTop=0.050000
-         WinLeft=0.690000
-         WinWidth=0.150000
+         WinLeft=0.600000
+         WinWidth=0.390000
          WinHeight=0.150000
          RenderWeight=0.950000
      End Object

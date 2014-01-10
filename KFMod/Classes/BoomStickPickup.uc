@@ -34,7 +34,6 @@ defaultproperties
      ItemName="Hunting Shotgun"
      ItemShortName="Hunting Shotgun"
      AmmoItemName="12-gauge Hunting shells"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.HuntingShot_3rd'
      CorrespondingPerkIndex=1
      EquipmentCategoryID=3
      InventoryType=Class'KFMod.BoomStick'

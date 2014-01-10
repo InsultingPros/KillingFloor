@@ -22,7 +22,6 @@ defaultproperties
      ItemName="The Orca Bomb Propeller"
      ItemShortName="The Orca"
      AmmoItemName="Orca Bombs"
-     showMesh=SkeletalMesh'KF_Weapons3rd2_Trip.M79_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.XbowAmmo'
      CorrespondingPerkIndex=6
      EquipmentCategoryID=2

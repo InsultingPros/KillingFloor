@@ -13,7 +13,6 @@ defaultproperties
      Description="A machete - commonly used for hacking through brush, or the limbs of ZEDs."
      ItemName="Machete"
      ItemShortName="Machete"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.machete_3rd'
      CorrespondingPerkIndex=4
      InventoryType=Class'KFMod.Machete'
      PickupMessage="You got a machete."

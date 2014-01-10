@@ -19,7 +19,6 @@ defaultproperties
      Description="A gas powered industrial strength chainsaw. This tool may rely on a steady supply of gasoline, but it can cut through a variety of surfaces with ease."
      ItemName="Chainsaw"
      ItemShortName="Chainsaw"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Chainsaw_3rd'
      CorrespondingPerkIndex=4
      VariantClasses(0)=Class'KFMod.GoldenChainsawPickup'
      InventoryType=Class'KFMod.Chainsaw'

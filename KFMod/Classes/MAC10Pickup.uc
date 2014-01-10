@@ -16,7 +16,6 @@ defaultproperties
      ItemName="MAC-10"
      ItemShortName="MAC-10"
      AmmoItemName=".45 Cal"
-     showMesh=SkeletalMesh'KF_Weapons3rd2_Trip.mac10_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      CorrespondingPerkIndex=5
      EquipmentCategoryID=3

@@ -22,7 +22,6 @@ defaultproperties
      ItemName="M7A3 Medic Gun"
      ItemShortName="M7A3M"
      AmmoItemName="7.6x40mm Ammo"
-     showMesh=SkeletalMesh'KF_Weapons3rd2_Trip.mp7_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      EquipmentCategoryID=3
      InventoryType=Class'KFMod.M7A3MMedicGun'

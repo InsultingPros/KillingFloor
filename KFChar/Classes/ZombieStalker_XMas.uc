@@ -222,7 +222,6 @@ defaultproperties
      ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd_Xmas.Stalker.Stalker_Challenge'
      ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd_Xmas.Stalker.Stalker_Challenge'
      MenuName="Christmas Stalker"
-     AmbientSound=Sound'KF_BaseStalker.Stalker_IdleLoop'
      Mesh=SkeletalMesh'KF_Freaks_Trip_Xmas.StalkerClause'
      Skins(0)=Shader'KF_Specimens_Trip_XMAS_T.StalkerClause.StalkerClause_invisible'
      Skins(1)=Shader'KF_Specimens_Trip_XMAS_T.StalkerClause.StalkerClause_invisible'

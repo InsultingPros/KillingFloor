@@ -13,7 +13,6 @@ defaultproperties
      ItemName="M32 Grenade Launcher"
      ItemShortName="M32 Launcher"
      AmmoItemName="M32 Grenades"
-     showMesh=SkeletalMesh'KF_Weapons3rd2_Trip.M32_MGL_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.XbowAmmo'
      CorrespondingPerkIndex=6
      EquipmentCategoryID=2

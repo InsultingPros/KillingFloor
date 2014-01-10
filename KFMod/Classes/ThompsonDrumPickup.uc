@@ -16,7 +16,6 @@ defaultproperties
      ItemName="Rising Storm Tommy Gun"
      ItemShortName="R.S. Tommy Gun"
      AmmoItemName="45. ACP Ammo"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.AK47_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      CorrespondingPerkIndex=3
      EquipmentCategoryID=3

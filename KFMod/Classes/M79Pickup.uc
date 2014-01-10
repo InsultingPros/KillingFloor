@@ -13,7 +13,6 @@ defaultproperties
      ItemName="M79 Grenade Launcher"
      ItemShortName="M79 Launcher"
      AmmoItemName="M79 Grenades"
-     showMesh=SkeletalMesh'KF_Weapons3rd2_Trip.M79_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.XbowAmmo'
      CorrespondingPerkIndex=6
      EquipmentCategoryID=2

@@ -16,7 +16,6 @@ defaultproperties
      ItemName="MKb42"
      ItemShortName="MKb42"
      AmmoItemName="7.92mm Kurz Ammo"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.AK47_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      CorrespondingPerkIndex=3
      EquipmentCategoryID=2

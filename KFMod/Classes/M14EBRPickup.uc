@@ -16,7 +16,6 @@ defaultproperties
      ItemName="M14EBR"
      ItemShortName="M14EBR"
      AmmoItemName="7.62x51mm Ammo"
-     showMesh=SkeletalMesh'KF_Weapons3rd2_Trip.M14_EBR_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      CorrespondingPerkIndex=2
      EquipmentCategoryID=3

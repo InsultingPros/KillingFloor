@@ -16,7 +16,6 @@ defaultproperties
      ItemName="Dual Handcannons"
      ItemShortName="Dual HCs"
      AmmoItemName=".300 JHP Ammo"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Handcannon_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.DeagleAmmo'
      CorrespondingPerkIndex=2
      EquipmentCategoryID=1

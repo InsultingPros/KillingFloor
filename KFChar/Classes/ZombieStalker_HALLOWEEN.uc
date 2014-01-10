@@ -167,7 +167,6 @@ defaultproperties
      ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd_HALLOWEEN.Stalker.Stalker_Challenge'
      GruntVolume=0.250000
      MenuName="HALLOWEEN Stalker"
-     AmbientSound=Sound'KF_BaseStalker.Stalker_IdleLoop'
      Mesh=SkeletalMesh'KF_Freaks_Trip_HALLOWEEN.Stalker_Halloween'
      Skins(0)=Shader'KF_Specimens_Trip_HALLOWEEN_T.Stalker.stalker_Redneck_invisible'
      Skins(1)=Shader'KF_Specimens_Trip_HALLOWEEN_T.Stalker.stalker_Redneck_invisible'

@@ -16,7 +16,6 @@ defaultproperties
      ItemName="MP7M Medic Gun"
      ItemShortName="MP7M"
      AmmoItemName="4.6x30mm Ammo"
-     showMesh=SkeletalMesh'KF_Weapons3rd2_Trip.mp7_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      EquipmentCategoryID=3
      InventoryType=Class'KFMod.MP7MMedicGun'

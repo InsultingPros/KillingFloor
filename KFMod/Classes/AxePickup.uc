@@ -13,7 +13,6 @@ defaultproperties
      Description="A sturdy fireman's axe."
      ItemName="Axe"
      ItemShortName="Axe"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Axe_3rd'
      CorrespondingPerkIndex=4
      InventoryType=Class'KFMod.Axe'
      PickupMessage="You got the Fire Axe."

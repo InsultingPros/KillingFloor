@@ -16,7 +16,6 @@ defaultproperties
      ItemName="FNFAL ACOG"
      ItemShortName="FNFAL ACOG"
      AmmoItemName="7.62x51mm Ammo"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.AK47_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      CorrespondingPerkIndex=3
      EquipmentCategoryID=3

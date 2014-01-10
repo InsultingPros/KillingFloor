@@ -12,7 +12,6 @@ defaultproperties
      Description="An incredibly sharp katana sword."
      ItemName="Katana"
      ItemShortName="Katana"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Katana_3rd'
      CorrespondingPerkIndex=4
      VariantClasses(0)=Class'KFMod.GoldenKatanaPickup'
      InventoryType=Class'KFMod.Katana'

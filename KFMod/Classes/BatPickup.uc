@@ -13,7 +13,6 @@ defaultproperties
      Description="This bit of broken pipe looks like it was pried from a gas-line."
      ItemName="Broken Pipe"
      ItemShortName="Broken Pipe"
-     showMesh=SkeletalMesh'KFWeaponModels.Bat3P'
      CorrespondingPerkIndex=4
      InventoryType=Class'KFMod.Bat'
      PickupMessage="You got a broken pipe."

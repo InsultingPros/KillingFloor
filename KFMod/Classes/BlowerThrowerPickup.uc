@@ -22,7 +22,6 @@ defaultproperties
      ItemName="Blower Thrower Bile Launcher"
      ItemShortName="Blower Thrower"
      AmmoItemName="Bile"
-     showMesh=SkeletalMesh'KF_Weapons3rd_Trip.Flamethrower_3rd'
      AmmoMesh=StaticMesh'KillingFloorStatics.FT_AmmoMesh'
      EquipmentCategoryID=3
      InventoryType=Class'KFMod.BlowerThrower'
