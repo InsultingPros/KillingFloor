@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieClot extends ZombieClotBase;
+class ZombieClot extends ZombieClotBase
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 #exec OBJ LOAD FILE=KF_Freaks_Trip.ukx
@@ -225,11 +226,5 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
-     EventClasses(0)="KFChar.ZombieClot"
-     EventClasses(1)="KFChar.ZombieClot"
-     EventClasses(2)="KFChar.ZombieClot_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieClot_XMAS"
-     DetachedArmClass=Class'KFChar.SeveredArmClot'
-     DetachedLegClass=Class'KFChar.SeveredLegClot'
-     DetachedHeadClass=Class'KFChar.SeveredHeadClot'
+     EventClasses(0)="KFChar.ZombieClot_STANDARD"
 }

@@ -7,25 +7,8 @@ class KFMonster extends Skaarj
 #exec OBJ LOAD FILE=KFZED_Temp_UT.utx
 #exec OBJ LOAD FILE=KFZED_FX_T.utx
 
-
 var array<string> EventClasses;
-/*
-var string MeshRef;
-var	array<string> SkinsRef;
-var string	DetachedArmClassRef;		// class of detached arm to spawn for this pawn. Modified by the subclass to match the player model
-var string	DetachedLegClassRef;		// class of detached leg to spawn for this pawn. Modified by the subclass to match the player model
-var string	DetachedHeadClassRef;		// class of detached head to spawn for this pawn. Modified by the subclass to match the player model
-var string	DetachedSpecialArmClassRef;// class of detached special arm to spawn for this pawn. Modified by the subclass to match the player model
 
-//dynamic sound loading stuff
-var array<string> HitSoundRef;
-var string AmbientSoundRef;
-var array<string> ChallengeSoundRef;
-var string MoanVoiceRef;
-var array<string> DeathSoundRef;
-var string JumpSoundRef;
-var string MeleeAttackHitSoundRef;
-*/
 /* reference to the ZombieVolume which spawned me .. */
 var ZombieVolume                            SpawnVolume;
 

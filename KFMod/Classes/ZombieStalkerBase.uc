@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieStalkerBase extends KFMonster;
+class ZombieStalkerBase extends KFMonster
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 #exec OBJ LOAD FILE=KFX.utx
@@ -19,15 +20,12 @@ defaultproperties
      MeleeAnims(0)="StalkerSpinAttack"
      MeleeAnims(1)="StalkerAttack1"
      MeleeAnims(2)="JumpAttack"
-     MoanVoice=SoundGroup'KF_EnemiesFinalSnd.Stalker.Stalker_Talk'
      MeleeDamage=9
      damageForce=5000
      KFRagdollName="Stalker_Trip"
      ZombieDamType(0)=Class'KFMod.DamTypeSlashingAttack'
      ZombieDamType(1)=Class'KFMod.DamTypeSlashingAttack'
      ZombieDamType(2)=Class'KFMod.DamTypeSlashingAttack'
-     MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd.Stalker.Stalker_HitPlayer'
-     JumpSound=SoundGroup'KF_EnemiesFinalSnd.Stalker.Stalker_Jump'
      CrispUpThreshhold=10
      PuntAnim="ClotPunt"
      SeveredArmAttachScale=0.800000
@@ -35,12 +33,6 @@ defaultproperties
      OnlineHeadshotOffset=(X=18.000000,Z=33.000000)
      OnlineHeadshotScale=1.200000
      MotionDetectorThreat=0.250000
-     HitSound(0)=SoundGroup'KF_EnemiesFinalSnd.Stalker.Stalker_Pain'
-     DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd.Stalker.Stalker_Death'
-     ChallengeSound(0)=SoundGroup'KF_EnemiesFinalSnd.Stalker.Stalker_Challenge'
-     ChallengeSound(1)=SoundGroup'KF_EnemiesFinalSnd.Stalker.Stalker_Challenge'
-     ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd.Stalker.Stalker_Challenge'
-     ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd.Stalker.Stalker_Challenge'
      ScoringValue=15
      SoundGroupClass=Class'KFMod.KFFemaleZombieSounds'
      IdleHeavyAnim="StalkerIdle"
@@ -63,11 +55,7 @@ defaultproperties
      IdleCrouchAnim="StalkerIdle"
      IdleWeaponAnim="StalkerIdle"
      IdleRestAnim="StalkerIdle"
-     AmbientSound=Sound'KF_BaseStalker.Stalker_IdleLoop'
-     Mesh=SkeletalMesh'KF_Freaks_Trip.Stalker_Freak'
      DrawScale=1.100000
      PrePivot=(Z=5.000000)
-     Skins(0)=Shader'KF_Specimens_Trip_T.stalker_invisible'
-     Skins(1)=Shader'KF_Specimens_Trip_T.stalker_invisible'
      RotationRate=(Yaw=45000,Roll=0)
 }

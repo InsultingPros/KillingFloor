@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieBoss extends ZombieBossBase;
+class ZombieBoss extends ZombieBossBase
+    abstract;
 
 #exec OBJ LOAD FILE=KFPatch2.utx
 #exec OBJ LOAD FILE=KF_Specimens_Trip_T.utx
@@ -2002,13 +2003,5 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
-     EventClasses(0)="KFChar.ZombieBoss"
-     EventClasses(1)="KFChar.ZombieBoss"
-     EventClasses(2)="KFChar.ZombieBoss_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieBoss_XMAS"
-     DetachedArmClass=Class'KFChar.SeveredArmPatriarch'
-     DetachedLegClass=Class'KFChar.SeveredLegPatriarch'
-     DetachedHeadClass=Class'KFChar.SeveredHeadPatriarch'
-     DetachedSpecialArmClass=Class'KFChar.SeveredRocketArmPatriarch'
      ControllerClass=Class'KFChar.BossZombieController'
 }

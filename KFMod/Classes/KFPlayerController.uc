@@ -108,7 +108,7 @@ replication
 
 	// Functions server can call.
 	reliable if( Role == ROLE_Authority )
-		KFClientNetWorkMsg, ClientLocationalVoiceMessage, ClientEnterZedTime, ClientExitZedTime,
+		KFClientNetWorkMsg, ClientLocationalVoiceMessage, ClientEnterZedTime, ClientExitZedTime, ClientShakeView,
 		ClientWeaponSpawned, ClientWeaponDestroyed, ClientZedsSpawn, ClientForceCollectGarbage, EnemyLocation;
 }
 
@@ -2428,6 +2428,32 @@ simulated function ClientWeaponSpawned(class<Weapon> WClass, Inventory Inv)
 			class'CamoShotgunFire'.static.PreloadAssets(Level);
 			class'CamoShotgunAttachment'.static.PreloadAssets();
 			break;
+
+		case class'NeonAK47AssaultRifle':
+			class'NeonAK47AssaultRifle'.static.PreloadAssets(Inv);
+			class'NeonAK47Fire'.static.PreloadAssets(Level);
+			class'NeonAK47Attachment'.static.PreloadAssets();
+			break;
+
+		case class'NeonKrissMMedicGun':
+			class'NeonKrissMMedicGun'.static.PreloadAssets(Inv);
+			class'NeonKrissMFire'.static.PreloadAssets(Level);
+			class'KrissMAltFire'.static.PreloadAssets(Level);
+			class'KrissMHealingProjectile'.static.PreloadAssets();
+			class'NeonKrissMAttachment'.static.PreloadAssets();
+			break;
+
+		case class'NeonSCARMK17AssaultRifle':
+			class'NeonSCARMK17AssaultRifle'.static.PreloadAssets(Inv);
+			class'NeonSCARMK17Fire'.static.PreloadAssets(Level);
+			class'NeonSCARMK17Attachment'.static.PreloadAssets();
+			break;
+
+		case class'NeonKSGShotgun':
+			class'NeonKSGShotgun'.static.PreloadAssets(Inv);
+			class'NeonKSGFire'.static.PreloadAssets(Level);
+			class'NeonKSGAttachment'.static.PreloadAssets();
+			break;
 	}
 }
 
@@ -2929,6 +2955,40 @@ simulated function ClientWeaponDestroyed(class<Weapon> WClass)
 				class'CamoShotgunAttachment'.static.UnloadAssets();
 			}
 			break;
+
+		case class'NeonAK47AssaultRifle':
+			if ( class'NeonAK47AssaultRifle'.static.UnloadAssets() )
+			{
+				class'NeonAK47Fire'.static.UnloadAssets();
+				class'NeonAK47Attachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'NeonKrissMMedicGun':
+			if ( class'NeonKrissMMedicGun'.static.UnloadAssets() )
+			{
+				class'NeonKrissMFire'.static.UnloadAssets();
+				class'KrissMAltFire'.static.UnloadAssets();
+				class'KrissMHealingProjectile'.static.UnloadAssets();
+				class'NeonKrissMAttachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'NeonSCARMK17AssaultRifle':
+			if ( class'NeonSCARMK17AssaultRifle'.static.UnloadAssets() )
+			{
+				class'NeonSCARMK17Fire'.static.UnloadAssets();
+				class'NeonSCARMK17Attachment'.static.UnloadAssets();
+			}
+			break;
+
+		case class'NeonKSGShotgun':
+			if ( class'NeonKSGShotgun'.static.UnloadAssets() )
+			{
+				class'NeonKSGFire'.static.UnloadAssets();
+				class'NeonKSGAttachment'.static.UnloadAssets();
+			}
+			break;
 	}
 }
 
@@ -3025,6 +3085,12 @@ simulated function ClientZedsSpawn(int eventNum)
    {
        class'KFMonstersXmas'.static.PreLoadAssets();
    }
+}
+
+function ClientShakeView(vector shRotMag, vector shRotRate, float shRotTime,
+                         vector shOffsetMag, vector shOffsetRate, float shOffsetTime)
+{
+    ShakeView( shRotMag, shRotRate, shRotTime, shOffsetMag, shOffsetRate, shOffsetTime );
 }
 
 function bool IsInInventory(class<Pickup> PickupToCheck, bool bCheckForEquivalent, bool bCheckForVariant)

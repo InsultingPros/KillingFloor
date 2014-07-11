@@ -7,7 +7,8 @@
 // Copyright (C) 2009 Tripwire Interactive LLC
 // - John "Ramm-Jaeger" Gibson
 //=============================================================================
-class ZombieHusk extends ZombieHuskBase;
+class ZombieHusk extends ZombieHuskBase
+    abstract;
 
 //----------------------------------------------------------------------------
 // NOTE: All Variables are declared in the base class to eliminate hitching
@@ -524,13 +525,6 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 defaultproperties
 {
      HuskFireProjClass=Class'KFChar.HuskFireProjectile'
-     EventClasses(0)="KFChar.ZombieHusk"
-     EventClasses(1)="KFChar.ZombieHusk"
-     EventClasses(2)="KFChar.ZombieHusk_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieHusk_XMAS"
-     DetachedArmClass=Class'KFChar.SeveredArmHusk'
-     DetachedLegClass=Class'KFChar.SeveredLegHusk'
-     DetachedHeadClass=Class'KFChar.SeveredHeadHusk'
-     DetachedSpecialArmClass=Class'KFChar.SeveredArmHuskGun'
+     EventClasses(0)="KFChar.ZombieHusk_STANDARD"
      ControllerClass=Class'KFChar.HuskZombieController'
 }

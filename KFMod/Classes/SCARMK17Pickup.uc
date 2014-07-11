@@ -19,6 +19,7 @@ defaultproperties
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      CorrespondingPerkIndex=3
      EquipmentCategoryID=3
+     VariantClasses(0)=Class'KFMod.NeonSCARMK17Pickup'
      InventoryType=Class'KFMod.SCARMK17AssaultRifle'
      PickupMessage="You got the SCARMK17"
      PickupSound=Sound'KF_SCARSnd.SCAR_Pickup'

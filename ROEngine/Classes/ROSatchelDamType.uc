@@ -16,7 +16,7 @@ class ROSatchelDamType extends ROWeaponDamageType
 
 defaultproperties
 {
-     HUDIcon=Texture'InterfaceArt_tex.deathicons.satchel'
+     HUDIcon=Texture'InterfaceArt_tex.Menu_weapons.satchel'
      TankDamageModifier=1.000000
      APCDamageModifier=1.000000
      VehicleDamageModifier=1.000000

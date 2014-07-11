@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieSiren extends ZombieSirenBase;
+class ZombieSiren extends ZombieSirenBase
+    abstract;
 
 //----------------------------------------------------------------------------
 // NOTE: All Variables are declared in the base class to eliminate hitching
@@ -410,11 +411,6 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
-     EventClasses(0)="KFChar.ZombieSiren"
-     EventClasses(1)="KFChar.ZombieSiren"
-     EventClasses(2)="KFChar.ZombieSiren_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieSiren_XMAS"
-     DetachedLegClass=Class'KFChar.SeveredLegSiren'
-     DetachedHeadClass=Class'KFChar.SeveredHeadSiren'
+     EventClasses(0)="KFChar.ZombieSiren_STANDARD"
      ControllerClass=Class'KFChar.SirenZombieController'
 }

@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieBloatBase extends KFMonster;
+class ZombieBloatBase extends KFMonster
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 #exec OBJ LOAD FILE=KF_EnemiesFinalSnd.uax
@@ -19,7 +20,6 @@ defaultproperties
      MeleeAnims(0)="BloatChop2"
      MeleeAnims(1)="BloatChop2"
      MeleeAnims(2)="BloatChop2"
-     MoanVoice=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_Talk'
      BleedOutDuration=6.000000
      ZapThreshold=0.500000
      ZappedDamageMod=1.500000
@@ -29,8 +29,6 @@ defaultproperties
      damageForce=70000
      bFatAss=True
      KFRagdollName="Bloat_Trip"
-     MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_HitPlayer'
-     JumpSound=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_Jump'
      PuntAnim="BloatPunt"
      Intelligence=BRAINS_Stupid
      bCanDistanceAttackDoors=True
@@ -44,12 +42,6 @@ defaultproperties
      PlayerCountHealthScale=0.250000
      OnlineHeadshotOffset=(X=5.000000,Z=70.000000)
      OnlineHeadshotScale=1.500000
-     HitSound(0)=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_Pain'
-     DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_Death'
-     ChallengeSound(0)=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_Challenge'
-     ChallengeSound(1)=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_Challenge'
-     ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_Challenge'
-     ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd.Bloat.Bloat_Challenge'
      AmmunitionClass=Class'KFMod.BZombieAmmo'
      ScoringValue=17
      IdleHeavyAnim="BloatIdle"
@@ -72,11 +64,8 @@ defaultproperties
      IdleCrouchAnim="BloatIdle"
      IdleWeaponAnim="BloatIdle"
      IdleRestAnim="BloatIdle"
-     AmbientSound=Sound'KF_BaseBloat.Bloat_Idle1Loop'
-     Mesh=SkeletalMesh'KF_Freaks_Trip.Bloat_Freak'
      DrawScale=1.075000
      PrePivot=(Z=5.000000)
-     Skins(0)=Combiner'KF_Specimens_Trip_T.bloat_cmb'
      SoundVolume=200
      Mass=400.000000
      RotationRate=(Yaw=45000,Roll=0)

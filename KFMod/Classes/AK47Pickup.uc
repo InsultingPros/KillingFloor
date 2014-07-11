@@ -20,6 +20,7 @@ defaultproperties
      CorrespondingPerkIndex=3
      EquipmentCategoryID=2
      VariantClasses(0)=Class'KFMod.GoldenAK47pickup'
+     VariantClasses(1)=Class'KFMod.NeonAK47Pickup'
      InventoryType=Class'KFMod.AK47AssaultRifle'
      PickupMessage="You got the AK47"
      PickupSound=Sound'KF_AK47Snd.AK47_Pickup'

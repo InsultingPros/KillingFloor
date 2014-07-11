@@ -1,7 +1,8 @@
 // Zombie Monster for KF Invasion gametype
 // GOREFAST.
 // He's speedy, and swings with a Single enlongated arm, affording him slightly more range
-class ZombieGoreFast extends ZombieGoreFastBase;
+class ZombieGoreFast extends ZombieGoreFastBase
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 
@@ -356,13 +357,7 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
-     EventClasses(0)="KFChar.ZombieGorefast"
-     EventClasses(1)="KFChar.ZombieGorefast"
-     EventClasses(2)="KFChar.ZombieGorefast_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieGorefast_XMAS"
-     DetachedArmClass=Class'KFChar.SeveredArmGorefast'
-     DetachedLegClass=Class'KFChar.SeveredLegGorefast'
-     DetachedHeadClass=Class'KFChar.SeveredHeadGorefast'
+     EventClasses(0)="KFChar.ZombieGorefast_STANDARD"
      bLeftArmGibbed=True
      ControllerClass=Class'KFChar.GorefastController'
 }

@@ -1,6 +1,7 @@
 // Chainsaw Zombie Monster for KF Invasion gametype
 // He's not quite as speedy as the other Zombies, But his attacks are TRULY damaging.
-class ZombieScrake extends ZombieScrakeBase;
+class ZombieScrake extends ZombieScrakeBase
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 
@@ -674,13 +675,6 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
-     EventClasses(0)="KFChar.ZombieScrake"
-     EventClasses(1)="KFChar.ZombieScrake"
-     EventClasses(2)="KFChar.ZombieScrake_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieScrake_XMAS"
-     DetachedArmClass=Class'KFChar.SeveredArmScrake'
-     DetachedLegClass=Class'KFChar.SeveredLegScrake'
-     DetachedHeadClass=Class'KFChar.SeveredHeadScrake'
-     DetachedSpecialArmClass=Class'KFChar.SeveredArmScrakeSaw'
+     EventClasses(0)="KFChar.ZombieScrake_STANDARD"
      ControllerClass=Class'KFChar.SawZombieController'
 }

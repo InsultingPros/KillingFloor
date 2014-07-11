@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieCrawlerBase extends KFMonster;
+class ZombieCrawlerBase extends KFMonster
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 
@@ -138,7 +139,6 @@ defaultproperties
      MeleeAnims(1)="ZombieLeapAttack2"
      HitAnims(1)="HitF"
      HitAnims(2)="HitF"
-     MoanVoice=SoundGroup'KF_EnemiesFinalSnd.Crawler.Crawler_Talk'
      KFHitFront="HitF"
      KFHitBack="HitF"
      KFHitLeft="HitF"
@@ -149,8 +149,6 @@ defaultproperties
      MeleeDamage=6
      damageForce=5000
      KFRagdollName="Crawler_Trip"
-     MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd.Crawler.Crawler_HitPlayer'
-     JumpSound=SoundGroup'KF_EnemiesFinalSnd.Crawler.Crawler_Jump'
      CrispUpThreshhold=10
      Intelligence=BRAINS_Mammal
      SeveredArmAttachScale=0.800000
@@ -159,12 +157,6 @@ defaultproperties
      OnlineHeadshotOffset=(X=28.000000,Z=7.000000)
      OnlineHeadshotScale=1.200000
      MotionDetectorThreat=0.340000
-     HitSound(0)=SoundGroup'KF_EnemiesFinalSnd.Crawler.Crawler_Pain'
-     DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd.Crawler.Crawler_Death'
-     ChallengeSound(0)=SoundGroup'KF_EnemiesFinalSnd.Crawler.Crawler_Acquire'
-     ChallengeSound(1)=SoundGroup'KF_EnemiesFinalSnd.Crawler.Crawler_Acquire'
-     ChallengeSound(2)=SoundGroup'KF_EnemiesFinalSnd.Crawler.Crawler_Acquire'
-     ChallengeSound(3)=SoundGroup'KF_EnemiesFinalSnd.Crawler.Crawler_Acquire'
      ScoringValue=10
      IdleHeavyAnim="ZombieLeapIdle"
      IdleRifleAnim="ZombieLeapIdle"
@@ -200,10 +192,7 @@ defaultproperties
      IdleWeaponAnim="ZombieLeapIdle"
      IdleRestAnim="ZombieLeapIdle"
      bOrientOnSlope=True
-     AmbientSound=Sound'KF_BaseCrawler.Crawler_Idle'
-     Mesh=SkeletalMesh'KF_Freaks_Trip.Crawler_Freak'
      DrawScale=1.100000
      PrePivot=(Z=0.000000)
-     Skins(0)=Combiner'KF_Specimens_Trip_T.crawler_cmb'
      CollisionHeight=25.000000
 }

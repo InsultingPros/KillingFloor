@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieFleshpound extends ZombieFleshpoundBase;
+class ZombieFleshpound extends ZombieFleshpoundBase
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 
@@ -708,12 +709,6 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
-     EventClasses(0)="KFChar.ZombieFleshPound"
-     EventClasses(1)="KFChar.ZombieFleshPound"
-     EventClasses(2)="KFChar.ZombieFleshPound_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieFleshPound_XMAS"
-     DetachedArmClass=Class'KFChar.SeveredArmPound'
-     DetachedLegClass=Class'KFChar.SeveredLegPound'
-     DetachedHeadClass=Class'KFChar.SeveredHeadPound'
+     EventClasses(0)="KFChar.ZombieFleshpound_STANDARD"
      ControllerClass=Class'KFChar.FleshpoundZombieController'
 }

@@ -35,6 +35,8 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
+     BileExplosion=Class'KFMod.BileExplosion'
+     BileExplosionHeadless=Class'KFMod.BileExplosionHeadless'
      MoanVoice=SoundGroup'KF_EnemiesFinalSnd_Xmas.Bloat.Bloat_Talk'
      MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd_Xmas.Bloat.Bloat_HitPlayer'
      JumpSound=SoundGroup'KF_EnemiesFinalSnd_Xmas.Bloat.Bloat_Jump'

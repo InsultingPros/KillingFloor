@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieBossBase extends KFMonster;
+class ZombieBossBase extends KFMonster
+    abstract;
 
 #exec OBJ LOAD FILE=KFPatch2.utx
 #exec OBJ LOAD FILE=KF_Specimens_Trip_T.utx
@@ -63,14 +64,9 @@ defaultproperties
      HealingLevels(1)=3500
      HealingLevels(2)=2187
      HealingAmount=1750
-     RocketFireSound=SoundGroup'KF_EnemiesFinalSnd.Patriarch.Kev_FireRocket'
-     MiniGunFireSound=Sound'KF_BasePatriarch.Attack.Kev_MG_GunfireLoop'
-     MiniGunSpinSound=Sound'KF_BasePatriarch.Attack.Kev_MG_TurbineFireLoop'
-     MeleeImpaleHitSound=SoundGroup'KF_EnemiesFinalSnd.Patriarch.Kev_HitPlayer_Impale'
      MGDamage=6.000000
      ClawMeleeDamageRange=85.000000
      ImpaleMeleeDamageRange=45.000000
-     MoanVoice=SoundGroup'KF_EnemiesFinalSnd.Patriarch.Kev_Talk'
      ZapThreshold=5.000000
      ZappedDamageMod=1.250000
      ZapResistanceScale=1.000000
@@ -82,8 +78,6 @@ defaultproperties
      damageForce=170000
      bFatAss=True
      KFRagdollName="Patriarch_Trip"
-     MeleeAttackHitSound=SoundGroup'KF_EnemiesFinalSnd.Patriarch.Kev_HitPlayer_Fist'
-     JumpSound=SoundGroup'KF_EnemiesFinalSnd.Patriarch.Kev_Jump'
      bMeleeStunImmune=True
      CrispUpThreshhold=1
      bCanDistanceAttackDoors=True
@@ -106,8 +100,6 @@ defaultproperties
      MotionDetectorThreat=10.000000
      bOnlyDamagedByCrossbow=True
      bBoss=True
-     HitSound(0)=SoundGroup'KF_EnemiesFinalSnd.Patriarch.Kev_Pain'
-     DeathSound(0)=SoundGroup'KF_EnemiesFinalSnd.Patriarch.Kev_Death'
      ScoringValue=500
      IdleHeavyAnim="BossIdle"
      IdleRifleAnim="BossIdle"
@@ -141,12 +133,8 @@ defaultproperties
      IdleCrouchAnim="BossIdle"
      IdleWeaponAnim="BossIdle"
      IdleRestAnim="BossIdle"
-     AmbientSound=Sound'KF_BasePatriarch.Idle.Kev_IdleLoop'
-     Mesh=SkeletalMesh'KF_Freaks_Trip.Patriarch_Freak'
      DrawScale=1.050000
      PrePivot=(Z=3.000000)
-     Skins(0)=Combiner'KF_Specimens_Trip_T.gatling_cmb'
-     Skins(1)=Combiner'KF_Specimens_Trip_T.patriarch_cmb'
      SoundVolume=75
      bNetNotify=False
      Mass=1000.000000

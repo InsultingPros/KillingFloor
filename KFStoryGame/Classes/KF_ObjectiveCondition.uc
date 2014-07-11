@@ -298,14 +298,18 @@ function bool               ConditionIsValid()
     PlayerCount_Max = Max(PlayerCount_Max,PlayerCount_Min);
 
 
-    NumPlayers = KFStoryGameInfo(GetObjOwner().Level.Game).GetTotalActivePlayers();
+    if(GetObjOwner() != none)
+    {
+        NumPlayers = KFStoryGameInfo(GetObjOwner().Level.Game).GetTotalActivePlayers();
+        CurrentDifficulty = GetObjOwner().Level.Game.GameDifficulty;
+    }
+
     if((PlayerCount_Max > 0 && NumPlayers > PlayerCount_Max) ||
     (PlayerCount_Min > 0 && NumPlayers < PlayerCount_Min))
     {
         return false;
     }
 
-    CurrentDifficulty = GetObjOwner().Level.Game.GameDifficulty;
     if(Difficulty_Max > 0)
     {
         switch(Difficulty_Max)

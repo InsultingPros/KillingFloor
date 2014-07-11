@@ -739,10 +739,10 @@ defaultproperties
      End Object
      KFWorkshopDownload=GUILabel'KFGui.KFMainMenu.WorkshopDownloadLabel'
 
-     WeaponBundle=258751
-     WeaponDLCs(0)=258751
+     WeaponBundle=309991
+     WeaponDLCs(0)=309991
      Begin Object Class=GUIImage Name=WeaponDLCImage
-         Image=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_UsVSThemWeaponPack'
+         Image=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Neon'
          ImageStyle=ISTY_Scaled
          WinTop=0.651389
          WinLeft=0.053125
@@ -772,12 +772,12 @@ defaultproperties
      End Object
      KFWeaponDLCOverlay=GUIImage'KFGui.KFMainMenu.WeaponDLCOverlay'
 
-     KFWeaponDLCOwnedTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_UsVSThemWeaponPack'
+     KFWeaponDLCOwnedTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Neon'
      KFWeaponDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFWeaponDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
-     CharacterDLCName="Harchier_Spebbington_II"
+     CharacterDLCName="Mr_Magma"
      Begin Object Class=GUIImage Name=CharacterDLCImage
-         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_NewHarchier'
+         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_SkullyFoster'
          ImageStyle=ISTY_Scaled
          WinTop=0.811111
          WinLeft=0.053125
@@ -806,7 +806,7 @@ defaultproperties
      End Object
      KFCharacterDLCOverlay=GUIImage'KFGui.KFMainMenu.CharacterDLCOverlay'
 
-     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_NewHarchier'
+     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_SkullyFoster'
      KFCharacterDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFCharacterDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
      Begin Object Class=BackgroundImage Name=ImgBkChar

@@ -102,7 +102,7 @@ static function float GetAmmoPickupMod(KFPlayerReplicationInfo KFPRI, KFAmmuniti
         || FNFALAmmo(Other) != none || MKb42Ammo(Other) != none
         || ThompsonAmmo(Other) != none || GoldenAK47Ammo(Other) != none
         || ThompsonDrumAmmo(Other) != none || SPThompsonAmmo(Other) != none
-        || CamoM4Ammo(Other) != none ) &&
+        || CamoM4Ammo(Other) != none || NeonAK47Ammo(Other) != none ) &&
         KFPRI.ClientVeteranSkillLevel > 0 )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel == 1 )
@@ -127,7 +127,8 @@ static function float AddExtraAmmoFor(KFPlayerReplicationInfo KFPRI, Class<Ammun
         || AmmoType == class'FNFALAmmo' || AmmoType == class'MKb42Ammo'
         || AmmoType == class'ThompsonAmmo' || AmmoType == class'GoldenAK47Ammo'
         || AmmoType == class'ThompsonDrumAmmo' || AmmoType == class'SPThompsonAmmo'
-        || AmmoType == class'CamoM4Ammo' )
+        || AmmoType == class'CamoM4Ammo' || AmmoType == class'NeonAK47Ammo'
+        || AmmoType == class'NeonSCARMK17Ammo' )
         && KFPRI.ClientVeteranSkillLevel > 0 )
 	{
 		if ( KFPRI.ClientVeteranSkillLevel == 1 )
@@ -216,7 +217,8 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
         || Item == class'FNFAL_ACOG_Pickup' || Item == class'MKb42Pickup'
         || Item == class'ThompsonPickup' || Item == class'GoldenAK47Pickup'
         || Item == class'ThompsonDrumPickup' || Item == class'SPThompsonPickup'
-        || Item == class'CamoM4Pickup' )
+        || Item == class'CamoM4Pickup' || Item == class'NeonAK47Pickup'
+        || Item == class'NeonSCARMK17Pickup' )
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on Assault Rifles
 	}

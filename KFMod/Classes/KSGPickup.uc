@@ -24,6 +24,7 @@ defaultproperties
      AmmoItemName="12-gauge mag"
      CorrespondingPerkIndex=1
      EquipmentCategoryID=3
+     VariantClasses(0)=Class'KFMod.NeonKSGPickup'
      InventoryType=Class'KFMod.KSGShotgun'
      PickupMessage="You got the Horzine HSG-1 shotgun."
      PickupSound=Sound'KF_KSGSnd.KSG_Pickup'

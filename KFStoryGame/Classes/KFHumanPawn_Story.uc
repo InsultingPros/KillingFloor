@@ -96,7 +96,11 @@ simulated function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation
 {
  	super.TakeDamage( Damage, InstigatedBY, Hitlocation, Momentum, damageType, HitIndex );
 
-	HandleStoryAchievements();
+	// HandleStoryAchievements is only used for Steamland. In fact, it screws up KFO-Transit!
+ 	if( class'KFGameType'.static.GetCurrentMapName(Level) ~= "KFO-Steamland" )
+ 	{
+		HandleStoryAchievements();
+	}
 }
 
 function HandleStoryAchievements()

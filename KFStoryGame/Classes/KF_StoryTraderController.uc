@@ -160,8 +160,14 @@ function FindNewShop()
 {
     local ShopVolume NewShop;
 
-    NewShop = Shops[Rand(Shops.length)] ;
-    NewShop.InitTeleports();
+    if(Shops.length > 0)
+    {
+        NewShop = Shops[Rand(Shops.length)] ;
+        if(NewShop != none)
+        {
+            NewShop.InitTeleports();
+        }
+    }
 
     if(KFGRI != none)
     {
@@ -170,7 +176,6 @@ function FindNewShop()
 
     log("=========================================",'Story_Debug');
     log("FIND Trader Shop : "@GetCurrentShop(),'Story_Debug');
-
 }
 
 function ShopVolume GetCurrentShop()

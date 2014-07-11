@@ -24,6 +24,7 @@ defaultproperties
      AmmoItemName="45. ACP Ammo"
      AmmoMesh=StaticMesh'KillingFloorStatics.L85Ammo'
      EquipmentCategoryID=3
+     VariantClasses(0)=Class'KFMod.NeonKrissMPickup'
      InventoryType=Class'KFMod.KrissMMedicGun'
      PickupMessage="You got the Schneidzekk Medic Gun"
      PickupSound=Sound'KF_KrissSND.Handling.KF_WEP_KRISS_Handling_Pickup'

@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieBloat extends ZombieBloatBase;
+class ZombieBloat extends ZombieBloatBase
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 #exec OBJ LOAD FILE=KF_EnemiesFinalSnd.uax
@@ -687,14 +688,6 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
-     BileExplosion=Class'KFMod.BileExplosion'
-     BileExplosionHeadless=Class'KFMod.BileExplosionHeadless'
-     EventClasses(0)="KFChar.ZombieBloat"
-     EventClasses(1)="KFChar.ZombieBloat"
-     EventClasses(2)="KFChar.ZombieBloat_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieBloat_XMAS"
-     DetachedArmClass=Class'KFChar.SeveredArmBloat'
-     DetachedLegClass=Class'KFChar.SeveredLegBloat'
-     DetachedHeadClass=Class'KFChar.SeveredHeadBloat'
+     EventClasses(0)="KFChar.ZombieBloat_STANDARD"
      ControllerClass=Class'KFChar.BloatZombieController'
 }

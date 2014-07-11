@@ -550,9 +550,9 @@ function array<IMClassList> LoadUpMonsterListFromGameType()
 
 
         //override the monster with its event version, assuming it's one of our own Zombies
-        if(MC.default.EventClasses.Length > eventNum && InStr(MonsterClasses[i].MClassName, "KFChar.Zombie")  != -1 )
+        if(InStr(MonsterClasses[i].MClassName, "KFChar.Zombie")  != -1 )
         {
-            MC = Class<KFMonster>(DynamicLoadObject(MC.default.EventClasses[eventNum],Class'Class'));
+            MC = Class<KFMonster>(DynamicLoadObject(MC.default.EventClasses[0],Class'Class'));
         }
 
 
@@ -568,15 +568,6 @@ function array<IMClassList> LoadUpMonsterListFromGameType()
         InitMList[j].ID = MonsterClasses[i].MID;
         j++;
     }
-    //precache the boss
-    /*MC = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
-    if(MC.default.EventClasses.Length > eventNum)
-    {
-        MC = Class<KFMonster>(DynamicLoadObject(MC.default.EventClasses[eventNum],Class'Class'));
-    }
-    MC.static.PreCacheAssets(Level);
-    InitMList.Length = j+1;
-    InitMList[j].MClass = MC;*/
 
     return InitMList;
 }
@@ -2105,11 +2096,6 @@ auto State PendingMatch
 
         for ( P = Level.ControllerList; P != None; P = P.NextController )
         {
-
-            //NotifyGameEvent( KFSteamStatsAndAchievements(KFPlayerController(P).SteamStatsAndAchievements).Stat46.Value );
-
-            //KFPlayerController(P).ClientZedsSpawn(EventNum);
-
             if ( P.IsA('PlayerController') && P.PlayerReplicationInfo != none && P.bIsPlayer && P.PlayerReplicationInfo.Team != none &&
                 P.PlayerReplicationInfo.bWaitingPlayer && !P.PlayerReplicationInfo.bOnlySpectator)
             {
@@ -3001,17 +2987,12 @@ State MatchInProgress
 
         if( KFGameLength != GL_Custom )
         {
-
             NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(MonsterCollection.default.EndGameBossClass,Class'Class'));
             NextspawnSquad[0].static.PreCacheAssets(Level);
         }
         else
         {
             NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
-            if(NextSpawnSquad[0].default.EventClasses.Length > eventNum)
-            {
-                NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(NextSpawnSquad[0].default.EventClasses[eventNum],Class'Class'));
-            }
             NextspawnSquad[0].static.PreCacheAssets(Level);
         }
 
@@ -4047,11 +4028,6 @@ function bool AddBoss()
     else
     {
         NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(EndGameBossClass,Class'Class'));
-        //override the monster with its event version
-        if(NextSpawnSquad[0].default.EventClasses.Length > eventNum)
-        {
-            NextSpawnSquad[0] = Class<KFMonster>(DynamicLoadObject(NextSpawnSquad[0].default.EventClasses[eventNum],Class'Class'));
-        }
     }
 
     if( LastZVol==none )
@@ -4809,7 +4785,7 @@ function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
     // If we won the match
     if ( KFGameReplicationInfo(GameReplicationInfo).EndGameType == 2 )
     {
-     	CheckHarchierAchievement();
+        CheckHarchierAchievement();
     }
 
     if ( CurrentGameProfile != none )
@@ -5037,56 +5013,174 @@ function WeaponDestroyed(class<Weapon> WeaponClass)
 static event class<GameInfo> SetGameType( string MapName )
 {
     if ( Left(MapName, InStr(MapName, "-")) ~= "KFO")
-	{
-	    return class<GameInfo>( DynamicLoadObject("KFStoryGame.KFStoryGameInfo", class'Class') );
-	}
+    {
+        return class<GameInfo>( DynamicLoadObject("KFStoryGame.KFStoryGameInfo", class'Class') );
+    }
 
     return super.SetGameType( MapName );
 }
 
 function string GetEventClotClassName()
 {
-    return "KFChar.ZombieClot";
+    return MonsterCollection.static.GetEventClotClassName();
 }
 
 function string GetEventGoreFastClassName()
 {
-    return "KFChar.ZombieGoreFast";
+    return MonsterCollection.static.GetEventGoreFastClassName();
 }
 
 function string GetEventCrawlerClassName()
 {
-    return "KFChar.ZombieCrawler";
+    return MonsterCollection.static.GetEventCrawlerClassName();
 }
 
 function string GetEventBloatClassName()
 {
-    return "KFChar.ZombieBloat";
+    return MonsterCollection.static.GetEventBloatClassName();
 }
 
 function string GetEventSirenClassName()
 {
-    return "KFChar.ZombieSiren";
+    return MonsterCollection.static.GetEventSirenClassName();
 }
 
 function string GetEventStalkerClassName()
 {
-    return "KFChar.ZombieStalker";
+    return MonsterCollection.static.GetEventStalkerClassName();
 }
 
 function string GetEventHuskClassName()
 {
-    return "KFChar.ZombieHusk";
+    return MonsterCollection.static.GetEventHuskClassName();
 }
 
 function string GetEventScrakeClassName()
 {
-    return "KFChar.ZombieScrake";
+    return MonsterCollection.static.GetEventScrakeClassName();
 }
 
 function string GetEventFleshpoundClassName()
 {
-    return "KFChar.ZombieFleshpound";
+    return MonsterCollection.static.GetEventFleshpoundClassName();
+}
+
+exec function DumpZedSquads(int MyKFGameLength)
+{
+    local WaveInfo MyWaves[16];
+    local int MyFinalWave, m, MyWaveNum, OldMySquadToUse, i, j, q, c, n;
+    local array<MSquadsList> MyInitSquads;
+    local array<int> MySquadsToUse; // Pointers
+    local Class<KFMonster> MC;
+    local string S,ID;
+    local bool bInitSq;
+    local array<IMClassList> InitMList;
+
+    if ( MyKFGameLength == 0 )
+    {
+        MyFinalWave = 4;
+        for ( i = 0; i < MyFinalWave; i++ )
+        {
+            MyWaves[i] = ShortWaves[i];
+        }
+    }
+    else if ( MyKFGameLength == 1 )
+    {
+        MyFinalWave = 7;
+        for ( i = 0; i < MyFinalWave; i++ )
+        {
+            MyWaves[i] = NormalWaves[i];
+        }
+    }
+    else if ( MyKFGameLength == 2 )
+    {
+        MyFinalWave = 10;
+        for ( i = 0; i < MyFinalWave; i++ )
+        {
+            MyWaves[i] = LongWaves[i];
+        }
+    }
+
+    InitMList = LoadUpMonsterListFromGameType();
+
+    for ( i = 0; i < MonsterSquad.Length; i++ )
+    {
+        S = MonsterSquad[i];
+        if ( S == "" )
+        {
+            Continue;
+        }
+
+        bInitSq = False;
+        n = 0;
+
+        while ( S != "" )
+        {
+            q = int(Left(S, 1));
+            ID = Mid(S, 1, 1);
+            S = Mid(S, 2);
+            MC = None;
+
+            for ( j = 0; j < InitMList.Length; j++ )
+            {
+                if ( InitMList[j].ID ~= ID )
+                {
+                    MC = InitMList[j].MClass;
+                    Break;
+                }
+            }
+
+            if ( MC == None )
+            {
+                Continue;
+            }
+
+            if ( !bInitSq )
+            {
+                MyInitSquads.Length = c+1;
+                bInitSq = True;
+            }
+
+            while ( (q--) > 0 )
+            {
+                MyInitSquads[c].MSquad.Length = n+1;
+                MyInitSquads[c].MSquad[n] = MC;
+                n++;
+            }
+        }
+
+        if ( bInitSq )
+        {
+            c++;
+        }
+    }
+
+    for ( MyWaveNum = 0; MyWaveNum < MyFinalWave; MyWaveNum++ )
+    {
+        j = 1;
+        for ( i = 0; i < MyInitSquads.Length; i++ )
+        {
+            if ( (j & MyWaves[MyWaveNum].WaveMask) != 0 )
+            {
+                MySquadsToUse.Insert(0,1);
+                MySquadsToUse[0] = i;
+
+                for ( m = 0; m < InitSquads[i].MSquad.Length; m++ )
+                {
+                   log("Wave " $ MyWaveNum + 1 $ " Squad " $ MySquadsToUse.Length $ " Monster " $ m + 1 $ " "$MyInitSquads[i].MSquad[m]);
+                }
+            }
+            if ( OldMySquadToUse != MySquadsToUse.Length )
+            {
+                log("==================End Squad " @ MySquadsToUse.Length @ "==================");
+                OldMySquadToUse = MySquadsToUse.Length;
+            }
+            j *= 2;
+        }
+        log(" ");
+        log("##################End Wave" @ MyWaveNum + 1 @ "##################");
+        log(" ");
+    }
 }
 
 defaultproperties
@@ -5299,6 +5393,9 @@ defaultproperties
      AvailableChars(50)="Steampunk_Mrs_Foster"
      AvailableChars(51)="Reggie"
      AvailableChars(52)="Harchier_Spebbington_II"
+     AvailableChars(53)="Ms_Clamley"
+     AvailableChars(54)="Mr_Magma"
+     AvailableChars(55)="Voltage"
      LoadedSkills(0)=Class'KFMod.KFVetFieldMedic'
      LoadedSkills(1)=Class'KFMod.KFVetSupportSpec'
      LoadedSkills(2)=Class'KFMod.KFVetSharpshooter'
@@ -5312,18 +5409,18 @@ defaultproperties
      LastBurnedEnemyMessageTime=-120.000000
      BurnedEnemyMessageDelay=120.000000
      SineWaveFreq=0.040000
-     MonsterClasses(0)=(MClassName="KFChar.ZombieClot",Mid="A")
-     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler",Mid="B")
-     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast",Mid="C")
-     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker",Mid="D")
-     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake",Mid="E")
-     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound",Mid="F")
-     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat",Mid="G")
-     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren",Mid="H")
-     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk",Mid="I")
-     EndGameBossClass="KFChar.ZombieBoss"
+     MonsterClasses(0)=(MClassName="KFChar.ZombieClot_STANDARD",Mid="A")
+     MonsterClasses(1)=(MClassName="KFChar.ZombieCrawler_STANDARD",Mid="B")
+     MonsterClasses(2)=(MClassName="KFChar.ZombieGoreFast_STANDARD",Mid="C")
+     MonsterClasses(3)=(MClassName="KFChar.ZombieStalker_STANDARD",Mid="D")
+     MonsterClasses(4)=(MClassName="KFChar.ZombieScrake_STANDARD",Mid="E")
+     MonsterClasses(5)=(MClassName="KFChar.ZombieFleshpound_STANDARD",Mid="F")
+     MonsterClasses(6)=(MClassName="KFChar.ZombieBloat_STANDARD",Mid="G")
+     MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_STANDARD",Mid="H")
+     MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_STANDARD",Mid="I")
+     EndGameBossClass="KFChar.ZombieBoss_STANDARD"
      WaveConfigMenu="KFGUI.KFWaveConfigMenu"
-     FallbackMonsterClass="KFChar.ZombieStalker"
+     FallbackMonsterClass="KFChar.ZombieStalker_STANDARD"
      FinalWave=10
      InvasionBotNames(1)="Zombie"
      InvasionBotNames(2)="Zombie"

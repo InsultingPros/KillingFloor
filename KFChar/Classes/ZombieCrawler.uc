@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieCrawler extends ZombieCrawlerBase;
+class ZombieCrawler extends ZombieCrawlerBase
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 
@@ -133,12 +134,6 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
-     EventClasses(0)="KFChar.ZombieCrawler"
-     EventClasses(1)="KFChar.ZombieCrawler"
-     EventClasses(2)="KFChar.ZombieCrawler_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieCrawler_XMAS"
-     DetachedArmClass=Class'KFChar.SeveredArmCrawler'
-     DetachedLegClass=Class'KFChar.SeveredLegCrawler'
-     DetachedHeadClass=Class'KFChar.SeveredHeadCrawler'
+     EventClasses(0)="KFChar.ZombieCrawler_STANDARD"
      ControllerClass=Class'KFChar.CrawlerController'
 }

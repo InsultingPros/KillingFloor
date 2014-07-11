@@ -1,5 +1,6 @@
 // Zombie Monster for KF Invasion gametype
-class ZombieStalker extends ZombieStalkerBase;
+class ZombieStalker extends ZombieStalkerBase
+    abstract;
 
 #exec OBJ LOAD FILE=PlayerSounds.uax
 #exec OBJ LOAD FILE=KFX.utx
@@ -307,11 +308,5 @@ static simulated function PreCacheMaterials(LevelInfo myLevel)
 
 defaultproperties
 {
-     EventClasses(0)="KFChar.ZombieStalker"
-     EventClasses(1)="KFChar.ZombieStalker"
-     EventClasses(2)="KFChar.ZombieStalker_HALLOWEEN"
-     EventClasses(3)="KFChar.ZombieStalker_XMAS"
-     DetachedArmClass=Class'KFChar.SeveredArmStalker'
-     DetachedLegClass=Class'KFChar.SeveredLegStalker'
-     DetachedHeadClass=Class'KFChar.SeveredHeadStalker'
+     EventClasses(0)="KFChar.ZombieStalker_STANDARD"
 }

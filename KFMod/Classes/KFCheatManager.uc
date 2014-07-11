@@ -984,6 +984,15 @@ exec function Camo()
     Pawn.GiveWeapon("KFmod.CamoShotgun");
 }
 
+exec function Tron()
+{
+    if (!areCheatsEnabled()) return;
+	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+		return;
+
+    Pawn.GiveWeapon("KFmod.NeonAK47AssaultRifle");
+}
+
 exec function GrantAchievement(int achievement)
 {
 	if (!areCheatsEnabled()) return;

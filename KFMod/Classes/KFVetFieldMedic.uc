@@ -109,7 +109,8 @@ static function float GetMagCapacityMod(KFPlayerReplicationInfo KFPRI, KFWeapon 
 static function float GetAmmoPickupMod(KFPlayerReplicationInfo KFPRI, KFAmmunition Other)
 {
 	if ( (MP7MAmmo(Other) != none || MP5MAmmo(Other) != none || M7A3MAmmo(Other) != none
-        || KrissMAmmo(Other) != none || BlowerThrowerAmmo(Other) != none || CamoMP5MAmmo(Other) != none ) && KFPRI.ClientVeteranSkillLevel > 0 )
+        || KrissMAmmo(Other) != none || BlowerThrowerAmmo(Other) != none || CamoMP5MAmmo(Other) != none || NeonKrissMAmmo(Other) != none ) 
+		&& KFPRI.ClientVeteranSkillLevel > 0 )
 	{
 		return 1.0 + (0.20 * FMin(float(KFPRI.ClientVeteranSkillLevel), 5.0)); // 100% increase in Medic weapon ammo carry
 	}
@@ -125,7 +126,8 @@ static function float GetCostScaling(KFPlayerReplicationInfo KFPRI, class<Pickup
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel));  // Up to 70% discount on Body Armor
 	}
 	else if ( Item == class'MP7MPickup' || Item == class'MP5MPickup' || Item == class'M7A3MPickup'
-        || Item == class'KrissMPickup' || Item == class'BlowerThrowerPickup' || Item == class'CamoMP5MPickup' )
+        || Item == class'KrissMPickup' || Item == class'BlowerThrowerPickup' || Item == class'CamoMP5MPickup'
+        || Item == class'NeonKrissMPickup' )
 	{
 		return 0.9 - (0.10 * float(KFPRI.ClientVeteranSkillLevel)); // Up to 70% discount on Medic Weapons
 	}
