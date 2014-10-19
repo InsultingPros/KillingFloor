@@ -117,7 +117,7 @@ function int GetDLCListTextureIndex()
 
 function InitComponent(GUIController MyController, GUIComponent MyOwner)
 {
-    local int eventNum;
+    local byte SpecialEventType;
 	Super.InitComponent(MyController, MyOwner);
 
    	Background = none;
@@ -126,14 +126,14 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
     WeaponDLCID = DetermineWeaponDLC();
     UpdateDLCOwnership();
 
-	eventNum = 0;//KFSteamStatsAndAchievements(PlayerOwner().SteamStatsAndAchievements).Stat46.Value;
+	SpecialEventType = class'KFGameType'.static.GetSpecialEventType();
 
-    if( eventNum == 2 )
+    if( SpecialEventType == 2 )
     {
         KFBackground.Image = MaterialSequence'KillingFloorHUD_HALLOWEEN.MainMenu.kf_menu_seq_HALLOWEEN';
         KFLogoBit.Image = FinalBlend'KillingFloorHUD_HALLOWEEN.KFLogoFB_halloween';
     }
-    else if( eventNum == 3 )
+    else if( SpecialEventType == 3 )
     {
         KFBackground.Image = MaterialSequence'KillingFloorHUD_XMAS.MainMenu.kf_menu_seq_XMAS';
         KFLogoBit.Image = FinalBlend'KillingFloorHUD_XMAS.KFLogoFB_XMAS';
@@ -739,10 +739,10 @@ defaultproperties
      End Object
      KFWorkshopDownload=GUILabel'KFGui.KFMainMenu.WorkshopDownloadLabel'
 
-     WeaponBundle=309991
-     WeaponDLCs(0)=309991
+     WeaponBundle=326960
+     WeaponDLCs(0)=326960
      Begin Object Class=GUIImage Name=WeaponDLCImage
-         Image=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Neon'
+         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_ToyMaster'
          ImageStyle=ISTY_Scaled
          WinTop=0.651389
          WinLeft=0.053125
@@ -772,12 +772,12 @@ defaultproperties
      End Object
      KFWeaponDLCOverlay=GUIImage'KFGui.KFMainMenu.WeaponDLCOverlay'
 
-     KFWeaponDLCOwnedTexture=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Neon'
-     KFWeaponDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
-     KFWeaponDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
-     CharacterDLCName="Mr_Magma"
+     KFWeaponDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_ToyMaster'
+     KFWeaponDLCOverlayTexture=Texture'KF_DLC.Characters.DLC_Capsules_DownloadClick'
+     KFWeaponDLCHoverTexture=Texture'KF_DLC.Characters.DLC_Capsules_DownloadNow'
+     CharacterDLCName="New_Bundles"
      Begin Object Class=GUIImage Name=CharacterDLCImage
-         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_SkullyFoster'
+         Image=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_NewBundles'
          ImageStyle=ISTY_Scaled
          WinTop=0.811111
          WinLeft=0.053125
@@ -806,7 +806,7 @@ defaultproperties
      End Object
      KFCharacterDLCOverlay=GUIImage'KFGui.KFMainMenu.CharacterDLCOverlay'
 
-     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_SkullyFoster'
+     KFCharacterDLCOwnedTexture=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_NewBundles'
      KFCharacterDLCOverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      KFCharacterDLCHoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
      Begin Object Class=BackgroundImage Name=ImgBkChar

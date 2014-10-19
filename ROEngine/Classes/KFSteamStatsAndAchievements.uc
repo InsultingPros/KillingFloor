@@ -522,6 +522,13 @@ const KFACHIEVEMENT_PickUpDoorKey                       = 272;
 const KFACHIEVEMENT_DestroyDNAVials                     = 273;
 const KFACHIEVEMENT_CompleteMsClamleyAchievements       = 274;
 
+// Clandestine Achievements
+const KFACHIEVEMENT_WinClandestineNormal				= 275;
+const KFACHIEVEMENT_WinClandestineHard 					= 276;
+const KFACHIEVEMENT_WinClandestineSuicidal				= 277;
+const KFACHIEVEMENT_WinClandestineHell					= 278;
+const KFACHIEVEMENT_DestroySkulls						= 279;
+
 struct native export KFAchievement
 {
     var string  SteamName;
@@ -556,6 +563,7 @@ var name TransitKillXZedsDuringWeldEventName;
 var name TransitNitroInXSecondsFailedEventName;
 var name SirensBelchBeerSteinsEventName;
 var name StrongholdGoldBagsEventName;
+var name ClandestineSkullsEventName;
 
 //=============================================================================
 // Objective Names
@@ -2564,6 +2572,10 @@ function WonGame(string MapName, float Difficulty, bool bLong)
         CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinTransitObjNormal);
         CheckTransitAchievementsCompleted();
     }
+    else if ( MapName ~= "KF-Clandestine" )
+    {
+        CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinClandestineNormal);
+    }
 }
 
 /* Checks what difficulty you completed the game on and sets the appropriate achievement to true */
@@ -4260,6 +4272,10 @@ simulated function CheckEvents( Name EventName )
     {
         bEventAchievementFailed = true;
     }
+    else if ( EventName == ClandestineSkullsEventName )
+    {
+        CheckAndSetAchievementComplete( KFACHIEVEMENT_DestroySkulls );
+    }
 }
 
 function OnWeaponReloaded()
@@ -4744,6 +4760,11 @@ defaultproperties
      Achievements(272)=(SteamName="PickUpDoorKey",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_270',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(273)=(SteamName="DestroyDNAVials",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_271',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(274)=(SteamName="CompleteMsClamleyAchievements",ProgressDenominator=5,Icon=Texture'KillingFloor2HUD.Achievements.Achievement_272',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(275)=(SteamName="WinClandestineNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_275',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(276)=(SteamName="WinClandestineHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_276',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(277)=(SteamName="WinClandestineSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_277',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(278)=(SteamName="WinClandestineHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_278',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(279)=(SteamName="DestroySkulls",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_279',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      HillBillyGnomesEventName="GnomeSoulsCompleted"
      SteamLandClownsEventName="ClownSoulsCompleted"
      SteamLandGamesEventName="MiniGamesCompleted"
@@ -4758,6 +4779,7 @@ defaultproperties
      TransitNitroInXSecondsFailedEventName="NitroAchievementFailed"
      SirensBelchBeerSteinsEventName="BeerSteinsCompleted"
      StrongholdGoldBagsEventName="GoldBags_Completed"
+     ClandestineSkullsEventName="SkullSmashCompleted"
      SteamLandEscortObjName="EscortRingMaster"
      SteamLandDefendObjName="DefendRingMaster"
      SteamLandGoldObjName="GoldStashObj"
@@ -5082,4 +5104,9 @@ defaultproperties
      SteamNameAchievement(272)="PickUpDoorKey"
      SteamNameAchievement(273)="DestroyDNAVials"
      SteamNameAchievement(274)="CompleteMsClamleyAchievements"
+     SteamNameAchievement(275)="WinClandestineNormal"
+     SteamNameAchievement(276)="WinClandestineHard"
+     SteamNameAchievement(277)="WinClandestineSuicidal"
+     SteamNameAchievement(278)="WinClandestineHell"
+     SteamNameAchievement(279)="DestroySkulls"
 }

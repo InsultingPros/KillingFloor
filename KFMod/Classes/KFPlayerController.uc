@@ -109,7 +109,7 @@ replication
 	// Functions server can call.
 	reliable if( Role == ROLE_Authority )
 		KFClientNetWorkMsg, ClientLocationalVoiceMessage, ClientEnterZedTime, ClientExitZedTime, ClientShakeView,
-		ClientWeaponSpawned, ClientWeaponDestroyed, ClientZedsSpawn, ClientForceCollectGarbage, EnemyLocation;
+		ClientWeaponSpawned, ClientWeaponDestroyed, ClientForceCollectGarbage, EnemyLocation;
 }
 
 simulated event PreBeginPlay()
@@ -3069,22 +3069,6 @@ simulated function ClientForceCollectGarbage()
 simulated function ClientPickedup( KFGrabbable item )
 {
    KFSteamStatsAndAchievements(SteamStatsAndAchievements).ZEDPieceGrabbed();
-}
-
-simulated function ClientZedsSpawn(int eventNum)
-{
-   if(eventNum == 0)
-   {
-       class'KFMonstersCollection'.static.PreLoadAssets();
-   }
-   else if(eventNum == 2)
-   {
-       class'KFMonstersHalloween'.static.PreLoadAssets();
-   }
-   else if(eventNum == 3)
-   {
-       class'KFMonstersXmas'.static.PreLoadAssets();
-   }
 }
 
 function ClientShakeView(vector shRotMag, vector shRotRate, float shRotTime,

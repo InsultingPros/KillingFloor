@@ -65,8 +65,6 @@ var     int                     FinalSquadNum;          // The final squad num w
 var     bool    bUsedSpecialSquad;  // Tracks if the special squad has been used already this time through the list
 var     int     SpecialListCounter; // Keep track of how many time's we've been through the list
 
-var transient int EventNum;
-
 var string HumanName[4];
 var string ZombieName[4];
 var int Time,LobbyTimeCounter;
@@ -228,7 +226,17 @@ var()   array<MClassTypes>  StandardMonsterClasses; // The standard monster clas
 
 var  bool   bUsingObjectiveMode;
 
+enum ESpecialEventType
+{
+    ET_None,
+    ET_SummerSideshow,
+    ET_HillbillyHorror,
+    ET_TwistedChristmas
+};
 
+var private const ESpecialEventType SpecialEventType;
+
+var array< class<KFMonstersCollection> > SpecialEventMonsterCollections;
 
 // Stub
 static function Texture GetRandomTeamSymbol(int base) { return None; }
@@ -547,15 +555,6 @@ function array<IMClassList> LoadUpMonsterListFromGameType()
         }
 
         MC = Class<KFMonster>(DynamicLoadObject(MonsterClasses[i].MClassName,Class'Class'));
-
-
-        //override the monster with its event version, assuming it's one of our own Zombies
-        if(InStr(MonsterClasses[i].MClassName, "KFChar.Zombie")  != -1 )
-        {
-            MC = Class<KFMonster>(DynamicLoadObject(MC.default.EventClasses[0],Class'Class'));
-        }
-
-
         if( MC==None )
         {
             Continue;
@@ -585,7 +584,7 @@ function array<IMClassList> LoadUpMonsterListFromCollection()
 
         MC = Class<KFMonster>(DynamicLoadObject(MonsterCollection.default.MonsterClasses[i].MClassName,Class'Class'));
 
-        if( MC==None )
+       if( MC==None )
             Continue;
 
         MC.static.PreCacheAssets(Level);
@@ -708,6 +707,8 @@ event InitGame( string Options, out string Error )
 
     log("Game length = "$KFGameLength);
 
+    
+    MonsterCollection = SpecialEventMonsterCollections[ GetSpecialEventType() ];
     if( KFGameLength != GL_Custom )
     {
         // Set up the default game type settings
@@ -764,50 +765,6 @@ event InitGame( string Options, out string Error )
         UpdateGameLength();
     }
 
-    LoadUpMonsterList();
-}
-
-function NotifyGameEvent(int EventNumIn)
-{
-    if( KFGameLength != GL_Custom )
-    {
-        if(MonsterCollection != class'KFMonstersCollection' )
-        {//we already have an event
-
-            if(EventNumIn == 3 && MonsterCollection != class'KFMonstersXmas')
-            {
-                log("Was we should be in halloween mode but we aren't!");
-            }
-            if(EventNumIn == 2 && MonsterCollection != class'KFMonstersHalloween')
-            {
-                log("Was we should be in halloween mode but we aren't!");
-            }
-            if(EventNumIn == 0 && MonsterCollection != class'KFMonstersCollection')
-            {
-                log("Was we shouldn't have an event but we do!");
-            }
-            return;
-        }
-    }
-    else
-    {
-        //if we've already decided on doing an event, return
-        if(EventNum != EventNumIn && EventNum != 0)
-        {
-            return;
-        }
-    }
-
-    if(EventNumIn == 2 )
-    {
-        MonsterCollection = class'KFMonstersHalloween';
-    }
-    else if(EventNumIn == 3 )
-    {
-        MonsterCollection = class'KFMonstersXmas';
-    }
-    //EventNum = EventNumIn;
-    PrepareSpecialSquads();
     LoadUpMonsterList();
 }
 
@@ -2162,19 +2119,7 @@ auto State PendingMatch
 Begin:
     if ( bQuickStart )
     {
-        //this is a hack because we can't declare variables in the Begin label
-        DetermineEvent();
         StartMatch();
-    }
-}
-
-//this is a hack because we can't declare variables in the Begin label
-function DetermineEvent()
-{
-    local Controller P;
-    for ( P = Level.ControllerList; P != None; P = P.NextController )
-    {
-        NotifyGameEvent( KFSteamStatsAndAchievements(KFPlayerController(P).SteamStatsAndAchievements).Stat46.Value );
     }
 }
 
@@ -5022,47 +4967,52 @@ static event class<GameInfo> SetGameType( string MapName )
 
 function string GetEventClotClassName()
 {
-    return MonsterCollection.static.GetEventClotClassName();
-}
-
-function string GetEventGoreFastClassName()
-{
-    return MonsterCollection.static.GetEventGoreFastClassName();
+    return MonsterCollection.default.MonsterClasses[ 0 ].MClassName;
 }
 
 function string GetEventCrawlerClassName()
 {
-    return MonsterCollection.static.GetEventCrawlerClassName();
+    return MonsterCollection.default.MonsterClasses[ 1 ].MClassName;
 }
 
-function string GetEventBloatClassName()
+function string GetEventGoreFastClassName()
 {
-    return MonsterCollection.static.GetEventBloatClassName();
-}
-
-function string GetEventSirenClassName()
-{
-    return MonsterCollection.static.GetEventSirenClassName();
+    return MonsterCollection.default.MonsterClasses[ 2 ].MClassName;
 }
 
 function string GetEventStalkerClassName()
 {
-    return MonsterCollection.static.GetEventStalkerClassName();
-}
-
-function string GetEventHuskClassName()
-{
-    return MonsterCollection.static.GetEventHuskClassName();
+    return MonsterCollection.default.MonsterClasses[ 3 ].MClassName;
 }
 
 function string GetEventScrakeClassName()
 {
-    return MonsterCollection.static.GetEventScrakeClassName();
+    return MonsterCollection.default.MonsterClasses[ 4 ].MClassName;
 }
 
 function string GetEventFleshpoundClassName()
 {
-    return MonsterCollection.static.GetEventFleshpoundClassName();
+    return MonsterCollection.default.MonsterClasses[ 5 ].MClassName;
+}
+
+function string GetEventBloatClassName()
+{
+    return MonsterCollection.default.MonsterClasses[ 6 ].MClassName;
+}
+
+function string GetEventSirenClassName()
+{
+    return MonsterCollection.default.MonsterClasses[ 7 ].MClassName;
+}
+
+function string GetEventHuskClassName()
+{
+    return MonsterCollection.default.MonsterClasses[ 8 ].MClassName;
+}
+
+static function ESpecialEventType GetSpecialEventType()
+{
+    return default.SpecialEventType;
 }
 
 exec function DumpZedSquads(int MyKFGameLength)
@@ -5419,6 +5369,11 @@ defaultproperties
      MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_STANDARD",Mid="H")
      MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_STANDARD",Mid="I")
      EndGameBossClass="KFChar.ZombieBoss_STANDARD"
+     SpecialEventType=ET_HillbillyHorror
+     SpecialEventMonsterCollections(0)=Class'KFMod.KFMonstersCollection'
+     SpecialEventMonsterCollections(1)=Class'KFMod.KFMonstersSummer'
+     SpecialEventMonsterCollections(2)=Class'KFMod.KFMonstersHalloween'
+     SpecialEventMonsterCollections(3)=Class'KFMod.KFMonstersXmas'
      WaveConfigMenu="KFGUI.KFWaveConfigMenu"
      FallbackMonsterClass="KFChar.ZombieStalker_STANDARD"
      FinalWave=10

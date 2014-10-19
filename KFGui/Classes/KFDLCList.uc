@@ -17,6 +17,8 @@ var	array<int>		bItemIsCharacter;
 var	array<int>		bItemOwned;
 var	array<string>	ItemAppID;
 var	array<texture>	ItemBackground;
+var int				IgnoreWeaponItem;
+var int				IgnoreCharacterItem;
 
 // State
 var	int								ItemHoverIndex;
@@ -33,7 +35,7 @@ event Closed(GUIComponent Sender, bool bCancelled)
 
 function InitList(PlayerController PCOwner, SteamStatsAndAchievementsBase StatsAndAchievements, bool bShowCharacters, bool bShowWeapons)
 {
-	local int i;
+	local int i, j;
 
 	OnDrawItem = DrawDLCItem;
 
@@ -49,6 +51,11 @@ function InitList(PlayerController PCOwner, SteamStatsAndAchievementsBase StatsA
 			// Show newest items first
 			for ( i = WeaponAppIDs.Length - 1; i >= 0; i-- )
 			{
+				if( i == IgnoreWeaponItem )
+				{
+					continue;
+				}
+
 				if ( !MyStatsAndAchievements.PlayerOwnsWeaponDLC(WeaponAppIDs[i]) )
 				{
 					bItemIsCharacter[bItemIsCharacter.Length] = 0;
@@ -65,6 +72,11 @@ function InitList(PlayerController PCOwner, SteamStatsAndAchievementsBase StatsA
 			// Show newest items first
 			for ( i = CharacterNames.Length - 1; i >= 0; i-- )
 			{
+				if( i == IgnoreCharacterItem )
+				{
+					continue;
+				}
+
 				if ( !MyPCOwner.CharacterAvailable(CharacterNames[i]) )
 				{
 					bItemIsCharacter[bItemIsCharacter.Length] = 1;
@@ -81,6 +93,11 @@ function InitList(PlayerController PCOwner, SteamStatsAndAchievementsBase StatsA
 			// Show newest items first
 			for ( i = WeaponAppIDs.Length - 1; i >= 0; i-- )
 			{
+				if( i == IgnoreWeaponItem )
+				{
+					continue;
+				}
+
 				if ( MyStatsAndAchievements.PlayerOwnsWeaponDLC(WeaponAppIDs[i]) )
 				{
 					bItemIsCharacter[bItemIsCharacter.Length] = 0;
@@ -97,6 +114,11 @@ function InitList(PlayerController PCOwner, SteamStatsAndAchievementsBase StatsA
 			// Show newest items first
 			for ( i = CharacterNames.Length - 1; i >= 0; i-- )
 			{
+				if( i == IgnoreCharacterItem )
+				{
+					continue;
+				}
+
 				if ( MyPCOwner.CharacterAvailable(CharacterNames[i]) )
 				{
 					bItemIsCharacter[bItemIsCharacter.Length] = 1;
@@ -236,6 +258,7 @@ defaultproperties
      CharacterNames(12)="Reggie"
      CharacterNames(13)="Harchier_Spebbington_II"
      CharacterNames(14)="Mr_Magma"
+     CharacterNames(15)="New_Bundles"
      CharacterUnownedTextures(0)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Outbreak'
      CharacterUnownedTextures(1)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Nightfall'
      CharacterUnownedTextures(2)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_PostMortem'
@@ -251,6 +274,7 @@ defaultproperties
      CharacterUnownedTextures(12)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_Reggie'
      CharacterUnownedTextures(13)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_NewHarchier'
      CharacterUnownedTextures(14)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_SkullyFoster'
+     CharacterUnownedTextures(15)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_NewBundles'
      CharacterOwnedTextures(0)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Outbreak'
      CharacterOwnedTextures(1)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Nightfall'
      CharacterOwnedTextures(2)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_PostMortem'
@@ -266,6 +290,7 @@ defaultproperties
      CharacterOwnedTextures(12)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_Reggie'
      CharacterOwnedTextures(13)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_NewHarchier'
      CharacterOwnedTextures(14)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_SkullyFoster'
+     CharacterOwnedTextures(15)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_NewBundles'
      WeaponAppIDs(0)=210934
      WeaponAppIDs(1)=210938
      WeaponAppIDs(2)=210943
@@ -273,6 +298,7 @@ defaultproperties
      WeaponAppIDs(4)=258751
      WeaponAppIDs(5)=258752
      WeaponAppIDs(6)=309991
+     WeaponAppIDs(7)=326960
      WeaponUnownedTextures(0)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Community'
      WeaponUnownedTextures(1)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Gold-Pack'
      WeaponUnownedTextures(2)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_CommunitySteamP'
@@ -280,6 +306,7 @@ defaultproperties
      WeaponUnownedTextures(4)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_UsVSThemWeaponPack'
      WeaponUnownedTextures(5)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_CamoWeaponPack'
      WeaponUnownedTextures(6)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Desat_Neon'
+     WeaponUnownedTextures(7)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Desat_ToyMaster'
      WeaponOwnedTextures(0)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Community'
      WeaponOwnedTextures(1)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Gold-Pack'
      WeaponOwnedTextures(2)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_CommunitySteamP'
@@ -287,8 +314,11 @@ defaultproperties
      WeaponOwnedTextures(4)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_UsVSThemWeaponPack'
      WeaponOwnedTextures(5)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_CamoWeaponPack'
      WeaponOwnedTextures(6)=Texture'KF_DLC.Weapons.UI_KFDLC_Weapons_Owned_Neon'
+     WeaponOwnedTextures(7)=Texture'KF_DLC.Characters.UI_KFDLC_Characters_Owned_ToyMaster'
      OverlayTexture=Texture'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'
      HoverTexture=Texture'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'
+     IgnoreWeaponItem=7
+     IgnoreCharacterItem=15
      GetItemHeight=KFDLCList.DLCItemHeight
      FontScale=FNS_Medium
 }
