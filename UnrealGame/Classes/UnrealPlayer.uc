@@ -828,6 +828,8 @@ simulated function DisplayDebug(Canvas Canvas, out float YL, out float YPos)
 
 defaultproperties
 {
+     CustomStatusAnnouncerPack="UnrealGame.FemaleAnnouncer"
+     CustomRewardAnnouncerPack="UnrealGame.MaleAnnouncer"
      MaxRecentServers=25
      LastKickWarningTime=-1000.000000
      PlayerChatType="UnrealGame.UnrealPlayerChatManager"

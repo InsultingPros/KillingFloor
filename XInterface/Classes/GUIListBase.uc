@@ -615,6 +615,10 @@ defaultproperties
      SectionStyleName="ListSection"
      OutlineStyleName="ItemOutline"
      SelectedBKColor=(B=200,G=255,R=255,A=255)
+     Index=-1
+     LastSelected=-1
+     DropIndex=-1
+     MightRemove=-1
      FontScale=FNS_Small
      StyleName="NoBackground"
      bTabStop=True

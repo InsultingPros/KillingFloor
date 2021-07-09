@@ -428,4 +428,5 @@ defaultproperties
      PanelHint(1)="Select your current Perk"
      bAllowedAsLast=True
      OnClose=GUIBuyMenu.KFBuyMenuClosed
+     WhiteColor=(B=255,G=255,R=255)
 }

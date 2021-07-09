@@ -1081,7 +1081,6 @@ ignores SeePlayer, HearNoise, KilledBy, NotifyBump, HitWall, NotifyPhysicsVolume
 defaultproperties
 {
      FovAngle=90.000000
-     Handedness=1.000000
      bAdrenalineEnabled=True
      bSlowerZAcquire=True
      MinHitWall=-1.000000

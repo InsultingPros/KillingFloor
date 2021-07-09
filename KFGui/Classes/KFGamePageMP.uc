@@ -187,6 +187,10 @@ defaultproperties
 {
      FirewallWarning="KFGUI.KFFirewallWarn"
      PageCaption=
+     Begin Object Class=GUIHeader Name=ServerBrowserHeader
+         bUseTextHeight=True
+         Caption="Server Browser"
+     End Object
      t_Header=GUIHeader'GUI2K4.UT2k4ServerBrowser.ServerBrowserHeader'
 
      Begin Object Class=KFGameFooter Name=SPFooter

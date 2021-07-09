@@ -151,5 +151,6 @@ function PgDn()
 
 defaultproperties
 {
+     bRequiresStyle=True
      OnClick=GUIVertList.InternalOnClick
 }

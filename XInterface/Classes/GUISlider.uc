@@ -234,6 +234,7 @@ defaultproperties
      bAcceptsInput=True
      bCaptureMouse=True
      bRequireReleaseClick=True
+     bRequiresStyle=True
      Begin Object Class=GUIToolTip Name=GUISliderToolTip
      End Object
      ToolTip=GUIToolTip'XInterface.GUISlider.GUISliderToolTip'

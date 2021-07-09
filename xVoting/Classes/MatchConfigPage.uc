@@ -200,7 +200,7 @@ defaultproperties
          bAcceptsInput=True
          OnActivate=MatchSetupTabControl.InternalOnActivate
      End Object
-     c_Groups=GUITabControl'xVoting.MatchConfigPage.MatchSetupTabControl'
+     c_Groups=GUITabControl'XVoting.MatchConfigPage.MatchSetupTabControl'
 
      PanelClass(0)="xVoting.MatchSetupLoginPanel"
      PanelClass(1)="xVoting.MatchSetupMain"

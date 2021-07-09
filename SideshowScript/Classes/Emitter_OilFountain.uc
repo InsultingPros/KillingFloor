@@ -19,7 +19,7 @@ defaultproperties
          LifetimeRange=(Min=2.000000,Max=2.000000)
          StartVelocityRange=(Z=(Min=-10.000000))
      End Object
-     Emitters(0)=SpriteEmitter'SideShowScript.Emitter_OilFountain.OilDrip'
+     Emitters(0)=SpriteEmitter'SideshowScript.Emitter_OilFountain.OilDrip'
 
      Begin Object Class=SpriteEmitter Name=OilSplash
          SpinParticles=True
@@ -42,6 +42,6 @@ defaultproperties
          LifetimeRange=(Min=1.250000,Max=1.250000)
          StartVelocityRange=(X=(Min=-15.000000,Max=15.000000),Y=(Min=-15.000000,Max=15.000000),Z=(Min=35.000000,Max=50.000000))
      End Object
-     Emitters(1)=SpriteEmitter'SideShowScript.Emitter_OilFountain.OilSplash'
+     Emitters(1)=SpriteEmitter'SideshowScript.Emitter_OilFountain.OilSplash'
 
 }

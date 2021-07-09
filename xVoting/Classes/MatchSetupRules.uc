@@ -71,7 +71,7 @@ defaultproperties
          WinHeight=1.000000
          OnActivate=PIPanel.InternalOnActivate
      End Object
-     p_Rules=RemotePlayInfoPanel'xVoting.MatchSetupRules.PIPanel'
+     p_Rules=RemotePlayInfoPanel'XVoting.MatchSetupRules.PIPanel'
 
      PanelCaption="Rules"
 }

@@ -932,16 +932,16 @@ defaultproperties
      bShowPersonalInfo=True
      bShowPoints=True
      bShowWeaponBar=True
+     bCrosshairShow=True
      bShowPortrait=True
      bShowPortraitVC=True
-     bSmallWeaponBar=True
      ConsoleColor=(B=253,G=216,R=153,A=255)
      ProgressFontName="ROFonts.ROBtsrmVr12"
      ProgressFadeTime=1.000000
      MOTDColor=(B=255,G=255,R=255,A=255)
      HudScale=1.000000
      HudOpacity=255.000000
-     HudCanvasScale=1.000000
+     HudCanvasScale=0.950000
      CrosshairScale=1.000000
      CrosshairOpacity=1.000000
      CrossHairColor=(B=255,G=255,R=255,A=255)

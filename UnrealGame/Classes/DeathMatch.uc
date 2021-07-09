@@ -1999,6 +1999,7 @@ defaultproperties
      MapListType="XInterface.MapListDeathMatch"
      MapPrefix="DM"
      BeaconName="DM"
+     MaxPlayers=32
      GoalScore=25
      TimeLimit=20
      MutatorClass="UnrealGame.DMMutator"

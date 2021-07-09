@@ -72,7 +72,7 @@ defaultproperties
      GroundMaterial=Texture'Pier_T.Icons.Goldbar_Icon_64'
      bRender1PMesh=False
      AIThreatModifier=1.500000
-     InventoryType=Class'SideShowScript.Inv_GoldBar'
+     InventoryType=Class'SideshowScript.Inv_GoldBar'
      LightType=LT_Steady
      LightHue=45
      LightSaturation=150
@@ -81,5 +81,5 @@ defaultproperties
      StaticMesh=StaticMesh'Pier_SM.Env_Pier_Gold_Bars'
      bUseDynamicLights=True
      CollisionRadius=40.000000
-     MessageClass=Class'SideShowScript.Msg_GoldBarNotification'
+     MessageClass=Class'SideshowScript.Msg_GoldBarNotification'
 }

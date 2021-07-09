@@ -219,4 +219,5 @@ defaultproperties
      ExpirationSeconds=3.000000
      StyleName="MouseOver"
      bVisible=False
+     bRequiresStyle=True
 }

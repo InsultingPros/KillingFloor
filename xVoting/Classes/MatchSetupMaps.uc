@@ -434,7 +434,7 @@ defaultproperties
          bScaleToParent=True
          OnPreDraw=InactiveBackground.InternalPreDraw
      End Object
-     sb_Avail=GUISectionBackground'xVoting.MatchSetupMaps.InactiveBackground'
+     sb_Avail=GUISectionBackground'XVoting.MatchSetupMaps.InactiveBackground'
 
      Begin Object Class=GUISectionBackground Name=ActiveBackground
          bFillClient=True
@@ -448,7 +448,7 @@ defaultproperties
          bScaleToParent=True
          OnPreDraw=ActiveBackground.InternalPreDraw
      End Object
-     sb_Active=GUISectionBackground'xVoting.MatchSetupMaps.ActiveBackground'
+     sb_Active=GUISectionBackground'XVoting.MatchSetupMaps.ActiveBackground'
 
      Begin Object Class=GUIListBox Name=InactiveList
          bVisibleWhenEmpty=True
@@ -460,7 +460,7 @@ defaultproperties
          WinHeight=0.662671
          TabOrder=0
      End Object
-     lb_Avail=GUIListBox'xVoting.MatchSetupMaps.InactiveList'
+     lb_Avail=GUIListBox'XVoting.MatchSetupMaps.InactiveList'
 
      Begin Object Class=GUIListBox Name=ActiveList
          bVisibleWhenEmpty=True
@@ -471,7 +471,7 @@ defaultproperties
          WinHeight=0.662671
          TabOrder=1
      End Object
-     lb_Active=GUIListBox'xVoting.MatchSetupMaps.ActiveList'
+     lb_Active=GUIListBox'XVoting.MatchSetupMaps.ActiveList'
 
      Begin Object Class=GUIButton Name=AddButton
          Caption="Add"
@@ -486,7 +486,7 @@ defaultproperties
          OnClick=MatchSetupMaps.ModifyMapList
          OnKeyEvent=AddButton.InternalOnKeyEvent
      End Object
-     b_Add=GUIButton'xVoting.MatchSetupMaps.AddButton'
+     b_Add=GUIButton'XVoting.MatchSetupMaps.AddButton'
 
      Begin Object Class=GUIButton Name=AddAllButton
          Caption="Add All"
@@ -500,7 +500,7 @@ defaultproperties
          OnClick=MatchSetupMaps.ModifyMapList
          OnKeyEvent=AddAllButton.InternalOnKeyEvent
      End Object
-     b_AddAll=GUIButton'xVoting.MatchSetupMaps.AddAllButton'
+     b_AddAll=GUIButton'XVoting.MatchSetupMaps.AddAllButton'
 
      Begin Object Class=GUIButton Name=RemoveButton
          Caption="Remove"
@@ -516,7 +516,7 @@ defaultproperties
          OnClick=MatchSetupMaps.ModifyMapList
          OnKeyEvent=RemoveButton.InternalOnKeyEvent
      End Object
-     b_Remove=GUIButton'xVoting.MatchSetupMaps.RemoveButton'
+     b_Remove=GUIButton'XVoting.MatchSetupMaps.RemoveButton'
 
      Begin Object Class=GUIButton Name=RemoveAllButton
          Caption="Remove All"
@@ -530,7 +530,7 @@ defaultproperties
          OnClick=MatchSetupMaps.ModifyMapList
          OnKeyEvent=RemoveAllButton.InternalOnKeyEvent
      End Object
-     b_RemoveAll=GUIButton'xVoting.MatchSetupMaps.RemoveAllButton'
+     b_RemoveAll=GUIButton'XVoting.MatchSetupMaps.RemoveAllButton'
 
      Begin Object Class=GUIButton Name=MoveUpButton
          Caption="Up"
@@ -545,7 +545,7 @@ defaultproperties
          OnClick=MatchSetupMaps.ModifyMapList
          OnKeyEvent=MoveUpButton.InternalOnKeyEvent
      End Object
-     b_MoveUp=GUIButton'xVoting.MatchSetupMaps.MoveUpButton'
+     b_MoveUp=GUIButton'XVoting.MatchSetupMaps.MoveUpButton'
 
      Begin Object Class=GUIButton Name=MoveDownButton
          Caption="Down"
@@ -560,7 +560,7 @@ defaultproperties
          OnClick=MatchSetupMaps.ModifyMapList
          OnKeyEvent=MoveDownButton.InternalOnKeyEvent
      End Object
-     b_MoveDown=GUIButton'xVoting.MatchSetupMaps.MoveDownButton'
+     b_MoveDown=GUIButton'XVoting.MatchSetupMaps.MoveDownButton'
 
      OnLogOut=MatchSetupMaps.LoggedOut
      PanelCaption="Maplist"

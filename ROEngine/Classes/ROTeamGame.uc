@@ -4037,9 +4037,8 @@ function int GetNumPlayers()
 
 defaultproperties
 {
-     WinLimit=2
      RoundLimit=3
-     PreStartTime=5
+     PreStartTime=30
      FFDamageLimit=800
      FFKillLimit=3
      FFArtyScale=1.000000
@@ -4200,6 +4199,7 @@ defaultproperties
      TeamAIType(0)=Class'ROEngine.ROTeamAI'
      TeamAIType(1)=Class'ROEngine.ROTeamAI'
      NetWait=0
+     RestartWait=0
      bAllowTaunts=False
      SpawnProtectionTime=0.000000
      CountDown=0

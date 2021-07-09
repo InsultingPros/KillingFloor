@@ -309,4 +309,5 @@ defaultproperties
 
      ch_OfficialMapsOnly=None
 
+     MaplistEditorMenu="ROInterface.ROMaplistEditor"
 }

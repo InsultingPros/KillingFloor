@@ -121,10 +121,6 @@ simulated function SetText()
 
 defaultproperties
 {
-     Backgrounds(0)="2k4Menus.Loading.loadingscreen1"
-     Backgrounds(1)="2k4Menus.Loading.loadingscreen2"
-     Backgrounds(2)="2k4Menus.Loading.loadingscreen2"
-     Backgrounds(3)="2k4Menus.Loading.loadingscreen4"
      Operations(0)=DrawOpImage'GUI2K4.UT2K4ServerLoading.OpBackground'
      Operations(1)=DrawOpText'GUI2K4.UT2K4ServerLoading.OpLoading'
      Operations(2)=DrawOpText'GUI2K4.UT2K4ServerLoading.OpMapname'

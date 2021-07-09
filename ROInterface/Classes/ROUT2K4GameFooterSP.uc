@@ -37,6 +37,7 @@ function SetupButtons( optional string bPerButtonSizes )
 defaultproperties
 {
      Begin Object Class=GUIButton Name=GamePrimaryButton
+         MenuState=MSAT_Disabled
          StyleName="FooterButton"
          WinTop=0.085678
          WinLeft=0.880000

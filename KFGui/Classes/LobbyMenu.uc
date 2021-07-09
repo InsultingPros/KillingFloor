@@ -804,6 +804,7 @@ defaultproperties
          RenderWeight=0.550000
          bAcceptsInput=False
          bNeverFocus=True
+         bAnimating=True
      End Object
      ReadyBox(0)=moCheckBox'KFGui.LobbyMenu.ReadyBox0'
 
@@ -821,6 +822,7 @@ defaultproperties
          RenderWeight=0.550000
          bAcceptsInput=False
          bNeverFocus=True
+         bAnimating=True
      End Object
      ReadyBox(1)=moCheckBox'KFGui.LobbyMenu.ReadyBox1'
 
@@ -838,6 +840,7 @@ defaultproperties
          RenderWeight=0.550000
          bAcceptsInput=False
          bNeverFocus=True
+         bAnimating=True
      End Object
      ReadyBox(2)=moCheckBox'KFGui.LobbyMenu.ReadyBox2'
 
@@ -855,6 +858,7 @@ defaultproperties
          RenderWeight=0.550000
          bAcceptsInput=False
          bNeverFocus=True
+         bAnimating=True
      End Object
      ReadyBox(3)=moCheckBox'KFGui.LobbyMenu.ReadyBox3'
 
@@ -872,6 +876,7 @@ defaultproperties
          RenderWeight=0.550000
          bAcceptsInput=False
          bNeverFocus=True
+         bAnimating=True
      End Object
      ReadyBox(4)=moCheckBox'KFGui.LobbyMenu.ReadyBox4'
 
@@ -889,6 +894,7 @@ defaultproperties
          RenderWeight=0.550000
          bAcceptsInput=False
          bNeverFocus=True
+         bAnimating=True
      End Object
      ReadyBox(5)=moCheckBox'KFGui.LobbyMenu.ReadyBox5'
 

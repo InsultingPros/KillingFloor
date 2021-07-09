@@ -360,6 +360,7 @@ defaultproperties
      NewTopicText="Topic"
      MaxChatScrollback=250
      InputHistorySize=16
+     bIRCTextToSpeechEnabled=True
      IRCTextColor=(B=160,G=160,R=160)
      IRCNickColor=(B=255,G=150,R=150)
      IRCActionColor=(G=200,R=230)

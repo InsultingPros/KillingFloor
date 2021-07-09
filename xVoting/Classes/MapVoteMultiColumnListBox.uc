@@ -115,7 +115,7 @@ defaultproperties
          ContextItems(1)="View Screenshot and Description"
          OnSelect=MapVoteMultiColumnListBox.InternalOnClick
      End Object
-     ContextMenu=GUIContextMenu'xVoting.MapVoteMultiColumnListBox.RCMenu'
+     ContextMenu=GUIContextMenu'XVoting.MapVoteMultiColumnListBox.RCMenu'
 
      OnRightClick=MapVoteMultiColumnListBox.InternalOnRightClick
 }

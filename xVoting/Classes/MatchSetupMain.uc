@@ -186,7 +186,7 @@ defaultproperties
          WinHeight=0.100000
          TabOrder=0
      End Object
-     co_GameType=moComboBox'xVoting.MatchSetupMain.GameTypeCombo'
+     co_GameType=moComboBox'XVoting.MatchSetupMain.GameTypeCombo'
 
      Begin Object Class=moEditBox Name=CommandLineParamsBox
          bVerticalLayout=True
@@ -200,12 +200,13 @@ defaultproperties
          WinHeight=0.200000
          TabOrder=2
      End Object
-     ed_Params=moEditBox'xVoting.MatchSetupMain.CommandLineParamsBox'
+     ed_Params=moEditBox'XVoting.MatchSetupMain.CommandLineParamsBox'
 
      Begin Object Class=moEditBox Name=DemoRecBox
          CaptionWidth=0.100000
          Caption="Filename"
          OnCreateComponent=DemoRecBox.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="Enter the name of the demo you'd like to record for this match"
          WinTop=0.457450
          WinLeft=0.391845
@@ -213,7 +214,7 @@ defaultproperties
          WinHeight=0.100000
          TabOrder=4
      End Object
-     ed_DemoRec=moEditBox'xVoting.MatchSetupMain.DemoRecBox'
+     ed_DemoRec=moEditBox'XVoting.MatchSetupMain.DemoRecBox'
 
      Begin Object Class=moCheckBox Name=DemoRecCheckbox
          Caption="Record Demo"
@@ -226,7 +227,7 @@ defaultproperties
          TabOrder=3
          OnChange=MatchSetupMain.InternalOnChange
      End Object
-     ch_DemoRec=moCheckBox'xVoting.MatchSetupMain.DemoRecCheckbox'
+     ch_DemoRec=moCheckBox'XVoting.MatchSetupMain.DemoRecCheckbox'
 
      Begin Object Class=moCheckBox Name=TournamentCheckbox
          Caption="Tournament Mode"
@@ -238,7 +239,7 @@ defaultproperties
          WinHeight=0.100000
          TabOrder=1
      End Object
-     ch_Tournament=moCheckBox'xVoting.MatchSetupMain.TournamentCheckbox'
+     ch_Tournament=moCheckBox'XVoting.MatchSetupMain.TournamentCheckbox'
 
      PanelCaption="General"
 }

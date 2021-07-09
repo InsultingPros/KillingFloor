@@ -560,6 +560,7 @@ defaultproperties
 
      Begin Object Class=GUIButton Name=IABotConfigConfig
          Caption="Info"
+         MenuState=MSAT_Disabled
          Hint="View detailed stats for this bot."
          WinTop=0.593949
          WinLeft=0.357306
@@ -601,6 +602,7 @@ defaultproperties
 
      Begin Object Class=GUIButton Name=IABotConfigDoConfig
          Caption="Edit"
+         MenuState=MSAT_Disabled
          Hint="Customize the AI attributes for this bot"
          WinTop=0.593949
          WinLeft=0.505743

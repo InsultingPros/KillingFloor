@@ -924,21 +924,6 @@ function bool MaplistDirty(int GameIndex, int RecordIndex)
 
 defaultproperties
 {
-     Games(0)=(GameType="BonusPack.xLastManStandingGame",ActiveMaplist="Default LMS")
-     Games(1)=(GameType="BonusPack.xMutantGame",ActiveMaplist="Default MUT")
-     Games(2)=(GameType="Onslaught.ONSOnslaughtGame",ActiveMaplist="Default ONS")
-     Games(3)=(GameType="SkaarjPack.Invasion",ActiveMaplist="Default INV")
-     Games(4)=(GameType="UT2k4Assault.ASGameInfo",ActiveMaplist="Default AS")
-     Games(5)=(GameType="XGame.xBombingRun",ActiveMaplist="Default BR")
-     Games(6)=(GameType="XGame.xCTFGame",ActiveMaplist="Default CTF")
-     Games(7)=(GameType="XGame.xDeathMatch",ActiveMaplist="Default DM")
-     Games(8)=(GameType="XGame.xDoubleDom",ActiveMaplist="Default DOM2")
-     Games(9)=(GameType="XGame.xTeamGame",ActiveMaplist="Default TDM")
-     Games(10)=(GameType="XGame.xVehicleCTFGame")
-     Games(11)=(GameType="ROEngine.ROTeamGame",ActiveMaplist="Default RO")
-     Games(12)=(GameType="KFmod.KFGameType",ActiveMaplist="Default KF")
-     Games(13)=(GameType="KFmod.KFGameTypePvP",ActiveMaplist="Default KFP")
-     Games(14)=(GameType="KFStoryGame.KFstoryGameInfo",ActiveMaplist="Default KFO")
      DefaultListName="Default"
      InvalidGameType="could not be loaded.  Normally, this means an .u file has been deleted, but the .int file has not."
      ReallyInvalidGameType="The requested gametype '%gametype%' could not be loaded."

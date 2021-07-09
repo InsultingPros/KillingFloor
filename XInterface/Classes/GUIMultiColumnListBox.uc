@@ -110,4 +110,5 @@ defaultproperties
 
      bDisplayHeader=True
      DefaultListClass="Xinterface.GUIMultiColumnList"
+     bRequiresStyle=True
 }

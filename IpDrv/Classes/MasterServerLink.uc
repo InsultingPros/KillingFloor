@@ -64,8 +64,8 @@ simulated function Tick( float Delta )
 
 defaultproperties
 {
-     LANPort=11707
-     LANServerPort=10707
+     LANPort=11757
+     LANServerPort=10757
      MasterServerList(0)=(Address="207.135.144.10",Port=28902)
      MasterServerList(1)=(Address="207.135.144.11",Port=28902)
      bAlwaysTick=True

@@ -115,7 +115,7 @@ defaultproperties
          WinHeight=0.053125
          RenderWeight=1.000000
      End Object
-     l_Title=GUILabel'xVoting.MatchSetupLoginPage.TitleLabel'
+     l_Title=GUILabel'XVoting.MatchSetupLoginPage.TitleLabel'
 
      Begin Object Class=moEditBox Name=UserIDEditBox
          Caption="UserID"
@@ -127,7 +127,7 @@ defaultproperties
          TabOrder=1
          OnKeyEvent=MatchSetupLoginPage.UserIDKeyPress
      End Object
-     ed_UserID=moEditBox'xVoting.MatchSetupLoginPage.UserIDEditBox'
+     ed_UserID=moEditBox'XVoting.MatchSetupLoginPage.UserIDEditBox'
 
      Begin Object Class=moEditBox Name=PasswordEditBox
          Caption="Password"
@@ -139,7 +139,7 @@ defaultproperties
          TabOrder=2
          OnKeyEvent=MatchSetupLoginPage.PasswordKeyPress
      End Object
-     ed_Password=moEditBox'xVoting.MatchSetupLoginPage.PasswordEditBox'
+     ed_Password=moEditBox'XVoting.MatchSetupLoginPage.PasswordEditBox'
 
      Begin Object Class=GUIButton Name=LoginButton
          Caption="Login"
@@ -152,7 +152,7 @@ defaultproperties
          OnClick=MatchSetupLoginPage.InternalOnClick
          OnKeyEvent=LoginButton.InternalOnKeyEvent
      End Object
-     b_Login=GUIButton'xVoting.MatchSetupLoginPage.LoginButton'
+     b_Login=GUIButton'XVoting.MatchSetupLoginPage.LoginButton'
 
      Begin Object Class=GUIButton Name=CancelButton
          Caption="Cancel"
@@ -165,7 +165,7 @@ defaultproperties
          OnClick=MatchSetupLoginPage.InternalOnClick
          OnKeyEvent=CancelButton.InternalOnKeyEvent
      End Object
-     b_Cancel=GUIButton'xVoting.MatchSetupLoginPage.CancelButton'
+     b_Cancel=GUIButton'XVoting.MatchSetupLoginPage.CancelButton'
 
      bAllowedAsLast=True
      OpenSound=Sound'KF_MenuSnd.Generic.msfxEdit'

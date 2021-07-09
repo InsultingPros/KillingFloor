@@ -2795,7 +2795,8 @@ defaultproperties
      GoreLevelText(0)="No Gore"
      GoreLevelText(1)="Reduced Gore"
      GoreLevelText(2)="Full Gore"
-     MaxPlayers=6
+     MaxSpectators=2
+     MaxPlayers=16
      CurrentID=1
      DefaultPlayerName="Player"
      FearCostFallOff=0.950000
@@ -2808,8 +2809,6 @@ defaultproperties
      GameReplicationInfoClass=Class'Engine.GameReplicationInfo'
      VoiceReplicationInfoClass=Class'Engine.VoiceChatReplicationInfo'
      MaplistHandlerClass=Class'Engine.MaplistManager'
-     GameStatsClass="IpDrv.MasterServerGameStats"
-     SecurityClass="UnrealGame.UnrealSecurity"
      GameName="Game"
      Acronym="???"
      VotingHandlerType="xVoting.xVotingHandler"

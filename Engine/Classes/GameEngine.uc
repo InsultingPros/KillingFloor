@@ -48,29 +48,5 @@ var(VoiceChat) globalconfig bool VoIPAllowVAD;
 
 defaultproperties
 {
-     ServerActors(0)="IpDrv.MasterServerUplink"
-     ServerActors(1)="UWeb.WebServer"
-     ServerPackages(0)="Core"
-     ServerPackages(1)="Engine"
-     ServerPackages(2)="Fire"
-     ServerPackages(3)="Editor"
-     ServerPackages(4)="IpDrv"
-     ServerPackages(5)="UWeb"
-     ServerPackages(6)="GamePlay"
-     ServerPackages(7)="UnrealGame"
-     ServerPackages(8)="XGame"
-     ServerPackages(9)="XInterface"
-     ServerPackages(10)="GUI2K4"
-     ServerPackages(11)="xVoting"
-     ServerPackages(12)="ROEffects"
-     ServerPackages(13)="ROEngine"
-     ServerPackages(14)="ROInterface"
-     ServerPackages(15)="KFMod"
-     ServerPackages(16)="KFChar"
-     MainMenuClass="KFGUI.KFMainMenu"
-     SinglePlayerMenuClass="KFGUI.KFMainMenu"
-     ConnectingMenuClass="GUI2K4.UT2K4ServerLoading"
-     DisconnectMenuClass="KFGUI.KFDisconnectPage"
-     LoadingClass="ROInterface.ROServerLoading"
      CacheSizeMegs=32
 }

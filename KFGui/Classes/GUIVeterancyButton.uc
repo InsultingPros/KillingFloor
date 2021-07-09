@@ -65,4 +65,9 @@ defaultproperties
      End Object
      ToolTip=GUIVeterancyToolTip'KFGui.GUIVeterancyButton.GUIVetToolTip'
 
+     Begin Object Class=VetButtonStyles Name=GUIVetButStyle
+         OnDraw=GUIVeterancyButton.RenderPerkIcon
+     End Object
+     Style=VetButtonStyles'KFGui.GUIVeterancyButton.GUIVetButStyle'
+
 }

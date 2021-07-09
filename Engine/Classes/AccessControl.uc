@@ -601,7 +601,6 @@ defaultproperties
      DefaultKickReason="None specified"
      IdleKickReason="Kicked for idling."
      AdminClass=Class'Engine.Admin'
-     bBanByID=True
      ACDisplayText(0)="Game Password"
      ACDisplayText(1)="Access Policies"
      ACDisplayText(2)="Admin Password"

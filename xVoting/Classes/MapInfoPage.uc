@@ -150,7 +150,7 @@ defaultproperties
          WinHeight=0.374167
          OnPreDraw=sbInfo.InternalPreDraw
      End Object
-     sb_Info=GUISectionBackground'xVoting.MapInfoPage.sbInfo'
+     sb_Info=GUISectionBackground'XVoting.MapInfoPage.sbInfo'
 
      Begin Object Class=GUIScrollTextBox Name=MapInfoList
          CharDelay=0.002500
@@ -165,7 +165,7 @@ defaultproperties
          bScaleToParent=True
          bNeverFocus=True
      End Object
-     lb_MapDesc=GUIScrollTextBox'xVoting.MapInfoPage.MapInfoList'
+     lb_MapDesc=GUIScrollTextBox'XVoting.MapInfoPage.MapInfoList'
 
      Begin Object Class=GUIImage Name=MapImage
          ImageStyle=ISTY_Scaled
@@ -177,7 +177,7 @@ defaultproperties
          RenderWeight=0.200000
          bScaleToParent=True
      End Object
-     i_MapImage=GUIImage'xVoting.MapInfoPage.MapImage'
+     i_MapImage=GUIImage'XVoting.MapInfoPage.MapImage'
 
      Begin Object Class=GUILabel Name=MapAuthorLabel
          Caption="MapAuthor"
@@ -191,7 +191,7 @@ defaultproperties
          RenderWeight=0.300000
          bScaleToParent=True
      End Object
-     l_MapAuthor=GUILabel'xVoting.MapInfoPage.MapAuthorLabel'
+     l_MapAuthor=GUILabel'XVoting.MapInfoPage.MapAuthorLabel'
 
      Begin Object Class=GUILabel Name=MapPlayersLabel
          Caption="Players"
@@ -205,7 +205,7 @@ defaultproperties
          RenderWeight=0.300000
          bScaleToParent=True
      End Object
-     l_MapPlayers=GUILabel'xVoting.MapInfoPage.MapPlayersLabel'
+     l_MapPlayers=GUILabel'XVoting.MapInfoPage.MapPlayersLabel'
 
      Begin Object Class=GUILabel Name=NoPreview
          Caption="No Preview Available"
@@ -221,7 +221,7 @@ defaultproperties
          WinHeight=0.451979
          bScaleToParent=True
      End Object
-     l_NoPreview=GUILabel'xVoting.MapInfoPage.NoPreview'
+     l_NoPreview=GUILabel'XVoting.MapInfoPage.NoPreview'
 
      MessageNoInfo="No information available!"
      AuthorText="Author"

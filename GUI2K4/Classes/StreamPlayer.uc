@@ -1511,6 +1511,27 @@ defaultproperties
      MGNew="New"
      MGRemove="Remove"
      MGRename="Rename"
+     Begin Object Class=GUIContextMenu Name=SongRCMenu
+         ContextItems(0)="Play Selected"
+         ContextItems(1)="Open Playlist Editor"
+         ContextItems(2)="-"
+         ContextItems(3)="Remove From Playlist"
+         ContextItems(4)="Clear Playlist"
+         OnSelect=StreamPlayer.SongMenuClick
+     End Object
+     cm_Playlist=GUIContextMenu'GUI2K4.StreamPlayer.SongRCMenu'
+
+     Begin Object Class=GUIContextMenu Name=PlaylistRCMenu
+         ContextItems(0)="Activate Playlist"
+         ContextItems(1)="Rename Playlist"
+         ContextItems(2)="Create new Playlist"
+         ContextItems(3)="-"
+         ContextItems(4)="Delete Playlist"
+         ContextItems(5)="Clear Playlist"
+         OnSelect=StreamPlayer.PlaylistMenuClick
+     End Object
+     cm_AllLists=GUIContextMenu'GUI2K4.StreamPlayer.PlaylistRCMenu'
+
      WindowName="Music Player"
      MinPageWidth=0.750000
      MinPageHeight=0.320000

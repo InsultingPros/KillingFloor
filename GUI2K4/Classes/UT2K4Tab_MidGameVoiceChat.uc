@@ -600,6 +600,7 @@ defaultproperties
      Begin Object Class=moCheckBox Name=NoVoiceChat
          Caption="Ignore Voice Chat"
          OnCreateComponent=NoVoiceChat.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="Do not receive any voice chat messages from this player, in any voice chat room"
          WinTop=0.750178
          WinLeft=0.647884
@@ -613,6 +614,7 @@ defaultproperties
      Begin Object Class=moCheckBox Name=NOSPEECH
          Caption="Ignore Speech"
          OnCreateComponent=NOSPEECH.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="Do not receive any speech messages, such as "Incoming!" from this player"
          WinTop=0.685424
          WinLeft=0.647884
@@ -626,6 +628,7 @@ defaultproperties
      Begin Object Class=moCheckBox Name=NOTEXT
          Caption="Ignore Text"
          OnCreateComponent=NOTEXT.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="Do not receive any text messages from this player"
          WinTop=0.620670
          WinLeft=0.647884
@@ -639,6 +642,7 @@ defaultproperties
      Begin Object Class=moCheckBox Name=BanPlayer
          Caption="Ban Player"
          OnCreateComponent=BanPlayer.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="Ban this player from your personal voice chat channel"
          WinTop=0.814932
          WinLeft=0.647884

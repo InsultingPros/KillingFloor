@@ -529,6 +529,13 @@ const KFACHIEVEMENT_WinClandestineSuicidal				= 277;
 const KFACHIEVEMENT_WinClandestineHell					= 278;
 const KFACHIEVEMENT_DestroySkulls						= 279;
 
+// ThrillsChills Achievements
+const KFACHIEVEMENT_WinThrillsChillsNormal				= 280;
+const KFACHIEVEMENT_WinThrillsChillsHard				= 281;
+const KFACHIEVEMENT_WinThrillsChillsSuicidal			= 282;
+const KFACHIEVEMENT_WinThrillsChillsHell				= 283;
+const KFACHIEVEMENT_CollectSnowGlobes					= 284;
+
 struct native export KFAchievement
 {
     var string  SteamName;
@@ -564,6 +571,7 @@ var name TransitNitroInXSecondsFailedEventName;
 var name SirensBelchBeerSteinsEventName;
 var name StrongholdGoldBagsEventName;
 var name ClandestineSkullsEventName;
+var name ThrillsChillsSnowglobeEventName;
 
 //=============================================================================
 // Objective Names
@@ -1001,7 +1009,6 @@ simulated event PostNetReceive()
         SavedZEDSKilledWhileZapped = ZEDSKilledWhileZapped.Value;
         bFlushStatsToDatabase = true;
     }
-
 
     if ( bFlushStatsToDatabase )
     {
@@ -2575,6 +2582,10 @@ function WonGame(string MapName, float Difficulty, bool bLong)
     else if ( MapName ~= "KF-Clandestine" )
     {
         CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinClandestineNormal);
+    }
+       else if ( MapName ~= "KF-ThrillsChills" )
+    {
+        CheckEndGameAchievements(Difficulty, KFACHIEVEMENT_WinThrillsChillsNormal);
     }
 }
 
@@ -4276,6 +4287,10 @@ simulated function CheckEvents( Name EventName )
     {
         CheckAndSetAchievementComplete( KFACHIEVEMENT_DestroySkulls );
     }
+    else if ( EventName == ThrillsChillsSnowglobeEventName )
+    {
+        CheckAndSetAchievementComplete( KFACHIEVEMENT_CollectSnowGlobes );
+    }
 }
 
 function OnWeaponReloaded()
@@ -4765,6 +4780,11 @@ defaultproperties
      Achievements(277)=(SteamName="WinClandestineSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_277',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(278)=(SteamName="WinClandestineHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_278',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      Achievements(279)=(SteamName="DestroySkulls",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_279',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(280)=(SteamName="WinThrillsChillsNormal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_280',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(281)=(SteamName="WinThrillsChillsHard",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_281',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(282)=(SteamName="WinThrillsChillsSuicidal",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_282',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(283)=(SteamName="WinThrillsChillsHell",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_283',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
+     Achievements(284)=(SteamName="CollectSnowGlobes",Icon=Texture'KillingFloor2HUD.Achievements.Achievement_284',LockedIcon=Texture'KillingFloorHUD.Achievements.KF_Achievement_Lock')
      HillBillyGnomesEventName="GnomeSoulsCompleted"
      SteamLandClownsEventName="ClownSoulsCompleted"
      SteamLandGamesEventName="MiniGamesCompleted"
@@ -4780,6 +4800,7 @@ defaultproperties
      SirensBelchBeerSteinsEventName="BeerSteinsCompleted"
      StrongholdGoldBagsEventName="GoldBags_Completed"
      ClandestineSkullsEventName="SkullSmashCompleted"
+     ThrillsChillsSnowglobeEventName="SnowGlobeCompleted"
      SteamLandEscortObjName="EscortRingMaster"
      SteamLandDefendObjName="DefendRingMaster"
      SteamLandGoldObjName="GoldStashObj"
@@ -5109,4 +5130,9 @@ defaultproperties
      SteamNameAchievement(277)="WinClandestineSuicidal"
      SteamNameAchievement(278)="WinClandestineHell"
      SteamNameAchievement(279)="DestroySkulls"
+     SteamNameAchievement(280)="WinThrillsChillsNormal"
+     SteamNameAchievement(281)="WinThrillsChillsHard"
+     SteamNameAchievement(282)="WinThrillsChillsSuicidal"
+     SteamNameAchievement(283)="WinThrillsChillsHell"
+     SteamNameAchievement(284)="CollectSnowGlobes"
 }

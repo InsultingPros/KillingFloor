@@ -2165,9 +2165,7 @@ defaultproperties
      bSpeechMenuUseMouseWheel=True
      ChatMenuClass="GUI2K4.UT2K4InGameChat"
      StatsPromptMenuClass="GUI2K4.UT2K4StatsPrompt"
-     MusicManagerClassName="GUI2K4.StreamPlayer"
      NeedPasswordMenuClass="GUI2K4.UT2K4GetPassword"
      ServerInfoMenu="GUI2K4.UT2K4ServerInfo"
      SteamLoginMenuClass="ROInterface.ROSteamLoginPage"
-     ConsoleHotKey=192
 }

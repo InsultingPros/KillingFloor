@@ -671,5 +671,6 @@ defaultproperties
      TraderSoundTooHeavy=SoundGroup'KF_Trader.TooHeavy'
      GetItemHeight=KFBuyMenuSaleList.SaleItemHeight
      FontScale=FNS_Medium
+     WhiteColor=(B=255,G=255,R=255)
      OnPreDraw=KFBuyMenuSaleList.PreDraw
 }

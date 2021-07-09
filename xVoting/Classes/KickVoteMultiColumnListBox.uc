@@ -84,7 +84,7 @@ defaultproperties
          OnSelect=KickVoteMultiColumnListBox.InternalOnClick
          StyleName="ServerListContextMenu"
      End Object
-     ContextMenu=GUIContextMenu'xVoting.KickVoteMultiColumnListBox.RCMenu'
+     ContextMenu=GUIContextMenu'XVoting.KickVoteMultiColumnListBox.RCMenu'
 
      OnRightClick=KickVoteMultiColumnListBox.InternalOnRightClick
 }

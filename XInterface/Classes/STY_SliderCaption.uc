@@ -10,4 +10,5 @@ class STY_SliderCaption extends GUIStyles;
 defaultproperties
 {
      KeyName="SliderCaption"
+     FontNames(0)="UT2MenuFont"
 }

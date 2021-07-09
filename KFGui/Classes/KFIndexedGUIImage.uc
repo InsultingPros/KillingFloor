@@ -14,6 +14,8 @@ defaultproperties
      bAcceptsInput=True
      bCaptureMouse=True
      bMouseOverSound=True
+     Begin Object Class=GUIToolTip Name=GUIButtonToolTip
+     End Object
      ToolTip=GUIToolTip'XInterface.GUIButton.GUIButtonToolTip'
 
      OnClickSound=CS_Click

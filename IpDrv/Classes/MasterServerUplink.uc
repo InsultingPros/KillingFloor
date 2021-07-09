@@ -207,7 +207,7 @@ defaultproperties
      CachePlayerCount=-1
      DoUplink=True
      UplinkToGamespy=True
-     DoLANBroadcast=True
+     SendStats=True
      MSUPropText(0)="Advertise Server"
      MSUPropText(1)="Process Stats"
      MSUPropDesc(0)="if true, your server is advertised on the internet server browser."

@@ -630,7 +630,7 @@ function UpdateHit(Actor HitActor, vector HitLocation, vector HitNormal)
 
 defaultproperties
 {
-     WeaponAmbientScale=5.000000
+     WeaponAmbientScale=1.000000
      MuzzleBoneName="tip"
      ShellEjectionBoneName="weapon_eject"
      PA_MovementAnims(0)="runF_Kar"

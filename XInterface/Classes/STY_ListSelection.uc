@@ -17,4 +17,14 @@ event Initialize()
 defaultproperties
 {
      KeyName="ListSelection"
+     FontNames(10)="UT2HeaderFont"
+     FontNames(11)="UT2HeaderFont"
+     FontNames(12)="UT2HeaderFont"
+     FontNames(13)="UT2HeaderFont"
+     FontNames(14)="UT2HeaderFont"
+     FontColors(0)=(B=128,G=64,R=64)
+     FontColors(1)=(B=128,G=64,R=64)
+     FontColors(2)=(B=128,G=64,R=64)
+     FontColors(3)=(B=128,G=64,R=64)
+     FontColors(4)=(B=128,G=64,R=64)
 }

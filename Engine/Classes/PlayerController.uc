@@ -7769,12 +7769,15 @@ simulated event OnSubscribedFileDownloadUpdate(float DownloadProgress)
 defaultproperties
 {
      bAlwaysMouseLook=True
-     bKeyboardLook=True
      bZeroRoll=True
      bNoTextToSpeechVoiceMessages=True
      bSmallWeapons=True
      bWeaponViewShake=True
      bLandingShake=True
+     bEnablePickupForceFeedback=True
+     bEnableWeaponForceFeedback=True
+     bEnableDamageForceFeedback=True
+     bEnableGUIForceFeedback=True
      bForceFeedbackSupported=True
      bVoiceChatEnabled=True
      bEnableInitialChatRoom=True
@@ -7811,12 +7814,12 @@ defaultproperties
      SpectateSpeed=600.000000
      DynamicPingThreshold=400.000000
      MidGameMenuClass="ROInterface.RODisconnectOptionPage"
-     DemoMenuClass="GUI2K4.UT2K4DemoPlayback"
      AdminMenuClass="GUI2K4.RemoteAdmin"
      ChatPasswordMenuClass="GUI2K4.UT2K4ChatPassword"
      VoiceChatCodec="CODEC_48NB"
      VoiceChatLANCodec="CODEC_96WB"
      LastSpeedHackLog=-100.000000
+     Handedness=1.000000
      bIsPlayer=True
      bCanOpenDoors=True
      bCanDoSpecial=True

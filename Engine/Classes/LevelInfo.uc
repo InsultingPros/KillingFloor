@@ -548,7 +548,7 @@ defaultproperties
      BloomRatioMaximum=0.500000
      CustomRadarRange=10000.000000
      PhysicsDetailLevel=PDL_Medium
-     MeshLODDetailLevel=MDL_Ultra
+     MeshLODDetailLevel=MDL_Medium
      KarmaTimeScale=0.900000
      RagdollTimeScale=1.000000
      MaxRagdolls=4

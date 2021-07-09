@@ -196,7 +196,7 @@ defaultproperties
          bScaleToParent=True
          OnPreDraw=MapvoteFooterBackground.InternalPreDraw
      End Object
-     sb_Background=AltSectionBackground'xVoting.MapVoteFooter.MapvoteFooterBackground'
+     sb_Background=AltSectionBackground'XVoting.MapVoteFooter.MapvoteFooterBackground'
 
      Begin Object Class=GUIScrollTextBox Name=ChatScrollBox
          bNoTeletype=True
@@ -214,7 +214,7 @@ defaultproperties
          bScaleToParent=True
          bNeverFocus=True
      End Object
-     lb_Chat=GUIScrollTextBox'xVoting.MapVoteFooter.ChatScrollBox'
+     lb_Chat=GUIScrollTextBox'XVoting.MapVoteFooter.ChatScrollBox'
 
      Begin Object Class=moEditBox Name=ChatEditbox
          CaptionWidth=0.150000
@@ -227,7 +227,7 @@ defaultproperties
          TabOrder=0
          OnKeyEvent=MapVoteFooter.InternalOnKeyEvent
      End Object
-     ed_Chat=moEditBox'xVoting.MapVoteFooter.ChatEditbox'
+     ed_Chat=moEditBox'XVoting.MapVoteFooter.ChatEditbox'
 
      Begin Object Class=GUIButton Name=AcceptButton
          Caption="Accept"
@@ -242,7 +242,7 @@ defaultproperties
          OnClick=MapVoteFooter.InternalOnClick
          OnKeyEvent=AcceptButton.InternalOnKeyEvent
      End Object
-     b_Accept=GUIButton'xVoting.MapVoteFooter.AcceptButton'
+     b_Accept=GUIButton'XVoting.MapVoteFooter.AcceptButton'
 
      Begin Object Class=GUIButton Name=SubmitButton
          Caption="Submit"
@@ -255,7 +255,7 @@ defaultproperties
          OnClick=MapVoteFooter.InternalOnClick
          OnKeyEvent=SubmitButton.InternalOnKeyEvent
      End Object
-     b_Submit=GUIButton'xVoting.MapVoteFooter.SubmitButton'
+     b_Submit=GUIButton'XVoting.MapVoteFooter.SubmitButton'
 
      Begin Object Class=GUIButton Name=CloseButton
          Caption="Close"
@@ -268,7 +268,7 @@ defaultproperties
          OnClick=MapVoteFooter.InternalOnClick
          OnKeyEvent=CloseButton.InternalOnKeyEvent
      End Object
-     b_Close=GUIButton'xVoting.MapVoteFooter.CloseButton'
+     b_Close=GUIButton'XVoting.MapVoteFooter.CloseButton'
 
      StyleName="BindBox"
      bNeverFocus=False

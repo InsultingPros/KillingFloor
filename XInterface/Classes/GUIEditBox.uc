@@ -328,6 +328,7 @@ defaultproperties
      StyleName="EditBox"
      WinHeight=0.060000
      bCaptureMouse=False
+     bRequiresStyle=True
      OnClickSound=CS_Edit
      OnActivate=GUIEditBox.InternalActivate
      OnDeActivate=GUIEditBox.InternalDeactivate

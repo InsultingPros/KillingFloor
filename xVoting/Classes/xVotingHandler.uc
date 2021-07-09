@@ -1681,16 +1681,15 @@ function GetServerDetails( out GameInfo.ServerResponseLine ServerState )
 
 defaultproperties
 {
-     VoteTimeLimit=30
+     VoteTimeLimit=70
      ScoreBoardDelay=5
      bAutoOpen=True
      MidGameVotePercent=50
      MinMapCount=2
      MapVoteHistoryType="xVoting.MapVoteHistory_INI"
-     RepeatLimit=1
+     RepeatLimit=4
      bDefaultToCurrentGameType=True
-     bKickVote=True
-     KickPercent=50
+     KickPercent=51
      bAnonymousKicking=True
      MapListLoaderType="xVoting.DefaultMapListLoader"
      ServerNumber=1

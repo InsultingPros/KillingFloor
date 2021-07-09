@@ -405,17 +405,9 @@ function string SetInitialMusic(string NewSong)
 
 defaultproperties
 {
-     ConsoleHotKey=9
      HistoryBot=-1
-     TimePerTitle=30.000000
-     TimePerDemo=60.000000
+     TimePerDemo=300.000000
      TimeTooIdle=60.000000
      TimeBeforeReboot=5.000000
-     TimePerSoak=3600.000000
-     DemoLevels(0)="DM-Curse3"
-     DemoLevels(1)="DM-Antalus"
-     DemoLevels(2)="CTF-Chrome"
-     DemoLevels(3)="DOM-SunTemple"
-     DemoLevels(4)="BR-Endagra"
      bRequiresTick=True
 }

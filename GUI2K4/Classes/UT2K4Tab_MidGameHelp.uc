@@ -196,6 +196,7 @@ defaultproperties
      Begin Object Class=GUIButton Name=PrevHint
          Caption="Previous Hint"
          bAutoSize=True
+         MenuState=MSAT_Disabled
          WinTop=0.900000
          WinLeft=0.131500
          WinWidth=0.226801
@@ -209,6 +210,7 @@ defaultproperties
      Begin Object Class=GUIButton Name=NextHint
          Caption="Next Hint"
          bAutoSize=True
+         MenuState=MSAT_Disabled
          WinTop=0.900000
          WinLeft=0.698425
          WinWidth=0.159469

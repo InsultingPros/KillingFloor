@@ -363,5 +363,6 @@ defaultproperties
      bIgnoreBackClick=True
      bAllowSelectEmpty=True
      bWrapItems=True
+     bRequiresStyle=True
      OnClick=GUICircularList.InternalOnClick
 }

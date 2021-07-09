@@ -159,7 +159,7 @@ defaultproperties
      LinkText="Link Setup"
      DefaultText="Default"
      AutoSelectText="Random"
-     MaplistEditorMenu="KFGUI.KFMaplistEditor"
+     MaplistEditorMenu="GUI2K4.MaplistEditor"
      WinTop=0.150000
      WinHeight=0.770000
 }

@@ -96,4 +96,5 @@ defaultproperties
      SelectionStyleName="ListSelection"
      FontScale=FNS_Small
      StyleName="ContextMenu"
+     bRequiresStyle=True
 }

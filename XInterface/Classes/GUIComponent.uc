@@ -1024,4 +1024,6 @@ defaultproperties
      Tag=-1
      bVisible=True
      bInit=True
+     TimerIndex=-1
+     WhiteColor=(B=244,G=237,R=253,A=255)
 }

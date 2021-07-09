@@ -323,7 +323,8 @@ defaultproperties
      bStopCountDown=True
      WeaponBerserk=1.000000
      ServerName="Killing Floor Server"
-     ShortName="KF Server"
+     ShortName="Server"
+     AdminEmail="Non-disclosed"
      GRIPropsDisplayText(0)="Server Name"
      GRIPropsDisplayText(1)="Admin Name"
      GRIPropsDisplayText(2)="Admin E-Mail"

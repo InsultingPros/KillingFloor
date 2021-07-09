@@ -10,4 +10,5 @@ class STY_Footer extends STY_SquareButton;
 defaultproperties
 {
      KeyName="Footer"
+     FontColors(1)=(B=0,G=200,R=230)
 }

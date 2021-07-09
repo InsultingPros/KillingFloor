@@ -56,7 +56,7 @@ defaultproperties
          OnSelect=MapVoteCountMultiColumnListBox.InternalOnClick
          StyleName="ServerListContextMenu"
      End Object
-     ContextMenu=GUIContextMenu'xVoting.MapVoteCountMultiColumnListBox.RCMenu'
+     ContextMenu=GUIContextMenu'XVoting.MapVoteCountMultiColumnListBox.RCMenu'
 
      OnRightClick=MapVoteCountMultiColumnListBox.InternalOnRightClick
 }

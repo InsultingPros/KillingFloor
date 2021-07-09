@@ -1435,7 +1435,7 @@ defaultproperties
      DesignModeHints(17)=(Key=" (Ctrl + Alt)",Description="                        View focus chain")
      DesignModeHints(18)=(Key=" [Ctrl +] Tab",Description="                        Select new MoveControl")
      DesignModeHints(19)=(Key=" [Ctrl +] LMouse",Description="                     Select new MoveControl")
-     MenuMouseSens=1.250000
+     MenuMouseSens=1.000000
      DblClickWindow=0.500000
      ButtonRepeatDelay=0.250000
      FastCursorStep=1

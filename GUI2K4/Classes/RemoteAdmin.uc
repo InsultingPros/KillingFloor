@@ -178,6 +178,7 @@ defaultproperties
          CaptionWidth=0.270000
          Caption="Section:"
          OnCreateComponent=OptionsCombo.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="Select the desired group of administration options to configure"
          WinTop=0.031249
          WinLeft=0.010625

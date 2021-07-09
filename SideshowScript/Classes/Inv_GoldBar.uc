@@ -19,6 +19,6 @@ defaultproperties
      GroundMaterial=Texture'Pier_T.Icons.Goldbar_Icon_64'
      ForcedGroundSpeed=120.000000
      bUseForcedGroundSpeed=True
-     PickupClass=Class'SideShowScript.Pickup_GoldBar'
+     PickupClass=Class'SideshowScript.Pickup_GoldBar'
      AttachmentClass=None
 }

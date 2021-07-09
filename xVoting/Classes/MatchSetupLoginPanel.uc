@@ -275,7 +275,7 @@ defaultproperties
          bBoundToParent=True
          bScaleToParent=True
      End Object
-     l_Status=GUILabel'xVoting.MatchSetupLoginPanel.StatusLabel'
+     l_Status=GUILabel'XVoting.MatchSetupLoginPanel.StatusLabel'
 
      Begin Object Class=moEditBox Name=UserIDEditBox
          CaptionWidth=0.100000
@@ -290,7 +290,7 @@ defaultproperties
          bScaleToParent=True
          OnKeyEvent=MatchSetupLoginPanel.UserNameKeyEvent
      End Object
-     ed_LoginName=moEditBox'xVoting.MatchSetupLoginPanel.UserIDEditBox'
+     ed_LoginName=moEditBox'XVoting.MatchSetupLoginPanel.UserIDEditBox'
 
      Begin Object Class=moEditBox Name=PasswordEditBox
          bMaskText=True
@@ -306,7 +306,7 @@ defaultproperties
          bScaleToParent=True
          OnKeyEvent=MatchSetupLoginPanel.PasswordKeyEvent
      End Object
-     ed_LoginPassword=moEditBox'xVoting.MatchSetupLoginPanel.PasswordEditBox'
+     ed_LoginPassword=moEditBox'XVoting.MatchSetupLoginPanel.PasswordEditBox'
 
      Begin Object Class=GUIButton Name=LoginButton
          Caption="Login"
@@ -321,7 +321,7 @@ defaultproperties
          OnClick=MatchSetupLoginPanel.InternalOnClick
          OnKeyEvent=LoginButton.InternalOnKeyEvent
      End Object
-     b_Submit=GUIButton'xVoting.MatchSetupLoginPanel.LoginButton'
+     b_Submit=GUIButton'XVoting.MatchSetupLoginPanel.LoginButton'
 
      Begin Object Class=GUIButton Name=CancelButton
          Caption="Cancel"
@@ -336,7 +336,7 @@ defaultproperties
          OnClick=MatchSetupLoginPanel.InternalOnClick
          OnKeyEvent=CancelButton.InternalOnKeyEvent
      End Object
-     b_Cancel=GUIButton'xVoting.MatchSetupLoginPanel.CancelButton'
+     b_Cancel=GUIButton'XVoting.MatchSetupLoginPanel.CancelButton'
 
      NoUsernameSpecified="In order to login to match setup, you must supply a username."
      NoPasswordSpecified="In order to login to match setup, you must supply a password."

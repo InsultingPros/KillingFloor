@@ -3,4 +3,29 @@ class VetButtonStyles extends GUIStyles;
 defaultproperties
 {
      KeyName="VeterancyButtonStyle"
+     FontNames(5)="UT2SmallFont"
+     FontNames(6)="UT2SmallFont"
+     FontNames(7)="UT2SmallFont"
+     FontNames(8)="UT2SmallFont"
+     FontNames(9)="UT2SmallFont"
+     FontNames(10)="UT2SmallFont"
+     FontNames(11)="UT2SmallFont"
+     FontNames(12)="UT2SmallFont"
+     FontNames(13)="UT2SmallFont"
+     FontNames(14)="UT2SmallFont"
+     FontColors(0)=(B=200,G=200,R=200,A=200)
+     FontColors(1)=(B=200,G=200,R=200,A=200)
+     FontColors(2)=(B=200,G=200,R=200,A=200)
+     FontColors(3)=(B=200,G=200,R=200,A=200)
+     FontColors(4)=(B=200,G=200,R=200,A=200)
+     Images(0)=Texture'25Tex.Common.VetbutTemplate'
+     Images(1)=Texture'25Tex.Common.VetbutTemplateSelect'
+     Images(2)=Texture'25Tex.Common.VetbutTemplateSelect'
+     Images(3)=Texture'25Tex.Common.VetbutTemplateSelect'
+     Images(4)=Texture'25Tex.Common.VetbutTemplateDisabled'
+     ImgStyle(0)=ISTY_Scaled
+     ImgStyle(1)=ISTY_Scaled
+     ImgStyle(2)=ISTY_Scaled
+     ImgStyle(3)=ISTY_Scaled
+     ImgStyle(4)=ISTY_Scaled
 }

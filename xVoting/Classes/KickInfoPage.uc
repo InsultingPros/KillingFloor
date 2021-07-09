@@ -106,7 +106,7 @@ defaultproperties
          TabOrder=2
          OnKeyEvent=ExitButton.InternalOnKeyEvent
      End Object
-     b_ReturnButton=GUIButton'xVoting.KickInfoPage.ExitButton'
+     b_ReturnButton=GUIButton'XVoting.KickInfoPage.ExitButton'
 
      Begin Object Class=GUIImage Name=KickImagePlayerPortrait
          Image=Texture'InterfaceArt_tex.Menu.changeme_texture'
@@ -118,7 +118,7 @@ defaultproperties
          WinWidth=0.155814
          WinHeight=0.358525
      End Object
-     i_PlayerPortrait=GUIImage'xVoting.KickInfoPage.KickImagePlayerPortrait'
+     i_PlayerPortrait=GUIImage'XVoting.KickInfoPage.KickImagePlayerPortrait'
 
      Begin Object Class=GUILabel Name=PlayerNameLabel
          Caption="PlayerName"
@@ -131,7 +131,7 @@ defaultproperties
          WinHeight=0.038297
          RenderWeight=0.300000
      End Object
-     l_PlayerName=GUILabel'xVoting.KickInfoPage.PlayerNameLabel'
+     l_PlayerName=GUILabel'XVoting.KickInfoPage.PlayerNameLabel'
 
      Begin Object Class=PlayerInfoMultiColumnListBox Name=PlayerInfoBoxControl
          bVisibleWhenEmpty=True
@@ -142,7 +142,7 @@ defaultproperties
          WinWidth=0.422477
          WinHeight=0.299483
      End Object
-     lb_PlayerInfoBox=PlayerInfoMultiColumnListBox'xVoting.KickInfoPage.PlayerInfoBoxControl'
+     lb_PlayerInfoBox=PlayerInfoMultiColumnListBox'XVoting.KickInfoPage.PlayerInfoBoxControl'
 
      PingText="Ping"
      ScoreText="Score"

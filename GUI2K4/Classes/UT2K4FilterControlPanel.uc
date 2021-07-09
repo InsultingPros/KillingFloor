@@ -308,6 +308,7 @@ defaultproperties
 
      Begin Object Class=GUIButton Name=RemoveFButton
          Caption="Remove"
+         MenuState=MSAT_Disabled
          Hint="Permanently delete currently selected filter"
          WinTop=0.927996
          WinLeft=0.189031

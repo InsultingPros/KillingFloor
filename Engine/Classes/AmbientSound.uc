@@ -33,7 +33,7 @@ var globalconfig float AmbientVolume;		// ambient volume multiplier (scaling)
 
 defaultproperties
 {
-     AmbientVolume=0.250000
+     AmbientVolume=0.300000
      bStatic=False
      bNoDelete=True
      Texture=Texture'Engine.S_Ambient'

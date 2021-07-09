@@ -35,4 +35,5 @@ defaultproperties
      BarStyleName="SectionHeaderBar"
      StyleName="SectionHeaderTop"
      bAcceptsInput=True
+     bRequiresStyle=True
 }

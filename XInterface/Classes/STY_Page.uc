@@ -11,4 +11,8 @@ class STY_Page extends GUIStyles;
 defaultproperties
 {
      KeyName="Page"
+     FontColors(0)=(B=128,G=128,R=255)
+     FontColors(1)=(B=128,G=128)
+     FontColors(2)=(B=128,G=128,R=255)
+     FontColors(3)=(B=128,G=128,R=255)
 }

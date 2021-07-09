@@ -27,5 +27,6 @@ defaultproperties
      bCaptureMouse=True
      bNeverFocus=True
      bRepeatClick=True
+     bRequiresStyle=True
      OnClick=GUIScrollZoneBase.InternalOnClick
 }

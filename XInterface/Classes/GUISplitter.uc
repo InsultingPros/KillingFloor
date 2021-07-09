@@ -76,4 +76,5 @@ defaultproperties
      StyleName="SquareButton"
      bAcceptsInput=True
      bNeverFocus=True
+     bRequiresStyle=True
 }

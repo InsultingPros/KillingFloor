@@ -2,4 +2,29 @@ class KF_ListSelection extends STY2ListSelection;
 
 defaultproperties
 {
+     FontNames(0)="UT2MidGameFont"
+     FontNames(1)="UT2MidGameFont"
+     FontNames(2)="UT2MidGameFont"
+     FontNames(3)="UT2MidGameFont"
+     FontNames(4)="UT2MidGameFont"
+     FontColors(0)=(B=255,G=255,A=255)
+     FontColors(1)=(B=68,G=68,R=203)
+     FontColors(2)=(B=68,G=68,R=203)
+     FontColors(3)=(B=68,G=68,R=203)
+     FontColors(4)=(B=50,G=50,R=255)
+     FontBKColors(0)=(B=0,G=0,R=0,A=90)
+     FontBKColors(1)=(B=0,G=0,R=0,A=90)
+     FontBKColors(2)=(B=0,G=0,R=0,A=90)
+     FontBKColors(3)=(B=0,G=0,R=0,A=90)
+     FontBKColors(4)=(B=0,G=0,R=0,A=90)
+     ImgColors(0)=(B=255,G=255,R=255,A=0)
+     ImgColors(1)=(B=255,G=255,R=255,A=0)
+     ImgColors(2)=(B=255,G=255,R=255,A=0)
+     ImgColors(3)=(B=255,G=255,R=255,A=0)
+     ImgColors(4)=(B=255,G=255,R=255,A=0)
+     RStyles(0)=MSTY_Masked
+     RStyles(1)=MSTY_Masked
+     RStyles(2)=MSTY_Masked
+     RStyles(3)=MSTY_Masked
+     RStyles(4)=MSTY_Masked
 }

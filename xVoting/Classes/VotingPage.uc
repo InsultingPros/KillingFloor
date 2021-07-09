@@ -42,7 +42,7 @@ defaultproperties
          WinHeight=0.291406
          TabOrder=10
      End Object
-     f_Chat=MapVoteFooter'xVoting.VotingPage.MatchSetupFooter'
+     f_Chat=MapVoteFooter'XVoting.VotingPage.MatchSetupFooter'
 
      bRequire640x480=False
      bAllowedAsLast=True

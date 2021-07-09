@@ -187,7 +187,7 @@ defaultproperties
          bScaleToParent=True
          OnRightClick=MapListBox.InternalOnRightClick
      End Object
-     lb_MapListBox=MapVoteMultiColumnListBox'xVoting.MapVotingPage.MapListBox'
+     lb_MapListBox=MapVoteMultiColumnListBox'XVoting.MapVotingPage.MapListBox'
 
      Begin Object Class=MapVoteCountMultiColumnListBox Name=VoteCountListBox
          HeaderColumnPerc(0)=0.400000
@@ -203,7 +203,7 @@ defaultproperties
          bScaleToParent=True
          OnRightClick=VoteCountListBox.InternalOnRightClick
      End Object
-     lb_VoteCountListBox=MapVoteCountMultiColumnListBox'xVoting.MapVotingPage.VoteCountListBox'
+     lb_VoteCountListBox=MapVoteCountMultiColumnListBox'XVoting.MapVotingPage.VoteCountListBox'
 
      Begin Object Class=moComboBox Name=GameTypeCombo
          CaptionWidth=0.350000
@@ -215,7 +215,7 @@ defaultproperties
          WinHeight=0.037500
          bScaleToParent=True
      End Object
-     co_GameType=moComboBox'xVoting.MapVotingPage.GameTypeCombo'
+     co_GameType=moComboBox'XVoting.MapVotingPage.GameTypeCombo'
 
      Begin Object Class=GUIImage Name=MapListBackground
          Image=Texture'KF_InterfaceArt_tex.Menu.Thin_border_SlightTransparent'
@@ -225,7 +225,7 @@ defaultproperties
          WinWidth=0.980000
          WinHeight=0.316542
      End Object
-     i_MapListBackground=GUIImage'xVoting.MapVotingPage.MapListBackground'
+     i_MapListBackground=GUIImage'XVoting.MapVotingPage.MapListBackground'
 
      Begin Object Class=GUIImage Name=MapCountListBackground
          Image=Texture'KF_InterfaceArt_tex.Menu.Thin_border_SlightTransparent'
@@ -236,7 +236,7 @@ defaultproperties
          WinHeight=0.223770
          OnDraw=MapVotingPage.AlignBK
      End Object
-     i_MapCountListBackground=GUIImage'xVoting.MapVotingPage.MapCountListBackground'
+     i_MapCountListBackground=GUIImage'XVoting.MapVotingPage.MapCountListBackground'
 
      lmsgMapVotingDisabled="Sorry, Map Voting has been disabled by the server administrator."
      lmsgReplicationNotFinished="Map data download in progress. Please try again later."

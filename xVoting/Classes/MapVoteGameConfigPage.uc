@@ -338,7 +338,7 @@ defaultproperties
          WinHeight=0.753907
          OnPreDraw=SBList.InternalPreDraw
      End Object
-     sb_List=AltSectionBackground'xVoting.MapVoteGameConfigPage.SBList'
+     sb_List=AltSectionBackground'XVoting.MapVoteGameConfigPage.SBList'
 
      Begin Object Class=AltSectionBackground Name=SBList2
          Caption="Mutators"
@@ -353,7 +353,7 @@ defaultproperties
          RenderWeight=0.490000
          OnPreDraw=SBList2.InternalPreDraw
      End Object
-     sb_List2=AltSectionBackground'xVoting.MapVoteGameConfigPage.SBList2'
+     sb_List2=AltSectionBackground'XVoting.MapVoteGameConfigPage.SBList2'
 
      Begin Object Class=GUIListBox Name=GameConfigListBox
          bVisibleWhenEmpty=True
@@ -365,13 +365,14 @@ defaultproperties
          WinHeight=0.727759
          TabOrder=0
      End Object
-     lb_GameConfigList=GUIListBox'xVoting.MapVoteGameConfigPage.GameConfigListBox'
+     lb_GameConfigList=GUIListBox'XVoting.MapVoteGameConfigPage.GameConfigListBox'
 
      Begin Object Class=moComboBox Name=GameClassComboBox
          CaptionWidth=0.400000
          ComponentWidth=0.600000
          Caption="Game Class"
          OnCreateComponent=GameClassComboBox.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="Select a game type for the select game configuration."
          WinTop=0.136135
          WinLeft=0.028955
@@ -380,13 +381,14 @@ defaultproperties
          TabOrder=4
          OnChange=MapVoteGameConfigPage.FieldChange
      End Object
-     co_GameClass=moComboBox'xVoting.MapVoteGameConfigPage.GameClassComboBox'
+     co_GameClass=moComboBox'XVoting.MapVoteGameConfigPage.GameClassComboBox'
 
      Begin Object Class=moEditBox Name=GameTitleEditBox
          CaptionWidth=0.400000
          ComponentWidth=0.600000
          Caption="Game Title"
          OnCreateComponent=GameTitleEditBox.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="Enter a custom game configuration title."
          WinTop=0.223844
          WinLeft=0.028955
@@ -395,13 +397,14 @@ defaultproperties
          TabOrder=3
          OnChange=MapVoteGameConfigPage.FieldChange
      End Object
-     ed_GameTitle=moEditBox'xVoting.MapVoteGameConfigPage.GameTitleEditBox'
+     ed_GameTitle=moEditBox'XVoting.MapVoteGameConfigPage.GameTitleEditBox'
 
      Begin Object Class=moEditBox Name=AcronymEditBox
          CaptionWidth=0.400000
          ComponentWidth=0.600000
          Caption="Abbreviation"
          OnCreateComponent=AcronymEditBox.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="A short abbreviation, description, or acronym that identifies the game configuration. This will be appended to the map name in vote messages."
          WinTop=0.306343
          WinLeft=0.028955
@@ -410,13 +413,14 @@ defaultproperties
          TabOrder=5
          OnChange=MapVoteGameConfigPage.FieldChange
      End Object
-     ed_Acronym=moEditBox'xVoting.MapVoteGameConfigPage.AcronymEditBox'
+     ed_Acronym=moEditBox'XVoting.MapVoteGameConfigPage.AcronymEditBox'
 
      Begin Object Class=moEditBox Name=PrefixEditBox
          CaptionWidth=0.400000
          ComponentWidth=0.600000
          Caption="Map Prefixes"
          OnCreateComponent=PrefixEditBox.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="List of map name prefixes. Separate each with commas."
          WinTop=0.393185
          WinLeft=0.028955
@@ -425,11 +429,12 @@ defaultproperties
          TabOrder=6
          OnChange=MapVoteGameConfigPage.FieldChange
      End Object
-     ed_Prefix=moEditBox'xVoting.MapVoteGameConfigPage.PrefixEditBox'
+     ed_Prefix=moEditBox'XVoting.MapVoteGameConfigPage.PrefixEditBox'
 
      Begin Object Class=MultiSelectListBox Name=MutatorListBox
          bVisibleWhenEmpty=True
          OnCreateComponent=MutatorListBox.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="Select each mutator that should be loaded with this game configuration."
          WinTop=0.484369
          WinLeft=0.224267
@@ -438,13 +443,14 @@ defaultproperties
          TabOrder=9
          OnChange=MapVoteGameConfigPage.FieldChange
      End Object
-     lb_Mutator=MultiSelectListBox'xVoting.MapVoteGameConfigPage.MutatorListBox'
+     lb_Mutator=MultiSelectListBox'XVoting.MapVoteGameConfigPage.MutatorListBox'
 
      Begin Object Class=moEditBox Name=ParameterEditBox
          CaptionWidth=0.400000
          ComponentWidth=0.600000
          Caption="Parameters"
          OnCreateComponent=ParameterEditBox.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="(Advanced) List of game parameters with values. Separated each with a comma. (ex. GoalScore=4,MinPlayers=4)"
          WinTop=0.826949
          WinLeft=0.077783
@@ -452,7 +458,7 @@ defaultproperties
          TabOrder=7
          OnChange=MapVoteGameConfigPage.FieldChange
      End Object
-     ed_Parameter=moEditBox'xVoting.MapVoteGameConfigPage.ParameterEditBox'
+     ed_Parameter=moEditBox'XVoting.MapVoteGameConfigPage.ParameterEditBox'
 
      Begin Object Class=GUIButton Name=NewButton
          Caption="New"
@@ -464,10 +470,11 @@ defaultproperties
          OnClick=MapVoteGameConfigPage.NewButtonClick
          OnKeyEvent=NewButton.InternalOnKeyEvent
      End Object
-     b_New=GUIButton'xVoting.MapVoteGameConfigPage.NewButton'
+     b_New=GUIButton'XVoting.MapVoteGameConfigPage.NewButton'
 
      Begin Object Class=GUIButton Name=DeleteButton
          Caption="Delete"
+         MenuState=MSAT_Disabled
          Hint="Delete the selected game configuration."
          WinTop=0.913925
          WinLeft=0.268403
@@ -476,12 +483,13 @@ defaultproperties
          OnClick=MapVoteGameConfigPage.DeleteButtonClick
          OnKeyEvent=DeleteButton.InternalOnKeyEvent
      End Object
-     b_Delete=GUIButton'xVoting.MapVoteGameConfigPage.DeleteButton'
+     b_Delete=GUIButton'XVoting.MapVoteGameConfigPage.DeleteButton'
 
      Begin Object Class=moCheckBox Name=DefaultCheckBox
          ComponentWidth=0.200000
          Caption="Default"
          OnCreateComponent=DefaultCheckBox.InternalOnCreateComponent
+         MenuState=MSAT_Disabled
          Hint="The selected game configuration will be the default if all the players leave the server"
          WinTop=0.826949
          WinLeft=0.659814
@@ -489,7 +497,7 @@ defaultproperties
          TabOrder=8
          OnChange=MapVoteGameConfigPage.FieldChange
      End Object
-     ch_Default=moCheckBox'xVoting.MapVoteGameConfigPage.DefaultCheckBox'
+     ch_Default=moCheckBox'XVoting.MapVoteGameConfigPage.DefaultCheckBox'
 
      SaveIndex=-1
      ListIndex=-1

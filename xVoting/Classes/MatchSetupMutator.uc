@@ -338,7 +338,7 @@ defaultproperties
          bScaleToParent=True
          OnPreDraw=InactiveBackground.InternalPreDraw
      End Object
-     sb_Avail=GUISectionBackground'xVoting.MatchSetupMutator.InactiveBackground'
+     sb_Avail=GUISectionBackground'XVoting.MatchSetupMutator.InactiveBackground'
 
      Begin Object Class=GUISectionBackground Name=ActiveBackground
          bFillClient=True
@@ -352,7 +352,7 @@ defaultproperties
          bScaleToParent=True
          OnPreDraw=ActiveBackground.InternalPreDraw
      End Object
-     sb_Active=GUISectionBackground'xVoting.MatchSetupMutator.ActiveBackground'
+     sb_Active=GUISectionBackground'XVoting.MatchSetupMutator.ActiveBackground'
 
      Begin Object Class=GUIListBox Name=MutInactiveList
          bVisibleWhenEmpty=True
@@ -364,7 +364,7 @@ defaultproperties
          WinHeight=0.662671
          TabOrder=0
      End Object
-     lb_Avail=GUIListBox'xVoting.MatchSetupMutator.MutInactiveList'
+     lb_Avail=GUIListBox'XVoting.MatchSetupMutator.MutInactiveList'
 
      Begin Object Class=GUIListBox Name=MutActiveList
          bVisibleWhenEmpty=True
@@ -376,7 +376,7 @@ defaultproperties
          WinHeight=0.662671
          TabOrder=1
      End Object
-     lb_Active=GUIListBox'xVoting.MatchSetupMutator.MutActiveList'
+     lb_Active=GUIListBox'XVoting.MatchSetupMutator.MutActiveList'
 
      Begin Object Class=GUIButton Name=MutAddButton
          Caption="Add"
@@ -391,7 +391,7 @@ defaultproperties
          OnClick=MatchSetupMutator.ModifyMutatorList
          OnKeyEvent=MutAddButton.InternalOnKeyEvent
      End Object
-     b_Add=GUIButton'xVoting.MatchSetupMutator.MutAddButton'
+     b_Add=GUIButton'XVoting.MatchSetupMutator.MutAddButton'
 
      Begin Object Class=GUIButton Name=MutAddAllButton
          Caption="Add All"
@@ -405,7 +405,7 @@ defaultproperties
          OnClick=MatchSetupMutator.ModifyMutatorList
          OnKeyEvent=MutAddAllButton.InternalOnKeyEvent
      End Object
-     b_AddAll=GUIButton'xVoting.MatchSetupMutator.MutAddAllButton'
+     b_AddAll=GUIButton'XVoting.MatchSetupMutator.MutAddAllButton'
 
      Begin Object Class=GUIButton Name=MutRemoveButton
          Caption="Remove"
@@ -421,7 +421,7 @@ defaultproperties
          OnClick=MatchSetupMutator.ModifyMutatorList
          OnKeyEvent=MutRemoveButton.InternalOnKeyEvent
      End Object
-     b_Remove=GUIButton'xVoting.MatchSetupMutator.MutRemoveButton'
+     b_Remove=GUIButton'XVoting.MatchSetupMutator.MutRemoveButton'
 
      Begin Object Class=GUIButton Name=MutRemoveAllButton
          Caption="Remove All"
@@ -435,7 +435,7 @@ defaultproperties
          OnClick=MatchSetupMutator.ModifyMutatorList
          OnKeyEvent=MutRemoveAllButton.InternalOnKeyEvent
      End Object
-     b_RemoveAll=GUIButton'xVoting.MatchSetupMutator.MutRemoveAllButton'
+     b_RemoveAll=GUIButton'XVoting.MatchSetupMutator.MutRemoveAllButton'
 
      PanelCaption="Mutators"
 }

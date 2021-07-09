@@ -454,6 +454,7 @@ defaultproperties
      End Object
      lb_Rules=GUIMultiOptionListBox'GUI2K4.UT2K4PlayInfoPanel.RuleListBox'
 
+     bRefresh=True
      EditText="Edit"
      FadeInTime=0.250000
      OnActivate=UT2K4PlayInfoPanel.InternalOnActivate

@@ -193,6 +193,7 @@ defaultproperties
 
      Begin Object Class=GUIButton Name=ResetButton
          Caption="Reset"
+         MenuState=MSAT_Disabled
          Hint="Reset & reload all player chat restrictions"
          WinTop=0.841335
          WinLeft=0.607745

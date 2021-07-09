@@ -6166,6 +6166,7 @@ defaultproperties
      JarrRotateMag=2000.000000
      JarrRotateRate=10000.000000
      JarrRotateDuration=4.000000
+     AutoJoinMask=7
      VehicleCheckRadius=350.000000
      DesiredFOV=85.000000
      DefaultFOV=85.000000

@@ -96,7 +96,7 @@ defaultproperties
          bScaleToParent=True
          OnPreDraw=ListBackground.InternalPreDraw
      End Object
-     sb_List=AltSectionBackground'xVoting.KickVotingPage.ListBackground'
+     sb_List=AltSectionBackground'XVoting.KickVotingPage.ListBackground'
 
      Begin Object Class=KickVoteMultiColumnListBox Name=PlayerListBoxControl
          bVisibleWhenEmpty=True
@@ -108,7 +108,7 @@ defaultproperties
          WinHeight=0.481758
          OnRightClick=PlayerListBoxControl.InternalOnRightClick
      End Object
-     lb_PlayerListBox=KickVoteMultiColumnListBox'xVoting.KickVotingPage.PlayerListBoxControl'
+     lb_PlayerListBox=KickVoteMultiColumnListBox'XVoting.KickVotingPage.PlayerListBoxControl'
 
      Begin Object Class=GUIButton Name=InfoButton
          Caption="Info"
@@ -120,7 +120,7 @@ defaultproperties
          OnClick=KickVotingPage.InfoClick
          OnKeyEvent=InfoButton.InternalOnKeyEvent
      End Object
-     b_Info=GUIButton'xVoting.KickVotingPage.InfoButton'
+     b_Info=GUIButton'XVoting.KickVotingPage.InfoButton'
 
      Begin Object Class=GUIButton Name=KickButton
          Caption="Kick"
@@ -132,7 +132,7 @@ defaultproperties
          OnClick=KickVotingPage.KickClick
          OnKeyEvent=KickButton.InternalOnKeyEvent
      End Object
-     b_Kick=GUIButton'xVoting.KickVotingPage.KickButton'
+     b_Kick=GUIButton'XVoting.KickVotingPage.KickButton'
 
      lmsgKickVotingDisabled="Sorry, Kick Voting has been disabled by the server administrator."
      WindowName="Kick Voting"

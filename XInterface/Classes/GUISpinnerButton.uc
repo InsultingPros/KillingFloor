@@ -35,5 +35,6 @@ defaultproperties
      StyleName="SpinnerButton"
      bNeverFocus=True
      bRepeatClick=True
+     bRequiresStyle=True
      OnClick=GUISpinnerButton.InternalOnClick
 }

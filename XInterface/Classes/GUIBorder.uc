@@ -35,4 +35,5 @@ defaultproperties
      PropagateVisibility=True
      StyleName="Footer"
      bNeverFocus=True
+     bRequiresStyle=True
 }

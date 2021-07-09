@@ -20,6 +20,7 @@ defaultproperties
 
      Begin Object Class=GUIButton Name=BrowserJoin
          Caption="JOIN"
+         MenuState=MSAT_Disabled
          StyleName="FooterButton"
          WinTop=0.500000
          WinLeft=611.000000
@@ -35,6 +36,7 @@ defaultproperties
 
      Begin Object Class=GUIButton Name=BrowserSpec
          Caption="SPECTATE"
+         MenuState=MSAT_Disabled
          StyleName="FooterButton"
          WinTop=0.500000
          WinLeft=0.771094
@@ -64,6 +66,7 @@ defaultproperties
 
      Begin Object Class=GUIButton Name=BrowserRefresh
          Caption="REFRESH"
+         MenuState=MSAT_Disabled
          StyleName="FooterButton"
          WinTop=0.500000
          WinLeft=0.885352

@@ -38,6 +38,7 @@ var 			Texture				KFCharacterDLCHoverTexture;
 #exec OBJ LOAD FIlE=PatchTex.utx
 #exec OBJ LOAD FIlE=KF_DLC.utx
 
+#exec OBJ LOAD FIlE=KillingFloorHUD_SUMMER.utx
 #exec OBJ LOAD FIlE=KillingFloorHUD_HALLOWEEN.utx
 #exec OBJ LOAD FIlE=KillingFloorHUD_XMAS.utx
 /*
@@ -128,7 +129,12 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 
 	SpecialEventType = class'KFGameType'.static.GetSpecialEventType();
 
-    if( SpecialEventType == 2 )
+    if( SpecialEventType == 1 )
+    {
+        KFBackground.Image = MaterialSequence'KillingFloorHUD_SUMMER.MainMenu.kf_menu_seq';
+        KFLogoBit.Image = FinalBlend'KillingFloorHUD_SUMMER.KFLogoFB';
+    }    
+    else if( SpecialEventType == 2 )
     {
         KFBackground.Image = MaterialSequence'KillingFloorHUD_HALLOWEEN.MainMenu.kf_menu_seq_HALLOWEEN';
         KFLogoBit.Image = FinalBlend'KillingFloorHUD_HALLOWEEN.KFLogoFB_halloween';

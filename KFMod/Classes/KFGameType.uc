@@ -45,13 +45,12 @@ const GL_Custom = 3;
 var()   globalconfig int    KFGameLength;       // The length for this game, adds/removes waves
 var()   globalconfig bool   bDisableZedSpawning;// Disable zed spawning for debugging
 
-
-
 struct IMClassList
 {
     var class<KFMonster> MClass;
     var string ID;
 };
+
 struct MSquadsList
 {
     var array< class<KFMonster> > MSquad;
@@ -202,7 +201,6 @@ struct MClassTypes
 var() globalconfig array<MClassTypes> MonsterClasses;
 var() string EndGameBossClass;
 
-
 // Store info for a special squad we want to spawn outside of the normal wave system
 struct SpecialSquad
 {
@@ -234,8 +232,7 @@ enum ESpecialEventType
     ET_TwistedChristmas
 };
 
-var private const ESpecialEventType SpecialEventType;
-
+var globalconfig ESpecialEventType SpecialEventType;
 var array< class<KFMonstersCollection> > SpecialEventMonsterCollections;
 
 // Stub
@@ -707,7 +704,7 @@ event InitGame( string Options, out string Error )
 
     log("Game length = "$KFGameLength);
 
-    
+
     MonsterCollection = SpecialEventMonsterCollections[ GetSpecialEventType() ];
     if( KFGameLength != GL_Custom )
     {
@@ -5369,7 +5366,6 @@ defaultproperties
      MonsterClasses(7)=(MClassName="KFChar.ZombieSiren_STANDARD",Mid="H")
      MonsterClasses(8)=(MClassName="KFChar.ZombieHusk_STANDARD",Mid="I")
      EndGameBossClass="KFChar.ZombieBoss_STANDARD"
-     SpecialEventType=ET_HillbillyHorror
      SpecialEventMonsterCollections(0)=Class'KFMod.KFMonstersCollection'
      SpecialEventMonsterCollections(1)=Class'KFMod.KFMonstersSummer'
      SpecialEventMonsterCollections(2)=Class'KFMod.KFMonstersHalloween'

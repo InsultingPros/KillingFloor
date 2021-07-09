@@ -130,7 +130,7 @@ defaultproperties
          bScaleToParent=True
          OnChange=MapVoteMapListConfigPage.UseMapList_Change
      End Object
-     ch_UseMapList=moCheckBox'xVoting.MapVoteMapListConfigPage.MapListCheckBox'
+     ch_UseMapList=moCheckBox'XVoting.MapVoteMapListConfigPage.MapListCheckBox'
 
      Begin Object Class=moEditBox Name=MapListLoaderPrefixEditBox
          CaptionWidth=0.400000
@@ -147,7 +147,7 @@ defaultproperties
          bScaleToParent=True
          OnChange=MapVoteMapListConfigPage.MapListChange
      End Object
-     ed_MapListPrefix=moEditBox'xVoting.MapVoteMapListConfigPage.MapListLoaderPrefixEditBox'
+     ed_MapListPrefix=moEditBox'XVoting.MapVoteMapListConfigPage.MapListLoaderPrefixEditBox'
 
      Begin Object Class=MultiSelectListBox Name=MapListListBox
          bVisibleWhenEmpty=True
@@ -162,7 +162,7 @@ defaultproperties
          bScaleToParent=True
          OnChange=MapVoteMapListConfigPage.MapListChange
      End Object
-     lb_MapList=MultiSelectListBox'xVoting.MapVoteMapListConfigPage.MapListListBox'
+     lb_MapList=MultiSelectListBox'XVoting.MapVoteMapListConfigPage.MapListListBox'
 
      sbCaption="Map Cycle List"
      WindowName="Map Voting List Configuration"

@@ -742,6 +742,19 @@ defaultproperties
      End Object
      i_GammaBar=GUIImage'ROInterface.ROUT2K4Tab_DetailSettings.GammaBar'
 
+     Begin Object Class=UT2K4GameFooter Name=SPFooter
+         PrimaryCaption="PLAY"
+         PrimaryHint="Start A Match With These Settings"
+         SecondaryCaption="SPECTATE"
+         SecondaryHint="Spectate A Match With These Settings"
+         Justification=TXTA_Left
+         TextIndent=5
+         FontScale=FNS_Small
+         WinTop=0.957943
+         RenderWeight=0.300000
+         TabOrder=8
+         OnPreDraw=SPFooter.InternalOnPreDraw
+     End Object
      t_Footer=UT2K4GameFooter'GUI2K4.UT2K4GamePageSP.SPFooter'
 
 }

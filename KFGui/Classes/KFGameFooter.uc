@@ -7,6 +7,7 @@ defaultproperties
      Begin Object Class=GUIButton Name=GamePrimaryButton
          AutoSizePadding=(HorzPerc=0.400000)
          bAutoSize=True
+         MenuState=MSAT_Disabled
          WinTop=0.906146
          WinHeight=0.033203
          TabOrder=0
@@ -18,6 +19,7 @@ defaultproperties
      Begin Object Class=GUIButton Name=GameSecondaryButton
          AutoSizePadding=(HorzPerc=0.400000)
          bAutoSize=True
+         MenuState=MSAT_Disabled
          WinTop=0.906146
          WinHeight=0.033203
          TabOrder=1

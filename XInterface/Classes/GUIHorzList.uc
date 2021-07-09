@@ -183,5 +183,6 @@ function PgDn()
 
 defaultproperties
 {
+     bRequiresStyle=True
      OnClick=GUIHorzList.InternalOnClick
 }
