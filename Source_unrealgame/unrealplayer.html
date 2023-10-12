@@ -1,0 +1,938 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: UnrealGame.UnrealPlayer</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/unrealplayer.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UnrealPlayer">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/unrealpawn.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/unrealplayerchatmanager.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_unrealgame/unrealplayer.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../unrealgame/unrealgame-overview.html">UnrealGame</a>.<a href="../unrealgame/unrealplayer.html">UnrealPlayer</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// UnrealPlayer.
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_type">class</span> <span class="source_type"><a href="../unrealgame/unrealplayer.html" class="source">UnrealPlayer</a></span> extends <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>
+<a name="5"></a>	config(<span class="source_type">User</span>);
+<a name="6"></a>
+<a name="7"></a>var <span class="source_type">bool</span>		bRising;
+<a name="8"></a>var <span class="source_type">bool</span>		bLatecomer;		<span class="source_comment">// entered multiplayer game after game started
+</span><a name="9"></a>var <span class="source_type">bool</span>		bDisplayLoser;
+<a name="10"></a>var <span class="source_type">bool</span>		bDisplayWinner;
+<a name="11"></a>var <span class="source_type">int</span>			LastTaunt;
+<a name="12"></a>var <span class="source_type">float</span>		LastWhispTime;
+<a name="13"></a>
+<a name="14"></a>var() <span class="source_type">int</span>		MultiKillLevel;
+<a name="15"></a>var() <span class="source_type">float</span>		LastKillTime;
+<a name="16"></a>
+<a name="17"></a>var <span class="source_type">float</span> LastTauntAnimTime, LastAutoTauntTime;
+<a name="18"></a>
+<a name="19"></a>var globalconfig <span class="source_type">string</span> CustomizedAnnouncerPack; <span class="source_comment">// OBSOLETE
+</span><a name="20"></a>var globalconfig <span class="source_type">string</span> CustomStatusAnnouncerPack;
+<a name="21"></a>var globalconfig <span class="source_type">string</span> CustomRewardAnnouncerPack;
+<a name="22"></a>var transient globalconfig array&lt;<span class="source_type">string</span>&gt; RejoinChannels;	<span class="source_comment">// Channels which player was a member of during last match
+</span><a name="23"></a>
+<a name="24"></a>var globalconfig array&lt;<span class="source_type">string</span>&gt; RecentServers;		<span class="source_comment">//IPs of recently visited servers - always in order with RecentServers[0] being the most recently visited server
+</span><a name="25"></a>var globalconfig <span class="source_type">int</span> MaxRecentServers;				<span class="source_comment">//Max length of RecentServers list (0 = always show login menu)
+</span><a name="26"></a>var globalconfig <span class="source_type">bool</span> bDontShowLoginMenu;			<span class="source_comment">//Don't show the login menu unless forced by the server
+</span><a name="27"></a>
+<a name="28"></a>var <span class="source_type">bool</span> bReadyToStart;	<span class="source_comment">//Ready to start the game - used to prevent player from clicking in until he's had a chance to see the login menu
+</span><a name="29"></a>var <span class="source_type">string</span> LoginMenuClass;	<span class="source_comment">//Set by replicated function called by DeathMatch to the name of the login menu
+</span><a name="30"></a>var <span class="source_type">bool</span> bForceLoginMenu;	<span class="source_comment">//Set by replicated function called by DeathMatch to whether it wants to force player to see login menu
+</span><a name="31"></a>var <span class="source_type">float</span> LastKickWarningTime;
+<a name="32"></a>
+<a name="33"></a>var <span class="source_type">string</span> NetBotDebugString;
+<a name="34"></a>
+<a name="35"></a>replication
+<a name="36"></a>{
+<a name="37"></a>	<span class="source_comment">// Things the server should send to the client.
+</span><a name="38"></a>	unreliable if( Role==ROLE_Authority )
+<a name="39"></a>		NewClientPlayTakeHit, ClientDelayedAnnouncement, ClientDelayedAnnouncementNamed;
+<a name="40"></a>	reliable if ( Role == ROLE_Authority )
+<a name="41"></a>		PlayWinMessage, PlayStartupMessage, ClientSendStats, ClientSendSprees, ClientSendMultiKills, ClientSendCombos, ClientSendWeapon,
+<a name="42"></a>		ClientSendVehicle, ClientReceiveLoginMenu, ClientReceiveBotDebugString;
+<a name="43"></a>
+<a name="44"></a>	reliable if ( Role &lt; ROLE_Authority )
+<a name="45"></a>		ServerDropFlag, ServerTaunt, ServerPlayVehicleHorn, ServerShowPathToBase, ServerUpdateStats, ServerUpdateStatArrays, ServerGetNextWeaponStats,
+<a name="46"></a>		ServerGetNextVehicleStats, ServerSetReadyToStart, ServerSendBotDebugString;
+<a name="47"></a>}
+<a name="48"></a>
+<a name="49"></a><span class="source_comment">// Local stats related functions
+</span><a name="50"></a>
+<a name="51"></a>function ServerUpdateStats(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI)
+<a name="52"></a>{
+<a name="53"></a><span class="source_comment">// if _RO_
+</span><a name="54"></a>	ClientSendStats(PRI,PRI.GoalsScored,PRI.bFirstBlood, PRI.kills,PRI.suicides,PRI.FlagTouches,PRI.FlagReturns,PRI.FlakCount,PRI.ComboCount,PRI.HeadCount,PRI.RanOverCount<span class="source_comment">/*,PRI.DaredevilPoints*/</span>);
+<a name="55"></a>}
+<a name="56"></a>
+<a name="57"></a>function ServerUpdateStatArrays(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI)
+<a name="58"></a>{
+<a name="59"></a>	ClientSendSprees(PRI,PRI.Spree[<span class="source_int">0</span>],PRI.Spree[<span class="source_int">1</span>],PRI.Spree[<span class="source_int">2</span>],PRI.Spree[<span class="source_int">3</span>],PRI.Spree[<span class="source_int">4</span>],PRI.Spree[<span class="source_int">5</span>]);
+<a name="60"></a>	ClientSendMultiKills(PRI,PRI.MultiKills[<span class="source_int">0</span>],PRI.MultiKills[<span class="source_int">1</span>],PRI.MultiKills[<span class="source_int">2</span>],PRI.MultiKills[<span class="source_int">3</span>],PRI.MultiKills[<span class="source_int">4</span>],PRI.MultiKills[<span class="source_int">5</span>],PRI.MultiKills[<span class="source_int">6</span>]);
+<a name="61"></a>	ClientSendCombos(PRI,PRI.Combos[<span class="source_int">0</span>],PRI.Combos[<span class="source_int">1</span>],PRI.Combos[<span class="source_int">2</span>],PRI.Combos[<span class="source_int">3</span>],PRI.Combos[<span class="source_int">4</span>]);
+<a name="62"></a>}
+<a name="63"></a>
+<a name="64"></a>function ServerGetNextWeaponStats(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI, <span class="source_type">int</span> <span class="source_type">i</span>)
+<a name="65"></a>{
+<a name="66"></a>	if ( <span class="source_type">i</span> &gt;= PRI.WeaponStatsArray.Length )
+<a name="67"></a>	{
+<a name="68"></a>		ServerGetNextVehicleStats(PRI, <span class="source_int">0</span>);
+<a name="69"></a>		return;
+<a name="70"></a>	}
+<a name="71"></a>
+<a name="72"></a>	ClientSendWeapon(PRI, PRI.WeaponStatsArray[<span class="source_type">i</span>].<span class="source_type">WeaponClass</span>, PRI.WeaponStatsArray[<span class="source_type">i</span>].kills, PRI.WeaponStatsArray[<span class="source_type">i</span>].deaths,PRI.WeaponStatsArray[<span class="source_type">i</span>].deathsholding,<span class="source_type">i</span>);
+<a name="73"></a>}
+<a name="74"></a>
+<a name="75"></a>function ServerGetNextVehicleStats(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI, <span class="source_type">int</span> <span class="source_type">i</span>)
+<a name="76"></a>{
+<a name="77"></a>	if (<span class="source_type">i</span> &gt;= PRI.VehicleStatsArray.Length)
+<a name="78"></a>		return;
+<a name="79"></a>
+<a name="80"></a>	ClientSendVehicle(PRI, PRI.VehicleStatsArray[<span class="source_type">i</span>].VehicleClass, PRI.VehicleStatsArray[<span class="source_type">i</span>].Kills, PRI.VehicleStatsArray[<span class="source_type">i</span>].Deaths, PRI.VehicleStatsArray[<span class="source_type">i</span>].DeathsDriving, <span class="source_type">i</span>);
+<a name="81"></a>}
+<a name="82"></a>
+<a name="83"></a>simulated function ClientSendWeapon(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>&gt; W, <span class="source_type">int</span> kills, <span class="source_type">int</span> deaths, <span class="source_type">int</span> deathsholding, <span class="source_type">int</span> <span class="source_type">i</span>)
+<a name="84"></a>{
+<a name="85"></a>	PRI.UpdateWeaponStats(PRI,W,Kills,Deaths,DeathsHolding);
+<a name="86"></a>	ServerGetNextWeaponStats(PRI,<span class="source_type">i</span>+<span class="source_int">1</span>);
+<a name="87"></a>}
+<a name="88"></a>
+<a name="89"></a>simulated function ClientSendVehicle(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>&gt; <span class="source_type">V</span>, <span class="source_type">int</span> Kills, <span class="source_type">int</span> Deaths, <span class="source_type">int</span> DeathsDriving, <span class="source_type">int</span> <span class="source_type">i</span>)
+<a name="90"></a>{
+<a name="91"></a>	PRI.UpdateVehicleStats(PRI, <span class="source_type">V</span>, Kills, Deaths, DeathsDriving);
+<a name="92"></a>	ServerGetNextVehicleStats(PRI, <span class="source_type">i</span>+<span class="source_int">1</span>);
+<a name="93"></a>}
+<a name="94"></a>
+<a name="95"></a>simulated function ClientSendSprees(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI,<span class="source_type">byte</span> Spree0,<span class="source_type">byte</span> Spree1,<span class="source_type">byte</span> Spree2,<span class="source_type">byte</span> Spree3,<span class="source_type">byte</span> Spree4,<span class="source_type">byte</span> Spree5)
+<a name="96"></a>{
+<a name="97"></a>	PRI.Spree[<span class="source_int">0</span>] = Spree0;
+<a name="98"></a>	PRI.Spree[<span class="source_int">1</span>] = Spree1;
+<a name="99"></a>	PRI.Spree[<span class="source_int">2</span>] = Spree2;
+<a name="100"></a>	PRI.Spree[<span class="source_int">3</span>] = Spree3;
+<a name="101"></a>	PRI.Spree[<span class="source_int">4</span>] = Spree4;
+<a name="102"></a>	PRI.Spree[<span class="source_int">5</span>] = Spree5;
+<a name="103"></a>}
+<a name="104"></a>
+<a name="105"></a>simulated function ClientSendMultiKills(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI,
+<a name="106"></a>								<span class="source_type">byte</span> MultiKills0, <span class="source_type">byte</span> MultiKills1, <span class="source_type">byte</span> MultiKills2, <span class="source_type">byte</span> MultiKills3, <span class="source_type">byte</span> MultiKills4, <span class="source_type">byte</span> MultiKills5, <span class="source_type">byte</span> MultiKills6)
+<a name="107"></a>{
+<a name="108"></a>	PRI.MultiKills[<span class="source_int">0</span>] = MultiKills0;
+<a name="109"></a>	PRI.MultiKills[<span class="source_int">1</span>] = MultiKills1;
+<a name="110"></a>	PRI.MultiKills[<span class="source_int">2</span>] = MultiKills2;
+<a name="111"></a>	PRI.MultiKills[<span class="source_int">3</span>] = MultiKills3;
+<a name="112"></a>	PRI.MultiKills[<span class="source_int">4</span>] = MultiKills4;
+<a name="113"></a>	PRI.MultiKills[<span class="source_int">5</span>] = MultiKills5;
+<a name="114"></a>	PRI.MultiKills[<span class="source_int">6</span>] = MultiKills6;
+<a name="115"></a>}
+<a name="116"></a>
+<a name="117"></a>simulated function ClientSendCombos(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI,<span class="source_type">byte</span> Combos0, <span class="source_type">byte</span> Combos1, <span class="source_type">byte</span> Combos2, <span class="source_type">byte</span> Combos3, <span class="source_type">byte</span> Combos4)
+<a name="118"></a>{
+<a name="119"></a>	PRI.Combos[<span class="source_int">0</span>] = Combos0;
+<a name="120"></a>	PRI.Combos[<span class="source_int">1</span>] = Combos1;
+<a name="121"></a>	PRI.Combos[<span class="source_int">2</span>] = Combos2;
+<a name="122"></a>	PRI.Combos[<span class="source_int">3</span>] = Combos3;
+<a name="123"></a>	PRI.Combos[<span class="source_int">4</span>] = Combos4;
+<a name="124"></a>
+<a name="125"></a>	ServerGetNextWeaponStats(PRI,<span class="source_int">0</span>);
+<a name="126"></a>}
+<a name="127"></a>
+<a name="128"></a><span class="source_comment">// if _RO_
+</span><a name="129"></a>simulated function ClientSendStats(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI, <span class="source_type">int</span> newgoals, <span class="source_type">bool</span> bNewFirstBlood, <span class="source_type">int</span> newkills, <span class="source_type">int</span> newsuicides, <span class="source_type">int</span> newFlagTouches, <span class="source_type">int</span> newFlagReturns, <span class="source_type">int</span> newFlakCount, <span class="source_type">int</span> newComboCount, <span class="source_type">int</span> newHeadCount, <span class="source_type">int</span> newRanOverCount<span class="source_comment">/*, int newDaredevilPoints*/</span>)
+<a name="130"></a>{
+<a name="131"></a>	PRI.GoalsScored = newGoals;
+<a name="132"></a>	PRI.bFirstBlood = bNewFirstBlood;
+<a name="133"></a>	PRI.Kills = NewKills;
+<a name="134"></a>	PRI.Suicides = NewSuicides;
+<a name="135"></a>	PRI.FlagTouches = NewFlagTouches;
+<a name="136"></a>	PRI.FlagReturns = NewFlagReturns;
+<a name="137"></a>	PRI.FlakCount = NewFlakCount;
+<a name="138"></a>	PRI.ComboCount = NewComboCount;
+<a name="139"></a>	PRI.HeadCount = NewHeadCount;
+<a name="140"></a>	PRI.RanOverCount = NewRanOverCount;
+<a name="141"></a>	<span class="source_comment">// if _RO_
+</span><a name="142"></a>	<span class="source_comment">//PRI.DaredevilPoints = NewDaredevilPoints;
+</span><a name="143"></a>
+<a name="144"></a>	ServerUpdateStatArrays(PRI);
+<a name="145"></a>}
+<a name="146"></a>
+<a name="147"></a>simulated event PostBeginPlay()
+<a name="148"></a>{
+<a name="149"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/announcervoice.html" class="source">AnnouncerVoice</a></span>&gt; VoiceClass;
+<a name="150"></a>
+<a name="151"></a>	Super.PostBeginPlay();
+<a name="152"></a>
+<a name="153"></a>	if ( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer )
+<a name="154"></a>	{
+<a name="155"></a>		VoiceClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/announcervoice.html" class="source">AnnouncerVoice</a></span>&gt;(DynamicLoadObject(CustomStatusAnnouncerPack,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="156"></a>		StatusAnnouncer = Spawn(VoiceClass);
+<a name="157"></a>		VoiceClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/announcervoice.html" class="source">AnnouncerVoice</a></span>&gt;(DynamicLoadObject(CustomRewardAnnouncerPack,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="158"></a>		RewardAnnouncer = Spawn(VoiceClass);
+<a name="159"></a>		PrecacheAnnouncements();
+<a name="160"></a>	}
+<a name="161"></a>}
+<a name="162"></a>
+<a name="163"></a>function AwardAdrenaline(<span class="source_type">float</span> <span class="source_type">amount</span>)
+<a name="164"></a>{
+<a name="165"></a>	if ( bAdrenalineEnabled )
+<a name="166"></a>	{
+<a name="167"></a>		if ( (Adrenaline &lt; AdrenalineMax) && (Adrenaline+<span class="source_type">amount</span> &gt;= AdrenalineMax) && ((<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || !<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.InCurrentCombo()) )
+<a name="168"></a>			ClientDelayedAnnouncementNamed(<span class="source_name">'Adrenalin'</span>,<span class="source_int">15</span>);
+<a name="169"></a>		Super.AwardAdrenaline(<span class="source_type">Amount</span>);
+<a name="170"></a>	}
+<a name="171"></a>}
+<a name="172"></a>
+<a name="173"></a>function ClientDelayedAnnouncementNamed(<span class="source_type">name</span> Announcement, <span class="source_type">byte</span> Delay)
+<a name="174"></a>{
+<a name="175"></a>	local <span class="source_type"><a href="../unrealgame/announceadrenaline.html" class="source">AnnounceAdrenaline</a></span> <span class="source_type">A</span>;
+<a name="176"></a>
+<a name="177"></a>	<span class="source_type">A</span> = spawn(<span class="source_type">class</span><span class="source_name">'AnnounceAdrenaline'</span>, self);
+<a name="178"></a>	<span class="source_type">A</span>.Announcement = Announcement;
+<a name="179"></a>	<span class="source_type">A</span>.settimer(<span class="source_int">0.1</span>*delay,false);
+<a name="180"></a>}
+<a name="181"></a>
+<a name="182"></a><span class="source_comment">// OBSOLETE
+</span><a name="183"></a>function ClientDelayedAnnouncement(<span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> AnnouncementSound, <span class="source_type">byte</span> Delay)
+<a name="184"></a>{
+<a name="185"></a>	local <span class="source_type"><a href="../unrealgame/announceadrenaline.html" class="source">AnnounceAdrenaline</a></span> <span class="source_type">A</span>;
+<a name="186"></a>
+<a name="187"></a>	<span class="source_type">A</span> = spawn(<span class="source_type">class</span><span class="source_name">'AnnounceAdrenaline'</span>, self);
+<a name="188"></a>	<span class="source_type">A</span>.AnnounceSound = AnnouncementSound;
+<a name="189"></a>	<span class="source_type">A</span>.settimer(<span class="source_int">0.1</span>*delay,false);
+<a name="190"></a>}
+<a name="191"></a>
+<a name="192"></a>function LogMultiKills(<span class="source_type">float</span> Reward, <span class="source_type">bool</span> bEnemyKill)
+<a name="193"></a>{
+<a name="194"></a>	local <span class="source_type">int</span> BoundedLevel;
+<a name="195"></a>
+<a name="196"></a>	if ( bEnemyKill && (<span class="source_type">Level</span>.TimeSeconds - LastKillTime &lt; <span class="source_int">4</span>) )
+<a name="197"></a>	{
+<a name="198"></a>		AwardAdrenaline( Reward );
+<a name="199"></a>		if ( <span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>) != None )
+<a name="200"></a>		{
+<a name="201"></a>			BoundedLevel = Min(MultiKillLevel,<span class="source_int">6</span>);
+<a name="202"></a>			<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>).MultiKills[BoundedLevel] += <span class="source_int">1</span>;
+<a name="203"></a>			if ( (MultiKillLevel &gt; <span class="source_int">0</span>) && (<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>).MultiKills[BoundedLevel-<span class="source_int">1</span>] &gt; <span class="source_int">0</span>) )
+<a name="204"></a>				<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>).MultiKills[BoundedLevel-<span class="source_int">1</span>] -= <span class="source_int">1</span>;
+<a name="205"></a>		}
+<a name="206"></a>		MultiKillLevel++;
+<a name="207"></a>		<span class="source_type"><a href="../unrealgame/unrealmpgameinfo.html" class="source">UnrealMPGameInfo</a></span>(<span class="source_type">Level</span>.Game).SpecialEvent(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>,<span class="source_string">"multikill_"</span>$MultiKillLevel);
+<a name="208"></a>	}
+<a name="209"></a>	else
+<a name="210"></a>		MultiKillLevel=<span class="source_int">0</span>;
+<a name="211"></a>
+<a name="212"></a>	if ( bEnemyKill )
+<a name="213"></a>		LastKillTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="214"></a>}
+<a name="215"></a>
+<a name="216"></a>exec function ShowAI()
+<a name="217"></a>{
+<a name="218"></a>	if( <span class="source_type">Level</span>.NetMode != NM_Standalone  )
+<a name="219"></a>		return;
+<a name="220"></a>
+<a name="221"></a>	myHUD.ShowDebug();
+<a name="222"></a>	if ( <span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type">ViewTarget</span>) != None )
+<a name="223"></a>		<span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type">ViewTarget</span>).bSoakDebug = myHUD.bShowDebugInfo;
+<a name="224"></a>}
+<a name="225"></a>
+<a name="226"></a>function Possess(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">aPawn</span>)
+<a name="227"></a>{
+<a name="228"></a>	Super.Possess(<span class="source_type">aPawn</span>);
+<a name="229"></a>}
+<a name="230"></a>
+<a name="231"></a>function <span class="source_type">bool</span> AutoTaunt()
+<a name="232"></a>{
+<a name="233"></a>	if (!bAutoTaunt || LastAutoTauntTime &gt; <span class="source_type">Level</span>.TimeSeconds - <span class="source_int">2</span>)
+<a name="234"></a>		return false;
+<a name="235"></a>
+<a name="236"></a>	LastAutoTauntTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="237"></a>	return true;
+<a name="238"></a>}
+<a name="239"></a>
+<a name="240"></a>function <span class="source_type">bool</span> DontReuseTaunt(<span class="source_type">int</span> <span class="source_type">T</span>)
+<a name="241"></a>{
+<a name="242"></a>	if ( <span class="source_type">T</span> == LastTaunt )
+<a name="243"></a>		return true;
+<a name="244"></a>
+<a name="245"></a>	if( <span class="source_type">T</span> == <span class="source_type">Level</span>.LastTaunt[<span class="source_int">0</span>] || <span class="source_type">T</span> == <span class="source_type">Level</span>.LastTaunt[<span class="source_int">1</span>] )
+<a name="246"></a>		return true;
+<a name="247"></a>
+<a name="248"></a>	LastTaunt = <span class="source_type">T</span>;
+<a name="249"></a>
+<a name="250"></a>	<span class="source_type">Level</span>.LastTaunt[<span class="source_int">1</span>] = <span class="source_type">Level</span>.LastTaunt[<span class="source_int">0</span>];
+<a name="251"></a>	<span class="source_type">Level</span>.LastTaunt[<span class="source_int">0</span>] = <span class="source_type">T</span>;
+<a name="252"></a>
+<a name="253"></a>	return false;
+<a name="254"></a>}
+<a name="255"></a>
+<a name="256"></a>exec function SoakBots()
+<a name="257"></a>{
+<a name="258"></a>	local <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>;
+<a name="259"></a>
+<a name="260"></a>	log(<span class="source_string">"Start Soaking"</span>);
+<a name="261"></a>	<span class="source_type"><a href="../unrealgame/unrealmpgameinfo.html" class="source">UnrealMPGameInfo</a></span>(<span class="source_type">Level</span>.Game).bSoaking = true;
+<a name="262"></a>	ForEach DynamicActors(<span class="source_type">class</span><span class="source_name">'Bot'</span>,<span class="source_type">B</span>)
+<a name="263"></a>		<span class="source_type">B</span>.bSoaking = true;
+<a name="264"></a>}
+<a name="265"></a>
+<a name="266"></a>function SoakPause(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">P</span>)
+<a name="267"></a>{
+<a name="268"></a>	log(<span class="source_string">"Soak pause by "</span>$<span class="source_type">P</span>);
+<a name="269"></a>	SetViewTarget(<span class="source_type">P</span>);
+<a name="270"></a>	SetPause(true);
+<a name="271"></a>	bBehindView = true;
+<a name="272"></a>	myHud.bShowDebugInfo = true;
+<a name="273"></a>	if ( <span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type">P</span>) != None )
+<a name="274"></a>		<span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type">P</span>).bSoakDebug = true;
+<a name="275"></a>}
+<a name="276"></a>
+<a name="277"></a>exec function BasePath(<span class="source_type">byte</span> <span class="source_type">num</span>)
+<a name="278"></a>{
+<a name="279"></a>	if (<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> == None )
+<a name="280"></a>		return;
+<a name="281"></a>	ServerShowPathToBase(<span class="source_type">num</span>);
+<a name="282"></a>}
+<a name="283"></a>
+<a name="284"></a>function ServerShowPathToBase(<span class="source_type">int</span> <span class="source_type">TeamNum</span>)
+<a name="285"></a>{
+<a name="286"></a>	if ( (<span class="source_type">Level</span>.NetMode != NM_Standalone) && (<span class="source_type">Level</span>.TimeSeconds - LastWhispTime &lt; <span class="source_int">0.5</span>) )
+<a name="287"></a>		return;
+<a name="288"></a>	LastWhispTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="289"></a>
+<a name="290"></a>	if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || !<span class="source_type">Level</span>.Game.bTeamGame || !<span class="source_type"><a href="../unrealgame/unrealmpgameinfo.html" class="source">UnrealMPGameInfo</a></span>(<span class="source_type">Level</span>.Game).CanShowPathTo(Self, <span class="source_type">TeamNum</span>) )
+<a name="291"></a>		return;
+<a name="292"></a>
+<a name="293"></a>	<span class="source_type"><a href="../unrealgame/unrealmpgameinfo.html" class="source">UnrealMPGameInfo</a></span>(<span class="source_type">Level</span>.Game).ShowPathTo(Self, <span class="source_type">TeamNum</span>);
+<a name="294"></a>}
+<a name="295"></a>
+<a name="296"></a>function <span class="source_type">byte</span> GetMessageIndex(<span class="source_type">name</span> PhraseName)
+<a name="297"></a>{
+<a name="298"></a>	if ( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.VoiceType == None )
+<a name="299"></a>		return <span class="source_int">0</span>;
+<a name="300"></a>	return <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.Voicetype.Static.GetMessageIndex(PhraseName);
+<a name="301"></a>}
+<a name="302"></a>
+<a name="303"></a>exec function RandomTaunt()
+<a name="304"></a>{
+<a name="305"></a>	local <span class="source_type">int</span> tauntNum;
+<a name="306"></a>
+<a name="307"></a>	if(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None)
+<a name="308"></a>		return;
+<a name="309"></a>
+<a name="310"></a>	<span class="source_comment">// First 4 taunts are 'order' anims. Don't pick them.
+</span><a name="311"></a>	tauntNum = Rand(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.TauntAnims.Length - <span class="source_int">4</span>);
+<a name="312"></a>	Taunt(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.TauntAnims[<span class="source_int">4</span> + tauntNum]);
+<a name="313"></a>}
+<a name="314"></a>
+<a name="315"></a>exec function Taunt( <span class="source_type">name</span> <span class="source_type">Sequence</span> )
+<a name="316"></a>{
+<a name="317"></a>	if( <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None && <span class="source_type">Sequence</span> == <span class="source_name">'gesture_point'</span> )
+<a name="318"></a>	{
+<a name="319"></a>		PlayVehicleHorn(<span class="source_int">0</span>);
+<a name="320"></a>		return;
+<a name="321"></a>	}
+<a name="322"></a>
+<a name="323"></a>	if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None) && (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Health &gt; <span class="source_int">0</span>) && (<span class="source_type">Level</span>.TimeSeconds - LastTauntAnimTime &gt; <span class="source_int">0.5</span>) && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.FindValidTaunt(<span class="source_type">Sequence</span>) )
+<a name="324"></a>	{
+<a name="325"></a>		ServerTaunt(<span class="source_type">Sequence</span>);
+<a name="326"></a>        LastTauntAnimTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="327"></a>	}
+<a name="328"></a>}
+<a name="329"></a>
+<a name="330"></a>function ServerTaunt(<span class="source_type">name</span> <span class="source_type">AnimName</span> )
+<a name="331"></a>{
+<a name="332"></a>	if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None) && (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Health &gt; <span class="source_int">0</span>) && (<span class="source_type">Level</span>.TimeSeconds - LastTauntAnimTime &gt; <span class="source_int">0.3</span>) && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.FindValidTaunt(<span class="source_type">AnimName</span>) )
+<a name="333"></a>	{
+<a name="334"></a>		<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.SetAnimAction(<span class="source_type">AnimName</span>);
+<a name="335"></a>        LastTauntAnimTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="336"></a>	}
+<a name="337"></a>}
+<a name="338"></a>
+<a name="339"></a>exec function PlayVehicleHorn( <span class="source_type">int</span> <span class="source_type">HornIndex</span> )
+<a name="340"></a>{
+<a name="341"></a>	local <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span> <span class="source_type">V</span>;
+<a name="342"></a>
+<a name="343"></a>	<span class="source_type">V</span> = <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>);
+<a name="344"></a>	if ( (<span class="source_type">V</span> != None) && (<span class="source_type">V</span>.Health &gt; <span class="source_int">0</span>) && (<span class="source_type">Level</span>.TimeSeconds - LastTauntAnimTime &gt; <span class="source_int">0.3</span>)  )
+<a name="345"></a>	{
+<a name="346"></a>		ServerPlayVehicleHorn(<span class="source_type">HornIndex</span>);
+<a name="347"></a>		LastTauntAnimTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="348"></a>	}
+<a name="349"></a>}
+<a name="350"></a>
+<a name="351"></a>function ServerPlayVehicleHorn( <span class="source_type">int</span> <span class="source_type">HornIndex</span> )
+<a name="352"></a>{
+<a name="353"></a>	local <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span> <span class="source_type">V</span>;
+<a name="354"></a>
+<a name="355"></a>	<span class="source_type">V</span> = <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>);
+<a name="356"></a>	if ( (<span class="source_type">V</span> != None) && (<span class="source_type">V</span>.Health &gt; <span class="source_int">0</span>) && (<span class="source_type">Level</span>.TimeSeconds - LastTauntAnimTime &gt; <span class="source_int">0.3</span>)  )
+<a name="357"></a>	{
+<a name="358"></a>		<span class="source_type">V</span>.ServerPlayHorn(<span class="source_type">HornIndex</span>);
+<a name="359"></a>		LastTauntAnimTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="360"></a>	}
+<a name="361"></a>}
+<a name="362"></a>
+<a name="363"></a>simulated function PlayStatusAnnouncement(<span class="source_type">name</span> <span class="source_type">AName</span>, <span class="source_type">byte</span> AnnouncementLevel, optional <span class="source_type">bool</span> <span class="source_type">bForce</span>)
+<a name="364"></a>{
+<a name="365"></a>	local <span class="source_type">float</span> Atten;
+<a name="366"></a>
+<a name="367"></a>	if ( AnnouncementLevel &gt; AnnouncerLevel )
+<a name="368"></a>	{
+<a name="369"></a>		if ( AnnouncementLevel == <span class="source_int">2</span> )
+<a name="370"></a>		{
+<a name="371"></a>			Atten = FClamp(<span class="source_int">0.1</span> + <span class="source_type">float</span>(AnnouncerVolume)*<span class="source_int">0.225</span>,<span class="source_int">0.2</span>,<span class="source_int">1.0</span>);
+<a name="372"></a>			<span class="source_comment">// ifndef _RO_
+</span><a name="373"></a>			<span class="source_comment">//ClientPlaySound(Sound'GameSounds.DDAverted',true,Atten,SLOT_Talk);
+</span><a name="374"></a>		}
+<a name="375"></a>		else if ( AnnouncementLevel == <span class="source_int">1</span> )
+<a name="376"></a>			PlayBeepSound();
+<a name="377"></a>		return;
+<a name="378"></a>	}
+<a name="379"></a>	Super.PlayStatusAnnouncement(<span class="source_type">AName</span>, AnnouncementLevel, <span class="source_type">bForce</span>);
+<a name="380"></a>}
+<a name="381"></a>
+<a name="382"></a>simulated function PlayRewardAnnouncement(<span class="source_type">name</span> <span class="source_type">AName</span>, <span class="source_type">byte</span> AnnouncementLevel, optional <span class="source_type">bool</span> <span class="source_type">bForce</span>)
+<a name="383"></a>{
+<a name="384"></a>	local <span class="source_type">float</span> Atten;
+<a name="385"></a>
+<a name="386"></a>	if ( AnnouncementLevel &gt; AnnouncerLevel )
+<a name="387"></a>	{
+<a name="388"></a>		if ( AnnouncementLevel == <span class="source_int">2</span> )
+<a name="389"></a>		{
+<a name="390"></a>			Atten = FClamp(<span class="source_int">0.1</span> + <span class="source_type">float</span>(AnnouncerVolume)*<span class="source_int">0.225</span>,<span class="source_int">0.2</span>,<span class="source_int">1.0</span>);
+<a name="391"></a>			<span class="source_comment">// ifndef _RO_
+</span><a name="392"></a>			<span class="source_comment">//ClientPlaySound(Sound'GameSounds.DDAverted',true,Atten,SLOT_Talk);
+</span><a name="393"></a>		}
+<a name="394"></a>		else if ( AnnouncementLevel == <span class="source_int">1</span> )
+<a name="395"></a>			PlayBeepSound();
+<a name="396"></a>		return;
+<a name="397"></a>	}
+<a name="398"></a>	Super.PlayRewardAnnouncement(<span class="source_type">AName</span>, AnnouncementLevel, <span class="source_type">bForce</span>);
+<a name="399"></a>}
+<a name="400"></a>
+<a name="401"></a>simulated function PlayAnnouncement(<span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ASound, <span class="source_type">byte</span> AnnouncementLevel, optional <span class="source_type">bool</span> <span class="source_type">bForce</span>)
+<a name="402"></a>{
+<a name="403"></a>	local <span class="source_type">float</span> Atten;
+<a name="404"></a>
+<a name="405"></a>	if ( AnnouncementLevel &gt; AnnouncerLevel )
+<a name="406"></a>	{
+<a name="407"></a>		if ( AnnouncementLevel == <span class="source_int">2</span> )
+<a name="408"></a>		{
+<a name="409"></a>			Atten = FClamp(<span class="source_int">0.1</span> + <span class="source_type">float</span>(AnnouncerVolume)*<span class="source_int">0.225</span>,<span class="source_int">0.2</span>,<span class="source_int">1.0</span>);
+<a name="410"></a>			<span class="source_comment">// ifndef _RO_
+</span><a name="411"></a>			<span class="source_comment">//ClientPlaySound(Sound'GameSounds.DDAverted',true,Atten,SLOT_Talk);
+</span><a name="412"></a>		}
+<a name="413"></a>		else if ( AnnouncementLevel == <span class="source_int">1</span> )
+<a name="414"></a>			PlayBeepSound();
+<a name="415"></a>		return;
+<a name="416"></a>	}
+<a name="417"></a>	Super.PlayAnnouncement(ASound,AnnouncementLevel,<span class="source_type">bForce</span>);
+<a name="418"></a>}
+<a name="419"></a>
+<a name="420"></a>
+<a name="421"></a>event KickWarning()
+<a name="422"></a>{
+<a name="423"></a>	if ( <span class="source_type">Level</span>.TimeSeconds - LastKickWarningTime &gt; <span class="source_int">0.5</span> )
+<a name="424"></a>	{
+<a name="425"></a>		ReceiveLocalizedMessage( <span class="source_type">class</span><span class="source_name">'IdleKickWarningMessage'</span>, <span class="source_int">0</span>, None, None, self );
+<a name="426"></a>		LastKickWarningTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="427"></a>	}
+<a name="428"></a>}
+<a name="429"></a>
+<a name="430"></a>function PlayStartupMessage(<span class="source_type">byte</span> StartupStage)
+<a name="431"></a>{
+<a name="432"></a>	ReceiveLocalizedMessage( <span class="source_type">class</span><span class="source_name">'StartupMessage'</span>, StartupStage, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> );
+<a name="433"></a>}
+<a name="434"></a>
+<a name="435"></a>simulated event PostNetReceive()
+<a name="436"></a>{
+<a name="437"></a>	Super.PostNetReceive();
+<a name="438"></a>
+<a name="439"></a>	if ( ChatManager != None )
+<a name="440"></a>		ChatManager.PlayerOwner = Self;
+<a name="441"></a>}
+<a name="442"></a>
+<a name="443"></a>simulated function InitInputSystem()
+<a name="444"></a>{
+<a name="445"></a>	Super.InitInputSystem();
+<a name="446"></a>
+<a name="447"></a>	if (LoginMenuClass != <span class="source_string">""</span>)
+<a name="448"></a>		ShowLoginMenu();
+<a name="449"></a>
+<a name="450"></a>	bReadyToStart = true;
+<a name="451"></a>	ServerSetReadyToStart();
+<a name="452"></a>}
+<a name="453"></a>
+<a name="454"></a>function ServerSetReadyToStart()
+<a name="455"></a>{
+<a name="456"></a>	bReadyToStart = true;
+<a name="457"></a>}
+<a name="458"></a>
+<a name="459"></a>simulated function ClientReceiveLoginMenu(<span class="source_type">string</span> <span class="source_type">MenuClass</span>, <span class="source_type">bool</span> <span class="source_type">bForce</span>)
+<a name="460"></a>{
+<a name="461"></a>	LoginMenuClass = <span class="source_type">MenuClass</span>;
+<a name="462"></a>	bForceLoginMenu = <span class="source_type">bForce</span>;
+<a name="463"></a>}
+<a name="464"></a>
+<a name="465"></a>simulated function ShowLoginMenu()
+<a name="466"></a>{
+<a name="467"></a>	local <span class="source_type">int</span> <span class="source_type">x</span>;
+<a name="468"></a>	local <span class="source_type">string</span> NetworkAddress;
+<a name="469"></a>
+<a name="470"></a>	if (<span class="source_type">Level</span>.NetMode != NM_Client || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Health &gt; <span class="source_int">0</span>) || (bDontShowLoginMenu && !bForceLoginMenu))
+<a name="471"></a>		return;
+<a name="472"></a>
+<a name="473"></a>	<span class="source_comment">//Show login menu if first time in this server or if server is forcing it to always be displayed
+</span><a name="474"></a>	if (!bForceLoginMenu)
+<a name="475"></a>	{
+<a name="476"></a>		NetworkAddress = GetServerNetworkAddress();
+<a name="477"></a>		if (NetworkAddress == <span class="source_string">""</span>)
+<a name="478"></a>			return;
+<a name="479"></a>		for (<span class="source_type">x</span> = <span class="source_int">0</span>; <span class="source_type">x</span> &lt; RecentServers.length; <span class="source_type">x</span>++)
+<a name="480"></a>			if (NetworkAddress ~= RecentServers[<span class="source_type">x</span>])
+<a name="481"></a>			{
+<a name="482"></a>				RecentServers.Insert(<span class="source_int">0</span>, <span class="source_int">1</span>);
+<a name="483"></a>				RecentServers[<span class="source_int">0</span>] = NetworkAddress;
+<a name="484"></a>				RecentServers.Remove(<span class="source_type">x</span>+<span class="source_int">1</span>, <span class="source_int">1</span>);
+<a name="485"></a>				SaveConfig();
+<a name="486"></a>				return;
+<a name="487"></a>			}
+<a name="488"></a>		RecentServers.Insert(<span class="source_int">0</span>, <span class="source_int">1</span>);
+<a name="489"></a>		RecentServers[<span class="source_int">0</span>] = NetworkAddress;
+<a name="490"></a>		if (RecentServers.length &gt; MaxRecentServers)
+<a name="491"></a>			RecentServers.length = MaxRecentServers;	<span class="source_comment">//kill oldest entries
+</span><a name="492"></a>
+<a name="493"></a>		SaveConfig();
+<a name="494"></a>	}
+<a name="495"></a>	ClientReplaceMenu(LoginMenuClass);
+<a name="496"></a>}
+<a name="497"></a>
+<a name="498"></a>function NotifyTakeHit(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> InstigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type">int</span> <span class="source_type">Damage</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Momentum</span>)
+<a name="499"></a>{
+<a name="500"></a>	local <span class="source_type">int</span> iDam;
+<a name="501"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> AttackLoc;
+<a name="502"></a>
+<a name="503"></a>	Super.NotifyTakeHit(InstigatedBy,<span class="source_type">HitLocation</span>,<span class="source_type">Damage</span>,<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>,<span class="source_type">Momentum</span>);
+<a name="504"></a>
+<a name="505"></a>	DamageShake(<span class="source_type">Damage</span>);
+<a name="506"></a>	iDam = Clamp(<span class="source_type">Damage</span>,<span class="source_int">0</span>,<span class="source_int">250</span>);
+<a name="507"></a>	if ( InstigatedBy != None )
+<a name="508"></a>		AttackLoc = InstigatedBy.Location;
+<a name="509"></a>
+<a name="510"></a>	NewClientPlayTakeHit(AttackLoc, <span class="source_type">hitLocation</span> - <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location, iDam, <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>);
+<a name="511"></a>}
+<a name="512"></a>
+<a name="513"></a>function NewClientPlayTakeHit(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> AttackLoc, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> HitLoc, <span class="source_type">byte</span> <span class="source_type">Damage</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>)
+<a name="514"></a>{
+<a name="515"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> HitDir;
+<a name="516"></a>
+<a name="517"></a>	if ( (myHUD != None) && ((<span class="source_type">Damage</span> &gt; <span class="source_int">0</span>) || bGodMode) )
+<a name="518"></a>	{
+<a name="519"></a>		if ( AttackLoc != vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>) )
+<a name="520"></a>			HitDir = Normal(AttackLoc - <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location);
+<a name="521"></a>		else
+<a name="522"></a>			HitDir = Normal(HitLoc);
+<a name="523"></a>		myHUD.DisplayHit(HitDir, <span class="source_type">Damage</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>);
+<a name="524"></a>	}
+<a name="525"></a>	HitLoc += <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location;
+<a name="526"></a>    if( bEnableDamageForceFeedback )        <span class="source_comment">// jdf
+</span><a name="527"></a>        ClientPlayForceFeedback(<span class="source_string">"Damage"</span>);  <span class="source_comment">// jdf
+</span><a name="528"></a>    if ( <span class="source_type">Level</span>.NetMode == NM_Client )
+<a name="529"></a>		<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.PlayTakeHit(HitLoc, <span class="source_type">Damage</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>);
+<a name="530"></a>}
+<a name="531"></a>
+<a name="532"></a>function ClientPlayTakeHit(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> HitLoc, <span class="source_type">byte</span> <span class="source_type">Damage</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>)
+<a name="533"></a>{
+<a name="534"></a>	NewClientPlayTakeHit(Location, HitLoc, <span class="source_type">Damage</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>);
+<a name="535"></a>}
+<a name="536"></a>
+<a name="537"></a>function PlayWinMessage(<span class="source_type">bool</span> bWinner)
+<a name="538"></a>{
+<a name="539"></a>	if ( bWinner )
+<a name="540"></a>		bDisplayWinner = true;
+<a name="541"></a>	else
+<a name="542"></a>		bDisplayLoser = true;
+<a name="543"></a>}
+<a name="544"></a>
+<a name="545"></a>auto <span class="source_type">state</span> PlayerWaiting
+<a name="546"></a>{
+<a name="547"></a>    exec function Fire(optional <span class="source_type">float</span> <span class="source_type">F</span>)
+<a name="548"></a>    {
+<a name="549"></a>        LoadPlayers();
+<a name="550"></a>        if ( !bForcePrecache && (<span class="source_type">Level</span>.TimeSeconds &gt; <span class="source_int">0.2</span>) && bReadyToStart )
+<a name="551"></a>		ServerReStartPlayer();
+<a name="552"></a>    }
+<a name="553"></a>
+<a name="554"></a>    function <span class="source_type">bool</span> CanRestartPlayer()
+<a name="555"></a>    {
+<a name="556"></a>    	return ((bReadyToStart || (<span class="source_type"><a href="../unrealgame/deathmatch.html" class="source">DeathMatch</a></span>(<span class="source_type">Level</span>.Game) != None && <span class="source_type"><a href="../unrealgame/deathmatch.html" class="source">DeathMatch</a></span>(<span class="source_type">Level</span>.Game).bForceRespawn)) && Super.CanRestartPlayer());
+<a name="557"></a>    }
+<a name="558"></a>}
+<a name="559"></a>
+<a name="560"></a><span class="source_comment">// Player movement.
+</span><a name="561"></a><span class="source_comment">// Player Standing, walking, running, falling.
+</span><a name="562"></a><span class="source_type">state</span> PlayerWalking
+<a name="563"></a>{
+<a name="564"></a>ignores SeePlayer, HearNoise;
+<a name="565"></a>
+<a name="566"></a>	function <span class="source_type">bool</span> NotifyLanded(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>)
+<a name="567"></a>	{
+<a name="568"></a>		if (DoubleClickDir == DCLICK_Active)
+<a name="569"></a>		{
+<a name="570"></a>			DoubleClickDir = DCLICK_Done;
+<a name="571"></a>			ClearDoubleClick();
+<a name="572"></a>			<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Velocity *= Vect(<span class="source_int">0.1</span>,<span class="source_int">0.1</span>,<span class="source_int">1.0</span>);
+<a name="573"></a>		}
+<a name="574"></a>		else
+<a name="575"></a>			DoubleClickDir = DCLICK_None;
+<a name="576"></a>
+<a name="577"></a>		if ( Global.NotifyLanded(<span class="source_type">HitNormal</span>) )
+<a name="578"></a>			return true;
+<a name="579"></a>
+<a name="580"></a>		return false;
+<a name="581"></a>	}
+<a name="582"></a>
+<a name="583"></a>	function ProcessMove(<span class="source_type">float</span> <span class="source_type">DeltaTime</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> NewAccel, <span class="source_type"><a href="../engine/actor.html#EDoubleClickDir" class="source">eDoubleClickDir</a></span> DoubleClickMove, <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> DeltaRot)
+<a name="584"></a>	{
+<a name="585"></a>		if ( (DoubleClickMove == DCLICK_Active) && (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Physics == PHYS_Falling) )
+<a name="586"></a>			DoubleClickDir = DCLICK_Active;
+<a name="587"></a>		else if ( (DoubleClickMove != DCLICK_None) && (DoubleClickMove &lt; DCLICK_Active) )
+<a name="588"></a>		{
+<a name="589"></a>			if ( <span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).Dodge(DoubleClickMove) )
+<a name="590"></a>				DoubleClickDir = DCLICK_Active;
+<a name="591"></a>		}
+<a name="592"></a>
+<a name="593"></a>		Super.ProcessMove(<span class="source_type">DeltaTime</span>,NewAccel,DoubleClickMove,DeltaRot);
+<a name="594"></a>	}
+<a name="595"></a>}
+<a name="596"></a>
+<a name="597"></a><span class="source_type">state</span> Dead
+<a name="598"></a>{
+<a name="599"></a>ignores SeePlayer, HearNoise, KilledBy, SwitchWeapon;
+<a name="600"></a>
+<a name="601"></a>	exec function Fire( optional <span class="source_type">float</span> <span class="source_type">F</span> )
+<a name="602"></a>	{
+<a name="603"></a>		if ( bFrozen )
+<a name="604"></a>		{
+<a name="605"></a>			if ( (TimerRate &lt;= <span class="source_int">0.0</span>) || (TimerRate &gt; <span class="source_int">1.0</span>) )
+<a name="606"></a>				bFrozen = false;
+<a name="607"></a>			return;
+<a name="608"></a>		}
+<a name="609"></a>		if ( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOutOfLives )
+<a name="610"></a>			ServerSpectate();
+<a name="611"></a>		else
+<a name="612"></a>			Super.Fire(<span class="source_type">F</span>);
+<a name="613"></a>	}
+<a name="614"></a>
+<a name="615"></a>Begin:
+<a name="616"></a>    Sleep(<span class="source_int">3.0</span>);
+<a name="617"></a>	if ( (<span class="source_type">ViewTarget</span> == None) || (<span class="source_type">ViewTarget</span> == self) || (VSize(<span class="source_type">ViewTarget</span>.Velocity) &lt; <span class="source_int">1.0</span>) )
+<a name="618"></a>	{
+<a name="619"></a>		Sleep(<span class="source_int">1.0</span>);
+<a name="620"></a>		if ( myHUD != None )
+<a name="621"></a>			myHUD.bShowScoreBoard = true;
+<a name="622"></a>	}
+<a name="623"></a>	else
+<a name="624"></a>		Goto(<span class="source_name">'Begin'</span>);
+<a name="625"></a>}
+<a name="626"></a>
+<a name="627"></a>exec function DropFlag()
+<a name="628"></a>{
+<a name="629"></a>	ServerDropFlag();
+<a name="630"></a>}
+<a name="631"></a>
+<a name="632"></a>function ServerDropFlag()
+<a name="633"></a>{
+<a name="634"></a>	if (<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>==None || <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.HasFlag==None)
+<a name="635"></a>    	return;
+<a name="636"></a>
+<a name="637"></a>    <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.HasFlag.Drop(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Velocity * <span class="source_int">0.5</span>);
+<a name="638"></a>}
+<a name="639"></a>
+<a name="640"></a>function ShowMidGameMenu(<span class="source_type">bool</span> <span class="source_type">bPause</span>)
+<a name="641"></a>{
+<a name="642"></a>	<span class="source_comment">// Pause if not already
+</span><a name="643"></a>	if(<span class="source_type">Level</span>.Pauser == None)
+<a name="644"></a>		SetPause(true);
+<a name="645"></a>
+<a name="646"></a>	if ( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer )
+<a name="647"></a>		StopForceFeedback();  <span class="source_comment">// jdf - no way to pause feedback
+</span><a name="648"></a>
+<a name="649"></a>	<span class="source_comment">// Open menu
+</span><a name="650"></a>
+<a name="651"></a>	if (bDemoOwner)
+<a name="652"></a>		ClientopenMenu(DemoMenuClass);
+<a name="653"></a>
+<a name="654"></a>	else if ( LoginMenuClass != <span class="source_string">""</span> )
+<a name="655"></a>		ClientOpenMenu(LoginMenuClass);
+<a name="656"></a>
+<a name="657"></a>	else ClientOpenMenu(MidGameMenuClass);
+<a name="658"></a>}
+<a name="659"></a>
+<a name="660"></a>simulated function <span class="source_type">string</span> GetCustomStatusAnnouncerClass()
+<a name="661"></a>{
+<a name="662"></a>	return CustomStatusAnnouncerPack;
+<a name="663"></a>}
+<a name="664"></a>
+<a name="665"></a>simulated function SetCustomStatusAnnouncerClass(<span class="source_type">string</span> NewAnnouncerClass)
+<a name="666"></a>{
+<a name="667"></a>	CustomStatusAnnouncerPack = NewAnnouncerClass;
+<a name="668"></a>}
+<a name="669"></a>
+<a name="670"></a>simulated function <span class="source_type">string</span> GetCustomRewardAnnouncerClass()
+<a name="671"></a>{
+<a name="672"></a>	return CustomRewardAnnouncerPack;
+<a name="673"></a>}
+<a name="674"></a>
+<a name="675"></a>simulated function SetCustomRewardAnnouncerClass(<span class="source_type">string</span> NewAnnouncerClass)
+<a name="676"></a>{
+<a name="677"></a>	CustomRewardAnnouncerPack = NewAnnouncerClass;
+<a name="678"></a>}
+<a name="679"></a>
+<a name="680"></a>simulated function <span class="source_type">bool</span> NeedNetNotify()
+<a name="681"></a>{
+<a name="682"></a>	return Super.NeedNetNotify() || ChatManager == None;
+<a name="683"></a>}
+<a name="684"></a>
+<a name="685"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="686"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="687"></a><span class="source_comment">//  Voice Chat
+</span><a name="688"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="689"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="690"></a>simulated event PostNetBeginPlay()
+<a name="691"></a>{
+<a name="692"></a>	Super.PostNetBeginPlay();
+<a name="693"></a>
+<a name="694"></a>	if ( <span class="source_type">Level</span>.NetMode == NM_Client || <span class="source_type">Level</span>.NetMode == NM_ListenServer )
+<a name="695"></a>		bVoiceChatEnabled = <span class="source_type">bool</span>(ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice UseVoIP"</span>));
+<a name="696"></a>}
+<a name="697"></a>
+<a name="698"></a>simulated function AutoJoinVoiceChat()
+<a name="699"></a>{
+<a name="700"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j, cnt;
+<a name="701"></a>	local <span class="source_type">string</span> DefaultChannel;
+<a name="702"></a>
+<a name="703"></a>	if ( !bVoiceChatEnabled || (<span class="source_type">Level</span>.NetMode != NM_Client && <span class="source_type">Level</span>.NetMode != NM_ListenServer) )
+<a name="704"></a>		return;
+<a name="705"></a>
+<a name="706"></a>	if ( VoiceReplicationInfo == None )
+<a name="707"></a>	{
+<a name="708"></a>		log(<span class="source_type">Name</span>@<span class="source_string">"AutoJoinVoiceChat() do not have VRI yet!"</span>,<span class="source_name">'VoiceChat'</span>);
+<a name="709"></a>		return;
+<a name="710"></a>	}
+<a name="711"></a>
+<a name="712"></a>	<span class="source_comment">// My replacement for the code below that obviously doesn't work
+</span><a name="713"></a>	if( <span class="source_type">bool</span>(AutoJoinMask & (<span class="source_int">1</span> &lt;&lt; <span class="source_int">0</span>)) )
+<a name="714"></a>	{
+<a name="715"></a>		Join(VoiceReplicationInfo.PublicChannelNames[<span class="source_int">0</span>],<span class="source_string">""</span>);
+<a name="716"></a>	}
+<a name="717"></a>
+<a name="718"></a>	<span class="source_comment">// Automatically join local and team
+</span><a name="719"></a>	Join(VoiceReplicationInfo.PublicChannelNames[<span class="source_int">1</span>],<span class="source_string">""</span>);
+<a name="720"></a>	Join(VoiceReplicationInfo.PublicChannelNames[<span class="source_int">2</span>],<span class="source_string">""</span>);
+<a name="721"></a>
+<a name="722"></a>	cnt = VoiceReplicationInfo.GetPublicChannelCount(True);
+<a name="723"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; cnt; <span class="source_type">i</span>++ )
+<a name="724"></a>	{
+<a name="725"></a>		if ( <span class="source_type">bool</span>(AutoJoinMask & (<span class="source_int">1</span> &lt;&lt; <span class="source_type">i</span>)) )
+<a name="726"></a>		{
+<a name="727"></a>			<span class="source_comment">// This doesn't seem to actually work so I am commenting it out - Ramm
+</span><a name="728"></a>			<span class="source_comment">//Join(VoiceReplicationInfo.PublicChannelNames[i],"");
+</span><a name="729"></a>			for ( j = RejoinChannels.Length - <span class="source_int">1</span>; j &gt;= <span class="source_int">0</span>; j-- )
+<a name="730"></a>				if ( RejoinChannels[j] == VoiceReplicationInfo.PublicChannelNames[<span class="source_type">i</span>] )
+<a name="731"></a>					RejoinChannels.Remove(j,<span class="source_int">1</span>);
+<a name="732"></a>		}
+<a name="733"></a>	}
+<a name="734"></a>
+<a name="735"></a>	<span class="source_comment">// Rejoin any channels we were members of during the last match
+</span><a name="736"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; RejoinChannels.Length; <span class="source_type">i</span>++)
+<a name="737"></a>		Join(RejoinChannels[<span class="source_type">i</span>],<span class="source_string">""</span>);
+<a name="738"></a>
+<a name="739"></a>	<span class="source_comment">// If we were speaking on a particular chatroom last match, re-activate the same room, if possible
+</span><a name="740"></a>	if ( LastActiveChannel != <span class="source_string">""</span> )
+<a name="741"></a>		Speak(LastActiveChannel);
+<a name="742"></a>
+<a name="743"></a>	else if ( ActiveRoom == None && bEnableInitialChatRoom )
+<a name="744"></a>	{
+<a name="745"></a>		DefaultChannel = GetDefaultActiveChannel();
+<a name="746"></a>		if ( DefaultChannel != <span class="source_string">""</span> )
+<a name="747"></a>			Speak(DefaultChannel);
+<a name="748"></a>	}
+<a name="749"></a>
+<a name="750"></a>	if (RejoinChannels.Length &gt; <span class="source_int">0</span> || LastActiveChannel != <span class="source_string">""</span>)
+<a name="751"></a>	{
+<a name="752"></a>		RejoinChannels.Length = <span class="source_int">0</span>;
+<a name="753"></a>		LastActiveChannel = <span class="source_string">""</span>;
+<a name="754"></a>		SaveConfig();
+<a name="755"></a>	}
+<a name="756"></a>}
+<a name="757"></a>
+<a name="758"></a>function ClientGameEnded()
+<a name="759"></a>{
+<a name="760"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="761"></a>	local array&lt;<span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span>&gt; Channels;
+<a name="762"></a>
+<a name="763"></a>	if (bVoiceChatEnabled && <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None && VoiceReplicationInfo != None)
+<a name="764"></a>	{
+<a name="765"></a>		log(<span class="source_type">Name</span>@<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>@<span class="source_string">"ClientGameEnded()"</span>,<span class="source_name">'VoiceChat'</span>);
+<a name="766"></a>		Channels = VoiceReplicationInfo.GetChannels();
+<a name="767"></a>
+<a name="768"></a>	<span class="source_comment">// Get a list of all channels currently a member of, and store them for the next match.
+</span><a name="769"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Channels.Length; <span class="source_type">i</span>++)
+<a name="770"></a>		{
+<a name="771"></a>			if ( Channels[<span class="source_type">i</span>] != None && Channels[<span class="source_type">i</span>].IsMember(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>, True) )
+<a name="772"></a>				RejoinChannels[RejoinChannels.Length] = Channels[<span class="source_type">i</span>].GetTitle();
+<a name="773"></a>		}
+<a name="774"></a>
+<a name="775"></a>		if ( ActiveRoom != None )
+<a name="776"></a>			LastActiveChannel = ActiveRoom.GetTitle();
+<a name="777"></a>	}
+<a name="778"></a>
+<a name="779"></a>	if (RejoinChannels.Length &gt; <span class="source_int">0</span> || LastActiveChannel != <span class="source_string">""</span>)
+<a name="780"></a>		SaveConfig();
+<a name="781"></a>
+<a name="782"></a>	Super.ClientGameEnded();
+<a name="783"></a>}
+<a name="784"></a>
+<a name="785"></a>function ServerChatDebug()
+<a name="786"></a>{
+<a name="787"></a>	local <span class="source_type"><a href="../engine/broadcasthandler.html" class="source">BroadcastHandler</a></span> <span class="source_type">B</span>;
+<a name="788"></a>
+<a name="789"></a>	for ( <span class="source_type">B</span> = <span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/broadcasthandler.html" class="source">BroadcastHandler</a></span>; <span class="source_type">B</span> != None; <span class="source_type">B</span> = <span class="source_type">B</span>.NextBroadcastHandler )
+<a name="790"></a>		if ( <span class="source_type"><a href="../unrealgame/unrealchathandler.html" class="source">UnrealChatHandler</a></span>(<span class="source_type">B</span>) != None )
+<a name="791"></a>			<span class="source_type"><a href="../unrealgame/unrealchathandler.html" class="source">UnrealChatHandler</a></span>(<span class="source_type">B</span>).DoChatDebug();
+<a name="792"></a>}
+<a name="793"></a>
+<a name="794"></a><span class="source_comment">//debug bot when a net client
+</span><a name="795"></a>exec function NetDebugBot()
+<a name="796"></a>{
+<a name="797"></a>	if (<span class="source_type">Level</span>.NetMode == NM_Client && <span class="source_type">ViewTarget</span> != <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>)
+<a name="798"></a>		ServerSendBotDebugString();
+<a name="799"></a>}
+<a name="800"></a>
+<a name="801"></a>function ServerSendBotDebugString()
+<a name="802"></a>{
+<a name="803"></a>	if (<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(RealViewTarget) != None)
+<a name="804"></a>		ClientReceiveBotDebugString(<span class="source_string">"(ORDERS: "</span>$<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(RealViewTarget).Squad.GetOrders()$<span class="source_string">") "</span>$<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(RealViewTarget).GoalString);
+<a name="805"></a>	else
+<a name="806"></a>		ClientReceiveBotDebugString(<span class="source_string">""</span>);
+<a name="807"></a>}
+<a name="808"></a>
+<a name="809"></a>simulated function ClientReceiveBotDebugString(<span class="source_type">string</span> DebugString)
+<a name="810"></a>{
+<a name="811"></a>	NetBotDebugString = DebugString;
+<a name="812"></a>	if (NetBotDebugString != <span class="source_string">""</span>)
+<a name="813"></a>		ServerSendBotDebugString();
+<a name="814"></a>}
+<a name="815"></a>
+<a name="816"></a>simulated function DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, out <span class="source_type">float</span> <span class="source_type">YL</span>, out <span class="source_type">float</span> YPos)
+<a name="817"></a>{
+<a name="818"></a>	Super.DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, <span class="source_type">YL</span>, YPos);
+<a name="819"></a>
+<a name="820"></a>	if (NetBotDebugString != <span class="source_string">""</span>)
+<a name="821"></a>	{
+<a name="822"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">255</span>);
+<a name="823"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"Bot ViewTarget's Goal: "</span>$NetBotDebugString);
+<a name="824"></a>		YPos += <span class="source_type">YL</span>;
+<a name="825"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>, YPos);
+<a name="826"></a>	}
+<a name="827"></a>}
+<a name="828"></a>
+<a name="829"></a>defaultproperties
+<a name="830"></a>{
+<a name="831"></a>     CustomStatusAnnouncerPack=<span class="source_string">"UnrealGame.FemaleAnnouncer"</span>
+<a name="832"></a>     CustomRewardAnnouncerPack=<span class="source_string">"UnrealGame.MaleAnnouncer"</span>
+<a name="833"></a>     MaxRecentServers=<span class="source_int">25</span>
+<a name="834"></a>     LastKickWarningTime=-<span class="source_int">1000.000000</span>
+<a name="835"></a>     PlayerChatType=<span class="source_string">"UnrealGame.UnrealPlayerChatManager"</span>
+<a name="836"></a>     FovAngle=<span class="source_int">85.000000</span>
+<a name="837"></a>     PlayerReplicationInfoClass=<span class="source_type">Class</span><span class="source_name">'UnrealGame.TeamPlayerReplicationInfo'</span>
+<a name="838"></a>}
+<a name="839"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/unrealplayer.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UnrealPlayer">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/unrealpawn.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/unrealplayerchatmanager.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:09.738 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.GUIScrollBarBase</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guiscrollbarbase.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUIScrollBarBase">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guiquestionpage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guiscrollbuttonbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/guiscrollbarbase.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/guiscrollbarbase.html">GUIScrollBarBase</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// ====================================================================
+</span><a name="2"></a><span class="source_comment">//  Class:  XInterface.GUIScrollBarBase
+</span><a name="3"></a><span class="source_comment">//  Parent: XInterface.GUIMultiComponent
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">//  Base class for scroll bar assemblies
+</span><a name="6"></a><span class="source_comment">// ====================================================================
+</span><a name="7"></a>
+<a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/guiscrollbarbase.html" class="source">GUIScrollBarBase</a></span> extends <span class="source_type"><a href="../xinterface/guimulticomponent.html" class="source">GUIMultiComponent</a></span>
+<a name="9"></a>		Native;
+<a name="10"></a>
+<a name="11"></a><span class="source_comment">// (cpptext)
+</span><a name="12"></a><span class="source_comment">// (cpptext)
+</span><a name="13"></a><span class="source_comment">// (cpptext)
+</span><a name="14"></a><span class="source_comment">// (cpptext)
+</span><a name="15"></a>
+<a name="16"></a>var()   <span class="source_type"><a href="../xinterface/gui.html#EOrientation" class="source">EOrientation</a></span>    <span class="source_type"><a href="../engine/scenemanager.html#Orientation" class="source">Orientation</a></span>;
+<a name="17"></a>var()   <span class="source_type">int</span>             Step;			<span class="source_comment">// How many elements to consider a single line
+</span><a name="18"></a>var     <span class="source_type">float</span>           GripPos;		<span class="source_comment">// Where in the ScrollZone is the grip	- Set Natively
+</span><a name="19"></a>var     <span class="source_type">float</span>           GripSize;		<span class="source_comment">// How big is the grip - Set Natively
+</span><a name="20"></a>var     <span class="source_type">float</span>           GrabOffset;		<span class="source_comment">// distance from top of button that the user started their drag. Set natively.
+</span><a name="21"></a>var()   <span class="source_type">int</span>             MinGripPixels;	<span class="source_comment">// Minimum size (in pixels) to draw the grip.
+</span><a name="22"></a>
+<a name="23"></a>var		<span class="source_type"><a href="../xinterface/guilistbase.html" class="source">GUIListBase</a></span>		MyList;			<span class="source_comment">// The list this Scrollbar is attached to
+</span><a name="24"></a>
+<a name="25"></a><span class="source_comment">// only to be used when MyList == none
+</span><a name="26"></a>var() 	<span class="source_type">int</span> 			BigStep;		<span class="source_comment">// big step, by default one page
+</span><a name="27"></a>var() 	<span class="source_type">int</span> 			ItemCount;		<span class="source_comment">// total number of items
+</span><a name="28"></a>var() 	<span class="source_type">int</span> 			ItemsPerPage;	<span class="source_comment">// number of visible items per page
+</span><a name="29"></a>var 	<span class="source_type">int</span> 			CurPos;			<span class="source_comment">// current possition
+</span><a name="30"></a>
+<a name="31"></a>var Automated <span class="source_type"><a href="../xinterface/guiscrollzonebase.html" class="source">GUIScrollZoneBase</a></span>   MyScrollZone;
+<a name="32"></a>var Automated <span class="source_type"><a href="../xinterface/guiscrollbuttonbase.html" class="source">GUIScrollButtonBase</a></span> MyIncreaseButton;
+<a name="33"></a>var Automated <span class="source_type"><a href="../xinterface/guiscrollbuttonbase.html" class="source">GUIScrollButtonBase</a></span> MyDecreaseButton;
+<a name="34"></a>var Automated <span class="source_type"><a href="../xinterface/guigripbuttonbase.html" class="source">GUIGripButtonBase</a></span>   MyGripButton;
+<a name="35"></a>
+<a name="36"></a>delegate PositionChanged(<span class="source_type">int</span> NewPos);
+<a name="37"></a>
+<a name="38"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="39"></a>{
+<a name="40"></a>	Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="41"></a>
+<a name="42"></a>    if (MyList != none)
+<a name="43"></a>	{
+<a name="44"></a>		ReFocus(MyList);
+<a name="45"></a>		BigStep = MyList.ItemsPerPage * Step;
+<a name="46"></a>		ItemCount = MyList.ItemCount;
+<a name="47"></a>		CurPos = MyList.Top;
+<a name="48"></a>	}
+<a name="49"></a>
+<a name="50"></a>	MyScrollZone.bNeverScale = True;
+<a name="51"></a>	MyIncreaseButton.bNeverScale = True;
+<a name="52"></a>	MyDecreaseButton.bNeverScale = True;
+<a name="53"></a>	MyGripButton.bNeverScale = True;
+<a name="54"></a>}
+<a name="55"></a>
+<a name="56"></a>function SetList( <span class="source_type"><a href="../xinterface/guilistbase.html" class="source">GUIListBase</a></span> <span class="source_type">List</span> )
+<a name="57"></a>{
+<a name="58"></a>    MyList = <span class="source_type">List</span>;
+<a name="59"></a>    Refocus(<span class="source_type">List</span>);
+<a name="60"></a>
+<a name="61"></a>    if ( <span class="source_type">List</span> != None )
+<a name="62"></a>    {
+<a name="63"></a>    	BigStep = <span class="source_type">List</span>.ItemsPerPage;
+<a name="64"></a>    	ItemCount = <span class="source_type">List</span>.ItemCount;
+<a name="65"></a>    	CurPos = MyList.Top;
+<a name="66"></a>    }
+<a name="67"></a>    else
+<a name="68"></a>	{
+<a name="69"></a>		BigStep = <span class="source_int">0</span>;
+<a name="70"></a>		ItemCount = <span class="source_int">0</span>;
+<a name="71"></a>		CurPos = <span class="source_int">0</span>;
+<a name="72"></a>	}
+<a name="73"></a>}
+<a name="74"></a>
+<a name="75"></a>function UpdateGripPosition(<span class="source_type">float</span> NewPos)
+<a name="76"></a>{
+<a name="77"></a>	if (MyList != none)
+<a name="78"></a>	{
+<a name="79"></a>		MyList.MakeVisible(NewPos);
+<a name="80"></a>		ItemCount = MyList.ItemCount;
+<a name="81"></a>	}
+<a name="82"></a>	GripPos = NewPos;
+<a name="83"></a>	CurPos = (ItemCount-ItemsPerPage)*GripPos;
+<a name="84"></a>	PositionChanged(CurPos);
+<a name="85"></a>}
+<a name="86"></a>
+<a name="87"></a>delegate MoveGripBy(<span class="source_type">int</span> items)
+<a name="88"></a>{
+<a name="89"></a>	local <span class="source_type">int</span> <span class="source_type">NewItem</span>;
+<a name="90"></a>
+<a name="91"></a>	if (MyList != none)
+<a name="92"></a>	{
+<a name="93"></a>		<span class="source_type">NewItem</span> = MyList.Top + items;
+<a name="94"></a>		ItemCount = MyList.ItemCount;
+<a name="95"></a>		if (MyList.ItemCount &gt; <span class="source_int">0</span>)
+<a name="96"></a>		{
+<a name="97"></a>			MyList.SetTopItem(<span class="source_type">NewItem</span>);
+<a name="98"></a>			AlignThumb();
+<a name="99"></a>		}
+<a name="100"></a>	}
+<a name="101"></a>
+<a name="102"></a>	CurPos += items;
+<a name="103"></a>	if (CurPos &lt; <span class="source_int">0</span>) CurPos = <span class="source_int">0</span>;
+<a name="104"></a>	if (CurPos &gt; ItemCount-ItemsPerPage) CurPos = ItemCount-ItemsPerPage;
+<a name="105"></a>	if (MyList == none) if (ItemCount &gt; <span class="source_int">0</span>) AlignThumb();
+<a name="106"></a>	PositionChanged(CurPos);
+<a name="107"></a>}
+<a name="108"></a>
+<a name="109"></a>function <span class="source_type">bool</span> DecreaseClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="110"></a>{
+<a name="111"></a>	WheelUp();
+<a name="112"></a>	return true;
+<a name="113"></a>}
+<a name="114"></a>
+<a name="115"></a>function <span class="source_type">bool</span> IncreaseClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="116"></a>{
+<a name="117"></a>	WheelDown();
+<a name="118"></a>	return true;
+<a name="119"></a>}
+<a name="120"></a>
+<a name="121"></a>function WheelUp()
+<a name="122"></a>{
+<a name="123"></a>	if (!<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CtrlPressed)
+<a name="124"></a>		MoveGripBy(-Step);
+<a name="125"></a>	else
+<a name="126"></a>		MoveGripBy(-BigStep);
+<a name="127"></a>}
+<a name="128"></a>
+<a name="129"></a>function WheelDown()
+<a name="130"></a>{
+<a name="131"></a>	if (!<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CtrlPressed)
+<a name="132"></a>		MoveGripBy(Step);
+<a name="133"></a>	else
+<a name="134"></a>		MoveGripBy(BigStep);
+<a name="135"></a>}
+<a name="136"></a>
+<a name="137"></a>delegate AlignThumb()
+<a name="138"></a>{
+<a name="139"></a>	local <span class="source_type">float</span> NewPos;
+<a name="140"></a>
+<a name="141"></a>	if (MyList != none)
+<a name="142"></a>	{
+<a name="143"></a>		BigStep = MyList.ItemsPerPage * Step;
+<a name="144"></a>		if (MyList.ItemCount==<span class="source_int">0</span>)
+<a name="145"></a>			NewPos = <span class="source_int">0</span>;
+<a name="146"></a>		else
+<a name="147"></a>			NewPos = <span class="source_type">float</span>(MyList.Top) / <span class="source_type">float</span>(MyList.ItemCount-MyList.ItemsPerPage);
+<a name="148"></a>	}
+<a name="149"></a>	else {
+<a name="150"></a>		if (ItemCount==<span class="source_int">0</span>)
+<a name="151"></a>			NewPos = <span class="source_int">0</span>;
+<a name="152"></a>		else
+<a name="153"></a>			NewPos = CurPos / <span class="source_type">float</span>(ItemCount-ItemsPerPage);
+<a name="154"></a>	}
+<a name="155"></a>
+<a name="156"></a>	GripPos = FClamp(NewPos, <span class="source_int">0.0</span>, <span class="source_int">1.0</span>);
+<a name="157"></a>}
+<a name="158"></a>
+<a name="159"></a>function Refocus(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> Who)
+<a name="160"></a>{
+<a name="161"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="162"></a>
+<a name="163"></a>	if (Who != None && Controls.Length &gt; <span class="source_int">0</span>)
+<a name="164"></a>		for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;Controls.Length;<span class="source_type">i</span>++)
+<a name="165"></a>	    {
+<a name="166"></a>	    	Controls[<span class="source_type">i</span>].FocusInstead = Who;
+<a name="167"></a>	        Controls[<span class="source_type">i</span>].bNeverFocus=true;
+<a name="168"></a>	    }
+<a name="169"></a>}
+<a name="170"></a>
+<a name="171"></a><span class="source_comment">// Stub
+</span><a name="172"></a>function <span class="source_type">bool</span> GripPreDraw( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span> ) { return false; }
+<a name="173"></a>
+<a name="174"></a>function SetFriendlyLabel( <span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span> <span class="source_type">NewLabel</span> )
+<a name="175"></a>{
+<a name="176"></a>	Super.SetFriendlyLabel(<span class="source_type">NewLabel</span>);
+<a name="177"></a>
+<a name="178"></a>	if ( MyScrollZone != None )
+<a name="179"></a>		MyScrollZone.SetFriendlyLabel(<span class="source_type">NewLabel</span>);
+<a name="180"></a>
+<a name="181"></a>	if ( MyIncreaseButton != None )
+<a name="182"></a>		MyIncreaseButton.SetFriendlyLabel(<span class="source_type">NewLabel</span>);
+<a name="183"></a>
+<a name="184"></a>	if ( MyDecreaseButton != None )
+<a name="185"></a>		MyDecreaseButton.SetFriendlyLabel(<span class="source_type">NewLabel</span>);
+<a name="186"></a>
+<a name="187"></a>	if ( MyGripButton != None )
+<a name="188"></a>		MyGripButton.SetFriendlyLabel(<span class="source_type">NewLabel</span>);
+<a name="189"></a>}
+<a name="190"></a>
+<a name="191"></a><span class="source_comment">/*
+<a name="192"></a>function bool FocusFirst(GUIComponent Sender)
+<a name="193"></a>{
+<a name="194"></a>}
+<a name="195"></a>
+<a name="196"></a>function bool FocusLast(GUIComponent Sender)
+<a name="197"></a>{
+<a name="198"></a>}
+<a name="199"></a>*/</span>
+<a name="200"></a>
+<a name="201"></a>defaultproperties
+<a name="202"></a>{
+<a name="203"></a>     Step=<span class="source_int">1</span>
+<a name="204"></a>     PropagateVisibility=True
+<a name="205"></a>     bTabStop=False
+<a name="206"></a>}
+<a name="207"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guiscrollbarbase.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUIScrollBarBase">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guiquestionpage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guiscrollbuttonbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:02.521 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

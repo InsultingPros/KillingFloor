@@ -1,0 +1,1861 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - KFMod.KFPawn</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_kfmod/kfpawn.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#KFPawn">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../kfmod/kfonlinelostrigger.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../kfmod/kfpawnfootadjuster.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#kfmod/kfpawn.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.KFPawn</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../xgame/xpawn.html">xPawn</a></dd>
+<dt>Modifiers</dt><dd>dependsOn ( xPawnGibGroup ) </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/pawn.html">Pawn</a>
+      |   
+      +-- <a href="../unrealgame/unrealgame-overview.html">UnrealGame</a>.<a href="../unrealgame/unrealpawn.html">UnrealPawn</a>
+         |   
+         +-- <a href="../xgame/xgame-overview.html">XGame</a>.<a href="../xgame/xpawn.html">xPawn</a>
+            |   
+            +-- <a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/kfpawn.html">KFPawn</a>
+</pre>
+
+<h4>Direct Known Subclasses:</h4>
+<blockquote>
+	<a href="../kfmod/kfhumanpawn.html">KFHumanPawn</a>
+</blockquote>
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Summary</th>
+</tr>
+<tr><td width="40%"><a href="#_NUM_FIRE_ANIMS" name="NUM_FIRE_ANIMS" title="go to the details">NUM_FIRE_ANIMS</a></td><td width="10%">=</td><td width="50%">4</td></tr>
+
+</table>
+
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../kfmod/kfpawnfootadjuster.html">KFPawnFootAdjuster</a></td><td width="66%"><a href="#_Adjuster" name="Adjuster" title="go to the details">Adjuster</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_AnimActResetTime" name="AnimActResetTime" title="go to the details">AnimActResetTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/emitter.html">Emitter</a></td><td width="66%"><a href="#_AttachedEmitter" name="AttachedEmitter" title="go to the details">AttachedEmitter</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../kfmod/kfbulletwhipattachment.html">KFBulletWhipAttachment</a></td><td width="66%"><a href="#_AuxCollisionCylinder" name="AuxCollisionCylinder" title="go to the details">AuxCollisionCylinder</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bAshen" name="bAshen" title="go to the details">bAshen</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bBurnApplied" name="bBurnApplied" title="go to the details">bBurnApplied</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bBurnified" name="bBurnified" title="go to the details">bBurnified</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bCanBeHealed" name="bCanBeHealed" title="go to the details">bCanBeHealed</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDestroyAfterRagDollTick" name="bDestroyAfterRagDollTick" title="go to the details">bDestroyAfterRagDollTick</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDestroyNextTick" name="bDestroyNextTick" title="go to the details">bDestroyNextTick</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDoAdjustFeet" name="bDoAdjustFeet" title="go to the details">bDoAdjustFeet</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bHasFootAdjust" name="bHasFootAdjust" title="go to the details">bHasFootAdjust</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_BileCount" name="BileCount" title="go to the details">BileCount</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_BileFrequency" name="BileFrequency" title="go to the details">BileFrequency</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/pawn.html">Pawn</a></td><td width="66%"><a href="#_BileInstigator" name="BileInstigator" title="go to the details">BileInstigator</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_bIsQuickHealing" name="bIsQuickHealing" title="go to the details">bIsQuickHealing</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../roeffects/robloodspurt.html">ROBloodSpurt</a>&gt;</td><td width="66%"><a href="#_BleedingEmitterClass" name="BleedingEmitterClass" title="go to the details">BleedingEmitterClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bLeftArmGibbed" name="bLeftArmGibbed" title="go to the details">bLeftArmGibbed</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bLeftLegGibbed" name="bLeftLegGibbed" title="go to the details">bLeftLegGibbed</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bMovementDisabled" name="bMovementDisabled" title="go to the details">bMovementDisabled</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bProcessedRagTickDestroy" name="bProcessedRagTickDestroy" title="go to the details">bProcessedRagTickDestroy</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bResetingAnimAct" name="bResetingAnimAct" title="go to the details">bResetingAnimAct</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bRightArmGibbed" name="bRightArmGibbed" title="go to the details">bRightArmGibbed</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bRightLegGibbed" name="bRightLegGibbed" title="go to the details">bRightLegGibbed</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bThrowingNade" name="bThrowingNade" title="go to the details">bThrowingNade</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_BurnDown" name="BurnDown" title="go to the details">BurnDown</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/emitter.html">Emitter</a>&gt;</td><td width="66%"><a href="#_BurnEffect" name="BurnEffect" title="go to the details">BurnEffect</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/pawn.html">pawn</a></td><td width="66%"><a href="#_BurnInstigator" name="BurnInstigator" title="go to the details">BurnInstigator</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_ClientIdleWeaponAnim" name="ClientIdleWeaponAnim" title="go to the details">ClientIdleWeaponAnim</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../roeffects/severedappendage.html">SeveredAppendage</a>&gt;</td><td width="66%"><a href="#_DetachedArmClass" name="DetachedArmClass" title="go to the details">DetachedArmClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../roeffects/severedappendage.html">SeveredAppendage</a>&gt;</td><td width="66%"><a href="#_DetachedLegClass" name="DetachedLegClass" title="go to the details">DetachedLegClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_DropCashMessageDelay" name="DropCashMessageDelay" title="go to the details">DropCashMessageDelay</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">Class&lt;<a href="../kfmod/species_kfmalehuman.html">SPECIES_KFMaleHuman</a>&gt;</td><td width="66%"><a href="#_FeetAdjSpec" name="FeetAdjSpec" title="go to the details">FeetAdjSpec</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_FireAltAnims[NUM_FIRE_ANIMS]" name="FireAltAnims[NUM_FIRE_ANIMS]" title="go to the details">FireAltAnims[NUM_FIRE_ANIMS]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_FireAnims[NUM_FIRE_ANIMS]" name="FireAnims[NUM_FIRE_ANIMS]" title="go to the details">FireAnims[NUM_FIRE_ANIMS]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_FireCrouchAltAnims[NUM_FIRE_ANIMS]" name="FireCrouchAltAnims[NUM_FIRE_ANIMS]" title="go to the details">FireCrouchAltAnims[NUM_FIRE_ANIMS]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_FireCrouchAnims[NUM_FIRE_ANIMS]" name="FireCrouchAnims[NUM_FIRE_ANIMS]" title="go to the details">FireCrouchAnims[NUM_FIRE_ANIMS]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_healthToGive" name="healthToGive" title="go to the details">healthToGive</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_HitAnims[4]" name="HitAnims[4]" title="go to the details">HitAnims[4]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/emitter.html">Emitter</a></td><td width="66%"><a href="#_ItBUURRNNNS" name="ItBUURRNNNS" title="go to the details">ItBUURRNNNS</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_KFBSkin" name="KFBSkin" title="go to the details">KFBSkin</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_KFFSkin" name="KFFSkin" title="go to the details">KFFSkin</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">mesh</td><td width="66%"><a href="#_KFSMesh" name="KFSMesh" title="go to the details">KFSMesh</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../kfmod/damtypevomit.html">DamTypeVomit</a>&gt;</td><td width="66%"><a href="#_LastBileDamagedByType" name="LastBileDamagedByType" title="go to the details">LastBileDamagedByType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_LastBurnDamage" name="LastBurnDamage" title="go to the details">LastBurnDamage</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/pawn.html">pawn</a></td><td width="66%"><a href="#_LastDamagedBy" name="LastDamagedBy" title="go to the details">LastDamagedBy</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LastDropCashMessageTime" name="LastDropCashMessageTime" title="go to the details">LastDropCashMessageTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_lastHealTime" name="lastHealTime" title="go to the details">lastHealTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt;</td><td width="66%"><a href="#_LastHitDamType" name="LastHitDamType" title="go to the details">LastHitDamType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../kfmod/kflevelrules.html">KFLevelRules</a></td><td width="66%"><a href="#_LevRls" name="LevRls" title="go to the details">LevRls</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../kfmod/dismembermentjetlimb.html">DismembermentJetLimb</a>&gt;</td><td width="66%"><a href="#_LimbSpurtEmitterClass" name="LimbSpurtEmitterClass" title="go to the details">LimbSpurtEmitterClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MaxZHeight" name="MaxZHeight" title="go to the details">MaxZHeight</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MinZHeight" name="MinZHeight" title="go to the details">MinZHeight</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_NadeThrowTimeout" name="NadeThrowTimeout" title="go to the details">NadeThrowTimeout</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../kfmod/dismembermentjethead.html">DismembermentJetHead</a>&gt;</td><td width="66%"><a href="#_NeckSpurtEmitterClass" name="NeckSpurtEmitterClass" title="go to the details">NeckSpurtEmitterClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_NextBileTime" name="NextBileTime" title="go to the details">NextBileTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/texture.html">Texture</a></td><td width="66%"><a href="#_NoEntryTexture" name="NoEntryTexture" title="go to the details">NoEntryTexture</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/emitter.html">Emitter</a>&gt;</td><td width="66%"><a href="#_ObliteratedEffectClass" name="ObliteratedEffectClass" title="go to the details">ObliteratedEffectClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_OldAdjust[2]" name="OldAdjust[2]" title="go to the details">OldAdjust[2]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/playerreplicationinfo.html">PlayerReplicationInfo</a></td><td width="66%"><a href="#_OwnerPRI" name="OwnerPRI" title="go to the details">OwnerPRI</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_PostFireBlendCrouchAnim" name="PostFireBlendCrouchAnim" title="go to the details">PostFireBlendCrouchAnim</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_PostFireBlendStandAnim" name="PostFireBlendStandAnim" title="go to the details">PostFireBlendStandAnim</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../roeffects/projectilebloodsplat.html">ProjectileBloodSplat</a>&gt;</td><td width="66%"><a href="#_ProjectileBloodSplatClass" name="ProjectileBloodSplatClass" title="go to the details">ProjectileBloodSplatClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_SavedAuxCollision" name="SavedAuxCollision" title="go to the details">SavedAuxCollision</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../kfmod/kfpawn.html#SScriptedAnimRepInfo">SScriptedAnimRepInfo</a></td><td width="66%"><a href="#_ScriptedAnimData" name="ScriptedAnimData" title="go to the details">ScriptedAnimData</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/inventory.html">Inventory</a></td><td width="66%"><a href="#_SecondaryItem" name="SecondaryItem" title="go to the details">SecondaryItem</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../roeffects/severedappendageattachment.html">SeveredAppendageAttachment</a>&gt;</td><td width="66%"><a href="#_SeveredArmAttachClass" name="SeveredArmAttachClass" title="go to the details">SeveredArmAttachClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../roeffects/severedappendageattachment.html">SeveredAppendageAttachment</a></td><td width="66%"><a href="#_SeveredHead" name="SeveredHead" title="go to the details">SeveredHead</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../roeffects/severedappendageattachment.html">SeveredAppendageAttachment</a>&gt;</td><td width="66%"><a href="#_SeveredHeadAttachClass" name="SeveredHeadAttachClass" title="go to the details">SeveredHeadAttachClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../roeffects/severedappendageattachment.html">SeveredAppendageAttachment</a></td><td width="66%"><a href="#_SeveredLeftArm" name="SeveredLeftArm" title="go to the details">SeveredLeftArm</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../roeffects/severedappendageattachment.html">SeveredAppendageAttachment</a></td><td width="66%"><a href="#_SeveredLeftLeg" name="SeveredLeftLeg" title="go to the details">SeveredLeftLeg</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../roeffects/severedappendageattachment.html">SeveredAppendageAttachment</a>&gt;</td><td width="66%"><a href="#_SeveredLegAttachClass" name="SeveredLegAttachClass" title="go to the details">SeveredLegAttachClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../roeffects/severedappendageattachment.html">SeveredAppendageAttachment</a></td><td width="66%"><a href="#_SeveredRightArm" name="SeveredRightArm" title="go to the details">SeveredRightArm</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../roeffects/severedappendageattachment.html">SeveredAppendageAttachment</a></td><td width="66%"><a href="#_SeveredRightLeg" name="SeveredRightLeg" title="go to the details">SeveredRightLeg</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_StopDisabledTime" name="StopDisabledTime" title="go to the details">StopDisabledTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/material.html">Material</a></td><td width="66%"><a href="#_TeamBeaconBorderMaterial" name="TeamBeaconBorderMaterial" title="go to the details">TeamBeaconBorderMaterial</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/texture.html">Texture</a></td><td width="66%"><a href="#_TeamBeaconTexture" name="TeamBeaconTexture" title="go to the details">TeamBeaconTexture</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimeSetDestroyNextTickTime" name="TimeSetDestroyNextTickTime" title="go to the details">TimeSetDestroyNextTickTime</a></td></tr>
+<tr><th colspan="2" class="small">Bob</th></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_BobScaleModifier" name="BobScaleModifier" title="go to the details">BobScaleModifier</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_BobSpeedModifier" name="BobSpeedModifier" title="go to the details">BobSpeedModifier</a></td></tr>
+<tr><th colspan="2" class="small">Gib</th></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_GibCountCalf" name="GibCountCalf" title="go to the details">GibCountCalf</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_GibCountForearm" name="GibCountForearm" title="go to the details">GibCountForearm</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_GibCountHead" name="GibCountHead" title="go to the details">GibCountHead</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_GibCountTorso" name="GibCountTorso" title="go to the details">GibCountTorso</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_GibCountUpperArm" name="GibCountUpperArm" title="go to the details">GibCountUpperArm</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../old2k4/xpawngibgroup.html">xPawnGibGroup</a>&gt;</td><td width="66%"><a href="#_GibGroupClass" name="GibGroupClass" title="go to the details">GibGroupClass</a></td></tr>
+<tr><th colspan="2" class="small">Global</th></tr>
+<tr><td nowrap="nowrap" width="33%">Mesh</td><td width="66%"><a href="#_SafeMesh" name="SafeMesh" title="go to the details">SafeMesh</a></td></tr>
+<tr><th colspan="2" class="small">Gore</th></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_SeveredArmAttachScale" name="SeveredArmAttachScale" title="go to the details">SeveredArmAttachScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_SeveredHeadAttachScale" name="SeveredHeadAttachScale" title="go to the details">SeveredHeadAttachScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_SeveredLegAttachScale" name="SeveredLegAttachScale" title="go to the details">SeveredLegAttachScale</a></td></tr>
+<tr><th colspan="2" class="small">KFPawn</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDetailedShadows" name="bDetailedShadows" title="go to the details">bDetailedShadows</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bRealDeathType" name="bRealDeathType" title="go to the details">bRealDeathType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bRealtimeShadows" name="bRealtimeShadows" title="go to the details">bRealtimeShadows</a></td></tr>
+<tr><th colspan="2" class="small">Sounds</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_DecapitationSound" name="DecapitationSound" title="go to the details">DecapitationSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FootStepSoundRadius" name="FootStepSoundRadius" title="go to the details">FootStepSoundRadius</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_QuietFootStepVolume" name="QuietFootStepVolume" title="go to the details">QuietFootStepVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_SoundFootsteps[20]" name="SoundFootsteps[20]" title="go to the details">SoundFootsteps[20]</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../xgame/xgame-overview.html">XGame</a>.<a href="../xgame/xpawn.html">xPawn</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../xgame/xpawn.html#bAlreadySetup">bAlreadySetup</a>, <a href="../xgame/xpawn.html#bBerserk">bBerserk</a>, <a href="../xgame/xpawn.html#bCanBoostDodge">bCanBoostDodge</a>, <a href="../xgame/xpawn.html#bCanDodgeDoubleJump">bCanDodgeDoubleJump</a>, <a href="../xgame/xpawn.html#bClearWeaponOffsets">bClearWeaponOffsets</a>, <a href="../xgame/xpawn.html#bDeRes">bDeRes</a>, <a href="../xgame/xpawn.html#bFlaming">bFlaming</a>, <a href="../xgame/xpawn.html#bFrozenBody">bFrozenBody</a>, <a href="../xgame/xpawn.html#bGibbed">bGibbed</a>, <a href="../xgame/xpawn.html#bInvis">bInvis</a>, <a href="../xgame/xpawn.html#bOldInvis">bOldInvis</a>, <a href="../xgame/xpawn.html#bRubbery">bRubbery</a>, <a href="../xgame/xpawn.html#bSkeletized">bSkeletized</a>, <a href="../xgame/xpawn.html#bSpawnDone">bSpawnDone</a>, <a href="../xgame/xpawn.html#bSpawnIn">bSpawnIn</a>, <a href="../xgame/xpawn.html#CurrentCombo">CurrentCombo</a>, <a href="../xgame/xpawn.html#DeResFX">DeResFX</a>, <a href="../xgame/xpawn.html#DeResGravScale">DeResGravScale</a>, <a href="../xgame/xpawn.html#DeResLateralFriction">DeResLateralFriction</a>, <a href="../xgame/xpawn.html#DeResLiftSoftness">DeResLiftSoftness</a>, <a href="../xgame/xpawn.html#DeResLiftVel">DeResLiftVel</a>, <a href="../xgame/xpawn.html#DeResMat0">DeResMat0</a>, <a href="../xgame/xpawn.html#DeResMat1">DeResMat1</a>, <a href="../xgame/xpawn.html#DeResTime">DeResTime</a>, <a href="../xgame/xpawn.html#FireHeavyBurstAnim">FireHeavyBurstAnim</a>, <a href="../xgame/xpawn.html#FireHeavyRapidAnim">FireHeavyRapidAnim</a>, <a href="../xgame/xpawn.html#FireRifleBurstAnim">FireRifleBurstAnim</a>, <a href="../xgame/xpawn.html#FireRifleRapidAnim">FireRifleRapidAnim</a>, <a href="../xgame/xpawn.html#FireRootBone">FireRootBone</a>, <a href="../xgame/xpawn.html#FireState">FireState</a>, <a href="../xgame/xpawn.html#FootstepVolume">FootstepVolume</a>, <a href="../xgame/xpawn.html#GruntVolume">GruntVolume</a>, <a href="../xgame/xpawn.html#HeadShotMessage">HeadShotMessage</a>, <a href="../xgame/xpawn.html#IdleHeavyAnim">IdleHeavyAnim</a>, <a href="../xgame/xpawn.html#IdleRifleAnim">IdleRifleAnim</a>, <a href="../xgame/xpawn.html#InvisMaterial">InvisMaterial</a>, <a href="../xgame/xpawn.html#LastUDamageSoundTime">LastUDamageSoundTime</a>, <a href="../xgame/xpawn.html#MaxMultiJump">MaxMultiJump</a>, <a href="../xgame/xpawn.html#MinTimeBetweenPainSounds">MinTimeBetweenPainSounds</a>, <a href="../xgame/xpawn.html#MultiJumpBoost">MultiJumpBoost</a>, <a href="../xgame/xpawn.html#MultiJumpRemaining">MultiJumpRemaining</a>, <a href="../xgame/xpawn.html#OldController">OldController</a>, <a href="../xgame/xpawn.html#PlacedCharacterName">PlacedCharacterName</a>, <a href="../xgame/xpawn.html#PlacedFemaleCharacterName">PlacedFemaleCharacterName</a>, <a href="../xgame/xpawn.html#PlayerShadow">PlayerShadow</a>, <a href="../xgame/xpawn.html#RagConvulseMaterial">RagConvulseMaterial</a>, <a href="../xgame/xpawn.html#RagDeathUpKick">RagDeathUpKick</a>, <a href="../xgame/xpawn.html#RagDeathVel">RagDeathVel</a>, <a href="../xgame/xpawn.html#RagdollLifeSpan">RagdollLifeSpan</a>, <a href="../xgame/xpawn.html#RagdollOverride">RagdollOverride</a>, <a href="../xgame/xpawn.html#RagGravScale">RagGravScale</a>, <a href="../xgame/xpawn.html#RagImpactSoundInterval">RagImpactSoundInterval</a>, <a href="../xgame/xpawn.html#RagImpactSounds">RagImpactSounds</a>, <a href="../xgame/xpawn.html#RagImpactVolume">RagImpactVolume</a>, <a href="../xgame/xpawn.html#RagInvInertia">RagInvInertia</a>, <a href="../xgame/xpawn.html#RagLastSoundTime">RagLastSoundTime</a>, <a href="../xgame/xpawn.html#RagShootStrength">RagShootStrength</a>, <a href="../xgame/xpawn.html#RagSpinScale">RagSpinScale</a>, <a href="../xgame/xpawn.html#RealSkins[4]">RealSkins[4]</a>, <a href="../xgame/xpawn.html#RepeaterDeathCount">RepeaterDeathCount</a>, <a href="../xgame/xpawn.html#ShieldHitMat">ShieldHitMat</a>, <a href="../xgame/xpawn.html#ShieldHitMatTime">ShieldHitMatTime</a>, <a href="../xgame/xpawn.html#ShieldStrengthMax">ShieldStrengthMax</a>, <a href="../xgame/xpawn.html#SimHitFxTicker">SimHitFxTicker</a>, <a href="../xgame/xpawn.html#SkeletonMesh">SkeletonMesh</a>, <a href="../xgame/xpawn.html#SmallShieldStrength">SmallShieldStrength</a>, <a href="../xgame/xpawn.html#SoundGroupClass">SoundGroupClass</a>, <a href="../xgame/xpawn.html#Species">Species</a>, <a href="../xgame/xpawn.html#TeamSkin">TeamSkin</a>, <a href="../xgame/xpawn.html#TeleportFXClass">TeleportFXClass</a>, <a href="../xgame/xpawn.html#TransEffects[2]">TransEffects[2]</a>, <a href="../xgame/xpawn.html#TransOutEffect[2]">TransOutEffect[2]</a>, <a href="../xgame/xpawn.html#UDamageSound">UDamageSound</a>, <a href="../xgame/xpawn.html#UDamageTime">UDamageTime</a>, <a href="../xgame/xpawn.html#UDamageTimer">UDamageTimer</a>, <a href="../xgame/xpawn.html#UDamageWeaponMaterial">UDamageWeaponMaterial</a>, <a href="../xgame/xpawn.html#VoiceClass">VoiceClass</a>, <a href="../xgame/xpawn.html#WallDodgeAnims[4]">WallDodgeAnims[4]</a>, <a href="../xgame/xpawn.html#WeaponAttachment">WeaponAttachment</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../unrealgame/unrealgame-overview.html">UnrealGame</a>.<a href="../unrealgame/unrealpawn.html">UnrealPawn</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../unrealgame/unrealpawn.html#AttackSuitability">AttackSuitability</a>, <a href="../unrealgame/unrealpawn.html#bAcceptAllInventory">bAcceptAllInventory</a>, <a href="../unrealgame/unrealpawn.html#bBlobShadow">bBlobShadow</a>, <a href="../unrealgame/unrealpawn.html#bIsSquadLeader">bIsSquadLeader</a>, <a href="../unrealgame/unrealpawn.html#bKeepTaunting">bKeepTaunting</a>, <a href="../unrealgame/unrealpawn.html#bNoDefaultInventory">bNoDefaultInventory</a>, <a href="../unrealgame/unrealpawn.html#bPlayerShadows">bPlayerShadows</a>, <a href="../unrealgame/unrealpawn.html#bPlayOwnFootsteps">bPlayOwnFootsteps</a>, <a href="../unrealgame/unrealpawn.html#bSoakDebug">bSoakDebug</a>, <a href="../unrealgame/unrealpawn.html#CurrentDir">CurrentDir</a>, <a href="../unrealgame/unrealpawn.html#GameObjOffset">GameObjOffset</a>, <a href="../unrealgame/unrealpawn.html#GameObjRot">GameObjRot</a>, <a href="../unrealgame/unrealpawn.html#LastFootStepTime">LastFootStepTime</a>, <a href="../unrealgame/unrealpawn.html#LoadOut">LoadOut</a>, <a href="../unrealgame/unrealpawn.html#OptionalEquipment[16]">OptionalEquipment[16]</a>, <a href="../unrealgame/unrealpawn.html#RequiredEquipment[16]">RequiredEquipment[16]</a>, <a href="../unrealgame/unrealpawn.html#SelectedEquipment[16]">SelectedEquipment[16]</a>, <a href="../unrealgame/unrealpawn.html#spree">spree</a>, <a href="../unrealgame/unrealpawn.html#SquadName">SquadName</a>, <a href="../unrealgame/unrealpawn.html#VoiceType">VoiceType</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../xgame/xgame-overview.html">XGame</a>.<a href="../xgame/xpawn.html">xPawn</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../xgame/xpawn.html#EFireAnimState">EFireAnimState</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+<tr><td><a href="#_SScriptedAnimRepInfo" name="SScriptedAnimRepInfo" title="go to the details">SScriptedAnimRepInfo</a><br /><span class="small">BaseAnim, BlendInTime, BlendOutTime, AnimRate, AnimIterations, bLoopAnim, StartFrame</span></td></tr>
+
+</table>
+
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AddHealth-" name="AddHealth" title="go to the details">AddHealth</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_AddShieldStrength-" name="AddShieldStrength" title="go to the details">AddShieldStrength</a> (int ShieldAmount))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_AnimBlendTimer-" name="AnimBlendTimer" title="go to the details">AnimBlendTimer</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AnimEnd-" name="AnimEnd" title="go to the details">AnimEnd</a> (int Channel))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AnimEnd-Dying" name="AnimEnd" title="go to the details">AnimEnd</a> (int Channel)<br /><span class="function_state">Dying</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AttachEffect-" name="AttachEffect" title="go to the details">AttachEffect</a> (class&lt;<a href="../engine/xemitter.html">xEmitter</a>&gt; EmitterClass, Name BoneName, <a href="../core/object.html#Vector">Vector</a> Location, Rotator Rotation ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AttachEmitterEffect-" name="AttachEmitterEffect" title="go to the details">AttachEmitterEffect</a> (class&lt;<a href="../engine/emitter.html">Emitter</a>&gt; EmitterClass, Name BoneName, <a href="../core/object.html#Vector">Vector</a> Location, Rotator Rotation ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-Dying" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">Dying</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_CanBuyNow-" name="CanBuyNow" title="go to the details">CanBuyNow</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_CanCarry-" name="CanCarry" title="go to the details">CanCarry</a> (float Weight ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CheckBob-" name="CheckBob" title="go to the details">CheckBob</a> (float DeltaTime, <a href="../core/object.html#Vector">vector</a> Y))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CheckFootSteps-" name="CheckFootSteps" title="go to the details">CheckFootSteps</a> (float DeltaTime))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ChunkUp-" name="ChunkUp" title="go to the details">ChunkUp</a> (<a href="../core/object.html#Rotator">Rotator</a> HitRotation, float ChunkPerterbation ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ClientCurrentWeaponSold-" name="ClientCurrentWeaponSold" title="go to the details">ClientCurrentWeaponSold</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ClientForceChangeWeapon-" name="ClientForceChangeWeapon" title="go to the details">ClientForceChangeWeapon</a> (<a href="../engine/inventory.html">Inventory</a> NewWeapon))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Destroyed-" name="Destroyed" title="go to the details">Destroyed</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Died-" name="Died" title="go to the details">Died</a> (<a href="../engine/controller.html">Controller</a> Killer, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, <a href="../core/object.html#Vector">vector</a> HitLocation))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DisableMovement-" name="DisableMovement" title="go to the details">DisableMovement</a> (float DisableDuration))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DisplayDebug-" name="DisplayDebug" title="go to the details">DisplayDebug</a> (<a href="../engine/canvas.html">Canvas</a> Canvas, out float YL, out float YPos))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoDamageFX-" name="DoDamageFX" title="go to the details">DoDamageFX</a> (Name boneName, int Damage, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; DamageType, Rotator r ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoDerezEffect-" name="DoDerezEffect" title="go to the details">DoDerezEffect</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_DoJump-" name="DoJump" title="go to the details">DoJump</a> (bool bUpdating ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_EncroachedBy-" name="EncroachedBy" title="go to the details">EncroachedBy</a> (actor Other ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>bool&nbsp;</td><td><a href="#_EncroachingOn-" name="EncroachingOn" title="go to the details">EncroachingOn</a> (actor Other ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_FellOutOfWorld-Dying" name="FellOutOfWorld" title="go to the details">FellOutOfWorld</a> (<a href="../engine/actor.html#eKillZType">eKillZType</a> KillType))<br /><span class="function_state">Dying</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_FootStepping-" name="FootStepping" title="go to the details">FootStepping</a> (int Side))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ForceDefaultCharacter-" name="ForceDefaultCharacter" title="go to the details">ForceDefaultCharacter</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_GetDefaultCharacter-" name="GetDefaultCharacter" title="go to the details">GetDefaultCharacter</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>float&nbsp;</td><td><a href="#_GetExposureTo-" name="GetExposureTo" title="go to the details">GetExposureTo</a> (<a href="../core/object.html#Vector">vector</a> TestLocation))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>class&lt;<a href="../old2k4/gib.html">Gib</a>&gt;&nbsp;</td><td><a href="#_GetGibClass-" name="GetGibClass" title="go to the details">GetGibClass</a> (xPawnGibGroup.EGibType gibType))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>name&nbsp;</td><td><a href="#_GetOffhandBoneFor-" name="GetOffhandBoneFor" title="go to the details">GetOffhandBoneFor</a> (<a href="../engine/inventory.html">Inventory</a> I))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_GetPlayerName-" name="GetPlayerName" title="go to the details">GetPlayerName</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/sound.html">Sound</a>&nbsp;</td><td><a href="#_GetSound-" name="GetSound" title="go to the details">GetSound</a> (xPawnSoundGroup.ESoundType soundType))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>class&lt;<a href="../kfmod/kfveterancytypes.html">KFVeterancyTypes</a>&gt;&nbsp;</td><td><a href="#_GetVeteran-" name="GetVeteran" title="go to the details">GetVeteran</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>name&nbsp;</td><td><a href="#_GetWeaponBoneFor-" name="GetWeaponBoneFor" title="go to the details">GetWeaponBoneFor</a> (<a href="../engine/inventory.html">Inventory</a> I))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_GiveHealth-" name="GiveHealth" title="go to the details">GiveHealth</a> (int HealAmount, int HealMax))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_GiveWeapon-" name="GiveWeapon" title="go to the details">GiveWeapon</a> (string aClassName ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_HandleNadeThrowAnim-" name="HandleNadeThrowAnim" title="go to the details">HandleNadeThrowAnim</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_HideBone-" name="HideBone" title="go to the details">HideBone</a> (name boneName))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ItemIsBuyable-" name="ItemIsBuyable" title="go to the details">ItemIsBuyable</a> (Class<Pickup> IC ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_KImpact-" name="KImpact" title="go to the details">KImpact</a> (<a href="../engine/actor.html">actor</a> other, <a href="../core/object.html#Vector">vector</a> pos, <a href="../core/object.html#Vector">vector</a> impactVel, <a href="../core/object.html#Vector">vector</a> impactNorm))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_KVelDropBelow-Dying" name="KVelDropBelow" title="go to the details">KVelDropBelow</a> ()))<br /><span class="function_state">Dying</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_ModifyVelocity-" name="ModifyVelocity" title="go to the details">ModifyVelocity</a> (float DeltaTime, <a href="../core/object.html#Vector">vector</a> OldVelocity))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_OldPlayHit-" name="OldPlayHit" title="go to the details">OldPlayHit</a> (float Damage, <a href="../engine/pawn.html">Pawn</a> InstigatedBy, <a href="../core/object.html#Vector">vector</a> HitLocation, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, <a href="../core/object.html#Vector">vector</a> Momentum, optional int HitIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayDirectionalHit-" name="PlayDirectionalHit" title="go to the details">PlayDirectionalHit</a> (<a href="../core/object.html#Vector">Vector</a> HitLoc))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayDying-" name="PlayDying" title="go to the details">PlayDying</a> (class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; DamageType, <a href="../core/object.html#Vector">vector</a> HitLoc))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayDyingAnimation-" name="PlayDyingAnimation" title="go to the details">PlayDyingAnimation</a> (class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; DamageType, <a href="../core/object.html#Vector">vector</a> HitLoc))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayDyingSound-" name="PlayDyingSound" title="go to the details">PlayDyingSound</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayHit-" name="PlayHit" title="go to the details">PlayHit</a> (float Damage, <a href="../engine/pawn.html">Pawn</a> InstigatedBy, <a href="../core/object.html#Vector">vector</a> HitLocation, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, <a href="../core/object.html#Vector">vector</a> Momentum, optional int HI ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayScriptedAnim-" name="PlayScriptedAnim" title="go to the details">PlayScriptedAnim</a> (SScriptedAnimRepInfo  AnimData))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PossessedBy-" name="PossessedBy" title="go to the details">PossessedBy</a> (<a href="../engine/controller.html">Controller</a> C))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PostBeginPlay-" name="PostBeginPlay" title="go to the details">PostBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PostNetBeginPlay-" name="PostNetBeginPlay" title="go to the details">PostNetBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_PostNetReceive-" name="PostNetReceive" title="go to the details">PostNetReceive</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PreTravelCleanUp-" name="PreTravelCleanUp" title="go to the details">PreTravelCleanUp</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ProcessHitFX-" name="ProcessHitFX" title="go to the details">ProcessHitFX</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ProcessLocationalDamage-" name="ProcessLocationalDamage" title="go to the details">ProcessLocationalDamage</a> (int Damage, <a href="../engine/pawn.html">Pawn</a> instigatedBy, <a href="../core/object.html#Vector">Vector</a> hitlocation, <a href="../core/object.html#Vector">Vector</a> momentum, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, array<int> PointsHit ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_QuickHeal-" name="QuickHeal" title="go to the details">QuickHeal</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_RemoveFlamingEffects-" name="RemoveFlamingEffects" title="go to the details">RemoveFlamingEffects</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_RemoveInventorySP-" name="RemoveInventorySP" title="go to the details">RemoveInventorySP</a> (class<inventory> ItemClass ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ServerBuyAmmo-" name="ServerBuyAmmo" title="go to the details">ServerBuyAmmo</a> (Class&lt;<a href="../engine/ammunition.html">Ammunition</a>&gt; AClass, bool bOnlyClip ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ServerBuyFirstAid-" name="ServerBuyFirstAid" title="go to the details">ServerBuyFirstAid</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ServerBuyKevlar-" name="ServerBuyKevlar" title="go to the details">ServerBuyKevlar</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ServerBuyPotato-" name="ServerBuyPotato" title="go to the details">ServerBuyPotato</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ServerBuyWeapon-" name="ServerBuyWeapon" title="go to the details">ServerBuyWeapon</a> (Class&lt;<a href="../engine/weapon.html">Weapon</a>&gt; WClass, float ItemWeight ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ServerSellAmmo-" name="ServerSellAmmo" title="go to the details">ServerSellAmmo</a> (Class<Ammunition> AClass ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ServerSellWeapon-" name="ServerSellWeapon" title="go to the details">ServerSellWeapon</a> (Class<Weapon> WClass ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_SetAnimAction-" name="SetAnimAction" title="go to the details">SetAnimAction</a> (name NewAction))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetFootHeight-" name="SetFootHeight" title="go to the details">SetFootHeight</a> (float HeightMulti, byte iNum ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetNadeTimeOut-" name="SetNadeTimeOut" title="go to the details">SetNadeTimeOut</a> (float NewTimeOut))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetScriptedAnimData-" name="SetScriptedAnimData" title="go to the details">SetScriptedAnimData</a> (name BaseAnim, float BlendInTime, float BlendOutTime, float AnimRate, byte AnimIterations, bool bLoopAnim, float StartFrame))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetTraderUpdate-" name="SetTraderUpdate" title="go to the details">SetTraderUpdate</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Setup-" name="Setup" title="go to the details">Setup</a> (xUtil.PlayerRecord rec, optional bool bLoadNow))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetWeaponAttachment-" name="SetWeaponAttachment" title="go to the details">SetWeaponAttachment</a> (<a href="../engine/weaponattachment.html">WeaponAttachment</a> NewAtt))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_ShieldAbsorb-" name="ShieldAbsorb" title="go to the details">ShieldAbsorb</a> (int dam))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpawnGiblet-" name="SpawnGiblet" title="go to the details">SpawnGiblet</a> (class&lt;<a href="../old2k4/gib.html">Gib</a>&gt; GibClass, <a href="../core/object.html#Vector">Vector</a> Location, <a href="../core/object.html#Rotator">Rotator</a> Rotation, float GibPerterbation ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpawnGibs-" name="SpawnGibs" title="go to the details">SpawnGibs</a> (<a href="../core/object.html#Rotator">Rotator</a> HitRotation, float ChunkPerterbation))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpawnHitEmitter-" name="SpawnHitEmitter" title="go to the details">SpawnHitEmitter</a> (float Damage, <a href="../engine/pawn.html">Pawn</a> InstigatedBy, <a href="../core/object.html#Vector">vector</a> HitLocation, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, vector Momentum ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpawnSeveredGiblet-" name="SpawnSeveredGiblet" title="go to the details">SpawnSeveredGiblet</a> (class&lt;<a href="../roeffects/severedappendage.html">SeveredAppendage</a>&gt; GibClass, <a href="../core/object.html#Vector">Vector</a> Location, <a href="../core/object.html#Rotator">Rotator</a> Rotation, float GibPerterbation ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SpecialCalcView-Dying" name="SpecialCalcView" title="go to the details">SpecialCalcView</a> (out <a href="../engine/actor.html">Actor</a> ViewActor, out <a href="../core/object.html#Vector">vector</a> CameraLocation, out rotator CameraRotation ))<br /><span class="function_state">Dying</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StartBurnFX-" name="StartBurnFX" title="go to the details">StartBurnFX</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StartDeRes-" name="StartDeRes" title="go to the details">StartDeRes</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StartFiringX-" name="StartFiringX" title="go to the details">StartFiringX</a> (bool bAltFire, bool bRapid))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StopBurnFX-" name="StopBurnFX" title="go to the details">StopBurnFX</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StopFiring-" name="StopFiring" title="go to the details">StopFiring</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SwitchToLastWeapon-" name="SwitchToLastWeapon" title="go to the details">SwitchToLastWeapon</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TakeBileDamage-" name="TakeBileDamage" title="go to the details">TakeBileDamage</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TakeDamage-" name="TakeDamage" title="go to the details">TakeDamage</a> (int Damage, <a href="../engine/pawn.html">Pawn</a> instigatedBy, <a href="../core/object.html#Vector">Vector</a> hitlocation, <a href="../core/object.html#Vector">Vector</a> momentum, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, optional int HitIdx ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TakeDamage-Dying" name="TakeDamage" title="go to the details">TakeDamage</a> (int Damage, <a href="../engine/pawn.html">Pawn</a> InstigatedBy, <a href="../core/object.html#Vector">Vector</a> Hitlocation, <a href="../core/object.html#Vector">Vector</a> Momentum, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, optional int HI ))<br /><span class="function_state">Dying</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TakeFallingDamage-" name="TakeFallingDamage" title="go to the details">TakeFallingDamage</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TakeFireDamage-" name="TakeFireDamage" title="go to the details">TakeFireDamage</a> (int Damage, <a href="../engine/pawn.html">pawn</a> BInstigator))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TestEye-" name="TestEye" title="go to the details">TestEye</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ThrowGrenade-" name="ThrowGrenade" title="go to the details">ThrowGrenade</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ThrowGrenadeFinished-" name="ThrowGrenadeFinished" title="go to the details">ThrowGrenadeFinished</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Tick-" name="Tick" title="go to the details">Tick</a> (float DeltaTime))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-Dying" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">Dying</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ToggleAuxCollision-" name="ToggleAuxCollision" title="go to the details">ToggleAuxCollision</a> (bool newbCollision))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ToggleFlashlight-" name="ToggleFlashlight" title="go to the details">ToggleFlashlight</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TossCash-" name="TossCash" title="go to the details">TossCash</a> (int Amount ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UpdateFeetCoords-" name="UpdateFeetCoords" title="go to the details">UpdateFeetCoords</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UpdateShadow-" name="UpdateShadow" title="go to the details">UpdateShadow</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_WeaponDown-" name="WeaponDown" title="go to the details">WeaponDown</a> ()))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../xgame/xgame-overview.html">XGame</a>.<a href="../xgame/xpawn.html">xPawn</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../xgame/xpawn.html#AddShieldStrength">AddShieldStrength</a>, <a href="../xgame/xpawn.html#AdjustedStrength">AdjustedStrength</a>, <a href="../xgame/xpawn.html#AltFire">AltFire</a>, <a href="../xgame/xpawn.html#AnimEnd">AnimEnd</a>, <a href="../xgame/xpawn.html#AssignInitialPose">AssignInitialPose</a>, <a href="../xgame/xpawn.html#AttachEffect">AttachEffect</a>, <a href="../xgame/xpawn.html#BeginState">BeginState</a>, <a href="../xgame/xpawn.html#BotDodge">BotDodge</a>, <a href="../xgame/xpawn.html#CalcHitLoc">CalcHitLoc</a>, <a href="../xgame/xpawn.html#CanDoubleJump">CanDoubleJump</a>, <a href="../xgame/xpawn.html#CanMultiJump">CanMultiJump</a>, <a href="../xgame/xpawn.html#CanUseShield">CanUseShield</a>, <a href="../xgame/xpawn.html#ChangedWeapon">ChangedWeapon</a>, <a href="../xgame/xpawn.html#CheckReflect">CheckReflect</a>, <a href="../xgame/xpawn.html#CheckValidFemaleDefault">CheckValidFemaleDefault</a>, <a href="../xgame/xpawn.html#CheckValidMaleDefault">CheckValidMaleDefault</a>, <a href="../xgame/xpawn.html#ClientDying">ClientDying</a>, <a href="../xgame/xpawn.html#ClientRestart">ClientRestart</a>, <a href="../xgame/xpawn.html#ClientSetUDamageTime">ClientSetUDamageTime</a>, <a href="../xgame/xpawn.html#DeactivateSpawnProtection">DeactivateSpawnProtection</a>, <a href="../xgame/xpawn.html#Destroyed">Destroyed</a>, <a href="../xgame/xpawn.html#DisableUDamage">DisableUDamage</a>, <a href="../xgame/xpawn.html#DoCombo">DoCombo</a>, <a href="../xgame/xpawn.html#DoComboName">DoComboName</a>, <a href="../xgame/xpawn.html#DoDamageFX">DoDamageFX</a>, <a href="../xgame/xpawn.html#DoDerezEffect">DoDerezEffect</a>, <a href="../xgame/xpawn.html#Dodge">Dodge</a>, <a href="../xgame/xpawn.html#DoDoubleJump">DoDoubleJump</a>, <a href="../xgame/xpawn.html#DoJump">DoJump</a>, <a href="../xgame/xpawn.html#DoTranslocateOut">DoTranslocateOut</a>, <a href="../xgame/xpawn.html#EnableUDamage">EnableUDamage</a>, <a href="../xgame/xpawn.html#FellOutOfWorld">FellOutOfWorld</a>, <a href="../xgame/xpawn.html#FindValidTaunt">FindValidTaunt</a>, <a href="../xgame/xpawn.html#Fire">Fire</a>, <a href="../xgame/xpawn.html#FootStepping">FootStepping</a>, <a href="../xgame/xpawn.html#ForceDefaultCharacter">ForceDefaultCharacter</a>, <a href="../xgame/xpawn.html#Gasp">Gasp</a>, <a href="../xgame/xpawn.html#GetAnimSequence">GetAnimSequence</a>, <a href="../xgame/xpawn.html#GetDefaultCharacter">GetDefaultCharacter</a>, <a href="../xgame/xpawn.html#GetKillerController">GetKillerController</a>, <a href="../xgame/xpawn.html#GetOffhandBoneFor">GetOffhandBoneFor</a>, <a href="../xgame/xpawn.html#GetPlacedRoster">GetPlacedRoster</a>, <a href="../xgame/xpawn.html#GetShieldStrength">GetShieldStrength</a>, <a href="../xgame/xpawn.html#GetShieldStrengthMax">GetShieldStrengthMax</a>, <a href="../xgame/xpawn.html#GetSound">GetSound</a>, <a href="../xgame/xpawn.html#GetTeam">GetTeam</a>, <a href="../xgame/xpawn.html#GetTeamNum">GetTeamNum</a>, <a href="../xgame/xpawn.html#GetWeaponBoneFor">GetWeaponBoneFor</a>, <a href="../xgame/xpawn.html#HasUDamage">HasUDamage</a>, <a href="../xgame/xpawn.html#HideBone">HideBone</a>, <a href="../xgame/xpawn.html#InCurrentCombo">InCurrentCombo</a>, <a href="../xgame/xpawn.html#KImpact">KImpact</a>, <a href="../xgame/xpawn.html#KSkelConvulse">KSkelConvulse</a>, <a href="../xgame/xpawn.html#KVelDropBelow">KVelDropBelow</a>, <a href="../xgame/xpawn.html#Landed">Landed</a>, <a href="../xgame/xpawn.html#LandThump">LandThump</a>, <a href="../xgame/xpawn.html#NotifyTeamChanged">NotifyTeamChanged</a>, <a href="../xgame/xpawn.html#PerformDodge">PerformDodge</a>, <a href="../xgame/xpawn.html#PhysicsVolumeChange">PhysicsVolumeChange</a>, <a href="../xgame/xpawn.html#PlayDirectionalDeath">PlayDirectionalDeath</a>, <a href="../xgame/xpawn.html#PlayDirectionalHit">PlayDirectionalHit</a>, <a href="../xgame/xpawn.html#PlayDoubleJump">PlayDoubleJump</a>, <a href="../xgame/xpawn.html#PlayDying">PlayDying</a>, <a href="../xgame/xpawn.html#PlayDyingAnimation">PlayDyingAnimation</a>, <a href="../xgame/xpawn.html#PlayDyingSound">PlayDyingSound</a>, <a href="../xgame/xpawn.html#PlayFootStepLeft">PlayFootStepLeft</a>, <a href="../xgame/xpawn.html#PlayFootStepRight">PlayFootStepRight</a>, <a href="../xgame/xpawn.html#PlayHit">PlayHit</a>, <a href="../xgame/xpawn.html#PlayMoverHitSound">PlayMoverHitSound</a>, <a href="../xgame/xpawn.html#PlayTakeHit">PlayTakeHit</a>, <a href="../xgame/xpawn.html#PlayTeleportEffect">PlayTeleportEffect</a>, <a href="../xgame/xpawn.html#PlayVictoryAnimation">PlayVictoryAnimation</a>, <a href="../xgame/xpawn.html#PlayWaiting">PlayWaiting</a>, <a href="../xgame/xpawn.html#PlayWeaponSwitch">PlayWeaponSwitch</a>, <a href="../xgame/xpawn.html#PossessedBy">PossessedBy</a>, <a href="../xgame/xpawn.html#PostBeginPlay">PostBeginPlay</a>, <a href="../xgame/xpawn.html#PostNetBeginPlay">PostNetBeginPlay</a>, <a href="../xgame/xpawn.html#PostNetReceive">PostNetReceive</a>, <a href="../xgame/xpawn.html#ProcessHitFX">ProcessHitFX</a>, <a href="../xgame/xpawn.html#RandSpin">RandSpin</a>, <a href="../xgame/xpawn.html#RemoveFlamingEffects">RemoveFlamingEffects</a>, <a href="../xgame/xpawn.html#RemovePowerups">RemovePowerups</a>, <a href="../xgame/xpawn.html#ResetPhysicsBasedAnim">ResetPhysicsBasedAnim</a>, <a href="../xgame/xpawn.html#ServerChangedWeapon">ServerChangedWeapon</a>, <a href="../xgame/xpawn.html#SetAnimAction">SetAnimAction</a>, <a href="../xgame/xpawn.html#SetHeadScale">SetHeadScale</a>, <a href="../xgame/xpawn.html#SetInvisibility">SetInvisibility</a>, <a href="../xgame/xpawn.html#SetOverlayMaterial">SetOverlayMaterial</a>, <a href="../xgame/xpawn.html#Setup">Setup</a>, <a href="../xgame/xpawn.html#SetWeaponAttachment">SetWeaponAttachment</a>, <a href="../xgame/xpawn.html#SetWeaponOverlay">SetWeaponOverlay</a>, <a href="../xgame/xpawn.html#ShieldAbsorb">ShieldAbsorb</a>, <a href="../xgame/xpawn.html#SpawnGibs">SpawnGibs</a>, <a href="../xgame/xpawn.html#StartDeRes">StartDeRes</a>, <a href="../xgame/xpawn.html#StartDriving">StartDriving</a>, <a href="../xgame/xpawn.html#StartFiring">StartFiring</a>, <a href="../xgame/xpawn.html#StopDriving">StopDriving</a>, <a href="../xgame/xpawn.html#StopFiring">StopFiring</a>, <a href="../xgame/xpawn.html#TakeDamage">TakeDamage</a>, <a href="../xgame/xpawn.html#Tick">Tick</a>, <a href="../xgame/xpawn.html#TickDeRes">TickDeRes</a>, <a href="../xgame/xpawn.html#TickFX">TickFX</a>, <a href="../xgame/xpawn.html#Timer">Timer</a>, <a href="../xgame/xpawn.html#WasPlayerPawn">WasPlayerPawn</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../unrealgame/unrealgame-overview.html">UnrealGame</a>.<a href="../unrealgame/unrealpawn.html">UnrealPawn</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../unrealgame/unrealpawn.html#AddDefaultInventory">AddDefaultInventory</a>, <a href="../unrealgame/unrealpawn.html#BaseChange">BaseChange</a>, <a href="../unrealgame/unrealpawn.html#BeginState">BeginState</a>, <a href="../unrealgame/unrealpawn.html#BotDodge">BotDodge</a>, <a href="../unrealgame/unrealpawn.html#CheckBob">CheckBob</a>, <a href="../unrealgame/unrealpawn.html#ChunkUp">ChunkUp</a>, <a href="../unrealgame/unrealpawn.html#CreateInventory">CreateInventory</a>, <a href="../unrealgame/unrealpawn.html#DisplayDebug">DisplayDebug</a>, <a href="../unrealgame/unrealpawn.html#Dodge">Dodge</a>, <a href="../unrealgame/unrealpawn.html#DropFlag">DropFlag</a>, <a href="../unrealgame/unrealpawn.html#EndJump">EndJump</a>, <a href="../unrealgame/unrealpawn.html#FindValidTaunt">FindValidTaunt</a>, <a href="../unrealgame/unrealpawn.html#FootStepping">FootStepping</a>, <a href="../unrealgame/unrealpawn.html#GetDebugName">GetDebugName</a>, <a href="../unrealgame/unrealpawn.html#GetPlacedRoster">GetPlacedRoster</a>, <a href="../unrealgame/unrealpawn.html#GetSpree">GetSpree</a>, <a href="../unrealgame/unrealpawn.html#GetWeaponBoneFor">GetWeaponBoneFor</a>, <a href="../unrealgame/unrealpawn.html#gibbedBy">gibbedBy</a>, <a href="../unrealgame/unrealpawn.html#HoldFlag">HoldFlag</a>, <a href="../unrealgame/unrealpawn.html#HoldGameObject">HoldGameObject</a>, <a href="../unrealgame/unrealpawn.html#IncrementSpree">IncrementSpree</a>, <a href="../unrealgame/unrealpawn.html#IsInLoadout">IsInLoadout</a>, <a href="../unrealgame/unrealpawn.html#Landed">Landed</a>, <a href="../unrealgame/unrealpawn.html#PerformDodge">PerformDodge</a>, <a href="../unrealgame/unrealpawn.html#PlayFootStep">PlayFootStep</a>, <a href="../unrealgame/unrealpawn.html#PostBeginPlay">PostBeginPlay</a>, <a href="../unrealgame/unrealpawn.html#PostNetBeginPlay">PostNetBeginPlay</a>, <a href="../unrealgame/unrealpawn.html#SetAnimAction">SetAnimAction</a>, <a href="../unrealgame/unrealpawn.html#SetMovementPhysics">SetMovementPhysics</a>, <a href="../unrealgame/unrealpawn.html#ShouldUnCrouch">ShouldUnCrouch</a>, <a href="../unrealgame/unrealpawn.html#SpawnGibs">SpawnGibs</a>, <a href="../unrealgame/unrealpawn.html#TakeDamage">TakeDamage</a>, <a href="../unrealgame/unrealpawn.html#TakeDrowningDamage">TakeDrowningDamage</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">States Summary</th>
+</tr>
+</table>
+
+<table>
+<tr>
+	<th>Dying <a href="../Source_kfmod/kfpawn.html#2614" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> Dying <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_AnimEnd+Dying">AnimEnd</a>, <a href="#_BeginState+Dying">BeginState</a>, <a href="#_FellOutOfWorld+Dying">FellOutOfWorld</a>, <a href="#_KVelDropBelow+Dying">KVelDropBelow</a>, <a href="#_SpecialCalcView+Dying">SpecialCalcView</a>, <a href="#_TakeDamage+Dying">TakeDamage</a>, <a href="#_Timer+Dying">Timer</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Detail</th>
+</tr>
+</table>
+
+<h4><a name="_NUM_FIRE_ANIMS" class="hidden"></a>NUM_FIRE_ANIMS <a href="../Source_kfmod/kfpawn.html#71" class="small">Source code</a></h4>
+<div class="declaration">const NUM_FIRE_ANIMS = <span class="source_int">4</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_Adjuster" class="hidden"></a>Adjuster <a href="../Source_kfmod/kfpawn.html#67" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../kfmod/kfpawnfootadjuster.html" class="source">KFPawnFootAdjuster</a></span> Adjuster;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AnimActResetTime" class="hidden"></a>AnimActResetTime <a href="../Source_kfmod/kfpawn.html#24" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> AnimActResetTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AttachedEmitter" class="hidden"></a>AttachedEmitter <a href="../Source_kfmod/kfpawn.html#134" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span> AttachedEmitter;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AuxCollisionCylinder" class="hidden"></a>AuxCollisionCylinder <a href="../Source_kfmod/kfpawn.html#129" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../kfmod/kfbulletwhipattachment.html" class="source">KFBulletWhipAttachment</a></span> AuxCollisionCylinder;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bAshen" class="hidden"></a>bAshen <a href="../Source_kfmod/kfpawn.html#46" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bAshen;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bBurnApplied" class="hidden"></a>bBurnApplied <a href="../Source_kfmod/kfpawn.html#52" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bBurnApplied;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bBurnified" class="hidden"></a>bBurnified <a href="../Source_kfmod/kfpawn.html#51" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bBurnified;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bCanBeHealed" class="hidden"></a>bCanBeHealed <a href="../Source_kfmod/kfpawn.html#20" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bCanBeHealed;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDestroyAfterRagDollTick" class="hidden"></a>bDestroyAfterRagDollTick <a href="../Source_kfmod/kfpawn.html#125" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bDestroyAfterRagDollTick;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDestroyNextTick" class="hidden"></a>bDestroyNextTick <a href="../Source_kfmod/kfpawn.html#119" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bDestroyNextTick;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDoAdjustFeet" class="hidden"></a>bDoAdjustFeet <a href="../Source_kfmod/kfpawn.html#65" class="small">Source code</a></h4>
+<div class="declaration">var globalconfig <span class="source_type">bool</span> bDoAdjustFeet;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bHasFootAdjust" class="hidden"></a>bHasFootAdjust <a href="../Source_kfmod/kfpawn.html#64" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bHasFootAdjust;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BileCount" class="hidden"></a>BileCount <a href="../Source_kfmod/kfpawn.html#25" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> BileCount;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BileFrequency" class="hidden"></a>BileFrequency <a href="../Source_kfmod/kfpawn.html#24" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> BileFrequency;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BileInstigator" class="hidden"></a>BileInstigator <a href="../Source_kfmod/kfpawn.html#26" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> BileInstigator;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bIsQuickHealing" class="hidden"></a>bIsQuickHealing <a href="../Source_kfmod/kfpawn.html#61" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">byte</span> bIsQuickHealing;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BleedingEmitterClass" class="hidden"></a>BleedingEmitterClass <a href="../Source_kfmod/kfpawn.html#108" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roeffects/robloodspurt.html" class="source">ROBloodSpurt</a></span>&gt; BleedingEmitterClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bLeftArmGibbed" class="hidden"></a>bLeftArmGibbed <a href="../Source_kfmod/kfpawn.html#112" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bLeftArmGibbed;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bLeftLegGibbed" class="hidden"></a>bLeftLegGibbed <a href="../Source_kfmod/kfpawn.html#114" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bLeftLegGibbed;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bMovementDisabled" class="hidden"></a>bMovementDisabled <a href="../Source_kfmod/kfpawn.html#88" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bMovementDisabled;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bProcessedRagTickDestroy" class="hidden"></a>bProcessedRagTickDestroy <a href="../Source_kfmod/kfpawn.html#126" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bProcessedRagTickDestroy;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bResetingAnimAct" class="hidden"></a>bResetingAnimAct <a href="../Source_kfmod/kfpawn.html#23" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bResetingAnimAct;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bRightArmGibbed" class="hidden"></a>bRightArmGibbed <a href="../Source_kfmod/kfpawn.html#113" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bRightArmGibbed;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bRightLegGibbed" class="hidden"></a>bRightLegGibbed <a href="../Source_kfmod/kfpawn.html#115" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bRightLegGibbed;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bThrowingNade" class="hidden"></a>bThrowingNade <a href="../Source_kfmod/kfpawn.html#31" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bThrowingNade;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BurnDown" class="hidden"></a>BurnDown <a href="../Source_kfmod/kfpawn.html#45" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> BurnDown;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BurnEffect" class="hidden"></a>BurnEffect <a href="../Source_kfmod/kfpawn.html#47" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span>&gt; BurnEffect;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BurnInstigator" class="hidden"></a>BurnInstigator <a href="../Source_kfmod/kfpawn.html#54" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> BurnInstigator;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClientIdleWeaponAnim" class="hidden"></a>ClientIdleWeaponAnim <a href="../Source_kfmod/kfpawn.html#29" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> ClientIdleWeaponAnim;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DetachedArmClass" class="hidden"></a>DetachedArmClass <a href="../Source_kfmod/kfpawn.html#110" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roeffects/severedappendage.html" class="source">SeveredAppendage</a></span>&gt; DetachedArmClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DetachedLegClass" class="hidden"></a>DetachedLegClass <a href="../Source_kfmod/kfpawn.html#111" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roeffects/severedappendage.html" class="source">SeveredAppendage</a></span>&gt; DetachedLegClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DropCashMessageDelay" class="hidden"></a>DropCashMessageDelay <a href="../Source_kfmod/kfpawn.html#123" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> DropCashMessageDelay;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FeetAdjSpec" class="hidden"></a>FeetAdjSpec <a href="../Source_kfmod/kfpawn.html#68" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../kfmod/species_kfmalehuman.html" class="source">SPECIES_KFMaleHuman</a></span>&gt; FeetAdjSpec;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FireAltAnims[NUM_FIRE_ANIMS]" class="hidden"></a>FireAltAnims[NUM_FIRE_ANIMS] <a href="../Source_kfmod/kfpawn.html#73" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> FireAltAnims[NUM_FIRE_ANIMS];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FireAnims[NUM_FIRE_ANIMS]" class="hidden"></a>FireAnims[NUM_FIRE_ANIMS] <a href="../Source_kfmod/kfpawn.html#72" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> FireAnims[NUM_FIRE_ANIMS];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FireCrouchAltAnims[NUM_FIRE_ANIMS]" class="hidden"></a>FireCrouchAltAnims[NUM_FIRE_ANIMS] <a href="../Source_kfmod/kfpawn.html#75" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> FireCrouchAltAnims[NUM_FIRE_ANIMS];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FireCrouchAnims[NUM_FIRE_ANIMS]" class="hidden"></a>FireCrouchAnims[NUM_FIRE_ANIMS] <a href="../Source_kfmod/kfpawn.html#74" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> FireCrouchAnims[NUM_FIRE_ANIMS];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_healthToGive" class="hidden"></a>healthToGive <a href="../Source_kfmod/kfpawn.html#21" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> healthToGive;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HitAnims[4]" class="hidden"></a>HitAnims[4] <a href="../Source_kfmod/kfpawn.html#76" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> HitAnims[<span class="source_int">4</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ItBUURRNNNS" class="hidden"></a>ItBUURRNNNS <a href="../Source_kfmod/kfpawn.html#49" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span> ItBUURRNNNS;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KFBSkin" class="hidden"></a>KFBSkin <a href="../Source_kfmod/kfpawn.html#16" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> KFBSkin;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KFFSkin" class="hidden"></a>KFFSkin <a href="../Source_kfmod/kfpawn.html#17" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> KFFSkin;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KFSMesh" class="hidden"></a>KFSMesh <a href="../Source_kfmod/kfpawn.html#18" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">mesh</span> KFSMesh;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LastBileDamagedByType" class="hidden"></a>LastBileDamagedByType <a href="../Source_kfmod/kfpawn.html#27" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/damtypevomit.html" class="source">DamTypeVomit</a></span>&gt; LastBileDamagedByType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LastBurnDamage" class="hidden"></a>LastBurnDamage <a href="../Source_kfmod/kfpawn.html#48" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> LastBurnDamage;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LastDamagedBy" class="hidden"></a>LastDamagedBy <a href="../Source_kfmod/kfpawn.html#54" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> LastDamagedBy;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LastDropCashMessageTime" class="hidden"></a>LastDropCashMessageTime <a href="../Source_kfmod/kfpawn.html#122" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> LastDropCashMessageTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lastHealTime" class="hidden"></a>lastHealTime <a href="../Source_kfmod/kfpawn.html#21" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> lastHealTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LastHitDamType" class="hidden"></a>LastHitDamType <a href="../Source_kfmod/kfpawn.html#39" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; LastHitDamType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LevRls" class="hidden"></a>LevRls <a href="../Source_kfmod/kfpawn.html#58" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../kfmod/kflevelrules.html" class="source">KFLevelRules</a></span> LevRls;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LimbSpurtEmitterClass" class="hidden"></a>LimbSpurtEmitterClass <a href="../Source_kfmod/kfpawn.html#102" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/dismembermentjetlimb.html" class="source">DismembermentJetLimb</a></span>&gt; LimbSpurtEmitterClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxZHeight" class="hidden"></a>MaxZHeight <a href="../Source_kfmod/kfpawn.html#66" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> MaxZHeight;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MinZHeight" class="hidden"></a>MinZHeight <a href="../Source_kfmod/kfpawn.html#66" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> MinZHeight;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NadeThrowTimeout" class="hidden"></a>NadeThrowTimeout <a href="../Source_kfmod/kfpawn.html#132" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> NadeThrowTimeout;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NeckSpurtEmitterClass" class="hidden"></a>NeckSpurtEmitterClass <a href="../Source_kfmod/kfpawn.html#101" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/dismembermentjethead.html" class="source">DismembermentJetHead</a></span>&gt; NeckSpurtEmitterClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NextBileTime" class="hidden"></a>NextBileTime <a href="../Source_kfmod/kfpawn.html#24" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> NextBileTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NoEntryTexture" class="hidden"></a>NoEntryTexture <a href="../Source_kfmod/kfpawn.html#36" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span> NoEntryTexture;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ObliteratedEffectClass" class="hidden"></a>ObliteratedEffectClass <a href="../Source_kfmod/kfpawn.html#116" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span>&gt; ObliteratedEffectClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OldAdjust[2]" class="hidden"></a>OldAdjust[2] <a href="../Source_kfmod/kfpawn.html#66" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> OldAdjust[<span class="source_int">2</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OwnerPRI" class="hidden"></a>OwnerPRI <a href="../Source_kfmod/kfpawn.html#59" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> OwnerPRI;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostFireBlendCrouchAnim" class="hidden"></a>PostFireBlendCrouchAnim <a href="../Source_kfmod/kfpawn.html#78" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> PostFireBlendCrouchAnim;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostFireBlendStandAnim" class="hidden"></a>PostFireBlendStandAnim <a href="../Source_kfmod/kfpawn.html#77" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> PostFireBlendStandAnim;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ProjectileBloodSplatClass" class="hidden"></a>ProjectileBloodSplatClass <a href="../Source_kfmod/kfpawn.html#109" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roeffects/projectilebloodsplat.html" class="source">ProjectileBloodSplat</a></span>&gt; ProjectileBloodSplatClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SavedAuxCollision" class="hidden"></a>SavedAuxCollision <a href="../Source_kfmod/kfpawn.html#130" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> SavedAuxCollision;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ScriptedAnimData" class="hidden"></a>ScriptedAnimData <a href="../Source_kfmod/kfpawn.html#153" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../kfmod/kfpawn.html#SScriptedAnimRepInfo" class="source">SScriptedAnimRepInfo</a></span> ScriptedAnimData;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SecondaryItem" class="hidden"></a>SecondaryItem <a href="../Source_kfmod/kfpawn.html#33" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> SecondaryItem;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredArmAttachClass" class="hidden"></a>SeveredArmAttachClass <a href="../Source_kfmod/kfpawn.html#104" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roeffects/severedappendageattachment.html" class="source">SeveredAppendageAttachment</a></span>&gt; SeveredArmAttachClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredHead" class="hidden"></a>SeveredHead <a href="../Source_kfmod/kfpawn.html#96" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../roeffects/severedappendageattachment.html" class="source">SeveredAppendageAttachment</a></span> <span class="source_type"><a href="../kfmod/severedhead.html" class="source">SeveredHead</a></span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredHeadAttachClass" class="hidden"></a>SeveredHeadAttachClass <a href="../Source_kfmod/kfpawn.html#106" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roeffects/severedappendageattachment.html" class="source">SeveredAppendageAttachment</a></span>&gt; SeveredHeadAttachClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredLeftArm" class="hidden"></a>SeveredLeftArm <a href="../Source_kfmod/kfpawn.html#92" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../roeffects/severedappendageattachment.html" class="source">SeveredAppendageAttachment</a></span> SeveredLeftArm;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredLeftLeg" class="hidden"></a>SeveredLeftLeg <a href="../Source_kfmod/kfpawn.html#94" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../roeffects/severedappendageattachment.html" class="source">SeveredAppendageAttachment</a></span> SeveredLeftLeg;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredLegAttachClass" class="hidden"></a>SeveredLegAttachClass <a href="../Source_kfmod/kfpawn.html#105" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roeffects/severedappendageattachment.html" class="source">SeveredAppendageAttachment</a></span>&gt; SeveredLegAttachClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredRightArm" class="hidden"></a>SeveredRightArm <a href="../Source_kfmod/kfpawn.html#93" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../roeffects/severedappendageattachment.html" class="source">SeveredAppendageAttachment</a></span> SeveredRightArm;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredRightLeg" class="hidden"></a>SeveredRightLeg <a href="../Source_kfmod/kfpawn.html#95" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../roeffects/severedappendageattachment.html" class="source">SeveredAppendageAttachment</a></span> SeveredRightLeg;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StopDisabledTime" class="hidden"></a>StopDisabledTime <a href="../Source_kfmod/kfpawn.html#89" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> StopDisabledTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TeamBeaconBorderMaterial" class="hidden"></a>TeamBeaconBorderMaterial <a href="../Source_kfmod/kfpawn.html#37" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> TeamBeaconBorderMaterial;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TeamBeaconTexture" class="hidden"></a>TeamBeaconTexture <a href="../Source_kfmod/kfpawn.html#36" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span> TeamBeaconTexture;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimeSetDestroyNextTickTime" class="hidden"></a>TimeSetDestroyNextTickTime <a href="../Source_kfmod/kfpawn.html#120" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> TimeSetDestroyNextTickTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Bob</h3>
+<h4><a name="_BobScaleModifier" class="hidden"></a>BobScaleModifier <a href="../Source_kfmod/kfpawn.html#86" class="small">Source code</a></h4>
+<div class="declaration">var(Bob) <span class="source_type">float</span> BobScaleModifier;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BobSpeedModifier" class="hidden"></a>BobSpeedModifier <a href="../Source_kfmod/kfpawn.html#85" class="small">Source code</a></h4>
+<div class="declaration">var(Bob) <span class="source_type">float</span> BobSpeedModifier;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Gib</h3>
+<h4><a name="_GibCountCalf" class="hidden"></a>GibCountCalf <a href="../Source_kfmod/kfpawn.html#10" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../old2k4/gib.html" class="source">Gib</a></span>) <span class="source_type">int</span> GibCountCalf;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GibCountForearm" class="hidden"></a>GibCountForearm <a href="../Source_kfmod/kfpawn.html#11" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../old2k4/gib.html" class="source">Gib</a></span>) <span class="source_type">int</span> GibCountForearm;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GibCountHead" class="hidden"></a>GibCountHead <a href="../Source_kfmod/kfpawn.html#12" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../old2k4/gib.html" class="source">Gib</a></span>) <span class="source_type">int</span> GibCountHead;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GibCountTorso" class="hidden"></a>GibCountTorso <a href="../Source_kfmod/kfpawn.html#13" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../old2k4/gib.html" class="source">Gib</a></span>) <span class="source_type">int</span> GibCountTorso;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GibCountUpperArm" class="hidden"></a>GibCountUpperArm <a href="../Source_kfmod/kfpawn.html#14" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../old2k4/gib.html" class="source">Gib</a></span>) <span class="source_type">int</span> GibCountUpperArm;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GibGroupClass" class="hidden"></a>GibGroupClass <a href="../Source_kfmod/kfpawn.html#9" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../old2k4/gib.html" class="source">Gib</a></span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../old2k4/xpawngibgroup.html" class="source">xPawnGibGroup</a></span>&gt; GibGroupClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Global</h3>
+<h4><a name="_SafeMesh" class="hidden"></a>SafeMesh <a href="../Source_kfmod/kfpawn.html#41" class="small">Source code</a></h4>
+<div class="declaration">var(Global) <span class="source_type">Mesh</span> SafeMesh;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Gore</h3>
+<h4><a name="_SeveredArmAttachScale" class="hidden"></a>SeveredArmAttachScale <a href="../Source_kfmod/kfpawn.html#97" class="small">Source code</a></h4>
+<div class="declaration">var(Gore) <span class="source_type">float</span> SeveredArmAttachScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredHeadAttachScale" class="hidden"></a>SeveredHeadAttachScale <a href="../Source_kfmod/kfpawn.html#99" class="small">Source code</a></h4>
+<div class="declaration">var(Gore) <span class="source_type">float</span> SeveredHeadAttachScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeveredLegAttachScale" class="hidden"></a>SeveredLegAttachScale <a href="../Source_kfmod/kfpawn.html#98" class="small">Source code</a></h4>
+<div class="declaration">var(Gore) <span class="source_type">float</span> SeveredLegAttachScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">KFPawn</h3>
+<h4><a name="_bDetailedShadows" class="hidden"></a>bDetailedShadows <a href="../Source_kfmod/kfpawn.html#56" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../kfmod/kfpawn.html" class="source">KFPawn</a></span>) globalconfig <span class="source_type">bool</span> bDetailedShadows;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bRealDeathType" class="hidden"></a>bRealDeathType <a href="../Source_kfmod/kfpawn.html#56" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../kfmod/kfpawn.html" class="source">KFPawn</a></span>) globalconfig <span class="source_type">bool</span> bRealDeathType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bRealtimeShadows" class="hidden"></a>bRealtimeShadows <a href="../Source_kfmod/kfpawn.html#56" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../kfmod/kfpawn.html" class="source">KFPawn</a></span>) globalconfig <span class="source_type">bool</span> bRealtimeShadows;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Sounds</h3>
+<h4><a name="_DecapitationSound" class="hidden"></a>DecapitationSound <a href="../Source_kfmod/kfpawn.html#117" class="small">Source code</a></h4>
+<div class="declaration">var(Sounds) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> DecapitationSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FootStepSoundRadius" class="hidden"></a>FootStepSoundRadius <a href="../Source_kfmod/kfpawn.html#82" class="small">Source code</a></h4>
+<div class="declaration">var(Sounds) <span class="source_type">float</span> FootStepSoundRadius;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_QuietFootStepVolume" class="hidden"></a>QuietFootStepVolume <a href="../Source_kfmod/kfpawn.html#83" class="small">Source code</a></h4>
+<div class="declaration">var(Sounds) <span class="source_type">float</span> QuietFootStepVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SoundFootsteps[20]" class="hidden"></a>SoundFootsteps[20] <a href="../Source_kfmod/kfpawn.html#84" class="small">Source code</a></h4>
+<div class="declaration">var(Sounds) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> SoundFootsteps[<span class="source_int">20</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Structures Detail</th>
+</tr>
+</table>
+
+<h4><a name="_SScriptedAnimRepInfo" class="hidden"></a>SScriptedAnimRepInfo <a href="../Source_kfmod/kfpawn.html#142" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../kfmod/kfpawn.html#SScriptedAnimRepInfo" class="source">SScriptedAnimRepInfo</a></span><br />
+{<blockquote>var <span class="source_type">byte</span> AnimIterations;<br />
+var <span class="source_type">float</span> AnimRate;<br />
+var <span class="source_type">name</span> BaseAnim;<br />
+var <span class="source_type">float</span> BlendInTime;<br />
+var <span class="source_type">float</span> BlendOutTime;<br />
+var <span class="source_type">bool</span> bLoopAnim;<br />
+var <span class="source_type">float</span> StartFrame;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_AddHealth-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AddHealth <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1495" class="small">Source code</a></h4>
+<div class="declaration">simulated function  AddHealth ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AddShieldStrength-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AddShieldStrength <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2342" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> AddShieldStrength ( <span class="source_type">int</span> ShieldAmount) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AnimBlendTimer-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> AnimBlendTimer <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1933" class="small">Source code</a></h4>
+<div class="declaration">simulated event  AnimBlendTimer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AnimEnd-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AnimEnd <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1419" class="small">Source code</a></h4>
+<div class="declaration">simulated function  AnimEnd ( <span class="source_type">int</span> <span class="source_type">Channel</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AnimEnd-Dying" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AnimEnd <span class="function_state">Dying</span> <a href="../Source_kfmod/kfpawn.html#2616" class="small">Source code</a></h4>
+<div class="declaration">simulated function  AnimEnd ( <span class="source_type">int</span> <span class="source_type">Channel</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AttachEffect-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AttachEffect <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2546" class="small">Source code</a></h4>
+<div class="declaration">simulated function  AttachEffect ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/xemitter.html" class="source">xEmitter</a></span>&gt; EmitterClass, <span class="source_type">Name</span> BoneName, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> Location, <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> <span class="source_type">Rotation</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AttachEmitterEffect-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AttachEmitterEffect <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3010" class="small">Source code</a></h4>
+<div class="declaration">simulated function  AttachEmitterEffect ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span>&gt; EmitterClass, <span class="source_type">Name</span> BoneName, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> Location, <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> <span class="source_type">Rotation</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-Dying" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">Dying</span> <a href="../Source_kfmod/kfpawn.html#2707" class="small">Source code</a></h4>
+<div class="declaration">simulated function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CanBuyNow-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CanBuyNow <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3085" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> CanBuyNow ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CanCarry-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CanCarry <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3079" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> CanCarry ( <span class="source_type">float</span> <span class="source_type">Weight</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CheckBob-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CheckBob <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3920" class="small">Source code</a></h4>
+<div class="declaration"> function  CheckBob ( <span class="source_type">float</span> <span class="source_type">DeltaTime</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Y</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CheckFootSteps-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CheckFootSteps <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3888" class="small">Source code</a></h4>
+<div class="declaration">simulated function  CheckFootSteps ( <span class="source_type">float</span> <span class="source_type">DeltaTime</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ChunkUp-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ChunkUp <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2931" class="small">Source code</a></h4>
+<div class="declaration">simulated function  ChunkUp ( <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> HitRotation, <span class="source_type">float</span> <span class="source_type">ChunkPerterbation</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClientCurrentWeaponSold-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ClientCurrentWeaponSold <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3117" class="small">Source code</a></h4>
+<div class="declaration">simulated function  ClientCurrentWeaponSold ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClientForceChangeWeapon-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ClientForceChangeWeapon <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3136" class="small">Source code</a></h4>
+<div class="declaration">simulated function  ClientForceChangeWeapon ( <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> NewWeapon) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Destroyed-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Destroyed <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2758" class="small">Source code</a></h4>
+<div class="declaration">simulated event  Destroyed ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Died-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Died <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2818" class="small">Source code</a></h4>
+<div class="declaration"> function  Died ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> Killer, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DisableMovement-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DisableMovement <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#443" class="small">Source code</a></h4>
+<div class="declaration"> function  DisableMovement ( <span class="source_type">float</span> DisableDuration) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DisplayDebug-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DisplayDebug <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#535" class="small">Source code</a></h4>
+<div class="declaration">simulated function  DisplayDebug ( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, out <span class="source_type">float</span> YL, out <span class="source_type">float</span> YPos) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoDamageFX-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoDamageFX <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#557" class="small">Source code</a></h4>
+<div class="declaration">simulated function  DoDamageFX ( <span class="source_type">Name</span> boneName, <span class="source_type">int</span> Damage, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>, <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> <span class="source_type">r</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoDerezEffect-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoDerezEffect <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#380" class="small">Source code</a></h4>
+<div class="declaration">simulated function  DoDerezEffect (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoJump-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoJump <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#4155" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> DoJump ( <span class="source_type">bool</span> <span class="source_type">bUpdating</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EncroachedBy-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> EncroachedBy <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3678" class="small">Source code</a></h4>
+<div class="declaration"> event  EncroachedBy ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EncroachingOn-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> EncroachingOn <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3668" class="small">Source code</a></h4>
+<div class="declaration"> event <span class="source_type">bool</span> EncroachingOn ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FellOutOfWorld-Dying" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> FellOutOfWorld <span class="function_state">Dying</span> <a href="../Source_kfmod/kfpawn.html#2643" class="small">Source code</a></h4>
+<div class="declaration"> event  FellOutOfWorld ( <span class="source_type"><a href="../engine/actor.html#eKillZType" class="source">eKillZType</a></span> KillType) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FootStepping-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FootStepping <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3838" class="small">Source code</a></h4>
+<div class="declaration">simulated function  FootStepping ( <span class="source_type">int</span> Side) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ForceDefaultCharacter-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ForceDefaultCharacter <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#969" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">bool</span> ForceDefaultCharacter ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetDefaultCharacter-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetDefaultCharacter <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#255" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">string</span> GetDefaultCharacter ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetExposureTo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetExposureTo <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#339" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">float</span> GetExposureTo ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> TestLocation) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetGibClass-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetGibClass <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1120" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">class</span>&lt;<span class="source_type"><a href="../old2k4/gib.html" class="source">Gib</a></span>&gt; GetGibClass ( <span class="source_type"><a href="../old2k4/xpawngibgroup.html" class="source">xPawnGibGroup</a></span>.EGibType gibType) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetOffhandBoneFor-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetOffhandBoneFor <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3689" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">name</span> GetOffhandBoneFor ( <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> <span class="source_type">I</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetPlayerName-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetPlayerName <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#4169" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> GetPlayerName ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetSound-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetSound <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3983" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> GetSound ( <span class="source_type"><a href="../xgame/xpawnsoundgroup.html" class="source">xPawnSoundGroup</a></span>.<span class="source_type"><a href="../xgame/xpawnsoundgroup.html#ESoundType" class="source">ESoundType</a></span> soundType) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetVeteran-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetVeteran <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3069" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfveterancytypes.html" class="source">KFVeterancyTypes</a></span>&gt; GetVeteran ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetWeaponBoneFor-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetWeaponBoneFor <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3684" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">name</span> GetWeaponBoneFor ( <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> <span class="source_type">I</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GiveHealth-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GiveHealth <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1518" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> GiveHealth ( <span class="source_type">int</span> HealAmount, <span class="source_type">int</span> HealMax) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GiveWeapon-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GiveWeapon <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#4108" class="small">Source code</a></h4>
+<div class="declaration"> function  GiveWeapon ( <span class="source_type">string</span> <span class="source_type">aClassName</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HandleNadeThrowAnim-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> HandleNadeThrowAnim <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1599" class="small">Source code</a></h4>
+<div class="declaration">simulated function  HandleNadeThrowAnim ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HideBone-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> HideBone <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1125" class="small">Source code</a></h4>
+<div class="declaration">simulated function  HideBone ( <span class="source_type">name</span> boneName) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ItemIsBuyable-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ItemIsBuyable <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3096" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ItemIsBuyable ( <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>&gt; <span class="source_type">IC</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KImpact-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> KImpact <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#948" class="small">Source code</a></h4>
+<div class="declaration"> event  KImpact ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">other</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> pos, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> impactVel, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> impactNorm) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KVelDropBelow-Dying" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> KVelDropBelow <span class="function_state">Dying</span> <a href="../Source_kfmod/kfpawn.html#2753" class="small">Source code</a></h4>
+<div class="declaration"> event  KVelDropBelow ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ModifyVelocity-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> ModifyVelocity <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#450" class="small">Source code</a></h4>
+<div class="declaration">simulated event  ModifyVelocity ( <span class="source_type">float</span> <span class="source_type">DeltaTime</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> OldVelocity) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OldPlayHit-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> OldPlayHit <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2477" class="small">Source code</a></h4>
+<div class="declaration"> function  OldPlayHit ( <span class="source_type">float</span> Damage, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> InstigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Momentum</span>, optional <span class="source_type">int</span> <span class="source_type">HitIndex</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayDirectionalHit-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayDirectionalHit <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3796" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PlayDirectionalHit ( <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> HitLoc) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayDying-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayDying <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#719" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PlayDying ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> HitLoc) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayDyingAnimation-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayDyingAnimation <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#800" class="small">Source code</a></h4>
+<div class="declaration"> function  PlayDyingAnimation ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> HitLoc) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayDyingSound-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayDyingSound <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1196" class="small">Source code</a></h4>
+<div class="declaration"> function  PlayDyingSound ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayHit-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayHit <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2375" class="small">Source code</a></h4>
+<div class="declaration"> function  PlayHit ( <span class="source_type">float</span> Damage, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> InstigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Momentum</span>, optional <span class="source_type">int</span> <span class="source_type">HI</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayScriptedAnim-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayScriptedAnim <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#407" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PlayScriptedAnim ( <span class="source_type"><a href="../kfmod/kfpawn.html#SScriptedAnimRepInfo" class="source">SScriptedAnimRepInfo</a></span>  AnimData) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PossessedBy-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PossessedBy <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#241" class="small">Source code</a></h4>
+<div class="declaration"> function  PossessedBy ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PostBeginPlay <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#188" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PostBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostNetBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PostNetBeginPlay <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#248" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PostNetBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostNetReceive-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> PostNetReceive <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#422" class="small">Source code</a></h4>
+<div class="declaration">simulated event  PostNetReceive ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PreTravelCleanUp-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PreTravelCleanUp <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#313" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PreTravelCleanUp ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ProcessHitFX-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ProcessHitFX <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#974" class="small">Source code</a></h4>
+<div class="declaration">simulated function  ProcessHitFX ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ProcessLocationalDamage-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ProcessLocationalDamage <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2118" class="small">Source code</a></h4>
+<div class="declaration"> function  ProcessLocationalDamage ( <span class="source_type">int</span> Damage, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> instigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">hitlocation</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">momentum</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, array&lt;<span class="source_type">int</span>&gt; <span class="source_type">PointsHit</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_QuickHeal-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> QuickHeal <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#4015" class="small">Source code</a></h4>
+<div class="declaration">simulated exec function  QuickHeal ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RemoveFlamingEffects-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> RemoveFlamingEffects <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3048" class="small">Source code</a></h4>
+<div class="declaration">simulated function  RemoveFlamingEffects ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RemoveInventorySP-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> RemoveInventorySP <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1450" class="small">Source code</a></h4>
+<div class="declaration"> function  RemoveInventorySP ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/inventory.html" class="source">inventory</a></span>&gt; <span class="source_type">ItemClass</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerBuyAmmo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ServerBuyAmmo <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3504" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ServerBuyAmmo ( <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../engine/ammunition.html" class="source">Ammunition</a></span>&gt; <span class="source_type">AClass</span>, <span class="source_type">bool</span> <span class="source_type">bOnlyClip</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerBuyFirstAid-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ServerBuyFirstAid <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3480" class="small">Source code</a></h4>
+<div class="declaration"> function  ServerBuyFirstAid ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerBuyKevlar-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ServerBuyKevlar <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3437" class="small">Source code</a></h4>
+<div class="declaration"> function  ServerBuyKevlar ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerBuyPotato-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ServerBuyPotato <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3142" class="small">Source code</a></h4>
+<div class="declaration"> function  ServerBuyPotato ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerBuyWeapon-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ServerBuyWeapon <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3157" class="small">Source code</a></h4>
+<div class="declaration"> function  ServerBuyWeapon ( <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>&gt; <span class="source_type">WClass</span>, <span class="source_type">float</span> <span class="source_type">ItemWeight</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerSellAmmo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ServerSellAmmo <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3629" class="small">Source code</a></h4>
+<div class="declaration"> function  ServerSellAmmo ( <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../engine/ammunition.html" class="source">Ammunition</a></span>&gt; <span class="source_type">AClass</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerSellWeapon-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ServerSellWeapon <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3335" class="small">Source code</a></h4>
+<div class="declaration"> function  ServerSellWeapon ( <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>&gt; <span class="source_type">WClass</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetAnimAction-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> SetAnimAction <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1941" class="small">Source code</a></h4>
+<div class="declaration">simulated event  SetAnimAction ( <span class="source_type">name</span> NewAction) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetFootHeight-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetFootHeight <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1778" class="small">Source code</a></h4>
+<div class="declaration">simulated function  SetFootHeight ( <span class="source_type">float</span> HeightMulti, <span class="source_type">byte</span> <span class="source_type">iNum</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetNadeTimeOut-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetNadeTimeOut <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1772" class="small">Source code</a></h4>
+<div class="declaration">simulated function  SetNadeTimeOut ( <span class="source_type">float</span> NewTimeOut) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetScriptedAnimData-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetScriptedAnimData <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#382" class="small">Source code</a></h4>
+<div class="declaration"> function  SetScriptedAnimData ( <span class="source_type">name</span> BaseAnim,
+<span class="source_type">float</span> BlendInTime,
+<span class="source_type">float</span> BlendOutTime,
+<span class="source_type">float</span> AnimRate,
+<span class="source_type">byte</span> AnimIterations,
+<span class="source_type">bool</span> bLoopAnim,
+<span class="source_type">float</span> StartFrame) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetTraderUpdate-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetTraderUpdate <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3659" class="small">Source code</a></h4>
+<div class="declaration">simulated function  SetTraderUpdate ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Setup-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Setup <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#260" class="small">Source code</a></h4>
+<div class="declaration">simulated function  Setup ( <span class="source_type"><a href="../xgame/xutil.html" class="source">xUtil</a></span>.<span class="source_type"><a href="../xgame/xutil.html#PlayerRecord" class="source">PlayerRecord</a></span> rec, optional <span class="source_type">bool</span> bLoadNow) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetWeaponAttachment-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetWeaponAttachment <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#3695" class="small">Source code</a></h4>
+<div class="declaration">simulated function  SetWeaponAttachment ( <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span> NewAtt) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ShieldAbsorb-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ShieldAbsorb <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1283" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> ShieldAbsorb ( <span class="source_type">int</span> dam) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnGiblet-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnGiblet <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2587" class="small">Source code</a></h4>
+<div class="declaration">simulated function  SpawnGiblet ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../old2k4/gib.html" class="source">Gib</a></span>&gt; GibClass, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> Location, <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> <span class="source_type">Rotation</span>, <span class="source_type">float</span> <span class="source_type">GibPerterbation</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnGibs-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnGibs <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1217" class="small">Source code</a></h4>
+<div class="declaration">simulated function  SpawnGibs ( <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> HitRotation, <span class="source_type">float</span> <span class="source_type">ChunkPerterbation</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnHitEmitter-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnHitEmitter <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2510" class="small">Source code</a></h4>
+<div class="declaration"> function  SpawnHitEmitter ( <span class="source_type">float</span> Damage, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> InstigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Momentum</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnSeveredGiblet-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnSeveredGiblet <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1095" class="small">Source code</a></h4>
+<div class="declaration">simulated function  SpawnSeveredGiblet ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roeffects/severedappendage.html" class="source">SeveredAppendage</a></span>&gt; GibClass, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> Location, <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> <span class="source_type">Rotation</span>, <span class="source_type">float</span> <span class="source_type">GibPerterbation</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpecialCalcView-Dying" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpecialCalcView <span class="function_state">Dying</span> <a href="../Source_kfmod/kfpawn.html#2618" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">bool</span> SpecialCalcView ( out <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> ViewActor, out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> CameraLocation, out <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">CameraRotation</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartBurnFX-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StartBurnFX <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2092" class="small">Source code</a></h4>
+<div class="declaration">simulated function  StartBurnFX ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartDeRes-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StartDeRes <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1260" class="small">Source code</a></h4>
+<div class="declaration">simulated function  StartDeRes ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartFiringX-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StartFiringX <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1354" class="small">Source code</a></h4>
+<div class="declaration">simulated function  StartFiringX ( <span class="source_type">bool</span> bAltFire, <span class="source_type">bool</span> bRapid) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StopBurnFX-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StopBurnFX <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2109" class="small">Source code</a></h4>
+<div class="declaration">simulated function  StopBurnFX ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StopFiring-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StopFiring <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1412" class="small">Source code</a></h4>
+<div class="declaration">simulated function  StopFiring ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SwitchToLastWeapon-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SwitchToLastWeapon <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1484" class="small">Source code</a></h4>
+<div class="declaration">exec function  SwitchToLastWeapon ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TakeBileDamage-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TakeBileDamage <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2336" class="small">Source code</a></h4>
+<div class="declaration"> function  TakeBileDamage ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TakeDamage-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TakeDamage <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2248" class="small">Source code</a></h4>
+<div class="declaration"> function  TakeDamage ( <span class="source_type">int</span> Damage, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> instigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">hitlocation</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">momentum</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, optional <span class="source_type">int</span> <span class="source_type">HitIdx</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TakeDamage-Dying" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TakeDamage <span class="function_state">Dying</span> <a href="../Source_kfmod/kfpawn.html#2670" class="small">Source code</a></h4>
+<div class="declaration">simulated function  TakeDamage ( <span class="source_type">int</span> Damage, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> InstigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">Hitlocation</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">Momentum</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, optional <span class="source_type">int</span> <span class="source_type">HI</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TakeFallingDamage-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TakeFallingDamage <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#476" class="small">Source code</a></h4>
+<div class="declaration"> function  TakeFallingDamage ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TakeFireDamage-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TakeFireDamage <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2353" class="small">Source code</a></h4>
+<div class="declaration"> function  TakeFireDamage ( <span class="source_type">int</span> Damage, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> BInstigator) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TestEye-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TestEye <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#514" class="small">Source code</a></h4>
+<div class="declaration">exec function  TestEye ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ThrowGrenade-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ThrowGrenade <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1555" class="small">Source code</a></h4>
+<div class="declaration"> function  ThrowGrenade ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ThrowGrenadeFinished-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ThrowGrenadeFinished <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1764" class="small">Source code</a></h4>
+<div class="declaration">simulated function  ThrowGrenadeFinished ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Tick-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Tick <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1834" class="small">Source code</a></h4>
+<div class="declaration">simulated function  Tick ( <span class="source_type">float</span> <span class="source_type">DeltaTime</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-Dying" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">Dying</span> <a href="../Source_kfmod/kfpawn.html#2727" class="small">Source code</a></h4>
+<div class="declaration">simulated function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ToggleAuxCollision-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ToggleAuxCollision <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#227" class="small">Source code</a></h4>
+<div class="declaration">simulated function  ToggleAuxCollision ( <span class="source_type">bool</span> newbCollision) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ToggleFlashlight-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ToggleFlashlight <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#4060" class="small">Source code</a></h4>
+<div class="declaration">simulated exec function  ToggleFlashlight ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TossCash-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TossCash <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#2962" class="small">Source code</a></h4>
+<div class="declaration">exec function  TossCash ( <span class="source_type">int</span> <span class="source_type">Amount</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpdateFeetCoords-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UpdateFeetCoords <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1813" class="small">Source code</a></h4>
+<div class="declaration">simulated function  UpdateFeetCoords ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpdateShadow-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UpdateShadow <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#358" class="small">Source code</a></h4>
+<div class="declaration">simulated function  UpdateShadow ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WeaponDown-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> WeaponDown <span class="function_state"></span> <a href="../Source_kfmod/kfpawn.html#1582" class="small">Source code</a></h4>
+<div class="declaration"> function  WeaponDown ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     GibGroupClass=<span class="source_type">Class</span><span class="source_name">'KFMod.KFHumanGibGroup'</span>
+     bCanBeHealed=True
+     BileFrequency=<span class="source_int">0.500000</span>
+     BurnEffect=<span class="source_type">Class</span><span class="source_name">'KFMod.KFMonsterFlame'</span>
+     bDetailedShadows=True
+     bRealDeathType=True
+     bDoAdjustFeet=True
+     FireAnims(<span class="source_int">0</span>)=<span class="source_string">"Fire_Bullpup"</span>
+     FireAnims(<span class="source_int">1</span>)=<span class="source_string">"Fire_Bullpup"</span>
+     FireAnims(<span class="source_int">2</span>)=<span class="source_string">"Fire_Bullpup"</span>
+     FireAnims(<span class="source_int">3</span>)=<span class="source_string">"Fire_Bullpup"</span>
+     FireAltAnims(<span class="source_int">0</span>)=<span class="source_string">"Fire_Bullpup"</span>
+     FireAltAnims(<span class="source_int">1</span>)=<span class="source_string">"Fire_Bullpup"</span>
+     FireAltAnims(<span class="source_int">2</span>)=<span class="source_string">"Fire_Bullpup"</span>
+     FireAltAnims(<span class="source_int">3</span>)=<span class="source_string">"Fire_Bullpup"</span>
+     FireCrouchAnims(<span class="source_int">0</span>)=<span class="source_string">"CHFire_BullPup"</span>
+     FireCrouchAnims(<span class="source_int">1</span>)=<span class="source_string">"CHFire_BullPup"</span>
+     FireCrouchAnims(<span class="source_int">2</span>)=<span class="source_string">"CHFire_BullPup"</span>
+     FireCrouchAnims(<span class="source_int">3</span>)=<span class="source_string">"CHFire_BullPup"</span>
+     FireCrouchAltAnims(<span class="source_int">0</span>)=<span class="source_string">"CHFire_BullPup"</span>
+     FireCrouchAltAnims(<span class="source_int">1</span>)=<span class="source_string">"CHFire_BullPup"</span>
+     FireCrouchAltAnims(<span class="source_int">2</span>)=<span class="source_string">"CHFire_BullPup"</span>
+     FireCrouchAltAnims(<span class="source_int">3</span>)=<span class="source_string">"CHFire_BullPup"</span>
+     HitAnims(<span class="source_int">0</span>)=<span class="source_string">"HitF_Bullpup"</span>
+     HitAnims(<span class="source_int">1</span>)=<span class="source_string">"HitB_Bullpup"</span>
+     HitAnims(<span class="source_int">2</span>)=<span class="source_string">"HitL_Bullpup"</span>
+     HitAnims(<span class="source_int">3</span>)=<span class="source_string">"HitR_Bullpup"</span>
+     PostFireBlendStandAnim=<span class="source_string">"Blend_Bullpup"</span>
+     PostFireBlendCrouchAnim=<span class="source_string">"CHBlend_Bullpup"</span>
+     FootStepSoundRadius=<span class="source_int">125.000000</span>
+     QuietFootStepVolume=<span class="source_int">0.400000</span>
+     SoundFootsteps(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDefault'</span>
+     SoundFootsteps(<span class="source_int">1</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDirt'</span>
+     SoundFootsteps(<span class="source_int">2</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDirt'</span>
+     SoundFootsteps(<span class="source_int">3</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepMetal'</span>
+     SoundFootsteps(<span class="source_int">4</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepWood'</span>
+     SoundFootsteps(<span class="source_int">5</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepGrass'</span>
+     SoundFootsteps(<span class="source_int">6</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDirt'</span>
+     SoundFootsteps(<span class="source_int">7</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDefault'</span>
+     SoundFootsteps(<span class="source_int">8</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDefault'</span>
+     SoundFootsteps(<span class="source_int">9</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepWater'</span>
+     SoundFootsteps(<span class="source_int">10</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepBrGlass'</span>
+     SoundFootsteps(<span class="source_int">11</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDefault'</span>
+     SoundFootsteps(<span class="source_int">12</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepConc'</span>
+     SoundFootsteps(<span class="source_int">13</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepWood'</span>
+     SoundFootsteps(<span class="source_int">14</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDefault'</span>
+     SoundFootsteps(<span class="source_int">15</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepMetal'</span>
+     SoundFootsteps(<span class="source_int">16</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDefault'</span>
+     SoundFootsteps(<span class="source_int">17</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDefault'</span>
+     SoundFootsteps(<span class="source_int">18</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDefault'</span>
+     SoundFootsteps(<span class="source_int">19</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_StepDefault'</span>
+     BobSpeedModifier=<span class="source_int">0.900000</span>
+     BobScaleModifier=<span class="source_int">1.000000</span>
+     SeveredArmAttachScale=<span class="source_int">1.100000</span>
+     SeveredLegAttachScale=<span class="source_int">1.100000</span>
+     SeveredHeadAttachScale=<span class="source_int">1.100000</span>
+     NeckSpurtEmitterClass=<span class="source_type">Class</span><span class="source_name">'KFMod.DismembermentJetHead'</span>
+     LimbSpurtEmitterClass=<span class="source_type">Class</span><span class="source_name">'KFMod.DismembermentJetLimb'</span>
+     SeveredArmAttachClass=<span class="source_type">Class</span><span class="source_name">'ROEffects.SeveredArmAttachment'</span>
+     SeveredLegAttachClass=<span class="source_type">Class</span><span class="source_name">'ROEffects.SeveredLegAttachment'</span>
+     SeveredHeadAttachClass=<span class="source_type">Class</span><span class="source_name">'ROEffects.SeveredHeadAttachment'</span>
+     ProjectileBloodSplatClass=<span class="source_type">Class</span><span class="source_name">'ROEffects.ProjectileBloodSplat'</span>
+     DetachedArmClass=<span class="source_type">Class</span><span class="source_name">'KFMod.SeveredArmSoldier'</span>
+     DetachedLegClass=<span class="source_type">Class</span><span class="source_name">'KFMod.SeveredLegSoldier'</span>
+     ObliteratedEffectClass=<span class="source_type">Class</span><span class="source_name">'ROEffects.PlayerObliteratedEmitter'</span>
+     DecapitationSound=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_EnemyGlobalSnd.Generic_Decap'</span>
+     DropCashMessageDelay=<span class="source_int">10.000000</span>
+     ShieldStrengthMax=<span class="source_int">100.000000</span>
+     Species=<span class="source_type">Class</span><span class="source_name">'KFMod.SPECIES_KFMaleHuman'</span>
+     GruntVolume=<span class="source_int">0.500000</span>
+     FootstepVolume=<span class="source_int">0.450000</span>
+     SoundGroupClass=<span class="source_type">Class</span><span class="source_name">'KFMod.KFMaleSoundGroup'</span>
+     IdleHeavyAnim=<span class="source_string">"Idle_Bullpup"</span>
+     IdleRifleAnim=<span class="source_string">"Idle_Bullpup"</span>
+     FireRootBone=<span class="source_string">"CHR_Spine1"</span>
+     DeResTime=<span class="source_int">0.000000</span>
+     DeResMat0=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KFCharacters.KFDeRez'</span>
+     DeResMat1=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KFCharacters.KFDeRez'</span>
+     DeResLiftVel=(Points=(,(InVal=<span class="source_int">0.000000</span>,OutVal=<span class="source_int">0.000000</span>),(InVal=<span class="source_int">0.000000</span>,OutVal=<span class="source_int">0.000000</span>)))
+     DeResLiftSoftness=(Points=((OutVal=<span class="source_int">0.000000</span>),(InVal=<span class="source_int">0.000000</span>,OutVal=<span class="source_int">0.000000</span>),(InVal=<span class="source_int">0.000000</span>,OutVal=<span class="source_int">0.000000</span>)))
+     DeResLateralFriction=<span class="source_int">0.000000</span>
+     RagdollLifeSpan=<span class="source_int">9999.000000</span>
+     RagDeathVel=<span class="source_int">75.000000</span>
+     RagShootStrength=<span class="source_int">6000.000000</span>
+     RagDeathUpKick=<span class="source_int">100.000000</span>
+     RagImpactSounds(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_PlayerGlobalSnd.Player_BodyImpact'</span>
+     RequiredEquipment(<span class="source_int">0</span>)=<span class="source_string">"none"</span>
+     RequiredEquipment(<span class="source_int">1</span>)=<span class="source_string">"none"</span>
+     bScriptPostRender=True
+     MeleeRange=<span class="source_int">80.000000</span>
+     GroundSpeed=<span class="source_int">240.000000</span>
+     WaterSpeed=<span class="source_int">180.000000</span>
+     AirSpeed=<span class="source_int">240.000000</span>
+     JumpZ=<span class="source_int">300.000000</span>
+     BaseEyeHeight=<span class="source_int">44.000000</span>
+     EyeHeight=<span class="source_int">44.000000</span>
+     CrouchRadius=<span class="source_int">20.000000</span>
+     MovementAnims(<span class="source_int">0</span>)=<span class="source_string">"JogF_Bullpup"</span>
+     MovementAnims(<span class="source_int">1</span>)=<span class="source_string">"JogB_Bullpup"</span>
+     MovementAnims(<span class="source_int">2</span>)=<span class="source_string">"JogL_Bullpup"</span>
+     MovementAnims(<span class="source_int">3</span>)=<span class="source_string">"JogR_Bullpup"</span>
+     DodgeSpeedFactor=<span class="source_int">1.000000</span>
+     DodgeSpeedZ=<span class="source_int">0.000000</span>
+     SwimAnims(<span class="source_int">0</span>)=<span class="source_string">"WalkF"</span>
+     SwimAnims(<span class="source_int">1</span>)=<span class="source_string">"WalkB"</span>
+     SwimAnims(<span class="source_int">2</span>)=<span class="source_string">"WalkL"</span>
+     SwimAnims(<span class="source_int">3</span>)=<span class="source_string">"WalkR"</span>
+     CrouchAnims(<span class="source_int">0</span>)=<span class="source_string">"CHwalkF_BullPup"</span>
+     CrouchAnims(<span class="source_int">1</span>)=<span class="source_string">"CHwalkB_BullPup"</span>
+     CrouchAnims(<span class="source_int">2</span>)=<span class="source_string">"CHwalkL_BullPup"</span>
+     CrouchAnims(<span class="source_int">3</span>)=<span class="source_string">"CHwalkR_BullPup"</span>
+     WalkAnims(<span class="source_int">0</span>)=<span class="source_string">"WalkF_Bullpup"</span>
+     WalkAnims(<span class="source_int">1</span>)=<span class="source_string">"WalkB_Bullpup"</span>
+     WalkAnims(<span class="source_int">2</span>)=<span class="source_string">"WalkL_Bullpup"</span>
+     WalkAnims(<span class="source_int">3</span>)=<span class="source_string">"WalkR_Bullpup"</span>
+     AirAnims(<span class="source_int">1</span>)=<span class="source_string">"JumpF_Mid"</span>
+     TakeoffAnims(<span class="source_int">1</span>)=<span class="source_string">"JumpF_Takeoff"</span>
+     LandAnims(<span class="source_int">1</span>)=<span class="source_string">"JumpF_Land"</span>
+     DodgeAnims(<span class="source_int">0</span>)=<span class="source_string">"JumpF_Takeoff"</span>
+     DodgeAnims(<span class="source_int">1</span>)=<span class="source_string">"JumpF_Takeoff"</span>
+     DodgeAnims(<span class="source_int">2</span>)=<span class="source_string">"JumpL_Takeoff"</span>
+     DodgeAnims(<span class="source_int">3</span>)=<span class="source_string">"JumpR_Takeoff"</span>
+     AirStillAnim=<span class="source_string">"JumpF_Mid"</span>
+     TakeoffStillAnim=<span class="source_string">"JumpF_Takeoff"</span>
+     CrouchTurnRightAnim=<span class="source_string">"CH_TurnR"</span>
+     CrouchTurnLeftAnim=<span class="source_string">"CH_TurnL"</span>
+     IdleCrouchAnim=<span class="source_string">"CHIdle_BullPup"</span>
+     IdleWeaponAnim=<span class="source_string">"Idle_Bullpup"</span>
+     IdleRestAnim=<span class="source_string">"Idle_Rifle"</span>
+     RootBone=<span class="source_string">"CHR_Pelvis"</span>
+     HeadBone=<span class="source_string">"CHR_Head"</span>
+     SpineBone1=<span class="source_string">"CHR_Spine2"</span>
+     SpineBone2=<span class="source_string">"CHR_Spine3"</span>
+     HitPoints(<span class="source_int">0</span>)=(PointRadius=<span class="source_int">40.000000</span>,PointHeight=<span class="source_int">60.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_Pelvis"</span>,PointOffset=(<span class="source_type">Y</span>=-<span class="source_int">10.000000</span>))
+     HitPoints(<span class="source_int">1</span>)=(PointRadius=<span class="source_int">6.500000</span>,PointHeight=<span class="source_int">8.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_Head"</span>,PointOffset=(X=<span class="source_int">2.000000</span>,<span class="source_type">Y</span>=-<span class="source_int">2.000000</span>),DamageMultiplier=<span class="source_int">5.000000</span>,HitPointType=PHP_Head)
+     HitPoints(<span class="source_int">2</span>)=(PointRadius=<span class="source_int">13.000000</span>,PointHeight=<span class="source_int">15.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_Spine3"</span>,PointOffset=(<span class="source_type">Y</span>=-<span class="source_int">5.000000</span>),DamageMultiplier=<span class="source_int">1.000000</span>,HitPointType=PHP_Torso)
+     HitPoints(<span class="source_int">3</span>)=(PointRadius=<span class="source_int">12.000000</span>,PointHeight=<span class="source_int">11.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_Spine1"</span>,PointOffset=(X=-<span class="source_int">3.000000</span>,<span class="source_type">Y</span>=-<span class="source_int">3.000000</span>),DamageMultiplier=<span class="source_int">1.000000</span>,HitPointType=PHP_Torso)
+     HitPoints(<span class="source_int">4</span>)=(PointRadius=<span class="source_int">7.000000</span>,PointHeight=<span class="source_int">12.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_LThigh"</span>,PointOffset=(X=<span class="source_int">18.000000</span>,<span class="source_type">Y</span>=<span class="source_int">1.000000</span>),DamageMultiplier=<span class="source_int">0.500000</span>,HitPointType=PHP_Leg)
+     HitPoints(<span class="source_int">5</span>)=(PointRadius=<span class="source_int">7.000000</span>,PointHeight=<span class="source_int">12.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_RThigh"</span>,PointOffset=(X=<span class="source_int">18.000000</span>,<span class="source_type">Y</span>=<span class="source_int">1.000000</span>),DamageMultiplier=<span class="source_int">0.500000</span>,HitPointType=PHP_Leg)
+     HitPoints(<span class="source_int">6</span>)=(PointRadius=<span class="source_int">5.000000</span>,PointHeight=<span class="source_int">11.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_LArmUpper"</span>,PointOffset=(X=<span class="source_int">8.000000</span>,Z=<span class="source_int">1.000000</span>),DamageMultiplier=<span class="source_int">0.300000</span>,HitPointType=PHP_Arm)
+     HitPoints(<span class="source_int">7</span>)=(PointRadius=<span class="source_int">5.000000</span>,PointHeight=<span class="source_int">11.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_RArmUpper"</span>,PointOffset=(X=<span class="source_int">8.000000</span>,Z=<span class="source_int">1.000000</span>),DamageMultiplier=<span class="source_int">0.300000</span>,HitPointType=PHP_Arm)
+     HitPoints(<span class="source_int">8</span>)=(PointRadius=<span class="source_int">6.000000</span>,PointHeight=<span class="source_int">18.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_LCalf"</span>,PointOffset=(X=<span class="source_int">15.000000</span>),DamageMultiplier=<span class="source_int">0.400000</span>,HitPointType=PHP_Leg)
+     HitPoints(<span class="source_int">9</span>)=(PointRadius=<span class="source_int">6.000000</span>,PointHeight=<span class="source_int">18.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_RCalf"</span>,PointOffset=(X=<span class="source_int">15.000000</span>),DamageMultiplier=<span class="source_int">0.400000</span>,HitPointType=PHP_Leg)
+     HitPoints(<span class="source_int">10</span>)=(PointRadius=<span class="source_int">4.000000</span>,PointHeight=<span class="source_int">10.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_LArmForeArm"</span>,PointOffset=(X=<span class="source_int">6.000000</span>),DamageMultiplier=<span class="source_int">0.200000</span>,HitPointType=PHP_Arm)
+     HitPoints(<span class="source_int">11</span>)=(PointRadius=<span class="source_int">4.000000</span>,PointHeight=<span class="source_int">10.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_RArmForeArm"</span>,PointOffset=(X=<span class="source_int">6.000000</span>),DamageMultiplier=<span class="source_int">0.200000</span>,HitPointType=PHP_Arm)
+     HitPoints(<span class="source_int">12</span>)=(PointRadius=<span class="source_int">4.000000</span>,PointHeight=<span class="source_int">4.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_LArmPalm"</span>,PointOffset=(X=<span class="source_int">5.000000</span>,<span class="source_type">Y</span>=<span class="source_int">2.000000</span>),DamageMultiplier=<span class="source_int">0.100000</span>,HitPointType=PHP_Hand)
+     HitPoints(<span class="source_int">13</span>)=(PointRadius=<span class="source_int">4.000000</span>,PointHeight=<span class="source_int">4.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_RArmPalm"</span>,PointOffset=(X=<span class="source_int">5.000000</span>,<span class="source_type">Y</span>=<span class="source_int">2.000000</span>),DamageMultiplier=<span class="source_int">0.100000</span>,HitPointType=PHP_Hand)
+     HitPoints(<span class="source_int">14</span>)=(PointRadius=<span class="source_int">4.000000</span>,PointHeight=<span class="source_int">8.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_LToe1"</span>,DamageMultiplier=<span class="source_int">0.100000</span>,HitPointType=PHP_Foot)
+     HitPoints(<span class="source_int">15</span>)=(PointRadius=<span class="source_int">4.000000</span>,PointHeight=<span class="source_int">8.000000</span>,PointScale=<span class="source_int">1.000000</span>,PointBone=<span class="source_string">"CHR_RToe1"</span>,DamageMultiplier=<span class="source_int">0.100000</span>,HitPointType=PHP_Foot)
+     PrePivot=(Z=<span class="source_int">0.000000</span>)
+     AmbientGlow=<span class="source_int">0</span>
+     bClientAnim=True
+     bForceSkelUpdate=True
+     CollisionRadius=<span class="source_int">20.000000</span>
+     CollisionHeight=<span class="source_int">40.000000</span>
+     bBlockKarma=True
+     bBlockHitPointTraces=False
+     Mass=<span class="source_int">400.000000</span>
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_kfmod/kfpawn.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#KFPawn">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../kfmod/kfonlinelostrigger.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../kfmod/kfpawnfootadjuster.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:47.112 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,1074 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFGui.KFTab_DetailSettings</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kftab_detailsettings.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFTab_DetailSettings">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kftab_controls.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kftab_dlcall.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfgui/kftab_detailsettings.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfgui/kfgui-overview.html">KFGui</a>.<a href="../kfgui/kftab_detailsettings.html">KFTab_DetailSettings</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span> extends <span class="source_type"><a href="../gui2k4/ut2k4tab_detailsettings.html" class="source">UT2K4Tab_DetailSettings</a></span>;
+<a name="2"></a>
+<a name="3"></a>var automated <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>	    co_GlobalDetails;
+<a name="4"></a>var automated <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>	    co_ScopeDetail;
+<a name="5"></a>
+<a name="6"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckbox</a></span>        ch_HDR;
+<a name="7"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckbox</a></span>        ch_Advanced;
+<a name="8"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckbox</a></span>        ch_MotionBlur;
+<a name="9"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckbox</a></span>        ch_VSync;
+<a name="10"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckbox</a></span>        ch_TripBuff;
+<a name="11"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckbox</a></span>        ch_WideScreen;
+<a name="12"></a>
+<a name="13"></a>var() noexport transient <span class="source_type">int</span>    iGlobalDetails, iScopeDetail,
+<a name="14"></a>                                iGlobalDetailsD, iScopeDetailD;
+<a name="15"></a>
+<a name="16"></a>var() noexport transient <span class="source_type">bool</span>   bMotionBlur, bMotionBlurD,
+<a name="17"></a>                                bHDR, bHDRD,
+<a name="18"></a>                                bVSync, bVSyncD,
+<a name="19"></a>                                bTripBuff, bTripBuffD,
+<a name="20"></a>								bWideScreen, bWideScreenD;
+<a name="21"></a>
+<a name="22"></a>const                           MAX_DETAIL_OPTIONS = <span class="source_int">7</span>;
+<a name="23"></a>var() localized <span class="source_type">string</span>          DetailOptions[MAX_DETAIL_OPTIONS];
+<a name="24"></a>var() localized <span class="source_type">string</span>          ScopeLevels[<span class="source_int">3</span>];
+<a name="25"></a>
+<a name="26"></a>var <span class="source_type">bool</span>                        bShowPerfWarning;   <span class="source_comment">// Used to disable performance warnings
+</span><a name="27"></a>
+<a name="28"></a>function <span class="source_type">bool</span> InternalOnPreDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="29"></a>{
+<a name="30"></a>    local <span class="source_type">bool</span> <span class="source_type">result</span>;
+<a name="31"></a>
+<a name="32"></a>    <span class="source_type">result</span> = super.OnPreDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span>);
+<a name="33"></a>
+<a name="34"></a>    if (iGlobalDetails == -<span class="source_int">1</span>) <span class="source_comment">// We need to pick default settings
+</span><a name="35"></a>    {
+<a name="36"></a>        iGlobalDetails = <span class="source_int">3</span>;
+<a name="37"></a>        co_GlobalDetails.SilentSetIndex(<span class="source_int">3</span>);
+<a name="38"></a>        UpdateGlobalDetails();
+<a name="39"></a>    }
+<a name="40"></a>	else
+<a name="41"></a>	    UpdateGlobalDetailsVisibility();
+<a name="42"></a>
+<a name="43"></a>	return <span class="source_type">result</span>;
+<a name="44"></a>}
+<a name="45"></a>
+<a name="46"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="47"></a>{
+<a name="48"></a>	Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="49"></a>
+<a name="50"></a>	RemoveComponent(sl_DistanceLOD);
+<a name="51"></a>}
+<a name="52"></a>
+<a name="53"></a>function SetupPositions()
+<a name="54"></a>{
+<a name="55"></a>    sb_Section1.ManageComponent(co_RenderDevice);
+<a name="56"></a>    sb_Section1.ManageComponent(co_Resolution);
+<a name="57"></a>    sb_Section1.ManageComponent(co_ColorDepth);
+<a name="58"></a>    sb_Section1.ManageComponent(ch_Fullscreen);
+<a name="59"></a>	sb_Section1.ManageComponent(ch_WideScreen);
+<a name="60"></a>	sb_Section1.ManageComponent(ch_VSync);
+<a name="61"></a>	sb_Section1.ManageComponent(ch_TripBuff);
+<a name="62"></a>    sb_Section1.ManageComponent(sl_Gamma);
+<a name="63"></a>    sb_Section1.ManageComponent(sl_Brightness);
+<a name="64"></a>    sb_Section1.ManageComponent(sl_Contrast);
+<a name="65"></a>    sb_Section1.ManageComponent(co_GlobalDetails);
+<a name="66"></a>    sb_Section1.ManageComponent(ch_Advanced);
+<a name="67"></a>
+<a name="68"></a>    sb_Section2.Managecomponent(co_Texture);
+<a name="69"></a>    sb_Section2.ManageComponent(co_Char);
+<a name="70"></a>    sb_Section2.ManageComponent(co_World);
+<a name="71"></a>    sb_Section2.ManageComponent(co_Physics);
+<a name="72"></a>    sb_Section2.ManageComponent(co_Decal);
+<a name="73"></a>    sb_Section2.ManageComponent(co_Shadows);
+<a name="74"></a>    sb_Section2.ManageComponent(co_MeshLOD);
+<a name="75"></a>    sb_Section2.ManageComponent(co_MultiSamples);
+<a name="76"></a>    sb_Section2.ManageComponent(co_Anisotropy);
+<a name="77"></a>    sb_Section2.ManageComponent(ch_ForceFSAAScreenshotSupport);
+<a name="78"></a>    sb_Section2.ManageComponent(ch_Decals);
+<a name="79"></a>    sb_Section2.ManageComponent(ch_DynLight);
+<a name="80"></a>    sb_Section2.ManageComponent(ch_Coronas);
+<a name="81"></a>    sb_Section2.ManageComponent(ch_Textures);
+<a name="82"></a>    sb_Section2.ManageComponent(ch_Projectors);
+<a name="83"></a>    sb_Section2.ManageComponent(ch_DecoLayers);
+<a name="84"></a>    sb_Section2.ManageComponent(ch_Trilinear);
+<a name="85"></a>    sb_Section2.ManageComponent(ch_Weather);
+<a name="86"></a>    sb_Section2.ManageComponent(co_ScopeDetail);
+<a name="87"></a>    sb_Section2.ManageComponent(ch_MotionBlur);
+<a name="88"></a>    sb_Section2.Managecomponent(ch_HDR);
+<a name="89"></a>
+<a name="90"></a>    sb_Section3.ManageComponent(i_GammaBar);
+<a name="91"></a>}
+<a name="92"></a>
+<a name="93"></a>function InitializeCombos()
+<a name="94"></a>{
+<a name="95"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="96"></a>	local array&lt;<span class="source_type"><a href="../xinterface/gui.html#GUIListElem" class="source">GUIListElem</a></span>&gt; Options;
+<a name="97"></a>
+<a name="98"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Components.Length; <span class="source_type">i</span>++)
+<a name="99"></a>	{
+<a name="100"></a>		if (<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="101"></a>		{
+<a name="102"></a>			MyGetComboOptions( <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]), Options );
+<a name="103"></a>			<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.<span class="source_type">List</span>.Elements = Options;
+<a name="104"></a>			<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.<span class="source_type">List</span>.ItemCount = Options.Length;
+<a name="105"></a>			<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).ReadOnly(True);
+<a name="106"></a>		}
+<a name="107"></a>	}
+<a name="108"></a>}
+<a name="109"></a>
+<a name="110"></a>function MyGetComboOptions(<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type"><a href="../xgame/combo.html" class="source">Combo</a></span>, out array&lt;<span class="source_type"><a href="../xinterface/gui.html#GUIListElem" class="source">GUIListElem</a></span>&gt; <span class="source_type">Ar</span>)
+<a name="111"></a>{
+<a name="112"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="113"></a>	<span class="source_comment">//local string tempStr;
+</span><a name="114"></a>
+<a name="115"></a>	<span class="source_type">Ar</span>.Remove(<span class="source_int">0</span>, <span class="source_type">Ar</span>.Length);
+<a name="116"></a>	if (<span class="source_type"><a href="../xgame/combo.html" class="source">Combo</a></span> == None)
+<a name="117"></a>		return;
+<a name="118"></a>
+<a name="119"></a>	<span class="source_type">switch</span> (<span class="source_type"><a href="../xgame/combo.html" class="source">Combo</a></span>)
+<a name="120"></a>	{
+<a name="121"></a>	    case co_GlobalDetails:
+<a name="122"></a>            for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ArrayCount(DetailOptions); <span class="source_type">i</span>++)
+<a name="123"></a>			{
+<a name="124"></a>				<span class="source_type">Ar</span>.Length = <span class="source_type">Ar</span>.Length + <span class="source_int">1</span>;
+<a name="125"></a>				<span class="source_type">Ar</span>[<span class="source_type">i</span>].<span class="source_type">Item</span> = DetailOptions[<span class="source_type">i</span>];
+<a name="126"></a>			}
+<a name="127"></a>			break;
+<a name="128"></a>
+<a name="129"></a>		case co_ScopeDetail:
+<a name="130"></a>			for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ArrayCount(ScopeLevels); <span class="source_type">i</span>++)
+<a name="131"></a>			{
+<a name="132"></a>				<span class="source_type">Ar</span>.Length = <span class="source_type">Ar</span>.Length + <span class="source_int">1</span>;
+<a name="133"></a>				<span class="source_type">Ar</span>[<span class="source_type">i</span>].<span class="source_type">Item</span> = ScopeLevels[<span class="source_type">i</span>];
+<a name="134"></a>			}
+<a name="135"></a>			break;
+<a name="136"></a>	}
+<a name="137"></a>
+<a name="138"></a>	if (<span class="source_type">Ar</span>.length == <span class="source_int">0</span>)
+<a name="139"></a>	    GetComboOptions(<span class="source_type"><a href="../xgame/combo.html" class="source">Combo</a></span>, <span class="source_type">Ar</span>);
+<a name="140"></a>}
+<a name="141"></a>
+<a name="142"></a>function InternalOnLoadINI(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">string</span> <span class="source_type">s</span>)
+<a name="143"></a>{
+<a name="144"></a>    local <span class="source_type">bool</span> <span class="source_type">a</span>, <span class="source_type">b</span>;
+<a name="145"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="146"></a>    local <span class="source_type">string</span> tempStr;
+<a name="147"></a>
+<a name="148"></a>    <span class="source_type">PC</span> = PlayerOwner();
+<a name="149"></a>    <span class="source_type">switch</span> (<span class="source_type">Sender</span>)
+<a name="150"></a>    {
+<a name="151"></a>        case co_GlobalDetails:
+<a name="152"></a>    		iGlobalDetails = <span class="source_type">class</span><span class="source_name">'ROPlayer'</span>.default.GlobalDetailLevel;
+<a name="153"></a>    		iGlobalDetailsD = iGlobalDetails;
+<a name="154"></a>    		co_GlobalDetails.SilentSetIndex(iGlobalDetails);
+<a name="155"></a>            ch_Advanced.SetComponentValue(iGlobalDetailsD == MAX_DETAIL_OPTIONS, true);
+<a name="156"></a>    		break;
+<a name="157"></a>
+<a name="158"></a>        case co_ScopeDetail:
+<a name="159"></a>            <span class="source_type">switch</span> (<span class="source_type">class</span><span class="source_name">'KFWeapon'</span>.default.KFScopeDetail)
+<a name="160"></a>            {
+<a name="161"></a>                case KF_ModelScope:
+<a name="162"></a>                    iScopeDetail = <span class="source_int">0</span>;
+<a name="163"></a>                    break;
+<a name="164"></a>
+<a name="165"></a>                case KF_TextureScope:
+<a name="166"></a>                    iScopeDetail = <span class="source_int">1</span>;
+<a name="167"></a>                    break;
+<a name="168"></a>
+<a name="169"></a>                case KF_ModelScopeHigh:
+<a name="170"></a>                    iScopeDetail = <span class="source_int">2</span>;
+<a name="171"></a>                    break;
+<a name="172"></a>
+<a name="173"></a>                default:
+<a name="174"></a>                    iScopeDetail = -<span class="source_int">1</span>;
+<a name="175"></a>            }
+<a name="176"></a>
+<a name="177"></a>            iScopeDetailD = iScopeDetail;
+<a name="178"></a>            if (iScopeDetail &lt; <span class="source_int">0</span>)
+<a name="179"></a>                co_ScopeDetail.SilentSetIndex(<span class="source_int">0</span>);
+<a name="180"></a>            else
+<a name="181"></a>                co_ScopeDetail.SilentSetIndex(iScopeDetail);
+<a name="182"></a>            break;
+<a name="183"></a>
+<a name="184"></a>    	case ch_MotionBlur:
+<a name="185"></a>    		bMotionBlur =  <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get KFMod.KFHumanPawn bUseBlurEffect"</span>));
+<a name="186"></a>    		bMotionBlurD = bMotionBlur;
+<a name="187"></a>    		ch_MotionBlur.SetComponentValue(bMotionBlur,true);
+<a name="188"></a>    		break;
+<a name="189"></a>
+<a name="190"></a>    	case ch_HDR:
+<a name="191"></a>    	    bHDR = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.ViewportManager Bloom"</span>));
+<a name="192"></a>    	    bHDRD = bHDR;
+<a name="193"></a>    	    ch_HDR.SetComponentValue(bHDR,true);
+<a name="194"></a>    	    break;
+<a name="195"></a>
+<a name="196"></a>    	case ch_Advanced:
+<a name="197"></a>    	    break; <span class="source_comment">// value is set by co_GlobalDetails
+</span><a name="198"></a>
+<a name="199"></a>    	case co_Shadows:
+<a name="200"></a>        tempStr = GetNativeClassName(<span class="source_string">"Engine.Engine.RenderDevice"</span>);
+<a name="201"></a>
+<a name="202"></a>        <span class="source_comment">// No render-to-texture on anything but Direct3D (or OpenGL!).
+</span><a name="203"></a>        if ((tempStr == <span class="source_string">"D3DDrv.D3DRenderDevice"</span>) ||
+<a name="204"></a>            (tempStr == <span class="source_string">"D3D9Drv.D3D9RenderDevice"</span>) ||
+<a name="205"></a>            (tempStr == <span class="source_string">"OpenGLDrv.OpenGLRenderDevice"</span>))
+<a name="206"></a>        {
+<a name="207"></a>            <span class="source_type">a</span> = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get UnrealGame.UnrealPawn bPlayerShadows"</span>));
+<a name="208"></a>            <span class="source_type">b</span> = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get UnrealGame.UnrealPawn bBlobShadow"</span>));
+<a name="209"></a>
+<a name="210"></a>            if ( <span class="source_type">b</span> )
+<a name="211"></a>                iShadow = <span class="source_int">1</span>;
+<a name="212"></a>            else if (<span class="source_type">a</span>)
+<a name="213"></a>                iShadow = <span class="source_int">2</span>;
+<a name="214"></a>            else
+<a name="215"></a>                iShadow = <span class="source_int">0</span>;
+<a name="216"></a>        }
+<a name="217"></a>        else
+<a name="218"></a>        {
+<a name="219"></a>            <span class="source_type">b</span> = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get UnrealGame.UnrealPawn bBlobShadow"</span>));
+<a name="220"></a>            if ( <span class="source_type">b</span> )
+<a name="221"></a>                iShadow = <span class="source_int">1</span>;
+<a name="222"></a>            else
+<a name="223"></a>                iShadow = <span class="source_int">0</span>;
+<a name="224"></a>        }
+<a name="225"></a>
+<a name="226"></a>        iShadowD = iShadow;
+<a name="227"></a>        co_Shadows.SilentSetIndex(iShadow);
+<a name="228"></a>        break;
+<a name="229"></a>
+<a name="230"></a>     	case ch_VSync:
+<a name="231"></a>	     	bVSync = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.RenderDevice UseVSync"</span>));
+<a name="232"></a>	     	bVSyncD = bVSync;
+<a name="233"></a>	     	ch_VSync.SetComponentValue(bVSync, true);
+<a name="234"></a>	        break;
+<a name="235"></a>
+<a name="236"></a>    	case ch_TripBuff:
+<a name="237"></a>	     	bTripBuff = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.RenderDevice UseTripleBuffering"</span>));
+<a name="238"></a>	     	bTripBuffD = bTripBuff;
+<a name="239"></a>	     	ch_TripBuff.SetComponentValue(bTripBuff, true);
+<a name="240"></a>	        break;
+<a name="241"></a>
+<a name="242"></a>	    case ch_WideScreen:
+<a name="243"></a>	     	bWideScreen = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get kfmod.KFPlayerController bUseTrueWideScreenFOV"</span>));
+<a name="244"></a>	     	bWideScreenD = bWideScreen;
+<a name="245"></a>	     	ch_WideScreen.SetComponentValue(bWideScreen, true);
+<a name="246"></a>	        break;
+<a name="247"></a>
+<a name="248"></a>    default:
+<a name="249"></a>    		super.InternalOnLoadINI(<span class="source_type">sender</span>, <span class="source_type">s</span>);
+<a name="250"></a>    }
+<a name="251"></a>
+<a name="252"></a>	<span class="source_comment">// Post-super checks
+</span><a name="253"></a>	<span class="source_type">switch</span> (<span class="source_type">Sender</span>)
+<a name="254"></a>	{
+<a name="255"></a>	    case co_RenderDevice:
+<a name="256"></a>            DisableHDRControlIfNeeded();
+<a name="257"></a>
+<a name="258"></a>            <span class="source_comment">// Disable control if card doesn't support hdr
+</span><a name="259"></a>            if (PlayerOwner() != none)
+<a name="260"></a>                if (!PlayerOwner().PostFX_IsBloomCapable())
+<a name="261"></a>                    ch_HDR.DisableMe();
+<a name="262"></a>
+<a name="263"></a>            break;
+<a name="264"></a>	}
+<a name="265"></a>}
+<a name="266"></a>
+<a name="267"></a>function InternalOnChange(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="268"></a>{
+<a name="269"></a>    local <span class="source_type">bool</span> bGoingUp;
+<a name="270"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="271"></a>
+<a name="272"></a>    Super.InternalOnChange(<span class="source_type">Sender</span>);
+<a name="273"></a>
+<a name="274"></a>    if ( bIgnoreChange )
+<a name="275"></a>        return;
+<a name="276"></a>
+<a name="277"></a>    <span class="source_type">switch</span> (<span class="source_type">Sender</span>)
+<a name="278"></a>    {
+<a name="279"></a>		<span class="source_comment">// These changes are saved together on SaveSettings
+</span><a name="280"></a>        case co_GlobalDetails:
+<a name="281"></a>            <span class="source_type">i</span> = co_GlobalDetails.GetIndex();
+<a name="282"></a>			bGoingUp = <span class="source_type">i</span> &gt; iGlobalDetails && <span class="source_type">i</span> != iGlobalDetailsD && (<span class="source_type">i</span> != MAX_DETAIL_OPTIONS - <span class="source_int">1</span>);
+<a name="283"></a>			iGlobalDetails = <span class="source_type">i</span>;
+<a name="284"></a>			<span class="source_comment">//ch_Advanced.SetComponentValue(i == MAX_DETAIL_OPTIONS, true);
+</span><a name="285"></a>			UpdateGlobalDetails();
+<a name="286"></a>			break;
+<a name="287"></a>
+<a name="288"></a>		case co_ScopeDetail:
+<a name="289"></a>			<span class="source_type">i</span> = co_ScopeDetail.GetIndex();
+<a name="290"></a>			bGoingUp = <span class="source_type">i</span> &gt; iScopeDetail && <span class="source_type">i</span> != iScopeDetailD;
+<a name="291"></a>			iScopeDetail = <span class="source_type">i</span>;
+<a name="292"></a>			break;
+<a name="293"></a>
+<a name="294"></a>		case ch_MotionBlur:
+<a name="295"></a>			bMotionBlur = ch_MotionBlur.IsChecked();
+<a name="296"></a>			bGoingUp = bMotionBlur && bMotionBlur != bMotionBlurD;
+<a name="297"></a>			break;
+<a name="298"></a>
+<a name="299"></a>    	case ch_HDR:
+<a name="300"></a>    	    bHDR = ch_HDR.IsChecked();
+<a name="301"></a>    	    bGoingUp = bHDR && bHDR != bHDRD;
+<a name="302"></a>    	    break;
+<a name="303"></a>
+<a name="304"></a>		case ch_Advanced:
+<a name="305"></a>		    if (ch_Advanced.IsChecked())
+<a name="306"></a>		    {
+<a name="307"></a>		        iGlobalDetails = MAX_DETAIL_OPTIONS - <span class="source_int">1</span>;
+<a name="308"></a>    		    co_GlobalDetails.SilentSetIndex(iGlobalDetails);
+<a name="309"></a>    		}
+<a name="310"></a>            UpdateGlobalDetailsVisibility();
+<a name="311"></a>            break;
+<a name="312"></a>
+<a name="313"></a>		case ch_VSync:
+<a name="314"></a>    	    bVSync = ch_VSync.IsChecked();
+<a name="315"></a>    	    break;
+<a name="316"></a>
+<a name="317"></a>   		case ch_TripBuff:
+<a name="318"></a>    	    bTripBuff = ch_TripBuff.IsChecked();
+<a name="319"></a>    	    break;
+<a name="320"></a>
+<a name="321"></a>    	case ch_WideScreen:
+<a name="322"></a>    	    bWideScreen = ch_WideScreen.IsChecked();
+<a name="323"></a>    	    break;
+<a name="324"></a>    }
+<a name="325"></a>
+<a name="326"></a>    if (bGoingUp)
+<a name="327"></a>        ShowPerformanceWarning();
+<a name="328"></a>}
+<a name="329"></a>
+<a name="330"></a>function ShowPerformanceWarning(optional <span class="source_type">float</span> <span class="source_type">Seconds</span>)
+<a name="331"></a>{
+<a name="332"></a>	if (bShowPerfWarning)
+<a name="333"></a>	    super.ShowPerformanceWarning(<span class="source_type">Seconds</span>);
+<a name="334"></a>}
+<a name="335"></a>
+<a name="336"></a>function UpdateGlobalDetails()
+<a name="337"></a>{
+<a name="338"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="339"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="340"></a>
+<a name="341"></a>    UpdateGlobalDetailsVisibility();
+<a name="342"></a>
+<a name="343"></a>    if ( iGlobalDetails == MAX_DETAIL_OPTIONS - <span class="source_int">1</span> )
+<a name="344"></a>        return; <span class="source_comment">// do not change settings if we picked custom
+</span><a name="345"></a>
+<a name="346"></a>    bShowPerfWarning = false;
+<a name="347"></a>
+<a name="348"></a>    <span class="source_type">switch</span> (iGlobalDetails)
+<a name="349"></a>    {
+<a name="350"></a>        case <span class="source_int">0</span>: <span class="source_comment">// Lowest
+</span><a name="351"></a>            co_Texture.SetIndex(<span class="source_int">0</span>);         <span class="source_comment">// Range = 0 - 8
+</span><a name="352"></a>            co_Char.SetIndex(<span class="source_int">0</span>);            <span class="source_comment">// Range = 0 - 8
+</span><a name="353"></a>            co_World.SetIndex(<span class="source_int">0</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="354"></a>            co_ScopeDetail.SetIndex(<span class="source_int">1</span>);     <span class="source_comment">// Range = 0 - 2 , 1 being lowest
+</span><a name="355"></a>            co_Physics.setindex(<span class="source_int">0</span>);         <span class="source_comment">// Range = 0 - 2
+</span><a name="356"></a>            co_Decal.setindex(<span class="source_int">0</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="357"></a>            co_Shadows.setindex(<span class="source_int">0</span>);         <span class="source_comment">// Range = 0 - 2 (0 - 1 sometimes -- check that!)
+</span><a name="358"></a>            co_MeshLOD.setindex(<span class="source_int">0</span>);         <span class="source_comment">// Range = 0 - 3
+</span><a name="359"></a>            co_MultiSamples.setindex(<span class="source_int">0</span>);
+<a name="360"></a>            co_Anisotropy.setindex(<span class="source_int">0</span>);
+<a name="361"></a>            ch_ForceFSAAScreenshotSupport.SetComponentValue(false,false);
+<a name="362"></a>            ch_Decals.SetComponentValue(false, false);
+<a name="363"></a>            ch_DynLight.SetComponentValue(false, false);
+<a name="364"></a>            ch_Coronas.SetComponentValue(false, false);
+<a name="365"></a>            ch_Textures.SetComponentValue(false, false);
+<a name="366"></a>            ch_Projectors.SetComponentValue(false, false);
+<a name="367"></a>            ch_DecoLayers.SetComponentValue(false, false);
+<a name="368"></a>            ch_Trilinear.SetComponentValue(false, false);
+<a name="369"></a>            ch_Weather.SetComponentValue(false, false);
+<a name="370"></a>            ch_DecoLayers.SetComponentValue(false, false);
+<a name="371"></a>            ch_MotionBlur.SetComponentValue(false, false);
+<a name="372"></a>            ch_HDR.SetComponentValue(false, false);
+<a name="373"></a>            break;
+<a name="374"></a>
+<a name="375"></a>        case <span class="source_int">1</span>: <span class="source_comment">// Low
+</span><a name="376"></a>            co_Texture.SetIndex(<span class="source_int">3</span>);         <span class="source_comment">// Range = 0 - 8
+</span><a name="377"></a>            co_Char.SetIndex(<span class="source_int">3</span>);            <span class="source_comment">// Range = 0 - 8
+</span><a name="378"></a>            co_World.SetIndex(<span class="source_int">0</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="379"></a>            co_ScopeDetail.SetIndex(<span class="source_int">1</span>);     <span class="source_comment">// Range = 0 - 2 , 1 being lowest
+</span><a name="380"></a>            co_Physics.setindex(<span class="source_int">0</span>);         <span class="source_comment">// Range = 0 - 2
+</span><a name="381"></a>            co_Decal.setindex(<span class="source_int">1</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="382"></a>            co_Shadows.setindex(<span class="source_int">1</span>);         <span class="source_comment">// Range = 0 - 2 (0 - 1 sometimes -- check that!)
+</span><a name="383"></a>            co_MeshLOD.setindex(<span class="source_int">1</span>);         <span class="source_comment">// Range = 0 - 3
+</span><a name="384"></a>            co_MultiSamples.setindex(<span class="source_int">0</span>);
+<a name="385"></a>
+<a name="386"></a>            if (AnisotropyModes.Length&gt;<span class="source_int">1</span>)
+<a name="387"></a>                 co_Anisotropy.SetIndex(<span class="source_int">1</span>);
+<a name="388"></a>            else
+<a name="389"></a>                 co_Anisotropy.setindex(<span class="source_int">0</span>);
+<a name="390"></a>
+<a name="391"></a>            ch_ForceFSAAScreenshotSupport.SetComponentValue(false,false);
+<a name="392"></a>            ch_Decals.SetComponentValue(true, false);
+<a name="393"></a>            ch_DynLight.SetComponentValue(false, false);
+<a name="394"></a>            ch_Coronas.SetComponentValue(true, false);
+<a name="395"></a>            ch_Textures.SetComponentValue(false, false);
+<a name="396"></a>            ch_Projectors.SetComponentValue(true, false);
+<a name="397"></a>            ch_DecoLayers.SetComponentValue(true, false);
+<a name="398"></a>            ch_Trilinear.SetComponentValue(false, false);
+<a name="399"></a>            ch_Weather.SetComponentValue(true, false);
+<a name="400"></a>            ch_MotionBlur.SetComponentValue(true, false);
+<a name="401"></a>            ch_HDR.SetComponentValue(false, false);
+<a name="402"></a>            break;
+<a name="403"></a>
+<a name="404"></a>        case <span class="source_int">2</span>: <span class="source_comment">// Medium
+</span><a name="405"></a>            co_Texture.SetIndex(<span class="source_int">5</span>);         <span class="source_comment">// Range = 0 - 8
+</span><a name="406"></a>            co_Char.SetIndex(<span class="source_int">5</span>);            <span class="source_comment">// Range = 0 - 8
+</span><a name="407"></a>            co_World.SetIndex(<span class="source_int">1</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="408"></a>            co_ScopeDetail.SetIndex(<span class="source_int">1</span>);     <span class="source_comment">// Range = 0 - 2 , 1 being lowest
+</span><a name="409"></a>            co_Physics.setindex(<span class="source_int">1</span>);         <span class="source_comment">// Range = 0 - 2
+</span><a name="410"></a>            co_Decal.setindex(<span class="source_int">1</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="411"></a>            co_Shadows.setindex(<span class="source_int">1</span>);         <span class="source_comment">// Range = 0 - 2 (0 - 1 sometimes -- check that!)
+</span><a name="412"></a>            co_MeshLOD.setindex(<span class="source_int">2</span>);         <span class="source_comment">// Range = 0 - 3
+</span><a name="413"></a>            co_MultiSamples.setindex(<span class="source_int">0</span>);
+<a name="414"></a>
+<a name="415"></a>            if (AnisotropyModes.Length&gt;<span class="source_int">2</span>)
+<a name="416"></a>                 co_Anisotropy.setindex(<span class="source_int">2</span>);
+<a name="417"></a>            else if (AnisotropyModes.Length&gt;<span class="source_int">1</span>)
+<a name="418"></a>                 co_Anisotropy.SetIndex(<span class="source_int">1</span>);
+<a name="419"></a>            else
+<a name="420"></a>                 co_Anisotropy.setindex(<span class="source_int">0</span>);
+<a name="421"></a>
+<a name="422"></a>            ch_ForceFSAAScreenshotSupport.SetComponentValue(false,false);
+<a name="423"></a>            ch_Decals.SetComponentValue(true, false);
+<a name="424"></a>            ch_DynLight.SetComponentValue(true, false);
+<a name="425"></a>            ch_Coronas.SetComponentValue(true, false);
+<a name="426"></a>            ch_Textures.SetComponentValue(true, false);
+<a name="427"></a>            ch_Projectors.SetComponentValue(true, false);
+<a name="428"></a>            ch_DecoLayers.SetComponentValue(true, false);
+<a name="429"></a>            ch_Trilinear.SetComponentValue(false, false);
+<a name="430"></a>            ch_Weather.SetComponentValue(true, false);
+<a name="431"></a>            ch_MotionBlur.SetComponentValue(true, false);
+<a name="432"></a>            ch_HDR.SetComponentValue(false, false);
+<a name="433"></a>            break;
+<a name="434"></a>
+<a name="435"></a>        case <span class="source_int">3</span>: <span class="source_comment">// High
+</span><a name="436"></a>            co_Texture.SetIndex(<span class="source_int">6</span>);         <span class="source_comment">// Range = 0 - 8
+</span><a name="437"></a>            co_Char.SetIndex(<span class="source_int">6</span>);            <span class="source_comment">// Range = 0 - 8
+</span><a name="438"></a>            co_World.SetIndex(<span class="source_int">2</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="439"></a>            co_ScopeDetail.SetIndex(<span class="source_int">0</span>);     <span class="source_comment">// Range = 0 - 2 , 1 being lowest
+</span><a name="440"></a>            co_Physics.setindex(<span class="source_int">1</span>);         <span class="source_comment">// Range = 0 - 2
+</span><a name="441"></a>            co_Decal.setindex(<span class="source_int">2</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="442"></a>            co_Shadows.setindex(<span class="source_int">1</span>);         <span class="source_comment">// Range = 0 - 2 (0 - 1 sometimes -- check that!)
+</span><a name="443"></a>            co_MeshLOD.setindex(<span class="source_int">2</span>);         <span class="source_comment">// Range = 0 - 3
+</span><a name="444"></a>            co_MultiSamples.setindex(<span class="source_int">0</span>);
+<a name="445"></a>
+<a name="446"></a>            if (MultiSampleModes.Length&gt;<span class="source_int">1</span>)
+<a name="447"></a>                 co_MultiSamples.setindex(<span class="source_int">1</span>);
+<a name="448"></a>            else
+<a name="449"></a>                 co_MultiSamples.setindex(<span class="source_int">0</span>);
+<a name="450"></a>
+<a name="451"></a>            if(AnisotropyModes.Length&gt;<span class="source_int">3</span>)
+<a name="452"></a>                 co_Anisotropy.setindex(<span class="source_int">3</span>);
+<a name="453"></a>            else if (AnisotropyModes.Length&gt;<span class="source_int">2</span>)
+<a name="454"></a>                 co_Anisotropy.setindex(<span class="source_int">2</span>);
+<a name="455"></a>            else if (AnisotropyModes.Length&gt;<span class="source_int">1</span>)
+<a name="456"></a>                 co_Anisotropy.SetIndex(<span class="source_int">1</span>);
+<a name="457"></a>            else
+<a name="458"></a>                 co_Anisotropy.setindex(<span class="source_int">0</span>);
+<a name="459"></a>
+<a name="460"></a>            ch_ForceFSAAScreenshotSupport.SetComponentValue(false,false);
+<a name="461"></a>            ch_Decals.SetComponentValue(true, false);
+<a name="462"></a>            ch_DynLight.SetComponentValue(true, false);
+<a name="463"></a>            ch_Coronas.SetComponentValue(true, false);
+<a name="464"></a>            ch_Textures.SetComponentValue(true, false);
+<a name="465"></a>            ch_Projectors.SetComponentValue(true, false);
+<a name="466"></a>            ch_DecoLayers.SetComponentValue(true, false);
+<a name="467"></a>            ch_Trilinear.SetComponentValue(false, false);
+<a name="468"></a>            ch_Weather.SetComponentValue(true, false);
+<a name="469"></a>            ch_MotionBlur.SetComponentValue(true, false);
+<a name="470"></a>            ch_HDR.SetComponentValue(true, false);
+<a name="471"></a>            break;
+<a name="472"></a>
+<a name="473"></a>        case <span class="source_int">4</span>: <span class="source_comment">// Higher
+</span><a name="474"></a>            co_Texture.SetIndex(<span class="source_int">7</span>);         <span class="source_comment">// Range = 0 - 8
+</span><a name="475"></a>            co_Char.SetIndex(<span class="source_int">7</span>);            <span class="source_comment">// Range = 0 - 8
+</span><a name="476"></a>            co_World.SetIndex(<span class="source_int">2</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="477"></a>            co_ScopeDetail.SetIndex(<span class="source_int">2</span>);     <span class="source_comment">// Range = 0 - 2 , 1 being lowest
+</span><a name="478"></a>            co_Physics.setindex(<span class="source_int">1</span>);         <span class="source_comment">// Range = 0 - 2
+</span><a name="479"></a>            co_Decal.setindex(<span class="source_int">2</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="480"></a>            co_Shadows.setindex(min(co_Shadows.ItemCount() - <span class="source_int">1</span>, <span class="source_int">3</span>));  <span class="source_comment">// Range = 0 - 2 (0 - 1 sometimes -- check that!)
+</span><a name="481"></a>            co_MeshLOD.setindex(<span class="source_int">2</span>);         <span class="source_comment">// Range = 0 - 3
+</span><a name="482"></a>
+<a name="483"></a>            if(MultiSampleModes.Length&gt;<span class="source_int">2</span>)
+<a name="484"></a>                 co_MultiSamples.setindex(<span class="source_int">2</span>);
+<a name="485"></a>            else if (MultiSampleModes.Length&gt;<span class="source_int">1</span>)
+<a name="486"></a>                 co_MultiSamples.setindex(<span class="source_int">1</span>);
+<a name="487"></a>            else
+<a name="488"></a>                 co_MultiSamples.setindex(<span class="source_int">0</span>);
+<a name="489"></a>
+<a name="490"></a>            if(AnisotropyModes.Length&gt;<span class="source_int">3</span>)
+<a name="491"></a>                 co_Anisotropy.setindex(<span class="source_int">3</span>);
+<a name="492"></a>            else if (AnisotropyModes.Length&gt;<span class="source_int">2</span>)
+<a name="493"></a>                 co_Anisotropy.SetIndex(<span class="source_int">2</span>);
+<a name="494"></a>            else if (AnisotropyModes.Length&gt;<span class="source_int">1</span>)
+<a name="495"></a>                 co_Anisotropy.SetIndex(<span class="source_int">1</span>);
+<a name="496"></a>            else
+<a name="497"></a>                 co_Anisotropy.setindex(<span class="source_int">0</span>);
+<a name="498"></a>
+<a name="499"></a>            ch_ForceFSAAScreenshotSupport.SetComponentValue(false,false);
+<a name="500"></a>            ch_Decals.SetComponentValue(true, false);
+<a name="501"></a>            ch_DynLight.SetComponentValue(true, false);
+<a name="502"></a>            ch_Coronas.SetComponentValue(true, false);
+<a name="503"></a>            ch_Textures.SetComponentValue(true, false);
+<a name="504"></a>            ch_Projectors.SetComponentValue(true, false);
+<a name="505"></a>            ch_DecoLayers.SetComponentValue(true, false);
+<a name="506"></a>            ch_Trilinear.SetComponentValue(false, false);
+<a name="507"></a>            ch_Weather.SetComponentValue(true, false);
+<a name="508"></a>            ch_MotionBlur.SetComponentValue(true, false);
+<a name="509"></a>            ch_HDR.SetComponentValue(true, false);
+<a name="510"></a>            break;
+<a name="511"></a>
+<a name="512"></a>        case <span class="source_int">5</span>: <span class="source_comment">// Highest
+</span><a name="513"></a>            co_Texture.SetIndex(<span class="source_int">8</span>);         <span class="source_comment">// Range = 0 - 8
+</span><a name="514"></a>            co_Char.SetIndex(<span class="source_int">8</span>);            <span class="source_comment">// Range = 0 - 8
+</span><a name="515"></a>            co_World.SetIndex(<span class="source_int">2</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="516"></a>            co_ScopeDetail.SetIndex(<span class="source_int">2</span>);     <span class="source_comment">// Range = 0 - 2 , 1 being lowest
+</span><a name="517"></a>            co_Physics.setindex(<span class="source_int">2</span>);         <span class="source_comment">// Range = 0 - 2
+</span><a name="518"></a>            co_Decal.setindex(<span class="source_int">2</span>);           <span class="source_comment">// Range = 0 - 2
+</span><a name="519"></a>            co_Shadows.setindex(min(co_Shadows.ItemCount() - <span class="source_int">1</span>, <span class="source_int">3</span>));  <span class="source_comment">// Range = 0 - 2 (0 - 1 sometimes -- check that!)
+</span><a name="520"></a>            co_MeshLOD.setindex(<span class="source_int">3</span>);         <span class="source_comment">// Range = 0 - 3
+</span><a name="521"></a>
+<a name="522"></a>            if(
+<a name="523"></a>                  (
+<a name="524"></a>                      (true==<span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"ISNVIDIAGPU"</span>)))
+<a name="525"></a>                       && (false==<span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"SUPPORTEDMULTISAMPLE 4"</span>))
+<a name="526"></a>                   )
+<a name="527"></a>                   || (false==<span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"ISNVIDIAGPU"</span>))))
+<a name="528"></a>                   && (MultiSampleModes.Length&gt;<span class="source_int">3</span>)
+<a name="529"></a>               )
+<a name="530"></a>                 co_MultiSamples.setindex(<span class="source_int">3</span>);
+<a name="531"></a>            else if(MultiSampleModes.Length&gt;<span class="source_int">2</span>)
+<a name="532"></a>                 co_MultiSamples.setindex(<span class="source_int">2</span>);
+<a name="533"></a>            else if (MultiSampleModes.Length&gt;<span class="source_int">1</span>)
+<a name="534"></a>                 co_MultiSamples.setindex(<span class="source_int">1</span>);
+<a name="535"></a>            else
+<a name="536"></a>                 co_MultiSamples.setindex(<span class="source_int">0</span>);
+<a name="537"></a>
+<a name="538"></a>            co_Anisotropy.setindex(AnisotropyModes.Length-<span class="source_int">1</span>);
+<a name="539"></a>            ch_ForceFSAAScreenshotSupport.SetComponentValue(false,false);
+<a name="540"></a>            ch_Decals.SetComponentValue(true, false);
+<a name="541"></a>            ch_DynLight.SetComponentValue(true, false);
+<a name="542"></a>            ch_Coronas.SetComponentValue(true, false);
+<a name="543"></a>            ch_Textures.SetComponentValue(true, false);
+<a name="544"></a>            ch_Projectors.SetComponentValue(true, false);
+<a name="545"></a>            ch_DecoLayers.SetComponentValue(true, false);
+<a name="546"></a>            ch_Trilinear.SetComponentValue(true, false);
+<a name="547"></a>            ch_Weather.SetComponentValue(true, false);
+<a name="548"></a>            ch_MotionBlur.SetComponentValue(true, false);
+<a name="549"></a>            ch_HDR.SetComponentValue(true, false);
+<a name="550"></a>            break;
+<a name="551"></a>    }
+<a name="552"></a>
+<a name="553"></a>    bShowPerfWarning = true;
+<a name="554"></a>
+<a name="555"></a>}
+<a name="556"></a>
+<a name="557"></a>function UpdateGlobalDetailsVisibility()
+<a name="558"></a>{
+<a name="559"></a>    if (iGlobalDetails == MAX_DETAIL_OPTIONS - <span class="source_int">1</span> || ch_Advanced.IsChecked()) <span class="source_comment">// custom
+</span><a name="560"></a>    {
+<a name="561"></a>        <span class="source_comment">//sb_Section2.SetVisibility(true);
+</span><a name="562"></a>        <span class="source_comment">/*sb_Section1.WinLeft = SavedContainer1Pos;
+<a name="563"></a>        sb_Section2.WinLeft = SavedContainer2Pos;
+<a name="564"></a>        sb_Section3.WinLeft = SavedContainer3Pos;*/</span>
+<a name="565"></a>        sb_Section2.EnableMe();
+<a name="566"></a>        DisableHDRControlIfNeeded();
+<a name="567"></a>
+<a name="568"></a>        <span class="source_comment">// wtf m8 _RO_
+</span><a name="569"></a>        if ((co_RenderDevice.GetExtra() != <span class="source_string">"D3D9Drv.D3D9RenderDevice"</span>) &&
+<a name="570"></a>            (co_RenderDevice.GetExtra() != <span class="source_string">"OpenGLDrv.OpenGLRenderDevice"</span>))
+<a name="571"></a>        {
+<a name="572"></a>           co_MultiSamples.DisableMe();
+<a name="573"></a>           ch_ForceFSAAScreenshotSupport.DisableMe();
+<a name="574"></a>        }
+<a name="575"></a>        <span class="source_comment">// _RO_
+</span><a name="576"></a>
+<a name="577"></a>        <span class="source_comment">//ch_Advanced.SetComponentValue(true ,true);
+</span><a name="578"></a>    }
+<a name="579"></a>    else
+<a name="580"></a>    {
+<a name="581"></a>        <span class="source_comment">//sb_Section2.SetVisibility(false);
+</span><a name="582"></a>        <span class="source_comment">/*sb_Section1.WinLeft = Container1PosAlt;
+<a name="583"></a>        sb_Section2.WinLeft = 1.0;
+<a name="584"></a>        sb_Section3.WinLeft = Container3PosAlt;*/</span>
+<a name="585"></a>        sb_Section2.DisableMe();
+<a name="586"></a>        <span class="source_comment">//ch_Advanced.SetComponentValue(false ,true);
+</span><a name="587"></a>    }
+<a name="588"></a>}
+<a name="589"></a>
+<a name="590"></a>function DisableHDRControlIfNeeded()
+<a name="591"></a>{
+<a name="592"></a>    <span class="source_comment">// Bloom only available when using direct3d 9.0
+</span><a name="593"></a>    if ((co_RenderDevice.GetExtra() != <span class="source_string">"D3D9Drv.D3D9RenderDevice"</span>) &&
+<a name="594"></a>        (co_RenderDevice.GetExtra() != <span class="source_string">"OpenGLDrv.OpenGLRenderDevice"</span>))
+<a name="595"></a>    {
+<a name="596"></a>        ch_HDR.DisableMe();
+<a name="597"></a>    }
+<a name="598"></a>}
+<a name="599"></a>
+<a name="600"></a>function SaveSettings()
+<a name="601"></a>{
+<a name="602"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="603"></a>	local <span class="source_type">bool</span> bSavePlayerConfig;
+<a name="604"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> inv;
+<a name="605"></a>	local <span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span> KFWeap;
+<a name="606"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="607"></a>
+<a name="608"></a>	Super.SaveSettings();
+<a name="609"></a>
+<a name="610"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="611"></a>
+<a name="612"></a>	if ( bVSync != bVSyncD )
+<a name="613"></a>	{
+<a name="614"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.RenderDevice UseVSync"</span> @ bVSync);
+<a name="615"></a>		bVSyncD = bVSync;
+<a name="616"></a>	}
+<a name="617"></a>
+<a name="618"></a>	if ( bTripBuff != bTripBuffD )
+<a name="619"></a>	{
+<a name="620"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.RenderDevice UseTripleBuffering"</span> @ bTripBuff);
+<a name="621"></a>		bTripBuffD = bTripBuff;
+<a name="622"></a>	}
+<a name="623"></a>
+<a name="624"></a>	if ( bWideScreen != bWideScreenD )
+<a name="625"></a>	{
+<a name="626"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set kfmod.KFPlayerController bUseTrueWideScreenFOV"</span> @ bWideScreen);
+<a name="627"></a>		bWideScreenD = bWideScreen;
+<a name="628"></a>	}
+<a name="629"></a>
+<a name="630"></a>	if (bMotionBlur != bMotionBlurD)
+<a name="631"></a>	{
+<a name="632"></a>		<span class="source_type">class</span><span class="source_name">'KFMod.KFHumanPawn'</span>.default.bUseBlurEffect = bMotionBlur;
+<a name="633"></a>		<span class="source_comment">//bSavePlayerConfig = true;
+</span><a name="634"></a>		<span class="source_type">class</span><span class="source_name">'KFMod.KFHumanPawn'</span>.static.StaticSaveConfig();
+<a name="635"></a>
+<a name="636"></a>		if (<span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != none)
+<a name="637"></a>		{
+<a name="638"></a>			<span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).bUseBlurEffect = bMotionBlur;
+<a name="639"></a>			<span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).SaveConfig();
+<a name="640"></a>		}
+<a name="641"></a>
+<a name="642"></a>		bMotionBlurD = bMotionBlur;
+<a name="643"></a>	}
+<a name="644"></a>
+<a name="645"></a>	if (bHDR != bHDRD)
+<a name="646"></a>	{
+<a name="647"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.ViewportManager Bloom"</span>@bHDR);
+<a name="648"></a>
+<a name="649"></a>		if (<span class="source_type">PC</span> != none)
+<a name="650"></a>		{
+<a name="651"></a>			<span class="source_type">PC</span>.PostFX_SetActive(<span class="source_int">0</span>, bHDR);
+<a name="652"></a>		}
+<a name="653"></a>
+<a name="654"></a>		bHDRD = bHDR;
+<a name="655"></a>	}
+<a name="656"></a>
+<a name="657"></a>	if (iScopeDetail != iScopeDetailD)
+<a name="658"></a>	{
+<a name="659"></a>        <span class="source_type">class</span><span class="source_name">'KFMod.KFWeapon'</span>.default.KFScopeDetail = <span class="source_type"><a href="../kfmod/kfweapon.html#KFScopeDetailSettings" class="source">KFScopeDetailSettings</a></span>(iScopeDetail);
+<a name="660"></a>        <span class="source_type">class</span><span class="source_name">'KFMod.KFWeapon'</span>.static.StaticSaveConfig();
+<a name="661"></a>
+<a name="662"></a>
+<a name="663"></a>        <span class="source_comment">// Initialize the FOV of all the weapons the player is carrying
+</span><a name="664"></a>    	if( <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != none )
+<a name="665"></a>        {
+<a name="666"></a>        	for ( Inv=<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; Inv!=None; Inv=Inv.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="667"></a>        	{
+<a name="668"></a>        		<span class="source_type">i</span>++;
+<a name="669"></a>                KFWeap = <span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span>(Inv);
+<a name="670"></a>        		if ( KFWeap != None && KFWeap.bHasScope )
+<a name="671"></a>        		{
+<a name="672"></a>                    KFWeap.KFScopeDetail = <span class="source_type">class</span><span class="source_name">'KFMod.KFWeapon'</span>.default.KFScopeDetail;
+<a name="673"></a>                    KFWeap.AdjustIngameScope();
+<a name="674"></a>        		}
+<a name="675"></a>
+<a name="676"></a>        		<span class="source_comment">// Little hack to catch possible runaway loops. Gotta love those linked listed in UE2.5 - Ramm
+</span><a name="677"></a>        		if( <span class="source_type">i</span> &gt; <span class="source_int">10000</span> )
+<a name="678"></a>        		  break;
+<a name="679"></a>        	}
+<a name="680"></a>    	}
+<a name="681"></a>
+<a name="682"></a>        iScopeDetailD = iScopeDetail;
+<a name="683"></a>	}
+<a name="684"></a><span class="source_comment">// KFTODO: Implement this in the KF player class
+</span><a name="685"></a>	if (iGlobalDetails != iGlobalDetailsD)
+<a name="686"></a>	{
+<a name="687"></a>        <span class="source_type">class</span><span class="source_name">'ROEngine.ROPlayer'</span>.default.GlobalDetailLevel = iGlobalDetails;
+<a name="688"></a>        bSavePlayerConfig = true;
+<a name="689"></a>
+<a name="690"></a>        iGlobalDetailsD = iGlobalDetails;
+<a name="691"></a>	}
+<a name="692"></a>
+<a name="693"></a>	if ( iShadow != iShadowD )
+<a name="694"></a>	{
+<a name="695"></a>		if ( <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None && <span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None )
+<a name="696"></a>		{
+<a name="697"></a>            <span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).bBlobShadow = iShadow == <span class="source_int">1</span>;
+<a name="698"></a>			<span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).bPlayerShadows = iShadow &gt; <span class="source_int">0</span>;
+<a name="699"></a>		}
+<a name="700"></a>
+<a name="701"></a>		<span class="source_type">class</span><span class="source_name">'UnrealPawn'</span>.default.bBlobShadow = iShadow == <span class="source_int">1</span>;
+<a name="702"></a>		<span class="source_type">class</span><span class="source_name">'UnrealPawn'</span>.default.bPlayerShadows = iShadow &gt; <span class="source_int">0</span>;
+<a name="703"></a>		iShadowD = iShadow;
+<a name="704"></a>
+<a name="705"></a>		if (<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None && <span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None)
+<a name="706"></a>			<span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>(<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).SaveConfig();
+<a name="707"></a>		else
+<a name="708"></a>            <span class="source_type">class</span><span class="source_name">'UnrealPawn'</span>.static.StaticSaveConfig();
+<a name="709"></a>
+<a name="710"></a>   		UpdateShadows(iShadow == <span class="source_int">1</span>, iShadow &gt; <span class="source_int">0</span>);
+<a name="711"></a>	}
+<a name="712"></a>
+<a name="713"></a>	if ( <span class="source_type">class</span><span class="source_name">'Vehicle'</span>.default.bVehicleShadows != (iShadow &gt; <span class="source_int">0</span>) )
+<a name="714"></a>	{
+<a name="715"></a>		<span class="source_type">class</span><span class="source_name">'Vehicle'</span>.default.bVehicleShadows = iShadow &gt; <span class="source_int">0</span>;
+<a name="716"></a>		<span class="source_type">class</span><span class="source_name">'Vehicle'</span>.static.StaticSaveConfig();
+<a name="717"></a>		UpdateVehicleShadows(iShadow &gt; <span class="source_int">0</span>);
+<a name="718"></a>	}
+<a name="719"></a>
+<a name="720"></a>	if (bSavePlayerConfig)
+<a name="721"></a>	   <span class="source_type">class</span><span class="source_name">'ROEngine.ROPlayer'</span>.static.StaticSaveConfig();
+<a name="722"></a>}
+<a name="723"></a>
+<a name="724"></a>simulated function UpdateShadows(<span class="source_type">bool</span> bBlobShadow, <span class="source_type">bool</span> bPlayerShadows)
+<a name="725"></a>{
+<a name="726"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="727"></a>    local <span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span> <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>;
+<a name="728"></a>
+<a name="729"></a>    <span class="source_type">PC</span> = PlayerOwner();
+<a name="730"></a>
+<a name="731"></a>    if (<span class="source_type">PC</span> == none || <span class="source_type">PC</span>.<span class="source_type">Level</span>.NetMode == NM_DedicatedServer)
+<a name="732"></a>        return;
+<a name="733"></a>
+<a name="734"></a>    foreach <span class="source_type">PC</span>.DynamicActors(<span class="source_type">class</span><span class="source_name">'UnrealPawn'</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>)
+<a name="735"></a>    {
+<a name="736"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>.bBlobShadow = bBlobShadow;
+<a name="737"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>.bPlayerShadows = bPlayerShadows;
+<a name="738"></a>        if( <span class="source_type"><a href="../kfmod/kfpawn.html" class="source">KFPawn</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != none )
+<a name="739"></a>        {
+<a name="740"></a>            <span class="source_type"><a href="../kfmod/kfpawn.html" class="source">KFPawn</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).UpdateShadow();
+<a name="741"></a>        }
+<a name="742"></a>        else if( <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != none )
+<a name="743"></a>        {
+<a name="744"></a>            <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).UpdateShadow();
+<a name="745"></a>        }
+<a name="746"></a>    }
+<a name="747"></a>}
+<a name="748"></a>
+<a name="749"></a>simulated function UpdateVehicleShadows(<span class="source_type">bool</span> bVehicleShadows)
+<a name="750"></a>{
+<a name="751"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="752"></a>    local <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span> <span class="source_type"><a href="../engine/vehicle.html" class="source">vehicle</a></span>;
+<a name="753"></a>
+<a name="754"></a>    <span class="source_type">PC</span> = PlayerOwner();
+<a name="755"></a>
+<a name="756"></a>    if (<span class="source_type">PC</span> == none || <span class="source_type">PC</span>.<span class="source_type">Level</span>.NetMode == NM_DedicatedServer)
+<a name="757"></a>        return;
+<a name="758"></a>
+<a name="759"></a>    foreach <span class="source_type">PC</span>.DynamicActors(<span class="source_type">class</span><span class="source_name">'Vehicle'</span>, <span class="source_type"><a href="../engine/vehicle.html" class="source">vehicle</a></span>)
+<a name="760"></a>    {
+<a name="761"></a>        <span class="source_type"><a href="../engine/vehicle.html" class="source">vehicle</a></span>.bVehicleShadows = bVehicleShadows;
+<a name="762"></a>        <span class="source_type"><a href="../engine/vehicle.html" class="source">vehicle</a></span>.UpdateShadow();
+<a name="763"></a>    }
+<a name="764"></a>}
+<a name="765"></a>
+<a name="766"></a>function ResetClicked()
+<a name="767"></a>{
+<a name="768"></a>	<span class="source_type">class</span><span class="source_name">'ROEngine.ROPlayer'</span>.static.ResetConfig(<span class="source_string">"GlobalDetailLevel"</span>);
+<a name="769"></a>	<span class="source_type">class</span><span class="source_name">'KFMod.KFWeapon'</span>.static.ResetConfig(<span class="source_string">"KFScopeDetail"</span>);
+<a name="770"></a>	<span class="source_type">class</span><span class="source_name">'KFMod.KFHumanPawn'</span>.static.ResetConfig(<span class="source_string">"bUseBlurEffect"</span>);
+<a name="771"></a>
+<a name="772"></a>	Super.ResetClicked();
+<a name="773"></a>}
+<a name="774"></a>
+<a name="775"></a>defaultproperties
+<a name="776"></a>{
+<a name="777"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=GlobalDetails
+<a name="778"></a>         ComponentJustification=TXTA_Left
+<a name="779"></a>         CaptionWidth=<span class="source_int">0.550000</span>
+<a name="780"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Game details"</span>
+<a name="781"></a>         OnCreateComponent=GlobalDetails.InternalOnCreateComponent
+<a name="782"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="783"></a>         IniDefault=<span class="source_string">"Higher"</span>
+<a name="784"></a>         Hint=<span class="source_string">"Changes the quality of the graphics in the game"</span>
+<a name="785"></a>         WinTop=<span class="source_int">0.063021</span>
+<a name="786"></a>         WinLeft=<span class="source_int">0.550000</span>
+<a name="787"></a>         WinWidth=<span class="source_int">0.400000</span>
+<a name="788"></a>         TabOrder=<span class="source_int">2</span>
+<a name="789"></a>         OnChange=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnChange
+<a name="790"></a>         OnLoadINI=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnLoadINI
+<a name="791"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="792"></a>     co_GlobalDetails=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.GlobalDetails'</span>
+<a name="793"></a>
+<a name="794"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=ScopeDetail
+<a name="795"></a>         ComponentJustification=TXTA_Left
+<a name="796"></a>         CaptionWidth=<span class="source_int">0.650000</span>
+<a name="797"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Scope Detail"</span>
+<a name="798"></a>         OnCreateComponent=ScopeDetail.InternalOnCreateComponent
+<a name="799"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="800"></a>         IniDefault=<span class="source_string">"Model (Low)"</span>
+<a name="801"></a>         Hint=<span class="source_string">"Changes how weapon scope views should be rendered"</span>
+<a name="802"></a>         WinTop=<span class="source_int">0.063021</span>
+<a name="803"></a>         WinLeft=<span class="source_int">0.550000</span>
+<a name="804"></a>         WinWidth=<span class="source_int">0.400000</span>
+<a name="805"></a>         TabOrder=<span class="source_int">9</span>
+<a name="806"></a>         OnChange=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnChange
+<a name="807"></a>         OnLoadINI=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnLoadINI
+<a name="808"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="809"></a>     co_ScopeDetail=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.ScopeDetail'</span>
+<a name="810"></a>
+<a name="811"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=HDRCheckbox
+<a name="812"></a>         ComponentJustification=TXTA_Left
+<a name="813"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="814"></a>         <span class="source_type">Caption</span>=<span class="source_string">"HDR Bloom"</span>
+<a name="815"></a>         OnCreateComponent=HDRCheckbox.InternalOnCreateComponent
+<a name="816"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="817"></a>         IniDefault=<span class="source_string">"True"</span>
+<a name="818"></a>         Hint=<span class="source_string">"Enables the Bloom effect"</span>
+<a name="819"></a>         WinTop=<span class="source_int">0.479308</span>
+<a name="820"></a>         WinLeft=<span class="source_int">0.600000</span>
+<a name="821"></a>         WinWidth=<span class="source_int">0.300000</span>
+<a name="822"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="823"></a>         TabOrder=<span class="source_int">13</span>
+<a name="824"></a>         OnChange=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnChange
+<a name="825"></a>         OnLoadINI=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnLoadINI
+<a name="826"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="827"></a>     ch_HDR=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.HDRCheckbox'</span>
+<a name="828"></a>
+<a name="829"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=Advanced
+<a name="830"></a>         ComponentJustification=TXTA_Left
+<a name="831"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="832"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Show Advanced Options"</span>
+<a name="833"></a>         OnCreateComponent=Advanced.InternalOnCreateComponent
+<a name="834"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="835"></a>         IniDefault=<span class="source_string">"True"</span>
+<a name="836"></a>         Hint=<span class="source_string">"Enables you to configure display options more precisely"</span>
+<a name="837"></a>         WinTop=<span class="source_int">0.479308</span>
+<a name="838"></a>         WinLeft=<span class="source_int">0.600000</span>
+<a name="839"></a>         WinWidth=<span class="source_int">0.300000</span>
+<a name="840"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="841"></a>         TabOrder=<span class="source_int">2</span>
+<a name="842"></a>         OnChange=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnChange
+<a name="843"></a>         OnLoadINI=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnLoadINI
+<a name="844"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="845"></a>     ch_Advanced=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.Advanced'</span>
+<a name="846"></a>
+<a name="847"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=<span class="source_type"><a href="../engine/motionblur.html" class="source">MotionBlur</a></span>
+<a name="848"></a>         ComponentJustification=TXTA_Left
+<a name="849"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="850"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Motion Blur"</span>
+<a name="851"></a>         OnCreateComponent=<span class="source_type"><a href="../engine/motionblur.html" class="source">MotionBlur</a></span>.InternalOnCreateComponent
+<a name="852"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="853"></a>         IniDefault=<span class="source_string">"True"</span>
+<a name="854"></a>         Hint=<span class="source_string">"Enables motion blur effects"</span>
+<a name="855"></a>         WinTop=<span class="source_int">0.479308</span>
+<a name="856"></a>         WinLeft=<span class="source_int">0.600000</span>
+<a name="857"></a>         WinWidth=<span class="source_int">0.300000</span>
+<a name="858"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="859"></a>         TabOrder=<span class="source_int">13</span>
+<a name="860"></a>         OnChange=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnChange
+<a name="861"></a>         OnLoadINI=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnLoadINI
+<a name="862"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="863"></a>     ch_MotionBlur=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.MotionBlur'</span>
+<a name="864"></a>
+<a name="865"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=VSyncbox
+<a name="866"></a>         ComponentJustification=TXTA_Left
+<a name="867"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="868"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Vertical Sync"</span>
+<a name="869"></a>         OnCreateComponent=VSyncbox.InternalOnCreateComponent
+<a name="870"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="871"></a>         IniDefault=<span class="source_string">"False"</span>
+<a name="872"></a>         Hint=<span class="source_string">"Syncs the frame rate to your monitor's refresh rate"</span>
+<a name="873"></a>         WinTop=<span class="source_int">0.479308</span>
+<a name="874"></a>         WinLeft=<span class="source_int">0.600000</span>
+<a name="875"></a>         WinWidth=<span class="source_int">0.300000</span>
+<a name="876"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="877"></a>         TabOrder=<span class="source_int">4</span>
+<a name="878"></a>         OnChange=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnChange
+<a name="879"></a>         OnLoadINI=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnLoadINI
+<a name="880"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="881"></a>     ch_VSync=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.VSyncbox'</span>
+<a name="882"></a>
+<a name="883"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=TripBuffbox
+<a name="884"></a>         ComponentJustification=TXTA_Left
+<a name="885"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="886"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Triple Buffering"</span>
+<a name="887"></a>         OnCreateComponent=TripBuffbox.InternalOnCreateComponent
+<a name="888"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="889"></a>         IniDefault=<span class="source_string">"False"</span>
+<a name="890"></a>         Hint=<span class="source_string">"May help framerate/smoothness if VSync is turned on"</span>
+<a name="891"></a>         WinTop=<span class="source_int">0.479308</span>
+<a name="892"></a>         WinLeft=<span class="source_int">0.600000</span>
+<a name="893"></a>         WinWidth=<span class="source_int">0.300000</span>
+<a name="894"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="895"></a>         TabOrder=<span class="source_int">4</span>
+<a name="896"></a>         OnChange=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnChange
+<a name="897"></a>         OnLoadINI=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnLoadINI
+<a name="898"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="899"></a>     ch_TripBuff=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.TripBuffbox'</span>
+<a name="900"></a>
+<a name="901"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=WideScreenbox
+<a name="902"></a>         ComponentJustification=TXTA_Left
+<a name="903"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="904"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Widescreen"</span>
+<a name="905"></a>         OnCreateComponent=WideScreenbox.InternalOnCreateComponent
+<a name="906"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="907"></a>         IniDefault=<span class="source_string">"True"</span>
+<a name="908"></a>         Hint=<span class="source_string">"Enables widescreen support"</span>
+<a name="909"></a>         WinTop=<span class="source_int">0.479308</span>
+<a name="910"></a>         WinLeft=<span class="source_int">0.600000</span>
+<a name="911"></a>         WinWidth=<span class="source_int">0.300000</span>
+<a name="912"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="913"></a>         TabOrder=<span class="source_int">4</span>
+<a name="914"></a>         OnChange=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnChange
+<a name="915"></a>         OnLoadINI=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnLoadINI
+<a name="916"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="917"></a>     ch_WideScreen=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.WideScreenbox'</span>
+<a name="918"></a>
+<a name="919"></a>     DetailOptions(<span class="source_int">0</span>)=<span class="source_string">"Lowest"</span>
+<a name="920"></a>     DetailOptions(<span class="source_int">1</span>)=<span class="source_string">"Low"</span>
+<a name="921"></a>     DetailOptions(<span class="source_int">2</span>)=<span class="source_string">"Medium"</span>
+<a name="922"></a>     DetailOptions(<span class="source_int">3</span>)=<span class="source_string">"High"</span>
+<a name="923"></a>     DetailOptions(<span class="source_int">4</span>)=<span class="source_string">"Higher"</span>
+<a name="924"></a>     DetailOptions(<span class="source_int">5</span>)=<span class="source_string">"Highest"</span>
+<a name="925"></a>     DetailOptions(<span class="source_int">6</span>)=<span class="source_string">"Custom"</span>
+<a name="926"></a>     ScopeLevels(<span class="source_int">0</span>)=<span class="source_string">"Model (Low)"</span>
+<a name="927"></a>     ScopeLevels(<span class="source_int">1</span>)=<span class="source_string">"Textured"</span>
+<a name="928"></a>     ScopeLevels(<span class="source_int">2</span>)=<span class="source_string">"Model (High)"</span>
+<a name="929"></a>     RenderModeText(<span class="source_int">0</span>)=<span class="source_string">"Direct 3D 9.0"</span>
+<a name="930"></a>     RenderModeText(<span class="source_int">1</span>)=<span class="source_string">"Direct 3D"</span>
+<a name="931"></a>     RenderModeText(<span class="source_int">2</span>)=<span class="source_string">"OpenGL"</span>
+<a name="932"></a>     RenderMode(<span class="source_int">0</span>)=<span class="source_string">"D3D9Drv.D3D9RenderDevice"</span>
+<a name="933"></a>     RenderMode(<span class="source_int">1</span>)=<span class="source_string">"D3DDrv.D3DRenderDevice"</span>
+<a name="934"></a>     RenderMode(<span class="source_int">2</span>)=<span class="source_string">"OpenGLDrv.OpenGLRenderDevice"</span>
+<a name="935"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=sbSection1
+<a name="936"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Resolution"</span>
+<a name="937"></a>         WinTop=<span class="source_int">0.012761</span>
+<a name="938"></a>         WinLeft=<span class="source_int">0.000948</span>
+<a name="939"></a>         WinWidth=<span class="source_int">0.485000</span>
+<a name="940"></a>         WinHeight=<span class="source_int">0.540729</span>
+<a name="941"></a>         RenderWeight=<span class="source_int">0.010000</span>
+<a name="942"></a>         OnPreDraw=sbSection1.InternalPreDraw
+<a name="943"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="944"></a>     sb_Section1=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.sbSection1'</span>
+<a name="945"></a>
+<a name="946"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=sbSection3
+<a name="947"></a>         bFillClient=True
+<a name="948"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Gamma Test"</span>
+<a name="949"></a>         WinTop=<span class="source_int">0.576061</span>
+<a name="950"></a>         WinLeft=<span class="source_int">0.000948</span>
+<a name="951"></a>         WinWidth=<span class="source_int">0.485000</span>
+<a name="952"></a>         WinHeight=<span class="source_int">0.411928</span>
+<a name="953"></a>         RenderWeight=<span class="source_int">0.010000</span>
+<a name="954"></a>         OnPreDraw=sbSection3.InternalPreDraw
+<a name="955"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="956"></a>     sb_Section3=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.sbSection3'</span>
+<a name="957"></a>
+<a name="958"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=GammaBar
+<a name="959"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'2K4Menus.Controls.Gamma'</span>
+<a name="960"></a>         ImageStyle=ISTY_Scaled
+<a name="961"></a>         ImageRenderStyle=MSTY_Normal
+<a name="962"></a>         OnChange=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnChange
+<a name="963"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="964"></a>     i_GammaBar=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFTab_DetailSettings.GammaBar'</span>
+<a name="965"></a>
+<a name="966"></a>     OnPreDraw=<span class="source_type"><a href="../kfgui/kftab_detailsettings.html" class="source">KFTab_DetailSettings</a></span>.InternalOnPreDraw
+<a name="967"></a>}
+<a name="968"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kftab_detailsettings.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFTab_DetailSettings">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kftab_controls.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kftab_dlcall.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.281 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.StreamCommandlet</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/streamcommandlet.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#StreamCommandlet">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/streambase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/streaminteraction.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/streamcommandlet.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/streamcommandlet.html">StreamCommandlet</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//	Created on: 10/16/2003
+</span><a name="3"></a><span class="source_comment">//	Description
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">//	Written by Ron Prestenback
+</span><a name="6"></a><span class="source_comment">//	© 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="7"></a><span class="source_comment">//==============================================================================
+</span><a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/streamcommandlet.html" class="source">StreamCommandlet</a></span> extends <span class="source_type"><a href="../core/commandlet.html" class="source">Commandlet</a></span>;
+<a name="9"></a>
+<a name="10"></a>event <span class="source_type">int</span> Main( <span class="source_type">string</span> <span class="source_type">Parms</span> )
+<a name="11"></a>{
+<a name="12"></a>	local <span class="source_type">string</span> src, <span class="source_type">match</span>;
+<a name="13"></a>
+<a name="14"></a>	if ( !divide(<span class="source_type">parms</span>, <span class="source_string">";"</span>, src, <span class="source_type">match</span>) )
+<a name="15"></a>		return <span class="source_int">0</span>;
+<a name="16"></a>
+<a name="17"></a>	log(<span class="source_string">"Source '"</span>$src$<span class="source_string">"'   Match '"</span>$<span class="source_type">match</span>$<span class="source_string">"'"</span>);
+<a name="18"></a>	log(<span class="source_string">"Result of reverse search is"</span>@ RevInStr(src,<span class="source_type">match</span>));
+<a name="19"></a>
+<a name="20"></a>	log(<span class="source_string">""</span>);
+<a name="21"></a>	chart(src);
+<a name="22"></a>	return <span class="source_int">0</span>;
+<a name="23"></a>
+<a name="24"></a>}
+<a name="25"></a>
+<a name="26"></a>function chart(<span class="source_type">string</span> src)
+<a name="27"></a>{
+<a name="28"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j, k;
+<a name="29"></a>	local <span class="source_type">string</span> <span class="source_type">s</span>, <span class="source_type">t</span>;
+<a name="30"></a>
+<a name="31"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">Len</span>(src); <span class="source_type">i</span>++ )
+<a name="32"></a>	{
+<a name="33"></a>		j = <span class="source_type">i</span> % <span class="source_int">10</span>;
+<a name="34"></a>		if ( j == <span class="source_int">0</span> )
+<a name="35"></a>		{
+<a name="36"></a>			k = <span class="source_type">i</span> / <span class="source_int">10</span>;
+<a name="37"></a>			<span class="source_type">t</span> $= k;
+<a name="38"></a>		}
+<a name="39"></a>		else <span class="source_type">t</span> $= <span class="source_string">" "</span>;
+<a name="40"></a>
+<a name="41"></a>		<span class="source_type">s</span> $= j;
+<a name="42"></a>	}
+<a name="43"></a>
+<a name="44"></a>	log(src);
+<a name="45"></a>	log(<span class="source_type">s</span>);
+<a name="46"></a>	log(<span class="source_type">t</span>);
+<a name="47"></a>}
+<a name="48"></a>
+<a name="49"></a>function <span class="source_type">int</span> RevInStr( <span class="source_type">string</span> src, <span class="source_type">string</span> <span class="source_type">match</span> )
+<a name="50"></a>{
+<a name="51"></a>	local <span class="source_type">int</span> <span class="source_type">pos</span>, <span class="source_type">i</span>;
+<a name="52"></a>	local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="53"></a>
+<a name="54"></a>	if ( src == <span class="source_string">""</span> || <span class="source_type">match</span> == <span class="source_string">""</span> )
+<a name="55"></a>		return -<span class="source_int">1</span>;
+<a name="56"></a>
+<a name="57"></a>	<span class="source_type">s</span> = src;
+<a name="58"></a>	<span class="source_type">i</span> = InStr(<span class="source_type">s</span>, <span class="source_type">match</span>);
+<a name="59"></a>
+<a name="60"></a>	do
+<a name="61"></a>	{
+<a name="62"></a>		<span class="source_type">pos</span> += <span class="source_type">i</span>;
+<a name="63"></a>		<span class="source_type">s</span> = Mid(src, <span class="source_type">pos</span>+<span class="source_int">1</span>);
+<a name="64"></a>		<span class="source_type">i</span> = InStr(<span class="source_type">s</span>, <span class="source_type">match</span>) + <span class="source_int">1</span>;
+<a name="65"></a>	} until ( <span class="source_type">i</span> == <span class="source_int">0</span> );
+<a name="66"></a>
+<a name="67"></a>	return <span class="source_type">pos</span>;
+<a name="68"></a>}
+<a name="69"></a>
+<a name="70"></a>defaultproperties
+<a name="71"></a>{
+<a name="72"></a>}
+<a name="73"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/streamcommandlet.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#StreamCommandlet">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/streambase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/streaminteraction.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:09.019 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

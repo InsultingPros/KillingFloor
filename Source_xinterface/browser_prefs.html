@@ -1,0 +1,631 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.Browser_Prefs</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/browser_prefs.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Browser_Prefs">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/browser_playerslist.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/browser_ruleslist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/browser_prefs.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/browser_prefs.html">Browser_Prefs</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/browser_prefs.html" class="source">Browser_Prefs</a></span> extends <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span>;
+<a name="2"></a>
+<a name="3"></a>var <span class="source_type"><a href="../xinterface/guititlebar.html" class="source">GUITitleBar</a></span>		StatusBar;
+<a name="4"></a>
+<a name="5"></a>var localized <span class="source_type">string</span>	ViewStatsStrings[<span class="source_int">3</span>];
+<a name="6"></a>var localized <span class="source_type">string</span>	MutatorModeStrings[<span class="source_int">4</span>];
+<a name="7"></a>var localized <span class="source_type">string</span>    WeaponStayStrings[<span class="source_int">3</span>];
+<a name="8"></a>var localized <span class="source_type">string</span>    TranslocatorStrings[<span class="source_int">3</span>];
+<a name="9"></a>
+<a name="10"></a>var <span class="source_type">bool</span>				bIsInitialised;
+<a name="11"></a>
+<a name="12"></a>var array&lt;<span class="source_type"><a href="../xgame/xutil.html" class="source">xUtil</a></span>.<span class="source_type"><a href="../xgame/xutil.html#MutatorRecord" class="source">MutatorRecord</a></span>&gt; <span class="source_type">MutatorRecords</span>;
+<a name="13"></a>
+<a name="14"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="15"></a>{
+<a name="16"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="17"></a>
+<a name="18"></a>	Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="19"></a>
+<a name="20"></a>	if(bIsInitialised)
+<a name="21"></a>		return;
+<a name="22"></a>
+<a name="23"></a>	<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(<span class="source_type"><a href="../xinterface/guipanel.html" class="source">GUIPanel</a></span>(Controls[<span class="source_int">0</span>]).Controls[<span class="source_int">0</span>]).OnClick=BackClick;
+<a name="24"></a>
+<a name="25"></a>	<span class="source_comment">// Set options for stats server viewing
+</span><a name="26"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">5</span>]).AddItem(ViewStatsStrings[<span class="source_int">0</span>]);
+<a name="27"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">5</span>]).AddItem(ViewStatsStrings[<span class="source_int">1</span>]);
+<a name="28"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">5</span>]).AddItem(ViewStatsStrings[<span class="source_int">2</span>]);
+<a name="29"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">5</span>]).ReadOnly(true);
+<a name="30"></a>
+<a name="31"></a>	<span class="source_comment">// Load mutators into combobox
+</span><a name="32"></a>	<span class="source_type">class</span><span class="source_name">'xUtil'</span>.static.GetMutatorList(<span class="source_type">MutatorRecords</span>);
+<a name="33"></a>
+<a name="34"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">9</span>]).AddItem(MutatorModeStrings[<span class="source_int">0</span>]);
+<a name="35"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">9</span>]).AddItem(MutatorModeStrings[<span class="source_int">1</span>]);
+<a name="36"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">9</span>]).AddItem(MutatorModeStrings[<span class="source_int">2</span>]);
+<a name="37"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">9</span>]).AddItem(MutatorModeStrings[<span class="source_int">3</span>]);
+<a name="38"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">9</span>]).ReadOnly(true);
+<a name="39"></a>
+<a name="40"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">13</span>]).AddItem(MutatorModeStrings[<span class="source_int">0</span>]);
+<a name="41"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">13</span>]).AddItem(MutatorModeStrings[<span class="source_int">2</span>]);
+<a name="42"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">13</span>]).AddItem(MutatorModeStrings[<span class="source_int">3</span>]);
+<a name="43"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">13</span>]).ReadOnly(true);
+<a name="44"></a>
+<a name="45"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_type">MutatorRecords</span>.Length; <span class="source_type">i</span>++)
+<a name="46"></a>	{
+<a name="47"></a>		<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">6</span>]).AddItem(<span class="source_type">MutatorRecords</span>[<span class="source_type">i</span>].<span class="source_type">FriendlyName</span>, None, <span class="source_type">MutatorRecords</span>[<span class="source_type">i</span>].<span class="source_type">ClassName</span>);
+<a name="48"></a>		<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">14</span>]).AddItem(<span class="source_type">MutatorRecords</span>[<span class="source_type">i</span>].<span class="source_type">FriendlyName</span>, None, <span class="source_type">MutatorRecords</span>[<span class="source_type">i</span>].<span class="source_type">ClassName</span>);
+<a name="49"></a>	}
+<a name="50"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">6</span>]).ReadOnly(true);
+<a name="51"></a>
+<a name="52"></a>	<span class="source_comment">// Weapon stay
+</span><a name="53"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">11</span>]).AddItem(WeaponStayStrings[<span class="source_int">0</span>]);
+<a name="54"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">11</span>]).AddItem(WeaponStayStrings[<span class="source_int">1</span>]);
+<a name="55"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">11</span>]).AddItem(WeaponStayStrings[<span class="source_int">2</span>]);
+<a name="56"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">11</span>]).ReadOnly(true);
+<a name="57"></a>
+<a name="58"></a>	<span class="source_comment">// Translocator
+</span><a name="59"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">12</span>]).AddItem(TranslocatorStrings[<span class="source_int">0</span>]);
+<a name="60"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">12</span>]).AddItem(TranslocatorStrings[<span class="source_int">1</span>]);
+<a name="61"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">12</span>]).AddItem(TranslocatorStrings[<span class="source_int">2</span>]);
+<a name="62"></a>	<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">12</span>]).ReadOnly(true);
+<a name="63"></a>
+<a name="64"></a>	<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">15</span>]).MyNumericEdit.Step = <span class="source_int">10</span>;
+<a name="65"></a>	<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">16</span>]).MyNumericEdit.Step = <span class="source_int">10</span>;
+<a name="66"></a>
+<a name="67"></a>	for(<span class="source_type">i</span>=<span class="source_int">2</span>; <span class="source_type">i</span>&lt;<span class="source_int">17</span>; <span class="source_type">i</span>++)
+<a name="68"></a>	{
+<a name="69"></a>		Controls[<span class="source_type">i</span>].OnLoadINI=MyOnLoadINI;
+<a name="70"></a>		Controls[<span class="source_type">i</span>].OnChange=MyOnChange;
+<a name="71"></a>	}
+<a name="72"></a>
+<a name="73"></a>	StatusBar = <span class="source_type"><a href="../xinterface/guititlebar.html" class="source">GUITitleBar</a></span>(<span class="source_type"><a href="../xinterface/guipanel.html" class="source">GUIPanel</a></span>(Controls[<span class="source_int">0</span>]).Controls[<span class="source_int">1</span>]);
+<a name="74"></a>
+<a name="75"></a>	<span class="source_comment">// Set on click for 'Show Icon Key' button
+</span><a name="76"></a>	<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(<span class="source_type"><a href="../xinterface/guipanel.html" class="source">GUIPanel</a></span>(Controls[<span class="source_int">0</span>]).Controls[<span class="source_int">2</span>]).OnClick = InternalShowIconKey;
+<a name="77"></a>
+<a name="78"></a>	bIsInitialised=true;
+<a name="79"></a>}
+<a name="80"></a>
+<a name="81"></a><span class="source_comment">// delegates
+</span><a name="82"></a>function <span class="source_type">bool</span> BackClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="83"></a>{
+<a name="84"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseMenu(true);
+<a name="85"></a>	return true;
+<a name="86"></a>}
+<a name="87"></a>
+<a name="88"></a>function UpdateMutatorVisibility()
+<a name="89"></a>{
+<a name="90"></a>	<span class="source_comment">// If first one is 'any' or 'none', don't show any mutator selector boxes
+</span><a name="91"></a>	if(<span class="source_type">Browser</span>.ViewMutatorMode == VMM_AnyMutators || <span class="source_type">Browser</span>.ViewMutatorMode == VMM_NoMutators)
+<a name="92"></a>	{
+<a name="93"></a>		Controls[<span class="source_int">6</span>].bVisible = false;
+<a name="94"></a>		Controls[<span class="source_int">13</span>].bVisible = false;
+<a name="95"></a>		Controls[<span class="source_int">14</span>].bVisible = false;
+<a name="96"></a>	}
+<a name="97"></a>	else <span class="source_comment">// If its not - show the first mutator selection box, and the second mode box
+</span><a name="98"></a>	{
+<a name="99"></a>		Controls[<span class="source_int">6</span>].bVisible = true;
+<a name="100"></a>
+<a name="101"></a>		Controls[<span class="source_int">13</span>].bVisible = true;
+<a name="102"></a>
+<a name="103"></a>		<span class="source_comment">// And check the second mode drop-down,
+</span><a name="104"></a>		if(<span class="source_type">Browser</span>.ViewMutator2Mode == VMM_AnyMutators)
+<a name="105"></a>			Controls[<span class="source_int">14</span>].bVisible = false;
+<a name="106"></a>		else
+<a name="107"></a>			Controls[<span class="source_int">14</span>].bVisible = true;
+<a name="108"></a>	}
+<a name="109"></a>}
+<a name="110"></a>
+<a name="111"></a>function <span class="source_type">bool</span> InternalShowIconKey(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="112"></a>{
+<a name="113"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"XInterface.Browser_IconKey"</span>);
+<a name="114"></a>
+<a name="115"></a>	return true;
+<a name="116"></a>}
+<a name="117"></a>
+<a name="118"></a>
+<a name="119"></a><span class="source_comment">///////////////////// LOAD ///////////////////////
+</span><a name="120"></a>function MyOnLoadINI(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">string</span> <span class="source_type">s</span>)
+<a name="121"></a>{
+<a name="122"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="123"></a>
+<a name="124"></a>	if(<span class="source_type">Sender</span> == Controls[<span class="source_int">8</span>])
+<a name="125"></a>		<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">8</span>]).Checked(<span class="source_type">Browser</span>.bOnlyShowStandard);
+<a name="126"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">2</span>])
+<a name="127"></a>		<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">2</span>]).Checked(<span class="source_type">Browser</span>.bOnlyShowNonPassword);
+<a name="128"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">3</span>])
+<a name="129"></a>		<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">3</span>]).Checked(<span class="source_type">Browser</span>.bDontShowFull);
+<a name="130"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">4</span>])
+<a name="131"></a>		<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">4</span>]).Checked(<span class="source_type">Browser</span>.bDontShowEmpty);
+<a name="132"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">5</span>])
+<a name="133"></a>		<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">5</span>]).SetText(ViewStatsStrings[<span class="source_type">Browser</span>.StatsServerView]);
+<a name="134"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">6</span>])
+<a name="135"></a>	{
+<a name="136"></a>		<span class="source_comment">// Find the Mutator with this class name, and put its friendly name in the box
+</span><a name="137"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_type">MutatorRecords</span>.Length; <span class="source_type">i</span>++)
+<a name="138"></a>		{
+<a name="139"></a>			if( <span class="source_type">Browser</span>.DesiredMutator == <span class="source_type">MutatorRecords</span>[<span class="source_type">i</span>].<span class="source_type">ClassName</span> )
+<a name="140"></a>			{
+<a name="141"></a>				<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">6</span>]).SetText( <span class="source_type">MutatorRecords</span>[<span class="source_type">i</span>].<span class="source_type">FriendlyName</span> );
+<a name="142"></a>				return;
+<a name="143"></a>			}
+<a name="144"></a>		}
+<a name="145"></a>	}
+<a name="146"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">7</span>])
+<a name="147"></a>	{
+<a name="148"></a>		<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span>(Controls[<span class="source_int">7</span>]).SetText(<span class="source_type">Browser</span>.CustomQuery);
+<a name="149"></a>	}
+<a name="150"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">9</span>])
+<a name="151"></a>	{
+<a name="152"></a>		<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">9</span>]).SetText( MutatorModeStrings[<span class="source_type">Browser</span>.ViewMutatorMode] );
+<a name="153"></a>
+<a name="154"></a>		UpdateMutatorVisibility();
+<a name="155"></a>	}
+<a name="156"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">10</span>])
+<a name="157"></a>		<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">10</span>]).Checked(<span class="source_type">Browser</span>.bDontShowWithBots);
+<a name="158"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">11</span>])
+<a name="159"></a>		<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">11</span>]).SetText(WeaponStayStrings[<span class="source_type">Browser</span>.WeaponStayServerView]);
+<a name="160"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">12</span>])
+<a name="161"></a>		<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">12</span>]).SetText(TranslocatorStrings[<span class="source_type">Browser</span>.TranslocServerView]);
+<a name="162"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">13</span>])
+<a name="163"></a>	{
+<a name="164"></a>		<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">13</span>]).SetText( MutatorModeStrings[<span class="source_type">Browser</span>.ViewMutator2Mode] );
+<a name="165"></a>
+<a name="166"></a>		UpdateMutatorVisibility();
+<a name="167"></a>	}
+<a name="168"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">14</span>])
+<a name="169"></a>	{
+<a name="170"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_type">MutatorRecords</span>.Length; <span class="source_type">i</span>++)
+<a name="171"></a>		{
+<a name="172"></a>			if( <span class="source_type">Browser</span>.DesiredMutator2 == <span class="source_type">MutatorRecords</span>[<span class="source_type">i</span>].<span class="source_type">ClassName</span> )
+<a name="173"></a>			{
+<a name="174"></a>				<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">14</span>]).SetText( <span class="source_type">MutatorRecords</span>[<span class="source_type">i</span>].<span class="source_type">FriendlyName</span> );
+<a name="175"></a>				return;
+<a name="176"></a>			}
+<a name="177"></a>		}
+<a name="178"></a>	}
+<a name="179"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">15</span>])
+<a name="180"></a>		<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">15</span>]).SetValue(<span class="source_type">Browser</span>.MinGamespeed);
+<a name="181"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">16</span>])
+<a name="182"></a>		<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">16</span>]).SetValue(<span class="source_type">Browser</span>.MaxGamespeed);
+<a name="183"></a>}
+<a name="184"></a>
+<a name="185"></a><span class="source_comment">///////////////////// SAVE ///////////////////////
+</span><a name="186"></a>function MyOnChange(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="187"></a>{
+<a name="188"></a>	local <span class="source_type">string</span> <span class="source_type">t</span>;
+<a name="189"></a>
+<a name="190"></a>	if(<span class="source_type">Sender</span> == Controls[<span class="source_int">8</span>])
+<a name="191"></a>		<span class="source_type">Browser</span>.bOnlyShowStandard = <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">8</span>]).IsChecked();
+<a name="192"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">2</span>])
+<a name="193"></a>		<span class="source_type">Browser</span>.bOnlyShowNonPassword = <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">2</span>]).IsChecked();
+<a name="194"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">3</span>])
+<a name="195"></a>		<span class="source_type">Browser</span>.bDontShowFull = <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">3</span>]).IsChecked();
+<a name="196"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">4</span>])
+<a name="197"></a>		<span class="source_type">Browser</span>.bDontShowEmpty = <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">4</span>]).IsChecked();
+<a name="198"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">5</span>])
+<a name="199"></a>	{
+<a name="200"></a>		<span class="source_type">t</span> = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">5</span>]).GetText();
+<a name="201"></a>
+<a name="202"></a>		if(<span class="source_type">t</span> == ViewStatsStrings[<span class="source_int">0</span>])
+<a name="203"></a>			<span class="source_type">Browser</span>.StatsServerView = SSV_Any;
+<a name="204"></a>		else if(<span class="source_type">t</span> == ViewStatsStrings[<span class="source_int">1</span>])
+<a name="205"></a>			<span class="source_type">Browser</span>.StatsServerView = SSV_OnlyStatsEnabled;
+<a name="206"></a>		else if(<span class="source_type">t</span> == ViewStatsStrings[<span class="source_int">2</span>])
+<a name="207"></a>			<span class="source_type">Browser</span>.StatsServerView = SSV_NoStatsEnabled;
+<a name="208"></a>	}
+<a name="209"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">6</span>])
+<a name="210"></a>	{
+<a name="211"></a>		<span class="source_type">Browser</span>.DesiredMutator = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">6</span>]).GetExtra();
+<a name="212"></a>	}
+<a name="213"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">7</span>])
+<a name="214"></a>	{
+<a name="215"></a>		<span class="source_type">Browser</span>.CustomQuery = <span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span>(Controls[<span class="source_int">7</span>]).GetText();
+<a name="216"></a>	}
+<a name="217"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">9</span>])
+<a name="218"></a>	{
+<a name="219"></a>		<span class="source_type">t</span> = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">9</span>]).GetText();
+<a name="220"></a>
+<a name="221"></a>		if(<span class="source_type">t</span> == MutatorModeStrings[<span class="source_int">0</span>])
+<a name="222"></a>			<span class="source_type">Browser</span>.ViewMutatorMode = VMM_AnyMutators;
+<a name="223"></a>		else if(<span class="source_type">t</span> == MutatorModeStrings[<span class="source_int">1</span>])
+<a name="224"></a>			<span class="source_type">Browser</span>.ViewMutatorMode = VMM_NoMutators;
+<a name="225"></a>		else if(<span class="source_type">t</span> == MutatorModeStrings[<span class="source_int">2</span>])
+<a name="226"></a>			<span class="source_type">Browser</span>.ViewMutatorMode = VMM_ThisMutator;
+<a name="227"></a>		else if(<span class="source_type">t</span> == MutatorModeStrings[<span class="source_int">3</span>])
+<a name="228"></a>			<span class="source_type">Browser</span>.ViewMutatorMode = VMM_NotThisMutator;
+<a name="229"></a>
+<a name="230"></a>		UpdateMutatorVisibility();
+<a name="231"></a>	}
+<a name="232"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">10</span>])
+<a name="233"></a>		<span class="source_type">Browser</span>.bDontShowWithBots = <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Controls[<span class="source_int">10</span>]).IsChecked();
+<a name="234"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">11</span>])
+<a name="235"></a>	{
+<a name="236"></a>		<span class="source_type">t</span> = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">11</span>]).GetText();
+<a name="237"></a>
+<a name="238"></a>		if(<span class="source_type">t</span> == WeaponStayStrings[<span class="source_int">0</span>])
+<a name="239"></a>			<span class="source_type">Browser</span>.WeaponStayServerView = WSSV_Any;
+<a name="240"></a>		else if(<span class="source_type">t</span> == WeaponStayStrings[<span class="source_int">1</span>])
+<a name="241"></a>			<span class="source_type">Browser</span>.WeaponStayServerView = WSSV_OnlyWeaponStay;
+<a name="242"></a>		else if(<span class="source_type">t</span> == WeaponStayStrings[<span class="source_int">2</span>])
+<a name="243"></a>			<span class="source_type">Browser</span>.WeaponStayServerView = WSSV_NoWeaponStay;
+<a name="244"></a>	}
+<a name="245"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">12</span>])
+<a name="246"></a>	{
+<a name="247"></a>		<span class="source_type">t</span> = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">12</span>]).GetText();
+<a name="248"></a>
+<a name="249"></a>		if(<span class="source_type">t</span> == TranslocatorStrings[<span class="source_int">0</span>])
+<a name="250"></a>			<span class="source_type">Browser</span>.TranslocServerView = TSV_Any;
+<a name="251"></a>		else if(<span class="source_type">t</span> == TranslocatorStrings[<span class="source_int">1</span>])
+<a name="252"></a>			<span class="source_type">Browser</span>.TranslocServerView = TSV_OnlyTransloc;
+<a name="253"></a>		else if(<span class="source_type">t</span> == TranslocatorStrings[<span class="source_int">2</span>])
+<a name="254"></a>			<span class="source_type">Browser</span>.TranslocServerView = TSV_NoTransloc;
+<a name="255"></a>	}
+<a name="256"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">13</span>])
+<a name="257"></a>	{
+<a name="258"></a>		<span class="source_type">t</span> = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">13</span>]).GetText();
+<a name="259"></a>
+<a name="260"></a>		if(<span class="source_type">t</span> == MutatorModeStrings[<span class="source_int">0</span>])
+<a name="261"></a>			<span class="source_type">Browser</span>.ViewMutator2Mode = VMM_AnyMutators;
+<a name="262"></a>		else if(<span class="source_type">t</span> == MutatorModeStrings[<span class="source_int">2</span>])
+<a name="263"></a>			<span class="source_type">Browser</span>.ViewMutator2Mode = VMM_ThisMutator;
+<a name="264"></a>		else if(<span class="source_type">t</span> == MutatorModeStrings[<span class="source_int">3</span>])
+<a name="265"></a>			<span class="source_type">Browser</span>.ViewMutator2Mode = VMM_NotThisMutator;
+<a name="266"></a>
+<a name="267"></a>		UpdateMutatorVisibility();
+<a name="268"></a>	}
+<a name="269"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">14</span>])
+<a name="270"></a>	{
+<a name="271"></a>		<span class="source_type">Browser</span>.DesiredMutator2 = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Controls[<span class="source_int">14</span>]).GetExtra();
+<a name="272"></a>	}
+<a name="273"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">15</span>])
+<a name="274"></a>	{
+<a name="275"></a>		if( <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">15</span>]).GetValue() &lt; <span class="source_int">0</span> )
+<a name="276"></a>			<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">15</span>]).SetValue( <span class="source_int">0</span> );
+<a name="277"></a>
+<a name="278"></a>		<span class="source_type">Browser</span>.MinGamespeed = <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">15</span>]).GetValue();
+<a name="279"></a>	}
+<a name="280"></a>	else if(<span class="source_type">Sender</span> == Controls[<span class="source_int">16</span>])
+<a name="281"></a>	{
+<a name="282"></a>		if( <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">16</span>]).GetValue() &gt; <span class="source_int">200</span> )
+<a name="283"></a>			<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">16</span>]).SetValue( <span class="source_int">200</span> );
+<a name="284"></a>
+<a name="285"></a>		<span class="source_type">Browser</span>.MaxGamespeed = <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Controls[<span class="source_int">16</span>]).GetValue();
+<a name="286"></a>	}
+<a name="287"></a>
+<a name="288"></a>	<span class="source_type">Browser</span>.SaveConfig();
+<a name="289"></a>}
+<a name="290"></a>
+<a name="291"></a>defaultproperties
+<a name="292"></a>{
+<a name="293"></a>     ViewStatsStrings(<span class="source_int">0</span>)=<span class="source_string">"Any Servers"</span>
+<a name="294"></a>     ViewStatsStrings(<span class="source_int">1</span>)=<span class="source_string">"Only Stats Servers"</span>
+<a name="295"></a>     ViewStatsStrings(<span class="source_int">2</span>)=<span class="source_string">"No Stats Servers"</span>
+<a name="296"></a>     MutatorModeStrings(<span class="source_int">0</span>)=<span class="source_string">"Any Mutators"</span>
+<a name="297"></a>     MutatorModeStrings(<span class="source_int">1</span>)=<span class="source_string">"No Mutators"</span>
+<a name="298"></a>     MutatorModeStrings(<span class="source_int">2</span>)=<span class="source_string">"This Mutator"</span>
+<a name="299"></a>     MutatorModeStrings(<span class="source_int">3</span>)=<span class="source_string">"Not This Mutator"</span>
+<a name="300"></a>     WeaponStayStrings(<span class="source_int">0</span>)=<span class="source_string">"Any Servers"</span>
+<a name="301"></a>     WeaponStayStrings(<span class="source_int">1</span>)=<span class="source_string">"Only Weapon Stay Servers"</span>
+<a name="302"></a>     WeaponStayStrings(<span class="source_int">2</span>)=<span class="source_string">"No Weapon Stay Servers"</span>
+<a name="303"></a>     TranslocatorStrings(<span class="source_int">0</span>)=<span class="source_string">"Any Servers"</span>
+<a name="304"></a>     TranslocatorStrings(<span class="source_int">1</span>)=<span class="source_string">"Only Translocator Servers"</span>
+<a name="305"></a>     TranslocatorStrings(<span class="source_int">2</span>)=<span class="source_string">"No Translocator Servers"</span>
+<a name="306"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guipanel.html" class="source">GUIPanel</a></span> <span class="source_type">Name</span>=FooterPanel
+<a name="307"></a>         Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=MyBackButton
+<a name="308"></a>             <span class="source_type">Caption</span>=<span class="source_string">"BACK"</span>
+<a name="309"></a>             StyleName=<span class="source_string">"SquareMenuButton"</span>
+<a name="310"></a>             WinWidth=<span class="source_int">0.200000</span>
+<a name="311"></a>             WinHeight=<span class="source_int">0.500000</span>
+<a name="312"></a>             OnKeyEvent=MyBackButton.InternalOnKeyEvent
+<a name="313"></a>         End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="314"></a>         Controls(<span class="source_int">0</span>)=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'XInterface.Browser_Prefs.MyBackButton'</span>
+<a name="315"></a>
+<a name="316"></a>         Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guititlebar.html" class="source">GUITitleBar</a></span> <span class="source_type">Name</span>=MyStatus
+<a name="317"></a>             bUseTextHeight=False
+<a name="318"></a>             <span class="source_type">Justification</span>=TXTA_Left
+<a name="319"></a>             StyleName=<span class="source_string">"SquareBar"</span>
+<a name="320"></a>             WinTop=<span class="source_int">0.500000</span>
+<a name="321"></a>             WinHeight=<span class="source_int">0.500000</span>
+<a name="322"></a>         End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="323"></a>         Controls(<span class="source_int">1</span>)=<span class="source_type"><a href="../xinterface/guititlebar.html" class="source">GUITitleBar</a></span><span class="source_name">'XInterface.Browser_Prefs.MyStatus'</span>
+<a name="324"></a>
+<a name="325"></a>         Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=MyKeyButton
+<a name="326"></a>             <span class="source_type">Caption</span>=<span class="source_string">"ICON KEY"</span>
+<a name="327"></a>             StyleName=<span class="source_string">"SquareMenuButton"</span>
+<a name="328"></a>             WinLeft=<span class="source_int">0.200000</span>
+<a name="329"></a>             WinWidth=<span class="source_int">0.200000</span>
+<a name="330"></a>             WinHeight=<span class="source_int">0.500000</span>
+<a name="331"></a>             OnKeyEvent=MyKeyButton.InternalOnKeyEvent
+<a name="332"></a>         End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="333"></a>         Controls(<span class="source_int">2</span>)=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'XInterface.Browser_Prefs.MyKeyButton'</span>
+<a name="334"></a>
+<a name="335"></a>         WinTop=<span class="source_int">0.900000</span>
+<a name="336"></a>         WinHeight=<span class="source_int">0.100000</span>
+<a name="337"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="338"></a>     Controls(<span class="source_int">0</span>)=<span class="source_type"><a href="../xinterface/guipanel.html" class="source">GUIPanel</a></span><span class="source_name">'XInterface.Browser_Prefs.FooterPanel'</span>
+<a name="339"></a>
+<a name="340"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span> <span class="source_type">Name</span>=FilterTitle
+<a name="341"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Server Filtering Options:"</span>
+<a name="342"></a>         TextColor=(<span class="source_type">B</span>=<span class="source_int">0</span>,G=<span class="source_int">200</span>,<span class="source_type">R</span>=<span class="source_int">230</span>)
+<a name="343"></a>         TextFont=<span class="source_string">"UT2HeaderFont"</span>
+<a name="344"></a>         WinTop=<span class="source_int">0.050000</span>
+<a name="345"></a>         WinLeft=<span class="source_int">0.150000</span>
+<a name="346"></a>         WinWidth=<span class="source_int">0.720003</span>
+<a name="347"></a>         WinHeight=<span class="source_int">0.056250</span>
+<a name="348"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="349"></a>     Controls(<span class="source_int">1</span>)=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span><span class="source_name">'XInterface.Browser_Prefs.FilterTitle'</span>
+<a name="350"></a>
+<a name="351"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=NoPasswdCheckBox
+<a name="352"></a>         ComponentJustification=TXTA_Left
+<a name="353"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="354"></a>         <span class="source_type">Caption</span>=<span class="source_string">"No Passworded Servers"</span>
+<a name="355"></a>         OnCreateComponent=NoPasswdCheckBox.InternalOnCreateComponent
+<a name="356"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="357"></a>         WinTop=<span class="source_int">0.210000</span>
+<a name="358"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="359"></a>         WinWidth=<span class="source_int">0.340000</span>
+<a name="360"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="361"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="362"></a>     Controls(<span class="source_int">2</span>)=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'XInterface.Browser_Prefs.NoPasswdCheckBox'</span>
+<a name="363"></a>
+<a name="364"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=NoFullCheckBox
+<a name="365"></a>         ComponentJustification=TXTA_Left
+<a name="366"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="367"></a>         <span class="source_type">Caption</span>=<span class="source_string">"No Full Servers"</span>
+<a name="368"></a>         OnCreateComponent=NoFullCheckBox.InternalOnCreateComponent
+<a name="369"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="370"></a>         WinTop=<span class="source_int">0.270000</span>
+<a name="371"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="372"></a>         WinWidth=<span class="source_int">0.340000</span>
+<a name="373"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="374"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="375"></a>     Controls(<span class="source_int">3</span>)=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'XInterface.Browser_Prefs.NoFullCheckBox'</span>
+<a name="376"></a>
+<a name="377"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=NoEmptyCheckBox
+<a name="378"></a>         ComponentJustification=TXTA_Left
+<a name="379"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="380"></a>         <span class="source_type">Caption</span>=<span class="source_string">"No Empty Servers"</span>
+<a name="381"></a>         OnCreateComponent=NoEmptyCheckBox.InternalOnCreateComponent
+<a name="382"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="383"></a>         WinTop=<span class="source_int">0.330000</span>
+<a name="384"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="385"></a>         WinWidth=<span class="source_int">0.340000</span>
+<a name="386"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="387"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="388"></a>     Controls(<span class="source_int">4</span>)=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'XInterface.Browser_Prefs.NoEmptyCheckBox'</span>
+<a name="389"></a>
+<a name="390"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=StatsViewCombo
+<a name="391"></a>         ComponentJustification=TXTA_Left
+<a name="392"></a>         CaptionWidth=<span class="source_int">0.400000</span>
+<a name="393"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Stats Servers"</span>
+<a name="394"></a>         OnCreateComponent=StatsViewCombo.InternalOnCreateComponent
+<a name="395"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="396"></a>         WinTop=<span class="source_int">0.390000</span>
+<a name="397"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="398"></a>         WinWidth=<span class="source_int">0.760000</span>
+<a name="399"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="400"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="401"></a>     Controls(<span class="source_int">5</span>)=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'XInterface.Browser_Prefs.StatsViewCombo'</span>
+<a name="402"></a>
+<a name="403"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=MutatorCombo
+<a name="404"></a>         ComponentJustification=TXTA_Left
+<a name="405"></a>         CaptionWidth=<span class="source_int">0.000000</span>
+<a name="406"></a>         OnCreateComponent=MutatorCombo.InternalOnCreateComponent
+<a name="407"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="408"></a>         WinTop=<span class="source_int">0.450000</span>
+<a name="409"></a>         WinLeft=<span class="source_int">0.675004</span>
+<a name="410"></a>         WinWidth=<span class="source_int">0.308750</span>
+<a name="411"></a>         WinHeight=<span class="source_int">0.060000</span>
+<a name="412"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="413"></a>     Controls(<span class="source_int">6</span>)=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'XInterface.Browser_Prefs.MutatorCombo'</span>
+<a name="414"></a>
+<a name="415"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span> <span class="source_type">Name</span>=CustomQuery
+<a name="416"></a>         CaptionWidth=<span class="source_int">0.400000</span>
+<a name="417"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Custom Query"</span>
+<a name="418"></a>         OnCreateComponent=CustomQuery.InternalOnCreateComponent
+<a name="419"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="420"></a>         WinTop=<span class="source_int">0.750000</span>
+<a name="421"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="422"></a>         WinWidth=<span class="source_int">0.760000</span>
+<a name="423"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="424"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="425"></a>     Controls(<span class="source_int">7</span>)=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span><span class="source_name">'XInterface.Browser_Prefs.CustomQuery'</span>
+<a name="426"></a>
+<a name="427"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=OnlyStandardCheckBox
+<a name="428"></a>         ComponentJustification=TXTA_Left
+<a name="429"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="430"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Only Standard Servers"</span>
+<a name="431"></a>         OnCreateComponent=OnlyStandardCheckBox.InternalOnCreateComponent
+<a name="432"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="433"></a>         WinTop=<span class="source_int">0.150000</span>
+<a name="434"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="435"></a>         WinWidth=<span class="source_int">0.340000</span>
+<a name="436"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="437"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="438"></a>     Controls(<span class="source_int">8</span>)=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'XInterface.Browser_Prefs.OnlyStandardCheckBox'</span>
+<a name="439"></a>
+<a name="440"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=MutatorModeCombo
+<a name="441"></a>         ComponentJustification=TXTA_Left
+<a name="442"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Mutators"</span>
+<a name="443"></a>         OnCreateComponent=MutatorModeCombo.InternalOnCreateComponent
+<a name="444"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="445"></a>         WinTop=<span class="source_int">0.450000</span>
+<a name="446"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="447"></a>         WinWidth=<span class="source_int">0.610000</span>
+<a name="448"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="449"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="450"></a>     Controls(<span class="source_int">9</span>)=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'XInterface.Browser_Prefs.MutatorModeCombo'</span>
+<a name="451"></a>
+<a name="452"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=NoBotServersCheckBox
+<a name="453"></a>         ComponentJustification=TXTA_Left
+<a name="454"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="455"></a>         <span class="source_type">Caption</span>=<span class="source_string">"No Servers With Bots"</span>
+<a name="456"></a>         OnCreateComponent=NoBotServersCheckBox.InternalOnCreateComponent
+<a name="457"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="458"></a>         WinTop=<span class="source_int">0.390000</span>
+<a name="459"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="460"></a>         WinWidth=<span class="source_int">0.340000</span>
+<a name="461"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="462"></a>         bVisible=False
+<a name="463"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="464"></a>     Controls(<span class="source_int">10</span>)=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'XInterface.Browser_Prefs.NoBotServersCheckBox'</span>
+<a name="465"></a>
+<a name="466"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=WeaponStayCombo
+<a name="467"></a>         ComponentJustification=TXTA_Left
+<a name="468"></a>         CaptionWidth=<span class="source_int">0.400000</span>
+<a name="469"></a>         <span class="source_type">Caption</span>=<span class="source_string">"WeaponStay"</span>
+<a name="470"></a>         OnCreateComponent=WeaponStayCombo.InternalOnCreateComponent
+<a name="471"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="472"></a>         WinTop=<span class="source_int">0.570000</span>
+<a name="473"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="474"></a>         WinWidth=<span class="source_int">0.760000</span>
+<a name="475"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="476"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="477"></a>     Controls(<span class="source_int">11</span>)=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'XInterface.Browser_Prefs.WeaponStayCombo'</span>
+<a name="478"></a>
+<a name="479"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=TranslocatorCombo
+<a name="480"></a>         ComponentJustification=TXTA_Left
+<a name="481"></a>         CaptionWidth=<span class="source_int">0.400000</span>
+<a name="482"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Translocator"</span>
+<a name="483"></a>         OnCreateComponent=TranslocatorCombo.InternalOnCreateComponent
+<a name="484"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="485"></a>         WinTop=<span class="source_int">0.630000</span>
+<a name="486"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="487"></a>         WinWidth=<span class="source_int">0.760000</span>
+<a name="488"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="489"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="490"></a>     Controls(<span class="source_int">12</span>)=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'XInterface.Browser_Prefs.TranslocatorCombo'</span>
+<a name="491"></a>
+<a name="492"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=MutatorModeCombo2
+<a name="493"></a>         ComponentJustification=TXTA_Left
+<a name="494"></a>         OnCreateComponent=MutatorModeCombo2.InternalOnCreateComponent
+<a name="495"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="496"></a>         WinTop=<span class="source_int">0.510000</span>
+<a name="497"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="498"></a>         WinWidth=<span class="source_int">0.610000</span>
+<a name="499"></a>         WinHeight=<span class="source_int">0.040000</span>
+<a name="500"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="501"></a>     Controls(<span class="source_int">13</span>)=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'XInterface.Browser_Prefs.MutatorModeCombo2'</span>
+<a name="502"></a>
+<a name="503"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=MutatorCombo2
+<a name="504"></a>         ComponentJustification=TXTA_Left
+<a name="505"></a>         CaptionWidth=<span class="source_int">0.000000</span>
+<a name="506"></a>         OnCreateComponent=MutatorCombo2.InternalOnCreateComponent
+<a name="507"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="508"></a>         WinTop=<span class="source_int">0.510000</span>
+<a name="509"></a>         WinLeft=<span class="source_int">0.675004</span>
+<a name="510"></a>         WinWidth=<span class="source_int">0.308750</span>
+<a name="511"></a>         WinHeight=<span class="source_int">0.060000</span>
+<a name="512"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="513"></a>     Controls(<span class="source_int">14</span>)=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'XInterface.Browser_Prefs.MutatorCombo2'</span>
+<a name="514"></a>
+<a name="515"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span> <span class="source_type">Name</span>=MinGamespeed
+<a name="516"></a>         MinValue=<span class="source_int">0</span>
+<a name="517"></a>         MaxValue=<span class="source_int">200</span>
+<a name="518"></a>         ComponentJustification=TXTA_Left
+<a name="519"></a>         CaptionWidth=<span class="source_int">0.700000</span>
+<a name="520"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Game Speed Min"</span>
+<a name="521"></a>         OnCreateComponent=MinGamespeed.InternalOnCreateComponent
+<a name="522"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="523"></a>         WinTop=<span class="source_int">0.690000</span>
+<a name="524"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="525"></a>         WinWidth=<span class="source_int">0.433750</span>
+<a name="526"></a>         WinHeight=<span class="source_int">0.060000</span>
+<a name="527"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="528"></a>     Controls(<span class="source_int">15</span>)=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span><span class="source_name">'XInterface.Browser_Prefs.MinGamespeed'</span>
+<a name="529"></a>
+<a name="530"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span> <span class="source_type">Name</span>=MaxGamespeed
+<a name="531"></a>         MinValue=<span class="source_int">0</span>
+<a name="532"></a>         MaxValue=<span class="source_int">200</span>
+<a name="533"></a>         ComponentJustification=TXTA_Left
+<a name="534"></a>         CaptionWidth=<span class="source_int">0.400000</span>
+<a name="535"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Max"</span>
+<a name="536"></a>         OnCreateComponent=MaxGamespeed.InternalOnCreateComponent
+<a name="537"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="538"></a>         WinTop=<span class="source_int">0.690000</span>
+<a name="539"></a>         WinLeft=<span class="source_int">0.557501</span>
+<a name="540"></a>         WinWidth=<span class="source_int">0.235000</span>
+<a name="541"></a>         WinHeight=<span class="source_int">0.060000</span>
+<a name="542"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="543"></a>     Controls(<span class="source_int">16</span>)=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span><span class="source_name">'XInterface.Browser_Prefs.MaxGamespeed'</span>
+<a name="544"></a>
+<a name="545"></a>}
+<a name="546"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/browser_prefs.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Browser_Prefs">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/browser_playerslist.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/browser_ruleslist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:00.451 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

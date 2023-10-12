@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.GUI</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/gui.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUI">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/floatingimage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guiborder.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/gui.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/gui.html">GUI</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// ====================================================================
+</span><a name="2"></a><span class="source_comment">//  Class:  UT2K4UI.GUI
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">//  GUI is an abstract class that holds all of the enums and structs
+</span><a name="5"></a><span class="source_comment">//  for the UI system
+</span><a name="6"></a><span class="source_comment">//
+</span><a name="7"></a><span class="source_comment">//  Written by Joe Wilcox
+</span><a name="8"></a><span class="source_comment">//  Updated by Ron Prestenback
+</span><a name="9"></a><span class="source_comment">//  (c) 2002, Epic Games, Inc.  All Rights Reserved
+</span><a name="10"></a><span class="source_comment">// ====================================================================
+</span><a name="11"></a>
+<a name="12"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/gui.html" class="source">GUI</a></span> extends <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="13"></a>    abstract
+<a name="14"></a>    instanced
+<a name="15"></a>    native
+<a name="16"></a>    editinlinenew
+<a name="17"></a>    config(<span class="source_type">User</span>);
+<a name="18"></a>
+<a name="19"></a><span class="source_comment">// (cpptext)
+</span><a name="20"></a><span class="source_comment">// (cpptext)
+</span><a name="21"></a><span class="source_comment">// (cpptext)
+</span><a name="22"></a><span class="source_comment">// (cpptext)
+</span><a name="23"></a><span class="source_comment">// (cpptext)
+</span><a name="24"></a>
+<a name="25"></a><span class="source_comment">// Number of times each of the rendering functions are allowed to be called on a single component each tick
+</span><a name="26"></a><span class="source_comment">// (PreDraw, Draw, and all delegates)
+</span><a name="27"></a><span class="source_comment">// Set to 1 to find components that are being rendered (or pre-drawn, or anything) twice each tick
+</span><a name="28"></a><span class="source_comment">// Set to 0 to disable render debugging
+</span><a name="29"></a>const <span class="source_type"><a href="../gameplay/counter.html" class="source">Counter</a></span> = <span class="source_int">0</span>;
+<a name="30"></a>
+<a name="31"></a>var noexport <span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>;             <span class="source_comment">// Callback to the GUIController running the show
+</span><a name="32"></a>var noexport    <span class="source_type"><a href="../core/object.html#Plane" class="source">plane</a></span>      SaveModulation;
+<a name="33"></a>var noexport     <span class="source_type">float</span>     SaveX,SaveY;
+<a name="34"></a>var noexport     <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>     SaveColor;
+<a name="35"></a>var noexport     <span class="source_type">font</span>      SaveFont;
+<a name="36"></a>var noexport     <span class="source_type">byte</span>      SaveStyle;
+<a name="37"></a>
+<a name="38"></a>
+<a name="39"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eMenuState" class="source">eMenuState</a></span>     <span class="source_comment">// Defines the various states of a component
+</span><a name="40"></a>{
+<a name="41"></a>    MSAT_Blurry,            <span class="source_comment">// Component has no focus at all
+</span><a name="42"></a>    MSAT_Watched,           <span class="source_comment">// Component is being watched (ie: Mouse is hovering over, etc)
+</span><a name="43"></a>    MSAT_Focused,           <span class="source_comment">// Component is Focused (ie: selected)
+</span><a name="44"></a>    MSAT_Pressed,           <span class="source_comment">// Component is being pressed
+</span><a name="45"></a>    MSAT_Disabled,          <span class="source_comment">// Component is disabled.
+</span><a name="46"></a>};
+<a name="47"></a>
+<a name="48"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eDropState" class="source">eDropState</a></span>     <span class="source_comment">// Defines the state for components allowed to participate in drop operations
+</span><a name="49"></a>{
+<a name="50"></a>    DRP_None,       <span class="source_comment">// Not participating in a drop operation
+</span><a name="51"></a>    DRP_Source,     <span class="source_comment">// Currently acting as a source
+</span><a name="52"></a>    DRP_Target,     <span class="source_comment">// Currently a target
+</span><a name="53"></a>    DRP_Accept,     <span class="source_comment">// Accepted dropped data
+</span><a name="54"></a>    DRP_Reject      <span class="source_comment">// Reject dropped data
+</span><a name="55"></a>};
+<a name="56"></a>
+<a name="57"></a>enum <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#EFontScale" class="source">eFontScale</a></span>     <span class="source_comment">// Defines which range of font/fontcolors are used for this component's style
+</span><a name="58"></a>{
+<a name="59"></a>    FNS_Small,
+<a name="60"></a>    FNS_Medium,
+<a name="61"></a>    FNS_Large
+<a name="62"></a>};
+<a name="63"></a>
+<a name="64"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eTextAlign" class="source">eTextAlign</a></span>     <span class="source_comment">// Used for aligning text in a box
+</span><a name="65"></a>{
+<a name="66"></a>    TXTA_Left,
+<a name="67"></a>    TXTA_Center,
+<a name="68"></a>    TXTA_Right,
+<a name="69"></a>};
+<a name="70"></a>
+<a name="71"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eTextCase" class="source">eTextCase</a></span>      <span class="source_comment">// Used for forcing case on text
+</span><a name="72"></a>{
+<a name="73"></a>    TXTC_None,
+<a name="74"></a>    TXTC_Upper,
+<a name="75"></a>    TXTC_Lower,
+<a name="76"></a>};
+<a name="77"></a>
+<a name="78"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eImgStyle" class="source">eImgStyle</a></span>      <span class="source_comment">// Used to define the style for an image
+</span><a name="79"></a>{
+<a name="80"></a>    ISTY_Normal,
+<a name="81"></a>    ISTY_Stretched,
+<a name="82"></a>    ISTY_Scaled,
+<a name="83"></a>    ISTY_Bound,
+<a name="84"></a>    ISTY_Justified,
+<a name="85"></a>    ISTY_PartialScaled,
+<a name="86"></a>    ISTY_Tiled,
+<a name="87"></a>};
+<a name="88"></a>
+<a name="89"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eImgAlign" class="source">eImgAlign</a></span>      <span class="source_comment">// Used for aligning justified images in a box
+</span><a name="90"></a>{
+<a name="91"></a>    IMGA_TopLeft,
+<a name="92"></a>    IMGA_Center,
+<a name="93"></a>    IMGA_BottomRight,
+<a name="94"></a>};
+<a name="95"></a>
+<a name="96"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eEditMask" class="source">eEditMask</a></span>      <span class="source_comment">// Used to define the mask of an input box
+</span><a name="97"></a>{
+<a name="98"></a>    EDM_None,
+<a name="99"></a>    EDM_Alpha,
+<a name="100"></a>    EDM_Numeric,
+<a name="101"></a>};
+<a name="102"></a>
+<a name="103"></a>enum <span class="source_type"><a href="../xinterface/gui.html#EMenuRenderStyle" class="source">EMenuRenderStyle</a></span>
+<a name="104"></a>{
+<a name="105"></a>    MSTY_None,
+<a name="106"></a>    MSTY_Normal,
+<a name="107"></a>    MSTY_Masked,
+<a name="108"></a>    MSTY_Translucent,
+<a name="109"></a>    MSTY_Modulated,
+<a name="110"></a>    MSTY_Alpha,
+<a name="111"></a>    MSTY_Additive,
+<a name="112"></a>    MSTY_Subtractive,
+<a name="113"></a>    MSTY_Particle,
+<a name="114"></a>    MSTY_AlphaZ,
+<a name="115"></a>};
+<a name="116"></a>
+<a name="117"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eIconPosition" class="source">eIconPosition</a></span>
+<a name="118"></a>{
+<a name="119"></a>    ICP_Normal,
+<a name="120"></a>    ICP_Center,
+<a name="121"></a>    ICP_Scaled,
+<a name="122"></a>    ICP_Stretched,
+<a name="123"></a>    ICP_Bound,
+<a name="124"></a>};
+<a name="125"></a>
+<a name="126"></a>enum <span class="source_type"><a href="../xinterface/gui.html#ePageAlign" class="source">ePageAlign</a></span>         <span class="source_comment">// Used to Align panels to a form.
+</span><a name="127"></a>{
+<a name="128"></a>    PGA_None,
+<a name="129"></a>    PGA_Client,
+<a name="130"></a>    PGA_Left,
+<a name="131"></a>    PGA_Right,
+<a name="132"></a>    PGA_Top,
+<a name="133"></a>    PGA_Bottom,
+<a name="134"></a>};
+<a name="135"></a>
+<a name="136"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eDrawDirection" class="source">eDrawDirection</a></span>
+<a name="137"></a>{
+<a name="138"></a>	DRD_LeftToRight,
+<a name="139"></a>	DRD_RightToLeft,
+<a name="140"></a>	DRD_TopToBottom,
+<a name="141"></a>	DRD_BottomToTop,
+<a name="142"></a>};
+<a name="143"></a>
+<a name="144"></a>enum <span class="source_type"><a href="../xinterface/gui.html#eCellStyle" class="source">eCellStyle</a></span>
+<a name="145"></a>{
+<a name="146"></a>	CELL_FixedSize,
+<a name="147"></a>    CELL_FixedCount
+<a name="148"></a>};
+<a name="149"></a>
+<a name="150"></a>enum <span class="source_type"><a href="../xinterface/gui.html#EOrientation" class="source">EOrientation</a></span>
+<a name="151"></a>{
+<a name="152"></a>	ORIENT_Vertical, ORIENT_Horizontal
+<a name="153"></a>};
+<a name="154"></a>
+<a name="155"></a>enum <span class="source_type"><a href="../xinterface/gui.html#EAnimationType" class="source">EAnimationType</a></span>
+<a name="156"></a>{
+<a name="157"></a>	AT_Position, AT_Dimension,
+<a name="158"></a>};
+<a name="159"></a>
+<a name="160"></a>const QBTN_Ok           =<span class="source_int">1</span>;
+<a name="161"></a>const QBTN_Cancel       =<span class="source_int">2</span>;
+<a name="162"></a>const QBTN_Retry        =<span class="source_int">4</span>;
+<a name="163"></a>const QBTN_Continue     =<span class="source_int">8</span>;
+<a name="164"></a>const QBTN_Yes          =<span class="source_int">16</span>;
+<a name="165"></a>const QBTN_No           =<span class="source_int">32</span>;
+<a name="166"></a>const QBTN_Abort        =<span class="source_int">64</span>;
+<a name="167"></a>const QBTN_Ignore       =<span class="source_int">128</span>;
+<a name="168"></a>const QBTN_OkCancel     =<span class="source_int">3</span>;
+<a name="169"></a>const QBTN_AbortRetry   =<span class="source_int">68</span>;
+<a name="170"></a>const QBTN_YesNo        =<span class="source_int">48</span>;
+<a name="171"></a>const QBTN_YesNoCancel  =<span class="source_int">50</span>;
+<a name="172"></a>
+<a name="173"></a>
+<a name="174"></a>struct native init <span class="source_type"><a href="../xinterface/gui.html#GUIListElem" class="source">GUIListElem</a></span>
+<a name="175"></a>{
+<a name="176"></a>    var <span class="source_type">string</span> <span class="source_type">Item</span>;
+<a name="177"></a>    var <span class="source_type"><a href="../core/object.html" class="source">object</a></span> ExtraData;
+<a name="178"></a>    var <span class="source_type">string</span> ExtraStrData;
+<a name="179"></a>    var <span class="source_type">bool</span>   <span class="source_type">bSection</span>;
+<a name="180"></a>};
+<a name="181"></a>
+<a name="182"></a>struct <span class="source_type"><a href="../xinterface/gui.html#APackInfo" class="source">APackInfo</a></span>	<span class="source_comment">// OBSOLETE - Use CacheManager.GetAnnouncerList() instead
+</span><a name="183"></a>{
+<a name="184"></a>	var <span class="source_type">string</span> PackageName;
+<a name="185"></a>    var localized <span class="source_type">string</span> Description;
+<a name="186"></a>};
+<a name="187"></a>
+<a name="188"></a>struct native init <span class="source_type"><a href="../xinterface/gui.html#MultiSelectListElem" class="source">MultiSelectListElem</a></span>
+<a name="189"></a>{
+<a name="190"></a>	var <span class="source_type">string</span> <span class="source_type">Item</span>;
+<a name="191"></a>	var <span class="source_type"><a href="../core/object.html" class="source">object</a></span> ExtraData;
+<a name="192"></a>	var <span class="source_type">string</span> ExtraStrData;
+<a name="193"></a>	var <span class="source_type">bool</span>   bSelected;
+<a name="194"></a>	var <span class="source_type">int</span>    SelectionIndex;	<span class="source_comment">// Used for tracking
+</span><a name="195"></a>    var <span class="source_type">bool</span>   <span class="source_type">bSection</span>;
+<a name="196"></a>};
+<a name="197"></a>
+<a name="198"></a>struct native init <span class="source_type"><a href="../xinterface/gui.html#ImageListElem" class="source">ImageListElem</a></span>
+<a name="199"></a>{
+<a name="200"></a>	var <span class="source_type">int</span>      <span class="source_type">Item</span>;
+<a name="201"></a>	var <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> <span class="source_type">Image</span>;
+<a name="202"></a>	var <span class="source_type">int</span>	 	 <span class="source_type">Locked</span>;
+<a name="203"></a>};
+<a name="204"></a>
+<a name="205"></a>struct native init <span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span>
+<a name="206"></a>{
+<a name="207"></a>	var() <span class="source_type">string</span> <span class="source_type">Caption</span>;
+<a name="208"></a>	var() <span class="source_type">string</span> <span class="source_type">Value</span>;
+<a name="209"></a>	var() <span class="source_type">string</span> <span class="source_type">ParentCaption</span>;
+<a name="210"></a>	var() <span class="source_type">string</span> <span class="source_type">ExtraInfo</span>;
+<a name="211"></a>	var() <span class="source_type">int</span> <span class="source_type">Level</span>;
+<a name="212"></a>	var() <span class="source_type">bool</span> bEnabled;
+<a name="213"></a>
+<a name="214"></a>cppstruct
+<a name="215"></a>{
+<a name="216"></a>	UBOOL operator==( const FGUITreeNode& <span class="source_type">Other</span> ) const;
+<a name="217"></a>}
+<a name="218"></a>};
+<a name="219"></a>
+<a name="220"></a>struct <span class="source_type"><a href="../xinterface/gui.html#AutoLoginInfo" class="source">AutoLoginInfo</a></span>
+<a name="221"></a>{
+<a name="222"></a>	var() <span class="source_type">string</span> IP;
+<a name="223"></a>	var() <span class="source_type">string</span> <span class="source_type">Port</span>;
+<a name="224"></a>	var() <span class="source_type">string</span> Username;
+<a name="225"></a>	var() <span class="source_type">string</span> <span class="source_type">Password</span>;
+<a name="226"></a>	var() <span class="source_type">bool</span>   bAutologin;
+<a name="227"></a>};
+<a name="228"></a>
+<a name="229"></a>struct <span class="source_type"><a href="../xinterface/gui.html#GUITabItem" class="source">GUITabItem</a></span>
+<a name="230"></a>{
+<a name="231"></a>	var() <span class="source_type">string</span> <span class="source_type">ClassName</span>;
+<a name="232"></a>	var() localized <span class="source_type">string</span> <span class="source_type">Caption</span>, Hint;
+<a name="233"></a>};
+<a name="234"></a>
+<a name="235"></a>
+<a name="236"></a><span class="source_comment">// GUI-wide utility functions
+</span><a name="237"></a>static function <span class="source_type">bool</span> IsDigit( <span class="source_type">string</span> <span class="source_type">Test</span>, optional <span class="source_type">bool</span> <span class="source_type">bAllowDecimal</span> )
+<a name="238"></a>{
+<a name="239"></a>	if ( <span class="source_type">Test</span> == <span class="source_string">""</span> )
+<a name="240"></a>		return false;
+<a name="241"></a>
+<a name="242"></a>	while ( <span class="source_type">Test</span> != <span class="source_string">""</span> )
+<a name="243"></a>	{
+<a name="244"></a>		if ( Asc(Left(<span class="source_type">Test</span>,<span class="source_int">1</span>)) &gt; <span class="source_int">57</span> )
+<a name="245"></a>			return false;
+<a name="246"></a>		if ( Asc(Left(<span class="source_type">Test</span>,<span class="source_int">1</span>)) &lt; <span class="source_int">48</span> && !(<span class="source_type">bAllowDecimal</span> && Left(<span class="source_type">Test</span>,<span class="source_int">1</span>) == <span class="source_string">"."</span>) )
+<a name="247"></a>			return false;
+<a name="248"></a>		<span class="source_type">Test</span> = Mid(<span class="source_type">Test</span>,<span class="source_int">1</span>);
+<a name="249"></a>	}
+<a name="250"></a>
+<a name="251"></a>	return true;
+<a name="252"></a>}
+<a name="253"></a>
+<a name="254"></a><span class="source_comment">// Join together array elements into a single string
+</span><a name="255"></a>static final function <span class="source_type">string</span> JoinArray(array&lt;<span class="source_type">string</span>&gt; <span class="source_type"><a href="../xwebadmin/stringarray.html" class="source">StringArray</a></span>, optional <span class="source_type">string</span> delim, optional <span class="source_type">bool</span> bIgnoreBlanks)
+<a name="256"></a>{
+<a name="257"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="258"></a>    local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="259"></a>
+<a name="260"></a>    if (delim == <span class="source_string">""</span>)
+<a name="261"></a>        delim = <span class="source_string">","</span>;
+<a name="262"></a>
+<a name="263"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type"><a href="../xwebadmin/stringarray.html" class="source">StringArray</a></span>.Length; <span class="source_type">i</span>++)
+<a name="264"></a>    {
+<a name="265"></a>        if ((<span class="source_type"><a href="../xwebadmin/stringarray.html" class="source">StringArray</a></span>[<span class="source_type">i</span>] != <span class="source_string">""</span>) || (!bIgnoreBlanks))
+<a name="266"></a>        {
+<a name="267"></a>            if (<span class="source_type">s</span> != <span class="source_string">""</span>)
+<a name="268"></a>                <span class="source_type">s</span> $= delim;
+<a name="269"></a>
+<a name="270"></a>            <span class="source_type">s</span> $= <span class="source_type"><a href="../xwebadmin/stringarray.html" class="source">StringArray</a></span>[<span class="source_type">i</span>];
+<a name="271"></a>        }
+<a name="272"></a>    }
+<a name="273"></a>
+<a name="274"></a>    return <span class="source_type">s</span>;
+<a name="275"></a>}
+<a name="276"></a>
+<a name="277"></a>
+<a name="278"></a><span class="source_comment">// Temp for profiling
+</span><a name="279"></a>
+<a name="280"></a>native function Profile(<span class="source_type">string</span> ProfileName);
+<a name="281"></a>
+<a name="282"></a>native function 			GetModList(out array&lt;<span class="source_type">string</span>&gt; ModDirs, out array&lt;<span class="source_type">string</span>&gt; ModTitles);
+<a name="283"></a>native function <span class="source_type">string</span>		GetModValue(<span class="source_type">string</span> ModDir, <span class="source_type">string</span> ModKey);
+<a name="284"></a>native function <span class="source_type"><a href="../engine/material.html" class="source">material</a></span> 	GetModLogo(<span class="source_type">string</span> ModDir);
+<a name="285"></a>
+<a name="286"></a>defaultproperties
+<a name="287"></a>{
+<a name="288"></a>}
+<a name="289"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/gui.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUI">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/floatingimage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guiborder.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:02.260 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

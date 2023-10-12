@@ -1,0 +1,614 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Engine.PhysicsVolume</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/physicsvolume.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#PhysicsVolume">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/pawn.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/pickup.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#engine/physicsvolume.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.PhysicsVolume</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../engine/volume.html">Volume</a></dd>
+<dt>Modifiers</dt><dd>native nativereplication </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/brush.html">Brush</a>
+      |   
+      +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/volume.html">Volume</a>
+         |   
+         +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/physicsvolume.html">PhysicsVolume</a>
+</pre>
+
+<h4>Direct Known Subclasses:</h4>
+<blockquote>
+	<a href="../frightscript/bloatkillvolume.html">BloatKillVolume</a>, <a href="../unrealgame/convoyphysicsvolume.html">ConvoyPhysicsVolume</a>, <a href="../engine/defaultphysicsvolume.html">DefaultPhysicsVolume</a>, <a href="../gameplay/karmaboostvolume.html">KarmaBoostVolume</a>, <a href="../kfmod/kfphysicsvolume.html">KFPhysicsVolume</a>, <a href="../kfmod/kfteamprogressvolume.html">KFTeamProgressVolume</a>, <a href="../kfstorygame/kf_storycheckpointvolume.html">KF_StoryCheckPointVolume</a>, <a href="../engine/laddervolume.html">LadderVolume</a>, <a href="../xgame/lavavolume.html">LavaVolume</a>, <a href="../gameplay/pressurevolume.html">PressureVolume</a>, <a href="../gameplay/watervolume.html">WaterVolume</a>, <a href="../xgame/xfallingvolume.html">xFallingVolume</a>, <a href="../kfstorygame/zombiekillvolume.html">ZombieKillVolume</a>
+</blockquote>
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_BACKUP_bPainCausing" name="BACKUP_bPainCausing" title="go to the details">BACKUP_bPainCausing</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_BACKUP_Gravity" name="BACKUP_Gravity" title="go to the details">BACKUP_Gravity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bIsAKFOverrideVolume" name="bIsAKFOverrideVolume" title="go to the details">bIsAKFOverrideVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/physicsvolume.html">PhysicsVolume</a></td><td width="66%"><a href="#_NextPhysicsVolume" name="NextPhysicsVolume" title="go to the details">NextPhysicsVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/info.html">Info</a></td><td width="66%"><a href="#_PainTimer" name="PainTimer" title="go to the details">PainTimer</a></td></tr>
+<tr><th colspan="2" class="small">Karma</th></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_KBuoyancy" name="KBuoyancy" title="go to the details">KBuoyancy</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_KExtraAngularDamping" name="KExtraAngularDamping" title="go to the details">KExtraAngularDamping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_KExtraLinearDamping" name="KExtraLinearDamping" title="go to the details">KExtraLinearDamping</a></td></tr>
+<tr><th colspan="2" class="small">PhysicsVolume</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bBounceVelocity" name="bBounceVelocity" title="go to the details">bBounceVelocity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDamagesVehicles" name="bDamagesVehicles" title="go to the details">bDamagesVehicles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDestructive" name="bDestructive" title="go to the details">bDestructive</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bMoveProjectiles" name="bMoveProjectiles" title="go to the details">bMoveProjectiles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bNeutralZone" name="bNeutralZone" title="go to the details">bNeutralZone</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bNoDecals" name="bNoDecals" title="go to the details">bNoDecals</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bNoInventory" name="bNoInventory" title="go to the details">bNoInventory</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bPainCausing" name="bPainCausing" title="go to the details">bPainCausing</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bWaterVolume" name="bWaterVolume" title="go to the details">bWaterVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_DamagePerSec" name="DamagePerSec" title="go to the details">DamagePerSec</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt;</td><td width="66%"><a href="#_DamageType" name="DamageType" title="go to the details">DamageType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/actor.html">actor</a>&gt;</td><td width="66%"><a href="#_EntryActor" name="EntryActor" title="go to the details">EntryActor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_EntrySound" name="EntrySound" title="go to the details">EntrySound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/actor.html">actor</a>&gt;</td><td width="66%"><a href="#_ExitActor" name="ExitActor" title="go to the details">ExitActor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_ExitSound" name="ExitSound" title="go to the details">ExitSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FluidFriction" name="FluidFriction" title="go to the details">FluidFriction</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_Gravity" name="Gravity" title="go to the details">Gravity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_GroundFriction" name="GroundFriction" title="go to the details">GroundFriction</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/actor.html">actor</a>&gt;</td><td width="66%"><a href="#_PawnEntryActor" name="PawnEntryActor" title="go to the details">PawnEntryActor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_Priority" name="Priority" title="go to the details">Priority</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TerminalVelocity" name="TerminalVelocity" title="go to the details">TerminalVelocity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_ViewFlash" name="ViewFlash" title="go to the details">ViewFlash</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_ViewFog" name="ViewFog" title="go to the details">ViewFog</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/i3dl2listener.html">I3DL2Listener</a></td><td width="66%"><a href="#_VolumeEffect" name="VolumeEffect" title="go to the details">VolumeEffect</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_ZoneVelocity" name="ZoneVelocity" title="go to the details">ZoneVelocity</a></td></tr>
+<tr><th colspan="2" class="small">VolumeFog</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDistanceFog" name="bDistanceFog" title="go to the details">bDistanceFog</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bNewKFColorCorrection" name="bNewKFColorCorrection" title="go to the details">bNewKFColorCorrection</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bNoKFColorCorrection" name="bNoKFColorCorrection" title="go to the details">bNoKFColorCorrection</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Color">color</a></td><td width="66%"><a href="#_DistanceFogColor" name="DistanceFogColor" title="go to the details">DistanceFogColor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_DistanceFogEnd" name="DistanceFogEnd" title="go to the details">DistanceFogEnd</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_DistanceFogStart" name="DistanceFogStart" title="go to the details">DistanceFogStart</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Color">color</a></td><td width="66%"><a href="#_KFOverlayColor" name="KFOverlayColor" title="go to the details">KFOverlayColor</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/volume.html">Volume</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/volume.html#AssociatedActor">AssociatedActor</a>, <a href="../engine/volume.html#AssociatedActorTag">AssociatedActorTag</a>, <a href="../engine/volume.html#DecoList">DecoList</a>, <a href="../engine/volume.html#LocationName">LocationName</a>, <a href="../engine/volume.html#LocationPriority">LocationPriority</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/brush.html">Brush</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/brush.html#bColored">bColored</a>, <a href="../engine/brush.html#BrushColor">BrushColor</a>, <a href="../engine/brush.html#CsgOper">CsgOper</a>, <a href="../engine/brush.html#MainScale">MainScale</a>, <a href="../engine/brush.html#PolyFlags">PolyFlags</a>, <a href="../engine/brush.html#PostPivot">PostPivot</a>, <a href="../engine/brush.html#PostScale">PostScale</a>, <a href="../engine/brush.html#TempScale">TempScale</a>, <a href="../engine/brush.html#UnusedLightMesh">UnusedLightMesh</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/brush.html">Brush</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/brush.html#ECsgOper">ECsgOper</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_ActorEnteredVolume-" name="ActorEnteredVolume" title="go to the details">ActorEnteredVolume</a> (<a href="../engine/actor.html">Actor</a> Other)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_ActorLeavingVolume-" name="ActorLeavingVolume" title="go to the details">ActorLeavingVolume</a> (<a href="../engine/actor.html">Actor</a> Other)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_BaseChange-" name="BaseChange" title="go to the details">BaseChange</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CausePainTo-" name="CausePainTo" title="go to the details">CausePainTo</a> (<a href="../engine/actor.html">Actor</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_PawnEnteredVolume-" name="PawnEnteredVolume" title="go to the details">PawnEnteredVolume</a> (<a href="../engine/pawn.html">Pawn</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_PawnLeavingVolume-" name="PawnLeavingVolume" title="go to the details">PawnLeavingVolume</a> (<a href="../engine/pawn.html">Pawn</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_PhysicsChangedFor-" name="PhysicsChangedFor" title="go to the details">PhysicsChangedFor</a> (<a href="../engine/actor.html">Actor</a> Other)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayEntrySplash-" name="PlayEntrySplash" title="go to the details">PlayEntrySplash</a> (<a href="../engine/actor.html">Actor</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayerPawnDiedInVolume-" name="PlayerPawnDiedInVolume" title="go to the details">PlayerPawnDiedInVolume</a> (<a href="../engine/pawn.html">Pawn</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayExitSplash-" name="PlayExitSplash" title="go to the details">PlayExitSplash</a> (<a href="../engine/actor.html">Actor</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PostBeginPlay-" name="PostBeginPlay" title="go to the details">PostBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PreBeginPlay-" name="PreBeginPlay" title="go to the details">PreBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TimerPop-" name="TimerPop" title="go to the details">TimerPop</a> (<a href="../engine/volumetimer.html">VolumeTimer</a> T))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_touch-" name="touch" title="go to the details">touch</a> (<a href="../engine/actor.html">Actor</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_untouch-" name="untouch" title="go to the details">untouch</a> (<a href="../engine/actor.html">Actor</a> Other))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/volume.html">Volume</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/volume.html#BeginState">BeginState</a>, <a href="../engine/volume.html#DisplayDebug">DisplayDebug</a>, <a href="../engine/volume.html#Encompasses">Encompasses</a>, <a href="../engine/volume.html#PostBeginPlay">PostBeginPlay</a>, <a href="../engine/volume.html#touch">touch</a>, <a href="../engine/volume.html#untouch">untouch</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_BACKUP_bPainCausing" class="hidden"></a>BACKUP_bPainCausing <a href="../Source_engine/physicsvolume.html#31" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> BACKUP_bPainCausing;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BACKUP_Gravity" class="hidden"></a>BACKUP_Gravity <a href="../Source_engine/physicsvolume.html#13" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> BACKUP_Gravity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bIsAKFOverrideVolume" class="hidden"></a>bIsAKFOverrideVolume <a href="../Source_engine/physicsvolume.html#61" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bIsAKFOverrideVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NextPhysicsVolume" class="hidden"></a>NextPhysicsVolume <a href="../Source_engine/physicsvolume.html#58" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span> NextPhysicsVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PainTimer" class="hidden"></a>PainTimer <a href="../Source_engine/physicsvolume.html#57" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/info.html" class="source">Info</a></span> PainTimer;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Karma</h3>
+<h4><a name="_KBuoyancy" class="hidden"></a>KBuoyancy <a href="../Source_engine/physicsvolume.html#55" class="small">Source code</a></h4>
+<div class="declaration">var(Karma) <span class="source_type">float</span> KBuoyancy;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KExtraAngularDamping" class="hidden"></a>KExtraAngularDamping <a href="../Source_engine/physicsvolume.html#54" class="small">Source code</a></h4>
+<div class="declaration">var(Karma) <span class="source_type">float</span> KExtraAngularDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KExtraLinearDamping" class="hidden"></a>KExtraLinearDamping <a href="../Source_engine/physicsvolume.html#53" class="small">Source code</a></h4>
+<div class="declaration">var(Karma) <span class="source_type">float</span> KExtraLinearDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">PhysicsVolume</h3>
+<h4><a name="_bBounceVelocity" class="hidden"></a>bBounceVelocity <a href="../Source_engine/physicsvolume.html#35" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">bool</span> bBounceVelocity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDamagesVehicles" class="hidden"></a>bDamagesVehicles <a href="../Source_engine/physicsvolume.html#39" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">bool</span> bDamagesVehicles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDestructive" class="hidden"></a>bDestructive <a href="../Source_engine/physicsvolume.html#32" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">bool</span> bDestructive;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bMoveProjectiles" class="hidden"></a>bMoveProjectiles <a href="../Source_engine/physicsvolume.html#34" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">bool</span> bMoveProjectiles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bNeutralZone" class="hidden"></a>bNeutralZone <a href="../Source_engine/physicsvolume.html#36" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">bool</span> bNeutralZone;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bNoDecals" class="hidden"></a>bNoDecals <a href="../Source_engine/physicsvolume.html#38" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">bool</span> bNoDecals;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bNoInventory" class="hidden"></a>bNoInventory <a href="../Source_engine/physicsvolume.html#33" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">bool</span> bNoInventory;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bPainCausing" class="hidden"></a>bPainCausing <a href="../Source_engine/physicsvolume.html#30" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">bool</span> bPainCausing;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bWaterVolume" class="hidden"></a>bWaterVolume <a href="../Source_engine/physicsvolume.html#37" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">bool</span> bWaterVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DamagePerSec" class="hidden"></a>DamagePerSec <a href="../Source_engine/physicsvolume.html#17" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">float</span> DamagePerSec;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DamageType" class="hidden"></a>DamageType <a href="../Source_engine/physicsvolume.html#18" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EntryActor" class="hidden"></a>EntryActor <a href="../Source_engine/physicsvolume.html#23" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span>&gt; EntryActor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EntrySound" class="hidden"></a>EntrySound <a href="../Source_engine/physicsvolume.html#20" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> EntrySound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ExitActor" class="hidden"></a>ExitActor <a href="../Source_engine/physicsvolume.html#24" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span>&gt; ExitActor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ExitSound" class="hidden"></a>ExitSound <a href="../Source_engine/physicsvolume.html#21" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ExitSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidFriction" class="hidden"></a>FluidFriction <a href="../Source_engine/physicsvolume.html#27" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">float</span> FluidFriction;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Gravity" class="hidden"></a>Gravity <a href="../Source_engine/physicsvolume.html#11" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Gravity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GroundFriction" class="hidden"></a>GroundFriction <a href="../Source_engine/physicsvolume.html#15" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">float</span> GroundFriction;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PawnEntryActor" class="hidden"></a>PawnEntryActor <a href="../Source_engine/physicsvolume.html#25" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span>&gt; PawnEntryActor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Priority" class="hidden"></a>Priority <a href="../Source_engine/physicsvolume.html#19" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">int</span> Priority;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TerminalVelocity" class="hidden"></a>TerminalVelocity <a href="../Source_engine/physicsvolume.html#16" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type">float</span> TerminalVelocity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ViewFlash" class="hidden"></a>ViewFlash <a href="../Source_engine/physicsvolume.html#28" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ViewFlash;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ViewFog" class="hidden"></a>ViewFog <a href="../Source_engine/physicsvolume.html#28" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ViewFog;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VolumeEffect" class="hidden"></a>VolumeEffect <a href="../Source_engine/physicsvolume.html#22" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) editinline <span class="source_type"><a href="../engine/i3dl2listener.html" class="source">I3DL2Listener</a></span> VolumeEffect;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ZoneVelocity" class="hidden"></a>ZoneVelocity <a href="../Source_engine/physicsvolume.html#10" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ZoneVelocity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">VolumeFog</h3>
+<h4><a name="_bDistanceFog" class="hidden"></a>bDistanceFog <a href="../Source_engine/physicsvolume.html#42" class="small">Source code</a></h4>
+<div class="declaration">var(VolumeFog) <span class="source_type">bool</span> bDistanceFog;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bNewKFColorCorrection" class="hidden"></a>bNewKFColorCorrection <a href="../Source_engine/physicsvolume.html#48" class="small">Source code</a></h4>
+<div class="declaration">var(VolumeFog) <span class="source_type">bool</span> bNewKFColorCorrection;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bNoKFColorCorrection" class="hidden"></a>bNoKFColorCorrection <a href="../Source_engine/physicsvolume.html#47" class="small">Source code</a></h4>
+<div class="declaration">var(VolumeFog) <span class="source_type">bool</span> bNoKFColorCorrection;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DistanceFogColor" class="hidden"></a>DistanceFogColor <a href="../Source_engine/physicsvolume.html#43" class="small">Source code</a></h4>
+<div class="declaration">var(VolumeFog) <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> DistanceFogColor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DistanceFogEnd" class="hidden"></a>DistanceFogEnd <a href="../Source_engine/physicsvolume.html#45" class="small">Source code</a></h4>
+<div class="declaration">var(VolumeFog) <span class="source_type">float</span> DistanceFogEnd;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DistanceFogStart" class="hidden"></a>DistanceFogStart <a href="../Source_engine/physicsvolume.html#44" class="small">Source code</a></h4>
+<div class="declaration">var(VolumeFog) <span class="source_type">float</span> DistanceFogStart;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KFOverlayColor" class="hidden"></a>KFOverlayColor <a href="../Source_engine/physicsvolume.html#49" class="small">Source code</a></h4>
+<div class="declaration">var(VolumeFog) <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> KFOverlayColor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_ActorEnteredVolume-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> ActorEnteredVolume <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#105" class="small">Source code</a></h4>
+<div class="declaration"> event  ActorEnteredVolume ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ActorLeavingVolume-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> ActorLeavingVolume <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#106" class="small">Source code</a></h4>
+<div class="declaration"> event  ActorLeavingVolume ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BaseChange-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> BaseChange <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#136" class="small">Source code</a></h4>
+<div class="declaration">singular event  BaseChange ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CausePainTo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CausePainTo <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#290" class="small">Source code</a></h4>
+<div class="declaration"> function  CausePainTo ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PawnEnteredVolume-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> PawnEnteredVolume <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#108" class="small">Source code</a></h4>
+<div class="declaration">simulated event  PawnEnteredVolume ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PawnLeavingVolume-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> PawnLeavingVolume <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#125" class="small">Source code</a></h4>
+<div class="declaration"> event  PawnLeavingVolume ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PhysicsChangedFor-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> PhysicsChangedFor <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#103" class="small">Source code</a></h4>
+<div class="declaration"> event  PhysicsChangedFor ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayEntrySplash-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayEntrySplash <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#252" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PlayEntrySplash ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayerPawnDiedInVolume-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayerPawnDiedInVolume <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#131" class="small">Source code</a></h4>
+<div class="declaration"> function  PlayerPawnDiedInVolume ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayExitSplash-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayExitSplash <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#282" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PlayExitSplash ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PostBeginPlay <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#81" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PostBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PreBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PreBeginPlay <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#71" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PreBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#94" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimerPop-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TimerPop <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#150" class="small">Source code</a></h4>
+<div class="declaration"> function  TimerPop ( <span class="source_type"><a href="../engine/volumetimer.html" class="source">VolumeTimer</a></span> <span class="source_type">T</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_touch-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> touch <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#192" class="small">Source code</a></h4>
+<div class="declaration">simulated event  touch ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#174" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_untouch-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> untouch <span class="function_state"></span> <a href="../Source_engine/physicsvolume.html#276" class="small">Source code</a></h4>
+<div class="declaration">simulated event  untouch ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     Gravity=(Z=-<span class="source_int">950.000000</span>)
+     GroundFriction=<span class="source_int">8.000000</span>
+     TerminalVelocity=<span class="source_int">2500.000000</span>
+     FluidFriction=<span class="source_int">0.300000</span>
+     bDamagesVehicles=True
+     KFOverlayColor=(<span class="source_type">B</span>=<span class="source_int">127</span>,G=<span class="source_int">127</span>,<span class="source_type">R</span>=<span class="source_int">127</span>)
+     KBuoyancy=<span class="source_int">1.000000</span>
+     bAlwaysRelevant=True
+     bOnlyDirtyReplication=True
+     NetUpdateFrequency=<span class="source_int">0.100000</span>
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/physicsvolume.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#PhysicsVolume">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/pawn.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/pickup.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:50.586 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

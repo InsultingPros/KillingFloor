@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: ROInterface.ROInterfaceUtil</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/rointerfaceutil.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROInterfaceUtil">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/roiamulticolumnrulespanel.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/rolargefont.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_rointerface/rointerfaceutil.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../rointerface/rointerface-overview.html">ROInterface</a>.<a href="../rointerface/rointerfaceutil.html">ROInterfaceUtil</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//-----------------------------------------------------------
+</span><a name="2"></a><span class="source_comment">//   Used to changed the style of UT2K4 menu's to RO style Menus
+</span><a name="3"></a><span class="source_comment">//   Puma 5-15-2004
+</span><a name="4"></a><span class="source_comment">//-----------------------------------------------------------
+</span><a name="5"></a><span class="source_type">class</span> <span class="source_type"><a href="../rointerface/rointerfaceutil.html" class="source">ROInterfaceUtil</a></span> extends <span class="source_type"><a href="../xinterface/gui.html" class="source">GUI</a></span>;
+<a name="6"></a>
+<a name="7"></a>var() <span class="source_type"><a href="../engine/material.html" class="source">material</a></span> HeaderTop,HeaderBar,HeaderBase;		<span class="source_comment">// Top, Bar and base
+</span><a name="8"></a>
+<a name="9"></a>final simulated static function <span class="source_type">int</span> SetROStyle(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, array&lt;<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>&gt; Components)
+<a name="10"></a>{
+<a name="11"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="12"></a>    local <span class="source_type">string</span>           myStyleName;
+<a name="13"></a>    local <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#EFontScale" class="source">eFontScale</a></span> tFontScale;
+<a name="14"></a>
+<a name="15"></a>    <span class="source_comment">// temp hax
+</span><a name="16"></a>    return Components.Length;
+<a name="17"></a>
+<a name="18"></a>    if(MyController == None)
+<a name="19"></a>    {
+<a name="20"></a>        return -<span class="source_int">1</span>;
+<a name="21"></a>    }
+<a name="22"></a>
+<a name="23"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Components.Length; <span class="source_type">i</span>++)
+<a name="24"></a>	{
+<a name="25"></a>	    if(Components[<span class="source_type">i</span>] != None)
+<a name="26"></a>	    {
+<a name="27"></a>    		if (<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="28"></a>    		{
+<a name="29"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.<span class="source_type">List</span>.FontScale;
+<a name="30"></a>                myStyleName = <span class="source_string">"RO2ComboListBox"</span>;
+<a name="31"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.<span class="source_type">List</span>.StyleName = myStyleName;
+<a name="32"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.<span class="source_type">List</span>.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="33"></a>
+<a name="34"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.<span class="source_type">List</span>.SelectedStyleName = myStyleName;
+<a name="35"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.<span class="source_type">List</span>.SelectedStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="36"></a>
+<a name="37"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.Edit.FontScale;
+<a name="38"></a>                myStyleName = <span class="source_string">"EditBox"</span>;
+<a name="39"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.Edit.StyleName = myStyleName;
+<a name="40"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.Edit.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="41"></a>
+<a name="42"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyShowListBtn.FontScale;
+<a name="43"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="44"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyShowListBtn.StyleName = myStyleName;
+<a name="45"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyShowListBtn.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="46"></a>
+<a name="47"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.FontScale;
+<a name="48"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="49"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyShowListBtn.StyleName = myStyleName;
+<a name="50"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyShowListBtn.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="51"></a>
+<a name="52"></a>
+<a name="53"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyScrollZone.FontScale;
+<a name="54"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="55"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyScrollZone.StyleName = myStyleName;
+<a name="56"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyScrollZone.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="57"></a>
+<a name="58"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyGripButton.FontScale;
+<a name="59"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="60"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyGripButton.StyleName = myStyleName;
+<a name="61"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyGripButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="62"></a>
+<a name="63"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyIncreaseButton.FontScale;
+<a name="64"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="65"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyIncreaseButton.StyleName = myStyleName;
+<a name="66"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyIncreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="67"></a>
+<a name="68"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyDecreaseButton.FontScale;
+<a name="69"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyDecreaseButton.StyleName = myStyleName;
+<a name="70"></a>                <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>(Components[<span class="source_type">i</span>]).MyComboBox.MyListBox.MyScrollBar.MyDecreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="71"></a>            }
+<a name="72"></a>    		if (<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="73"></a>    		{
+<a name="74"></a>                myStyleName = <span class="source_string">"CheckBox"</span>;
+<a name="75"></a>                <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Components[<span class="source_type">i</span>]).MyCheckBox.StyleName = myStyleName;
+<a name="76"></a>                <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>(Components[<span class="source_type">i</span>]).MyCheckBox.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="77"></a>            }
+<a name="78"></a>    		if (<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="79"></a>    		{
+<a name="80"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span>(Components[<span class="source_type">i</span>]).MySlider.FontScale;
+<a name="81"></a>                myStyleName = <span class="source_string">"SliderKnob"</span>;
+<a name="82"></a>                <span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span>(Components[<span class="source_type">i</span>]).MySlider.StyleName = myStyleName;
+<a name="83"></a>                <span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span>(Components[<span class="source_type">i</span>]).MySlider.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="84"></a>
+<a name="85"></a>                myStyleName = <span class="source_string">"ROSliderBar"</span>;
+<a name="86"></a>                <span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span>(Components[<span class="source_type">i</span>]).MySlider.BarStyleName = myStyleName;
+<a name="87"></a>                <span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span>(Components[<span class="source_type">i</span>]).MySlider.BarStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="88"></a>            }
+<a name="89"></a>    		if (<span class="source_type"><a href="../xinterface/mobutton.html" class="source">moButton</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="90"></a>    		{
+<a name="91"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mobutton.html" class="source">moButton</a></span>(Components[<span class="source_type">i</span>]).MyButton.FontScale;
+<a name="92"></a>                myStyleName = <span class="source_string">"RO2ComboListBox"</span>;
+<a name="93"></a>                <span class="source_type"><a href="../xinterface/mobutton.html" class="source">moButton</a></span>(Components[<span class="source_type">i</span>]).MyButton.StyleName = myStyleName;
+<a name="94"></a>                <span class="source_type"><a href="../xinterface/mobutton.html" class="source">moButton</a></span>(Components[<span class="source_type">i</span>]).MyButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="95"></a>            }
+<a name="96"></a>    		if (<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="97"></a>    		{
+<a name="98"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span>(Components[<span class="source_type">i</span>]).MyEditBox.FontScale;
+<a name="99"></a>                myStyleName = <span class="source_string">"EditBox"</span>;
+<a name="100"></a>                <span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span>(Components[<span class="source_type">i</span>]).MyEditBox.StyleName = myStyleName;
+<a name="101"></a>                <span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span>(Components[<span class="source_type">i</span>]).MyEditBox.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="102"></a>            }
+<a name="103"></a>    		if (<span class="source_type"><a href="../xinterface/mofloatedit.html" class="source">moFloatEdit</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="104"></a>    		{
+<a name="105"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mofloatedit.html" class="source">moFloatEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MyEditBox.FontScale;
+<a name="106"></a>                myStyleName = <span class="source_string">"RO2ComboListBox"</span>;
+<a name="107"></a>                <span class="source_type"><a href="../xinterface/mofloatedit.html" class="source">moFloatEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MyEditBox.StyleName = myStyleName;
+<a name="108"></a>                <span class="source_type"><a href="../xinterface/mofloatedit.html" class="source">moFloatEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MyEditBox.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="109"></a>
+<a name="110"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/mofloatedit.html" class="source">moFloatEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MySpinner.FontScale;
+<a name="111"></a>                myStyleName = <span class="source_string">"SpinnerButton"</span>;
+<a name="112"></a>                <span class="source_type"><a href="../xinterface/mofloatedit.html" class="source">moFloatEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MySpinner.StyleName = myStyleName;
+<a name="113"></a>                <span class="source_type"><a href="../xinterface/mofloatedit.html" class="source">moFloatEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MySpinner.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="114"></a>            }
+<a name="115"></a>    		if (<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="116"></a>    		{
+<a name="117"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(Components[<span class="source_type">i</span>]).FontScale;
+<a name="118"></a>                myStyleName = <span class="source_string">"ROSquareButton"</span>;
+<a name="119"></a>                <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(Components[<span class="source_type">i</span>]).StyleName = myStyleName;
+<a name="120"></a>                <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(Components[<span class="source_type">i</span>]).Style = MyController.GetStyle(myStyleName,<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(Components[<span class="source_type">i</span>]).FontScale);
+<a name="121"></a>            }
+<a name="122"></a>    		if (<span class="source_type"><a href="../xinterface/guiheader.html" class="source">GUIHeader</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="123"></a>    		{
+<a name="124"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guiheader.html" class="source">GUIHeader</a></span>(Components[<span class="source_type">i</span>]).FontScale;
+<a name="125"></a>                myStyleName = <span class="source_string">"TitleBar"</span>;
+<a name="126"></a>                <span class="source_type"><a href="../xinterface/guiheader.html" class="source">GUIHeader</a></span>(Components[<span class="source_type">i</span>]).StyleName = myStyleName;
+<a name="127"></a>                <span class="source_type"><a href="../xinterface/guiheader.html" class="source">GUIHeader</a></span>(Components[<span class="source_type">i</span>]).Style = MyController.GetStyle(myStyleName,<span class="source_type"><a href="../xinterface/guiheader.html" class="source">GUIHeader</a></span>(Components[<span class="source_type">i</span>]).FontScale);
+<a name="128"></a>            }
+<a name="129"></a>    		if (<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="130"></a>    		{
+<a name="131"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MyEditBox.FontScale;
+<a name="132"></a>                myStyleName = <span class="source_string">"RO2ComboListBox"</span>;
+<a name="133"></a>                <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MyEditBox.StyleName = myStyleName;
+<a name="134"></a>                <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MyEditBox.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="135"></a>
+<a name="136"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MySpinner.FontScale;
+<a name="137"></a>                myStyleName = <span class="source_string">"SpinnerButton"</span>;
+<a name="138"></a>                <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MySpinner.StyleName = myStyleName;
+<a name="139"></a>                <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>(Components[<span class="source_type">i</span>]).MyNumericEdit.MySpinner.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="140"></a>            }
+<a name="141"></a>    		if (<span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="142"></a>    		{
+<a name="143"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyScrollZone.FontScale;
+<a name="144"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="145"></a>                <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyScrollZone.StyleName = myStyleName;
+<a name="146"></a>                <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyScrollZone.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="147"></a>
+<a name="148"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyGripButton.FontScale;
+<a name="149"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="150"></a>                <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyGripButton.StyleName = myStyleName;
+<a name="151"></a>                <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyGripButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="152"></a>
+<a name="153"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyIncreaseButton.FontScale;
+<a name="154"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="155"></a>                <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyIncreaseButton.StyleName = myStyleName;
+<a name="156"></a>                <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyIncreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="157"></a>
+<a name="158"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyDecreaseButton.FontScale;
+<a name="159"></a>                <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyDecreaseButton.StyleName = myStyleName;
+<a name="160"></a>                <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyDecreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="161"></a>            }
+<a name="162"></a>    		if (<span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="163"></a>    		{
+<a name="164"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyScrollZone.FontScale;
+<a name="165"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="166"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyScrollZone.StyleName = myStyleName;
+<a name="167"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyScrollZone.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="168"></a>
+<a name="169"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyGripButton.FontScale;
+<a name="170"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="171"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyGripButton.StyleName = myStyleName;
+<a name="172"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyGripButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="173"></a>
+<a name="174"></a>                tFontScale = <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyIncreaseButton.FontScale;
+<a name="175"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="176"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyIncreaseButton.StyleName = myStyleName;
+<a name="177"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyIncreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="178"></a>
+<a name="179"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyDecreaseButton.FontScale;
+<a name="180"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyDecreaseButton.StyleName = myStyleName;
+<a name="181"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.MyScrollBar.MyDecreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="182"></a>
+<a name="183"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).Header.FontScale;
+<a name="184"></a>                myStyleName = <span class="source_string">"ROSectionHeaderBar"</span>;
+<a name="185"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).Header.BarStyleName = myStyleName;
+<a name="186"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).Header.BarStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="187"></a>                myStyleName = <span class="source_string">"ROSectionHeaderTop"</span>;
+<a name="188"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).Header.StyleName = myStyleName;
+<a name="189"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).Header.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="190"></a>
+<a name="191"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.FontScale;
+<a name="192"></a>                myStyleName = <span class="source_string">"ROItemOutline"</span>;
+<a name="193"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.OutLineStyleName = myStyleName;
+<a name="194"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.OutLineStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="195"></a>
+<a name="196"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.FontScale;
+<a name="197"></a>                myStyleName = <span class="source_string">"ROListSelection"</span>;
+<a name="198"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.SelectedStyleName = myStyleName;
+<a name="199"></a>                <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.SelectedStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="200"></a>            }
+<a name="201"></a>    		if (<span class="source_type"><a href="../xinterface/guilistheader.html" class="source">GUIListHeader</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="202"></a>    		{
+<a name="203"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guilistheader.html" class="source">GUIListHeader</a></span>(Components[<span class="source_type">i</span>]).FontScale;
+<a name="204"></a>                myStyleName = <span class="source_string">"ROListSection"</span>;
+<a name="205"></a>                <span class="source_type"><a href="../xinterface/guilistheader.html" class="source">GUIListHeader</a></span>(Components[<span class="source_type">i</span>]).StyleName = myStyleName;
+<a name="206"></a>                <span class="source_type"><a href="../xinterface/guilistheader.html" class="source">GUIListHeader</a></span>(Components[<span class="source_type">i</span>]).Style = MyController.GetStyle(myStyleName,<span class="source_type"><a href="../xinterface/guilistheader.html" class="source">GUIListHeader</a></span>(Components[<span class="source_type">i</span>]).FontScale);
+<a name="207"></a>
+<a name="208"></a>                <span class="source_type"><a href="../xinterface/guilistheader.html" class="source">GUIListHeader</a></span>(Components[<span class="source_type">i</span>]).LabelStyleName = myStyleName;
+<a name="209"></a>                <span class="source_type"><a href="../xinterface/guilistheader.html" class="source">GUIListHeader</a></span>(Components[<span class="source_type">i</span>]).MyLabel.Style = MyController.GetStyle(myStyleName,<span class="source_type"><a href="../xinterface/guilistheader.html" class="source">GUIListHeader</a></span>(Components[<span class="source_type">i</span>]).FontScale);
+<a name="210"></a>            }
+<a name="211"></a>    		if (<span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="212"></a>    		{
+<a name="213"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.FontScale;
+<a name="214"></a>                myStyleName = <span class="source_string">"ROItemOutline"</span>;
+<a name="215"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.OutLineStyleName = myStyleName;
+<a name="216"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.OutLineStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="217"></a>
+<a name="218"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.FontScale;
+<a name="219"></a>                myStyleName = <span class="source_string">"ROListSelection"</span>;
+<a name="220"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.SelectedStyleName = myStyleName;
+<a name="221"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.SelectedStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="222"></a>
+<a name="223"></a>                tFontScale = <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyScrollZone.FontScale;
+<a name="224"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="225"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyScrollZone.StyleName = myStyleName;
+<a name="226"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyScrollZone.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="227"></a>           	    tFontScale = <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyGripButton.FontScale;
+<a name="228"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="229"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyGripButton.StyleName = myStyleName;
+<a name="230"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyGripButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="231"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyIncreaseButton.FontScale;
+<a name="232"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="233"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyIncreaseButton.StyleName = myStyleName;
+<a name="234"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyIncreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="235"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyDecreaseButton.FontScale;
+<a name="236"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyDecreaseButton.StyleName = myStyleName;
+<a name="237"></a>                <span class="source_type"><a href="../xinterface/guitreelistbox.html" class="source">GUITreeListBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyDecreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="238"></a>           }
+<a name="239"></a>    		if (<span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="240"></a>    		{
+<a name="241"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.FontScale;
+<a name="242"></a>                myStyleName = <span class="source_string">"RO2ComboListBox"</span>;
+<a name="243"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.StyleName = myStyleName;
+<a name="244"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="245"></a>
+<a name="246"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.SelectedStyleName = myStyleName;
+<a name="247"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).<span class="source_type">List</span>.SelectedStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="248"></a>
+<a name="249"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).Edit.FontScale;
+<a name="250"></a>                myStyleName = <span class="source_string">"EditBox"</span>;
+<a name="251"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).Edit.StyleName = myStyleName;
+<a name="252"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).Edit.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="253"></a>
+<a name="254"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyShowListBtn.FontScale;
+<a name="255"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="256"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyShowListBtn.StyleName = myStyleName;
+<a name="257"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyShowListBtn.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="258"></a>
+<a name="259"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.FontScale;
+<a name="260"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="261"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyShowListBtn.StyleName = myStyleName;
+<a name="262"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyShowListBtn.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="263"></a>
+<a name="264"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyScrollZone.FontScale;
+<a name="265"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="266"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyScrollZone.StyleName = myStyleName;
+<a name="267"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyScrollZone.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="268"></a>
+<a name="269"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyGripButton.FontScale;
+<a name="270"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="271"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyGripButton.StyleName = myStyleName;
+<a name="272"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyGripButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="273"></a>
+<a name="274"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyIncreaseButton.FontScale;
+<a name="275"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="276"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyIncreaseButton.StyleName = myStyleName;
+<a name="277"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyIncreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="278"></a>
+<a name="279"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyDecreaseButton.FontScale;
+<a name="280"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyDecreaseButton.StyleName = myStyleName;
+<a name="281"></a>                <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span>(Components[<span class="source_type">i</span>]).MyListBox.MyScrollBar.MyDecreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="282"></a>            }
+<a name="283"></a>    		if (<span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="284"></a>    		{
+<a name="285"></a>                tFontScale = <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyScrollZone.FontScale;
+<a name="286"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="287"></a>                <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyScrollZone.StyleName = myStyleName;
+<a name="288"></a>                <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyScrollZone.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="289"></a>           	    tFontScale = <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyGripButton.FontScale;
+<a name="290"></a>                myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="291"></a>                <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyGripButton.StyleName = myStyleName;
+<a name="292"></a>                <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyGripButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="293"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyIncreaseButton.FontScale;
+<a name="294"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="295"></a>                <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyIncreaseButton.StyleName = myStyleName;
+<a name="296"></a>                <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyIncreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="297"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyDecreaseButton.FontScale;
+<a name="298"></a>                <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyDecreaseButton.StyleName = myStyleName;
+<a name="299"></a>                <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyDecreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="300"></a>           }
+<a name="301"></a>    	   if (<span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="302"></a>    	   {
+<a name="303"></a>                tFontScale = <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyScrollZone.FontScale;
+<a name="304"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="305"></a>                <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyScrollZone.StyleName = myStyleName;
+<a name="306"></a>                <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyScrollZone.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="307"></a>           	    tFontScale = <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyGripButton.FontScale;
+<a name="308"></a>                myStyleName = <span class="source_string">"ROScrollButtons"</span>;
+<a name="309"></a>                <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyGripButton.StyleName = myStyleName;
+<a name="310"></a>                <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyGripButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="311"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyIncreaseButton.FontScale;
+<a name="312"></a>                myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="313"></a>                <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyIncreaseButton.StyleName = myStyleName;
+<a name="314"></a>                <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyIncreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="315"></a>    	        tFontScale = <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyDecreaseButton.FontScale;
+<a name="316"></a>                <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyDecreaseButton.StyleName = myStyleName;
+<a name="317"></a>                <span class="source_type"><a href="../xinterface/guiscrolltext.html" class="source">GUIScrollText</a></span>(Components[<span class="source_type">i</span>]).MyScrollBar.MyDecreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="318"></a>           }
+<a name="319"></a>    	   if (<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span>(Components[<span class="source_type">i</span>]) != None)
+<a name="320"></a>    	   {
+<a name="321"></a>                <span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span>(Components[<span class="source_type">i</span>]).HeaderTop = default.HeaderTop;
+<a name="322"></a>                <span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span>(Components[<span class="source_type">i</span>]).HeaderBar = default.HeaderBar;
+<a name="323"></a>                <span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span>(Components[<span class="source_type">i</span>]).HeaderBase = default.HeaderBase;
+<a name="324"></a>           }
+<a name="325"></a>       }
+<a name="326"></a>    }
+<a name="327"></a>
+<a name="328"></a>    return  Components.Length;
+<a name="329"></a>}
+<a name="330"></a>
+<a name="331"></a>final simulated static function <span class="source_type">int</span> ReformatLists(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guimulticolumnlistbox.html" class="source">GUIMultiColumnListBox</a></span> MyListBox)
+<a name="332"></a>{
+<a name="333"></a>    local <span class="source_type">string</span>           myStyleName;
+<a name="334"></a>    local                  <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#EFontScale" class="source">eFontScale</a></span> tFontScale;
+<a name="335"></a>    local <span class="source_type">int</span>              myReturnValue;
+<a name="336"></a>
+<a name="337"></a>    <span class="source_comment">// hax
+</span><a name="338"></a>    return -<span class="source_int">1</span>;
+<a name="339"></a>
+<a name="340"></a>    myReturnValue = -<span class="source_int">1</span>;
+<a name="341"></a>	if( (MyListBox != none) && (MyListBox.<span class="source_type">List</span> != none))
+<a name="342"></a>	{
+<a name="343"></a>        myReturnValue = <span class="source_int">1</span>;
+<a name="344"></a>        tFontScale = MyListBox.<span class="source_type">List</span>.MyScrollBar.MyScrollZone.FontScale;
+<a name="345"></a>        myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="346"></a>        MyListBox.<span class="source_type">List</span>.MyScrollBar.MyScrollZone.StyleName = myStyleName;
+<a name="347"></a>        MyListBox.<span class="source_type">List</span>.MyScrollBar.MyScrollZone.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="348"></a>        tFontScale = MyListBox.<span class="source_type">List</span>.MyScrollBar.MyGripButton.FontScale;
+<a name="349"></a>        myStyleName = <span class="source_string">"RORoundScaledButton"</span>;
+<a name="350"></a>        MyListBox.<span class="source_type">List</span>.MyScrollBar.MyGripButton.StyleName = myStyleName;
+<a name="351"></a>        MyListBox.<span class="source_type">List</span>.MyScrollBar.MyGripButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="352"></a>        tFontScale = MyListBox.<span class="source_type">List</span>.MyScrollBar.MyIncreaseButton.FontScale;
+<a name="353"></a>        myStyleName = <span class="source_string">"ROScrollZone"</span>;
+<a name="354"></a>        MyListBox.<span class="source_type">List</span>.MyScrollBar.MyIncreaseButton.StyleName = myStyleName;
+<a name="355"></a>        MyListBox.<span class="source_type">List</span>.MyScrollBar.MyIncreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="356"></a>        tFontScale = MyListBox.<span class="source_type">List</span>.MyScrollBar.MyDecreaseButton.FontScale;
+<a name="357"></a>        MyListBox.<span class="source_type">List</span>.MyScrollBar.MyDecreaseButton.StyleName = myStyleName;
+<a name="358"></a>        MyListBox.<span class="source_type">List</span>.MyScrollBar.MyDecreaseButton.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="359"></a>        tFontScale = MyListBox.Header.FontScale;
+<a name="360"></a>        myStyleName = <span class="source_string">"ROSectionHeaderBar"</span>;
+<a name="361"></a>        MyListBox.Header.BarStyleName = myStyleName;
+<a name="362"></a>        MyListBox.Header.BarStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="363"></a>        myStyleName = <span class="source_string">"ROSectionHeaderTop"</span>;
+<a name="364"></a>        MyListBox.Header.StyleName = myStyleName;
+<a name="365"></a>        MyListBox.Header.Style = MyController.GetStyle(myStyleName,tFontScale);
+<a name="366"></a>        tFontScale = MyListBox.<span class="source_type">List</span>.FontScale;
+<a name="367"></a>        myStyleName = <span class="source_string">"ROItemOutline"</span>;
+<a name="368"></a>        MyListBox.<span class="source_type">List</span>.OutLineStyleName = myStyleName;
+<a name="369"></a>        MyListBox.<span class="source_type">List</span>.OutLineStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="370"></a>        tFontScale = MyListBox.<span class="source_type">List</span>.FontScale;
+<a name="371"></a>        myStyleName = <span class="source_string">"ROListSelection"</span>;
+<a name="372"></a>        MyListBox.<span class="source_type">List</span>.SelectedStyleName = myStyleName;
+<a name="373"></a>        MyListBox.<span class="source_type">List</span>.SelectedStyle = MyController.GetStyle(myStyleName,tFontScale);
+<a name="374"></a>    }
+<a name="375"></a>    return myReturnValue;
+<a name="376"></a>}
+<a name="377"></a>
+<a name="378"></a>defaultproperties
+<a name="379"></a>{
+<a name="380"></a>     HeaderBase=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.RODisplay'</span>
+<a name="381"></a>}
+<a name="382"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/rointerfaceutil.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROInterfaceUtil">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/roiamulticolumnrulespanel.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/rolargefont.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:07.103 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

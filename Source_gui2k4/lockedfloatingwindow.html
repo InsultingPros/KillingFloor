@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.LockedFloatingWindow</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/lockedfloatingwindow.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#LockedFloatingWindow">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/largewindow.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/maplistbox.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/lockedfloatingwindow.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/lockedfloatingwindow.html">LockedFloatingWindow</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//  Created on: 12/29/2003
+</span><a name="3"></a><span class="source_comment">//  This implementation of floating window has an internal frame, and is intended for
+</span><a name="4"></a><span class="source_comment">//  menus which contain one or two large components (like lists)
+</span><a name="5"></a><span class="source_comment">//
+</span><a name="6"></a><span class="source_comment">//  Written by Ron Prestenback
+</span><a name="7"></a><span class="source_comment">//  © 2003, Epic Games, Inc. All Rights Reserved
+</span><a name="8"></a><span class="source_comment">//==============================================================================
+</span><a name="9"></a>
+<a name="10"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/lockedfloatingwindow.html" class="source">LockedFloatingWindow</a></span> extends <span class="source_type"><a href="../gui2k4/floatingwindow.html" class="source">FloatingWindow</a></span>;
+<a name="11"></a>
+<a name="12"></a>var automated <span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> sb_Main;
+<a name="13"></a>var automated <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> b_Cancel, b_OK;
+<a name="14"></a>
+<a name="15"></a>var() localized <span class="source_type">string</span> SubCaption;  <span class="source_comment">// this is the caption that will go onto the sectionbackground header
+</span><a name="16"></a>var() <span class="source_type">float</span> EdgeBorder[<span class="source_int">4</span>];
+<a name="17"></a>
+<a name="18"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> InController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">InOwner</span>)
+<a name="19"></a>{
+<a name="20"></a>	Super.InitComponent(InController, <span class="source_type">InOwner</span>);
+<a name="21"></a>
+<a name="22"></a>	if ( SubCaption != <span class="source_string">""</span> )
+<a name="23"></a>		sb_Main.<span class="source_type">Caption</span> = SubCaption;
+<a name="24"></a>
+<a name="25"></a>	AlignButtons();
+<a name="26"></a>
+<a name="27"></a>}
+<a name="28"></a>
+<a name="29"></a>function InternalOnCreateComponent(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> NewComp, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="30"></a>{
+<a name="31"></a>	if ( <span class="source_type">Sender</span> == Self )
+<a name="32"></a>		NewComp.bBoundToParent = True;
+<a name="33"></a>	else Super.InternalOnCreateComponent(NewComp, <span class="source_type">Sender</span>);
+<a name="34"></a>}
+<a name="35"></a>
+<a name="36"></a>function <span class="source_type">bool</span> InternalOnClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="37"></a>{
+<a name="38"></a>	if ( <span class="source_type">Sender</span> == b_OK )
+<a name="39"></a>	{
+<a name="40"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseMenu(false);
+<a name="41"></a>		return true;
+<a name="42"></a>	}
+<a name="43"></a>
+<a name="44"></a>	if ( <span class="source_type">Sender</span> == b_Cancel )
+<a name="45"></a>	{
+<a name="46"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseMenu(true);
+<a name="47"></a>		return true;
+<a name="48"></a>	}
+<a name="49"></a>
+<a name="50"></a>	return false;
+<a name="51"></a>}
+<a name="52"></a>
+<a name="53"></a>function AlignButtons()
+<a name="54"></a>{
+<a name="55"></a>	local <span class="source_type">float</span> <span class="source_type">X</span>,<span class="source_type">Y</span>,Xs,Ys;
+<a name="56"></a>	local <span class="source_type">float</span> WIP,HIP;
+<a name="57"></a>
+<a name="58"></a>	WIP = ActualWidth();
+<a name="59"></a>	HIP = ActualHeight();
+<a name="60"></a>
+<a name="61"></a>	Xs = b_Ok.ActualWidth() * <span class="source_int">0.1</span>;
+<a name="62"></a>	Ys = b_Ok.ActualHeight() * <span class="source_int">0.1</span>;
+<a name="63"></a>
+<a name="64"></a>	<span class="source_type">X</span> = <span class="source_int">1</span> - ( (b_Ok.ActualWidth()  + Xs) / WIP) - (EdgeBorder[<span class="source_int">2</span>] / WIP);
+<a name="65"></a>	<span class="source_type">Y</span> = <span class="source_int">1</span> - ( (b_Ok.ActualHeight() + Ys) / HIP) - (EdgeBorder[<span class="source_int">3</span>] / WIP);
+<a name="66"></a>
+<a name="67"></a>	b_Ok.WinLeft = <span class="source_type">X</span>;
+<a name="68"></a>	b_Ok.WinTop = <span class="source_type">Y</span>;
+<a name="69"></a>
+<a name="70"></a>	<span class="source_type">X</span> = <span class="source_int">1</span> -( (b_Ok.ActualWidth() + b_Cancel.ActualWidth() + Xs) / WIP) - (EdgeBorder[<span class="source_int">2</span>] / WIP);
+<a name="71"></a>
+<a name="72"></a>	b_Cancel.WinLeft = <span class="source_type">X</span>;
+<a name="73"></a>	b_Cancel.WinTop = <span class="source_type">Y</span>;
+<a name="74"></a>}
+<a name="75"></a>
+<a name="76"></a>defaultproperties
+<a name="77"></a>{
+<a name="78"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../gui2k4/altsectionbackground.html" class="source">AltSectionBackground</a></span> <span class="source_type">Name</span>=InternalFrameImage
+<a name="79"></a>         WinTop=<span class="source_int">0.075000</span>
+<a name="80"></a>         WinLeft=<span class="source_int">0.040000</span>
+<a name="81"></a>         WinWidth=<span class="source_int">0.675859</span>
+<a name="82"></a>         WinHeight=<span class="source_int">0.550976</span>
+<a name="83"></a>         OnPreDraw=InternalFrameImage.InternalPreDraw
+<a name="84"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="85"></a>     sb_Main=<span class="source_type"><a href="../gui2k4/altsectionbackground.html" class="source">AltSectionBackground</a></span><span class="source_name">'GUI2K4.LockedFloatingWindow.InternalFrameImage'</span>
+<a name="86"></a>
+<a name="87"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=LockedCancelButton
+<a name="88"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Cancel"</span>
+<a name="89"></a>         bAutoShrink=False
+<a name="90"></a>         WinTop=<span class="source_int">0.872397</span>
+<a name="91"></a>         WinLeft=<span class="source_int">0.512695</span>
+<a name="92"></a>         WinWidth=<span class="source_int">0.159649</span>
+<a name="93"></a>         TabOrder=<span class="source_int">99</span>
+<a name="94"></a>         bBoundToParent=True
+<a name="95"></a>         OnClick=<span class="source_type"><a href="../gui2k4/lockedfloatingwindow.html" class="source">LockedFloatingWindow</a></span>.InternalOnClick
+<a name="96"></a>         OnKeyEvent=LockedCancelButton.InternalOnKeyEvent
+<a name="97"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="98"></a>     b_Cancel=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.LockedFloatingWindow.LockedCancelButton'</span>
+<a name="99"></a>
+<a name="100"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=LockedOKButton
+<a name="101"></a>         <span class="source_type">Caption</span>=<span class="source_string">"OK"</span>
+<a name="102"></a>         bAutoShrink=False
+<a name="103"></a>         WinTop=<span class="source_int">0.872397</span>
+<a name="104"></a>         WinLeft=<span class="source_int">0.742188</span>
+<a name="105"></a>         WinWidth=<span class="source_int">0.159649</span>
+<a name="106"></a>         TabOrder=<span class="source_int">100</span>
+<a name="107"></a>         bBoundToParent=True
+<a name="108"></a>         OnClick=<span class="source_type"><a href="../gui2k4/lockedfloatingwindow.html" class="source">LockedFloatingWindow</a></span>.InternalOnClick
+<a name="109"></a>         OnKeyEvent=LockedOKButton.InternalOnKeyEvent
+<a name="110"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="111"></a>     b_OK=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.LockedFloatingWindow.LockedOKButton'</span>
+<a name="112"></a>
+<a name="113"></a>     EdgeBorder(<span class="source_int">0</span>)=<span class="source_int">16.000000</span>
+<a name="114"></a>     EdgeBorder(<span class="source_int">1</span>)=<span class="source_int">24.000000</span>
+<a name="115"></a>     EdgeBorder(<span class="source_int">2</span>)=<span class="source_int">16.000000</span>
+<a name="116"></a>     EdgeBorder(<span class="source_int">3</span>)=<span class="source_int">24.000000</span>
+<a name="117"></a>     bResizeWidthAllowed=False
+<a name="118"></a>     bResizeHeightAllowed=False
+<a name="119"></a>     DefaultLeft=<span class="source_int">0.125000</span>
+<a name="120"></a>     DefaultTop=<span class="source_int">0.150000</span>
+<a name="121"></a>     DefaultWidth=<span class="source_int">0.740000</span>
+<a name="122"></a>     DefaultHeight=<span class="source_int">0.700000</span>
+<a name="123"></a>     bCaptureInput=True
+<a name="124"></a>     InactiveFadeColor=(<span class="source_type">B</span>=<span class="source_int">60</span>,G=<span class="source_int">60</span>,<span class="source_type">R</span>=<span class="source_int">60</span>)
+<a name="125"></a>     WinTop=<span class="source_int">0.150000</span>
+<a name="126"></a>     WinLeft=<span class="source_int">0.125000</span>
+<a name="127"></a>     WinWidth=<span class="source_int">0.740000</span>
+<a name="128"></a>     WinHeight=<span class="source_int">0.700000</span>
+<a name="129"></a>}
+<a name="130"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/lockedfloatingwindow.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#LockedFloatingWindow">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/largewindow.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/maplistbox.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:05.000 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

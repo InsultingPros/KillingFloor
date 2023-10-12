@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.KFSPGameType</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfspgametype.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFSPGameType">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfspeciestype.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfsplayercontroller.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/kfspgametype.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/kfspgametype.html">KFSPGameType</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// Single player Killing Floor Gametype
+</span><a name="2"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/kfspgametype.html" class="source">KFSPGameType</a></span> extends <span class="source_type"><a href="../kfmod/kfgametype.html" class="source">KFGameType</a></span>;
+<a name="3"></a>
+<a name="4"></a><span class="source_comment">// Config
+</span><a name="5"></a>var()	 config	<span class="source_type">int</span>						 RoundLimit;				 <span class="source_comment">// number of pair of rounds
+</span><a name="6"></a>var						 <span class="source_type">int</span>						 MaxRounds;					<span class="source_comment">// converted to actual number of rounds played
+</span><a name="7"></a>var()	 config	<span class="source_type">int</span>						 RoundTimeLimit;		 <span class="source_comment">// max round duration (in minutes)
+</span><a name="8"></a>var()	 config	<span class="source_type">int</span>						 PracticeTimeLimit;	<span class="source_comment">// practice duration (in seconds)
+</span><a name="9"></a>
+<a name="10"></a>var		 config	<span class="source_type">int</span>						 ReinforcementsFreq;				 <span class="source_comment">// Reinforcement frequency (seconds, 0 = no reinforcements)
+</span><a name="11"></a>var						 <span class="source_type">int</span>						 ReinforcementsValidTime;		<span class="source_comment">// delay while players are allowed to join last reinforcement
+</span><a name="12"></a>var						 <span class="source_type">int</span>						 ReinforcementsCount;
+<a name="13"></a>
+<a name="14"></a>var <span class="source_type">int</span> SuccessfulAssaultTimeLimit;		 <span class="source_comment">// if first attacking team sucessfully attacked, defenders will have to beat that time to win.
+</span><a name="15"></a>
+<a name="16"></a>const ASPROPNUM = <span class="source_int">5</span>;
+<a name="17"></a>var localized <span class="source_type">string</span>		ASPropsDisplayText[ASPROPNUM];
+<a name="18"></a>var localized <span class="source_type">string</span>		ASPropDescText[ASPROPNUM];
+<a name="19"></a>
+<a name="20"></a>var(LoadingHints) private localized array&lt;<span class="source_type">string</span>&gt; ASHints;
+<a name="21"></a>
+<a name="22"></a><span class="source_comment">// internal
+</span><a name="23"></a>var		 <span class="source_type">byte</span>				CurrentAttackingTeam;	 <span class="source_comment">// Current Attacking team index
+</span><a name="24"></a>var		 <span class="source_type">byte</span>				FirstAttackingTeam;
+<a name="25"></a>var		 <span class="source_type">byte</span>				CurrentRound;
+<a name="26"></a>var		 <span class="source_type">int</span>				 RoundStartTime;
+<a name="27"></a>var		 <span class="source_type">bool</span>				bDisableReinforcements;
+<a name="28"></a>
+<a name="29"></a>var <span class="source_type">name</span>		AttackerWinRound[<span class="source_int">2</span>];
+<a name="30"></a>var <span class="source_type">name</span>		DefenderWinRound[<span class="source_int">2</span>];
+<a name="31"></a>var <span class="source_type">name</span>		DrawGameSound;
+<a name="32"></a>
+<a name="33"></a>var <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span>	 CurrentObjective, LastDisabledObjective;
+<a name="34"></a>var <span class="source_type"><a href="../engine/vehicle.html" class="source">vehicle</a></span> KeyVehicle;
+<a name="35"></a>
+<a name="36"></a>var Array&lt;<span class="source_type"><a href="../old2k4/playerspawnmanager.html" class="source">PlayerSpawnManager</a></span>&gt;	 SpawnManagers;					<span class="source_comment">// Handling player spawning
+</span><a name="37"></a>
+<a name="38"></a>var <span class="source_type"><a href="../engine/scenemanager.html" class="source">SceneManager</a></span>								CurrentMatineeScene;		<span class="source_comment">// SP matinee intro cinematic
+</span><a name="39"></a>var <span class="source_type"><a href="../kfmod/kfscenemanager.html" class="source">KFSceneManager</a></span>		EndCinematic;					 <span class="source_comment">// MP outro cinematic
+</span><a name="40"></a>
+<a name="41"></a>var <span class="source_type">bool</span>		bWeakObjectives;		<span class="source_comment">// cheat
+</span><a name="42"></a>
+<a name="43"></a>
+<a name="44"></a><span class="source_comment">// Story Mode Specific Variables
+</span><a name="45"></a>
+<a name="46"></a>var <span class="source_type"><a href="../kfmod/kfsplevelinfo.html" class="source">KFSPLevelInfo</a></span> SPInfo;	<span class="source_comment">// The reigning Level Info
+</span><a name="47"></a>
+<a name="48"></a>var <span class="source_type">bool</span> bDefKFEquips; <span class="source_comment">// Sets whether pawns spawn with regular gear or not.	(KFSP)
+</span><a name="49"></a>var <span class="source_type">int</span> PlayerStartingHealth;	<span class="source_comment">// The starting amount of Hitpoints for all players.
+</span><a name="50"></a>var <span class="source_type">int</span> PlayerStartingArmor;
+<a name="51"></a>
+<a name="52"></a>var <span class="source_type">bool</span> bPlayedIntro;
+<a name="53"></a>
+<a name="54"></a>var <span class="source_type"><a href="../kfmod/kfteamprogressvolume.html" class="source">KFTeamProgressVolume</a></span> SpawnVolume;
+<a name="55"></a>
+<a name="56"></a>function LoadUpMonsterList();
+<a name="57"></a>
+<a name="58"></a>event PostNetBeginPlay()
+<a name="59"></a>{
+<a name="60"></a>	local <span class="source_type"><a href="../kfmod/kfsplevelinfo.html" class="source">KFSPLevelInfo</a></span> LI;
+<a name="61"></a>
+<a name="62"></a>	foreach AllActors(<span class="source_type">class</span><span class="source_name">'KFSPLevelInfo'</span>,LI)
+<a name="63"></a>	{
+<a name="64"></a>		if (LI != none)
+<a name="65"></a>			SPInfo = LI;
+<a name="66"></a>	}
+<a name="67"></a>
+<a name="68"></a>	if(SPInfo != none)
+<a name="69"></a>		<span class="source_type"><a href="../kfmod/kfgamereplicationinfo.html" class="source">KFGameReplicationInfo</a></span>(<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>).bHUDShowCash = SPInfo.bHUDShowCash;
+<a name="70"></a>}
+<a name="71"></a>
+<a name="72"></a>function OverrideInitialBots()
+<a name="73"></a>{
+<a name="74"></a>	InitialBots = <span class="source_int">0</span>;
+<a name="75"></a>}
+<a name="76"></a>
+<a name="77"></a>function <span class="source_type">bool</span> TooManyBots(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> botToRemove)
+<a name="78"></a>{
+<a name="79"></a>	 return true;
+<a name="80"></a>}
+<a name="81"></a>
+<a name="82"></a>function AddDefaultInventory( <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">PlayerPawn</span> )
+<a name="83"></a>{
+<a name="84"></a>	if (SPInfo != none)
+<a name="85"></a>		if ( <span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">PlayerPawn</span>) != None )
+<a name="86"></a>			<span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">PlayerPawn</span>).AddDefaultInventory();
+<a name="87"></a>
+<a name="88"></a>	SetPlayerDefaults(<span class="source_type">PlayerPawn</span>);
+<a name="89"></a>}
+<a name="90"></a>
+<a name="91"></a>function RestartPlayer( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">aPlayer</span> )
+<a name="92"></a>{
+<a name="93"></a>	Super(<span class="source_type"><a href="../engine/gameinfo.html" class="source">gameinfo</a></span>).RestartPlayer(<span class="source_type">aPlayer</span>);
+<a name="94"></a>	if( <span class="source_type">aPlayer</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>!=None && SPInfo!=none )
+<a name="95"></a>		SPInfo.ModifyPlayer(<span class="source_type">aPlayer</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>);
+<a name="96"></a>}
+<a name="97"></a>function AddGameSpecificInventory(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">p</span>)
+<a name="98"></a>{
+<a name="99"></a>	if( SPInfo!=none )
+<a name="100"></a>		SPInfo.AddGameInv(<span class="source_type">p</span>);
+<a name="101"></a>}
+<a name="102"></a>
+<a name="103"></a>function ForceAddBot();
+<a name="104"></a>
+<a name="105"></a>function InitPlacedBot(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>, <span class="source_type"><a href="../unrealgame/rosterentry.html" class="source">RosterEntry</a></span> <span class="source_type">R</span>){}
+<a name="106"></a>
+<a name="107"></a>function InitializeBot(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> NewBot, <span class="source_type"><a href="../unrealgame/unrealteaminfo.html" class="source">UnrealTeamInfo</a></span> BotTeam, <span class="source_type"><a href="../unrealgame/rosterentry.html" class="source">RosterEntry</a></span> Chosen);
+<a name="108"></a>
+<a name="109"></a>function <span class="source_type">bool</span> AddBot(optional <span class="source_type">string</span> botName)
+<a name="110"></a>{
+<a name="111"></a>	return false;
+<a name="112"></a>}
+<a name="113"></a>
+<a name="114"></a>exec function AddBots(<span class="source_type">int</span> <span class="source_type">num</span>);
+<a name="115"></a>
+<a name="116"></a>function <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> SpawnBot(optional <span class="source_type">string</span> botName)
+<a name="117"></a>{
+<a name="118"></a>	Return None;
+<a name="119"></a>}
+<a name="120"></a>
+<a name="121"></a>event <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> Login( <span class="source_type">string</span> Portal, <span class="source_type">string</span> Options, out <span class="source_type">string</span> <span class="source_type">Error</span> )
+<a name="122"></a>{
+<a name="123"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">NewPlayer</span>;
+<a name="124"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="125"></a>	local <span class="source_type">bool</span> bTempLate;
+<a name="126"></a>
+<a name="127"></a>	bTempLate = bNoLateJoiners;
+<a name="128"></a>	bNoLateJoiners = False;
+<a name="129"></a>	<span class="source_type">NewPlayer</span> = Super.Login(Portal,Options,<span class="source_type">Error</span>);
+<a name="130"></a>	bNoLateJoiners = bTempLate;
+<a name="131"></a>
+<a name="132"></a>	for ( <span class="source_type">C</span>=<span class="source_type">Level</span>.ControllerList; <span class="source_type">C</span>!=None; <span class="source_type">C</span>=<span class="source_type">C</span>.NextController )
+<a name="133"></a>		if ( (<span class="source_type">C</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None) && <span class="source_type">C</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOutOfLives && !<span class="source_type">C</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOnlySpectator && !<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.bMatchHasBegun )
+<a name="134"></a>		{
+<a name="135"></a>			<span class="source_type">NewPlayer</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOutOfLives = true;
+<a name="136"></a>			<span class="source_type">NewPlayer</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.NumLives = <span class="source_int">1</span>;
+<a name="137"></a>			Break;
+<a name="138"></a>		}
+<a name="139"></a>
+<a name="140"></a>	<span class="source_type">NewPlayer</span>.SetGRI(<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>);
+<a name="141"></a>
+<a name="142"></a>	if ( bDelayedStart ) <span class="source_comment">//!
+</span><a name="143"></a>	{
+<a name="144"></a>		<span class="source_type">NewPlayer</span>.GotoState(<span class="source_name">'PlayerWaiting'</span>);
+<a name="145"></a>		return <span class="source_type">NewPlayer</span>;
+<a name="146"></a>	}
+<a name="147"></a>	return <span class="source_type">NewPlayer</span>;
+<a name="148"></a>
+<a name="149"></a>}
+<a name="150"></a>
+<a name="151"></a>event KFSceneEnded( <span class="source_type"><a href="../kfmod/kfscenemanager.html" class="source">KFSceneManager</a></span> SM, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span> )
+<a name="152"></a>{
+<a name="153"></a>	GotoState(<span class="source_name">'MatchInProgress'</span>);
+<a name="154"></a>}
+<a name="155"></a>
+<a name="156"></a><span class="source_comment">/* cinematic started... */</span>
+<a name="157"></a>event KFSceneStarted( <span class="source_type"><a href="../kfmod/kfscenemanager.html" class="source">KFSceneManager</a></span> SM, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span> )
+<a name="158"></a>{
+<a name="159"></a>	if ( <span class="source_type">Other</span> != None && <span class="source_type">Other</span>.IsA(<span class="source_name">'KFSceneManager'</span>) )
+<a name="160"></a>		GotoState(<span class="source_name">'MPOutroCinematic'</span>);
+<a name="161"></a>}
+<a name="162"></a>
+<a name="163"></a><span class="source_comment">/* network friendly outro */</span>
+<a name="164"></a><span class="source_type">state</span> MPOutroCinematic
+<a name="165"></a>{
+<a name="166"></a>}
+<a name="167"></a>
+<a name="168"></a>function <span class="source_type">bool</span> IsPlayingIntro()
+<a name="169"></a>{
+<a name="170"></a>	return false;
+<a name="171"></a>}
+<a name="172"></a>
+<a name="173"></a><span class="source_type">State</span> MatchInProgress
+<a name="174"></a>{
+<a name="175"></a>	function beginstate()
+<a name="176"></a>	{
+<a name="177"></a>		if (!bPlayedIntro)
+<a name="178"></a>		{
+<a name="179"></a>			TriggerEvent(<span class="source_name">'IntroScene'</span>, Self, None);		 <span class="source_comment">// try to play Matinee intro
+</span><a name="180"></a>			bPlayedIntro = true;
+<a name="181"></a>		}
+<a name="182"></a>	}
+<a name="183"></a>}
+<a name="184"></a>
+<a name="185"></a>function GetServerInfo( out <span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">ServerState</span> )
+<a name="186"></a>{
+<a name="187"></a>	Super.GetServerInfo(<span class="source_type">ServerState</span>);
+<a name="188"></a>	<span class="source_type">ServerState</span>.<span class="source_type">GameType</span> = <span class="source_type">string</span>(<span class="source_name">'KFGameType'</span>);
+<a name="189"></a>}
+<a name="190"></a>
+<a name="191"></a>function <span class="source_type">float</span> RatePlayerStart(<span class="source_type"><a href="../engine/navigationpoint.html" class="source">NavigationPoint</a></span> <span class="source_type">N</span>, <span class="source_type">byte</span> <span class="source_type">Team</span>, <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>)
+<a name="192"></a>{
+<a name="193"></a>	local <span class="source_type">float</span> Dec;
+<a name="194"></a>
+<a name="195"></a>	if( SpawnVolume==None )
+<a name="196"></a>		Return Super.RatePlayerStart(<span class="source_type">N</span>,<span class="source_type">Team</span>,<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>);
+<a name="197"></a>	if( <span class="source_type">N</span>.<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>!=SpawnVolume || <span class="source_type"><a href="../engine/playerstart.html" class="source">PlayerStart</a></span>(<span class="source_type">N</span>)==None )
+<a name="198"></a>		Return -<span class="source_int">100000</span>;
+<a name="199"></a>	<span class="source_type"><a href="../engine/playerstart.html" class="source">PlayerStart</a></span>(<span class="source_type">N</span>).bEnabled = True;
+<a name="200"></a>	Dec = Super.RatePlayerStart(<span class="source_type">N</span>,<span class="source_type">Team</span>,<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>);
+<a name="201"></a>	<span class="source_type"><a href="../engine/playerstart.html" class="source">PlayerStart</a></span>(<span class="source_type">N</span>).bEnabled = False;
+<a name="202"></a>	Return FMax(<span class="source_int">0</span>,Dec);
+<a name="203"></a>}
+<a name="204"></a>
+<a name="205"></a>defaultproperties
+<a name="206"></a>{
+<a name="207"></a>     bNoLateJoiners=True
+<a name="208"></a>     ScoreBoardType=<span class="source_string">"KFMod.KFSPObjectiveBoardNew"</span>
+<a name="209"></a>     HUDType=<span class="source_string">"KFmod.HUDKillingFloorSP"</span>
+<a name="210"></a>     MapListType=<span class="source_string">"KFMod.KFMapListSP"</span>
+<a name="211"></a>     <span class="source_type">MapPrefix</span>=<span class="source_string">"KFS"</span>
+<a name="212"></a>     BeaconName=<span class="source_string">"KFS"</span>
+<a name="213"></a>     GameReplicationInfoClass=<span class="source_type">Class</span><span class="source_name">'KFMod.KFSGameReplicationInfo'</span>
+<a name="214"></a>     GameName=<span class="source_string">"Story"</span>
+<a name="215"></a>     Description=<span class="source_string">"Story Based Cooperative Gameplay."</span>
+<a name="216"></a>     Acronym=<span class="source_string">"KFS"</span>
+<a name="217"></a>}
+<a name="218"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfspgametype.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFSPGameType">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfspeciestype.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfsplayercontroller.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.124 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

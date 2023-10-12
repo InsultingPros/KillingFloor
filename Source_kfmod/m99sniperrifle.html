@@ -1,0 +1,877 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.M99SniperRifle</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/m99sniperrifle.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#M99SniperRifle">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/m99pickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/mac10ammo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/m99sniperrifle.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/m99sniperrifle.html">M99SniperRifle</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780
+</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// M99SniperRifle
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_comment">// M99 Sniper Rifle Inventory Class
+</span><a name="5"></a><span class="source_comment">//=============================================================================
+</span><a name="6"></a><span class="source_comment">// Killing Floor Source
+</span><a name="7"></a><span class="source_comment">// Copyright (C) 2012 Tripwire Interactive LLC
+</span><a name="8"></a><span class="source_comment">// - John "Ramm-Jaeger" Gibson and IJC
+</span><a name="9"></a><span class="source_comment">//=============================================================================
+</span><a name="10"></a>
+<a name="11"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/m99sniperrifle.html" class="source">M99SniperRifle</a></span> extends <span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span>;
+<a name="12"></a>
+<a name="13"></a><span class="source_comment">//=============================================================================
+</span><a name="14"></a><span class="source_comment">// Execs
+</span><a name="15"></a><span class="source_comment">//=============================================================================
+</span><a name="16"></a>
+<a name="17"></a><span class="source_macro">#exec OBJ LOAD FILE=..\textures\ScopeShaders.utx
+</span><a name="18"></a><span class="source_macro">#exec OBJ LOAD FILE=..\textures\KF_Weapons5_Scopes_Trip_T.utx
+</span><a name="19"></a>
+<a name="20"></a>var() <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> ZoomMat;
+<a name="21"></a>
+<a name="22"></a><span class="source_comment">//=============================================================================
+</span><a name="23"></a><span class="source_comment">// Variables
+</span><a name="24"></a><span class="source_comment">//=============================================================================
+</span><a name="25"></a>
+<a name="26"></a>var()		<span class="source_type">int</span>			lenseMaterialID;		<span class="source_comment">// used since material id's seem to change alot
+</span><a name="27"></a>
+<a name="28"></a>var()		<span class="source_type">float</span>		scopePortalFOVHigh;		<span class="source_comment">// The FOV to zoom the scope portal by.
+</span><a name="29"></a>var()		<span class="source_type">float</span>		scopePortalFOV;			<span class="source_comment">// The FOV to zoom the scope portal by.
+</span><a name="30"></a>var()       <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>      XoffsetScoped;
+<a name="31"></a>var()       <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>      XoffsetHighDetail;
+<a name="32"></a>
+<a name="33"></a><span class="source_comment">// Not sure if these pitch vars are still needed now that we use Scripted Textures. We'll keep for now in case they are. - Ramm 08/14/04
+</span><a name="34"></a>var()		<span class="source_type">int</span>			scopePitch;				<span class="source_comment">// Tweaks the pitch of the scope firing angle
+</span><a name="35"></a>var()		<span class="source_type">int</span>			scopeYaw;				<span class="source_comment">// Tweaks the yaw of the scope firing angle
+</span><a name="36"></a>var()		<span class="source_type">int</span>			scopePitchHigh;			<span class="source_comment">// Tweaks the pitch of the scope firing angle high detail scope
+</span><a name="37"></a>var()		<span class="source_type">int</span>			scopeYawHigh;			<span class="source_comment">// Tweaks the yaw of the scope firing angle high detail scope
+</span><a name="38"></a>
+<a name="39"></a><span class="source_comment">// 3d Scope vars
+</span><a name="40"></a>var   <span class="source_type"><a href="../engine/scriptedtexture.html" class="source">ScriptedTexture</a></span>   ScopeScriptedTexture;   <span class="source_comment">// Scripted texture for 3d scopes
+</span><a name="41"></a>var	  <span class="source_type"><a href="../engine/shader.html" class="source">Shader</a></span>		    ScopeScriptedShader;   	<span class="source_comment">// The shader that combines the scripted texture with the sight overlay
+</span><a name="42"></a>var   <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>          ScriptedTextureFallback;<span class="source_comment">// The texture to render if the users system doesn't support shaders
+</span><a name="43"></a>
+<a name="44"></a><span class="source_comment">// new scope vars
+</span><a name="45"></a>var     <span class="source_type"><a href="../engine/combiner.html" class="source">Combiner</a></span>            ScriptedScopeCombiner;
+<a name="46"></a>
+<a name="47"></a>var     <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>             TexturedScopeTexture;
+<a name="48"></a>
+<a name="49"></a>var	    <span class="source_type">bool</span>				bInitializedScope;		<span class="source_comment">// Set to true when the scope has been initialized
+</span><a name="50"></a>
+<a name="51"></a>var		<span class="source_type">string</span> ZoomMatRef;
+<a name="52"></a>var		<span class="source_type">string</span> ScriptedTextureFallbackRef;
+<a name="53"></a>
+<a name="54"></a><span class="source_comment">//=============================================================================
+</span><a name="55"></a><span class="source_comment">// Functions
+</span><a name="56"></a><span class="source_comment">//=============================================================================
+</span><a name="57"></a>
+<a name="58"></a><span class="source_comment">//===========================================
+</span><a name="59"></a><span class="source_comment">// Used for debugging the weapons and scopes- Ramm
+</span><a name="60"></a><span class="source_comment">//===========================================
+</span><a name="61"></a>
+<a name="62"></a><span class="source_comment">// Commented out for the release build
+</span><a name="63"></a>
+<a name="64"></a>static function PreloadAssets(<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv, optional <span class="source_type">bool</span> bSkipRefCount)
+<a name="65"></a>{
+<a name="66"></a>	super.PreloadAssets(Inv, bSkipRefCount);
+<a name="67"></a>
+<a name="68"></a>	default.ZoomMat = <span class="source_type"><a href="../engine/finalblend.html" class="source">FinalBlend</a></span>(DynamicLoadObject(default.ZoomMatRef, <span class="source_type">class</span><span class="source_name">'FinalBlend'</span>, true));
+<a name="69"></a>	default.ScriptedTextureFallback = <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>(DynamicLoadObject(default.ScriptedTextureFallbackRef, <span class="source_type">class</span><span class="source_name">'texture'</span>, true));
+<a name="70"></a>
+<a name="71"></a>	if ( <span class="source_type"><a href="../kfmod/m99sniperrifle.html" class="source">M99SniperRifle</a></span>(Inv) != none )
+<a name="72"></a>	{
+<a name="73"></a>		<span class="source_type"><a href="../kfmod/m99sniperrifle.html" class="source">M99SniperRifle</a></span>(Inv).ZoomMat = default.ZoomMat;
+<a name="74"></a>		<span class="source_type"><a href="../kfmod/m99sniperrifle.html" class="source">M99SniperRifle</a></span>(Inv).ScriptedTextureFallback = default.ScriptedTextureFallback;
+<a name="75"></a>	}
+<a name="76"></a>}
+<a name="77"></a>
+<a name="78"></a>static function <span class="source_type">bool</span> UnloadAssets()
+<a name="79"></a>{
+<a name="80"></a>	if ( super.UnloadAssets() )
+<a name="81"></a>	{
+<a name="82"></a>		default.ZoomMat = none;
+<a name="83"></a>		default.ScriptedTextureFallback = none;
+<a name="84"></a>	}
+<a name="85"></a>
+<a name="86"></a>	return true;
+<a name="87"></a>}
+<a name="88"></a>
+<a name="89"></a>exec function pfov(<span class="source_type">int</span> thisFOV)
+<a name="90"></a>{
+<a name="91"></a>	if( !<span class="source_type">class</span><span class="source_name">'ROEngine.ROLevelInfo'</span>.static.RODebugMode() )
+<a name="92"></a>		return;
+<a name="93"></a>
+<a name="94"></a>	scopePortalFOV = thisFOV;
+<a name="95"></a>}
+<a name="96"></a>
+<a name="97"></a>exec function pPitch(<span class="source_type">int</span> <span class="source_type">num</span>)
+<a name="98"></a>{
+<a name="99"></a>	if( !<span class="source_type">class</span><span class="source_name">'ROEngine.ROLevelInfo'</span>.static.RODebugMode() )
+<a name="100"></a>		return;
+<a name="101"></a>
+<a name="102"></a>	scopePitch = <span class="source_type">num</span>;
+<a name="103"></a>	scopePitchHigh = <span class="source_type">num</span>;
+<a name="104"></a>}
+<a name="105"></a>
+<a name="106"></a>exec function pYaw(<span class="source_type">int</span> <span class="source_type">num</span>)
+<a name="107"></a>{
+<a name="108"></a>	if( !<span class="source_type">class</span><span class="source_name">'ROEngine.ROLevelInfo'</span>.static.RODebugMode() )
+<a name="109"></a>		return;
+<a name="110"></a>
+<a name="111"></a>	scopeYaw = <span class="source_type">num</span>;
+<a name="112"></a>	scopeYawHigh = <span class="source_type">num</span>;
+<a name="113"></a>}
+<a name="114"></a>
+<a name="115"></a>simulated exec function TexSize(<span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">int</span> j)
+<a name="116"></a>{
+<a name="117"></a>	if( !<span class="source_type">class</span><span class="source_name">'ROEngine.ROLevelInfo'</span>.static.RODebugMode() )
+<a name="118"></a>		return;
+<a name="119"></a>
+<a name="120"></a>	ScopeScriptedTexture.SetSize(<span class="source_type">i</span>, j);
+<a name="121"></a>}
+<a name="122"></a>
+<a name="123"></a><span class="source_comment">// Helper function for the scope system. The scope system checks here to see when it should draw the portal.
+</span><a name="124"></a><span class="source_comment">// if you want to limit any times the portal should/shouldn't be drawn, add them here.
+</span><a name="125"></a><span class="source_comment">// Ramm 10/27/03
+</span><a name="126"></a>simulated function <span class="source_type">bool</span> ShouldDrawPortal()
+<a name="127"></a>{
+<a name="128"></a><span class="source_comment">//	local 	name	thisAnim;
+</span><a name="129"></a><span class="source_comment">//	local	float 	animframe;
+</span><a name="130"></a><span class="source_comment">//	local	float 	animrate;
+</span><a name="131"></a><span class="source_comment">//
+</span><a name="132"></a><span class="source_comment">//	GetAnimParams(0, thisAnim,animframe,animrate);
+</span><a name="133"></a>
+<a name="134"></a><span class="source_comment">//	if(bUsingSights && (IsInState('Idle') || IsInState('PostFiring')) && thisAnim != 'scope_shoot_last')
+</span><a name="135"></a>    if( bAimingRifle )
+<a name="136"></a>		return true;
+<a name="137"></a>	else
+<a name="138"></a>		return false;
+<a name="139"></a>}
+<a name="140"></a>
+<a name="141"></a>simulated function PostBeginPlay()
+<a name="142"></a>{
+<a name="143"></a>	super.PostBeginPlay();
+<a name="144"></a>
+<a name="145"></a>    <span class="source_comment">// Get new scope detail value from KFWeapon
+</span><a name="146"></a>    KFScopeDetail = <span class="source_type">class</span><span class="source_name">'KFMod.KFWeapon'</span>.default.KFScopeDetail;
+<a name="147"></a>
+<a name="148"></a>	UpdateScopeMode();
+<a name="149"></a>}
+<a name="150"></a>
+<a name="151"></a><span class="source_comment">// Handles initializing and swithing between different scope modes
+</span><a name="152"></a>simulated function UpdateScopeMode()
+<a name="153"></a>{
+<a name="154"></a>	if (<span class="source_type">Level</span>.NetMode != NM_DedicatedServer && <span class="source_type">Instigator</span> != none && <span class="source_type">Instigator</span>.IsLocallyControlled() &&
+<a name="155"></a>		<span class="source_type">Instigator</span>.IsHumanControlled() )
+<a name="156"></a>    {
+<a name="157"></a>	    if( KFScopeDetail == KF_ModelScope )
+<a name="158"></a>		{
+<a name="159"></a>			scopePortalFOV = default.scopePortalFOV;
+<a name="160"></a>			ZoomedDisplayFOV = CalcAspectRatioAdjustedFOV(default.ZoomedDisplayFOV);
+<a name="161"></a>			<span class="source_comment">//bPlayerFOVZooms = false;
+</span><a name="162"></a>			if (bAimingRifle)
+<a name="163"></a>			{
+<a name="164"></a>				PlayerViewOffset = XoffsetScoped;
+<a name="165"></a>			}
+<a name="166"></a>
+<a name="167"></a>			if( ScopeScriptedTexture == none )
+<a name="168"></a>			{
+<a name="169"></a>	        	ScopeScriptedTexture = <span class="source_type"><a href="../engine/scriptedtexture.html" class="source">ScriptedTexture</a></span>(<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.AllocateObject(<span class="source_type">class</span><span class="source_name">'ScriptedTexture'</span>));
+<a name="170"></a>			}
+<a name="171"></a>
+<a name="172"></a>	        ScopeScriptedTexture.FallBackMaterial = ScriptedTextureFallback;
+<a name="173"></a>	        ScopeScriptedTexture.SetSize(<span class="source_int">512</span>,<span class="source_int">512</span>);
+<a name="174"></a>	        ScopeScriptedTexture.<span class="source_type">Client</span> = Self;
+<a name="175"></a>
+<a name="176"></a>			if( ScriptedScopeCombiner == none )
+<a name="177"></a>			{
+<a name="178"></a>				<span class="source_comment">// Construct the Combiner
+</span><a name="179"></a>				ScriptedScopeCombiner = <span class="source_type"><a href="../engine/combiner.html" class="source">Combiner</a></span>(<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.AllocateObject(<span class="source_type">class</span><span class="source_name">'Combiner'</span>));
+<a name="180"></a>	            ScriptedScopeCombiner.Material1 = <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_Weapons5_Scopes_Trip_T.Scope.MilDot'</span>;
+<a name="181"></a>	            ScriptedScopeCombiner.FallbackMaterial = <span class="source_type"><a href="../engine/shader.html" class="source">Shader</a></span><span class="source_name">'ScopeShaders.Zoomblur.LensShader'</span>;
+<a name="182"></a>	            ScriptedScopeCombiner.CombineOperation = CO_Multiply;
+<a name="183"></a>	            ScriptedScopeCombiner.AlphaOperation = AO_Use_Mask;
+<a name="184"></a>	            ScriptedScopeCombiner.Material2 = ScopeScriptedTexture;
+<a name="185"></a>	        }
+<a name="186"></a>
+<a name="187"></a>			if( ScopeScriptedShader == none )
+<a name="188"></a>			{
+<a name="189"></a>	            <span class="source_comment">// Construct the scope shader
+</span><a name="190"></a>				ScopeScriptedShader = <span class="source_type"><a href="../engine/shader.html" class="source">Shader</a></span>(<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.AllocateObject(<span class="source_type">class</span><span class="source_name">'Shader'</span>));
+<a name="191"></a>				ScopeScriptedShader.Diffuse = ScriptedScopeCombiner;
+<a name="192"></a>				ScopeScriptedShader.SelfIllumination = ScriptedScopeCombiner;
+<a name="193"></a>				ScopeScriptedShader.FallbackMaterial = <span class="source_type"><a href="../engine/shader.html" class="source">Shader</a></span><span class="source_name">'ScopeShaders.Zoomblur.LensShader'</span>;
+<a name="194"></a>			}
+<a name="195"></a>
+<a name="196"></a>	        bInitializedScope = true;
+<a name="197"></a>		}
+<a name="198"></a>		else if( KFScopeDetail == KF_ModelScopeHigh )
+<a name="199"></a>		{
+<a name="200"></a>			scopePortalFOV = scopePortalFOVHigh;
+<a name="201"></a>			ZoomedDisplayFOV = CalcAspectRatioAdjustedFOV(default.ZoomedDisplayFOVHigh);
+<a name="202"></a>			<span class="source_comment">//bPlayerFOVZooms = false;
+</span><a name="203"></a>			if (bAimingRifle)
+<a name="204"></a>			{
+<a name="205"></a>				PlayerViewOffset = XoffsetHighDetail;
+<a name="206"></a>			}
+<a name="207"></a>
+<a name="208"></a>			if( ScopeScriptedTexture == none )
+<a name="209"></a>			{
+<a name="210"></a>	        	ScopeScriptedTexture = <span class="source_type"><a href="../engine/scriptedtexture.html" class="source">ScriptedTexture</a></span>(<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.AllocateObject(<span class="source_type">class</span><span class="source_name">'ScriptedTexture'</span>));
+<a name="211"></a>	        }
+<a name="212"></a>			ScopeScriptedTexture.FallBackMaterial = ScriptedTextureFallback;
+<a name="213"></a>	        ScopeScriptedTexture.SetSize(<span class="source_int">1024</span>,<span class="source_int">1024</span>);
+<a name="214"></a>	        ScopeScriptedTexture.<span class="source_type">Client</span> = Self;
+<a name="215"></a>
+<a name="216"></a>			if( ScriptedScopeCombiner == none )
+<a name="217"></a>			{
+<a name="218"></a>				<span class="source_comment">// Construct the Combiner
+</span><a name="219"></a>				ScriptedScopeCombiner = <span class="source_type"><a href="../engine/combiner.html" class="source">Combiner</a></span>(<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.AllocateObject(<span class="source_type">class</span><span class="source_name">'Combiner'</span>));
+<a name="220"></a>	            ScriptedScopeCombiner.Material1 = <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_Weapons5_Scopes_Trip_T.Scope.MilDot'</span>;
+<a name="221"></a>	            ScriptedScopeCombiner.FallbackMaterial = <span class="source_type"><a href="../engine/shader.html" class="source">Shader</a></span><span class="source_name">'ScopeShaders.Zoomblur.LensShader'</span>;
+<a name="222"></a>	            ScriptedScopeCombiner.CombineOperation = CO_Multiply;
+<a name="223"></a>	            ScriptedScopeCombiner.AlphaOperation = AO_Use_Mask;
+<a name="224"></a>	            ScriptedScopeCombiner.Material2 = ScopeScriptedTexture;
+<a name="225"></a>	        }
+<a name="226"></a>
+<a name="227"></a>			if( ScopeScriptedShader == none )
+<a name="228"></a>			{
+<a name="229"></a>	            <span class="source_comment">// Construct the scope shader
+</span><a name="230"></a>				ScopeScriptedShader = <span class="source_type"><a href="../engine/shader.html" class="source">Shader</a></span>(<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.AllocateObject(<span class="source_type">class</span><span class="source_name">'Shader'</span>));
+<a name="231"></a>				ScopeScriptedShader.Diffuse = ScriptedScopeCombiner;
+<a name="232"></a>				ScopeScriptedShader.SelfIllumination = ScriptedScopeCombiner;
+<a name="233"></a>				ScopeScriptedShader.FallbackMaterial = <span class="source_type"><a href="../engine/shader.html" class="source">Shader</a></span><span class="source_name">'ScopeShaders.Zoomblur.LensShader'</span>;
+<a name="234"></a>			}
+<a name="235"></a>
+<a name="236"></a>            bInitializedScope = true;
+<a name="237"></a>		}
+<a name="238"></a>		else if (KFScopeDetail == KF_TextureScope)
+<a name="239"></a>		{
+<a name="240"></a>			ZoomedDisplayFOV = CalcAspectRatioAdjustedFOV(default.ZoomedDisplayFOV);
+<a name="241"></a>			PlayerViewOffset.<span class="source_type">X</span> = default.PlayerViewOffset.<span class="source_type">X</span>;
+<a name="242"></a>			<span class="source_comment">//bPlayerFOVZooms = true;
+</span><a name="243"></a>
+<a name="244"></a>			bInitializedScope = true;
+<a name="245"></a>		}
+<a name="246"></a>	}
+<a name="247"></a>}
+<a name="248"></a>
+<a name="249"></a>simulated event RenderTexture(<span class="source_type"><a href="../engine/scriptedtexture.html" class="source">ScriptedTexture</a></span> <span class="source_type">Tex</span>)
+<a name="250"></a>{
+<a name="251"></a>    local <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> RollMod;
+<a name="252"></a>
+<a name="253"></a>    RollMod = <span class="source_type">Instigator</span>.GetViewRotation();
+<a name="254"></a>    <span class="source_comment">//RollMod.Roll -= 16384;
+</span><a name="255"></a>
+<a name="256"></a><span class="source_comment">//	Rpawn = ROPawn(Instigator);
+</span><a name="257"></a><span class="source_comment">//	// Subtract roll from view while leaning - Ramm
+</span><a name="258"></a><span class="source_comment">//	if (Rpawn != none && rpawn.LeanAmount != 0)
+</span><a name="259"></a><span class="source_comment">//	{
+</span><a name="260"></a><span class="source_comment">//		RollMod.Roll += rpawn.LeanAmount;
+</span><a name="261"></a><span class="source_comment">//	}
+</span><a name="262"></a>
+<a name="263"></a>    if(<span class="source_type">Owner</span> != none && <span class="source_type">Instigator</span> != none && <span class="source_type">Tex</span> != none && <span class="source_type">Tex</span>.<span class="source_type">Client</span> != none)
+<a name="264"></a>        <span class="source_type">Tex</span>.DrawPortal(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_type">Tex</span>.USize,<span class="source_type">Tex</span>.VSize,<span class="source_type">Owner</span>,(<span class="source_type">Instigator</span>.Location + <span class="source_type">Instigator</span>.EyePosition()), RollMod,  scopePortalFOV );
+<a name="265"></a>}
+<a name="266"></a>
+<a name="267"></a>
+<a name="268"></a>function <span class="source_type">float</span> GetAIRating()
+<a name="269"></a>{
+<a name="270"></a>	local <span class="source_type"><a href="../engine/aicontroller.html" class="source">AIController</a></span> <span class="source_type">B</span>;
+<a name="271"></a>
+<a name="272"></a>	<span class="source_type">B</span> = <span class="source_type"><a href="../engine/aicontroller.html" class="source">AIController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="273"></a>	if ( (<span class="source_type">B</span> == None) || (<span class="source_type">B</span>.Enemy == None) )
+<a name="274"></a>		return AIRating;
+<a name="275"></a>
+<a name="276"></a>	return (AIRating + <span class="source_int">0.0003</span> * FClamp(<span class="source_int">1500</span> - VSize(<span class="source_type">B</span>.Enemy.Location - <span class="source_type">Instigator</span>.Location),<span class="source_int">0</span>,<span class="source_int">1000</span>));
+<a name="277"></a>}
+<a name="278"></a>
+<a name="279"></a>function <span class="source_type">byte</span> BestMode()
+<a name="280"></a>{
+<a name="281"></a>	return <span class="source_int">0</span>;
+<a name="282"></a>}
+<a name="283"></a>
+<a name="284"></a>function <span class="source_type">bool</span> RecommendRangedAttack()
+<a name="285"></a>{
+<a name="286"></a>	return true;
+<a name="287"></a>}
+<a name="288"></a>
+<a name="289"></a><span class="source_comment">//TODO: LONG ranged?
+</span><a name="290"></a>function <span class="source_type">bool</span> RecommendLongRangedAttack()
+<a name="291"></a>{
+<a name="292"></a>	return true;
+<a name="293"></a>}
+<a name="294"></a>
+<a name="295"></a>function <span class="source_type">float</span> SuggestAttackStyle()
+<a name="296"></a>{
+<a name="297"></a>	return -<span class="source_int">1.0</span>;
+<a name="298"></a>}
+<a name="299"></a>
+<a name="300"></a>
+<a name="301"></a>simulated function SetZoomBlendColor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">c</span>)
+<a name="302"></a>{
+<a name="303"></a>	local <span class="source_type">Byte</span>    val;
+<a name="304"></a>	local <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>   clr;
+<a name="305"></a>	local <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>   <span class="source_type">fog</span>;
+<a name="306"></a>
+<a name="307"></a>	clr.<span class="source_type">R</span> = <span class="source_int">255</span>;
+<a name="308"></a>	clr.G = <span class="source_int">255</span>;
+<a name="309"></a>	clr.<span class="source_type">B</span> = <span class="source_int">255</span>;
+<a name="310"></a>	clr.<span class="source_type">A</span> = <span class="source_int">255</span>;
+<a name="311"></a>
+<a name="312"></a>	if( <span class="source_type">Instigator</span>.Region.Zone.bDistanceFog )
+<a name="313"></a>	{
+<a name="314"></a>		<span class="source_type">fog</span> = <span class="source_type">Instigator</span>.Region.Zone.DistanceFogColor;
+<a name="315"></a>		val = <span class="source_int">0</span>;
+<a name="316"></a>		val = <span class="source_type">Max</span>( val, <span class="source_type">fog</span>.<span class="source_type">R</span>);
+<a name="317"></a>		val = <span class="source_type">Max</span>( val, <span class="source_type">fog</span>.G);
+<a name="318"></a>		val = <span class="source_type">Max</span>( val, <span class="source_type">fog</span>.<span class="source_type">B</span>);
+<a name="319"></a>		if( val &gt; <span class="source_int">128</span> )
+<a name="320"></a>		{
+<a name="321"></a>			val -= <span class="source_int">128</span>;
+<a name="322"></a>			clr.<span class="source_type">R</span> -= val;
+<a name="323"></a>			clr.G -= val;
+<a name="324"></a>			clr.<span class="source_type">B</span> -= val;
+<a name="325"></a>		}
+<a name="326"></a>	}
+<a name="327"></a>	<span class="source_type">c</span>.DrawColor = clr;
+<a name="328"></a>}
+<a name="329"></a>
+<a name="330"></a>
+<a name="331"></a><span class="source_comment">/**
+<a name="332"></a> * Handles all the functionality for zooming in including
+<a name="333"></a> * setting the parameters for the weapon, pawn, and playercontroller
+<a name="334"></a> *
+<a name="335"></a> * @param bAnimateTransition whether or not to animate this zoom transition
+<a name="336"></a> */</span>
+<a name="337"></a>simulated function ZoomIn(<span class="source_type">bool</span> bAnimateTransition)
+<a name="338"></a>{
+<a name="339"></a>    super(<span class="source_type"><a href="../roengine/basekfweapon.html" class="source">BaseKFWeapon</a></span>).ZoomIn(bAnimateTransition);
+<a name="340"></a>
+<a name="341"></a>	bAimingRifle = True;
+<a name="342"></a>
+<a name="343"></a>	if( <span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">Instigator</span>)!=None )
+<a name="344"></a>		<span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">Instigator</span>).SetAiming(True);
+<a name="345"></a>
+<a name="346"></a>	if( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer && <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none )
+<a name="347"></a>	{
+<a name="348"></a>		if( AimInSound != none )
+<a name="349"></a>		{
+<a name="350"></a>            PlayOwnedSound(AimInSound, SLOT_Interact,,,,, false);
+<a name="351"></a>        }
+<a name="352"></a>	}
+<a name="353"></a>}
+<a name="354"></a>
+<a name="355"></a><span class="source_comment">/**
+<a name="356"></a> * Handles all the functionality for zooming out including
+<a name="357"></a> * setting the parameters for the weapon, pawn, and playercontroller
+<a name="358"></a> *
+<a name="359"></a> * @param bAnimateTransition whether or not to animate this zoom transition
+<a name="360"></a> */</span>
+<a name="361"></a>simulated function ZoomOut(<span class="source_type">bool</span> bAnimateTransition)
+<a name="362"></a>{
+<a name="363"></a>    super.ZoomOut(bAnimateTransition);
+<a name="364"></a>
+<a name="365"></a>	bAimingRifle = False;
+<a name="366"></a>
+<a name="367"></a>	if( <span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">Instigator</span>)!=None )
+<a name="368"></a>		<span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">Instigator</span>).SetAiming(False);
+<a name="369"></a>
+<a name="370"></a>	if( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer && <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none )
+<a name="371"></a>	{
+<a name="372"></a>		if( AimOutSound != none )
+<a name="373"></a>		{
+<a name="374"></a>            PlayOwnedSound(AimOutSound, SLOT_Interact,,,,, false);
+<a name="375"></a>        }
+<a name="376"></a>        <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).TransitionFOV(<span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).DefaultFOV,<span class="source_int">0.0</span>);
+<a name="377"></a>	}
+<a name="378"></a>}
+<a name="379"></a>
+<a name="380"></a><span class="source_comment">// Force the weapon out of iron sights shortly after firing so the textured
+</span><a name="381"></a><span class="source_comment">// scope gets the same disadvantage as the 3d scope
+</span><a name="382"></a>simulated function <span class="source_type">bool</span> StartFire(<span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="383"></a>{
+<a name="384"></a>    if ( super.StartFire(<span class="source_type">Mode</span>) )
+<a name="385"></a>    {
+<a name="386"></a>         if ( <span class="source_type">Instigator</span> != none && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none &&
+<a name="387"></a>			  <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).SteamStatsAndAchievements) != none )
+<a name="388"></a>		{
+<a name="389"></a>			<span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).SteamStatsAndAchievements).OnShotM99();
+<a name="390"></a>		}
+<a name="391"></a>
+<a name="392"></a>        return true;
+<a name="393"></a>    }
+<a name="394"></a>
+<a name="395"></a>    return false;
+<a name="396"></a>}
+<a name="397"></a>
+<a name="398"></a><span class="source_comment">/*simulated function ReloadSound()
+<a name="399"></a>{
+<a name="400"></a>    if (AmmoAmount(0) &gt;= 1)
+<a name="401"></a>    {
+<a name="402"></a>	PlaySound(ReloadM99,,0.5);
+<a name="403"></a>	}
+<a name="404"></a>	else
+<a name="405"></a>	{
+<a name="406"></a>	return;
+<a name="407"></a>	}
+<a name="408"></a>}*/</span>
+<a name="409"></a>
+<a name="410"></a><span class="source_comment">/**
+<a name="411"></a> * Called by the native code when the interpolation of the first person weapon to the zoomed position finishes
+<a name="412"></a> */</span>
+<a name="413"></a>simulated event OnZoomInFinished()
+<a name="414"></a>{
+<a name="415"></a>    local <span class="source_type">name</span> anim;
+<a name="416"></a>    local <span class="source_type">float</span> frame, rate;
+<a name="417"></a>
+<a name="418"></a>    GetAnimParams(<span class="source_int">0</span>, anim, frame, rate);
+<a name="419"></a>
+<a name="420"></a>    if (ClientState == WS_ReadyToFire)
+<a name="421"></a>    {
+<a name="422"></a>        <span class="source_comment">// Play the iron idle anim when we're finished zooming in
+</span><a name="423"></a>        if (anim == IdleAnim)
+<a name="424"></a>        {
+<a name="425"></a>           PlayIdle();
+<a name="426"></a>        }
+<a name="427"></a>    }
+<a name="428"></a>
+<a name="429"></a>	if( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer && <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none &&
+<a name="430"></a>        KFScopeDetail == KF_TextureScope )
+<a name="431"></a>	{
+<a name="432"></a>		<span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).TransitionFOV(PlayerIronSightFOV,<span class="source_int">0.0</span>);
+<a name="433"></a>	}
+<a name="434"></a>}
+<a name="435"></a>
+<a name="436"></a>simulated event RenderOverlays(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="437"></a>{
+<a name="438"></a>    local <span class="source_type">int</span> <span class="source_type">m</span>;
+<a name="439"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="440"></a>
+<a name="441"></a>    if (<span class="source_type">Instigator</span> == None)
+<a name="442"></a>        return;
+<a name="443"></a>
+<a name="444"></a>    <span class="source_comment">// Lets avoid having to do multiple casts every tick - Ramm
+</span><a name="445"></a>	<span class="source_type">PC</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="446"></a>
+<a name="447"></a>	if(<span class="source_type">PC</span> == None)
+<a name="448"></a>		return;
+<a name="449"></a>
+<a name="450"></a>    if(!bInitializedScope && <span class="source_type">PC</span> != none )
+<a name="451"></a>	{
+<a name="452"></a>    	  UpdateScopeMode();
+<a name="453"></a>    }
+<a name="454"></a>
+<a name="455"></a>    <span class="source_comment">// draw muzzleflashes/smoke for all fire modes so idle state won't
+</span><a name="456"></a>    <span class="source_comment">// cause emitters to just disappear
+</span><a name="457"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawActor(None, false, true); <span class="source_comment">// amb: Clear the z-buffer here
+</span><a name="458"></a>
+<a name="459"></a>    for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="460"></a>	{
+<a name="461"></a>        if (FireMode[<span class="source_type">m</span>] != None)
+<a name="462"></a>        {
+<a name="463"></a>            FireMode[<span class="source_type">m</span>].DrawMuzzleFlash(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="464"></a>        }
+<a name="465"></a>    }
+<a name="466"></a>
+<a name="467"></a>
+<a name="468"></a>    SetLocation( <span class="source_type">Instigator</span>.Location + <span class="source_type">Instigator</span>.CalcDrawOffset(self) );
+<a name="469"></a>    SetRotation( <span class="source_type">Instigator</span>.GetViewRotation() + ZoomRotInterp);
+<a name="470"></a>
+<a name="471"></a>	PreDrawFPWeapon();	<span class="source_comment">// Laurent -- Hook to override things before render (like rotation if using a staticmesh)
+</span><a name="472"></a>
+<a name="473"></a> 	if(bAimingRifle && <span class="source_type">PC</span> != none && (KFScopeDetail == KF_ModelScope || KFScopeDetail == KF_ModelScopeHigh))
+<a name="474"></a> 	{
+<a name="475"></a> 		if (ShouldDrawPortal())
+<a name="476"></a> 		{
+<a name="477"></a>			if ( ScopeScriptedTexture != none )
+<a name="478"></a>			{
+<a name="479"></a>				Skins[LenseMaterialID] = ScopeScriptedShader;
+<a name="480"></a>				ScopeScriptedTexture.<span class="source_type">Client</span> = Self;   <span class="source_comment">// Need this because this can get corrupted - Ramm
+</span><a name="481"></a>				ScopeScriptedTexture.Revision = (ScopeScriptedTexture.Revision +<span class="source_int">1</span>);
+<a name="482"></a>			}
+<a name="483"></a> 		}
+<a name="484"></a>
+<a name="485"></a>		bDrawingFirstPerson = true;
+<a name="486"></a> 	    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawBoundActor(self, false, false,DisplayFOV,<span class="source_type">PC</span>.<span class="source_type">Rotation</span>,rot(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>),<span class="source_type">Instigator</span>.CalcZoomedDrawOffset(self));
+<a name="487"></a>      	bDrawingFirstPerson = false;
+<a name="488"></a>	}
+<a name="489"></a>    <span class="source_comment">// Added "bInIronViewCheck here. Hopefully it prevents us getting the scope overlay when not zoomed.
+</span><a name="490"></a>    <span class="source_comment">// Its a bit of a band-aid solution, but it will work til we get to the root of the problem - Ramm 08/12/04
+</span><a name="491"></a>	else if( KFScopeDetail == KF_TextureScope && <span class="source_type">PC</span>.DesiredFOV == PlayerIronSightFOV && bAimingRifle)
+<a name="492"></a>	{
+<a name="493"></a>		Skins[LenseMaterialID] = ScriptedTextureFallback;
+<a name="494"></a>
+<a name="495"></a>		SetZoomBlendColor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="496"></a>
+<a name="497"></a>		<span class="source_comment">//Black-out either side of the main zoom circle.
+</span><a name="498"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Normal;
+<a name="499"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">0</span>, <span class="source_int">0</span>);
+<a name="500"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTile(ZoomMat, (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeX - <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY) / <span class="source_int">2</span>, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY, <span class="source_int">0.0</span>, <span class="source_int">0.0</span>, <span class="source_int">8</span>, <span class="source_int">8</span>);
+<a name="501"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeX, <span class="source_int">0</span>);
+<a name="502"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTile(ZoomMat, -(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeX - <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY) / <span class="source_int">2</span>, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY, <span class="source_int">0.0</span>, <span class="source_int">0.0</span>, <span class="source_int">8</span>, <span class="source_int">8</span>);
+<a name="503"></a>
+<a name="504"></a>		<span class="source_comment">//The view through the scope itself.
+</span><a name="505"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_int">255</span>;
+<a name="506"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos((<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeX - <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY) / <span class="source_int">2</span>,<span class="source_int">0</span>);
+<a name="507"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTile(ZoomMat, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY, <span class="source_int">0.0</span>, <span class="source_int">0.0</span>, <span class="source_int">1024</span>, <span class="source_int">1024</span>);
+<a name="508"></a>
+<a name="509"></a>		<span class="source_comment">//Draw some useful text.
+</span><a name="510"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.MedFont;
+<a name="511"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">200</span>,<span class="source_int">150</span>,<span class="source_int">0</span>);
+<a name="512"></a>
+<a name="513"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeX * <span class="source_int">0.16</span>, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY * <span class="source_int">0.43</span>);
+<a name="514"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"Zoom: 3.0"</span>);
+<a name="515"></a>
+<a name="516"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeX * <span class="source_int">0.16</span>, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY * <span class="source_int">0.47</span>);
+<a name="517"></a>	}
+<a name="518"></a> 	else
+<a name="519"></a> 	{
+<a name="520"></a>		Skins[LenseMaterialID] = ScriptedTextureFallback;
+<a name="521"></a>		bDrawingFirstPerson = true;
+<a name="522"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawActor(self, false, false, DisplayFOV);
+<a name="523"></a>		bDrawingFirstPerson = false;
+<a name="524"></a> 	}
+<a name="525"></a>}
+<a name="526"></a>
+<a name="527"></a><span class="source_comment">//=============================================================================
+</span><a name="528"></a><span class="source_comment">// Scopes
+</span><a name="529"></a><span class="source_comment">//=============================================================================
+</span><a name="530"></a>
+<a name="531"></a><span class="source_comment">//------------------------------------------------------------------------------
+</span><a name="532"></a><span class="source_comment">// SetScopeDetail(RO) - Allow the players to change scope detail while ingame.
+</span><a name="533"></a><span class="source_comment">//	Changes are saved to the ini file.
+</span><a name="534"></a><span class="source_comment">//------------------------------------------------------------------------------
+</span><a name="535"></a><span class="source_comment">/*simulated exec function SetScopeDetail()
+<a name="536"></a>{
+<a name="537"></a>	if( !bHasScope )
+<a name="538"></a>		return;
+<a name="539"></a>
+<a name="540"></a>	if (KFScopeDetail == KF_ModelScope)
+<a name="541"></a>		KFScopeDetail = KF_TextureScope;
+<a name="542"></a>	else if ( KFScopeDetail == KF_TextureScope)
+<a name="543"></a>		KFScopeDetail = KF_ModelScopeHigh;
+<a name="544"></a>	else if ( KFScopeDetail == KF_ModelScopeHigh)
+<a name="545"></a>		KFScopeDetail = KF_ModelScope;
+<a name="546"></a>
+<a name="547"></a>	AdjustIngameScope();
+<a name="548"></a>	class'KFMod.KFWeapon'.default.KFScopeDetail = KFScopeDetail;
+<a name="549"></a>	class'KFMod.KFWeapon'.static.StaticSaveConfig();		// saves the new scope detail value to the ini
+<a name="550"></a>}*/</span>
+<a name="551"></a>
+<a name="552"></a><span class="source_comment">// Adjust a single FOV based on the current aspect ratio. Adjust FOV is the default NON-aspect ratio adjusted FOV to adjust
+</span><a name="553"></a>simulated function <span class="source_type">float</span> CalcAspectRatioAdjustedFOV(<span class="source_type">float</span> AdjustFOV)
+<a name="554"></a>{
+<a name="555"></a>	local <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span> <span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span>;
+<a name="556"></a>	local <span class="source_type">float</span> <span class="source_type">ResX</span>, <span class="source_type">ResY</span>;
+<a name="557"></a>	local <span class="source_type">float</span> AspectRatio;
+<a name="558"></a>
+<a name="559"></a>	<span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span> = <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Level</span>.GetLocalPlayerController());
+<a name="560"></a>
+<a name="561"></a>	if( <span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span> == none )
+<a name="562"></a>	{
+<a name="563"></a>		return AdjustFOV;
+<a name="564"></a>	}
+<a name="565"></a>
+<a name="566"></a>	<span class="source_type">ResX</span> = <span class="source_type">float</span>(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span>(<span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span>.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span>).<span class="source_type">ResX</span>);
+<a name="567"></a>	<span class="source_type">ResY</span> = <span class="source_type">float</span>(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span>(<span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span>.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span>).<span class="source_type">ResY</span>);
+<a name="568"></a>	AspectRatio = <span class="source_type">ResX</span> / <span class="source_type">ResY</span>;
+<a name="569"></a>
+<a name="570"></a>	if ( <span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span>.bUseTrueWideScreenFOV && AspectRatio &gt;= <span class="source_int">1.60</span> ) <span class="source_comment">//1.6 = 16/10 which is 16:10 ratio and 16:9 comes to 1.77
+</span><a name="571"></a>	{
+<a name="572"></a>		return CalcFOVForAspectRatio(AdjustFOV);
+<a name="573"></a>	}
+<a name="574"></a>	else
+<a name="575"></a>	{
+<a name="576"></a>		return AdjustFOV;
+<a name="577"></a>	}
+<a name="578"></a>}
+<a name="579"></a>
+<a name="580"></a><span class="source_comment">//------------------------------------------------------------------------------
+</span><a name="581"></a><span class="source_comment">// AdjustIngameScope(RO) - Takes the changes to the ScopeDetail variable and
+</span><a name="582"></a><span class="source_comment">//	sets the scope to the new detail mode. Called when the player switches the
+</span><a name="583"></a><span class="source_comment">//	scope setting ingame, or when the scope setting is changed from the menu
+</span><a name="584"></a><span class="source_comment">//------------------------------------------------------------------------------
+</span><a name="585"></a>simulated function AdjustIngameScope()
+<a name="586"></a>{
+<a name="587"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="588"></a>
+<a name="589"></a>    <span class="source_comment">// Lets avoid having to do multiple casts every tick - Ramm
+</span><a name="590"></a>	<span class="source_type">PC</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="591"></a>
+<a name="592"></a>	if( !bHasScope )
+<a name="593"></a>		return;
+<a name="594"></a>
+<a name="595"></a>	<span class="source_type">switch</span> (KFScopeDetail)
+<a name="596"></a>	{
+<a name="597"></a>		case KF_ModelScope:
+<a name="598"></a>			if( bAimingRifle )
+<a name="599"></a>				DisplayFOV = CalcAspectRatioAdjustedFOV(default.ZoomedDisplayFOV);
+<a name="600"></a>			if ( <span class="source_type">PC</span>.DesiredFOV == PlayerIronSightFOV && bAimingRifle )
+<a name="601"></a>			{
+<a name="602"></a>            	if( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer && <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none )
+<a name="603"></a>            	{
+<a name="604"></a>                    <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).TransitionFOV(<span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).DefaultFOV,<span class="source_int">0.0</span>);
+<a name="605"></a>}
+<a name="606"></a>			}
+<a name="607"></a>			break;
+<a name="608"></a>
+<a name="609"></a>		case KF_TextureScope:
+<a name="610"></a>			if( bAimingRifle )
+<a name="611"></a>				DisplayFOV = CalcAspectRatioAdjustedFOV(default.ZoomedDisplayFOV);
+<a name="612"></a>			if ( bAimingRifle && <span class="source_type">PC</span>.DesiredFOV != PlayerIronSightFOV )
+<a name="613"></a>			{
+<a name="614"></a>            	if( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer && <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none )
+<a name="615"></a>            	{
+<a name="616"></a>            		<span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).TransitionFOV(PlayerIronSightFOV,<span class="source_int">0.0</span>);
+<a name="617"></a>            	}
+<a name="618"></a>			}
+<a name="619"></a>			break;
+<a name="620"></a>
+<a name="621"></a>		case KF_ModelScopeHigh:
+<a name="622"></a>			if( bAimingRifle )
+<a name="623"></a>			{
+<a name="624"></a>				if( ZoomedDisplayFOVHigh &gt; <span class="source_int">0</span> )
+<a name="625"></a>				{
+<a name="626"></a>					DisplayFOV = CalcAspectRatioAdjustedFOV(default.ZoomedDisplayFOVHigh);
+<a name="627"></a>				}
+<a name="628"></a>				else
+<a name="629"></a>				{
+<a name="630"></a>					DisplayFOV = CalcAspectRatioAdjustedFOV(default.ZoomedDisplayFOV);
+<a name="631"></a>				}
+<a name="632"></a>			}
+<a name="633"></a>			if ( bAimingRifle && <span class="source_type">PC</span>.DesiredFOV == PlayerIronSightFOV )
+<a name="634"></a>			{
+<a name="635"></a>            	if( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer && <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none )
+<a name="636"></a>            	{
+<a name="637"></a>                    <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).TransitionFOV(<span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).DefaultFOV,<span class="source_int">0.0</span>);
+<a name="638"></a>            	}
+<a name="639"></a>			}
+<a name="640"></a>			break;
+<a name="641"></a>	}
+<a name="642"></a>
+<a name="643"></a>	<span class="source_comment">// Make any chagned to the scope setup
+</span><a name="644"></a>	UpdateScopeMode();
+<a name="645"></a>}
+<a name="646"></a>
+<a name="647"></a>simulated event Destroyed()
+<a name="648"></a>{
+<a name="649"></a>    if (ScopeScriptedTexture != None)
+<a name="650"></a>    {
+<a name="651"></a>        ScopeScriptedTexture.<span class="source_type">Client</span> = None;
+<a name="652"></a>        <span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.FreeObject(ScopeScriptedTexture);
+<a name="653"></a>        ScopeScriptedTexture=None;
+<a name="654"></a>    }
+<a name="655"></a>
+<a name="656"></a>    if (ScriptedScopeCombiner != None)
+<a name="657"></a>    {
+<a name="658"></a>		ScriptedScopeCombiner.Material2 = none;
+<a name="659"></a>		<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.FreeObject(ScriptedScopeCombiner);
+<a name="660"></a>		ScriptedScopeCombiner = none;
+<a name="661"></a>    }
+<a name="662"></a>
+<a name="663"></a>    if (ScopeScriptedShader != None)
+<a name="664"></a>    {
+<a name="665"></a>		ScopeScriptedShader.Diffuse = none;
+<a name="666"></a>		ScopeScriptedShader.SelfIllumination = none;
+<a name="667"></a>		<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.FreeObject(ScopeScriptedShader);
+<a name="668"></a>		ScopeScriptedShader = none;
+<a name="669"></a>    }
+<a name="670"></a>
+<a name="671"></a>    Super.Destroyed();
+<a name="672"></a>}
+<a name="673"></a>
+<a name="674"></a>simulated function PreTravelCleanUp()
+<a name="675"></a>{
+<a name="676"></a>    if (ScopeScriptedTexture != None)
+<a name="677"></a>    {
+<a name="678"></a>        ScopeScriptedTexture.<span class="source_type">Client</span> = None;
+<a name="679"></a>        <span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.FreeObject(ScopeScriptedTexture);
+<a name="680"></a>        ScopeScriptedTexture=None;
+<a name="681"></a>    }
+<a name="682"></a>
+<a name="683"></a>    if (ScriptedScopeCombiner != None)
+<a name="684"></a>    {
+<a name="685"></a>		ScriptedScopeCombiner.Material2 = none;
+<a name="686"></a>		<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.FreeObject(ScriptedScopeCombiner);
+<a name="687"></a>		ScriptedScopeCombiner = none;
+<a name="688"></a>    }
+<a name="689"></a>
+<a name="690"></a>    if (ScopeScriptedShader != None)
+<a name="691"></a>    {
+<a name="692"></a>		ScopeScriptedShader.Diffuse = none;
+<a name="693"></a>		ScopeScriptedShader.SelfIllumination = none;
+<a name="694"></a>		<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.FreeObject(ScopeScriptedShader);
+<a name="695"></a>		ScopeScriptedShader = none;
+<a name="696"></a>    }
+<a name="697"></a>}
+<a name="698"></a>
+<a name="699"></a><span class="source_type">state</span> PendingClientWeaponSet
+<a name="700"></a>{
+<a name="701"></a>    simulated function Timer()
+<a name="702"></a>    {
+<a name="703"></a>        if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Owner</span>) != None && !bIsReloading )
+<a name="704"></a>        {
+<a name="705"></a>            ClientWeaponSet(bPendingSwitch);
+<a name="706"></a>        }
+<a name="707"></a>
+<a name="708"></a>        if ( IsInState(<span class="source_name">'PendingClientWeaponSet'</span>) )
+<a name="709"></a>        {
+<a name="710"></a>			SetTimer(<span class="source_int">0.1</span>, false);
+<a name="711"></a>		}
+<a name="712"></a>    }
+<a name="713"></a>
+<a name="714"></a>    simulated function BeginState()
+<a name="715"></a>    {
+<a name="716"></a>        SetTimer(<span class="source_int">0.1</span>, false);
+<a name="717"></a>    }
+<a name="718"></a>
+<a name="719"></a>    simulated function EndState()
+<a name="720"></a>    {
+<a name="721"></a>    }
+<a name="722"></a>}
+<a name="723"></a>
+<a name="724"></a>defaultproperties
+<a name="725"></a>{
+<a name="726"></a>     lenseMaterialID=<span class="source_int">2</span>
+<a name="727"></a>     scopePortalFOVHigh=<span class="source_int">20.000000</span>
+<a name="728"></a>     scopePortalFOV=<span class="source_int">13.330000</span>
+<a name="729"></a>     ZoomMatRef=<span class="source_string">"KF_Weapons5_Scopes_Trip_T.M99.MilDotFinalBlend"</span>
+<a name="730"></a>     ScriptedTextureFallbackRef=<span class="source_string">"KF_Weapons_Trip_T.CBLens_cmb"</span>
+<a name="731"></a>     bHasScope=True
+<a name="732"></a>     ZoomedDisplayFOVHigh=<span class="source_int">18.000000</span>
+<a name="733"></a>     ForceZoomOutOnFireTime=<span class="source_int">0.400000</span>
+<a name="734"></a>     MagCapacity=<span class="source_int">1</span>
+<a name="735"></a>     ReloadRate=<span class="source_int">4.376000</span>
+<a name="736"></a>     ReloadAnim=<span class="source_string">"Reload"</span>
+<a name="737"></a>     ReloadAnimRate=<span class="source_int">1.000000</span>
+<a name="738"></a>     <span class="source_type">Weight</span>=<span class="source_int">13.000000</span>
+<a name="739"></a>     bHasAimingMode=True
+<a name="740"></a>     IdleAimAnim=<span class="source_string">"Idle_Iron"</span>
+<a name="741"></a>     StandardDisplayFOV=<span class="source_int">55.000000</span>
+<a name="742"></a>     bModeZeroCanDryFire=True
+<a name="743"></a>     TraderInfoTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KillingFloor2HUD.Trader_Weapon_Icons.Trader_M99'</span>
+<a name="744"></a>     bIsTier3Weapon=True
+<a name="745"></a>     MeshRef=<span class="source_string">"KF_Wep_M99_Sniper.M99_Sniper"</span>
+<a name="746"></a>     SkinRefs(<span class="source_int">0</span>)=<span class="source_string">"KF_Weapons5_Trip_T.Weapons.M99_cmb"</span>
+<a name="747"></a>     SelectSoundRef=<span class="source_string">"KF_M99Snd.M99_Select"</span>
+<a name="748"></a>     HudImageRef=<span class="source_string">"KillingFloor2HUD.WeaponSelect.M99_unselected"</span>
+<a name="749"></a>     SelectedHudImageRef=<span class="source_string">"KillingFloor2HUD.WeaponSelect.M99"</span>
+<a name="750"></a>     PlayerIronSightFOV=<span class="source_int">30.000000</span>
+<a name="751"></a>     ZoomTime=<span class="source_int">0.285000</span>
+<a name="752"></a>     ZoomedDisplayFOV=<span class="source_int">30.000000</span>
+<a name="753"></a>     FireModeClass(<span class="source_int">0</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.M99Fire'</span>
+<a name="754"></a>     FireModeClass(<span class="source_int">1</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.NoFire'</span>
+<a name="755"></a>     PutDownAnim=<span class="source_string">"PutDown"</span>
+<a name="756"></a>     PutDownAnimRate=<span class="source_int">2.000000</span>
+<a name="757"></a>     SelectForce=<span class="source_string">"SwitchToAssaultRifle"</span>
+<a name="758"></a>     AIRating=<span class="source_int">0.550000</span>
+<a name="759"></a>     CurrentRating=<span class="source_int">0.550000</span>
+<a name="760"></a>     bShowChargingBar=True
+<a name="761"></a>     Description=<span class="source_string">"M99 50 Caliber Single Shot Sniper Rifle - The ultimate in long range accuracy and knock down power."</span>
+<a name="762"></a>     EffectOffset=(<span class="source_type">X</span>=<span class="source_int">100.000000</span>,<span class="source_type">Y</span>=<span class="source_int">25.000000</span>,<span class="source_type">Z</span>=-<span class="source_int">10.000000</span>)
+<a name="763"></a>     DisplayFOV=<span class="source_int">55.000000</span>
+<a name="764"></a>     Priority=<span class="source_int">190</span>
+<a name="765"></a>     CustomCrosshair=<span class="source_int">11</span>
+<a name="766"></a>     CustomCrossHairTextureName=<span class="source_string">"Crosshairs.HUD.Crosshair_Cross5"</span>
+<a name="767"></a>     InventoryGroup=<span class="source_int">4</span>
+<a name="768"></a>     GroupOffset=<span class="source_int">14</span>
+<a name="769"></a>     PickupClass=<span class="source_type">Class</span><span class="source_name">'KFMod.M99Pickup'</span>
+<a name="770"></a>     PlayerViewOffset=(<span class="source_type">X</span>=<span class="source_int">15.000000</span>,<span class="source_type">Y</span>=<span class="source_int">15.000000</span>,<span class="source_type">Z</span>=-<span class="source_int">2.500000</span>)
+<a name="771"></a>     BobDamping=<span class="source_int">4.500000</span>
+<a name="772"></a>     AttachmentClass=<span class="source_type">Class</span><span class="source_name">'KFMod.M99Attachment'</span>
+<a name="773"></a>     IconCoords=(X1=<span class="source_int">245</span>,Y1=<span class="source_int">39</span>,X2=<span class="source_int">329</span>,Y2=<span class="source_int">79</span>)
+<a name="774"></a>     ItemName=<span class="source_string">"M99 AMR"</span>
+<a name="775"></a>     LightType=LT_None
+<a name="776"></a>     LightBrightness=<span class="source_int">0.000000</span>
+<a name="777"></a>     LightRadius=<span class="source_int">0.000000</span>
+<a name="778"></a>     TransientSoundVolume=<span class="source_int">1.250000</span>
+<a name="779"></a>}
+<a name="780"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/m99sniperrifle.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#M99SniperRifle">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/m99pickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/mac10ammo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:05.120 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

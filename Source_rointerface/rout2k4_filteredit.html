@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: ROInterface.ROUT2K4_FilterEdit</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/rout2k4_filteredit.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROUT2K4_FilterEdit">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/rout2k4tab_serverrulespanel.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/rout2k4_filterlistpage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_rointerface/rout2k4_filteredit.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../rointerface/rointerface-overview.html">ROInterface</a>.<a href="../rointerface/rout2k4_filteredit.html">ROUT2K4_FilterEdit</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//-----------------------------------------------------------
+</span><a name="2"></a><span class="source_comment">//
+</span><a name="3"></a><span class="source_comment">//-----------------------------------------------------------
+</span><a name="4"></a>
+<a name="5"></a><span class="source_type">class</span> <span class="source_type"><a href="../rointerface/rout2k4_filteredit.html" class="source">ROUT2K4_FilterEdit</a></span> extends <span class="source_type"><a href="../gui2k4/largewindow.html" class="source">LargeWindow</a></span>;
+<a name="6"></a>
+<a name="7"></a>var automated <span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> sb_Options;
+<a name="8"></a>var automated <span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span> eb_Name;
+<a name="9"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> ck_Full, ck_Bots, ck_Empty, ck_Passworded, ck_VACOnly, ck_Hidden;
+<a name="10"></a>var automated <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> b_Ok, b_Cancel;
+<a name="11"></a>
+<a name="12"></a>var <span class="source_type">int</span> 			FilterIndex;
+<a name="13"></a>var	<span class="source_type"><a href="../gui2k4/browserfilters.html" class="source">BrowserFilters</a></span> 	FM;
+<a name="14"></a>
+<a name="15"></a>var <span class="source_type"><a href="../gui2k4/ut2k4_filterlistpage.html" class="source">UT2K4_FilterListPage</a></span> FLP;
+<a name="16"></a>
+<a name="17"></a>var <span class="source_type">bool</span> bInitialized;
+<a name="18"></a>
+<a name="19"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyC, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> MyO)
+<a name="20"></a>{
+<a name="21"></a>	Super.InitComponent(MyC, MyO);
+<a name="22"></a>
+<a name="23"></a>	FLP = <span class="source_type"><a href="../gui2k4/ut2k4_filterlistpage.html" class="source">UT2K4_FilterListPage</a></span>(ParentPage);
+<a name="24"></a>
+<a name="25"></a>	sb_Options.ManageComponent(ck_Full);
+<a name="26"></a>	sb_Options.ManageComponent(ck_Empty);
+<a name="27"></a>	sb_Options.ManageComponent(ck_Passworded);
+<a name="28"></a>	sb_Options.ManageComponent(ck_Bots);
+<a name="29"></a>	sb_Options.ManageComponent(ck_VACOnly);
+<a name="30"></a>	sb_Options.ManageComponent(ck_Hidden);
+<a name="31"></a>}
+<a name="32"></a>
+<a name="33"></a>event HandleParameters(<span class="source_type">string</span> Param1, <span class="source_type">string</span> <span class="source_type">Param2</span>)
+<a name="34"></a>{
+<a name="35"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="36"></a>	local array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html" class="source">CustomFilter</a></span>.<span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span>&gt; Rules;
+<a name="37"></a>	local <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#QueryData" class="source">QueryData</a></span> 	<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>;
+<a name="38"></a>
+<a name="39"></a>	FilterIndex = <span class="source_type">int</span>(Param1);
+<a name="40"></a>	eb_Name.SetComponentValue(<span class="source_type">Param2</span>);
+<a name="41"></a>
+<a name="42"></a>	if (<span class="source_type">Param2</span>~=<span class="source_string">"Default"</span>)
+<a name="43"></a>		eb_Name.DisableMe();
+<a name="44"></a>	else
+<a name="45"></a>		eb_Name.EnableMe();
+<a name="46"></a>
+<a name="47"></a>	<span class="source_comment">//Get the custom filter
+</span><a name="48"></a> 	Rules = FLP.FM.GetFilterRules(FilterIndex);
+<a name="49"></a>
+<a name="50"></a>	for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;Rules.Length;<span class="source_type">i</span>++)
+<a name="51"></a>	{
+<a name="52"></a>		<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span> = Rules[<span class="source_type">i</span>].<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>;
+<a name="53"></a>		if ( <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key~=<span class="source_string">"currentplayers"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span>==<span class="source_string">"0"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType==QT_GreaterThan )
+<a name="54"></a>			ck_Empty.Checked(true);
+<a name="55"></a>
+<a name="56"></a>		if ( <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key~=<span class="source_string">"password"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span>==<span class="source_string">"false"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType==QT_Equals )
+<a name="57"></a>			ck_Passworded.Checked(true);
+<a name="58"></a>
+<a name="59"></a>		if ( <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key~=<span class="source_string">"freespace"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span> ==<span class="source_string">"0"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType==QT_GreaterThan )
+<a name="60"></a>			ck_Full.Checked(true);
+<a name="61"></a>
+<a name="62"></a>		if ( <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key~=<span class="source_string">"nobots"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span>==<span class="source_string">"true"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType==QT_Equals)
+<a name="63"></a>			ck_Bots.Checked(true);
+<a name="64"></a>
+<a name="65"></a>		if ( <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key~=<span class="source_string">"vacsecure"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span>==<span class="source_string">"true"</span> && <span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType==QT_Equals)
+<a name="66"></a>			ck_VACOnly.Checked(true);
+<a name="67"></a>	}
+<a name="68"></a>}
+<a name="69"></a>
+<a name="70"></a>function <span class="source_type">bool</span> CancelClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="71"></a>{
+<a name="72"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseMenu(true);
+<a name="73"></a>	return true;
+<a name="74"></a>}
+<a name="75"></a>
+<a name="76"></a>function <span class="source_type"><a href="../gui2k4/customfilter.html" class="source">CustomFilter</a></span>.<span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span> BuildRule(<span class="source_type">string</span> Key, <span class="source_type">string</span> <span class="source_type">Value</span>, <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#EQueryType" class="source">EQueryType</a></span> qType)
+<a name="77"></a>{
+<a name="78"></a>	local <span class="source_type"><a href="../gui2k4/customfilter.html" class="source">CustomFilter</a></span>.<span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span> <span class="source_type">NewRule</span>;
+<a name="79"></a>
+<a name="80"></a>	<span class="source_type">NewRule</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key   		= key;
+<a name="81"></a>	<span class="source_type">NewRule</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span> 		= <span class="source_type">value</span>;
+<a name="82"></a>	<span class="source_type">NewRule</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType	= qtype;
+<a name="83"></a>	<span class="source_type">NewRule</span>.FilterType				= DT_Unique;
+<a name="84"></a>	<span class="source_type">NewRule</span>.ItemName				= Key;
+<a name="85"></a>
+<a name="86"></a>	return <span class="source_type">NewRule</span>;
+<a name="87"></a>}
+<a name="88"></a>
+<a name="89"></a>
+<a name="90"></a>function <span class="source_type">bool</span> OkClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Server</span>)
+<a name="91"></a>{
+<a name="92"></a>	local array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html" class="source">CustomFilter</a></span>.<span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span>&gt; Rules;
+<a name="93"></a>	local <span class="source_type">int</span> cnt;
+<a name="94"></a>
+<a name="95"></a>	cnt = <span class="source_int">0</span>;
+<a name="96"></a>
+<a name="97"></a>	<span class="source_comment">// Build Query lists
+</span><a name="98"></a>
+<a name="99"></a>	if ( ck_Empty.IsChecked() )
+<a name="100"></a>		Rules[Cnt++] = BuildRule(<span class="source_string">"currentplayers"</span>,<span class="source_string">"0"</span>,QT_GreaterThan);
+<a name="101"></a>
+<a name="102"></a>	if ( ck_Full.IsChecked() )
+<a name="103"></a>		Rules[Cnt++] = BuildRule(<span class="source_string">"freespace"</span>,<span class="source_string">"0"</span>,QT_GreaterThan);
+<a name="104"></a>
+<a name="105"></a>	if ( ck_Passworded.IsChecked() )
+<a name="106"></a>		Rules[Cnt++] = BuildRule(<span class="source_string">"password"</span>,<span class="source_string">"false"</span>,QT_Equals);
+<a name="107"></a>
+<a name="108"></a>	if ( ck_Bots.IsChecked() )
+<a name="109"></a>		Rules[Cnt++] = BuildRule(<span class="source_string">"nobots"</span>,<span class="source_string">"true"</span>, QT_Equals);
+<a name="110"></a>
+<a name="111"></a>	if ( ck_VACOnly.IsChecked() )
+<a name="112"></a>		Rules[Cnt++] = BuildRule(<span class="source_string">"vacsecure"</span>,<span class="source_string">"true"</span>, QT_Equals);
+<a name="113"></a>
+<a name="114"></a>	FLP.FM.PostEdit(FilterIndex,eb_Name.GetComponentValue(),Rules);
+<a name="115"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseMenu(true);
+<a name="116"></a>	FLP.InitFilterList();
+<a name="117"></a>
+<a name="118"></a>	FLP.li_Filters.SetIndex(FLP.li_Filters.Find(eb_Name.GetComponentValue()));
+<a name="119"></a>
+<a name="120"></a>	return true;
+<a name="121"></a>}
+<a name="122"></a>
+<a name="123"></a>function <span class="source_type">bool</span> ebPreDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="124"></a>{
+<a name="125"></a>	<span class="source_comment">// Reposition
+</span><a name="126"></a>	eb_Name.WinTop = sb_Options.ActualTop() + <span class="source_int">36</span>;
+<a name="127"></a>	return true;
+<a name="128"></a>}
+<a name="129"></a>
+<a name="130"></a>defaultproperties
+<a name="131"></a>{
+<a name="132"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=sbOptions
+<a name="133"></a>         bFillClient=True
+<a name="134"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Options..."</span>
+<a name="135"></a>         LeftPadding=<span class="source_int">0.002500</span>
+<a name="136"></a>         RightPadding=<span class="source_int">0.002500</span>
+<a name="137"></a>         TopPadding=<span class="source_int">0.200000</span>
+<a name="138"></a>         BottomPadding=<span class="source_int">0.002500</span>
+<a name="139"></a>         NumColumns=<span class="source_int">2</span>
+<a name="140"></a>         WinTop=<span class="source_int">0.257448</span>
+<a name="141"></a>         WinLeft=<span class="source_int">0.086094</span>
+<a name="142"></a>         WinWidth=<span class="source_int">0.827735</span>
+<a name="143"></a>         WinHeight=<span class="source_int">0.427735</span>
+<a name="144"></a>         OnPreDraw=sbOptions.InternalPreDraw
+<a name="145"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="146"></a>     sb_Options=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.sbOptions'</span>
+<a name="147"></a>
+<a name="148"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span> <span class="source_type">Name</span>=ebName
+<a name="149"></a>         ComponentWidth=<span class="source_int">0.700000</span>
+<a name="150"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Filter Name:"</span>
+<a name="151"></a>         OnCreateComponent=ebName.InternalOnCreateComponent
+<a name="152"></a>         WinTop=<span class="source_int">0.124114</span>
+<a name="153"></a>         WinLeft=<span class="source_int">0.184531</span>
+<a name="154"></a>         WinWidth=<span class="source_int">0.654297</span>
+<a name="155"></a>         TabOrder=<span class="source_int">0</span>
+<a name="156"></a>         OnPreDraw=<span class="source_type"><a href="../rointerface/rout2k4_filteredit.html" class="source">ROUT2K4_FilterEdit</a></span>.ebPreDraw
+<a name="157"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="158"></a>     eb_Name=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.ebName'</span>
+<a name="159"></a>
+<a name="160"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=ckFull
+<a name="161"></a>         ComponentWidth=<span class="source_int">0.100000</span>
+<a name="162"></a>         <span class="source_type">Caption</span>=<span class="source_string">"No Full Servers"</span>
+<a name="163"></a>         OnCreateComponent=ckFull.InternalOnCreateComponent
+<a name="164"></a>         WinTop=<span class="source_int">0.250000</span>
+<a name="165"></a>         WinLeft=<span class="source_int">0.250000</span>
+<a name="166"></a>         TabOrder=<span class="source_int">1</span>
+<a name="167"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="168"></a>     ck_Full=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.ckFull'</span>
+<a name="169"></a>
+<a name="170"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=ckBots
+<a name="171"></a>         ComponentWidth=<span class="source_int">0.100000</span>
+<a name="172"></a>         <span class="source_type">Caption</span>=<span class="source_string">"No Bots"</span>
+<a name="173"></a>         OnCreateComponent=ckBots.InternalOnCreateComponent
+<a name="174"></a>         WinTop=<span class="source_int">0.250000</span>
+<a name="175"></a>         WinLeft=<span class="source_int">0.250000</span>
+<a name="176"></a>         TabOrder=<span class="source_int">2</span>
+<a name="177"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="178"></a>     ck_Bots=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.ckBots'</span>
+<a name="179"></a>
+<a name="180"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=ckEmpty
+<a name="181"></a>         ComponentWidth=<span class="source_int">0.100000</span>
+<a name="182"></a>         <span class="source_type">Caption</span>=<span class="source_string">"No Empty Servers"</span>
+<a name="183"></a>         OnCreateComponent=ckEmpty.InternalOnCreateComponent
+<a name="184"></a>         WinTop=<span class="source_int">0.250000</span>
+<a name="185"></a>         WinLeft=<span class="source_int">0.250000</span>
+<a name="186"></a>         TabOrder=<span class="source_int">3</span>
+<a name="187"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="188"></a>     ck_Empty=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.ckEmpty'</span>
+<a name="189"></a>
+<a name="190"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=ckPassworded
+<a name="191"></a>         ComponentWidth=<span class="source_int">0.100000</span>
+<a name="192"></a>         <span class="source_type">Caption</span>=<span class="source_string">"No Passworded Servers"</span>
+<a name="193"></a>         OnCreateComponent=ckPassworded.InternalOnCreateComponent
+<a name="194"></a>         WinTop=<span class="source_int">0.250000</span>
+<a name="195"></a>         WinLeft=<span class="source_int">0.250000</span>
+<a name="196"></a>         TabOrder=<span class="source_int">4</span>
+<a name="197"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="198"></a>     ck_Passworded=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.ckPassworded'</span>
+<a name="199"></a>
+<a name="200"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=ckVACOnly
+<a name="201"></a>         ComponentWidth=<span class="source_int">0.100000</span>
+<a name="202"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Valve Anti-Cheat Protected Only"</span>
+<a name="203"></a>         OnCreateComponent=ckVACOnly.InternalOnCreateComponent
+<a name="204"></a>         WinTop=<span class="source_int">0.250000</span>
+<a name="205"></a>         WinLeft=<span class="source_int">0.250000</span>
+<a name="206"></a>         TabOrder=<span class="source_int">5</span>
+<a name="207"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="208"></a>     ck_VACOnly=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.ckVACOnly'</span>
+<a name="209"></a>
+<a name="210"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=ckHidden
+<a name="211"></a>         ComponentWidth=<span class="source_int">0.100000</span>
+<a name="212"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Hidden"</span>
+<a name="213"></a>         OnCreateComponent=ckHidden.InternalOnCreateComponent
+<a name="214"></a>         WinTop=<span class="source_int">0.250000</span>
+<a name="215"></a>         WinLeft=<span class="source_int">0.250000</span>
+<a name="216"></a>         TabOrder=<span class="source_int">6</span>
+<a name="217"></a>         bVisible=False
+<a name="218"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="219"></a>     ck_Hidden=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.ckHidden'</span>
+<a name="220"></a>
+<a name="221"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=bOk
+<a name="222"></a>         <span class="source_type">Caption</span>=<span class="source_string">"OK"</span>
+<a name="223"></a>         WinTop=<span class="source_int">0.698612</span>
+<a name="224"></a>         WinLeft=<span class="source_int">0.561564</span>
+<a name="225"></a>         WinWidth=<span class="source_int">0.168750</span>
+<a name="226"></a>         WinHeight=<span class="source_int">0.050000</span>
+<a name="227"></a>         OnClick=<span class="source_type"><a href="../rointerface/rout2k4_filteredit.html" class="source">ROUT2K4_FilterEdit</a></span>.OkClick
+<a name="228"></a>         OnKeyEvent=bOk.InternalOnKeyEvent
+<a name="229"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="230"></a>     b_OK=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.bOk'</span>
+<a name="231"></a>
+<a name="232"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=bCancel
+<a name="233"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Cancel"</span>
+<a name="234"></a>         WinTop=<span class="source_int">0.698612</span>
+<a name="235"></a>         WinLeft=<span class="source_int">0.742814</span>
+<a name="236"></a>         WinWidth=<span class="source_int">0.168750</span>
+<a name="237"></a>         WinHeight=<span class="source_int">0.050000</span>
+<a name="238"></a>         OnClick=<span class="source_type"><a href="../rointerface/rout2k4_filteredit.html" class="source">ROUT2K4_FilterEdit</a></span>.CancelClick
+<a name="239"></a>         OnKeyEvent=bCancel.InternalOnKeyEvent
+<a name="240"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="241"></a>     b_Cancel=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'ROInterface.ROUT2K4_FilterEdit.bCancel'</span>
+<a name="242"></a>
+<a name="243"></a>     WindowName=<span class="source_string">"Edit Filter Rules..."</span>
+<a name="244"></a>     WinLeft=<span class="source_int">0.050000</span>
+<a name="245"></a>     WinWidth=<span class="source_int">0.900000</span>
+<a name="246"></a>     WinHeight=<span class="source_int">0.570000</span>
+<a name="247"></a>}
+<a name="248"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/rout2k4_filteredit.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROUT2K4_FilterEdit">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/rout2k4tab_serverrulespanel.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/rout2k4_filterlistpage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:07.830 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

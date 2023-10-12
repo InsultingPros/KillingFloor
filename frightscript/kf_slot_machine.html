@@ -1,0 +1,862 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - FrightScript.KF_Slot_Machine</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../frightscript/frightscript-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_frightscript/kf_slot_machine.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#KF_Slot_Machine">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../frightscript/kf_slot_cashpickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../frightscript/kf_slot_reel.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#frightscript/kf_slot_machine.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../frightscript/frightscript-overview.html">FrightScript</a>.KF_Slot_Machine</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../engine/actor.html">Actor</a></dd>
+<dt>Modifiers</dt><dd>placeable </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../frightscript/frightscript-overview.html">FrightScript</a>.<a href="../frightscript/kf_slot_machine.html">KF_Slot_Machine</a>
+</pre>
+
+
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Summary</th>
+</tr>
+<tr><td width="40%"><a href="#_NUMAMBIENTSNDS" name="NUMAMBIENTSNDS" title="go to the details">NUMAMBIENTSNDS</a></td><td width="10%">=</td><td width="50%">3</td></tr>
+<tr><td width="40%"><a href="#_NUMREELS" name="NUMREELS" title="go to the details">NUMREELS</a></td><td width="10%">=</td><td width="50%">3</td></tr>
+<tr><td width="40%"><a href="#_NUMSYMBOLS" name="NUMSYMBOLS" title="go to the details">NUMSYMBOLS</a></td><td width="10%">=</td><td width="50%">6</td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Contants from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#MAINCOLLISIONINDEX">MAINCOLLISIONINDEX</a>, <a href="../engine/actor.html#MAXSTEPHEIGHT">MAXSTEPHEIGHT</a>, <a href="../engine/actor.html#MINFLOORZ">MINFLOORZ</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Contants from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#ALLIES_TEAM_INDEX">ALLIES_TEAM_INDEX</a>, <a href="../core/object.html#AXIS_TEAM_INDEX">AXIS_TEAM_INDEX</a>, <a href="../core/object.html#MaxInt">MaxInt</a>, <a href="../core/object.html#NEUTRAL_TEAM_INDEX">NEUTRAL_TEAM_INDEX</a>, <a href="../core/object.html#Pi">Pi</a>, <a href="../core/object.html#RF_NotForClient">RF_NotForClient</a>, <a href="../core/object.html#RF_NotForEdit">RF_NotForEdit</a>, <a href="../core/object.html#RF_NotForServer">RF_NotForServer</a>, <a href="../core/object.html#RF_Public">RF_Public</a>, <a href="../core/object.html#RF_Standalone">RF_Standalone</a>, <a href="../core/object.html#RF_Transactional">RF_Transactional</a>, <a href="../core/object.html#RF_Transient">RF_Transient</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bActive" name="bActive" title="go to the details">bActive</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bFirstSpin" name="bFirstSpin" title="go to the details">bFirstSpin</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_CashPrizeRadius" name="CashPrizeRadius" title="go to the details">CashPrizeRadius</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_CashPrizeVolume" name="CashPrizeVolume" title="go to the details">CashPrizeVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/pawn.html">Pawn</a></td><td width="66%"><a href="#_CurrentPlayer" name="CurrentPlayer" title="go to the details">CurrentPlayer</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_DesiredRolls[NUMREELS]" name="DesiredRolls[NUMREELS]" title="go to the details">DesiredRolls[NUMREELS]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_JackPotChance" name="JackPotChance" title="go to the details">JackPotChance</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_JackpotRadius" name="JackpotRadius" title="go to the details">JackpotRadius</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_JackpotVolume" name="JackpotVolume" title="go to the details">JackpotVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LastReelStopTime" name="LastReelStopTime" title="go to the details">LastReelStopTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_LastRepAnimByte" name="LastRepAnimByte" title="go to the details">LastRepAnimByte</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LastSpinTime" name="LastSpinTime" title="go to the details">LastSpinTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LeverPullRadius" name="LeverPullRadius" title="go to the details">LeverPullRadius</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LeverPullVolume" name="LeverPullVolume" title="go to the details">LeverPullVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MonsterPrizeRadius" name="MonsterPrizeRadius" title="go to the details">MonsterPrizeRadius</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MonsterPrizeVolume" name="MonsterPrizeVolume" title="go to the details">MonsterPrizeVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_NumSpinning" name="NumSpinning" title="go to the details">NumSpinning</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ReelSpinningRadius" name="ReelSpinningRadius" title="go to the details">ReelSpinningRadius</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_ReelSpinningVolume" name="ReelSpinningVolume" title="go to the details">ReelSpinningVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ReelStoppedRadius" name="ReelStoppedRadius" title="go to the details">ReelStoppedRadius</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ReelStoppedVolume" name="ReelStoppedVolume" title="go to the details">ReelStoppedVolume</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../frightscript/kf_slot_machine.html#SReelSymbol">SReelSymbol</a></td><td width="66%"><a href="#_ReelSymbols[NUMSYMBOLS]" name="ReelSymbols[NUMSYMBOLS]" title="go to the details">ReelSymbols[NUMSYMBOLS]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_RemainingBonusSpins" name="RemainingBonusSpins" title="go to the details">RemainingBonusSpins</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_RemainingPayOut" name="RemainingPayOut" title="go to the details">RemainingPayOut</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_RepAnimByte" name="RepAnimByte" title="go to the details">RepAnimByte</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_SlotPullAnim" name="SlotPullAnim" title="go to the details">SlotPullAnim</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_Snd_AmbientActiveRef[NUMAMBIENTSNDS]" name="Snd_AmbientActiveRef[NUMAMBIENTSNDS]" title="go to the details">Snd_AmbientActiveRef[NUMAMBIENTSNDS]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">Sound</a></td><td width="66%"><a href="#_Snd_AmbientActive[NUMAMBIENTSNDS]" name="Snd_AmbientActive[NUMAMBIENTSNDS]" title="go to the details">Snd_AmbientActive[NUMAMBIENTSNDS]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">Sound</a></td><td width="66%"><a href="#_Snd_CashPrize" name="Snd_CashPrize" title="go to the details">Snd_CashPrize</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_Snd_CashPrizeRef" name="Snd_CashPrizeRef" title="go to the details">Snd_CashPrizeRef</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">Sound</a></td><td width="66%"><a href="#_Snd_Jackpot" name="Snd_Jackpot" title="go to the details">Snd_Jackpot</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_Snd_JackpotRef" name="Snd_JackpotRef" title="go to the details">Snd_JackpotRef</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">Sound</a></td><td width="66%"><a href="#_Snd_LeverPull" name="Snd_LeverPull" title="go to the details">Snd_LeverPull</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_Snd_LeverPullRef" name="Snd_LeverPullRef" title="go to the details">Snd_LeverPullRef</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">Sound</a></td><td width="66%"><a href="#_Snd_MonsterPrize" name="Snd_MonsterPrize" title="go to the details">Snd_MonsterPrize</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_Snd_MonsterPrizeRef" name="Snd_MonsterPrizeRef" title="go to the details">Snd_MonsterPrizeRef</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">Sound</a></td><td width="66%"><a href="#_Snd_ReelSpinning" name="Snd_ReelSpinning" title="go to the details">Snd_ReelSpinning</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_Snd_ReelSpinningRef" name="Snd_ReelSpinningRef" title="go to the details">Snd_ReelSpinningRef</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">Sound</a></td><td width="66%"><a href="#_Snd_ReelStopped" name="Snd_ReelStopped" title="go to the details">Snd_ReelStopped</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_Snd_ReelStoppedRef" name="Snd_ReelStoppedRef" title="go to the details">Snd_ReelStoppedRef</a></td></tr>
+<tr><th colspan="2" class="small">KF_Slot_Machine</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../kfstorygame/kf_storywavedesigner.html">KF_StoryWaveDesigner</a></td><td width="66%"><a href="#_AssociatedDesigner" name="AssociatedDesigner" title="go to the details">AssociatedDesigner</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bStartActive" name="bStartActive" title="go to the details">bStartActive</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_JackPotChanceIncreaseRate" name="JackPotChanceIncreaseRate" title="go to the details">JackPotChanceIncreaseRate</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_MaxBet" name="MaxBet" title="go to the details">MaxBet</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../frightscript/kf_slot_reel.html">KF_Slot_Reel</a></td><td width="66%"><a href="#_Reels[NUMREELS]" name="Reels[NUMREELS]" title="go to the details">Reels[NUMREELS]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_SpinDuration" name="SpinDuration" title="go to the details">SpinDuration</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_YouLostEvent" name="YouLostEvent" title="go to the details">YouLostEvent</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_YouWonEvent" name="YouWonEvent" title="go to the details">YouWonEvent</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#Acceleration">Acceleration</a>, <a href="../engine/actor.html#AccumKarmaAngleError">AccumKarmaAngleError</a>, <a href="../engine/actor.html#ActorRenderData">ActorRenderData</a>, <a href="../engine/actor.html#AmbientGlow">AmbientGlow</a>, <a href="../engine/actor.html#AmbientSound">AmbientSound</a>, <a href="../engine/actor.html#AntiPortal">AntiPortal</a>, <a href="../engine/actor.html#Attached">Attached</a>, <a href="../engine/actor.html#AttachmentBone">AttachmentBone</a>, <a href="../engine/actor.html#AttachTag">AttachTag</a>, <a href="../engine/actor.html#bAcceptsProjectors">bAcceptsProjectors</a>, <a href="../engine/actor.html#bActorShadows">bActorShadows</a>, <a href="../engine/actor.html#bAlreadyPrecachedMaterials">bAlreadyPrecachedMaterials</a>, <a href="../engine/actor.html#bAlreadyPrecachedMeshes">bAlreadyPrecachedMeshes</a>, <a href="../engine/actor.html#bAlwaysFaceCamera">bAlwaysFaceCamera</a>, <a href="../engine/actor.html#bAlwaysRelevant">bAlwaysRelevant</a>, <a href="../engine/actor.html#bAlwaysTick">bAlwaysTick</a>, <a href="../engine/actor.html#bAlwaysZeroBoneOffset">bAlwaysZeroBoneOffset</a>, <a href="../engine/actor.html#bAnimByOwner">bAnimByOwner</a>, <a href="../engine/actor.html#Base">Base</a>, <a href="../engine/actor.html#bAttenByLife">bAttenByLife</a>, <a href="../engine/actor.html#bAutoAlignToTerrain">bAutoAlignToTerrain</a>, <a href="../engine/actor.html#bAutoTraceNotify">bAutoTraceNotify</a>, <a href="../engine/actor.html#bBadStateCode">bBadStateCode</a>, <a href="../engine/actor.html#bBlockActors">bBlockActors</a>, <a href="../engine/actor.html#bBlockHitPointTraces">bBlockHitPointTraces</a>, <a href="../engine/actor.html#bBlockKarma">bBlockKarma</a>, <a href="../engine/actor.html#bBlockNonZeroExtentTraces">bBlockNonZeroExtentTraces</a>, <a href="../engine/actor.html#bBlockPlayers">bBlockPlayers</a>, <a href="../engine/actor.html#bBlockProjectiles">bBlockProjectiles</a>, <a href="../engine/actor.html#bBlocksTeleport">bBlocksTeleport</a>, <a href="../engine/actor.html#bBlockZeroExtentTraces">bBlockZeroExtentTraces</a>, <a href="../engine/actor.html#bBounce">bBounce</a>, <a href="../engine/actor.html#bCanAutoTraceSelect">bCanAutoTraceSelect</a>, <a href="../engine/actor.html#bCanBeDamaged">bCanBeDamaged</a>, <a href="../engine/actor.html#bCanTeleport">bCanTeleport</a>, <a href="../engine/actor.html#bClientAnim">bClientAnim</a>, <a href="../engine/actor.html#bClientAuthoritative">bClientAuthoritative</a>, <a href="../engine/actor.html#bClientDemoNetFunc">bClientDemoNetFunc</a>, <a href="../engine/actor.html#bClientDemoRecording">bClientDemoRecording</a>, <a href="../engine/actor.html#bClientTrigger">bClientTrigger</a>, <a href="../engine/actor.html#bCollideActors">bCollideActors</a>, <a href="../engine/actor.html#bCollideWhenPlacing">bCollideWhenPlacing</a>, <a href="../engine/actor.html#bCollideWorld">bCollideWorld</a>, <a href="../engine/actor.html#bCompressedPosition">bCompressedPosition</a>, <a href="../engine/actor.html#bCorona">bCorona</a>, <a href="../engine/actor.html#bDeferRendering">bDeferRendering</a>, <a href="../engine/actor.html#bDeleteMe">bDeleteMe</a>, <a href="../engine/actor.html#bDemoOwner">bDemoOwner</a>, <a href="../engine/actor.html#bDemoRecording">bDemoRecording</a>, <a href="../engine/actor.html#bDestroyInPainVolume">bDestroyInPainVolume</a>, <a href="../engine/actor.html#bDetailAttachment">bDetailAttachment</a>, <a href="../engine/actor.html#bDirectional">bDirectional</a>, <a href="../engine/actor.html#bDirectionalCorona">bDirectionalCorona</a>, <a href="../engine/actor.html#bDisableSorting">bDisableSorting</a>, <a href="../engine/actor.html#bDisturbFluidSurface">bDisturbFluidSurface</a>, <a href="../engine/actor.html#bDramaticLighting">bDramaticLighting</a>, <a href="../engine/actor.html#bDynamicLight">bDynamicLight</a>, <a href="../engine/actor.html#bEdShouldSnap">bEdShouldSnap</a>, <a href="../engine/actor.html#bEdSnap">bEdSnap</a>, <a href="../engine/actor.html#bFixedRotationDir">bFixedRotationDir</a>, <a href="../engine/actor.html#bForceSkelUpdate">bForceSkelUpdate</a>, <a href="../engine/actor.html#bFullVolume">bFullVolume</a>, <a href="../engine/actor.html#bGameRelevant">bGameRelevant</a>, <a href="../engine/actor.html#bHardAttach">bHardAttach</a>, <a href="../engine/actor.html#bHidden">bHidden</a>, <a href="../engine/actor.html#bHiddenEd">bHiddenEd</a>, <a href="../engine/actor.html#bHiddenEdGroup">bHiddenEdGroup</a>, <a href="../engine/actor.html#bHighDetail">bHighDetail</a>, <a href="../engine/actor.html#bHurtEntry">bHurtEntry</a>, <a href="../engine/actor.html#bIgnoreEncroachers">bIgnoreEncroachers</a>, <a href="../engine/actor.html#bIgnoreOutOfWorld">bIgnoreOutOfWorld</a>, <a href="../engine/actor.html#bIgnoreTerminalVelocity">bIgnoreTerminalVelocity</a>, <a href="../engine/actor.html#bIgnoreVehicles">bIgnoreVehicles</a>, <a href="../engine/actor.html#bInterpolating">bInterpolating</a>, <a href="../engine/actor.html#bJustTeleported">bJustTeleported</a>, <a href="../engine/actor.html#bLightChanged">bLightChanged</a>, <a href="../engine/actor.html#bLightingVisibility">bLightingVisibility</a>, <a href="../engine/actor.html#bLockLocation">bLockLocation</a>, <a href="../engine/actor.html#bMovable">bMovable</a>, <a href="../engine/actor.html#bNetDirty">bNetDirty</a>, <a href="../engine/actor.html#bNetInitial">bNetInitial</a>, <a href="../engine/actor.html#bNetInitialRotation">bNetInitialRotation</a>, <a href="../engine/actor.html#bNetNotify">bNetNotify</a>, <a href="../engine/actor.html#bNetOwner">bNetOwner</a>, <a href="../engine/actor.html#bNetRelevant">bNetRelevant</a>, <a href="../engine/actor.html#bNetTemporary">bNetTemporary</a>, <a href="../engine/actor.html#bNoDelete">bNoDelete</a>, <a href="../engine/actor.html#bNoRepMesh">bNoRepMesh</a>, <a href="../engine/actor.html#bNotifyLocalPlayerTeamReceived">bNotifyLocalPlayerTeamReceived</a>, <a href="../engine/actor.html#bNotOnDedServer">bNotOnDedServer</a>, <a href="../engine/actor.html#bObsolete">bObsolete</a>, <a href="../engine/actor.html#bOnlyAffectPawns">bOnlyAffectPawns</a>, <a href="../engine/actor.html#bOnlyDirtyReplication">bOnlyDirtyReplication</a>, <a href="../engine/actor.html#bOnlyDrawIfAttached">bOnlyDrawIfAttached</a>, <a href="../engine/actor.html#bOnlyOwnerSee">bOnlyOwnerSee</a>, <a href="../engine/actor.html#bOnlyRelevantToOwner">bOnlyRelevantToOwner</a>, <a href="../engine/actor.html#bOrientOnSlope">bOrientOnSlope</a>, <a href="../engine/actor.html#bOrientToVelocity">bOrientToVelocity</a>, <a href="../engine/actor.html#bOwnerNoSee">bOwnerNoSee</a>, <a href="../engine/actor.html#bPathColliding">bPathColliding</a>, <a href="../engine/actor.html#bPathTemp">bPathTemp</a>, <a href="../engine/actor.html#bPendingDelete">bPendingDelete</a>, <a href="../engine/actor.html#bProjTarget">bProjTarget</a>, <a href="../engine/actor.html#bRepClientDemo">bRepClientDemo</a>, <a href="../engine/actor.html#bReplicateAnimations">bReplicateAnimations</a>, <a href="../engine/actor.html#bReplicateInstigator">bReplicateInstigator</a>, <a href="../engine/actor.html#bReplicateMovement">bReplicateMovement</a>, <a href="../engine/actor.html#bRotateToDesired">bRotateToDesired</a>, <a href="../engine/actor.html#Brush">Brush</a>, <a href="../engine/actor.html#bScriptInitialized">bScriptInitialized</a>, <a href="../engine/actor.html#bSelected">bSelected</a>, <a href="../engine/actor.html#bShadowCast">bShadowCast</a>, <a href="../engine/actor.html#bShouldBaseAtStartup">bShouldBaseAtStartup</a>, <a href="../engine/actor.html#bShouldStopKarma">bShouldStopKarma</a>, <a href="../engine/actor.html#bShowOctreeNodes">bShowOctreeNodes</a>, <a href="../engine/actor.html#bSkipActorPropertyReplication">bSkipActorPropertyReplication</a>, <a href="../engine/actor.html#bSmoothKarmaStateUpdates">bSmoothKarmaStateUpdates</a>, <a href="../engine/actor.html#bSpecialLit">bSpecialLit</a>, <a href="../engine/actor.html#bStasis">bStasis</a>, <a href="../engine/actor.html#bStatic">bStatic</a>, <a href="../engine/actor.html#bStaticLighting">bStaticLighting</a>, <a href="../engine/actor.html#bSuperHighDetail">bSuperHighDetail</a>, <a href="../engine/actor.html#bTearOff">bTearOff</a>, <a href="../engine/actor.html#bTempEditor">bTempEditor</a>, <a href="../engine/actor.html#bTicked">bTicked</a>, <a href="../engine/actor.html#bTimerLoop">bTimerLoop</a>, <a href="../engine/actor.html#bTraceWater">bTraceWater</a>, <a href="../engine/actor.html#bTrailerAllowRotation">bTrailerAllowRotation</a>, <a href="../engine/actor.html#bTrailerPrePivot">bTrailerPrePivot</a>, <a href="../engine/actor.html#bTrailerSameRotation">bTrailerSameRotation</a>, <a href="../engine/actor.html#bTravel">bTravel</a>, <a href="../engine/actor.html#bUnlit">bUnlit</a>, <a href="../engine/actor.html#Buoyancy">Buoyancy</a>, <a href="../engine/actor.html#bUpdateSimulatedPosition">bUpdateSimulatedPosition</a>, <a href="../engine/actor.html#bUseCollisionStaticMesh">bUseCollisionStaticMesh</a>, <a href="../engine/actor.html#bUseCylinderCollision">bUseCylinderCollision</a>, <a href="../engine/actor.html#bUseDynamicLights">bUseDynamicLights</a>, <a href="../engine/actor.html#bUseHighDetailOverlayIndex">bUseHighDetailOverlayIndex</a>, <a href="../engine/actor.html#bUseLightingFromBase">bUseLightingFromBase</a>, <a href="../engine/actor.html#bWasSNFiltered">bWasSNFiltered</a>, <a href="../engine/actor.html#bWorldGeometry">bWorldGeometry</a>, <a href="../engine/actor.html#CachedLocalToWorld">CachedLocalToWorld</a>, <a href="../engine/actor.html#CachedLocation">CachedLocation</a>, <a href="../engine/actor.html#CachedRotation">CachedRotation</a>, <a href="../engine/actor.html#ClientOverlayCounter">ClientOverlayCounter</a>, <a href="../engine/actor.html#ClientOverlayTimer">ClientOverlayTimer</a>, <a href="../engine/actor.html#CollisionHeight">CollisionHeight</a>, <a href="../engine/actor.html#CollisionRadius">CollisionRadius</a>, <a href="../engine/actor.html#CollisionTag">CollisionTag</a>, <a href="../engine/actor.html#ColLocation">ColLocation</a>, <a href="../engine/actor.html#CullDistance">CullDistance</a>, <a href="../engine/actor.html#Deleted">Deleted</a>, <a href="../engine/actor.html#DesiredRotation">DesiredRotation</a>, <a href="../engine/actor.html#DrawScale">DrawScale</a>, <a href="../engine/actor.html#DrawScale3D">DrawScale3D</a>, <a href="../engine/actor.html#DrawType">DrawType</a>, <a href="../engine/actor.html#Event">Event</a>, <a href="../engine/actor.html#ExcludeTag[8]">ExcludeTag[8]</a>, <a href="../engine/actor.html#FluidSurfaceShootStrengthMod">FluidSurfaceShootStrengthMod</a>, <a href="../engine/actor.html#ForcedVisibilityZoneTag">ForcedVisibilityZoneTag</a>, <a href="../engine/actor.html#ForceNoise">ForceNoise</a>, <a href="../engine/actor.html#ForceRadius">ForceRadius</a>, <a href="../engine/actor.html#ForceScale">ForceScale</a>, <a href="../engine/actor.html#ForceType">ForceType</a>, <a href="../engine/actor.html#Group">Group</a>, <a href="../engine/actor.html#HardRelMatrix">HardRelMatrix</a>, <a href="../engine/actor.html#HighDetailOverlay">HighDetailOverlay</a>, <a href="../engine/actor.html#HighDetailOverlayIndex">HighDetailOverlayIndex</a>, <a href="../engine/actor.html#InitialState">InitialState</a>, <a href="../engine/actor.html#Instigator">Instigator</a>, <a href="../engine/actor.html#Inventory">Inventory</a>, <a href="../engine/actor.html#JoinedTag">JoinedTag</a>, <a href="../engine/actor.html#KParams">KParams</a>, <a href="../engine/actor.html#KStepTag">KStepTag</a>, <a href="../engine/actor.html#LastRenderTime">LastRenderTime</a>, <a href="../engine/actor.html#LastReplicateTime">LastReplicateTime</a>, <a href="../engine/actor.html#LatentFloat">LatentFloat</a>, <a href="../engine/actor.html#Leaves">Leaves</a>, <a href="../engine/actor.html#Level">Level</a>, <a href="../engine/actor.html#LifeSpan">LifeSpan</a>, <a href="../engine/actor.html#LightBrightness">LightBrightness</a>, <a href="../engine/actor.html#LightCone">LightCone</a>, <a href="../engine/actor.html#LightEffect">LightEffect</a>, <a href="../engine/actor.html#LightHue">LightHue</a>, <a href="../engine/actor.html#LightPeriod">LightPeriod</a>, <a href="../engine/actor.html#LightPhase">LightPhase</a>, <a href="../engine/actor.html#LightRadius">LightRadius</a>, <a href="../engine/actor.html#LightRenderData">LightRenderData</a>, <a href="../engine/actor.html#LightSaturation">LightSaturation</a>, <a href="../engine/actor.html#LightType">LightType</a>, <a href="../engine/actor.html#Location">Location</a>, <a href="../engine/actor.html#LODBias">LODBias</a>, <a href="../engine/actor.html#Mass">Mass</a>, <a href="../engine/actor.html#MaxLights">MaxLights</a>, <a href="../engine/actor.html#Mesh">Mesh</a>, <a href="../engine/actor.html#MeshInstance">MeshInstance</a>, <a href="../engine/actor.html#MessageClass">MessageClass</a>, <a href="../engine/actor.html#NetPriority">NetPriority</a>, <a href="../engine/actor.html#NetTag">NetTag</a>, <a href="../engine/actor.html#NetUpdateFrequency">NetUpdateFrequency</a>, <a href="../engine/actor.html#NetUpdateTime">NetUpdateTime</a>, <a href="../engine/actor.html#OctreeBox">OctreeBox</a>, <a href="../engine/actor.html#OctreeBoxCenter">OctreeBoxCenter</a>, <a href="../engine/actor.html#OctreeBoxRadii">OctreeBoxRadii</a>, <a href="../engine/actor.html#OctreeNodes">OctreeNodes</a>, <a href="../engine/actor.html#OverlayMaterial">OverlayMaterial</a>, <a href="../engine/actor.html#OverlayTimer">OverlayTimer</a>, <a href="../engine/actor.html#Owner">Owner</a>, <a href="../engine/actor.html#PendingTouch">PendingTouch</a>, <a href="../engine/actor.html#Physics">Physics</a>, <a href="../engine/actor.html#PhysicsVolume">PhysicsVolume</a>, <a href="../engine/actor.html#PrePivot">PrePivot</a>, <a href="../engine/actor.html#Projectors">Projectors</a>, <a href="../engine/actor.html#Region">Region</a>, <a href="../engine/actor.html#RelativeLocation">RelativeLocation</a>, <a href="../engine/actor.html#RelativeRotation">RelativeRotation</a>, <a href="../engine/actor.html#RemoteRole">RemoteRole</a>, <a href="../engine/actor.html#RenderRevision">RenderRevision</a>, <a href="../engine/actor.html#RepSkin">RepSkin</a>, <a href="../engine/actor.html#Role">Role</a>, <a href="../engine/actor.html#Rotation">Rotation</a>, <a href="../engine/actor.html#RotationRate">RotationRate</a>, <a href="../engine/actor.html#ScaleGlow">ScaleGlow</a>, <a href="../engine/actor.html#SimAnim">SimAnim</a>, <a href="../engine/actor.html#Skins">Skins</a>, <a href="../engine/actor.html#SoundOcclusion">SoundOcclusion</a>, <a href="../engine/actor.html#SoundPitch">SoundPitch</a>, <a href="../engine/actor.html#SoundRadius">SoundRadius</a>, <a href="../engine/actor.html#SoundVolume">SoundVolume</a>, <a href="../engine/actor.html#StaticFilterState">StaticFilterState</a>, <a href="../engine/actor.html#StaticMesh">StaticMesh</a>, <a href="../engine/actor.html#StaticMeshInstance">StaticMeshInstance</a>, <a href="../engine/actor.html#StaticMeshProjectors">StaticMeshProjectors</a>, <a href="../engine/actor.html#StaticSectionBatches">StaticSectionBatches</a>, <a href="../engine/actor.html#Style">Style</a>, <a href="../engine/actor.html#SurfaceType">SurfaceType</a>, <a href="../engine/actor.html#Tag">Tag</a>, <a href="../engine/actor.html#Texture">Texture</a>, <a href="../engine/actor.html#TimerCounter">TimerCounter</a>, <a href="../engine/actor.html#TimerRate">TimerRate</a>, <a href="../engine/actor.html#Touching">Touching</a>, <a href="../engine/actor.html#TransientSoundRadius">TransientSoundRadius</a>, <a href="../engine/actor.html#TransientSoundVolume">TransientSoundVolume</a>, <a href="../engine/actor.html#UV2Mode">UV2Mode</a>, <a href="../engine/actor.html#UV2Texture">UV2Texture</a>, <a href="../engine/actor.html#Velocity">Velocity</a>, <a href="../engine/actor.html#XLevel">XLevel</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#Class">Class</a>, <a href="../core/object.html#Name">Name</a>, <a href="../core/object.html#ObjectFlags">ObjectFlags</a>, <a href="../core/object.html#ObjectInternal[7]">ObjectInternal[7]</a>, <a href="../core/object.html#Outer">Outer</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#EDoubleClickDir">EDoubleClickDir</a>, <a href="../engine/actor.html#EDrawType">EDrawType</a>, <a href="../engine/actor.html#EFilterState">EFilterState</a>, <a href="../engine/actor.html#EFlagState">EFlagState</a>, <a href="../engine/actor.html#EForceType">EForceType</a>, <a href="../engine/actor.html#eKillZType">eKillZType</a>, <a href="../engine/actor.html#ELightEffect">ELightEffect</a>, <a href="../engine/actor.html#ELightType">ELightType</a>, <a href="../engine/actor.html#EMusicTransition">EMusicTransition</a>, <a href="../engine/actor.html#ENetRole">ENetRole</a>, <a href="../engine/actor.html#EPhysics">EPhysics</a>, <a href="../engine/actor.html#ERenderStyle">ERenderStyle</a>, <a href="../engine/actor.html#ESoundOcclusion">ESoundOcclusion</a>, <a href="../engine/actor.html#ESoundSlot">ESoundSlot</a>, <a href="../engine/actor.html#ESurfaceTypes">ESurfaceTypes</a>, <a href="../engine/actor.html#ETravelType">ETravelType</a>, <a href="../engine/actor.html#EUV2Mode">EUV2Mode</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#EAxis">EAxis</a>, <a href="../core/object.html#ECamOrientation">ECamOrientation</a>, <a href="../core/object.html#EDetailMode">EDetailMode</a>, <a href="../core/object.html#EDrawPivot">EDrawPivot</a>, <a href="../core/object.html#ESheerAxis">ESheerAxis</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+<tr><td><a href="#_SReelSymbol" name="SReelSymbol" title="go to the details">SReelSymbol</a><br /><span class="small">ReelPosition, SymbolName, NumReqHits, NumHits</span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#ActorRenderDataPtr">ActorRenderDataPtr</a>, <a href="../engine/actor.html#AnimRep">AnimRep</a>, <a href="../engine/actor.html#BatchReference">BatchReference</a>, <a href="../engine/actor.html#FireProperties">FireProperties</a>, <a href="../engine/actor.html#KRBVec">KRBVec</a>, <a href="../engine/actor.html#KRigidBodyState">KRigidBodyState</a>, <a href="../engine/actor.html#KSimParams">KSimParams</a>, <a href="../engine/actor.html#LightRenderDataPtr">LightRenderDataPtr</a>, <a href="../engine/actor.html#PointRegion">PointRegion</a>, <a href="../engine/actor.html#ProjectorRenderInfoPtr">ProjectorRenderInfoPtr</a>, <a href="../engine/actor.html#StaticMeshProjectorRenderInfoPtr">StaticMeshProjectorRenderInfoPtr</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#BoundingVolume">BoundingVolume</a>, <a href="../core/object.html#Box">Box</a>, <a href="../core/object.html#Color">Color</a>, <a href="../core/object.html#CompressedPosition">CompressedPosition</a>, <a href="../core/object.html#Coords">Coords</a>, <a href="../core/object.html#FloatBox">FloatBox</a>, <a href="../core/object.html#Guid">Guid</a>, <a href="../core/object.html#IntBox">IntBox</a>, <a href="../core/object.html#InterpCurve">InterpCurve</a>, <a href="../core/object.html#InterpCurvePoint">InterpCurvePoint</a>, <a href="../core/object.html#Matrix">Matrix</a>, <a href="../core/object.html#Plane">Plane</a>, <a href="../core/object.html#Quat">Quat</a>, <a href="../core/object.html#Range">Range</a>, <a href="../core/object.html#RangeVector">RangeVector</a>, <a href="../core/object.html#Rotator">Rotator</a>, <a href="../core/object.html#Scale">Scale</a>, <a href="../core/object.html#TMultiMap">TMultiMap</a>, <a href="../core/object.html#Vector">Vector</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AddBonusSpins-" name="AddBonusSpins" title="go to the details">AddBonusSpins</a> (int NumToAdd))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_AttemptSpin-" name="AttemptSpin" title="go to the details">AttemptSpin</a> (<a href="../engine/pawn.html">Pawn</a> SlotPlayer))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CalculateReelPositions-" name="CalculateReelPositions" title="go to the details">CalculateReelPositions</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../core/object.html#Vector">vector</a>&nbsp;</td><td><a href="#_GetPayoutLocation-" name="GetPayoutLocation" title="go to the details">GetPayoutLocation</a> (optional float SpawnOffset))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../core/object.html#Vector">vector</a>&nbsp;</td><td><a href="#_GetPayoutVelocity-" name="GetPayoutVelocity" title="go to the details">GetPayoutVelocity</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_GetSymbolAtPosition-" name="GetSymbolAtPosition" title="go to the details">GetSymbolAtPosition</a> (float Position, optional out int Index))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PayOut-" name="PayOut" title="go to the details">PayOut</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayPullAnim-" name="PlayPullAnim" title="go to the details">PlayPullAnim</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PostBeginPlay-" name="PostBeginPlay" title="go to the details">PostBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_PostNetReceive-" name="PostNetReceive" title="go to the details">PostNetReceive</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PreBeginPlay-" name="PreBeginPlay" title="go to the details">PreBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PreLoadSounds-" name="PreLoadSounds" title="go to the details">PreLoadSounds</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ReelsAreSpinning-" name="ReelsAreSpinning" title="go to the details">ReelsAreSpinning</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetActive-" name="SetActive" title="go to the details">SetActive</a> (bool On))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpawnAmmo-" name="SpawnAmmo" title="go to the details">SpawnAmmo</a> (int NumToSpawn))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpawnCash-" name="SpawnCash" title="go to the details">SpawnCash</a> (int Amount))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpawnEnemy-" name="SpawnEnemy" title="go to the details">SpawnEnemy</a> (int NumHits))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpawnFuel-" name="SpawnFuel" title="go to the details">SpawnFuel</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpinReels-" name="SpinReels" title="go to the details">SpinReels</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Tick-" name="Tick" title="go to the details">Tick</a> (Float DeltaTime))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Touch-" name="Touch" title="go to the details">Touch</a> (Actor Other ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Trigger-" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">Actor</a> Other, Pawn EventInstigator ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UnlockAchievement-" name="UnlockAchievement" title="go to the details">UnlockAchievement</a> ()))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#*">*</a>, <a href="../engine/actor.html#+">+</a>, <a href="../engine/actor.html#-">-</a>, <a href="../engine/actor.html#AddToPackageMap">AddToPackageMap</a>, <a href="../engine/actor.html#AdjustVolume">AdjustVolume</a>, <a href="../engine/actor.html#AllActors">AllActors</a>, <a href="../engine/actor.html#AllowMusicPlayback">AllowMusicPlayback</a>, <a href="../engine/actor.html#AnimBlendParams">AnimBlendParams</a>, <a href="../engine/actor.html#AnimBlendToAlpha">AnimBlendToAlpha</a>, <a href="../engine/actor.html#AnimEnd">AnimEnd</a>, <a href="../engine/actor.html#AnimIsInGroup">AnimIsInGroup</a>, <a href="../engine/actor.html#AnimStopLooping">AnimStopLooping</a>, <a href="../engine/actor.html#Attach">Attach</a>, <a href="../engine/actor.html#AttachToBone">AttachToBone</a>, <a href="../engine/actor.html#AutonomousPhysics">AutonomousPhysics</a>, <a href="../engine/actor.html#BaseChange">BaseChange</a>, <a href="../engine/actor.html#BasedActors">BasedActors</a>, <a href="../engine/actor.html#BecomeViewTarget">BecomeViewTarget</a>, <a href="../engine/actor.html#BeginEvent">BeginEvent</a>, <a href="../engine/actor.html#BeginPlay">BeginPlay</a>, <a href="../engine/actor.html#BlocksShotAt">BlocksShotAt</a>, <a href="../engine/actor.html#BoneRefresh">BoneRefresh</a>, <a href="../engine/actor.html#BroadcastLocalizedMessage">BroadcastLocalizedMessage</a>, <a href="../engine/actor.html#Bump">Bump</a>, <a href="../engine/actor.html#CanSplash">CanSplash</a>, <a href="../engine/actor.html#ChangeBaseParamsFeedbackEffect">ChangeBaseParamsFeedbackEffect</a>, <a href="../engine/actor.html#ChangeSpringFeedbackEffect">ChangeSpringFeedbackEffect</a>, <a href="../engine/actor.html#CheckAchievementEvents">CheckAchievementEvents</a>, <a href="../engine/actor.html#CheckForErrors">CheckForErrors</a>, <a href="../engine/actor.html#CheckMaxEffectDistance">CheckMaxEffectDistance</a>, <a href="../engine/actor.html#ChildActors">ChildActors</a>, <a href="../engine/actor.html#ClearStayingDebugLines">ClearStayingDebugLines</a>, <a href="../engine/actor.html#ClientTrigger">ClientTrigger</a>, <a href="../engine/actor.html#Clock">Clock</a>, <a href="../engine/actor.html#CollidingActors">CollidingActors</a>, <a href="../engine/actor.html#ConsoleCommand">ConsoleCommand</a>, <a href="../engine/actor.html#CopyObjectToClipboard">CopyObjectToClipboard</a>, <a href="../engine/actor.html#Crash">Crash</a>, <a href="../engine/actor.html#CurrentLIPSincAnim">CurrentLIPSincAnim</a>, <a href="../engine/actor.html#DebugClock">DebugClock</a>, <a href="../engine/actor.html#DebugUnclock">DebugUnclock</a>, <a href="../engine/actor.html#DemoPlaySound">DemoPlaySound</a>, <a href="../engine/actor.html#Destroy">Destroy</a>, <a href="../engine/actor.html#Destroyed">Destroyed</a>, <a href="../engine/actor.html#Detach">Detach</a>, <a href="../engine/actor.html#DetachFromBone">DetachFromBone</a>, <a href="../engine/actor.html#DisplayDebug">DisplayDebug</a>, <a href="../engine/actor.html#DrawDebugCircle">DrawDebugCircle</a>, <a href="../engine/actor.html#DrawDebugLine">DrawDebugLine</a>, <a href="../engine/actor.html#DrawDebugSphere">DrawDebugSphere</a>, <a href="../engine/actor.html#DrawStayingDebugLine">DrawStayingDebugLine</a>, <a href="../engine/actor.html#DynamicActors">DynamicActors</a>, <a href="../engine/actor.html#EffectIsRelevant">EffectIsRelevant</a>, <a href="../engine/actor.html#EnableChannelNotify">EnableChannelNotify</a>, <a href="../engine/actor.html#EncroachedBy">EncroachedBy</a>, <a href="../engine/actor.html#EncroachingOn">EncroachingOn</a>, <a href="../engine/actor.html#EndedRotation">EndedRotation</a>, <a href="../engine/actor.html#EndEvent">EndEvent</a>, <a href="../engine/actor.html#Error">Error</a>, <a href="../engine/actor.html#Falling">Falling</a>, <a href="../engine/actor.html#FastTrace">FastTrace</a>, <a href="../engine/actor.html#FellOutOfWorld">FellOutOfWorld</a>, <a href="../engine/actor.html#FinishAnim">FinishAnim</a>, <a href="../engine/actor.html#FinishedInterpolation">FinishedInterpolation</a>, <a href="../engine/actor.html#FinishInterpolation">FinishInterpolation</a>, <a href="../engine/actor.html#ForceFeedbackSupported">ForceFeedbackSupported</a>, <a href="../engine/actor.html#FreezeAnimAt">FreezeAnimAt</a>, <a href="../engine/actor.html#GainedChild">GainedChild</a>, <a href="../engine/actor.html#GetAllInt">GetAllInt</a>, <a href="../engine/actor.html#GetAllIntDesc">GetAllIntDesc</a>, <a href="../engine/actor.html#GetAnimDuration">GetAnimDuration</a>, <a href="../engine/actor.html#GetAnimParams">GetAnimParams</a>, <a href="../engine/actor.html#GetBoneCoords">GetBoneCoords</a>, <a href="../engine/actor.html#GetBoneRotation">GetBoneRotation</a>, <a href="../engine/actor.html#GetCacheEntry">GetCacheEntry</a>, <a href="../engine/actor.html#GetClosestBone">GetClosestBone</a>, <a href="../engine/actor.html#GetCollisionExtent">GetCollisionExtent</a>, <a href="../engine/actor.html#GetDebugName">GetDebugName</a>, <a href="../engine/actor.html#GetEventColor">GetEventColor</a>, <a href="../engine/actor.html#GetEvents">GetEvents</a>, <a href="../engine/actor.html#GetHumanReadableName">GetHumanReadableName</a>, <a href="../engine/actor.html#GetLocalString">GetLocalString</a>, <a href="../engine/actor.html#GetMapName">GetMapName</a>, <a href="../engine/actor.html#GetMeshName">GetMeshName</a>, <a href="../engine/actor.html#GetNextInt">GetNextInt</a>, <a href="../engine/actor.html#GetNextIntDesc">GetNextIntDesc</a>, <a href="../engine/actor.html#GetNextSkin">GetNextSkin</a>, <a href="../engine/actor.html#GetNotifyChannel">GetNotifyChannel</a>, <a href="../engine/actor.html#GetRenderBoundingSphere">GetRenderBoundingSphere</a>, <a href="../engine/actor.html#GetRootLocation">GetRootLocation</a>, <a href="../engine/actor.html#GetRootLocationDelta">GetRootLocationDelta</a>, <a href="../engine/actor.html#GetRootRotation">GetRootRotation</a>, <a href="../engine/actor.html#GetRootRotationDelta">GetRootRotationDelta</a>, <a href="../engine/actor.html#GetSoundDuration">GetSoundDuration</a>, <a href="../engine/actor.html#GetURLMap">GetURLMap</a>, <a href="../engine/actor.html#GetUrlOption">GetUrlOption</a>, <a href="../engine/actor.html#HasAnim">HasAnim</a>, <a href="../engine/actor.html#HasLIPSincAnim">HasLIPSincAnim</a>, <a href="../engine/actor.html#HealDamage">HealDamage</a>, <a href="../engine/actor.html#HitPointTrace">HitPointTrace</a>, <a href="../engine/actor.html#HitWall">HitWall</a>, <a href="../engine/actor.html#HurtRadius">HurtRadius</a>, <a href="../engine/actor.html#IsAnimating">IsAnimating</a>, <a href="../engine/actor.html#IsInPain">IsInPain</a>, <a href="../engine/actor.html#IsInVolume">IsInVolume</a>, <a href="../engine/actor.html#IsJoinedTo">IsJoinedTo</a>, <a href="../engine/actor.html#IsPlayingLIPSincAnim">IsPlayingLIPSincAnim</a>, <a href="../engine/actor.html#IsStationary">IsStationary</a>, <a href="../engine/actor.html#IsTweening">IsTweening</a>, <a href="../engine/actor.html#KAddAngularImpulse">KAddAngularImpulse</a>, <a href="../engine/actor.html#KAddBoneLifter">KAddBoneLifter</a>, <a href="../engine/actor.html#KAddImpulse">KAddImpulse</a>, <a href="../engine/actor.html#KApplyForce">KApplyForce</a>, <a href="../engine/actor.html#KDisableCollision">KDisableCollision</a>, <a href="../engine/actor.html#KDrawRigidBodyState">KDrawRigidBodyState</a>, <a href="../engine/actor.html#KEnableCollision">KEnableCollision</a>, <a href="../engine/actor.html#KFreezeRagdoll">KFreezeRagdoll</a>, <a href="../engine/actor.html#KGetActorGravScale">KGetActorGravScale</a>, <a href="../engine/actor.html#KGetCOMOffset">KGetCOMOffset</a>, <a href="../engine/actor.html#KGetCOMPosition">KGetCOMPosition</a>, <a href="../engine/actor.html#KGetDampingProps">KGetDampingProps</a>, <a href="../engine/actor.html#KGetFriction">KGetFriction</a>, <a href="../engine/actor.html#KGetImpactThreshold">KGetImpactThreshold</a>, <a href="../engine/actor.html#KGetInertiaTensor">KGetInertiaTensor</a>, <a href="../engine/actor.html#KGetMass">KGetMass</a>, <a href="../engine/actor.html#KGetRBQuaternion">KGetRBQuaternion</a>, <a href="../engine/actor.html#KGetRestitution">KGetRestitution</a>, <a href="../engine/actor.html#KGetRigidBodyState">KGetRigidBodyState</a>, <a href="../engine/actor.html#KGetSimParams">KGetSimParams</a>, <a href="../engine/actor.html#KGetSkelMass">KGetSkelMass</a>, <a href="../engine/actor.html#KilledBy">KilledBy</a>, <a href="../engine/actor.html#KImpact">KImpact</a>, <a href="../engine/actor.html#KIsAwake">KIsAwake</a>, <a href="../engine/actor.html#KIsRagdollAvailable">KIsRagdollAvailable</a>, <a href="../engine/actor.html#KMakeRagdollAvailable">KMakeRagdollAvailable</a>, <a href="../engine/actor.html#KRBVecFromVector">KRBVecFromVector</a>, <a href="../engine/actor.html#KRBVecToVector">KRBVecToVector</a>, <a href="../engine/actor.html#KRemoveAllBoneLifters">KRemoveAllBoneLifters</a>, <a href="../engine/actor.html#KRemoveLifterFromBone">KRemoveLifterFromBone</a>, <a href="../engine/actor.html#KScaleJointLimits">KScaleJointLimits</a>, <a href="../engine/actor.html#KSetActorGravScale">KSetActorGravScale</a>, <a href="../engine/actor.html#KSetBlockKarma">KSetBlockKarma</a>, <a href="../engine/actor.html#KSetCOMOffset">KSetCOMOffset</a>, <a href="../engine/actor.html#KSetDampingProps">KSetDampingProps</a>, <a href="../engine/actor.html#KSetFriction">KSetFriction</a>, <a href="../engine/actor.html#KSetImpactThreshold">KSetImpactThreshold</a>, <a href="../engine/actor.html#KSetInertiaTensor">KSetInertiaTensor</a>, <a href="../engine/actor.html#KSetMass">KSetMass</a>, <a href="../engine/actor.html#KSetRestitution">KSetRestitution</a>, <a href="../engine/actor.html#KSetSimParams">KSetSimParams</a>, <a href="../engine/actor.html#KSetSkelVel">KSetSkelVel</a>, <a href="../engine/actor.html#KSetStayUpright">KSetStayUpright</a>, <a href="../engine/actor.html#KSetStayUprightParams">KSetStayUprightParams</a>, <a href="../engine/actor.html#KSkelConvulse">KSkelConvulse</a>, <a href="../engine/actor.html#KUpdateState">KUpdateState</a>, <a href="../engine/actor.html#KVelDropBelow">KVelDropBelow</a>, <a href="../engine/actor.html#KWake">KWake</a>, <a href="../engine/actor.html#Landed">Landed</a>, <a href="../engine/actor.html#LinkMesh">LinkMesh</a>, <a href="../engine/actor.html#LinkSkelAnim">LinkSkelAnim</a>, <a href="../engine/actor.html#LIPSincAnimEnd">LIPSincAnimEnd</a>, <a href="../engine/actor.html#LockRootMotion">LockRootMotion</a>, <a href="../engine/actor.html#LoopAnim">LoopAnim</a>, <a href="../engine/actor.html#LostChild">LostChild</a>, <a href="../engine/actor.html#MakeNoise">MakeNoise</a>, <a href="../engine/actor.html#MatchStarting">MatchStarting</a>, <a href="../engine/actor.html#Move">Move</a>, <a href="../engine/actor.html#MoveCacheEntry">MoveCacheEntry</a>, <a href="../engine/actor.html#MoveSmooth">MoveSmooth</a>, <a href="../engine/actor.html#NearSpot">NearSpot</a>, <a href="../engine/actor.html#NotifyLocalPlayerDead">NotifyLocalPlayerDead</a>, <a href="../engine/actor.html#NotifyLocalPlayerTeamReceived">NotifyLocalPlayerTeamReceived</a>, <a href="../engine/actor.html#NotifySelected">NotifySelected</a>, <a href="../engine/actor.html#OnlyAffectPawns">OnlyAffectPawns</a>, <a href="../engine/actor.html#PauseStream">PauseStream</a>, <a href="../engine/actor.html#PawnBaseDied">PawnBaseDied</a>, <a href="../engine/actor.html#PhysicsVolumeChange">PhysicsVolumeChange</a>, <a href="../engine/actor.html#PlayAnim">PlayAnim</a>, <a href="../engine/actor.html#PlayerCanSeeMe">PlayerCanSeeMe</a>, <a href="../engine/actor.html#PlayFeedbackEffect">PlayFeedbackEffect</a>, <a href="../engine/actor.html#PlayLIPSincAnim">PlayLIPSincAnim</a>, <a href="../engine/actor.html#PlayMusic">PlayMusic</a>, <a href="../engine/actor.html#PlayOwnedSound">PlayOwnedSound</a>, <a href="../engine/actor.html#PlaySound">PlaySound</a>, <a href="../engine/actor.html#PlayStream">PlayStream</a>, <a href="../engine/actor.html#PlayTeleportEffect">PlayTeleportEffect</a>, <a href="../engine/actor.html#PostBeginPlay">PostBeginPlay</a>, <a href="../engine/actor.html#PostLoadSavedGame">PostLoadSavedGame</a>, <a href="../engine/actor.html#PostNetBeginPlay">PostNetBeginPlay</a>, <a href="../engine/actor.html#PostNetReceive">PostNetReceive</a>, <a href="../engine/actor.html#PostTeleport">PostTeleport</a>, <a href="../engine/actor.html#PostTouch">PostTouch</a>, <a href="../engine/actor.html#POVChanged">POVChanged</a>, <a href="../engine/actor.html#PreBeginPlay">PreBeginPlay</a>, <a href="../engine/actor.html#PrecacheAnnouncer">PrecacheAnnouncer</a>, <a href="../engine/actor.html#PreSaveGame">PreSaveGame</a>, <a href="../engine/actor.html#PreTeleport">PreTeleport</a>, <a href="../engine/actor.html#RadiusActors">RadiusActors</a>, <a href="../engine/actor.html#RanInto">RanInto</a>, <a href="../engine/actor.html#ReceivedEvent">ReceivedEvent</a>, <a href="../engine/actor.html#RecoverFromBadStateCode">RecoverFromBadStateCode</a>, <a href="../engine/actor.html#RenderOverlays">RenderOverlays</a>, <a href="../engine/actor.html#RenderTexture">RenderTexture</a>, <a href="../engine/actor.html#Reset">Reset</a>, <a href="../engine/actor.html#ResetStaticFilterState">ResetStaticFilterState</a>, <a href="../engine/actor.html#SeekStream">SeekStream</a>, <a href="../engine/actor.html#SelfTriggered">SelfTriggered</a>, <a href="../engine/actor.html#SetAnimFrame">SetAnimFrame</a>, <a href="../engine/actor.html#SetBase">SetBase</a>, <a href="../engine/actor.html#SetBoneDirection">SetBoneDirection</a>, <a href="../engine/actor.html#SetBoneLocation">SetBoneLocation</a>, <a href="../engine/actor.html#SetBoneRotation">SetBoneRotation</a>, <a href="../engine/actor.html#SetBoneScale">SetBoneScale</a>, <a href="../engine/actor.html#SetCollision">SetCollision</a>, <a href="../engine/actor.html#SetCollisionSize">SetCollisionSize</a>, <a href="../engine/actor.html#SetDefaultDisplayProperties">SetDefaultDisplayProperties</a>, <a href="../engine/actor.html#SetDelayedDamageInstigatorController">SetDelayedDamageInstigatorController</a>, <a href="../engine/actor.html#SetDisplayProperties">SetDisplayProperties</a>, <a href="../engine/actor.html#SetDrawScale">SetDrawScale</a>, <a href="../engine/actor.html#SetDrawScale3D">SetDrawScale3D</a>, <a href="../engine/actor.html#SetDrawType">SetDrawType</a>, <a href="../engine/actor.html#SetGRI">SetGRI</a>, <a href="../engine/actor.html#SetInitialState">SetInitialState</a>, <a href="../engine/actor.html#SetLocation">SetLocation</a>, <a href="../engine/actor.html#SetOverlayMaterial">SetOverlayMaterial</a>, <a href="../engine/actor.html#SetOwner">SetOwner</a>, <a href="../engine/actor.html#SetPhysics">SetPhysics</a>, <a href="../engine/actor.html#SetRelativeLocation">SetRelativeLocation</a>, <a href="../engine/actor.html#SetRelativeRotation">SetRelativeRotation</a>, <a href="../engine/actor.html#SetRotation">SetRotation</a>, <a href="../engine/actor.html#SetStaticMesh">SetStaticMesh</a>, <a href="../engine/actor.html#SetTimer">SetTimer</a>, <a href="../engine/actor.html#ShouldBeHidden">ShouldBeHidden</a>, <a href="../engine/actor.html#Sleep">Sleep</a>, <a href="../engine/actor.html#Spawn">Spawn</a>, <a href="../engine/actor.html#SpecialHandling">SpecialHandling</a>, <a href="../engine/actor.html#StartInterpolation">StartInterpolation</a>, <a href="../engine/actor.html#StopAllMusic">StopAllMusic</a>, <a href="../engine/actor.html#StopAnimating">StopAnimating</a>, <a href="../engine/actor.html#StopFeedbackEffect">StopFeedbackEffect</a>, <a href="../engine/actor.html#StopLIPSincAnim">StopLIPSincAnim</a>, <a href="../engine/actor.html#StopMusic">StopMusic</a>, <a href="../engine/actor.html#StopStream">StopStream</a>, <a href="../engine/actor.html#SuggestFallVelocity">SuggestFallVelocity</a>, <a href="../engine/actor.html#TakeDamage">TakeDamage</a>, <a href="../engine/actor.html#TeamLink">TeamLink</a>, <a href="../engine/actor.html#TextToSpeech">TextToSpeech</a>, <a href="../engine/actor.html#Tick">Tick</a>, <a href="../engine/actor.html#Timer">Timer</a>, <a href="../engine/actor.html#TimerPop">TimerPop</a>, <a href="../engine/actor.html#TornOff">TornOff</a>, <a href="../engine/actor.html#Touch">Touch</a>, <a href="../engine/actor.html#TouchingActor">TouchingActor</a>, <a href="../engine/actor.html#TouchingActors">TouchingActors</a>, <a href="../engine/actor.html#Trace">Trace</a>, <a href="../engine/actor.html#TraceActors">TraceActors</a>, <a href="../engine/actor.html#TraceThisActor">TraceThisActor</a>, <a href="../engine/actor.html#TravelPostAccept">TravelPostAccept</a>, <a href="../engine/actor.html#TravelPreAccept">TravelPreAccept</a>, <a href="../engine/actor.html#Trigger">Trigger</a>, <a href="../engine/actor.html#TriggerEvent">TriggerEvent</a>, <a href="../engine/actor.html#TweenAnim">TweenAnim</a>, <a href="../engine/actor.html#UnClock">UnClock</a>, <a href="../engine/actor.html#UnTouch">UnTouch</a>, <a href="../engine/actor.html#UnTrigger">UnTrigger</a>, <a href="../engine/actor.html#UntriggerEvent">UntriggerEvent</a>, <a href="../engine/actor.html#UpdateAnnouncements">UpdateAnnouncements</a>, <a href="../engine/actor.html#UpdateDefaultMesh">UpdateDefaultMesh</a>, <a href="../engine/actor.html#UpdateDefaultStaticMesh">UpdateDefaultStaticMesh</a>, <a href="../engine/actor.html#UpdatePrecacheMaterials">UpdatePrecacheMaterials</a>, <a href="../engine/actor.html#UpdatePrecacheStaticMeshes">UpdatePrecacheStaticMeshes</a>, <a href="../engine/actor.html#UpdateURL">UpdateURL</a>, <a href="../engine/actor.html#UsedBy">UsedBy</a>, <a href="../engine/actor.html#VisibleActors">VisibleActors</a>, <a href="../engine/actor.html#VisibleCollidingActors">VisibleCollidingActors</a>, <a href="../engine/actor.html#ZoneChange">ZoneChange</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#!">!</a>, <a href="../core/object.html#!=">!=</a>, <a href="../core/object.html#$">$</a>, <a href="../core/object.html#$=">$=</a>, <a href="../core/object.html#%">%</a>, <a href="../core/object.html#&">&</a>, <a href="../core/object.html#&&">&&</a>, <a href="../core/object.html#*">*</a>, <a href="../core/object.html#**">**</a>, <a href="../core/object.html#*=">*=</a>, <a href="../core/object.html#+">+</a>, <a href="../core/object.html#++">++</a>, <a href="../core/object.html#+=">+=</a>, <a href="../core/object.html#-">-</a>, <a href="../core/object.html#--">--</a>, <a href="../core/object.html#-=">-=</a>, <a href="../core/object.html#/ ">/ </a>, <a href="../core/object.html#/=">/=</a>, <a href="../core/object.html#&lt;">&lt;</a>, <a href="../core/object.html#&lt;&lt;">&lt;&lt;</a>, <a href="../core/object.html#&lt;=">&lt;=</a>, <a href="../core/object.html#==">==</a>, <a href="../core/object.html#&gt;">&gt;</a>, <a href="../core/object.html#&gt;=">&gt;=</a>, <a href="../core/object.html#&gt;&gt;">&gt;&gt;</a>, <a href="../core/object.html#&gt;&gt;&gt;">&gt;&gt;&gt;</a>, <a href="../core/object.html#@">@</a>, <a href="../core/object.html#@=">@=</a>, <a href="../core/object.html#Abs">Abs</a>, <a href="../core/object.html#Acos">Acos</a>, <a href="../core/object.html#AllObjects">AllObjects</a>, <a href="../core/object.html#Asc">Asc</a>, <a href="../core/object.html#Asin">Asin</a>, <a href="../core/object.html#Atan">Atan</a>, <a href="../core/object.html#BeginState">BeginState</a>, <a href="../core/object.html#Caps">Caps</a>, <a href="../core/object.html#Ceil">Ceil</a>, <a href="../core/object.html#Chr">Chr</a>, <a href="../core/object.html#Clamp">Clamp</a>, <a href="../core/object.html#ClassIsChildOf">ClassIsChildOf</a>, <a href="../core/object.html#ClearConfig">ClearConfig</a>, <a href="../core/object.html#ClockwiseFrom">ClockwiseFrom</a>, <a href="../core/object.html#Cos">Cos</a>, <a href="../core/object.html#Created">Created</a>, <a href="../core/object.html#Cross">Cross</a>, <a href="../core/object.html#Disable">Disable</a>, <a href="../core/object.html#Divide">Divide</a>, <a href="../core/object.html#Dot">Dot</a>, <a href="../core/object.html#DynamicLoadObject">DynamicLoadObject</a>, <a href="../core/object.html#EatStr">EatStr</a>, <a href="../core/object.html#Enable">Enable</a>, <a href="../core/object.html#EndState">EndState</a>, <a href="../core/object.html#Eval">Eval</a>, <a href="../core/object.html#Exp">Exp</a>, <a href="../core/object.html#FClamp">FClamp</a>, <a href="../core/object.html#FindObject">FindObject</a>, <a href="../core/object.html#FMax">FMax</a>, <a href="../core/object.html#FMin">FMin</a>, <a href="../core/object.html#FRand">FRand</a>, <a href="../core/object.html#GetAxes">GetAxes</a>, <a href="../core/object.html#GetEnum">GetEnum</a>, <a href="../core/object.html#GetItemName">GetItemName</a>, <a href="../core/object.html#GetPerObjectNames">GetPerObjectNames</a>, <a href="../core/object.html#GetPropertyText">GetPropertyText</a>, <a href="../core/object.html#GetReferencers">GetReferencers</a>, <a href="../core/object.html#GetStateName">GetStateName</a>, <a href="../core/object.html#GetUnAxes">GetUnAxes</a>, <a href="../core/object.html#GotoState">GotoState</a>, <a href="../core/object.html#InStr">InStr</a>, <a href="../core/object.html#InterpCurveEval">InterpCurveEval</a>, <a href="../core/object.html#InterpCurveGetInputDomain">InterpCurveGetInputDomain</a>, <a href="../core/object.html#InterpCurveGetOutputRange">InterpCurveGetOutputRange</a>, <a href="../core/object.html#Invert">Invert</a>, <a href="../core/object.html#IsA">IsA</a>, <a href="../core/object.html#IsInState">IsInState</a>, <a href="../core/object.html#IsOnConsole">IsOnConsole</a>, <a href="../core/object.html#IsSoaking">IsSoaking</a>, <a href="../core/object.html#Left">Left</a>, <a href="../core/object.html#Len">Len</a>, <a href="../core/object.html#Lerp">Lerp</a>, <a href="../core/object.html#Localize">Localize</a>, <a href="../core/object.html#Locs">Locs</a>, <a href="../core/object.html#Log">Log</a>, <a href="../core/object.html#Loge">Loge</a>, <a href="../core/object.html#Max">Max</a>, <a href="../core/object.html#Mid">Mid</a>, <a href="../core/object.html#Min">Min</a>, <a href="../core/object.html#MirrorVectorByNormal">MirrorVectorByNormal</a>, <a href="../core/object.html#Normal">Normal</a>, <a href="../core/object.html#Normalize">Normalize</a>, <a href="../core/object.html#OrthoRotation">OrthoRotation</a>, <a href="../core/object.html#PlatformIs64Bit">PlatformIs64Bit</a>, <a href="../core/object.html#PlatformIsMacOS">PlatformIsMacOS</a>, <a href="../core/object.html#PlatformIsOpenGL">PlatformIsOpenGL</a>, <a href="../core/object.html#PlatformIsUnix">PlatformIsUnix</a>, <a href="../core/object.html#PlatformIsWindows">PlatformIsWindows</a>, <a href="../core/object.html#QuatFindBetween">QuatFindBetween</a>, <a href="../core/object.html#QuatFromAxisAndAngle">QuatFromAxisAndAngle</a>, <a href="../core/object.html#QuatFromRotator">QuatFromRotator</a>, <a href="../core/object.html#QuatInvert">QuatInvert</a>, <a href="../core/object.html#QuatProduct">QuatProduct</a>, <a href="../core/object.html#QuatRotateVector">QuatRotateVector</a>, <a href="../core/object.html#QuatSlerp">QuatSlerp</a>, <a href="../core/object.html#QuatToRotator">QuatToRotator</a>, <a href="../core/object.html#Rand">Rand</a>, <a href="../core/object.html#RandRange">RandRange</a>, <a href="../core/object.html#Repl">Repl</a>, <a href="../core/object.html#ReplaceText">ReplaceText</a>, <a href="../core/object.html#ResetConfig">ResetConfig</a>, <a href="../core/object.html#Right">Right</a>, <a href="../core/object.html#RotRand">RotRand</a>, <a href="../core/object.html#Round">Round</a>, <a href="../core/object.html#SaveConfig">SaveConfig</a>, <a href="../core/object.html#SetPropertyText">SetPropertyText</a>, <a href="../core/object.html#Sin">Sin</a>, <a href="../core/object.html#Smerp">Smerp</a>, <a href="../core/object.html#Split">Split</a>, <a href="../core/object.html#Sqrt">Sqrt</a>, <a href="../core/object.html#Square">Square</a>, <a href="../core/object.html#StaticClearConfig">StaticClearConfig</a>, <a href="../core/object.html#StaticSaveConfig">StaticSaveConfig</a>, <a href="../core/object.html#StopWatch">StopWatch</a>, <a href="../core/object.html#StrCmp">StrCmp</a>, <a href="../core/object.html#Tan">Tan</a>, <a href="../core/object.html#VRand">VRand</a>, <a href="../core/object.html#VSize">VSize</a>, <a href="../core/object.html#VSizeSquared">VSizeSquared</a>, <a href="../core/object.html#Warn">Warn</a>, <a href="../core/object.html#^">^</a>, <a href="../core/object.html#^^">^^</a>, <a href="../core/object.html#|">|</a>, <a href="../core/object.html#||">||</a>, <a href="../core/object.html#~">~</a>, <a href="../core/object.html#~=">~=</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Detail</th>
+</tr>
+</table>
+
+<h4><a name="_NUMAMBIENTSNDS" class="hidden"></a>NUMAMBIENTSNDS <a href="../Source_frightscript/kf_slot_machine.html#20" class="small">Source code</a></h4>
+<div class="declaration">const NUMAMBIENTSNDS = <span class="source_int">3</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NUMREELS" class="hidden"></a>NUMREELS <a href="../Source_frightscript/kf_slot_machine.html#18" class="small">Source code</a></h4>
+<div class="declaration">const NUMREELS = <span class="source_int">3</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NUMSYMBOLS" class="hidden"></a>NUMSYMBOLS <a href="../Source_frightscript/kf_slot_machine.html#19" class="small">Source code</a></h4>
+<div class="declaration">const NUMSYMBOLS = <span class="source_int">6</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_bActive" class="hidden"></a>bActive <a href="../Source_frightscript/kf_slot_machine.html#89" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bActive;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bFirstSpin" class="hidden"></a>bFirstSpin <a href="../Source_frightscript/kf_slot_machine.html#69" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bFirstSpin;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CashPrizeRadius" class="hidden"></a>CashPrizeRadius <a href="../Source_frightscript/kf_slot_machine.html#41" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> CashPrizeRadius;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CashPrizeVolume" class="hidden"></a>CashPrizeVolume <a href="../Source_frightscript/kf_slot_machine.html#39" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> CashPrizeVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CurrentPlayer" class="hidden"></a>CurrentPlayer <a href="../Source_frightscript/kf_slot_machine.html#50" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> CurrentPlayer;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DesiredRolls[NUMREELS]" class="hidden"></a>DesiredRolls[NUMREELS] <a href="../Source_frightscript/kf_slot_machine.html#24" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> DesiredRolls[NUMREELS];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_JackPotChance" class="hidden"></a>JackPotChance <a href="../Source_frightscript/kf_slot_machine.html#67" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> JackPotChance;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_JackpotRadius" class="hidden"></a>JackpotRadius <a href="../Source_frightscript/kf_slot_machine.html#41" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> JackpotRadius;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_JackpotVolume" class="hidden"></a>JackpotVolume <a href="../Source_frightscript/kf_slot_machine.html#39" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> JackpotVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LastReelStopTime" class="hidden"></a>LastReelStopTime <a href="../Source_frightscript/kf_slot_machine.html#32" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> LastReelStopTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LastRepAnimByte" class="hidden"></a>LastRepAnimByte <a href="../Source_frightscript/kf_slot_machine.html#76" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">byte</span> LastRepAnimByte;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LastSpinTime" class="hidden"></a>LastSpinTime <a href="../Source_frightscript/kf_slot_machine.html#30" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> LastSpinTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LeverPullRadius" class="hidden"></a>LeverPullRadius <a href="../Source_frightscript/kf_slot_machine.html#41" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> LeverPullRadius;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LeverPullVolume" class="hidden"></a>LeverPullVolume <a href="../Source_frightscript/kf_slot_machine.html#39" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> LeverPullVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MonsterPrizeRadius" class="hidden"></a>MonsterPrizeRadius <a href="../Source_frightscript/kf_slot_machine.html#41" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> MonsterPrizeRadius;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MonsterPrizeVolume" class="hidden"></a>MonsterPrizeVolume <a href="../Source_frightscript/kf_slot_machine.html#39" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> MonsterPrizeVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NumSpinning" class="hidden"></a>NumSpinning <a href="../Source_frightscript/kf_slot_machine.html#26" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> NumSpinning;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReelSpinningRadius" class="hidden"></a>ReelSpinningRadius <a href="../Source_frightscript/kf_slot_machine.html#41" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> ReelSpinningRadius;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReelSpinningVolume" class="hidden"></a>ReelSpinningVolume <a href="../Source_frightscript/kf_slot_machine.html#44" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">byte</span> ReelSpinningVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReelStoppedRadius" class="hidden"></a>ReelStoppedRadius <a href="../Source_frightscript/kf_slot_machine.html#41" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> ReelStoppedRadius;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReelStoppedVolume" class="hidden"></a>ReelStoppedVolume <a href="../Source_frightscript/kf_slot_machine.html#39" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> ReelStoppedVolume;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReelSymbols[NUMSYMBOLS]" class="hidden"></a>ReelSymbols[NUMSYMBOLS] <a href="../Source_frightscript/kf_slot_machine.html#87" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../frightscript/kf_slot_machine.html#SReelSymbol" class="source">SReelSymbol</a></span> ReelSymbols[NUMSYMBOLS];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RemainingBonusSpins" class="hidden"></a>RemainingBonusSpins <a href="../Source_frightscript/kf_slot_machine.html#63" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> RemainingBonusSpins;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RemainingPayOut" class="hidden"></a>RemainingPayOut <a href="../Source_frightscript/kf_slot_machine.html#56" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> RemainingPayOut;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RepAnimByte" class="hidden"></a>RepAnimByte <a href="../Source_frightscript/kf_slot_machine.html#76" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">byte</span> RepAnimByte;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SlotPullAnim" class="hidden"></a>SlotPullAnim <a href="../Source_frightscript/kf_slot_machine.html#74" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> SlotPullAnim;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_AmbientActiveRef[NUMAMBIENTSNDS]" class="hidden"></a>Snd_AmbientActiveRef[NUMAMBIENTSNDS] <a href="../Source_frightscript/kf_slot_machine.html#46" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> Snd_AmbientActiveRef[NUMAMBIENTSNDS];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_AmbientActive[NUMAMBIENTSNDS]" class="hidden"></a>Snd_AmbientActive[NUMAMBIENTSNDS] <a href="../Source_frightscript/kf_slot_machine.html#48" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> Snd_AmbientActive[NUMAMBIENTSNDS];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_CashPrize" class="hidden"></a>Snd_CashPrize <a href="../Source_frightscript/kf_slot_machine.html#36" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> Snd_CashPrize;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_CashPrizeRef" class="hidden"></a>Snd_CashPrizeRef <a href="../Source_frightscript/kf_slot_machine.html#34" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> Snd_CashPrizeRef;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_Jackpot" class="hidden"></a>Snd_Jackpot <a href="../Source_frightscript/kf_slot_machine.html#36" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> Snd_Jackpot;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_JackpotRef" class="hidden"></a>Snd_JackpotRef <a href="../Source_frightscript/kf_slot_machine.html#34" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> Snd_JackpotRef;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_LeverPull" class="hidden"></a>Snd_LeverPull <a href="../Source_frightscript/kf_slot_machine.html#36" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> Snd_LeverPull;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_LeverPullRef" class="hidden"></a>Snd_LeverPullRef <a href="../Source_frightscript/kf_slot_machine.html#34" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> Snd_LeverPullRef;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_MonsterPrize" class="hidden"></a>Snd_MonsterPrize <a href="../Source_frightscript/kf_slot_machine.html#36" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> Snd_MonsterPrize;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_MonsterPrizeRef" class="hidden"></a>Snd_MonsterPrizeRef <a href="../Source_frightscript/kf_slot_machine.html#34" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> Snd_MonsterPrizeRef;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_ReelSpinning" class="hidden"></a>Snd_ReelSpinning <a href="../Source_frightscript/kf_slot_machine.html#36" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> Snd_ReelSpinning;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_ReelSpinningRef" class="hidden"></a>Snd_ReelSpinningRef <a href="../Source_frightscript/kf_slot_machine.html#34" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> Snd_ReelSpinningRef;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_ReelStopped" class="hidden"></a>Snd_ReelStopped <a href="../Source_frightscript/kf_slot_machine.html#36" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> Snd_ReelStopped;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Snd_ReelStoppedRef" class="hidden"></a>Snd_ReelStoppedRef <a href="../Source_frightscript/kf_slot_machine.html#34" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> Snd_ReelStoppedRef;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">KF_Slot_Machine</h3>
+<h4><a name="_AssociatedDesigner" class="hidden"></a>AssociatedDesigner <a href="../Source_frightscript/kf_slot_machine.html#65" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../frightscript/kf_slot_machine.html" class="source">KF_Slot_Machine</a></span>) const edfindable <span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html" class="source">KF_StoryWaveDesigner</a></span> AssociatedDesigner;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bStartActive" class="hidden"></a>bStartActive <a href="../Source_frightscript/kf_slot_machine.html#91" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../frightscript/kf_slot_machine.html" class="source">KF_Slot_Machine</a></span>) const <span class="source_type">bool</span> bStartActive;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_JackPotChanceIncreaseRate" class="hidden"></a>JackPotChanceIncreaseRate <a href="../Source_frightscript/kf_slot_machine.html#59" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../frightscript/kf_slot_machine.html" class="source">KF_Slot_Machine</a></span>) const <span class="source_type">float</span> JackPotChanceIncreaseRate;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxBet" class="hidden"></a>MaxBet <a href="../Source_frightscript/kf_slot_machine.html#61" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../frightscript/kf_slot_machine.html" class="source">KF_Slot_Machine</a></span>) <span class="source_type">int</span> MaxBet;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reels[NUMREELS]" class="hidden"></a>Reels[NUMREELS] <a href="../Source_frightscript/kf_slot_machine.html#22" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../frightscript/kf_slot_machine.html" class="source">KF_Slot_Machine</a></span>) edfindable <span class="source_type"><a href="../frightscript/kf_slot_reel.html" class="source">KF_Slot_Reel</a></span> Reels[NUMREELS];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpinDuration" class="hidden"></a>SpinDuration <a href="../Source_frightscript/kf_slot_machine.html#28" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../frightscript/kf_slot_machine.html" class="source">KF_Slot_Machine</a></span>) <span class="source_type">float</span> SpinDuration;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_YouLostEvent" class="hidden"></a>YouLostEvent <a href="../Source_frightscript/kf_slot_machine.html#52" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../frightscript/kf_slot_machine.html" class="source">KF_Slot_Machine</a></span>) const <span class="source_type">name</span> YouLostEvent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_YouWonEvent" class="hidden"></a>YouWonEvent <a href="../Source_frightscript/kf_slot_machine.html#54" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../frightscript/kf_slot_machine.html" class="source">KF_Slot_Machine</a></span>) const <span class="source_type">name</span> YouWonEvent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Structures Detail</th>
+</tr>
+</table>
+
+<h4><a name="_SReelSymbol" class="hidden"></a>SReelSymbol <a href="../Source_frightscript/kf_slot_machine.html#79" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../frightscript/kf_slot_machine.html#SReelSymbol" class="source">SReelSymbol</a></span><br />
+{<blockquote>var <span class="source_type">int</span> NumHits;<br />
+var <span class="source_type">int</span> NumReqHits;<br />
+var <span class="source_type">float</span> ReelPosition;<br />
+var <span class="source_type">string</span> SymbolName;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_AddBonusSpins-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AddBonusSpins <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#590" class="small">Source code</a></h4>
+<div class="declaration"> function  AddBonusSpins ( <span class="source_type">int</span> NumToAdd) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AttemptSpin-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AttemptSpin <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#175" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> AttemptSpin ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> SlotPlayer) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CalculateReelPositions-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CalculateReelPositions <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#226" class="small">Source code</a></h4>
+<div class="declaration"> function  CalculateReelPositions ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetPayoutLocation-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetPayoutLocation <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#607" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> GetPayoutLocation ( optional <span class="source_type">float</span> SpawnOffset) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetPayoutVelocity-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetPayoutVelocity <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#597" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> GetPayoutVelocity ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetSymbolAtPosition-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetSymbolAtPosition <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#262" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> GetSymbolAtPosition ( <span class="source_type">float</span> Position, optional out <span class="source_type">int</span> <span class="source_type">Index</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PayOut-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PayOut <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#376" class="small">Source code</a></h4>
+<div class="declaration"> function  PayOut ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayPullAnim-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayPullAnim <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#545" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PlayPullAnim ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PostBeginPlay <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#105" class="small">Source code</a></h4>
+<div class="declaration"> function  PostBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostNetReceive-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> PostNetReceive <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#556" class="small">Source code</a></h4>
+<div class="declaration">simulated event  PostNetReceive ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PreBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PreBeginPlay <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#100" class="small">Source code</a></h4>
+<div class="declaration"> function  PreBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PreLoadSounds-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PreLoadSounds <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#110" class="small">Source code</a></h4>
+<div class="declaration"> function  PreLoadSounds ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReelsAreSpinning-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ReelsAreSpinning <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#220" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ReelsAreSpinning ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetActive-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetActive <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#301" class="small">Source code</a></h4>
+<div class="declaration"> function  SetActive ( <span class="source_type">bool</span> On) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnAmmo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnAmmo <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#444" class="small">Source code</a></h4>
+<div class="declaration"> function  SpawnAmmo ( <span class="source_type">int</span> NumToSpawn) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnCash-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnCash <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#566" class="small">Source code</a></h4>
+<div class="declaration"> function  SpawnCash ( <span class="source_type">int</span> <span class="source_type">Amount</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnEnemy-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnEnemy <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#506" class="small">Source code</a></h4>
+<div class="declaration"> function  SpawnEnemy ( <span class="source_type">int</span> NumHits) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnFuel-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnFuel <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#464" class="small">Source code</a></h4>
+<div class="declaration"> function  SpawnFuel ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpinReels-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpinReels <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#278" class="small">Source code</a></h4>
+<div class="declaration"> function  SpinReels ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Tick-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Tick <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#331" class="small">Source code</a></h4>
+<div class="declaration"> function  Tick ( <span class="source_type">Float</span> <span class="source_type">DeltaTime</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#602" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Touch-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Touch <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#151" class="small">Source code</a></h4>
+<div class="declaration">simulated event  Touch ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Trigger <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#215" class="small">Source code</a></h4>
+<div class="declaration"> event  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UnlockAchievement-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UnlockAchievement <span class="function_state"></span> <a href="../Source_frightscript/kf_slot_machine.html#486" class="small">Source code</a></h4>
+<div class="declaration"> function  UnlockAchievement ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     SpinDuration=<span class="source_int">6.000000</span>
+     Snd_ReelStoppedRef=<span class="source_string">"SteamLand_SND.SlotMachine_ReelStop"</span>
+     Snd_ReelSpinningRef=<span class="source_string">"FreakCircus_Snd_two.Test.arcade6"</span>
+     Snd_MonsterPrizeRef=<span class="source_string">"Hellride_Snd.General.KF_HellRide_EvilLaugh_02"</span>
+     Snd_CashPrizeRef=<span class="source_string">"SteamLand_SND.SlotMachine_Dosh"</span>
+     Snd_JackpotRef=<span class="source_string">"SteamLand_SND.SlotMachine_JackPot"</span>
+     Snd_LeverPullRef=<span class="source_string">"SteamLand_SND.SlotMachine_LeverPull"</span>
+     Snd_ReelSpinning=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'FreakCircus_Snd_two.Test.arcade6'</span>
+     ReelStoppedVolume=<span class="source_int">2.000000</span>
+     CashPrizeVolume=<span class="source_int">2.000000</span>
+     MonsterPrizeVolume=<span class="source_int">2.000000</span>
+     JackpotVolume=<span class="source_int">2.000000</span>
+     LeverPullVolume=<span class="source_int">2.000000</span>
+     ReelSpinningRadius=<span class="source_int">750.000000</span>
+     ReelStoppedRadius=<span class="source_int">500.000000</span>
+     CashPrizeRadius=<span class="source_int">500.000000</span>
+     MonsterPrizeRadius=<span class="source_int">500.000000</span>
+     JackpotRadius=<span class="source_int">750.000000</span>
+     LeverPullRadius=<span class="source_int">500.000000</span>
+     ReelSpinningVolume=<span class="source_int">255</span>
+     Snd_AmbientActiveRef(<span class="source_int">0</span>)=<span class="source_string">"SteamLand_SND.Ambient_SlotMachine_1"</span>
+     Snd_AmbientActiveRef(<span class="source_int">1</span>)=<span class="source_string">"SteamLand_SND.Ambient_SlotMachine_2"</span>
+     Snd_AmbientActiveRef(<span class="source_int">2</span>)=<span class="source_string">"SteamLand_SND.Ambient_SlotMachine_3"</span>
+     JackPotChanceIncreaseRate=<span class="source_int">0.020000</span>
+     MaxBet=<span class="source_int">50</span>
+     bFirstSpin=True
+     SlotPullAnim=<span class="source_string">"Pull"</span>
+     ReelSymbols(<span class="source_int">0</span>)=(SymbolName=<span class="source_string">"Fuel"</span>,NumReqHits=<span class="source_int">3</span>)
+     ReelSymbols(<span class="source_int">1</span>)=(ReelPosition=<span class="source_int">11000.000000</span>,SymbolName=<span class="source_string">"Ammo"</span>,NumReqHits=<span class="source_int">2</span>)
+     ReelSymbols(<span class="source_int">2</span>)=(ReelPosition=<span class="source_int">22000.000000</span>,SymbolName=<span class="source_string">"Monster"</span>,NumReqHits=<span class="source_int">1</span>)
+     ReelSymbols(<span class="source_int">3</span>)=(ReelPosition=<span class="source_int">33000.000000</span>,SymbolName=<span class="source_string">"Fuel"</span>,NumReqHits=<span class="source_int">3</span>)
+     ReelSymbols(<span class="source_int">4</span>)=(ReelPosition=<span class="source_int">44000.000000</span>,SymbolName=<span class="source_string">"Ammo"</span>,NumReqHits=<span class="source_int">2</span>)
+     ReelSymbols(<span class="source_int">5</span>)=(ReelPosition=<span class="source_int">55000.000000</span>,SymbolName=<span class="source_string">"Monster"</span>,NumReqHits=<span class="source_int">1</span>)
+     DrawType=DT_Mesh
+     bUseDynamicLights=True
+     RemoteRole=ROLE_SimulatedProxy
+     NetUpdateFrequency=<span class="source_int">1.000000</span>
+     <span class="source_type">Mesh</span>=SkeletalMesh<span class="source_name">'FrightYard_SKM.GasPump_Slots'</span>
+     bFullVolume=True
+     SoundRadius=<span class="source_int">250.000000</span>
+     CollisionRadius=<span class="source_int">35.000000</span>
+     CollisionHeight=<span class="source_int">60.000000</span>
+     bCollideActors=True
+     bUseCylinderCollision=True
+     bNetNotify=True
+     bDirectional=True
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../frightscript/frightscript-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_frightscript/kf_slot_machine.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#KF_Slot_Machine">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../frightscript/kf_slot_cashpickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../frightscript/kf_slot_reel.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:48.077 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

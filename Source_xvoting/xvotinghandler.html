@@ -1,0 +1,1895 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XVoting.xVotingHandler</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xvoting/xvoting-overview.html">Package</a></td>
+	<td class="header"><a href="../xvoting/xvotinghandler.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#xVotingHandler">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xvoting/votingreplicationinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xvoting/defaultmaplistloader.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xvoting/xvotinghandler.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xvoting/xvoting-overview.html">XVoting</a>.<a href="../xvoting/xvotinghandler.html">xVotingHandler</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022<br />01023<br />01024<br />01025<br />01026<br />01027<br />01028<br />01029<br />01030<br />01031<br />01032<br />01033<br />01034<br />01035<br />01036<br />01037<br />01038<br />01039<br />01040<br />
+01041<br />01042<br />01043<br />01044<br />01045<br />01046<br />01047<br />01048<br />01049<br />01050<br />01051<br />01052<br />01053<br />01054<br />01055<br />01056<br />01057<br />01058<br />01059<br />01060<br />
+01061<br />01062<br />01063<br />01064<br />01065<br />01066<br />01067<br />01068<br />01069<br />01070<br />01071<br />01072<br />01073<br />01074<br />01075<br />01076<br />01077<br />01078<br />01079<br />01080<br />
+01081<br />01082<br />01083<br />01084<br />01085<br />01086<br />01087<br />01088<br />01089<br />01090<br />01091<br />01092<br />01093<br />01094<br />01095<br />01096<br />01097<br />01098<br />01099<br />01100<br />
+01101<br />01102<br />01103<br />01104<br />01105<br />01106<br />01107<br />01108<br />01109<br />01110<br />01111<br />01112<br />01113<br />01114<br />01115<br />01116<br />01117<br />01118<br />01119<br />01120<br />
+01121<br />01122<br />01123<br />01124<br />01125<br />01126<br />01127<br />01128<br />01129<br />01130<br />01131<br />01132<br />01133<br />01134<br />01135<br />01136<br />01137<br />01138<br />01139<br />01140<br />
+01141<br />01142<br />01143<br />01144<br />01145<br />01146<br />01147<br />01148<br />01149<br />01150<br />01151<br />01152<br />01153<br />01154<br />01155<br />01156<br />01157<br />01158<br />01159<br />01160<br />
+01161<br />01162<br />01163<br />01164<br />01165<br />01166<br />01167<br />01168<br />01169<br />01170<br />01171<br />01172<br />01173<br />01174<br />01175<br />01176<br />01177<br />01178<br />01179<br />01180<br />
+01181<br />01182<br />01183<br />01184<br />01185<br />01186<br />01187<br />01188<br />01189<br />01190<br />01191<br />01192<br />01193<br />01194<br />01195<br />01196<br />01197<br />01198<br />01199<br />01200<br />
+01201<br />01202<br />01203<br />01204<br />01205<br />01206<br />01207<br />01208<br />01209<br />01210<br />01211<br />01212<br />01213<br />01214<br />01215<br />01216<br />01217<br />01218<br />01219<br />01220<br />
+01221<br />01222<br />01223<br />01224<br />01225<br />01226<br />01227<br />01228<br />01229<br />01230<br />01231<br />01232<br />01233<br />01234<br />01235<br />01236<br />01237<br />01238<br />01239<br />01240<br />
+01241<br />01242<br />01243<br />01244<br />01245<br />01246<br />01247<br />01248<br />01249<br />01250<br />01251<br />01252<br />01253<br />01254<br />01255<br />01256<br />01257<br />01258<br />01259<br />01260<br />
+01261<br />01262<br />01263<br />01264<br />01265<br />01266<br />01267<br />01268<br />01269<br />01270<br />01271<br />01272<br />01273<br />01274<br />01275<br />01276<br />01277<br />01278<br />01279<br />01280<br />
+01281<br />01282<br />01283<br />01284<br />01285<br />01286<br />01287<br />01288<br />01289<br />01290<br />01291<br />01292<br />01293<br />01294<br />01295<br />01296<br />01297<br />01298<br />01299<br />01300<br />
+01301<br />01302<br />01303<br />01304<br />01305<br />01306<br />01307<br />01308<br />01309<br />01310<br />01311<br />01312<br />01313<br />01314<br />01315<br />01316<br />01317<br />01318<br />01319<br />01320<br />
+01321<br />01322<br />01323<br />01324<br />01325<br />01326<br />01327<br />01328<br />01329<br />01330<br />01331<br />01332<br />01333<br />01334<br />01335<br />01336<br />01337<br />01338<br />01339<br />01340<br />
+01341<br />01342<br />01343<br />01344<br />01345<br />01346<br />01347<br />01348<br />01349<br />01350<br />01351<br />01352<br />01353<br />01354<br />01355<br />01356<br />01357<br />01358<br />01359<br />01360<br />
+01361<br />01362<br />01363<br />01364<br />01365<br />01366<br />01367<br />01368<br />01369<br />01370<br />01371<br />01372<br />01373<br />01374<br />01375<br />01376<br />01377<br />01378<br />01379<br />01380<br />
+01381<br />01382<br />01383<br />01384<br />01385<br />01386<br />01387<br />01388<br />01389<br />01390<br />01391<br />01392<br />01393<br />01394<br />01395<br />01396<br />01397<br />01398<br />01399<br />01400<br />
+01401<br />01402<br />01403<br />01404<br />01405<br />01406<br />01407<br />01408<br />01409<br />01410<br />01411<br />01412<br />01413<br />01414<br />01415<br />01416<br />01417<br />01418<br />01419<br />01420<br />
+01421<br />01422<br />01423<br />01424<br />01425<br />01426<br />01427<br />01428<br />01429<br />01430<br />01431<br />01432<br />01433<br />01434<br />01435<br />01436<br />01437<br />01438<br />01439<br />01440<br />
+01441<br />01442<br />01443<br />01444<br />01445<br />01446<br />01447<br />01448<br />01449<br />01450<br />01451<br />01452<br />01453<br />01454<br />01455<br />01456<br />01457<br />01458<br />01459<br />01460<br />
+01461<br />01462<br />01463<br />01464<br />01465<br />01466<br />01467<br />01468<br />01469<br />01470<br />01471<br />01472<br />01473<br />01474<br />01475<br />01476<br />01477<br />01478<br />01479<br />01480<br />
+01481<br />01482<br />01483<br />01484<br />01485<br />01486<br />01487<br />01488<br />01489<br />01490<br />01491<br />01492<br />01493<br />01494<br />01495<br />01496<br />01497<br />01498<br />01499<br />01500<br />
+01501<br />01502<br />01503<br />01504<br />01505<br />01506<br />01507<br />01508<br />01509<br />01510<br />01511<br />01512<br />01513<br />01514<br />01515<br />01516<br />01517<br />01518<br />01519<br />01520<br />
+01521<br />01522<br />01523<br />01524<br />01525<br />01526<br />01527<br />01528<br />01529<br />01530<br />01531<br />01532<br />01533<br />01534<br />01535<br />01536<br />01537<br />01538<br />01539<br />01540<br />
+01541<br />01542<br />01543<br />01544<br />01545<br />01546<br />01547<br />01548<br />01549<br />01550<br />01551<br />01552<br />01553<br />01554<br />01555<br />01556<br />01557<br />01558<br />01559<br />01560<br />
+01561<br />01562<br />01563<br />01564<br />01565<br />01566<br />01567<br />01568<br />01569<br />01570<br />01571<br />01572<br />01573<br />01574<br />01575<br />01576<br />01577<br />01578<br />01579<br />01580<br />
+01581<br />01582<br />01583<br />01584<br />01585<br />01586<br />01587<br />01588<br />01589<br />01590<br />01591<br />01592<br />01593<br />01594<br />01595<br />01596<br />01597<br />01598<br />01599<br />01600<br />
+01601<br />01602<br />01603<br />01604<br />01605<br />01606<br />01607<br />01608<br />01609<br />01610<br />01611<br />01612<br />01613<br />01614<br />01615<br />01616<br />01617<br />01618<br />01619<br />01620<br />
+01621<br />01622<br />01623<br />01624<br />01625<br />01626<br />01627<br />01628<br />01629<br />01630<br />01631<br />01632<br />01633<br />01634<br />01635<br />01636<br />01637<br />01638<br />01639<br />01640<br />
+01641<br />01642<br />01643<br />01644<br />01645<br />01646<br />01647<br />01648<br />01649<br />01650<br />01651<br />01652<br />01653<br />01654<br />01655<br />01656<br />01657<br />01658<br />01659<br />01660<br />
+01661<br />01662<br />01663<br />01664<br />01665<br />01666<br />01667<br />01668<br />01669<br />01670<br />01671<br />01672<br />01673<br />01674<br />01675<br />01676<br />01677<br />01678<br />01679<br />01680<br />
+01681<br />01682<br />01683<br />01684<br />01685<br />01686<br />01687<br />01688<br />01689<br />01690<br />01691<br />01692<br />01693<br />01694<br />01695<br />01696<br />01697<br />01698<br />01699<br />01700<br />
+01701<br />01702<br />01703<br />01704<br />01705<br />01706<br />01707<br />01708<br />01709<br />01710<br />01711<br />01712<br />01713<br />01714<br />01715<br />01716<br />01717<br />01718<br />01719<br />01720<br />
+01721<br />01722<br />01723<br />01724<br />01725<br />01726<br />01727<br />01728<br />01729<br />01730<br />01731<br />01732<br />01733<br />01734<br />01735<br />01736<br />01737<br />01738<br />01739<br />01740<br />
+01741<br />01742<br />01743<br />01744<br />01745<br />01746<br />01747<br />01748<br />01749<br />01750</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// ====================================================================
+</span><a name="2"></a><span class="source_comment">//  Class:  xVoting.xVotingHandler
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">//	xVotingHandler handles the server side of map voting, kick voting,
+</span><a name="5"></a><span class="source_comment">//  and match setup.
+</span><a name="6"></a><span class="source_comment">//
+</span><a name="7"></a><span class="source_comment">//  Written by Bruce Bickar
+</span><a name="8"></a><span class="source_comment">//  (c) 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="9"></a><span class="source_comment">// ====================================================================
+</span><a name="10"></a><span class="source_type">class</span> <span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span> extends <span class="source_type"><a href="../engine/votinghandler.html" class="source">VotingHandler</a></span> config;
+<a name="11"></a>
+<a name="12"></a><span class="source_comment">// work variables
+</span><a name="13"></a>var array&lt;<span class="source_type"><a href="../xvoting/votingreplicationinfo.html" class="source">VotingReplicationInfo</a></span>&gt; MVRI; <span class="source_comment">// used to communicated between players and server
+</span><a name="14"></a>var <span class="source_type">int</span>           MapCount;      <span class="source_comment">// number of maps
+</span><a name="15"></a>var <span class="source_type">bool</span>          bLevelSwitchPending;
+<a name="16"></a>var <span class="source_type">bool</span>          bMidGameVote;
+<a name="17"></a>var <span class="source_type">int</span>           TimeLeft,ScoreBoardTime,ServerTravelTime;
+<a name="18"></a>var array&lt;<span class="source_type"><a href="../engine/votinghandler.html#MapVoteScore" class="source">MapVoteScore</a></span>&gt; MapVoteCount;
+<a name="19"></a>var array&lt;<span class="source_type"><a href="../engine/votinghandler.html#KickVoteScore" class="source">KickVoteScore</a></span>&gt; KickVoteCount;
+<a name="20"></a>var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xvoting/mapvotehistory.html" class="source">MapVoteHistory</a></span>&gt; MapVoteHistoryClass;
+<a name="21"></a>var array&lt;<span class="source_type"><a href="../engine/votinghandler.html#MapVoteMapList" class="source">MapVoteMapList</a></span>&gt; <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>;
+<a name="22"></a>var <span class="source_type"><a href="../xvoting/mapvotehistory.html" class="source">MapVoteHistory</a></span> History;
+<a name="23"></a>var <span class="source_type">string</span>        TextMessage;
+<a name="24"></a>var <span class="source_type">string</span>        ServerTravelString;
+<a name="25"></a>var <span class="source_type">bool</span>          bAutoDetectMode; <span class="source_comment">// true if mapvote enabled but not configuration
+</span><a name="26"></a>
+<a name="27"></a><span class="source_comment">// ---- INI Configuration setting variables ----
+</span><a name="28"></a>var() config array&lt;<span class="source_type"><a href="../engine/votinghandler.html#MapVoteGameConfig" class="source">MapVoteGameConfig</a></span>&gt; GameConfig;
+<a name="29"></a>var() config <span class="source_type">int</span>    VoteTimeLimit;
+<a name="30"></a>var() config <span class="source_type">int</span>    ScoreBoardDelay;
+<a name="31"></a>var() config <span class="source_type">bool</span>   bAutoOpen;
+<a name="32"></a>var() config <span class="source_type">int</span>    MidGameVotePercent;
+<a name="33"></a>var() config <span class="source_type">bool</span>   bScoreMode;
+<a name="34"></a>var() config <span class="source_type">bool</span>   bAccumulationMode;
+<a name="35"></a>var() config <span class="source_type">bool</span>   bEliminationMode;
+<a name="36"></a>var() config <span class="source_type">int</span>    MinMapCount;
+<a name="37"></a>var() config <span class="source_type">string</span> MapVoteHistoryType;
+<a name="38"></a>var() config <span class="source_type">int</span>    RepeatLimit;
+<a name="39"></a>var() config <span class="source_type">int</span>    DefaultGameConfig;
+<a name="40"></a>var() config <span class="source_type">bool</span>   bDefaultToCurrentGameType;
+<a name="41"></a>var() config <span class="source_type">bool</span>   bMapVote;
+<a name="42"></a>var() config <span class="source_type">bool</span>   bKickVote;
+<a name="43"></a>var() config <span class="source_type">bool</span>   bMatchSetup;
+<a name="44"></a>var() config <span class="source_type">int</span>    KickPercent;
+<a name="45"></a>var() config <span class="source_type">bool</span>   bAnonymousKicking;
+<a name="46"></a>var() config <span class="source_type">string</span> MapListLoaderType;
+<a name="47"></a>var() config array&lt;<span class="source_type"><a href="../engine/votinghandler.html#AccumulationData" class="source">AccumulationData</a></span>&gt; AccInfo; <span class="source_comment">// used to save player's unused votes between maps when in Accumulation mode
+</span><a name="48"></a>var() config <span class="source_type">int</span>    ServerNumber;
+<a name="49"></a>var() config <span class="source_type">int</span>    CurrentGameConfig;
+<a name="50"></a>
+<a name="51"></a><span class="source_comment">// MatchSetup
+</span><a name="52"></a>var <span class="source_type"><a href="../xvoting/matchconfig.html" class="source">MatchConfig</a></span> MatchProfile;
+<a name="53"></a>var <span class="source_type">string</span> GameConfigPage;
+<a name="54"></a>var <span class="source_type">string</span> MapListConfigPage;
+<a name="55"></a>
+<a name="56"></a><span class="source_comment">// Localization variables
+</span><a name="57"></a>var localized <span class="source_type">string</span> lmsgInvalidPassword;
+<a name="58"></a>var localized <span class="source_type">string</span> lmsgMatchSetupPermission;
+<a name="59"></a>var localized <span class="source_type">string</span> lmsgKickVote;
+<a name="60"></a>var localized <span class="source_type">string</span> lmsgAnonymousKickVote;
+<a name="61"></a>var localized <span class="source_type">string</span> lmsgKickVoteAdmin;
+<a name="62"></a>var localized <span class="source_type">string</span> lmsgMapWon;
+<a name="63"></a>var localized <span class="source_type">string</span> lmsgMidGameVote;
+<a name="64"></a>var localized <span class="source_type">string</span> lmsgSpectatorsCantVote;
+<a name="65"></a>var localized <span class="source_type">string</span> lmsgMapVotedFor;
+<a name="66"></a>var localized <span class="source_type">string</span> lmsgMapVotedForWithCount;
+<a name="67"></a>var localized <span class="source_type">string</span> PropsDisplayText[<span class="source_int">17</span>];
+<a name="68"></a>var localized <span class="source_type">string</span> PropDescription[<span class="source_int">17</span>];
+<a name="69"></a>var localized <span class="source_type">string</span> lmsgAdminMapChange;
+<a name="70"></a>var localized <span class="source_type">string</span> lmsgGameConfigColumnTitle[<span class="source_int">6</span>];
+<a name="71"></a>
+<a name="72"></a>const MAPVOTEALLOWED = True;
+<a name="73"></a>const KICKVOTEALLOWED = True;
+<a name="74"></a>const MATCHSETUPALLOWED = False;
+<a name="75"></a>
+<a name="76"></a>static function <span class="source_type">bool</span> IsEnabled()
+<a name="77"></a>{
+<a name="78"></a>	return ( Default.bMapVote || Default.bKickVote || Default.bMatchSetup );
+<a name="79"></a>}
+<a name="80"></a>
+<a name="81"></a><span class="source_comment">//================================================================================================
+</span><a name="82"></a><span class="source_comment">//                                    Startup/Event Code
+</span><a name="83"></a><span class="source_comment">//================================================================================================
+</span><a name="84"></a>function PostBeginPlay()
+<a name="85"></a>{
+<a name="86"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="87"></a>
+<a name="88"></a>	Super.PostBeginPlay();
+<a name="89"></a>
+<a name="90"></a>	<span class="source_comment">// disable voting in single player mode
+</span><a name="91"></a>    if( <span class="source_type">Level</span>.NetMode == NM_StandAlone )
+<a name="92"></a>		return;
+<a name="93"></a>
+<a name="94"></a><span class="source_comment">// if _RO_
+</span><a name="95"></a><span class="source_comment">//	if ( Level.IsDemoBuild() )
+</span><a name="96"></a><span class="source_comment">//	{
+</span><a name="97"></a><span class="source_comment">//		bMapVote = False;
+</span><a name="98"></a><span class="source_comment">//		bKickVote = False;
+</span><a name="99"></a><span class="source_comment">//	}
+</span><a name="100"></a>
+<a name="101"></a>	bMatchSetup = bMatchSetup && MATCHSETUPALLOWED;
+<a name="102"></a>
+<a name="103"></a>	if(bKickVote)
+<a name="104"></a>		log(<span class="source_string">"Kick Voting Enabled"</span>,<span class="source_name">'MapVote'</span>);
+<a name="105"></a>	else
+<a name="106"></a>		log(<span class="source_string">"Kick Voting Disabled"</span>,<span class="source_name">'MapVote'</span>);
+<a name="107"></a>
+<a name="108"></a>	if(bMapVote)
+<a name="109"></a>	{
+<a name="110"></a>		log(<span class="source_string">"Map Voting Enabled"</span>,<span class="source_name">'MapVote'</span>);
+<a name="111"></a>		<span class="source_comment">// check current game settings
+</span><a name="112"></a>		if( GameConfig.Length &gt; <span class="source_int">0</span> )
+<a name="113"></a>		{
+<a name="114"></a>			if( !(<span class="source_type">string</span>(<span class="source_type">Level</span>.Game.<span class="source_type">Class</span>) ~= GameConfig[CurrentGameConfig].<span class="source_type">GameClass</span>) )
+<a name="115"></a>			{
+<a name="116"></a>				CurrentGameConfig = <span class="source_int">0</span>;
+<a name="117"></a>				<span class="source_comment">// find matching game type in game config
+</span><a name="118"></a>				for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;GameConfig.Length; <span class="source_type">i</span>++)
+<a name="119"></a>				{
+<a name="120"></a>					if(GameConfig[<span class="source_type">i</span>].<span class="source_type">GameClass</span> ~= <span class="source_type">string</span>(<span class="source_type">Level</span>.Game.<span class="source_type">Class</span>))
+<a name="121"></a>					{
+<a name="122"></a>						CurrentGameConfig = <span class="source_type">i</span>;
+<a name="123"></a>						break;
+<a name="124"></a>					}
+<a name="125"></a>				}
+<a name="126"></a>			}
+<a name="127"></a>		}
+<a name="128"></a>		else
+<a name="129"></a>			CurrentGameConfig = <span class="source_int">0</span>;
+<a name="130"></a>		LoadMapList();
+<a name="131"></a>	}
+<a name="132"></a>	else
+<a name="133"></a>		log(<span class="source_string">"Map Voting Disabled"</span>,<span class="source_name">'MapVote'</span>);
+<a name="134"></a>
+<a name="135"></a>	if(bMatchSetup)
+<a name="136"></a>	{
+<a name="137"></a>		log(<span class="source_string">"MatchSetup Enabled"</span>,<span class="source_name">'MapVote'</span>);
+<a name="138"></a>
+<a name="139"></a>		MatchProfile = CreateMatchProfile();
+<a name="140"></a>		MatchProfile.Init(<span class="source_type">Level</span>);
+<a name="141"></a>		MatchProfile.LoadCurrentSettings();
+<a name="142"></a>	}
+<a name="143"></a>	else
+<a name="144"></a>		log(<span class="source_string">"MatchSetup Disabled"</span>,<span class="source_name">'MapVote'</span>);
+<a name="145"></a>}
+<a name="146"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="147"></a>function PlayerJoin(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>)
+<a name="148"></a>{
+<a name="149"></a>	<span class="source_comment">// disable voting in single player mode
+</span><a name="150"></a>    if( <span class="source_type">Level</span>.NetMode == NM_StandAlone )
+<a name="151"></a>		return;
+<a name="152"></a>
+<a name="153"></a>	if(!<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.IsA(<span class="source_name">'XPlayer'</span>)) <span class="source_comment">// no bots
+</span><a name="154"></a>		return;
+<a name="155"></a>
+<a name="156"></a>	if(bMapVote || bKickVote || bMatchSetup)
+<a name="157"></a>	{
+<a name="158"></a>		Log(<span class="source_string">"___New Player Joined - "</span> $ <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> $ <span class="source_string">", "</span> $ <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.GetPlayerNetworkAddress(),<span class="source_name">'MapVote'</span>);
+<a name="159"></a>		AddMapVoteReplicationInfo(<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>);
+<a name="160"></a>	}
+<a name="161"></a>}
+<a name="162"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="163"></a>function PlayerExit(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">Exiting</span>)
+<a name="164"></a>{
+<a name="165"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>,<span class="source_type">x</span>,ExitingPlayerIndex;
+<a name="166"></a>
+<a name="167"></a>	<span class="source_comment">// disable voting in single player mode
+</span><a name="168"></a>    if( <span class="source_type">Level</span>.NetMode == NM_StandAlone )
+<a name="169"></a>		return;
+<a name="170"></a>
+<a name="171"></a>    ExitingPlayerIndex = -<span class="source_int">1</span>;
+<a name="172"></a>
+<a name="173"></a>	log(<span class="source_string">"____PlayerExit"</span>, <span class="source_name">'MapVoteDebug'</span>);
+<a name="174"></a>
+<a name="175"></a>	if(bMapVote || bKickVote || bMatchSetup)
+<a name="176"></a>	{
+<a name="177"></a>		<span class="source_comment">// find the MVRI belonging to the exiting player
+</span><a name="178"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span> &lt; MVRI.Length;<span class="source_type">i</span>++)
+<a name="179"></a>		{
+<a name="180"></a>		    <span class="source_comment">// remove players vote from vote count
+</span><a name="181"></a>			if( MVRI[<span class="source_type">i</span>] != none && (MVRI[<span class="source_type">i</span>].PlayerOwner == none || MVRI[<span class="source_type">i</span>].PlayerOwner == <span class="source_type">Exiting</span>) )
+<a name="182"></a>			{
+<a name="183"></a>				log(<span class="source_string">"exiting player MVRI found "</span> $ <span class="source_type">i</span>,<span class="source_name">'MapVoteDebug'</span>);
+<a name="184"></a>				ExitingPlayerIndex = <span class="source_type">i</span>;
+<a name="185"></a>				if( bMapVote && MVRI[ExitingPlayerIndex].MapVote &gt; -<span class="source_int">1</span> && MVRI[ExitingPlayerIndex].GameVote &gt; -<span class="source_int">1</span> )
+<a name="186"></a>				{
+<a name="187"></a>					for( <span class="source_type">x</span>=<span class="source_int">0</span>; <span class="source_type">x</span>&lt;MapVoteCount.Length; <span class="source_type">x</span>++ )
+<a name="188"></a>					{
+<a name="189"></a>						if( MVRI[ExitingPlayerIndex].MapVote == MapVoteCount[<span class="source_type">x</span>].<span class="source_type">MapIndex</span> &&
+<a name="190"></a>							MVRI[ExitingPlayerIndex].GameVote == MapVoteCount[<span class="source_type">x</span>].GameConfigIndex)
+<a name="191"></a>						{
+<a name="192"></a>							MapVoteCount[<span class="source_type">x</span>].VoteCount -= MVRI[ExitingPlayerIndex].VoteCount;
+<a name="193"></a>							UpdateVoteCount(MapVoteCount[<span class="source_type">x</span>].<span class="source_type">MapIndex</span>, MapVoteCount[<span class="source_type">x</span>].GameConfigIndex, MapVoteCount[<span class="source_type">x</span>].VoteCount);
+<a name="194"></a>							break;
+<a name="195"></a>						}
+<a name="196"></a>					}
+<a name="197"></a>				}
+<a name="198"></a>
+<a name="199"></a>				if( bKickVote )
+<a name="200"></a>				{
+<a name="201"></a>					<span class="source_comment">// clear votes for exiting player
+</span><a name="202"></a>					UpdateKickVoteCount( MVRI[ExitingPlayerIndex].<span class="source_type">PlayerID</span>, <span class="source_int">0</span> );
+<a name="203"></a>
+<a name="204"></a>					<span class="source_comment">// decrease votecount for player that the exiting player voted against
+</span><a name="205"></a>					if( MVRI[ExitingPlayerIndex].KickVote &gt; -<span class="source_int">1</span> && MVRI[MVRI[ExitingPlayerIndex].KickVote] != none )
+<a name="206"></a>						UpdateKickVoteCount( MVRI[MVRI[ExitingPlayerIndex].KickVote].<span class="source_type">PlayerID</span>, -<span class="source_int">1</span>);
+<a name="207"></a>				}
+<a name="208"></a>			}
+<a name="209"></a>
+<a name="210"></a>			if( bKickVote && ExitingPlayerIndex &gt; -<span class="source_int">1</span> && MVRI[<span class="source_type">i</span>] != none && MVRI[<span class="source_type">i</span>].KickVote == ExitingPlayerIndex )
+<a name="211"></a>				MVRI[<span class="source_type">i</span>].KickVote = -<span class="source_int">1</span>;
+<a name="212"></a>
+<a name="213"></a>			if( MVRI[<span class="source_type">i</span>] != none && (MVRI[<span class="source_type">i</span>].PlayerOwner == none || MVRI[<span class="source_type">i</span>].PlayerOwner == <span class="source_type">Exiting</span>) )
+<a name="214"></a>			{
+<a name="215"></a>				log(<span class="source_string">"___Destroying VRI..."</span>,<span class="source_name">'MapVoteDebug'</span>);
+<a name="216"></a>				MVRI[<span class="source_type">i</span>].Destroy();
+<a name="217"></a>				MVRI[<span class="source_type">i</span>] = none;
+<a name="218"></a>				if( bKickVote )
+<a name="219"></a>					TallyKickVotes();
+<a name="220"></a>				if( bMapVote )
+<a name="221"></a>					TallyVotes(false);
+<a name="222"></a>			}
+<a name="223"></a>		}
+<a name="224"></a>	}
+<a name="225"></a>}
+<a name="226"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="227"></a>function AddMapVoteReplicationInfo(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>)
+<a name="228"></a>{
+<a name="229"></a>	local <span class="source_type"><a href="../xvoting/votingreplicationinfo.html" class="source">VotingReplicationInfo</a></span> <span class="source_type">M</span>;
+<a name="230"></a>
+<a name="231"></a>	log(<span class="source_string">"___Spawning VotingReplicationInfo"</span>,<span class="source_name">'MapVoteDebug'</span>);
+<a name="232"></a>	<span class="source_type">M</span> = Spawn(<span class="source_type">class</span><span class="source_name">'VotingReplicationInfo'</span>,<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>,,<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.Location);
+<a name="233"></a>	if(<span class="source_type">M</span> == None)
+<a name="234"></a>	{
+<a name="235"></a>		Log(<span class="source_string">"___Failed to spawn VotingReplicationInfo"</span>,<span class="source_name">'MapVote'</span>);
+<a name="236"></a>		return;
+<a name="237"></a>	}
+<a name="238"></a>
+<a name="239"></a>	<span class="source_type">M</span>.<span class="source_type">PlayerID</span> = <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerID</span>;
+<a name="240"></a>	MVRI[MVRI.Length] = <span class="source_type">M</span>;
+<a name="241"></a>}
+<a name="242"></a><span class="source_comment">//================================================================================================
+</span><a name="243"></a><span class="source_comment">//                                    Map Voting
+</span><a name="244"></a><span class="source_comment">//================================================================================================
+</span><a name="245"></a>function LoadMapList()
+<a name="246"></a>{
+<a name="247"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>,EnabledMapCount;
+<a name="248"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xvoting/maplistloader.html" class="source">MapListLoader</a></span>&gt; MapListLoaderClass;
+<a name="249"></a>	local <span class="source_type"><a href="../xvoting/maplistloader.html" class="source">MapListLoader</a></span> Loader;
+<a name="250"></a>
+<a name="251"></a>	<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>.Length = <span class="source_int">0</span>; <span class="source_comment">// clear
+</span><a name="252"></a>	MapCount = <span class="source_int">0</span>;
+<a name="253"></a>
+<a name="254"></a>	MapVoteHistoryClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xvoting/mapvotehistory.html" class="source">MapVoteHistory</a></span>&gt;(DynamicLoadObject(MapVoteHistoryType, <span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="255"></a>	History = new(None,<span class="source_string">"MapVoteHistory"</span>$<span class="source_type">string</span>(ServerNumber)) MapVoteHistoryClass;
+<a name="256"></a>	if(History == None) <span class="source_comment">// Failed to spawn MapVoteHistory
+</span><a name="257"></a>		History = new(None,<span class="source_string">"MapVoteHistory"</span>$<span class="source_type">string</span>(ServerNumber)) <span class="source_type">class</span><span class="source_name">'MapVoteHistory_INI'</span>;
+<a name="258"></a>
+<a name="259"></a>	log(<span class="source_string">"GameTypes:"</span>,<span class="source_name">'MapVote'</span>);
+<a name="260"></a>
+<a name="261"></a>	if(GameConfig.Length == <span class="source_int">0</span>)
+<a name="262"></a>	{
+<a name="263"></a>		bAutoDetectMode = true;
+<a name="264"></a>		<span class="source_comment">// default to ONLY current game type and maps
+</span><a name="265"></a>		GameConfig.Length = <span class="source_int">1</span>;
+<a name="266"></a>		GameConfig[<span class="source_int">0</span>].<span class="source_type">GameClass</span> = <span class="source_type">string</span>(<span class="source_type">Level</span>.Game.<span class="source_type">Class</span>);
+<a name="267"></a>		GameConfig[<span class="source_int">0</span>].Prefix = <span class="source_type">Level</span>.Game.<span class="source_type">MapPrefix</span>;
+<a name="268"></a>		GameConfig[<span class="source_int">0</span>].Acronym = <span class="source_type">Level</span>.Game.Acronym;
+<a name="269"></a>		GameConfig[<span class="source_int">0</span>].GameName = <span class="source_type">Level</span>.Game.GameName;
+<a name="270"></a>		GameConfig[<span class="source_int">0</span>].Mutators=<span class="source_string">""</span>;
+<a name="271"></a>		GameConfig[<span class="source_int">0</span>].Options=<span class="source_string">""</span>;
+<a name="272"></a><span class="source_comment">//		GameConfig.Length = 10;
+</span><a name="273"></a><span class="source_comment">//		// UT2003 game types
+</span><a name="274"></a><span class="source_comment">//		GameConfig[0].GameClass="XGame.xDeathMatch";GameConfig[0].Prefix="DM";GameConfig[0].Acronym="DM";GameConfig[0].GameName="DeathMatch";GameConfig[0].Mutators="";GameConfig[0].Options="";
+</span><a name="275"></a><span class="source_comment">//		GameConfig[1].GameClass="XGame.xTeamGame";GameConfig[1].Prefix="DM";GameConfig[1].Acronym="TDM";GameConfig[1].GameName="Team DeathMatch";GameConfig[1].Mutators="";GameConfig[1].Options="";
+</span><a name="276"></a><span class="source_comment">//		GameConfig[2].GameClass="XGame.xDoubleDom";GameConfig[2].Prefix="DOM";GameConfig[2].Acronym="DOM";GameConfig[2].GameName="Double Domination";GameConfig[2].Mutators="";GameConfig[2].Options="";
+</span><a name="277"></a><span class="source_comment">//		GameConfig[3].GameClass="XGame.xCTFGame";GameConfig[3].Prefix="CTF";GameConfig[3].Acronym="CTF";GameConfig[3].GameName="Capture the Flag";GameConfig[3].Mutators="";GameConfig[3].Options="";
+</span><a name="278"></a><span class="source_comment">//		GameConfig[4].GameClass="XGame.xBombingRun";GameConfig[4].Prefix="BR";GameConfig[4].Acronym="BR";GameConfig[4].GameName="Bombing Run";GameConfig[4].Mutators="";GameConfig[4].Options="";
+</span><a name="279"></a><span class="source_comment">//        // bonus pack game types
+</span><a name="280"></a><span class="source_comment">//		GameConfig[5].GameClass="BonusPack.xMutantGame";GameConfig[5].Prefix="DM";GameConfig[5].Acronym="MUT";GameConfig[5].GameName="Mutant";GameConfig[5].Mutators="";GameConfig[5].Options="";
+</span><a name="281"></a><span class="source_comment">//		GameConfig[6].GameClass="BonusPack.xLastManStandingGame";GameConfig[6].Prefix="DM";GameConfig[6].Acronym="LMS";GameConfig[6].GameName="Last Man Standing";GameConfig[6].Mutators="";GameConfig[6].Options="";
+</span><a name="282"></a><span class="source_comment">//		GameConfig[7].GameClass="SkaarjPack.Invasion";GameConfig[7].Prefix="DM";GameConfig[7].Acronym="INV";GameConfig[7].GameName="Invasion";GameConfig[7].Mutators="";GameConfig[7].Options="";
+</span><a name="283"></a><span class="source_comment">//		// UT2004 game types
+</span><a name="284"></a><span class="source_comment">//		GameConfig[8].GameClass="Onslaught.ONSOnslaughtGame";GameConfig[8].Prefix="ONS";GameConfig[8].Acronym="ONS";GameConfig[8].GameName="Onslaught";GameConfig[8].Mutators="";GameConfig[8].Options="";
+</span><a name="285"></a><span class="source_comment">//		GameConfig[9].GameClass="UT2k4Assault.ASGameInfo";GameConfig[9].Prefix="AS";GameConfig[9].Acronym="AS";GameConfig[9].GameName="Assault";GameConfig[9].Mutators="";GameConfig[9].Options="";
+</span><a name="286"></a>	}
+<a name="287"></a>	MapCount = <span class="source_int">0</span>;
+<a name="288"></a>
+<a name="289"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span> &lt; GameConfig.Length;<span class="source_type">i</span>++)
+<a name="290"></a>		if(GameConfig[<span class="source_type">i</span>].<span class="source_type">GameClass</span> != <span class="source_string">""</span>)
+<a name="291"></a>			log(GameConfig[<span class="source_type">i</span>].GameName,<span class="source_name">'MapVote'</span>);
+<a name="292"></a>
+<a name="293"></a>	log(<span class="source_string">"MapListLoaderType = "</span> $ MapListLoaderType,<span class="source_name">'MapVote'</span>);
+<a name="294"></a>
+<a name="295"></a>	MapListLoaderClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xvoting/maplistloader.html" class="source">MapListLoader</a></span>&gt;(DynamicLoadObject(MapListLoaderType, <span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="296"></a>	Loader = spawn(MapListLoaderClass);
+<a name="297"></a>	if(Loader == None) <span class="source_comment">// Failed to spawn MapListLoader
+</span><a name="298"></a>		Loader = spawn(<span class="source_type">class</span><span class="source_name">'DefaultMapListLoader'</span>); <span class="source_comment">// default
+</span><a name="299"></a>	Loader.LoadMapList(self);
+<a name="300"></a>
+<a name="301"></a>	log(MapCount $ <span class="source_string">" maps loaded."</span>,<span class="source_name">'MapVote'</span>);
+<a name="302"></a>
+<a name="303"></a>	History.Save();
+<a name="304"></a>
+<a name="305"></a>	if(bEliminationMode)
+<a name="306"></a>	{
+<a name="307"></a>		<span class="source_comment">// Count the Remaining Enabled maps
+</span><a name="308"></a>		EnabledMapCount = <span class="source_int">0</span>;
+<a name="309"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;MapCount;<span class="source_type">i</span>++)
+<a name="310"></a>		{
+<a name="311"></a>			if(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">i</span>].bEnabled)
+<a name="312"></a>				EnabledMapCount++;
+<a name="313"></a>		}
+<a name="314"></a>		if(EnabledMapCount &lt; MinMapCount || EnabledMapCount == <span class="source_int">0</span>)
+<a name="315"></a>		{
+<a name="316"></a>			log(<span class="source_string">"Elimination Mode Reset/Reload."</span>,<span class="source_name">'MapVote'</span>);
+<a name="317"></a>			RepeatLimit = <span class="source_int">0</span>;
+<a name="318"></a>			<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>.Length = <span class="source_int">0</span>;
+<a name="319"></a>			MapCount = <span class="source_int">0</span>;
+<a name="320"></a>			SaveConfig();
+<a name="321"></a>			Loader.LoadMapList(self);
+<a name="322"></a>		}
+<a name="323"></a>	}
+<a name="324"></a>	Loader.Destroy();
+<a name="325"></a>}
+<a name="326"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="327"></a>function AddMap(<span class="source_type">string</span> <span class="source_type">MapName</span>, <span class="source_type">string</span> Mutators, <span class="source_type">string</span> GameOptions) <span class="source_comment">// called from the MapListLoader
+</span><a name="328"></a>{
+<a name="329"></a>	local <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span> <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>;
+<a name="330"></a>	local <span class="source_type">bool</span> bUpdate;
+<a name="331"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="332"></a>
+<a name="333"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>.Length; <span class="source_type">i</span>++)  <span class="source_comment">// dont add duplicate map names
+</span><a name="334"></a>		if(<span class="source_type">MapName</span> ~= <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">i</span>].<span class="source_type">MapName</span>)
+<a name="335"></a>			return;
+<a name="336"></a>
+<a name="337"></a>	<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span> = History.GetMapHistory(<span class="source_type">MapName</span>);
+<a name="338"></a>
+<a name="339"></a>	<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>.Length = MapCount + <span class="source_int">1</span>;
+<a name="340"></a>	<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[MapCount].<span class="source_type">MapName</span> = <span class="source_type">MapName</span>;
+<a name="341"></a>	<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[MapCount].PlayCount = <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">P</span>;
+<a name="342"></a>	<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[MapCount].<span class="source_type">Sequence</span> = <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">S</span>;
+<a name="343"></a>	if(<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">S</span> &lt;= RepeatLimit && <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">S</span> != <span class="source_int">0</span>)
+<a name="344"></a>		<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[MapCount].bEnabled = false; <span class="source_comment">// dont allow players to vote for this one
+</span><a name="345"></a>	else
+<a name="346"></a>		<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[MapCount].bEnabled = true;
+<a name="347"></a>	MapCount++;
+<a name="348"></a>
+<a name="349"></a>	if(Mutators != <span class="source_string">""</span> && Mutators != <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">U</span>)
+<a name="350"></a>	{
+<a name="351"></a>		<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">U</span> = Mutators;
+<a name="352"></a>		bUpdate = True;
+<a name="353"></a>	}
+<a name="354"></a>
+<a name="355"></a>	if(GameOptions != <span class="source_string">""</span> && GameOptions != <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.G)
+<a name="356"></a>	{
+<a name="357"></a>		<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.G = GameOptions;
+<a name="358"></a>		bUpdate = True;
+<a name="359"></a>	}
+<a name="360"></a>
+<a name="361"></a>	if(<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">M</span> == <span class="source_string">""</span>) <span class="source_comment">// if map not found in MapVoteHistory then add it
+</span><a name="362"></a>	{
+<a name="363"></a>		<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">M</span> = <span class="source_type">MapName</span>;
+<a name="364"></a>		bUpdate = True;
+<a name="365"></a>	}
+<a name="366"></a>
+<a name="367"></a>	if(bUpdate)
+<a name="368"></a>		History.AddMap(<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>);
+<a name="369"></a>}
+<a name="370"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="371"></a>function <span class="source_type">int</span> GetMVRIIndex(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>)
+<a name="372"></a>{
+<a name="373"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="374"></a>
+<a name="375"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span> &lt; MVRI.Length;<span class="source_type">i</span>++)
+<a name="376"></a>		if(MVRI[<span class="source_type">i</span>] != None && MVRI[<span class="source_type">i</span>].PlayerOwner == <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>)
+<a name="377"></a>			return <span class="source_type">i</span>;
+<a name="378"></a>	return -<span class="source_int">1</span>;
+<a name="379"></a>}
+<a name="380"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="381"></a>function SubmitMapVote(<span class="source_type">int</span> <span class="source_type">MapIndex</span>, <span class="source_type">int</span> GameIndex, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Voter)
+<a name="382"></a>{
+<a name="383"></a>	local <span class="source_type">int</span> <span class="source_type">Index</span>, VoteCount, PrevMapVote, PrevGameVote;
+<a name="384"></a>	local <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span> <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>;
+<a name="385"></a>
+<a name="386"></a>	if(bLevelSwitchPending)
+<a name="387"></a>		return;
+<a name="388"></a>
+<a name="389"></a>	<span class="source_type">Index</span> = GetMVRIIndex(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter));
+<a name="390"></a>
+<a name="391"></a>	<span class="source_comment">// check for invalid vote from unpatch players
+</span><a name="392"></a>	if( !IsValidVote(<span class="source_type">MapIndex</span>, GameIndex) )
+<a name="393"></a>		return;
+<a name="394"></a>
+<a name="395"></a>    <span class="source_comment">//if _RO_
+</span><a name="396"></a>	if(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bAdmin || <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bSilentAdmin)  <span class="source_comment">// Administrator Vote
+</span><a name="397"></a>	<span class="source_comment">//else
+</span><a name="398"></a>	<span class="source_comment">//if(PlayerController(Voter).PlayerReplicationInfo.bAdmin)
+</span><a name="399"></a>	<span class="source_comment">//end _RO_
+</span><a name="400"></a>	{
+<a name="401"></a>		TextMessage = lmsgAdminMapChange;
+<a name="402"></a>		TextMessage = Repl(TextMessage, <span class="source_string">"%mapname%"</span>, <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].<span class="source_type">MapName</span> $ <span class="source_string">"("</span> $ GameConfig[GameIndex].Acronym $ <span class="source_string">")"</span>);
+<a name="403"></a>		<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="404"></a>
+<a name="405"></a>		log(<span class="source_string">"Admin has forced map switch to "</span> $ <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].<span class="source_type">MapName</span> $ <span class="source_string">"("</span> $ GameConfig[GameIndex].Acronym $ <span class="source_string">")"</span>,<span class="source_name">'MapVote'</span>);
+<a name="406"></a>
+<a name="407"></a>		CloseAllVoteWindows();
+<a name="408"></a>
+<a name="409"></a>		bLevelSwitchPending = true;
+<a name="410"></a>
+<a name="411"></a>		<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span> = History.PlayMap(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].<span class="source_type">MapName</span>);
+<a name="412"></a>
+<a name="413"></a>		ServerTravelString = SetupGameMap(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>], GameIndex, <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>);
+<a name="414"></a>		log(<span class="source_string">"ServerTravelString = "</span> $ ServerTravelString ,<span class="source_name">'MapVoteDebug'</span>);
+<a name="415"></a>
+<a name="416"></a>		<span class="source_type">Level</span>.ServerTravel(ServerTravelString, false);    <span class="source_comment">// change the map
+</span><a name="417"></a>
+<a name="418"></a>		settimer(<span class="source_int">1</span>,true);
+<a name="419"></a>		return;
+<a name="420"></a>	}
+<a name="421"></a>
+<a name="422"></a>	if( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOnlySpectator )
+<a name="423"></a>	{
+<a name="424"></a>		<span class="source_comment">// Spectators cant vote
+</span><a name="425"></a>		<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).ClientMessage(lmsgSpectatorsCantVote);
+<a name="426"></a>		return;
+<a name="427"></a>	}
+<a name="428"></a>
+<a name="429"></a>	<span class="source_comment">// check for invalid map, invalid gametype, player isnt revoting same as previous vote, and map choosen isnt disabled
+</span><a name="430"></a>	if(<span class="source_type">MapIndex</span> &lt; <span class="source_int">0</span> ||
+<a name="431"></a>		<span class="source_type">MapIndex</span> &gt;= MapCount ||
+<a name="432"></a>		GameIndex &gt;= GameConfig.Length ||
+<a name="433"></a>		(MVRI[<span class="source_type">Index</span>].GameVote == GameIndex && MVRI[<span class="source_type">Index</span>].MapVote == <span class="source_type">MapIndex</span>) ||
+<a name="434"></a>		!<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].bEnabled)
+<a name="435"></a>		return;
+<a name="436"></a>
+<a name="437"></a>	log(<span class="source_string">"___"</span> $ <span class="source_type">Index</span> $ <span class="source_string">" - "</span> $ <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> $ <span class="source_string">" voted for "</span> $ <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].<span class="source_type">MapName</span> $ <span class="source_string">"("</span> $ GameConfig[GameIndex].Acronym $ <span class="source_string">")"</span>,<span class="source_name">'MapVote'</span>);
+<a name="438"></a>
+<a name="439"></a>	PrevMapVote = MVRI[<span class="source_type">Index</span>].MapVote;
+<a name="440"></a>	PrevGameVote = MVRI[<span class="source_type">Index</span>].GameVote;
+<a name="441"></a>	MVRI[<span class="source_type">Index</span>].MapVote = <span class="source_type">MapIndex</span>;
+<a name="442"></a>	MVRI[<span class="source_type">Index</span>].GameVote = GameIndex;
+<a name="443"></a>
+<a name="444"></a>	if(bAccumulationMode)
+<a name="445"></a>	{
+<a name="446"></a>		if(bScoreMode)
+<a name="447"></a>		{
+<a name="448"></a>			VoteCount = GetAccVote(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter)) + <span class="source_type">int</span>(GetPlayerScore(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter)));
+<a name="449"></a>			TextMessage = lmsgMapVotedForWithCount;
+<a name="450"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%playername%"</span>, <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> );
+<a name="451"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%votecount%"</span>, <span class="source_type">string</span>(VoteCount) );
+<a name="452"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%mapname%"</span>, <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].<span class="source_type">MapName</span> $ <span class="source_string">"("</span> $ GameConfig[GameIndex].Acronym $ <span class="source_string">")"</span> );
+<a name="453"></a>			<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="454"></a>		}
+<a name="455"></a>		else
+<a name="456"></a>		{
+<a name="457"></a>			VoteCount = GetAccVote(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter)) + <span class="source_int">1</span>;
+<a name="458"></a>			TextMessage = lmsgMapVotedForWithCount;
+<a name="459"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%playername%"</span>, <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> );
+<a name="460"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%votecount%"</span>, <span class="source_type">string</span>(VoteCount) );
+<a name="461"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%mapname%"</span>, <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].<span class="source_type">MapName</span> $ <span class="source_string">"("</span> $ GameConfig[GameIndex].Acronym $ <span class="source_string">")"</span> );
+<a name="462"></a>			<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="463"></a>		}
+<a name="464"></a>	}
+<a name="465"></a>	else
+<a name="466"></a>	{
+<a name="467"></a>		if(bScoreMode)
+<a name="468"></a>		{
+<a name="469"></a>			VoteCount = <span class="source_type">int</span>(GetPlayerScore(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter)));
+<a name="470"></a>			TextMessage = lmsgMapVotedForWithCount;
+<a name="471"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%playername%"</span>, <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> );
+<a name="472"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%votecount%"</span>, <span class="source_type">string</span>(VoteCount) );
+<a name="473"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%mapname%"</span>, <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].<span class="source_type">MapName</span> $ <span class="source_string">"("</span> $ GameConfig[GameIndex].Acronym $ <span class="source_string">")"</span> );
+<a name="474"></a>			<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="475"></a>		}
+<a name="476"></a>		else
+<a name="477"></a>		{
+<a name="478"></a>			VoteCount =  <span class="source_int">1</span>;
+<a name="479"></a>			TextMessage = lmsgMapVotedFor;
+<a name="480"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%playername%"</span>, <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> );
+<a name="481"></a>			TextMessage = repl(TextMessage, <span class="source_string">"%mapname%"</span>, <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].<span class="source_type">MapName</span> $ <span class="source_string">"("</span> $ GameConfig[GameIndex].Acronym $ <span class="source_string">")"</span> );
+<a name="482"></a>			<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="483"></a>		}
+<a name="484"></a>	}
+<a name="485"></a>	UpdateVoteCount(<span class="source_type">MapIndex</span>, GameIndex, VoteCount);
+<a name="486"></a>	if( PrevMapVote &gt; -<span class="source_int">1</span> && PrevGameVote &gt; -<span class="source_int">1</span> )
+<a name="487"></a>		UpdateVoteCount(PrevMapVote, PrevGameVote, -MVRI[<span class="source_type">Index</span>].VoteCount); <span class="source_comment">// undo previous vote
+</span><a name="488"></a>	MVRI[<span class="source_type">Index</span>].VoteCount = VoteCount;
+<a name="489"></a>	TallyVotes(false);
+<a name="490"></a>}
+<a name="491"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="492"></a>function <span class="source_type">bool</span> IsValidVote(<span class="source_type">int</span> <span class="source_type">MapIndex</span>, <span class="source_type">int</span> GameIndex)
+<a name="493"></a>{
+<a name="494"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="495"></a>	local array&lt;<span class="source_type">string</span>&gt; PrefixList;
+<a name="496"></a>
+<a name="497"></a>	<span class="source_comment">// check if the maps prefix is one listed for the gametype
+</span><a name="498"></a>	Split(GameConfig[GameIndex].Prefix, <span class="source_string">","</span>, PrefixList);
+<a name="499"></a>
+<a name="500"></a>	for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PreFixList.Length; <span class="source_type">i</span>++)
+<a name="501"></a>		if( left(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">MapIndex</span>].<span class="source_type">MapName</span>, <span class="source_type">len</span>(PrefixList[<span class="source_type">i</span>])) ~= PrefixList[<span class="source_type">i</span>] )
+<a name="502"></a>			return true;
+<a name="503"></a>
+<a name="504"></a>	return false;
+<a name="505"></a>}
+<a name="506"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="507"></a>function UpdateVoteCount(<span class="source_type">int</span> <span class="source_type">MapIndex</span>, <span class="source_type">int</span> GameIndex, <span class="source_type">int</span> VoteCount)
+<a name="508"></a>{
+<a name="509"></a>	local <span class="source_type">int</span> <span class="source_type">x</span>,<span class="source_type">i</span>;
+<a name="510"></a>	local <span class="source_type">bool</span> bFound;
+<a name="511"></a>	local <span class="source_type"><a href="../engine/votinghandler.html#MapVoteScore" class="source">MapVoteScore</a></span> MVCData;
+<a name="512"></a>
+<a name="513"></a>	<span class="source_comment">// search for matching record
+</span><a name="514"></a>	for( <span class="source_type">x</span>=<span class="source_int">0</span>; <span class="source_type">x</span>&lt;MapVoteCount.Length; <span class="source_type">x</span>++ )
+<a name="515"></a>	{
+<a name="516"></a>		if( MapVoteCount[<span class="source_type">x</span>].GameConfigIndex == GameIndex &&
+<a name="517"></a>		    MapVoteCount[<span class="source_type">x</span>].<span class="source_type">MapIndex</span> == <span class="source_type">MapIndex</span>)
+<a name="518"></a>		{
+<a name="519"></a>			MapVoteCount[<span class="source_type">x</span>].VoteCount += VoteCount;
+<a name="520"></a>			MVCData = MapVoteCount[<span class="source_type">x</span>];
+<a name="521"></a>			if(MapVoteCount[<span class="source_type">x</span>].VoteCount &lt;= <span class="source_int">0</span>)
+<a name="522"></a>				MapVoteCount.Remove( <span class="source_type">x</span>, <span class="source_int">1</span>);
+<a name="523"></a>			bFound = true;
+<a name="524"></a>			break;
+<a name="525"></a>		}
+<a name="526"></a>	}
+<a name="527"></a>
+<a name="528"></a>	if( !bFound && VoteCount &gt; <span class="source_int">0</span>) <span class="source_comment">// add new if not found
+</span><a name="529"></a>	{
+<a name="530"></a>		<span class="source_type">x</span> = MapVoteCount.Length;
+<a name="531"></a>		MapVoteCount.Insert(<span class="source_type">x</span>,<span class="source_int">1</span>);
+<a name="532"></a>		MapVoteCount[<span class="source_type">x</span>].GameConfigIndex = GameIndex;
+<a name="533"></a>		MapVoteCount[<span class="source_type">x</span>].<span class="source_type">MapIndex</span> = <span class="source_type">MapIndex</span>;
+<a name="534"></a>		MapVoteCount[<span class="source_type">x</span>].VoteCount = VoteCount;
+<a name="535"></a>		MVCData = MapVoteCount[<span class="source_type">x</span>];
+<a name="536"></a>	}
+<a name="537"></a>
+<a name="538"></a>	<span class="source_comment">// send update to all players
+</span><a name="539"></a>	for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;MVRI.Length; <span class="source_type">i</span>++ )
+<a name="540"></a>	{
+<a name="541"></a>		if( MVRI[<span class="source_type">i</span>] != none && MVRI[<span class="source_type">i</span>].PlayerOwner != none )
+<a name="542"></a>			MVRI[<span class="source_type">i</span>].ReceiveMapVoteCount(MVCData, False);
+<a name="543"></a>	}
+<a name="544"></a>}
+<a name="545"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="546"></a>function TallyVotes(<span class="source_type">bool</span> bForceMapSwitch)
+<a name="547"></a>{
+<a name="548"></a>	local <span class="source_type">int</span>        <span class="source_type">index</span>,<span class="source_type">x</span>,<span class="source_type">y</span>,topmap,<span class="source_type">r</span>,mapidx,gameidx;
+<a name="549"></a>	local array&lt;<span class="source_type">int</span>&gt; VoteCount;
+<a name="550"></a>	local array&lt;<span class="source_type">int</span>&gt; Ranking;
+<a name="551"></a>	local <span class="source_type">int</span>        PlayersThatVoted;
+<a name="552"></a>	local <span class="source_type">int</span>        TieCount;
+<a name="553"></a>	local <span class="source_type">string</span>     CurrentMap;
+<a name="554"></a>	local <span class="source_type">int</span>        Votes;
+<a name="555"></a>	local <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span> <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>;
+<a name="556"></a>
+<a name="557"></a>	if(bLevelSwitchPending)
+<a name="558"></a>		return;
+<a name="559"></a>
+<a name="560"></a>	PlayersThatVoted = <span class="source_int">0</span>;
+<a name="561"></a>	VoteCount.Length = GameConfig.Length * MapCount;
+<a name="562"></a>	<span class="source_comment">// note: VoteCount array is a 2 dimension array VoteCount[GameConfigIndex, MapIndex]
+</span><a name="563"></a>	<span class="source_comment">//       Maps -&gt;
+</span><a name="564"></a>	<span class="source_comment">//       0 1 2 3 4 5 6 7 8
+</span><a name="565"></a>	<span class="source_comment">// G     - - - - - - - - -
+</span><a name="566"></a>	<span class="source_comment">// a  0 |0 0 0 0 0 0 0 2 0
+</span><a name="567"></a>	<span class="source_comment">// m  1 |0 0 0 2 0 0 0 0 0
+</span><a name="568"></a>	<span class="source_comment">// e  2 |0 6 0 0 0 5 0 0 0
+</span><a name="569"></a>	<span class="source_comment">// s  3 |0 0 0 3 0 0 0 0 0
+</span><a name="570"></a>
+<a name="571"></a>	for(<span class="source_type">x</span>=<span class="source_int">0</span>;<span class="source_type">x</span> &lt; MVRI.Length;<span class="source_type">x</span>++) <span class="source_comment">// for each player
+</span><a name="572"></a>	{
+<a name="573"></a>		if(MVRI[<span class="source_type">x</span>] != none && MVRI[<span class="source_type">x</span>].MapVote &gt; -<span class="source_int">1</span> && MVRI[<span class="source_type">x</span>].GameVote &gt; -<span class="source_int">1</span>) <span class="source_comment">// if this player has voted
+</span><a name="574"></a>		{
+<a name="575"></a>			PlayersThatVoted++;
+<a name="576"></a>
+<a name="577"></a>			if(bScoreMode)
+<a name="578"></a>			{
+<a name="579"></a>				if(bAccumulationMode)
+<a name="580"></a>					Votes = GetAccVote(MVRI[<span class="source_type">x</span>].PlayerOwner) + <span class="source_type">int</span>(GetPlayerScore(MVRI[<span class="source_type">x</span>].PlayerOwner));
+<a name="581"></a>				else
+<a name="582"></a>					Votes = <span class="source_type">int</span>(GetPlayerScore(MVRI[<span class="source_type">x</span>].PlayerOwner));
+<a name="583"></a>			}
+<a name="584"></a>			else
+<a name="585"></a>			{  <span class="source_comment">// Not Score Mode == Majority (one vote per player)
+</span><a name="586"></a>				if(bAccumulationMode)
+<a name="587"></a>					Votes = GetAccVote(MVRI[<span class="source_type">x</span>].PlayerOwner) + <span class="source_int">1</span>;
+<a name="588"></a>				else
+<a name="589"></a>					Votes = <span class="source_int">1</span>;
+<a name="590"></a>			}
+<a name="591"></a>			VoteCount[MVRI[<span class="source_type">x</span>].GameVote * MapCount + MVRI[<span class="source_type">x</span>].MapVote] = VoteCount[MVRI[<span class="source_type">x</span>].GameVote * MapCount + MVRI[<span class="source_type">x</span>].MapVote] + Votes;
+<a name="592"></a>
+<a name="593"></a>			if(!bScoreMode)
+<a name="594"></a>			{
+<a name="595"></a>				<span class="source_comment">// If more then half the players voted for the same map as this player then force a winner
+</span><a name="596"></a>				if(<span class="source_type">Level</span>.Game.NumPlayers &gt; <span class="source_int">2</span> && <span class="source_type">float</span>(VoteCount[MVRI[<span class="source_type">x</span>].GameVote * MapCount + MVRI[<span class="source_type">x</span>].MapVote]) / <span class="source_type">float</span>(<span class="source_type">Level</span>.Game.NumPlayers) &gt; <span class="source_int">0.5</span> && <span class="source_type">Level</span>.Game.bGameEnded)
+<a name="597"></a>					bForceMapSwitch = true;
+<a name="598"></a>			}
+<a name="599"></a>		}
+<a name="600"></a>	}
+<a name="601"></a>	log(<span class="source_string">"___Voted - "</span> $ PlayersThatVoted,<span class="source_name">'MapVoteDebug'</span>);
+<a name="602"></a>
+<a name="603"></a>	if(<span class="source_type">Level</span>.Game.NumPlayers &gt; <span class="source_int">2</span> && !<span class="source_type">Level</span>.Game.bGameEnded && !bMidGameVote && (<span class="source_type">float</span>(PlayersThatVoted) / <span class="source_type">float</span>(<span class="source_type">Level</span>.Game.NumPlayers)) * <span class="source_int">100</span> &gt;= MidGameVotePercent) <span class="source_comment">// Mid game vote initiated
+</span><a name="604"></a>	{
+<a name="605"></a>		<span class="source_type">Level</span>.Game.Broadcast(self,lmsgMidGameVote);
+<a name="606"></a>		bMidGameVote = true;
+<a name="607"></a>		<span class="source_comment">// Start voting count-down timer
+</span><a name="608"></a>		TimeLeft = VoteTimeLimit;
+<a name="609"></a>		ScoreBoardTime = <span class="source_int">1</span>;
+<a name="610"></a>		settimer(<span class="source_int">1</span>,true);
+<a name="611"></a>	}
+<a name="612"></a>
+<a name="613"></a>	<span class="source_type">index</span> = <span class="source_int">0</span>;
+<a name="614"></a>	for(<span class="source_type">x</span>=<span class="source_int">0</span>;<span class="source_type">x</span> &lt; VoteCount.Length;<span class="source_type">x</span>++) <span class="source_comment">// for each map
+</span><a name="615"></a>	{
+<a name="616"></a>		if(VoteCount[<span class="source_type">x</span>] &gt; <span class="source_int">0</span>)
+<a name="617"></a>		{
+<a name="618"></a>			Ranking.Insert(<span class="source_type">index</span>,<span class="source_int">1</span>);
+<a name="619"></a>			Ranking[<span class="source_type">index</span>++] = <span class="source_type">x</span>; <span class="source_comment">// copy all vote indexes to the ranking list if someone has voted for it.
+</span><a name="620"></a>		}
+<a name="621"></a>	}
+<a name="622"></a>
+<a name="623"></a>	if(PlayersThatVoted &gt; <span class="source_int">1</span>)
+<a name="624"></a>	{
+<a name="625"></a>		<span class="source_comment">// bubble sort ranking list by vote count
+</span><a name="626"></a>		for(<span class="source_type">x</span>=<span class="source_int">0</span>; <span class="source_type">x</span>&lt;<span class="source_type">index</span>-<span class="source_int">1</span>; <span class="source_type">x</span>++)
+<a name="627"></a>		{
+<a name="628"></a>			for(<span class="source_type">y</span>=<span class="source_type">x</span>+<span class="source_int">1</span>; <span class="source_type">y</span>&lt;<span class="source_type">index</span>; <span class="source_type">y</span>++)
+<a name="629"></a>			{
+<a name="630"></a>				if(VoteCount[Ranking[<span class="source_type">x</span>]] &lt; VoteCount[Ranking[<span class="source_type">y</span>]])
+<a name="631"></a>				{
+<a name="632"></a>				topmap = Ranking[<span class="source_type">x</span>];
+<a name="633"></a>				Ranking[<span class="source_type">x</span>] = Ranking[<span class="source_type">y</span>];
+<a name="634"></a>				Ranking[<span class="source_type">y</span>] = topmap;
+<a name="635"></a>				}
+<a name="636"></a>			}
+<a name="637"></a>		}
+<a name="638"></a>	}
+<a name="639"></a>	else
+<a name="640"></a>	{
+<a name="641"></a>		if(PlayersThatVoted == <span class="source_int">0</span>)
+<a name="642"></a>		{
+<a name="643"></a>			GetDefaultMap(mapidx, gameidx);
+<a name="644"></a>			topmap = gameidx * MapCount + mapidx;
+<a name="645"></a>		}
+<a name="646"></a>		else
+<a name="647"></a>			topmap = Ranking[<span class="source_int">0</span>];  <span class="source_comment">// only one player voted
+</span><a name="648"></a>	}
+<a name="649"></a>
+<a name="650"></a>	<span class="source_comment">//Check for a tie
+</span><a name="651"></a>	if(PlayersThatVoted &gt; <span class="source_int">1</span>) <span class="source_comment">// need more than one player vote for a tie
+</span><a name="652"></a>	{
+<a name="653"></a>		if(<span class="source_type">index</span> &gt; <span class="source_int">1</span> && VoteCount[Ranking[<span class="source_int">0</span>]] == VoteCount[Ranking[<span class="source_int">1</span>]] && VoteCount[Ranking[<span class="source_int">0</span>]] != <span class="source_int">0</span>)
+<a name="654"></a>		{
+<a name="655"></a>			TieCount = <span class="source_int">1</span>;
+<a name="656"></a>			for(<span class="source_type">x</span>=<span class="source_int">1</span>; <span class="source_type">x</span>&lt;<span class="source_type">index</span>; <span class="source_type">x</span>++)
+<a name="657"></a>			{
+<a name="658"></a>				if(VoteCount[Ranking[<span class="source_int">0</span>]] == VoteCount[Ranking[<span class="source_type">x</span>]])
+<a name="659"></a>				TieCount++;
+<a name="660"></a>			}
+<a name="661"></a>			<span class="source_comment">//reminder ---&gt; int Rand( int Max ); Returns a random number from 0 to Max-1.
+</span><a name="662"></a>			topmap = Ranking[Rand(TieCount)];
+<a name="663"></a>
+<a name="664"></a>			<span class="source_comment">// Don't allow same map to be choosen
+</span><a name="665"></a>			CurrentMap = GetURLMap();
+<a name="666"></a>
+<a name="667"></a>			<span class="source_type">r</span> = <span class="source_int">0</span>;
+<a name="668"></a>			while(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[topmap - (topmap/MapCount) * MapCount].<span class="source_type">MapName</span> ~= CurrentMap)
+<a name="669"></a>			{
+<a name="670"></a>				topmap = Ranking[Rand(TieCount)];
+<a name="671"></a>				if(<span class="source_type">r</span>++&gt;<span class="source_int">100</span>)
+<a name="672"></a>					break;  <span class="source_comment">// just incase
+</span><a name="673"></a>			}
+<a name="674"></a>		}
+<a name="675"></a>		else
+<a name="676"></a>		{
+<a name="677"></a>			topmap = Ranking[<span class="source_int">0</span>];
+<a name="678"></a>		}
+<a name="679"></a>	}
+<a name="680"></a>
+<a name="681"></a>	<span class="source_comment">// if everyone has voted go ahead and change map
+</span><a name="682"></a>	if(bForceMapSwitch || (<span class="source_type">Level</span>.Game.NumPlayers == PlayersThatVoted && <span class="source_type">Level</span>.Game.NumPlayers &gt; <span class="source_int">0</span>) )
+<a name="683"></a>	{
+<a name="684"></a>		if(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[topmap - topmap/MapCount * MapCount].<span class="source_type">MapName</span> == <span class="source_string">""</span>)
+<a name="685"></a>			return;
+<a name="686"></a>
+<a name="687"></a>		TextMessage = lmsgMapWon;
+<a name="688"></a>		TextMessage = repl(TextMessage,<span class="source_string">"%mapname%"</span>,<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[topmap - topmap/MapCount * MapCount].<span class="source_type">MapName</span> $ <span class="source_string">"("</span> $ GameConfig[topmap/MapCount].Acronym $ <span class="source_string">")"</span>);
+<a name="689"></a>		<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="690"></a>
+<a name="691"></a>		CloseAllVoteWindows();
+<a name="692"></a>
+<a name="693"></a>		<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span> = History.PlayMap(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[topmap - topmap/MapCount * MapCount].<span class="source_type">MapName</span>);
+<a name="694"></a>
+<a name="695"></a>		ServerTravelString = SetupGameMap(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[topmap - topmap/MapCount * MapCount], topmap/MapCount, <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>);
+<a name="696"></a>		log(<span class="source_string">"ServerTravelString = "</span> $ ServerTravelString ,<span class="source_name">'MapVoteDebug'</span>);
+<a name="697"></a>
+<a name="698"></a>		History.Save();
+<a name="699"></a>
+<a name="700"></a>		if(bEliminationMode)
+<a name="701"></a>			RepeatLimit++;
+<a name="702"></a>
+<a name="703"></a>		if(bAccumulationMode)
+<a name="704"></a>			SaveAccVotes(topmap - topmap/MapCount * MapCount, topmap/MapCount);
+<a name="705"></a>
+<a name="706"></a>		<span class="source_comment">//if(bEliminationMode || bAccumulationMode)
+</span><a name="707"></a>		CurrentGameConfig = topmap/MapCount;
+<a name="708"></a>		if( !bAutoDetectMode )
+<a name="709"></a>			SaveConfig();
+<a name="710"></a>
+<a name="711"></a>		bLevelSwitchPending = true;
+<a name="712"></a>		settimer(<span class="source_type">Level</span>.TimeDilation,true);  <span class="source_comment">// timer() will monitor the server-travel and detect a failure
+</span><a name="713"></a>
+<a name="714"></a>		<span class="source_type">Level</span>.ServerTravel(ServerTravelString, false);    <span class="source_comment">// change the map
+</span><a name="715"></a>	}
+<a name="716"></a>}
+<a name="717"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="718"></a>event timer()
+<a name="719"></a>{
+<a name="720"></a>	local <span class="source_type">int</span> mapidx,gameidx,<span class="source_type">i</span>;
+<a name="721"></a>	local <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span> <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>;
+<a name="722"></a>
+<a name="723"></a>	if(bLevelSwitchPending)
+<a name="724"></a>	{
+<a name="725"></a>		if( <span class="source_type">Level</span>.NextURL == <span class="source_string">""</span> )
+<a name="726"></a>		{
+<a name="727"></a>			if(<span class="source_type">Level</span>.NextSwitchCountdown &lt; <span class="source_int">0</span>)  <span class="source_comment">// if negative then level switch failed
+</span><a name="728"></a>			{
+<a name="729"></a>				Log(<span class="source_string">"___Map change Failed, bad or missing map file."</span>,<span class="source_name">'MapVote'</span>);
+<a name="730"></a>				GetDefaultMap(mapidx, gameidx);
+<a name="731"></a>				<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span> = History.PlayMap(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[mapidx].<span class="source_type">MapName</span>);
+<a name="732"></a>				ServerTravelString = SetupGameMap(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[mapidx], gameidx, <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>);
+<a name="733"></a>				log(<span class="source_string">"ServerTravelString = "</span> $ ServerTravelString ,<span class="source_name">'MapVoteDebug'</span>);
+<a name="734"></a>				History.Save();
+<a name="735"></a>				<span class="source_type">Level</span>.ServerTravel(ServerTravelString, false);    <span class="source_comment">// change the map
+</span><a name="736"></a>			}
+<a name="737"></a>		}
+<a name="738"></a>		return;
+<a name="739"></a>	}
+<a name="740"></a>
+<a name="741"></a>	if(ScoreBoardTime &gt; -<span class="source_int">1</span>)
+<a name="742"></a>	{
+<a name="743"></a>		if(ScoreBoardTime == <span class="source_int">0</span>)
+<a name="744"></a>			OpenAllVoteWindows();
+<a name="745"></a>		ScoreBoardTime--;
+<a name="746"></a>		return;
+<a name="747"></a>	}
+<a name="748"></a>	TimeLeft--;
+<a name="749"></a>
+<a name="750"></a>	if(TimeLeft == <span class="source_int">60</span> || TimeLeft == <span class="source_int">30</span> || TimeLeft == <span class="source_int">20</span> || TimeLeft == <span class="source_int">10</span>)  <span class="source_comment">// play announcer count down voice
+</span><a name="751"></a>	{
+<a name="752"></a>		<span class="source_comment">//log("___CountDown " $ TimeLeft,'MapVoteDebug');
+</span><a name="753"></a>		<span class="source_comment">//BroadcastLocalizedMessage(class'MapVoteCountDownMsg', TimeLeft);
+</span><a name="754"></a>		for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;MVRI.Length; <span class="source_type">i</span>++)
+<a name="755"></a>			if(MVRI[<span class="source_type">i</span>] != none && MVRI[<span class="source_type">i</span>].PlayerOwner != none )
+<a name="756"></a>				MVRI[<span class="source_type">i</span>].PlayCountDown(TimeLeft);
+<a name="757"></a>	}
+<a name="758"></a>
+<a name="759"></a>	<span class="source_comment">//if(TimeLeft &lt; 11 && TimeLeft &gt; 0 )  // play announcer voice Count Down
+</span><a name="760"></a>	<span class="source_comment">//	BroadcastLocalizedMessage(class'VotingTimerMessage', TimeLeft);
+</span><a name="761"></a>
+<a name="762"></a>	if(TimeLeft == <span class="source_int">0</span>)  <span class="source_comment">// force level switch if time limit is up
+</span><a name="763"></a>		TallyVotes(true);   <span class="source_comment">// if no-one has voted a random map will be choosen
+</span><a name="764"></a>}
+<a name="765"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="766"></a>function CloseAllVoteWindows()
+<a name="767"></a>{
+<a name="768"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="769"></a>
+<a name="770"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt; MVRI.Length;<span class="source_type">i</span>++)
+<a name="771"></a>	{
+<a name="772"></a>		if(MVRI[<span class="source_type">i</span>] != none)
+<a name="773"></a>		{
+<a name="774"></a>			<span class="source_comment">//log("___Closing window " $ i,'MapVoteDebug');
+</span><a name="775"></a>			MVRI[<span class="source_type">i</span>].CloseWindow();
+<a name="776"></a>		}
+<a name="777"></a>	}
+<a name="778"></a>}
+<a name="779"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="780"></a>function OpenAllVoteWindows()
+<a name="781"></a>{
+<a name="782"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="783"></a>
+<a name="784"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt; MVRI.Length;<span class="source_type">i</span>++)
+<a name="785"></a>	{
+<a name="786"></a>		if(MVRI[<span class="source_type">i</span>] != none)
+<a name="787"></a>		{
+<a name="788"></a>			<span class="source_comment">//log("Opening window " $ i,'MapVoteDebug');
+</span><a name="789"></a>			MVRI[<span class="source_type">i</span>].OpenWindow();
+<a name="790"></a>		}
+<a name="791"></a>	}
+<a name="792"></a>}
+<a name="793"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="794"></a>function <span class="source_type">string</span> SetupGameMap(<span class="source_type"><a href="../engine/votinghandler.html#MapVoteMapList" class="source">MapVoteMapList</a></span> <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>, <span class="source_type">int</span> GameIndex, <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span> <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span>)
+<a name="795"></a>{
+<a name="796"></a>	local <span class="source_type">string</span> ReturnString;
+<a name="797"></a>	local <span class="source_type">string</span> MutatorString;
+<a name="798"></a>	local <span class="source_type">string</span> <span class="source_type">OptionString</span>;
+<a name="799"></a>	local array&lt;<span class="source_type">string</span>&gt; MapsInRotation;
+<a name="800"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="801"></a>
+<a name="802"></a>	<span class="source_comment">// Add Per-GameType Mutators
+</span><a name="803"></a>	if(GameConfig[GameIndex].Mutators != <span class="source_string">""</span>)
+<a name="804"></a>		MutatorString = MutatorString $ GameConfig[GameIndex].Mutators;
+<a name="805"></a>
+<a name="806"></a>	<span class="source_comment">// Add Per-Map Mutators
+</span><a name="807"></a>	if(<span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span>.<span class="source_type">U</span> != <span class="source_string">""</span>)
+<a name="808"></a>		MutatorString = MutatorString $ <span class="source_string">","</span> $ <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span>.<span class="source_type">U</span>;
+<a name="809"></a>
+<a name="810"></a>	<span class="source_comment">// Add Per-GameType Game Options
+</span><a name="811"></a>	if(GameConfig[GameIndex].Options != <span class="source_string">""</span>)
+<a name="812"></a>		<span class="source_type">OptionString</span> = <span class="source_type">OptionString</span> $ Repl(Repl(GameConfig[GameIndex].Options,<span class="source_string">","</span>,<span class="source_string">"?"</span>),<span class="source_string">" "</span>,<span class="source_string">""</span>);
+<a name="813"></a>
+<a name="814"></a>	<span class="source_comment">// Add Per-Map Game Options
+</span><a name="815"></a>	if(<span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span>.G != <span class="source_string">""</span>)
+<a name="816"></a>		<span class="source_type">OptionString</span> = <span class="source_type">OptionString</span> $ <span class="source_string">"?"</span> $ <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span>.G;
+<a name="817"></a>
+<a name="818"></a>	<span class="source_comment">//if _RO_
+</span><a name="819"></a>	<span class="source_comment">// Remove the .rom off of the map name, if it exists
+</span><a name="820"></a>	if ( Right(<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">MapName</span>, <span class="source_int">4</span>) == <span class="source_string">".rom"</span> )
+<a name="821"></a>	    ReturnString = Left(<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">MapName</span>, <span class="source_type">Len</span>(<span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">MapName</span>) - <span class="source_int">4</span>);
+<a name="822"></a>	else
+<a name="823"></a>	    ReturnString = <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>.<span class="source_type">MapName</span>;
+<a name="824"></a>
+<a name="825"></a>	MapsInRotation = <span class="source_type">Level</span>.Game.MaplistHandler.GetCurrentMapRotation();
+<a name="826"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MapsInRotation.Length; <span class="source_type">i</span>++ )
+<a name="827"></a>	{
+<a name="828"></a>	    if ( InStr(MapsInRotation[<span class="source_type">i</span>], ReturnString) != -<span class="source_int">1</span> )
+<a name="829"></a>	    {
+<a name="830"></a>            ReturnString = MapsInRotation[<span class="source_type">i</span>];
+<a name="831"></a>	        break;
+<a name="832"></a>        }
+<a name="833"></a>    }
+<a name="834"></a>	<span class="source_comment">//else
+</span><a name="835"></a>	<span class="source_comment">//ReturnString = MapInfo.MapName; //$ ".ut2";
+</span><a name="836"></a>	<span class="source_comment">//end _RO_
+</span><a name="837"></a>
+<a name="838"></a>    ReturnString = ReturnString $ <span class="source_string">"?Game="</span> $ GameConfig[GameIndex].<span class="source_type">GameClass</span>;
+<a name="839"></a>
+<a name="840"></a>	if(MutatorString != <span class="source_string">""</span>)
+<a name="841"></a>		ReturnString = ReturnString $ <span class="source_string">"?Mutator="</span> $ MutatorString;
+<a name="842"></a>
+<a name="843"></a>	if(<span class="source_type">OptionString</span> != <span class="source_string">""</span>)
+<a name="844"></a>		ReturnString = ReturnString $ <span class="source_string">"?"</span> $ <span class="source_type">OptionString</span>;
+<a name="845"></a>
+<a name="846"></a>	return ReturnString;
+<a name="847"></a>}
+<a name="848"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="849"></a>function <span class="source_type">bool</span> HandleRestartGame()
+<a name="850"></a>{
+<a name="851"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="852"></a>	<span class="source_comment">// Called by GameInfo.RestartGame at End Of Game
+</span><a name="853"></a>	<span class="source_comment">// Return False to prevent traveling to next map
+</span><a name="854"></a>    log(<span class="source_string">"____HandleRestartGame"</span>, <span class="source_name">'MapVoteDebug'</span>);
+<a name="855"></a>
+<a name="856"></a>	<span class="source_comment">// disable voting in single player mode
+</span><a name="857"></a>    if( <span class="source_type">Level</span>.NetMode == NM_StandAlone )
+<a name="858"></a>		return true;
+<a name="859"></a>
+<a name="860"></a>	if( bMatchSetup ) <span class="source_comment">// check if any match setup in progress
+</span><a name="861"></a>	{
+<a name="862"></a>		for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;MVRI.Length; <span class="source_type">i</span>++)
+<a name="863"></a>			if( MVRI[<span class="source_type">i</span>] != none && MVRI[<span class="source_type">i</span>].bMatchSetupPermitted )
+<a name="864"></a>				return false; <span class="source_comment">// don't contine to next map
+</span><a name="865"></a>	}
+<a name="866"></a>
+<a name="867"></a>	if(bMapVote && bAutoOpen)
+<a name="868"></a>	{
+<a name="869"></a>		<span class="source_comment">//check if the game is an assault mod for UT2k3Assault
+</span><a name="870"></a>		if(<span class="source_type">string</span>(<span class="source_type">Level</span>.Game.<span class="source_type">Class</span>) ~= <span class="source_string">"RoARAssault.xAssault"</span>)
+<a name="871"></a>			if(<span class="source_type">int</span>(<span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.GetPropertyText(<span class="source_string">"Part"</span>)) != <span class="source_int">2</span>)
+<a name="872"></a>				return true;
+<a name="873"></a>
+<a name="874"></a>		<span class="source_comment">// Start voting count-down timer
+</span><a name="875"></a>		TimeLeft = VoteTimeLimit;
+<a name="876"></a>		ScoreBoardTime = ScoreBoardDelay;
+<a name="877"></a>		settimer(<span class="source_int">1</span>,true);
+<a name="878"></a>  		return false;
+<a name="879"></a>	}
+<a name="880"></a>	return true;
+<a name="881"></a>}
+<a name="882"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="883"></a>function <span class="source_type"><a href="../engine/votinghandler.html#MapVoteMapList" class="source">MapVoteMapList</a></span> GetMapList(<span class="source_type">int</span> p_MapIndex)
+<a name="884"></a>{
+<a name="885"></a>	return <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[p_MapIndex];
+<a name="886"></a>}
+<a name="887"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="888"></a>function <span class="source_type"><a href="../engine/votinghandler.html#MapVoteGameConfigLite" class="source">MapVoteGameConfigLite</a></span> GetGameConfig(<span class="source_type">int</span> p_GameConfigIndex)
+<a name="889"></a>{
+<a name="890"></a>	local <span class="source_type"><a href="../engine/votinghandler.html#MapVoteGameConfigLite" class="source">MapVoteGameConfigLite</a></span> GameConfigItem;
+<a name="891"></a>
+<a name="892"></a>	GameConfigItem.<span class="source_type">GameClass</span> = GameConfig[p_GameConfigIndex].<span class="source_type">GameClass</span>;
+<a name="893"></a>	GameConfigItem.Prefix = GameConfig[p_GameConfigIndex].Prefix;
+<a name="894"></a>	GameConfigItem.GameName = GameConfig[p_GameConfigIndex].GameName;
+<a name="895"></a>
+<a name="896"></a>	return GameConfigItem;
+<a name="897"></a>}
+<a name="898"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="899"></a>function <span class="source_type">float</span> GetPlayerScore(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>)
+<a name="900"></a>{
+<a name="901"></a>	local <span class="source_type">float</span> PlayerScore;
+<a name="902"></a>
+<a name="903"></a>	if( !<span class="source_type">Level</span>.Game.bGameEnded )
+<a name="904"></a>		PlayerScore = <span class="source_int">1</span>;
+<a name="905"></a>	else
+<a name="906"></a>		PlayerScore = <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Score</span>;
+<a name="907"></a>
+<a name="908"></a>	if(PlayerScore &lt; <span class="source_int">1</span>)
+<a name="909"></a>		PlayerScore = <span class="source_int">1</span>;
+<a name="910"></a>
+<a name="911"></a>	return PlayerScore;
+<a name="912"></a>}
+<a name="913"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="914"></a>function <span class="source_type">int</span> GetAccVote(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>)
+<a name="915"></a>{
+<a name="916"></a>	local <span class="source_type">int</span> <span class="source_type">x</span>,PlayerAccVotes;
+<a name="917"></a>	local <span class="source_type">string</span> <span class="source_type">PlayerName</span>;
+<a name="918"></a>
+<a name="919"></a>	<span class="source_type">PlayerName</span> = <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>;
+<a name="920"></a>
+<a name="921"></a>	if(<span class="source_type">PlayerName</span> == <span class="source_string">""</span>)
+<a name="922"></a>		return(<span class="source_int">0</span>);
+<a name="923"></a>
+<a name="924"></a>	if(AccInfo.Length &gt; <span class="source_int">0</span>)
+<a name="925"></a>	{
+<a name="926"></a>		<span class="source_comment">// Find the players name in the saved accumulated votes
+</span><a name="927"></a>		for(<span class="source_type">x</span>=<span class="source_int">0</span>;<span class="source_type">x</span>&lt;AccInfo.Length;<span class="source_type">x</span>++)
+<a name="928"></a>		{
+<a name="929"></a>			if(AccInfo[<span class="source_type">x</span>].<span class="source_type">Name</span> == <span class="source_type">PlayerName</span>)
+<a name="930"></a>			{
+<a name="931"></a>				PlayerAccVotes = AccInfo[<span class="source_type">x</span>].VoteCount;
+<a name="932"></a>				break;
+<a name="933"></a>			}
+<a name="934"></a>		}
+<a name="935"></a>	}
+<a name="936"></a>	else
+<a name="937"></a>		PlayerAccVotes = <span class="source_int">0</span>;
+<a name="938"></a>	return(PlayerAccVotes);
+<a name="939"></a>}
+<a name="940"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="941"></a>function SaveAccVotes(<span class="source_type">int</span> WinningMapIndex, <span class="source_type">int</span> WinningGameIndex)
+<a name="942"></a>{
+<a name="943"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="944"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">P</span>;
+<a name="945"></a>	local <span class="source_type">int</span> <span class="source_type">x</span>, <span class="source_type">Index</span>;
+<a name="946"></a>	local <span class="source_type">bool</span> bFound;
+<a name="947"></a>
+<a name="948"></a>	if(AccInfo.Length &gt; <span class="source_int">0</span>)
+<a name="949"></a>	{
+<a name="950"></a>		for(<span class="source_type">x</span>=<span class="source_int">0</span>;<span class="source_type">x</span>&lt;AccInfo.Length;<span class="source_type">x</span>++)
+<a name="951"></a>		{
+<a name="952"></a>			if(AccInfo[<span class="source_type">x</span>].<span class="source_type">Name</span> != <span class="source_string">""</span>)
+<a name="953"></a>			{
+<a name="954"></a>				bFound = false;
+<a name="955"></a>				for(<span class="source_type">C</span>=<span class="source_type">Level</span>.ControllerList;<span class="source_type">C</span>!=None;<span class="source_type">C</span>=<span class="source_type">C</span>.NextController)
+<a name="956"></a>				{
+<a name="957"></a>					<span class="source_type">P</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">C</span>);
+<a name="958"></a>					if(<span class="source_type">C</span>.bIsPlayer && <span class="source_type">P</span> != None && AccInfo[<span class="source_type">x</span>].<span class="source_type">Name</span> == <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>)
+<a name="959"></a>					{
+<a name="960"></a>						<span class="source_type">Index</span> = GetMVRIIndex(<span class="source_type">P</span>);
+<a name="961"></a>						if(MVRI[<span class="source_type">Index</span>] != None && MVRI[<span class="source_type">Index</span>].MapVote != WinningMapIndex && MVRI[<span class="source_type">Index</span>].GameVote != WinningGameIndex)
+<a name="962"></a>						{
+<a name="963"></a>							bFound = true;
+<a name="964"></a>							if(bScoreMode)
+<a name="965"></a>								AccInfo[<span class="source_type">x</span>].VoteCount = AccInfo[<span class="source_type">x</span>].VoteCount + <span class="source_type">int</span>(GetPlayerScore(<span class="source_type">P</span>));
+<a name="966"></a>							else
+<a name="967"></a>								AccInfo[<span class="source_type">x</span>].VoteCount++;
+<a name="968"></a>						}
+<a name="969"></a>						break;
+<a name="970"></a>					}
+<a name="971"></a>				}
+<a name="972"></a>				if(!bFound)  <span class="source_comment">// If this player is not here anymore remove or voted for winning map then remove
+</span><a name="973"></a>				{
+<a name="974"></a>					AccInfo[<span class="source_type">x</span>].<span class="source_type">Name</span> = <span class="source_string">""</span>;
+<a name="975"></a>					AccInfo[<span class="source_type">x</span>].VoteCount = <span class="source_int">0</span>;
+<a name="976"></a>				}
+<a name="977"></a>			}
+<a name="978"></a>		}
+<a name="979"></a>
+<a name="980"></a>		<span class="source_comment">// Remove blank entries
+</span><a name="981"></a>		for(<span class="source_type">x</span>=AccInfo.Length-<span class="source_int">1</span>;<span class="source_type">x</span>&gt;=<span class="source_int">0</span>;<span class="source_type">x</span>--)
+<a name="982"></a>		{
+<a name="983"></a>			if(AccInfo[<span class="source_type">x</span>].<span class="source_type">Name</span> == <span class="source_string">""</span>)
+<a name="984"></a>			{
+<a name="985"></a>				<span class="source_comment">//log("Removeing " $ AccInfo[x].Name);
+</span><a name="986"></a>				AccInfo.Remove(<span class="source_type">x</span>,<span class="source_int">1</span>);
+<a name="987"></a>			}
+<a name="988"></a>		}
+<a name="989"></a>	}
+<a name="990"></a>
+<a name="991"></a>	<span class="source_comment">// Add players who have not voted
+</span><a name="992"></a>	for(<span class="source_type">C</span>=<span class="source_type">Level</span>.ControllerList;<span class="source_type">C</span>!=None;<span class="source_type">C</span>=<span class="source_type">C</span>.NextController)
+<a name="993"></a>	{
+<a name="994"></a>		<span class="source_type">P</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">C</span>);
+<a name="995"></a>		if(<span class="source_type">C</span>.bIsPlayer && <span class="source_type">P</span> != None)
+<a name="996"></a>		{
+<a name="997"></a>			bFound = false;
+<a name="998"></a>			if(AccInfo.Length &gt; <span class="source_int">0</span>)
+<a name="999"></a>			{
+<a name="1000"></a>				for(<span class="source_type">x</span>=<span class="source_int">0</span>;<span class="source_type">x</span>&lt;AccInfo.Length;<span class="source_type">x</span>++)
+<a name="1001"></a>				{
+<a name="1002"></a>					if(AccInfo[<span class="source_type">x</span>].<span class="source_type">Name</span> == <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>)
+<a name="1003"></a>					{
+<a name="1004"></a>						bFound = true;
+<a name="1005"></a>						break;
+<a name="1006"></a>					}
+<a name="1007"></a>				}
+<a name="1008"></a>			}
+<a name="1009"></a>			<span class="source_type">Index</span> = GetMVRIIndex(<span class="source_type">P</span>);
+<a name="1010"></a>			if(!bFound && MVRI[<span class="source_type">Index</span>].MapVote != WinningMapIndex && MVRI[<span class="source_type">Index</span>].GameVote != WinningGameIndex)
+<a name="1011"></a>			{
+<a name="1012"></a>				<span class="source_comment">// Not found, so add it
+</span><a name="1013"></a>				AccInfo.Insert(AccInfo.Length,<span class="source_int">1</span>);
+<a name="1014"></a>				AccInfo[AccInfo.Length - <span class="source_int">1</span>].<span class="source_type">Name</span> = <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>;
+<a name="1015"></a>				if(bScoreMode)
+<a name="1016"></a>					AccInfo[AccInfo.Length - <span class="source_int">1</span>].VoteCount = <span class="source_type">int</span>(GetPlayerScore(<span class="source_type">P</span>));
+<a name="1017"></a>				else
+<a name="1018"></a>					AccInfo[AccInfo.Length - <span class="source_int">1</span>].VoteCount = <span class="source_int">1</span>;
+<a name="1019"></a>			}
+<a name="1020"></a>		}
+<a name="1021"></a>	}
+<a name="1022"></a>}
+<a name="1023"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1024"></a>function GetDefaultMap(out <span class="source_type">int</span> mapidx, out <span class="source_type">int</span> gameidx)
+<a name="1025"></a>{
+<a name="1026"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>,<span class="source_type">x</span>,<span class="source_type">y</span>,<span class="source_type">r</span>,<span class="source_type">p</span>,GCIdx;
+<a name="1027"></a>	local array&lt;<span class="source_type">string</span>&gt; PrefixList;
+<a name="1028"></a>	local <span class="source_type">bool</span> <span class="source_type">bLoop</span>;
+<a name="1029"></a>
+<a name="1030"></a>	if(MapCount &lt;= <span class="source_int">0</span>)
+<a name="1031"></a>		return;
+<a name="1032"></a>
+<a name="1033"></a>	<span class="source_comment">// set the default gametype
+</span><a name="1034"></a>	if(bDefaultToCurrentGameType)
+<a name="1035"></a>		GCIdx = CurrentGameConfig;
+<a name="1036"></a>	else
+<a name="1037"></a>		GCIdx = DefaultGameConfig;
+<a name="1038"></a>
+<a name="1039"></a>	<span class="source_comment">// Parse Prefix list for default game type
+</span><a name="1040"></a>	PrefixList.Length = <span class="source_int">0</span>;
+<a name="1041"></a>	<span class="source_type">p</span> = Split(GameConfig[GCIdx].Prefix, <span class="source_string">","</span>, PrefixList);
+<a name="1042"></a>	if(PrefixList.Length == <span class="source_int">0</span>)
+<a name="1043"></a>	{
+<a name="1044"></a>		gameidx = GCIdx;
+<a name="1045"></a>		mapidx = <span class="source_int">0</span>;
+<a name="1046"></a>		return;
+<a name="1047"></a>	}
+<a name="1048"></a>
+<a name="1049"></a>	<span class="source_comment">// choose a map at random, check if it is enabled and the prefix is in the prefix list
+</span><a name="1050"></a>	<span class="source_type">r</span>=<span class="source_int">0</span>;
+<a name="1051"></a>	<span class="source_type">bLoop</span> = True;
+<a name="1052"></a>	while(<span class="source_type">bLoop</span>)
+<a name="1053"></a>	{
+<a name="1054"></a>		<span class="source_type">i</span> = Rand(MapCount);
+<a name="1055"></a>		if( <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">i</span>].bEnabled )
+<a name="1056"></a>		{
+<a name="1057"></a>			for(<span class="source_type">x</span>=<span class="source_int">0</span>; <span class="source_type">x</span> &lt; PrefixList.Length; <span class="source_type">x</span>++)
+<a name="1058"></a>			{
+<a name="1059"></a>				if( left(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">i</span>].<span class="source_type">MapName</span>, <span class="source_type">len</span>(PrefixList[<span class="source_type">x</span>])) ~= PrefixList[<span class="source_type">x</span>] )
+<a name="1060"></a>				{
+<a name="1061"></a>					<span class="source_type">bLoop</span> = false;
+<a name="1062"></a>					break;
+<a name="1063"></a>				}
+<a name="1064"></a>			}
+<a name="1065"></a>		}
+<a name="1066"></a>
+<a name="1067"></a>		if(<span class="source_type">bLoop</span> && <span class="source_type">r</span>++ &gt; <span class="source_int">100</span>)
+<a name="1068"></a>		{
+<a name="1069"></a>			<span class="source_comment">// give up after 100 unsuccessful attempts.
+</span><a name="1070"></a>			<span class="source_comment">// find the first map that matches up to default gametype
+</span><a name="1071"></a>            for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;=MapCount;<span class="source_type">i</span>++)
+<a name="1072"></a>			{
+<a name="1073"></a>				if( <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">i</span>].bEnabled )
+<a name="1074"></a>				{
+<a name="1075"></a>					for(<span class="source_type">x</span>=<span class="source_int">0</span>; <span class="source_type">x</span> &lt; PrefixList.Length; <span class="source_type">x</span>++)
+<a name="1076"></a>					{
+<a name="1077"></a>						if( left(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">i</span>].<span class="source_type">MapName</span>, <span class="source_type">len</span>(PrefixList[<span class="source_type">x</span>])) ~= PrefixList[<span class="source_type">x</span>] )
+<a name="1078"></a>						{
+<a name="1079"></a>							<span class="source_comment">// ding ding ding, found one
+</span><a name="1080"></a>							<span class="source_type">bLoop</span> = false;
+<a name="1081"></a>							break;
+<a name="1082"></a>						}
+<a name="1083"></a>					}
+<a name="1084"></a>				}
+<a name="1085"></a>			}
+<a name="1086"></a>
+<a name="1087"></a>			if(<span class="source_type">bLoop</span>) <span class="source_comment">// still didnt find any, then find the first enabled map and find its gameconfig
+</span><a name="1088"></a>			{
+<a name="1089"></a>				for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;=MapCount;<span class="source_type">i</span>++)
+<a name="1090"></a>				{
+<a name="1091"></a>					if( <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">i</span>].bEnabled )
+<a name="1092"></a>					{
+<a name="1093"></a>						<span class="source_comment">// find prefix in GameConfigs
+</span><a name="1094"></a>						for(<span class="source_type">y</span>=<span class="source_int">0</span>;<span class="source_type">y</span>&lt;GameConfig.Length;<span class="source_type">y</span>++)
+<a name="1095"></a>						{
+<a name="1096"></a>							<span class="source_comment">// Parse Prefix list for game type
+</span><a name="1097"></a>							PrefixList.Length = <span class="source_int">0</span>;
+<a name="1098"></a>							<span class="source_type">p</span> = Split(GameConfig[<span class="source_type">y</span>].Prefix, <span class="source_string">","</span>, PrefixList);
+<a name="1099"></a>							if(PrefixList.Length &gt; <span class="source_int">0</span>)
+<a name="1100"></a>							{
+<a name="1101"></a>								for(<span class="source_type">x</span>=<span class="source_int">0</span>; <span class="source_type">x</span> &lt; PrefixList.Length; <span class="source_type">x</span>++)
+<a name="1102"></a>								{
+<a name="1103"></a>									if( left(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">i</span>].<span class="source_type">MapName</span>, <span class="source_type">len</span>(PrefixList[<span class="source_type">x</span>])) ~= PrefixList[<span class="source_type">x</span>] )
+<a name="1104"></a>									{
+<a name="1105"></a>										<span class="source_comment">// ding ding ding, found one
+</span><a name="1106"></a>										GCIdx = <span class="source_type">y</span>;
+<a name="1107"></a>										<span class="source_type">bLoop</span> = false;
+<a name="1108"></a>										break;
+<a name="1109"></a>									}
+<a name="1110"></a>								}
+<a name="1111"></a>							}
+<a name="1112"></a>							if(!<span class="source_type">bLoop</span>)
+<a name="1113"></a>								break;
+<a name="1114"></a>						}
+<a name="1115"></a>						break;
+<a name="1116"></a>					}
+<a name="1117"></a>				}
+<a name="1118"></a>			}
+<a name="1119"></a>			break;
+<a name="1120"></a>		}
+<a name="1121"></a>	}
+<a name="1122"></a>	gameidx = GCIdx;
+<a name="1123"></a>	mapidx = <span class="source_type">i</span>;
+<a name="1124"></a>	log(<span class="source_string">"Default Map Choosen = "</span> $ <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[mapidx].<span class="source_type">MapName</span> $ <span class="source_string">"("</span> $ GameConfig[gameidx].Acronym $ <span class="source_string">")"</span>,<span class="source_name">'MapVoteDebug'</span>);
+<a name="1125"></a>}
+<a name="1126"></a><span class="source_comment">//================================================================================================
+</span><a name="1127"></a><span class="source_comment">//                                    Kick Voting
+</span><a name="1128"></a><span class="source_comment">//================================================================================================
+</span><a name="1129"></a>function SubmitKickVote(<span class="source_type">int</span> <span class="source_type">PlayerID</span>, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Voter)
+<a name="1130"></a>{
+<a name="1131"></a>	local <span class="source_type">int</span> VoterID, VictumID, <span class="source_type">i</span>, PreviousVote;
+<a name="1132"></a>	local <span class="source_type">bool</span> bFound;
+<a name="1133"></a>	local <span class="source_type">string</span> <span class="source_type">PlayerName</span>;
+<a name="1134"></a>
+<a name="1135"></a>	log(<span class="source_string">"SubmitKickVote "</span> $ <span class="source_type">PlayerID</span>, <span class="source_name">'MapVoteDebug'</span>);
+<a name="1136"></a>
+<a name="1137"></a>	if(bLevelSwitchPending || !bKickVote)
+<a name="1138"></a>		return;
+<a name="1139"></a>
+<a name="1140"></a>	VoterID = GetMVRIIndex(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter));
+<a name="1141"></a>
+<a name="1142"></a>	<span class="source_comment">// Find Player
+</span><a name="1143"></a>	bFound = false;
+<a name="1144"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span> &lt; MVRI.Length;<span class="source_type">i</span>++)
+<a name="1145"></a>	{
+<a name="1146"></a>		if(MVRI[<span class="source_type">i</span>] != none && MVRI[<span class="source_type">i</span>].PlayerOwner.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerID</span> == <span class="source_type">PlayerID</span>)
+<a name="1147"></a>		{
+<a name="1148"></a>			bFound = true;
+<a name="1149"></a>			VictumID = <span class="source_type">i</span>;
+<a name="1150"></a>			<span class="source_type">PlayerName</span> = MVRI[<span class="source_type">i</span>].PlayerOwner.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>;
+<a name="1151"></a>			break;
+<a name="1152"></a>		}
+<a name="1153"></a>	}
+<a name="1154"></a>	if(!bFound)
+<a name="1155"></a>		return;
+<a name="1156"></a>
+<a name="1157"></a>	if( MVRI[VoterID].KickVote == VictumID ) <span class="source_comment">// if vote is for same player stop
+</span><a name="1158"></a>		return;
+<a name="1159"></a>
+<a name="1160"></a>    <span class="source_comment">//if _RO_
+</span><a name="1161"></a>    if( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bAdmin || <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bSilentAdmin )  <span class="source_comment">// Administrator Vote
+</span><a name="1162"></a>    <span class="source_comment">//else
+</span><a name="1163"></a>	<span class="source_comment">//if( PlayerController(Voter).PlayerReplicationInfo.bAdmin )  // Administrator Vote
+</span><a name="1164"></a>    <span class="source_comment">//end _RO_
+</span><a name="1165"></a>	{
+<a name="1166"></a>		log(<span class="source_string">"___Admin "</span> $ <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> $ <span class="source_string">" kicked "</span> $ <span class="source_type">PlayerName</span>,<span class="source_name">'MapVote'</span>);
+<a name="1167"></a>		KickPlayer(VictumID);
+<a name="1168"></a>		return;
+<a name="1169"></a>	}
+<a name="1170"></a>
+<a name="1171"></a>	if( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOnlySpectator )
+<a name="1172"></a>	{
+<a name="1173"></a>		<span class="source_comment">// Spectators cant vote
+</span><a name="1174"></a>		<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).ClientMessage(lmsgSpectatorsCantVote);
+<a name="1175"></a>		return;
+<a name="1176"></a>	}
+<a name="1177"></a>
+<a name="1178"></a>	<span class="source_comment">// cant kick admin
+</span><a name="1179"></a>	<span class="source_comment">//if _RO_
+</span><a name="1180"></a>	if( MVRI[VictumID].PlayerOwner.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bAdmin || MVRI[VictumID].PlayerOwner.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bSilentAdmin ||
+<a name="1181"></a>        NetConnection(MVRI[VictumID].PlayerOwner.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>) == None)
+<a name="1182"></a>	<span class="source_comment">//else
+</span><a name="1183"></a>	<span class="source_comment">//if(MVRI[VictumID].PlayerOwner.PlayerReplicationInfo.bAdmin || NetConnection(MVRI[VictumID].PlayerOwner.Player) == None)
+</span><a name="1184"></a>	<span class="source_comment">//end _RO_
+</span><a name="1185"></a>	{
+<a name="1186"></a>		TextMessage = lmsgKickVoteAdmin;
+<a name="1187"></a>		TextMessage = repl(TextMessage,<span class="source_string">"%playername%"</span>,<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>);
+<a name="1188"></a>		<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="1189"></a>		return;
+<a name="1190"></a>	}
+<a name="1191"></a>
+<a name="1192"></a>	log(<span class="source_string">"___"</span> $ <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> $ <span class="source_string">" placed a kick vote against "</span> $ <span class="source_type">PlayerName</span>,<span class="source_name">'MapVote'</span>);
+<a name="1193"></a>	if(bAnonymousKicking)
+<a name="1194"></a>	{
+<a name="1195"></a>		TextMessage = lmsgAnonymousKickVote;
+<a name="1196"></a>		TextMessage = repl(TextMessage,<span class="source_string">"%playername%"</span>,<span class="source_type">PlayerName</span>);
+<a name="1197"></a>		<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="1198"></a>	}
+<a name="1199"></a>	else
+<a name="1200"></a>	{
+<a name="1201"></a>		TextMessage = lmsgKickVote;
+<a name="1202"></a>		TextMessage = repl(TextMessage,<span class="source_string">"%playername1%"</span>,<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Voter).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>);
+<a name="1203"></a>		TextMessage = repl(TextMessage,<span class="source_string">"%playername2%"</span>,<span class="source_type">PlayerName</span>);
+<a name="1204"></a>		<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="1205"></a>	}
+<a name="1206"></a>	PreviousVote = MVRI[VoterID].KickVote;
+<a name="1207"></a>	MVRI[VoterID].KickVote = VictumID;
+<a name="1208"></a>
+<a name="1209"></a>  	UpdateKickVoteCount(MVRI[VictumID].<span class="source_type">PlayerID</span>, <span class="source_int">1</span>);
+<a name="1210"></a>	if( PreviousVote &gt; -<span class="source_int">1</span> )
+<a name="1211"></a>		UpdateKickVoteCount(MVRI[PreviousVote].<span class="source_type">PlayerID</span>, -<span class="source_int">1</span>); <span class="source_comment">// undo previous vote
+</span><a name="1212"></a>
+<a name="1213"></a>	TallyKickVotes();
+<a name="1214"></a>}
+<a name="1215"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1216"></a>function UpdateKickVoteCount(<span class="source_type">int</span> <span class="source_type">PlayerID</span>, <span class="source_type">int</span> VoteCountDelta)
+<a name="1217"></a>{
+<a name="1218"></a>	local <span class="source_type">int</span> <span class="source_type">x</span>,<span class="source_type">i</span>;
+<a name="1219"></a>	local <span class="source_type">bool</span> bFound;
+<a name="1220"></a>
+<a name="1221"></a>	if( <span class="source_type">PlayerID</span> &lt; <span class="source_int">0</span> )
+<a name="1222"></a>		return;
+<a name="1223"></a>
+<a name="1224"></a>	<span class="source_comment">// search for matching record
+</span><a name="1225"></a>	for( <span class="source_type">x</span>=<span class="source_int">0</span>; <span class="source_type">x</span>&lt;KickVoteCount.Length; <span class="source_type">x</span>++ )
+<a name="1226"></a>	{
+<a name="1227"></a>		if( KickVoteCount[<span class="source_type">x</span>].<span class="source_type">PlayerID</span> == <span class="source_type">PlayerID</span>)
+<a name="1228"></a>		{
+<a name="1229"></a>			if( VoteCountDelta == <span class="source_int">0</span> )
+<a name="1230"></a>				KickVoteCount[<span class="source_type">x</span>].KickVoteCount = <span class="source_int">0</span>;
+<a name="1231"></a>			else
+<a name="1232"></a>				KickVoteCount[<span class="source_type">x</span>].KickVoteCount += VoteCountDelta;
+<a name="1233"></a>
+<a name="1234"></a>			if( KickVoteCount[<span class="source_type">x</span>].KickVoteCount &lt; <span class="source_int">0</span> )
+<a name="1235"></a>			   KickVoteCount[<span class="source_type">x</span>].KickVoteCount = <span class="source_int">0</span>;
+<a name="1236"></a>			bFound = true;
+<a name="1237"></a>			break;
+<a name="1238"></a>		}
+<a name="1239"></a>	}
+<a name="1240"></a>
+<a name="1241"></a>	if( !bFound && VoteCountDelta &gt; <span class="source_int">0</span>) <span class="source_comment">// add new if not found
+</span><a name="1242"></a>	{
+<a name="1243"></a>		<span class="source_type">x</span> = KickVoteCount.Length;
+<a name="1244"></a>		KickVoteCount.Insert(<span class="source_type">x</span>,<span class="source_int">1</span>);
+<a name="1245"></a>		KickVoteCount[<span class="source_type">x</span>].<span class="source_type">PlayerID</span> = <span class="source_type">PlayerID</span>;
+<a name="1246"></a>		KickVoteCount[<span class="source_type">x</span>].KickVoteCount = <span class="source_int">1</span>;
+<a name="1247"></a>	}
+<a name="1248"></a>
+<a name="1249"></a>	<span class="source_comment">// send update to all players
+</span><a name="1250"></a>	for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;MVRI.Length; <span class="source_type">i</span>++ )
+<a name="1251"></a>	{
+<a name="1252"></a>		if( MVRI[<span class="source_type">i</span>] != none && MVRI[<span class="source_type">i</span>].PlayerOwner != none && <span class="source_type">x</span> &lt; KickVoteCount.Length )
+<a name="1253"></a>			MVRI[<span class="source_type">i</span>].ReceiveKickVoteCount(KickVoteCount[<span class="source_type">x</span>], False);
+<a name="1254"></a>	}
+<a name="1255"></a>}
+<a name="1256"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1257"></a>function TallyKickVotes()
+<a name="1258"></a>{
+<a name="1259"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>,<span class="source_type">x</span>,<span class="source_type">y</span>,<span class="source_type">index</span>,PlayersThatVoted,Lamer;
+<a name="1260"></a>	local array&lt;<span class="source_type">int</span>&gt; VoteCount;
+<a name="1261"></a>	local array&lt;<span class="source_type">int</span>&gt; Ranking;
+<a name="1262"></a>
+<a name="1263"></a>	VoteCount.Length = MVRI.Length;
+<a name="1264"></a>
+<a name="1265"></a>	<span class="source_comment">// tally up the votes
+</span><a name="1266"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span> &lt; MVRI.Length;<span class="source_type">i</span>++)
+<a name="1267"></a>	{
+<a name="1268"></a>		if(MVRI[<span class="source_type">i</span>] != None && MVRI[<span class="source_type">i</span>].KickVote != -<span class="source_int">1</span>) <span class="source_comment">// if this player has voted
+</span><a name="1269"></a>		{
+<a name="1270"></a>			PlayersThatVoted++;
+<a name="1271"></a>			VoteCount[MVRI[<span class="source_type">i</span>].KickVote]++; <span class="source_comment">// increment the votecount for this player
+</span><a name="1272"></a>		}
+<a name="1273"></a>	}
+<a name="1274"></a>
+<a name="1275"></a>	<span class="source_type">index</span> = <span class="source_int">0</span>;
+<a name="1276"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span> &lt; VoteCount.Length;<span class="source_type">i</span>++) <span class="source_comment">// for each player
+</span><a name="1277"></a>	{
+<a name="1278"></a>		if(VoteCount[<span class="source_type">i</span>] &gt; <span class="source_int">0</span>)
+<a name="1279"></a>		{
+<a name="1280"></a>			Ranking.Insert(<span class="source_type">index</span>,<span class="source_int">1</span>);
+<a name="1281"></a>			Ranking[<span class="source_type">index</span>++] = <span class="source_type">i</span>;
+<a name="1282"></a>		}
+<a name="1283"></a>	}
+<a name="1284"></a>
+<a name="1285"></a>	if(PlayersThatVoted &gt; <span class="source_int">1</span>)
+<a name="1286"></a>	{
+<a name="1287"></a>		<span class="source_comment">// bubble sort ranking list by vote count
+</span><a name="1288"></a>		for(<span class="source_type">x</span>=<span class="source_int">0</span>; <span class="source_type">x</span>&lt;<span class="source_type">index</span>-<span class="source_int">1</span>; <span class="source_type">x</span>++)
+<a name="1289"></a>		{
+<a name="1290"></a>			for(<span class="source_type">y</span>=<span class="source_type">x</span>+<span class="source_int">1</span>; <span class="source_type">y</span>&lt;<span class="source_type">index</span>; <span class="source_type">y</span>++)
+<a name="1291"></a>			{
+<a name="1292"></a>				if(VoteCount[Ranking[<span class="source_type">x</span>]] &lt; VoteCount[Ranking[<span class="source_type">y</span>]])
+<a name="1293"></a>				{
+<a name="1294"></a>				Lamer = Ranking[<span class="source_type">x</span>];
+<a name="1295"></a>				Ranking[<span class="source_type">x</span>] = Ranking[<span class="source_type">y</span>];
+<a name="1296"></a>				Ranking[<span class="source_type">y</span>] = Lamer;
+<a name="1297"></a>				}
+<a name="1298"></a>			}
+<a name="1299"></a>		}
+<a name="1300"></a>		Lamer = Ranking[<span class="source_int">0</span>];
+<a name="1301"></a>	}
+<a name="1302"></a>
+<a name="1303"></a>	<span class="source_comment">// if more than KickPercent of the players voted to kick this player then kick
+</span><a name="1304"></a>	<span class="source_comment">// TODO: For TESTING only , remove
+</span><a name="1305"></a>	<span class="source_comment">//if(Level.Game.NumPlayers &gt; 2 && ((float(VoteCount[Lamer])/float(Level.Game.NumPlayers))*100 &gt;= KickPercent))
+</span><a name="1306"></a>	if(((<span class="source_type">float</span>(VoteCount[Lamer])/<span class="source_type">float</span>(<span class="source_type">Level</span>.Game.NumPlayers))*<span class="source_int">100</span> &gt;= KickPercent))
+<a name="1307"></a>	{
+<a name="1308"></a>		KickPlayer(Lamer);
+<a name="1309"></a>		return;
+<a name="1310"></a>	}
+<a name="1311"></a>}
+<a name="1312"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1313"></a>function KickPlayer(<span class="source_type">int</span> PlayerIndex)
+<a name="1314"></a>{
+<a name="1315"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1316"></a>
+<a name="1317"></a>	if( MVRI[PlayerIndex] == none || MVRI[PlayerIndex].PlayerOwner == none )
+<a name="1318"></a>		return;
+<a name="1319"></a>
+<a name="1320"></a>	TextMessage = <span class="source_string">"%playername% has been kicked."</span>;
+<a name="1321"></a>	TextMessage = repl(TextMessage,<span class="source_string">"%playername%"</span>,MVRI[PlayerIndex].PlayerOwner.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>);
+<a name="1322"></a>	<span class="source_type">Level</span>.Game.Broadcast(self,TextMessage);
+<a name="1323"></a>
+<a name="1324"></a>	if(bKickVote)
+<a name="1325"></a>	{
+<a name="1326"></a>		<span class="source_comment">// Reset votes
+</span><a name="1327"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span> &lt; MVRI.Length;<span class="source_type">i</span>++)
+<a name="1328"></a>		{
+<a name="1329"></a>			if(MVRI[<span class="source_type">i</span>] != None && MVRI[<span class="source_type">i</span>].KickVote != -<span class="source_int">1</span>)
+<a name="1330"></a>				MVRI[<span class="source_type">i</span>].KickVote = -<span class="source_int">1</span>;
+<a name="1331"></a>		}
+<a name="1332"></a>	}
+<a name="1333"></a>
+<a name="1334"></a>	<span class="source_comment">//close his/her voting window if open
+</span><a name="1335"></a>	if(MVRI[PlayerIndex] != None)
+<a name="1336"></a>		MVRI[PlayerIndex].CloseWindow();
+<a name="1337"></a>
+<a name="1338"></a>	log(<span class="source_string">"___"</span> $ MVRI[PlayerIndex].PlayerOwner.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> $ <span class="source_string">" has been kicked."</span>,<span class="source_name">'MapVote'</span>);
+<a name="1339"></a>	<span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/accesscontrol.html" class="source">AccessControl</a></span>.BanPlayer(MVRI[PlayerIndex].PlayerOwner, True); <span class="source_comment">// session type ban
+</span><a name="1340"></a>}
+<a name="1341"></a><span class="source_comment">//================================================================================================
+</span><a name="1342"></a><span class="source_comment">//                                    MatchSetup
+</span><a name="1343"></a><span class="source_comment">//================================================================================================
+</span><a name="1344"></a>function <span class="source_type">bool</span> MatchSetupLogin(<span class="source_type">string</span> UserID, <span class="source_type">string</span> <span class="source_type">Password</span>, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Requestor, out <span class="source_type">int</span> SecLevel)
+<a name="1345"></a>{
+<a name="1346"></a>	local <span class="source_type"><a href="../engine/xadminuser.html" class="source">xAdminUser</a></span> <span class="source_type"><a href="../xadmin/xadminconfigini.html#AdminUser" class="source">AdminUser</a></span>;
+<a name="1347"></a>
+<a name="1348"></a>	if( bMatchSetup && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Requestor) != none )
+<a name="1349"></a>	{
+<a name="1350"></a>		if( UserID ~= <span class="source_string">"Admin"</span> && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Requestor).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bAdmin )
+<a name="1351"></a>		{
+<a name="1352"></a>			SecLevel = <span class="source_int">255</span>;
+<a name="1353"></a>			return True; <span class="source_comment">// this user is already logged in as an administrator
+</span><a name="1354"></a>		}
+<a name="1355"></a>
+<a name="1356"></a>		if( <span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/accesscontrol.html" class="source">AccessControl</a></span>.AdminLogin( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Requestor), UserID, <span class="source_type">Password</span>) )
+<a name="1357"></a>		{
+<a name="1358"></a>			<span class="source_comment">// Xm = MatchSetup Priv
+</span><a name="1359"></a>			if( <span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/accesscontrol.html" class="source">AccessControl</a></span>.CanPerform(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Requestor), <span class="source_string">"Xm"</span>) )
+<a name="1360"></a>			{
+<a name="1361"></a>				Log(UserID $ <span class="source_string">" has logged in to MatchSetup."</span>);
+<a name="1362"></a>				<span class="source_type"><a href="../xadmin/xadminconfigini.html#AdminUser" class="source">AdminUser</a></span> = <span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/accesscontrol.html" class="source">AccessControl</a></span>.GetUser(UserID);
+<a name="1363"></a>				if( <span class="source_type"><a href="../xadmin/xadminconfigini.html#AdminUser" class="source">AdminUser</a></span> != none )
+<a name="1364"></a>					SecLevel = <span class="source_type"><a href="../xadmin/xadminconfigini.html#AdminUser" class="source">AdminUser</a></span>.MaxSecLevel();
+<a name="1365"></a>				else
+<a name="1366"></a>					SecLevel = <span class="source_int">0</span>;
+<a name="1367"></a>				<span class="source_comment">// hack for default AccessControl setup
+</span><a name="1368"></a>				if( SecLevel == <span class="source_int">0</span> && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Requestor).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bAdmin )
+<a name="1369"></a>					SecLevel = <span class="source_int">255</span>;
+<a name="1370"></a>
+<a name="1371"></a>				Log(<span class="source_string">"SecLevel = "</span> $ SecLevel);
+<a name="1372"></a>				return True;
+<a name="1373"></a>			}
+<a name="1374"></a>			else
+<a name="1375"></a>			{
+<a name="1376"></a>				log(UserID $ <span class="source_string">" doesnt have MatchSetup permissions."</span>);
+<a name="1377"></a>				<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Requestor).ClientMessage(lmsgMatchSetupPermission);
+<a name="1378"></a>				Return False;
+<a name="1379"></a>			}
+<a name="1380"></a>		}
+<a name="1381"></a>		else
+<a name="1382"></a>		{
+<a name="1383"></a>			Log(UserID $ <span class="source_string">" password was invalid."</span>);
+<a name="1384"></a>			<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Requestor).ClientMessage(lmsgInvalidPassword);
+<a name="1385"></a>			return False;
+<a name="1386"></a>		}
+<a name="1387"></a>	}
+<a name="1388"></a>}
+<a name="1389"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1390"></a>function MatchSetupLogout(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Requestor)
+<a name="1391"></a>{
+<a name="1392"></a>	if( bMatchSetup && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Requestor) != none )
+<a name="1393"></a>		<span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/accesscontrol.html" class="source">AccessControl</a></span>.AdminLogout( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Requestor) );
+<a name="1394"></a>}
+<a name="1395"></a><span class="source_comment">//================================================================================================
+</span><a name="1396"></a><span class="source_comment">//                                    Configuration
+</span><a name="1397"></a><span class="source_comment">//================================================================================================
+</span><a name="1398"></a>static function FillPlayInfo(<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span> <span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>)
+<a name="1399"></a>{
+<a name="1400"></a>	<span class="source_comment">// this sends configuration settings to ether the WebAdmin, Server Rules GUI,
+</span><a name="1401"></a>	<span class="source_comment">// or MatchSetup via the PlayInfo class.
+</span><a name="1402"></a>	Super.FillPlayInfo(<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>);
+<a name="1403"></a>
+<a name="1404"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"bMapVote"</span>,default.PropsDisplayText[<span class="source_int">0</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Check"</span>,,,True,False);
+<a name="1405"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"bAutoOpen"</span>,default.PropsDisplayText[<span class="source_int">1</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Check"</span>,,,True,True);
+<a name="1406"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"ScoreBoardDelay"</span>,default.PropsDisplayText[<span class="source_int">2</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Text"</span>,<span class="source_string">"3;0:60"</span>,,True,True);
+<a name="1407"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"bScoreMode"</span>,default.PropsDisplayText[<span class="source_int">3</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Check"</span>,,,True,True);
+<a name="1408"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"bAccumulationMode"</span>,default.PropsDisplayText[<span class="source_int">4</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Check"</span>,,,True,True);
+<a name="1409"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"bEliminationMode"</span>,default.PropsDisplayText[<span class="source_int">5</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Check"</span>,,,True,True);
+<a name="1410"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"MinMapCount"</span>,default.PropsDisplayText[<span class="source_int">6</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Text"</span>,<span class="source_string">"4;1:9999"</span>,,True,True);
+<a name="1411"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"RepeatLimit"</span>,default.PropsDisplayText[<span class="source_int">7</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Text"</span>,<span class="source_string">"4;0:9999"</span>,,True,True);
+<a name="1412"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"VoteTimeLimit"</span>,default.PropsDisplayText[<span class="source_int">8</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Text"</span>,<span class="source_string">"3;10:300"</span>,,True,True);
+<a name="1413"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"MidGameVotePercent"</span>,default.PropsDisplayText[<span class="source_int">9</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Text"</span>,<span class="source_string">"3;1:100"</span>,,True,True);
+<a name="1414"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"bDefaultToCurrentGameType"</span>,default.PropsDisplayText[<span class="source_int">10</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Check"</span>,,,True,True);
+<a name="1415"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.MapVoteGroup,<span class="source_string">"GameConfig"</span>,default.PropsDisplayText[<span class="source_int">15</span>],<span class="source_int">0</span>, <span class="source_int">1</span>,<span class="source_string">"Custom"</span>,<span class="source_string">";;"</span>$default.GameConfigPage,,True,True);
+<a name="1416"></a>	<span class="source_comment">//PlayInfo.AddSetting(default.MapVoteGroup,"MapListLoaderType",default.PropsDisplayText[16],0, 1,"Custom",";;"$default.MapListConfigPage,,True,True);
+</span><a name="1417"></a>
+<a name="1418"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.KickVoteGroup,<span class="source_string">"bKickVote"</span>,default.PropsDisplayText[<span class="source_int">11</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Check"</span>,,,True,True);
+<a name="1419"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.KickVoteGroup,<span class="source_string">"KickPercent"</span>,default.PropsDisplayText[<span class="source_int">12</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Text"</span>,<span class="source_string">"3;1:100"</span>,,True,True);
+<a name="1420"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.KickVoteGroup,<span class="source_string">"bAnonymousKicking"</span>,default.PropsDisplayText[<span class="source_int">13</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Check"</span>,,,True,True);
+<a name="1421"></a>
+<a name="1422"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.AddSetting(default.ServerGroup,<span class="source_string">"bMatchSetup"</span>,default.PropsDisplayText[<span class="source_int">14</span>],<span class="source_int">0</span>,<span class="source_int">1</span>,<span class="source_string">"Check"</span>,,,True,True);
+<a name="1423"></a>
+<a name="1424"></a>	<span class="source_type">class</span><span class="source_name">'DefaultMapListLoader'</span>.static.FillPlayInfo(<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>);
+<a name="1425"></a>	<span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>.PopClass();
+<a name="1426"></a>}
+<a name="1427"></a>
+<a name="1428"></a>static event <span class="source_type">bool</span> AcceptPlayInfoProperty(<span class="source_type">string</span> PropertyName)
+<a name="1429"></a>{
+<a name="1430"></a><span class="source_comment">// if _RO_
+</span><a name="1431"></a><span class="source_comment">//	if ( class'LevelInfo'.static.IsDemoBuild() )
+</span><a name="1432"></a><span class="source_comment">//		return false;
+</span><a name="1433"></a>
+<a name="1434"></a>	<span class="source_type">switch</span> ( PropertyName )
+<a name="1435"></a>	{
+<a name="1436"></a>	case <span class="source_string">"bMapVote"</span>:
+<a name="1437"></a>	case <span class="source_string">"bAutoOpen"</span>:
+<a name="1438"></a>	case <span class="source_string">"ScoreBoardDelay"</span>:
+<a name="1439"></a>	case <span class="source_string">"bScoreMode"</span>:
+<a name="1440"></a>	case <span class="source_string">"bAccumulationMode"</span>:
+<a name="1441"></a>	case <span class="source_string">"bEliminationMode"</span>:
+<a name="1442"></a>	case <span class="source_string">"MinMapCount"</span>:
+<a name="1443"></a>	case <span class="source_string">"RepeatLimit"</span>:
+<a name="1444"></a>	case <span class="source_string">"VoteTimeLimit"</span>:
+<a name="1445"></a>	case <span class="source_string">"MidGameVotePercent"</span>:
+<a name="1446"></a>	case <span class="source_string">"bDefaultToCurrentGameType"</span>:
+<a name="1447"></a>	case <span class="source_string">"GameConfig"</span>:
+<a name="1448"></a>	case <span class="source_string">"MapListLoaderType"</span>:
+<a name="1449"></a>		 return MAPVOTEALLOWED;
+<a name="1450"></a>
+<a name="1451"></a>	case <span class="source_string">"bKickVote"</span>:
+<a name="1452"></a>	case <span class="source_string">"KickPercent"</span>:
+<a name="1453"></a>	case <span class="source_string">"bAnonymousKicking"</span>:
+<a name="1454"></a>		return KICKVOTEALLOWED;
+<a name="1455"></a>
+<a name="1456"></a>	case <span class="source_string">"bMatchSetup"</span>:
+<a name="1457"></a>		return MATCHSETUPALLOWED;
+<a name="1458"></a>	}
+<a name="1459"></a>
+<a name="1460"></a>	return Super.AcceptPlayInfoProperty(PropertyName);
+<a name="1461"></a>}
+<a name="1462"></a>
+<a name="1463"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1464"></a>static event <span class="source_type">string</span> GetDescriptionText(<span class="source_type">string</span> <span class="source_type">PropName</span>)
+<a name="1465"></a>{
+<a name="1466"></a>	<span class="source_type">switch</span> (<span class="source_type">PropName</span>)
+<a name="1467"></a>	{
+<a name="1468"></a>		case <span class="source_string">"bMapVote"</span>:					return default.PropDescription[<span class="source_int">0</span>];
+<a name="1469"></a>		case <span class="source_string">"bAutoOpen"</span>:					return default.PropDescription[<span class="source_int">1</span>];
+<a name="1470"></a>		case <span class="source_string">"ScoreBoardDelay"</span>:				return default.PropDescription[<span class="source_int">2</span>];
+<a name="1471"></a>		case <span class="source_string">"bScoreMode"</span>:					return default.PropDescription[<span class="source_int">3</span>];
+<a name="1472"></a>		case <span class="source_string">"bAccumulationMode"</span>:			return default.PropDescription[<span class="source_int">4</span>];
+<a name="1473"></a>		case <span class="source_string">"bEliminationMode"</span>:			return default.PropDescription[<span class="source_int">5</span>];
+<a name="1474"></a>		case <span class="source_string">"MinMapCount"</span>:					return default.PropDescription[<span class="source_int">6</span>];
+<a name="1475"></a>		case <span class="source_string">"RepeatLimit"</span>:					return default.PropDescription[<span class="source_int">7</span>];
+<a name="1476"></a>		case <span class="source_string">"VoteTimeLimit"</span>:				return default.PropDescription[<span class="source_int">8</span>];
+<a name="1477"></a>		case <span class="source_string">"MidGameVotePercent"</span>:			return default.PropDescription[<span class="source_int">9</span>];
+<a name="1478"></a>		case <span class="source_string">"bDefaultToCurrentGameType"</span>:	return default.PropDescription[<span class="source_int">10</span>];
+<a name="1479"></a>		case <span class="source_string">"bKickVote"</span>:					return default.PropDescription[<span class="source_int">11</span>];
+<a name="1480"></a>		case <span class="source_string">"KickPercent"</span>:					return default.PropDescription[<span class="source_int">12</span>];
+<a name="1481"></a>		case <span class="source_string">"bAnonymousKicking"</span>:			return default.PropDescription[<span class="source_int">13</span>];
+<a name="1482"></a>		case <span class="source_string">"bMatchSetup"</span>:			        return default.PropDescription[<span class="source_int">14</span>];
+<a name="1483"></a>		case <span class="source_string">"GameConfig"</span>:                  return default.PropDescription[<span class="source_int">15</span>];
+<a name="1484"></a>		case <span class="source_string">"MapListLoaderType"</span>:           return default.PropDescription[<span class="source_int">16</span>];
+<a name="1485"></a>	}
+<a name="1486"></a>	return <span class="source_string">""</span>;
+<a name="1487"></a>}
+<a name="1488"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1489"></a>function <span class="source_type">string</span> GetConfigArrayData(<span class="source_type">string</span> ConfigArrayName, <span class="source_type">int</span> RowIndex, <span class="source_type">int</span> ColumnIndex)
+<a name="1490"></a>{
+<a name="1491"></a>	<span class="source_type">switch</span>( Caps(ConfigArrayName) )
+<a name="1492"></a>	{
+<a name="1493"></a>		case <span class="source_string">"GAMECONFIG"</span>:
+<a name="1494"></a>			if( RowIndex &gt; GameConfig.Length-<span class="source_int">1</span> || ColumnIndex &gt; <span class="source_int">5</span> )
+<a name="1495"></a>				return <span class="source_string">""</span>;
+<a name="1496"></a>
+<a name="1497"></a>			<span class="source_type">switch</span>( ColumnIndex )
+<a name="1498"></a>			{
+<a name="1499"></a>	        	case <span class="source_int">0</span>:
+<a name="1500"></a>					return <span class="source_string">"GAMETYPE;50;"</span> $ GameConfig[RowIndex].<span class="source_type">GameClass</span>;
+<a name="1501"></a>				case <span class="source_int">1</span>:
+<a name="1502"></a>					return <span class="source_string">"TEXT;50;"</span> $ GameConfig[RowIndex].Prefix;
+<a name="1503"></a>				case <span class="source_int">2</span>:
+<a name="1504"></a>					return <span class="source_string">"TEXT;20;"</span> $ GameConfig[RowIndex].Acronym;
+<a name="1505"></a>				case <span class="source_int">3</span>:
+<a name="1506"></a>					return <span class="source_string">"TEXT;50;"</span> $ GameConfig[RowIndex].GameName;
+<a name="1507"></a>				case <span class="source_int">4</span>:
+<a name="1508"></a>					return <span class="source_string">"MUTATORS;255;"</span> $ GameConfig[RowIndex].Mutators;
+<a name="1509"></a>				case <span class="source_int">5</span>:
+<a name="1510"></a>					return <span class="source_string">"TEXT;255;"</span> $ GameConfig[RowIndex].Options;
+<a name="1511"></a>				default:
+<a name="1512"></a>					return <span class="source_string">""</span>;
+<a name="1513"></a>			}
+<a name="1514"></a>			break;
+<a name="1515"></a>
+<a name="1516"></a>		case <span class="source_string">"MAPLIST"</span>:
+<a name="1517"></a>			<span class="source_comment">// TODO: *
+</span><a name="1518"></a>			break;
+<a name="1519"></a>	}
+<a name="1520"></a>}
+<a name="1521"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1522"></a>function <span class="source_type">string</span> GetConfigArrayColumnTitle(<span class="source_type">string</span> ConfigArrayName, <span class="source_type">int</span> ColumnIndex)
+<a name="1523"></a>{
+<a name="1524"></a>	<span class="source_type">switch</span>( Caps(ConfigArrayName) )
+<a name="1525"></a>	{
+<a name="1526"></a>		case <span class="source_string">"GAMECONFIG"</span>:
+<a name="1527"></a>			if( ColumnIndex &gt; <span class="source_int">5</span> || ColumnIndex &lt; <span class="source_int">0</span> )
+<a name="1528"></a>				return <span class="source_string">""</span>;
+<a name="1529"></a>   			return lmsgGameConfigColumnTitle[ColumnIndex];
+<a name="1530"></a>
+<a name="1531"></a>		case <span class="source_string">"MAPLIST"</span>:
+<a name="1532"></a>			<span class="source_comment">// TODO: *
+</span><a name="1533"></a>			break;
+<a name="1534"></a>	}
+<a name="1535"></a>}
+<a name="1536"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1537"></a>function DeleteConfigArrayItem(<span class="source_type">string</span> ConfigArrayName, <span class="source_type">int</span> RowIndex)
+<a name="1538"></a>{
+<a name="1539"></a>	<span class="source_type">switch</span>( Caps(ConfigArrayName) )
+<a name="1540"></a>	{
+<a name="1541"></a>		case <span class="source_string">"GAMECONFIG"</span>:
+<a name="1542"></a>			if( RowIndex &lt; <span class="source_int">0</span> || RowIndex &gt; GameConfig.Length-<span class="source_int">1</span> )
+<a name="1543"></a>				return;
+<a name="1544"></a>			GameConfig.Remove(RowIndex,<span class="source_int">1</span>);
+<a name="1545"></a>   			return;
+<a name="1546"></a>
+<a name="1547"></a>		case <span class="source_string">"MAPLIST"</span>:
+<a name="1548"></a>			<span class="source_comment">// TODO: *
+</span><a name="1549"></a>			break;
+<a name="1550"></a>	}
+<a name="1551"></a>}
+<a name="1552"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1553"></a>function <span class="source_type">int</span> AddConfigArrayItem(<span class="source_type">string</span> ConfigArrayName)
+<a name="1554"></a>{
+<a name="1555"></a>	<span class="source_type">switch</span>( Caps(ConfigArrayName) )
+<a name="1556"></a>	{
+<a name="1557"></a>		case <span class="source_string">"GAMECONFIG"</span>:
+<a name="1558"></a>			GameConfig.Insert(GameConfig.Length,<span class="source_int">1</span>);
+<a name="1559"></a>			GameConfig[GameConfig.Length-<span class="source_int">1</span>].<span class="source_type">GameClass</span> = <span class="source_string">"XGame.xDeathMatch"</span>;
+<a name="1560"></a>			GameConfig[GameConfig.Length-<span class="source_int">1</span>].Prefix = <span class="source_string">""</span>;
+<a name="1561"></a>			GameConfig[GameConfig.Length-<span class="source_int">1</span>].Acronym = <span class="source_string">""</span>;
+<a name="1562"></a>			GameConfig[GameConfig.Length-<span class="source_int">1</span>].GameName = <span class="source_string">"new"</span>;
+<a name="1563"></a>			GameConfig[GameConfig.Length-<span class="source_int">1</span>].Mutators = <span class="source_string">""</span>;
+<a name="1564"></a>			GameConfig[GameConfig.Length-<span class="source_int">1</span>].Options = <span class="source_string">""</span>;
+<a name="1565"></a>   			return GameConfig.Length-<span class="source_int">1</span>;
+<a name="1566"></a>
+<a name="1567"></a>		case <span class="source_string">"MAPLIST"</span>:
+<a name="1568"></a>			<span class="source_comment">// TODO: *
+</span><a name="1569"></a>			break;
+<a name="1570"></a>	}
+<a name="1571"></a>}
+<a name="1572"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1573"></a>function UpdateConfigArrayItem(<span class="source_type">string</span> ConfigArrayName, <span class="source_type">int</span> RowIndex, <span class="source_type">int</span> ColumnIndex, <span class="source_type">string</span> <span class="source_type">NewValue</span>)
+<a name="1574"></a>{
+<a name="1575"></a>	<span class="source_type">switch</span>( Caps(ConfigArrayName) )
+<a name="1576"></a>	{
+<a name="1577"></a>		case <span class="source_string">"GAMECONFIG"</span>:
+<a name="1578"></a>			if( RowIndex &lt; <span class="source_int">0</span> || RowIndex &gt; GameConfig.Length-<span class="source_int">1</span> || ColumnIndex &gt; <span class="source_int">5</span> )
+<a name="1579"></a>				return;
+<a name="1580"></a>
+<a name="1581"></a>			<span class="source_type">switch</span>( ColumnIndex )
+<a name="1582"></a>			{
+<a name="1583"></a>	        	case <span class="source_int">0</span>:
+<a name="1584"></a>					GameConfig[RowIndex].<span class="source_type">GameClass</span> = <span class="source_type">NewValue</span>;
+<a name="1585"></a>					break;
+<a name="1586"></a>				case <span class="source_int">1</span>:
+<a name="1587"></a>					GameConfig[RowIndex].Prefix = <span class="source_type">NewValue</span>;
+<a name="1588"></a>					break;
+<a name="1589"></a>				case <span class="source_int">2</span>:
+<a name="1590"></a>					GameConfig[RowIndex].Acronym = <span class="source_type">NewValue</span>;
+<a name="1591"></a>					break;
+<a name="1592"></a>				case <span class="source_int">3</span>:
+<a name="1593"></a>					GameConfig[RowIndex].GameName = <span class="source_type">NewValue</span>;
+<a name="1594"></a>					break;
+<a name="1595"></a>				case <span class="source_int">4</span>:
+<a name="1596"></a>					GameConfig[RowIndex].Mutators = <span class="source_type">NewValue</span>;
+<a name="1597"></a>					break;
+<a name="1598"></a>				case <span class="source_int">5</span>:
+<a name="1599"></a>					GameConfig[RowIndex].Options = <span class="source_type">NewValue</span>;
+<a name="1600"></a>					break;
+<a name="1601"></a>			}
+<a name="1602"></a>   			return;
+<a name="1603"></a>
+<a name="1604"></a>		case <span class="source_string">"MAPLIST"</span>:
+<a name="1605"></a>			<span class="source_comment">// TODO: *
+</span><a name="1606"></a>			break;
+<a name="1607"></a>	}
+<a name="1608"></a>}
+<a name="1609"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1610"></a>function <span class="source_type">int</span> GetConfigArrayItemCount(<span class="source_type">string</span> ConfigArrayName)
+<a name="1611"></a>{
+<a name="1612"></a>	<span class="source_type">switch</span>( Caps(ConfigArrayName) )
+<a name="1613"></a>	{
+<a name="1614"></a>		case <span class="source_string">"GAMECONFIG"</span>:
+<a name="1615"></a>   			return GameConfig.Length;
+<a name="1616"></a>
+<a name="1617"></a>		case <span class="source_string">"MAPLIST"</span>:
+<a name="1618"></a>			<span class="source_comment">// TODO: *
+</span><a name="1619"></a>			break;
+<a name="1620"></a>	}
+<a name="1621"></a>}
+<a name="1622"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1623"></a>function ReloadAll( optional <span class="source_type">bool</span> <span class="source_type">bParam</span> )
+<a name="1624"></a>{
+<a name="1625"></a>	<span class="source_comment">// TODO: ReloadAll
+</span><a name="1626"></a>	ReloadMatchConfig(<span class="source_type">bParam</span>,<span class="source_type">bParam</span>);
+<a name="1627"></a>}
+<a name="1628"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1629"></a>function PropagateValue( <span class="source_type"><a href="../xvoting/votingreplicationinfo.html" class="source">VotingReplicationInfo</a></span> <span class="source_type">Sender</span>, <span class="source_type">string</span> <span class="source_type">Type</span>, <span class="source_type">string</span> SettingName, <span class="source_type">string</span> <span class="source_type">NewValue</span> )
+<a name="1630"></a>{
+<a name="1631"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1632"></a>
+<a name="1633"></a>	<span class="source_comment">// BroadCast change to all other MatchSetup users.
+</span><a name="1634"></a>	for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;MVRI.Length; <span class="source_type">i</span>++)
+<a name="1635"></a>	{
+<a name="1636"></a>		if(MVRI[<span class="source_type">i</span>].bMatchSetupPermitted && MVRI[<span class="source_type">i</span>] != <span class="source_type">Sender</span>)
+<a name="1637"></a>		{
+<a name="1638"></a>			MVRI[<span class="source_type">i</span>].SendClientResponse( <span class="source_type">Type</span>, MVRI[<span class="source_type">i</span>].UpdateID, SettingName $ Chr(<span class="source_int">27</span>) $ <span class="source_type">NewValue</span> );
+<a name="1639"></a>			MVRI[<span class="source_type">i</span>].bMatchSetupAccepted = false;
+<a name="1640"></a>		}
+<a name="1641"></a>	}
+<a name="1642"></a>}
+<a name="1643"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1644"></a>function ReloadMatchConfig( <span class="source_type">bool</span> bRefreshMaps, <span class="source_type">bool</span> bRefreshMuts, optional <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">Caller</span> )
+<a name="1645"></a>{
+<a name="1646"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1647"></a>
+<a name="1648"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MVRI.Length; <span class="source_type">i</span>++ )
+<a name="1649"></a>	{
+<a name="1650"></a>		<span class="source_comment">// TODO - optimize to determine which settings need to be sent and only send those
+</span><a name="1651"></a>		if ( MVRI[<span class="source_type">i</span>] != None && MVRI[<span class="source_type">i</span>].bMatchSetupPermitted )
+<a name="1652"></a>		{
+<a name="1653"></a>			<span class="source_comment">// If we want a full refresh, have the client request the full refresh, so
+</span><a name="1654"></a>			<span class="source_comment">// that the client's current lists will be cleared first
+</span><a name="1655"></a>			if ( bRefreshMaps && bRefreshMuts )
+<a name="1656"></a>				MVRI[<span class="source_type">i</span>].SendClientResponse(MVRI[<span class="source_type">i</span>].LoginID,<span class="source_string">"1"</span>);
+<a name="1657"></a>			else MVRI[<span class="source_type">i</span>].RequestMatchSettings(bRefreshMaps, bRefreshMuts);
+<a name="1658"></a>		}
+<a name="1659"></a>	}
+<a name="1660"></a>}
+<a name="1661"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1662"></a>function <span class="source_type"><a href="../xvoting/matchconfig.html" class="source">MatchConfig</a></span> CreateMatchProfile()
+<a name="1663"></a>{
+<a name="1664"></a>	return new(None, <span class="source_string">"MatchConfig"</span> $ Chr(<span class="source_int">27</span>) $ <span class="source_type">Level</span>.Game.<span class="source_type">Class</span> $ Chr(<span class="source_int">27</span>) $ ServerNumber) <span class="source_type">class</span><span class="source_name">'MatchConfig'</span>;
+<a name="1665"></a>}
+<a name="1666"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1667"></a>function GetServerDetails( out <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">ServerState</span> )
+<a name="1668"></a>{
+<a name="1669"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1670"></a>	<span class="source_type">i</span> = <span class="source_type">ServerState</span>.<span class="source_type">ServerInfo</span>.Length;
+<a name="1671"></a>
+<a name="1672"></a>	<span class="source_type">ServerState</span>.<span class="source_type">ServerInfo</span>.Length = <span class="source_type">i</span>+<span class="source_int">1</span>;
+<a name="1673"></a>	<span class="source_type">ServerState</span>.<span class="source_type">ServerInfo</span>[<span class="source_type">i</span>].Key = <span class="source_string">"MapVoting"</span>;
+<a name="1674"></a>	<span class="source_type">ServerState</span>.<span class="source_type">ServerInfo</span>[<span class="source_type">i</span>++].<span class="source_type">Value</span> = Locs(bMapVote);
+<a name="1675"></a>
+<a name="1676"></a>	<span class="source_type">ServerState</span>.<span class="source_type">ServerInfo</span>.Length = <span class="source_type">i</span>+<span class="source_int">1</span>;
+<a name="1677"></a>	<span class="source_type">ServerState</span>.<span class="source_type">ServerInfo</span>[<span class="source_type">i</span>].Key = <span class="source_string">"KickVoting"</span>;
+<a name="1678"></a>	<span class="source_type">ServerState</span>.<span class="source_type">ServerInfo</span>[<span class="source_type">i</span>++].<span class="source_type">Value</span> = Locs(bKickVote);
+<a name="1679"></a>}
+<a name="1680"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="1681"></a>
+<a name="1682"></a>defaultproperties
+<a name="1683"></a>{
+<a name="1684"></a>     VoteTimeLimit=<span class="source_int">70</span>
+<a name="1685"></a>     ScoreBoardDelay=<span class="source_int">5</span>
+<a name="1686"></a>     bAutoOpen=True
+<a name="1687"></a>     MidGameVotePercent=<span class="source_int">50</span>
+<a name="1688"></a>     MinMapCount=<span class="source_int">2</span>
+<a name="1689"></a>     MapVoteHistoryType=<span class="source_string">"xVoting.MapVoteHistory_INI"</span>
+<a name="1690"></a>     RepeatLimit=<span class="source_int">4</span>
+<a name="1691"></a>     bDefaultToCurrentGameType=True
+<a name="1692"></a>     KickPercent=<span class="source_int">51</span>
+<a name="1693"></a>     bAnonymousKicking=True
+<a name="1694"></a>     MapListLoaderType=<span class="source_string">"xVoting.DefaultMapListLoader"</span>
+<a name="1695"></a>     ServerNumber=<span class="source_int">1</span>
+<a name="1696"></a>     GameConfigPage=<span class="source_string">"xVoting.MapVoteGameConfigPage"</span>
+<a name="1697"></a>     MapListConfigPage=<span class="source_string">"xVoting.MapVoteMapListConfigPage"</span>
+<a name="1698"></a>     lmsgInvalidPassword=<span class="source_string">"The password entered is invalid !"</span>
+<a name="1699"></a>     lmsgMatchSetupPermission=<span class="source_string">"Sorry, you do not have permission to use Match Setup !"</span>
+<a name="1700"></a>     lmsgKickVote=<span class="source_string">"%playername1% placed a kick vote against %playername2%"</span>
+<a name="1701"></a>     lmsgAnonymousKickVote=<span class="source_string">"A kick vote has been placed against %playername%"</span>
+<a name="1702"></a>     lmsgKickVoteAdmin=<span class="source_string">"%playername% attempted to submit a kick vote against the server administrator !"</span>
+<a name="1703"></a>     lmsgMapWon=<span class="source_string">"%mapname% has won !"</span>
+<a name="1704"></a>     lmsgMidGameVote=<span class="source_string">"Mid-Game Map Voting has been initiated !!!!"</span>
+<a name="1705"></a>     lmsgSpectatorsCantVote=<span class="source_string">"Sorry, Spectators can not vote."</span>
+<a name="1706"></a>     lmsgMapVotedFor=<span class="source_string">"%playername% has voted for %mapname%"</span>
+<a name="1707"></a>     lmsgMapVotedForWithCount=<span class="source_string">"%playername% has placed %votecount% votes for %mapname%"</span>
+<a name="1708"></a>     PropsDisplayText(<span class="source_int">0</span>)=<span class="source_string">"Enable Map Voting"</span>
+<a name="1709"></a>     PropsDisplayText(<span class="source_int">1</span>)=<span class="source_string">"Auto Open GUI"</span>
+<a name="1710"></a>     PropsDisplayText(<span class="source_int">2</span>)=<span class="source_string">"ScoreBoard Delay"</span>
+<a name="1711"></a>     PropsDisplayText(<span class="source_int">3</span>)=<span class="source_string">"Score Mode"</span>
+<a name="1712"></a>     PropsDisplayText(<span class="source_int">4</span>)=<span class="source_string">"Accumulation Mode"</span>
+<a name="1713"></a>     PropsDisplayText(<span class="source_int">5</span>)=<span class="source_string">"Elimination Mode"</span>
+<a name="1714"></a>     PropsDisplayText(<span class="source_int">6</span>)=<span class="source_string">"Minimum Maps"</span>
+<a name="1715"></a>     PropsDisplayText(<span class="source_int">7</span>)=<span class="source_string">"Repeat Limit"</span>
+<a name="1716"></a>     PropsDisplayText(<span class="source_int">8</span>)=<span class="source_string">"Voting Time Limit"</span>
+<a name="1717"></a>     PropsDisplayText(<span class="source_int">9</span>)=<span class="source_string">"Mid-Game Vote Percent"</span>
+<a name="1718"></a>     PropsDisplayText(<span class="source_int">10</span>)=<span class="source_string">"Default Current GameType"</span>
+<a name="1719"></a>     PropsDisplayText(<span class="source_int">11</span>)=<span class="source_string">"Enable Kick Voting"</span>
+<a name="1720"></a>     PropsDisplayText(<span class="source_int">12</span>)=<span class="source_string">"Kick Vote Percent"</span>
+<a name="1721"></a>     PropsDisplayText(<span class="source_int">13</span>)=<span class="source_string">"Anonymous Kick Voting"</span>
+<a name="1722"></a>     PropsDisplayText(<span class="source_int">14</span>)=<span class="source_string">"Allow Match Setup"</span>
+<a name="1723"></a>     PropsDisplayText(<span class="source_int">15</span>)=<span class="source_string">"Game Configuration"</span>
+<a name="1724"></a>     PropsDisplayText(<span class="source_int">16</span>)=<span class="source_string">"Map List Configuration"</span>
+<a name="1725"></a>     PropDescription(<span class="source_int">0</span>)=<span class="source_string">"If enabled players can vote for maps."</span>
+<a name="1726"></a>     PropDescription(<span class="source_int">1</span>)=<span class="source_string">"If enabled the Map voting interface will automatically open at the end of each game."</span>
+<a name="1727"></a>     PropDescription(<span class="source_int">2</span>)=<span class="source_string">"Sets the number of seconds to delay after the end of each game before opening the voting interface."</span>
+<a name="1728"></a>     PropDescription(<span class="source_int">3</span>)=<span class="source_string">"If enabled, each player gets his or her score worth of votes."</span>
+<a name="1729"></a>     PropDescription(<span class="source_int">4</span>)=<span class="source_string">"If enabled, each player will accumulate votes each game until they win."</span>
+<a name="1730"></a>     PropDescription(<span class="source_int">5</span>)=<span class="source_string">"If enabled, available maps are disabled as they are played until there are X maps left."</span>
+<a name="1731"></a>     PropDescription(<span class="source_int">6</span>)=<span class="source_string">"The number of enabled maps that remain in the map list (in Elimination mode) before the map list is reset."</span>
+<a name="1732"></a>     PropDescription(<span class="source_int">7</span>)=<span class="source_string">"Number of previously played maps that should not be votable."</span>
+<a name="1733"></a>     PropDescription(<span class="source_int">8</span>)=<span class="source_string">"Limits how much time (in seconds) to allow for voting."</span>
+<a name="1734"></a>     PropDescription(<span class="source_int">9</span>)=<span class="source_string">"Percentage of players that must vote to trigger a Mid-Game vote."</span>
+<a name="1735"></a>     PropDescription(<span class="source_int">10</span>)=<span class="source_string">"If enabled, and there are no players on the server then the server will stay on the current game type."</span>
+<a name="1736"></a>     PropDescription(<span class="source_int">11</span>)=<span class="source_string">"If enable players can vote to kick other players."</span>
+<a name="1737"></a>     PropDescription(<span class="source_int">12</span>)=<span class="source_string">"The percentage of players that must vote against an individual player to have them kicked from the server."</span>
+<a name="1738"></a>     PropDescription(<span class="source_int">13</span>)=<span class="source_string">"If enabled players can place Kick votes without anyone knowing who placed the vote."</span>
+<a name="1739"></a>     PropDescription(<span class="source_int">14</span>)=<span class="source_string">"Enables match setup on the server - valid admin username & password is required in order to use this feature"</span>
+<a name="1740"></a>     PropDescription(<span class="source_int">15</span>)=<span class="source_string">"Opens the map voting game configuration screen"</span>
+<a name="1741"></a>     PropDescription(<span class="source_int">16</span>)=<span class="source_string">"Opens the map voting list configuration screen"</span>
+<a name="1742"></a>     lmsgAdminMapChange=<span class="source_string">"Admin has forced map switch to %mapname%"</span>
+<a name="1743"></a>     lmsgGameConfigColumnTitle(<span class="source_int">0</span>)=<span class="source_string">"GameType"</span>
+<a name="1744"></a>     lmsgGameConfigColumnTitle(<span class="source_int">1</span>)=<span class="source_string">"MapPrefixes"</span>
+<a name="1745"></a>     lmsgGameConfigColumnTitle(<span class="source_int">2</span>)=<span class="source_string">"Abbreviation"</span>
+<a name="1746"></a>     lmsgGameConfigColumnTitle(<span class="source_int">3</span>)=<span class="source_string">"Name"</span>
+<a name="1747"></a>     lmsgGameConfigColumnTitle(<span class="source_int">4</span>)=<span class="source_string">"Mutators"</span>
+<a name="1748"></a>     lmsgGameConfigColumnTitle(<span class="source_int">5</span>)=<span class="source_string">"Options"</span>
+<a name="1749"></a>}
+<a name="1750"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xvoting/xvoting-overview.html">Package</a></td>
+	<td class="header"><a href="../xvoting/xvotinghandler.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#xVotingHandler">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xvoting/votingreplicationinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xvoting/defaultmaplistloader.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:11.017 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

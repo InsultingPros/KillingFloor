@@ -1,0 +1,631 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: UnrealGame.TeamAI</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/teamai.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#TeamAI">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/stringmessageplus.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/teamgame.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_unrealgame/teamai.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../unrealgame/unrealgame-overview.html">UnrealGame</a>.<a href="../unrealgame/teamai.html">TeamAI</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// TeamAI.
+</span><a name="3"></a><span class="source_comment">// strategic team AI control for TeamGame
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">//=============================================================================
+</span><a name="6"></a><span class="source_type">class</span> <span class="source_type"><a href="../unrealgame/teamai.html" class="source">TeamAI</a></span> extends <span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>;
+<a name="7"></a>
+<a name="8"></a>var <span class="source_type"><a href="../unrealgame/unrealteaminfo.html" class="source">UnrealTeamInfo</a></span> <span class="source_type">Team</span>;
+<a name="9"></a>var <span class="source_type"><a href="../unrealgame/unrealteaminfo.html" class="source">UnrealTeamInfo</a></span> EnemyTeam;
+<a name="10"></a>var	<span class="source_type">int</span>	NumSupportingPlayer;
+<a name="11"></a>var <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> Objectives; <span class="source_comment">// list of objectives to be defended or attacked by this team
+</span><a name="12"></a>var <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> PickedObjective;	<span class="source_comment">// objective that was picked from a list of equal priority objectives
+</span><a name="13"></a>var <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> Squads;
+<a name="14"></a>var <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> AttackSquad, FreelanceSquad;
+<a name="15"></a>var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span>&gt; SquadType;
+<a name="16"></a>var <span class="source_type">int</span> OrderOffset;
+<a name="17"></a>var <span class="source_type">name</span> OrderList[<span class="source_int">8</span>];
+<a name="18"></a>
+<a name="19"></a>var <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span> SuperPickups[<span class="source_int">16</span>];
+<a name="20"></a>var <span class="source_type">int</span> NumSuperPickups;
+<a name="21"></a>
+<a name="22"></a>function PostBeginPlay()
+<a name="23"></a>{
+<a name="24"></a>	Super.PostBeginPlay();
+<a name="25"></a>	SetTimer(<span class="source_int">5.0</span>,true);
+<a name="26"></a>}
+<a name="27"></a>
+<a name="28"></a>function Timer()
+<a name="29"></a>{
+<a name="30"></a>	ReAssessStrategy();
+<a name="31"></a>}
+<a name="32"></a>
+<a name="33"></a>function CriticalObjectiveWarning(<span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> G, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">NewEnemy</span>);
+<a name="34"></a>
+<a name="35"></a>function CallForBall(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Recipient</span>);
+<a name="36"></a>
+<a name="37"></a>function <span class="source_type">bool</span> SuperPickupAvailable(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>)
+<a name="38"></a>{
+<a name="39"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="40"></a>	local <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span> <span class="source_type">P</span>;
+<a name="41"></a>
+<a name="42"></a>	if ( NumSuperPickups == <span class="source_int">0</span> )
+<a name="43"></a>	{
+<a name="44"></a>		ForEach DynamicActors(<span class="source_type">class</span><span class="source_name">'Pickup'</span>, <span class="source_type">P</span>)
+<a name="45"></a>			if ( <span class="source_type">P</span>.IsSuperItem() )
+<a name="46"></a>			{
+<a name="47"></a>				SuperPickups[NumSuperPickups] = <span class="source_type">P</span>;
+<a name="48"></a>				NumSuperPickups++;
+<a name="49"></a>				if ( NumSuperPickups == <span class="source_int">16</span> )
+<a name="50"></a>					break;
+<a name="51"></a>			}
+<a name="52"></a>	}
+<a name="53"></a>
+<a name="54"></a>	if ( NumSuperPickups &lt;= <span class="source_int">0</span> )
+<a name="55"></a>	{
+<a name="56"></a>		NumSuperPickups = -<span class="source_int">1</span>;
+<a name="57"></a>		return false;
+<a name="58"></a>	}
+<a name="59"></a>
+<a name="60"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;NumSuperPickups; <span class="source_type">i</span>++ )
+<a name="61"></a>	{
+<a name="62"></a>		if ( (SuperPickups[<span class="source_type">i</span>] != None) && SuperPickups[<span class="source_type">i</span>].ReadyToPickup(<span class="source_int">0</span>)
+<a name="63"></a>			&& <span class="source_type">B</span>.SuperPickupNotSpokenFor(SuperPickups[<span class="source_type">i</span>]) )
+<a name="64"></a>			return true;
+<a name="65"></a>	}
+<a name="66"></a>
+<a name="67"></a>	if ( NumSuperPickups &lt; <span class="source_int">16</span> )
+<a name="68"></a>		return false;
+<a name="69"></a>
+<a name="70"></a>	ForEach DynamicActors(<span class="source_type">class</span><span class="source_name">'Pickup'</span>, <span class="source_type">P</span>)
+<a name="71"></a>		if ( <span class="source_type">P</span>.IsSuperItem() )
+<a name="72"></a>		{
+<a name="73"></a>			if ( <span class="source_type">P</span>.ReadyToPickup(<span class="source_int">2</span>) )
+<a name="74"></a>				return true;
+<a name="75"></a>		}
+<a name="76"></a>
+<a name="77"></a>	return false;
+<a name="78"></a>}
+<a name="79"></a>
+<a name="80"></a>function Reset()
+<a name="81"></a>{
+<a name="82"></a>	Super.Reset();
+<a name="83"></a>	PickedObjective = None;
+<a name="84"></a>}
+<a name="85"></a>
+<a name="86"></a>function ClearEnemies()
+<a name="87"></a>{
+<a name="88"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="89"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="90"></a>	local <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">M</span>;
+<a name="91"></a>
+<a name="92"></a>	Reset();
+<a name="93"></a>	for ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="94"></a>	{
+<a name="95"></a>		for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">8</span>; <span class="source_type">i</span>++ )
+<a name="96"></a>			<span class="source_type">S</span>.Reset();
+<a name="97"></a>		for	( <span class="source_type">M</span>=<span class="source_type">S</span>.SquadMembers; <span class="source_type">M</span>!=None; <span class="source_type">M</span>=<span class="source_type">M</span>.NextSquadMember )
+<a name="98"></a>			<span class="source_type">M</span>.Reset();
+<a name="99"></a>	}
+<a name="100"></a>}
+<a name="101"></a>
+<a name="102"></a>function <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> GetSquadLedBy(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>)
+<a name="103"></a>{
+<a name="104"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="105"></a>
+<a name="106"></a>	for ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="107"></a>		if ( <span class="source_type">S</span>.SquadLeader == <span class="source_type">C</span> )
+<a name="108"></a>			return <span class="source_type">S</span>;
+<a name="109"></a>	return None;
+<a name="110"></a>}
+<a name="111"></a>
+<a name="112"></a><span class="source_comment">/* ReAssessStrategy()
+<a name="113"></a>Look at current strategic situation, and decide whether to update squad objectives
+<a name="114"></a>*/</span>
+<a name="115"></a>function ReAssessStrategy()
+<a name="116"></a>{
+<a name="117"></a>	local <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> <span class="source_type">O</span>;
+<a name="118"></a>	local <span class="source_type">int</span> PlusDiff, MinusDiff;
+<a name="119"></a>
+<a name="120"></a>	if ( FreelanceSquad == None )
+<a name="121"></a>		return;
+<a name="122"></a>
+<a name="123"></a>	<span class="source_comment">// decide whether to play defensively or aggressively
+</span><a name="124"></a>	if ( <span class="source_type">Level</span>.Game.TimeLimit &gt; <span class="source_int">0</span> )
+<a name="125"></a>	{
+<a name="126"></a>		PlusDiff = <span class="source_int">0</span>;
+<a name="127"></a>		MinusDiff = <span class="source_int">2</span>;
+<a name="128"></a>		if ( <span class="source_type"><a href="../unrealgame/deathmatch.html" class="source">DeathMatch</a></span>(<span class="source_type">Level</span>.Game).RemainingTime &lt; <span class="source_int">180</span> )
+<a name="129"></a>			MinusDiff = <span class="source_int">0</span>;
+<a name="130"></a>	}
+<a name="131"></a>	else
+<a name="132"></a>	{
+<a name="133"></a>		PlusDiff = <span class="source_int">2</span>;
+<a name="134"></a>		MinusDiff = <span class="source_int">2</span>;
+<a name="135"></a>	}
+<a name="136"></a>
+<a name="137"></a>	FreelanceSquad.bFreelanceAttack = false;
+<a name="138"></a>	FreelanceSquad.bFreelanceDefend = false;
+<a name="139"></a>	if ( <span class="source_type">Team</span>.<span class="source_type">Score</span> &gt; EnemyTeam.<span class="source_type">Score</span> + PlusDiff )
+<a name="140"></a>	{
+<a name="141"></a>		FreelanceSquad.bFreelanceDefend = true;
+<a name="142"></a>		<span class="source_type">O</span> = GetLeastDefendedObjective();
+<a name="143"></a>	}
+<a name="144"></a>	else if ( <span class="source_type">Team</span>.<span class="source_type">Score</span> &lt; EnemyTeam.<span class="source_type">Score</span> - MinusDiff )
+<a name="145"></a>	{
+<a name="146"></a>		FreelanceSquad.bFreelanceAttack = true;
+<a name="147"></a>		<span class="source_type">O</span> = GetPriorityAttackObjectiveFor(FreelanceSquad);
+<a name="148"></a>	}
+<a name="149"></a>	else
+<a name="150"></a>		<span class="source_type">O</span> = GetPriorityFreelanceObjective();
+<a name="151"></a>
+<a name="152"></a>	if ( (<span class="source_type">O</span> != None) && (<span class="source_type">O</span> != FreelanceSquad.SquadObjective) )
+<a name="153"></a>		FreelanceSquad.SetObjective(<span class="source_type">O</span>,true);
+<a name="154"></a>}
+<a name="155"></a>
+<a name="156"></a>function NotifyKilled(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> Killer, <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">Killed</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">KilledPawn</span>)
+<a name="157"></a>{
+<a name="158"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="159"></a>
+<a name="160"></a>	for ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="161"></a>		<span class="source_type">S</span>.NotifyKilled(Killer,<span class="source_type">Killed</span>,<span class="source_type">KilledPawn</span>);
+<a name="162"></a>}
+<a name="163"></a>
+<a name="164"></a>function FindNewObjectives(<span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> <span class="source_type">DisabledObjective</span>)
+<a name="165"></a>{
+<a name="166"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="167"></a>
+<a name="168"></a>	for ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="169"></a>		if ( <span class="source_type">S</span>.SquadObjective == <span class="source_type">DisabledObjective</span> )
+<a name="170"></a>			FindNewObjectiveFor(<span class="source_type">S</span>,true);
+<a name="171"></a>}
+<a name="172"></a>
+<a name="173"></a><span class="source_comment">/* FindNewObjectiveFor()
+<a name="174"></a>pick a new objective for a squad that has completed its current objective
+<a name="175"></a>*/</span>
+<a name="176"></a>function FindNewObjectiveFor(<span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>, <span class="source_type">bool</span> bForceUpdate)
+<a name="177"></a>{
+<a name="178"></a>	local <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> <span class="source_type">O</span>, Temp;
+<a name="179"></a>
+<a name="180"></a>	if ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">S</span>.SquadLeader) != None )
+<a name="181"></a>		return;
+<a name="182"></a>	if ( <span class="source_type">S</span>.bFreelance )
+<a name="183"></a>		<span class="source_type">O</span> = GetPriorityFreelanceObjective();
+<a name="184"></a>	else if ( <span class="source_type">S</span>.GetOrders() == <span class="source_name">'Attack'</span> )
+<a name="185"></a>		<span class="source_type">O</span> = GetPriorityAttackObjectiveFor(<span class="source_type">S</span>);
+<a name="186"></a>	if ( <span class="source_type">O</span> == None )
+<a name="187"></a>	{
+<a name="188"></a>		<span class="source_type">O</span> = GetLeastDefendedObjective();
+<a name="189"></a>		if ( (<span class="source_type">O</span> != None) && (<span class="source_type">O</span>.DefenseSquad != None) )
+<a name="190"></a>		{
+<a name="191"></a>			if ( <span class="source_type">S</span>.GetOrders() == <span class="source_name">'Attack'</span> )
+<a name="192"></a>			{
+<a name="193"></a>				<span class="source_type">S</span>.MergeWith(<span class="source_type">O</span>.DefenseSquad);
+<a name="194"></a>				return;
+<a name="195"></a>			}
+<a name="196"></a>			else
+<a name="197"></a>			{
+<a name="198"></a>				Temp = <span class="source_type">O</span>;
+<a name="199"></a>				<span class="source_type">O</span> = GetPriorityAttackObjectiveFor(<span class="source_type">S</span>);
+<a name="200"></a>				if ( <span class="source_type">O</span> == None )
+<a name="201"></a>				{
+<a name="202"></a>					<span class="source_type">S</span>.MergeWith(Temp.DefenseSquad);
+<a name="203"></a>					return;
+<a name="204"></a>				}
+<a name="205"></a>			}
+<a name="206"></a>		}
+<a name="207"></a>	}
+<a name="208"></a>	if ( (<span class="source_type">O</span> == None) && (<span class="source_type">S</span>.bFreelance || (<span class="source_type">S</span>.GetOrders() == <span class="source_name">'Defend'</span>)) )
+<a name="209"></a>		<span class="source_type">O</span> = GetPriorityAttackObjectiveFor(<span class="source_type">S</span>);
+<a name="210"></a>	<span class="source_type">S</span>.SetObjective(<span class="source_type">O</span>,bForceUpdate);
+<a name="211"></a>}
+<a name="212"></a>
+<a name="213"></a>function RemoveSquad(<span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> Squad)
+<a name="214"></a>{
+<a name="215"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="216"></a>
+<a name="217"></a>	if ( Squad == Squads )
+<a name="218"></a>	{
+<a name="219"></a>		Squads = Squads.NextSquad;
+<a name="220"></a>		return;
+<a name="221"></a>	}
+<a name="222"></a>	For ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="223"></a>		if ( <span class="source_type">S</span>.NextSquad == Squad )
+<a name="224"></a>		{
+<a name="225"></a>			<span class="source_type">S</span>.NextSquad = <span class="source_type">S</span>.NextSquad.NextSquad;
+<a name="226"></a>			return;
+<a name="227"></a>		}
+<a name="228"></a>}
+<a name="229"></a>
+<a name="230"></a>function <span class="source_type">bool</span> OnThisTeam(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span>)
+<a name="231"></a>{
+<a name="232"></a>	if ( <span class="source_type">Other</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None )
+<a name="233"></a>		return ( <span class="source_type">Other</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> == <span class="source_type">Team</span> );
+<a name="234"></a>	if ( <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type">Other</span>) != None )
+<a name="235"></a>		return ( <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type">Other</span>).<span class="source_type">Team</span> == <span class="source_type">Team</span>.TeamIndex );
+<a name="236"></a>	return false;
+<a name="237"></a>}
+<a name="238"></a>
+<a name="239"></a>function <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> FindSquadOf(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>)
+<a name="240"></a>{
+<a name="241"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="242"></a>
+<a name="243"></a>	if ( <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type">C</span>) != None )
+<a name="244"></a>		return <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type">C</span>).Squad;
+<a name="245"></a>
+<a name="246"></a>	for ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="247"></a>		if ( <span class="source_type">S</span>.SquadLeader == <span class="source_type">C</span> )
+<a name="248"></a>			return <span class="source_type">S</span>;
+<a name="249"></a>	return None;
+<a name="250"></a>}
+<a name="251"></a>
+<a name="252"></a>function <span class="source_type">bool</span> FriendlyToward(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span>)
+<a name="253"></a>{
+<a name="254"></a>	return OnThisTeam(<span class="source_type">Other</span>);
+<a name="255"></a>}
+<a name="256"></a>
+<a name="257"></a>function SetObjectiveLists()
+<a name="258"></a>{
+<a name="259"></a>	local <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> <span class="source_type">O</span>;
+<a name="260"></a>
+<a name="261"></a>	ForEach AllActors(<span class="source_type">class</span><span class="source_name">'GameObjective'</span>,<span class="source_type">O</span>)
+<a name="262"></a>		if ( <span class="source_type">O</span>.bFirstObjective )
+<a name="263"></a>		{
+<a name="264"></a>			Objectives = <span class="source_type">O</span>;
+<a name="265"></a>			break;
+<a name="266"></a>		}
+<a name="267"></a>}
+<a name="268"></a>
+<a name="269"></a>function <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> FindHumanSquad()
+<a name="270"></a>{
+<a name="271"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="272"></a>
+<a name="273"></a>	for ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="274"></a>		if ( <span class="source_type">S</span>.SquadLeader.IsA(<span class="source_name">'PlayerController'</span>) )
+<a name="275"></a>			return <span class="source_type">S</span>;
+<a name="276"></a>}
+<a name="277"></a>
+<a name="278"></a>function <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> AddHumanSquad()
+<a name="279"></a>{
+<a name="280"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="281"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">P</span>;
+<a name="282"></a>
+<a name="283"></a>	<span class="source_type">S</span> = FindHumanSquad();
+<a name="284"></a>	if ( <span class="source_type">S</span> != None )
+<a name="285"></a>		return <span class="source_type">S</span>;
+<a name="286"></a>
+<a name="287"></a>	<span class="source_comment">// add human squad
+</span><a name="288"></a>	For ( <span class="source_type">P</span>=<span class="source_type">Level</span>.ControllerList; <span class="source_type">P</span>!=None; <span class="source_type">P</span>= <span class="source_type">P</span>.NextController )
+<a name="289"></a>		if ( <span class="source_type">P</span>.IsA(<span class="source_name">'PlayerController'</span>) && (<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> == <span class="source_type">Team</span>)
+<a name="290"></a>			&& !<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOnlySpectator )
+<a name="291"></a>		return AddSquadWithLeader(<span class="source_type">P</span>,None);
+<a name="292"></a>}
+<a name="293"></a>
+<a name="294"></a>function PutBotOnSquadLedBy(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>, <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>)
+<a name="295"></a>{
+<a name="296"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="297"></a>
+<a name="298"></a>	for ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="299"></a>		if ( <span class="source_type">S</span>.SquadLeader == <span class="source_type">C</span> )
+<a name="300"></a>			break;
+<a name="301"></a>
+<a name="302"></a>	if ( (<span class="source_type">S</span> == None) && (<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">C</span>) != None) )
+<a name="303"></a>		<span class="source_type">S</span> = AddSquadWithLeader(<span class="source_type">C</span>,None);
+<a name="304"></a>
+<a name="305"></a>	if ( <span class="source_type">S</span> != None )
+<a name="306"></a>		<span class="source_type">S</span>.AddBot(<span class="source_type">B</span>);
+<a name="307"></a>}
+<a name="308"></a>
+<a name="309"></a>function <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> AddSquadWithLeader(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>, <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> <span class="source_type">O</span>)
+<a name="310"></a>{
+<a name="311"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="312"></a>
+<a name="313"></a>	<span class="source_type">S</span> = spawn(SquadType);
+<a name="314"></a>	<span class="source_type">S</span>.Initialize(<span class="source_type">Team</span>,<span class="source_type">O</span>,<span class="source_type">C</span>);
+<a name="315"></a>	<span class="source_type">S</span>.NextSquad = Squads;
+<a name="316"></a>	Squads = <span class="source_type">S</span>;
+<a name="317"></a>	return <span class="source_type">S</span>;
+<a name="318"></a>}
+<a name="319"></a>
+<a name="320"></a>
+<a name="321"></a>function <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> GetLeastDefendedObjective()
+<a name="322"></a>{
+<a name="323"></a>	local <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> <span class="source_type">O</span>, Best;
+<a name="324"></a>
+<a name="325"></a>	for ( <span class="source_type">O</span>=Objectives; <span class="source_type">O</span>!=None; <span class="source_type">O</span>=<span class="source_type">O</span>.NextObjective )
+<a name="326"></a>	{
+<a name="327"></a>		if ( !<span class="source_type">O</span>.bDisabled && <span class="source_type">O</span>.bActive && (<span class="source_type">O</span>.DefenderTeamIndex == <span class="source_type">Team</span>.TeamIndex)
+<a name="328"></a>			&& ((Best == None) || (Best.DefensePriority	&lt; <span class="source_type">O</span>.DefensePriority)
+<a name="329"></a>				|| ((Best.DefensePriority == <span class="source_type">O</span>.DefensePriority) && (Best.GetNumDefenders() &gt; <span class="source_type">O</span>.GetNumDefenders()))) )
+<a name="330"></a>			Best = <span class="source_type">O</span>;
+<a name="331"></a>	}
+<a name="332"></a>	return Best;
+<a name="333"></a>}
+<a name="334"></a>
+<a name="335"></a>function <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> GetMostDefendedObjective()
+<a name="336"></a>{
+<a name="337"></a>	local <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> <span class="source_type">O</span>, Best;
+<a name="338"></a>
+<a name="339"></a>	for ( <span class="source_type">O</span>=Objectives; <span class="source_type">O</span>!=None; <span class="source_type">O</span>=<span class="source_type">O</span>.NextObjective )
+<a name="340"></a>	{
+<a name="341"></a>		if ( !<span class="source_type">O</span>.bDisabled && <span class="source_type">O</span>.bActive && (<span class="source_type">O</span>.DefenderTeamIndex == <span class="source_type">Team</span>.TeamIndex)
+<a name="342"></a>			&& ((Best == None) || (Best.DefensePriority	&lt; <span class="source_type">O</span>.DefensePriority)
+<a name="343"></a>				|| ((Best.DefensePriority == <span class="source_type">O</span>.DefensePriority) && (Best.GetNumDefenders() &lt; <span class="source_type">O</span>.GetNumDefenders()))) )
+<a name="344"></a>			Best = <span class="source_type">O</span>;
+<a name="345"></a>	}
+<a name="346"></a>	return Best;
+<a name="347"></a>}
+<a name="348"></a>
+<a name="349"></a>function <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> GetPriorityAttackObjective()
+<a name="350"></a>{
+<a name="351"></a>	return GetPriorityAttackObjectiveFor(None);
+<a name="352"></a>}
+<a name="353"></a>
+<a name="354"></a>function <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> GetPriorityAttackObjectiveFor(<span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> AttackSquad)
+<a name="355"></a>{
+<a name="356"></a>	local <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> <span class="source_type">O</span>;
+<a name="357"></a>
+<a name="358"></a>	if ( (PickedObjective != None) && PickedObjective.bDisabled )
+<a name="359"></a>		PickedObjective = None;
+<a name="360"></a>	if ( PickedObjective == None )
+<a name="361"></a>	{
+<a name="362"></a>		for ( <span class="source_type">O</span>=Objectives; <span class="source_type">O</span>!=None; <span class="source_type">O</span>=<span class="source_type">O</span>.NextObjective )
+<a name="363"></a>		{
+<a name="364"></a>			if ( !<span class="source_type">O</span>.bDisabled && <span class="source_type">O</span>.bActive && (<span class="source_type">O</span>.DefenderTeamIndex != <span class="source_type">Team</span>.TeamIndex)
+<a name="365"></a>				&& ((PickedObjective == None) || (PickedObjective.DefensePriority &lt; <span class="source_type">O</span>.DefensePriority)
+<a name="366"></a>					|| ((PickedObjective.DefensePriority == <span class="source_type">O</span>.DefensePriority) && (FRand() &lt; <span class="source_int">0.3</span>))) )
+<a name="367"></a>				PickedObjective = <span class="source_type">O</span>;
+<a name="368"></a>		}
+<a name="369"></a>	}
+<a name="370"></a>	return PickedObjective;
+<a name="371"></a>}
+<a name="372"></a>
+<a name="373"></a>function <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> GetPriorityFreelanceObjective()
+<a name="374"></a>{
+<a name="375"></a>	return GetPriorityAttackObjectiveFor(None);
+<a name="376"></a>}
+<a name="377"></a>
+<a name="378"></a>function <span class="source_type">bool</span> PutOnDefense(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>)
+<a name="379"></a>{
+<a name="380"></a>	local <span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span> <span class="source_type">O</span>;
+<a name="381"></a>
+<a name="382"></a>	<span class="source_type">O</span> = GetLeastDefendedObjective();
+<a name="383"></a>	if ( <span class="source_type">O</span> != None )
+<a name="384"></a>	{
+<a name="385"></a>		if ( <span class="source_type">O</span>.DefenseSquad == None )
+<a name="386"></a>			<span class="source_type">O</span>.DefenseSquad = AddSquadWithLeader(<span class="source_type">B</span>, <span class="source_type">O</span>);
+<a name="387"></a>		else
+<a name="388"></a>			<span class="source_type">O</span>.DefenseSquad.AddBot(<span class="source_type">B</span>);
+<a name="389"></a>		return true;
+<a name="390"></a>	}
+<a name="391"></a>	return false;
+<a name="392"></a>}
+<a name="393"></a>
+<a name="394"></a>function PutOnOffense(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>)
+<a name="395"></a>{
+<a name="396"></a>	if ( (AttackSquad == None) || (AttackSquad.<span class="source_type">Size</span> &gt;= AttackSquad.MaxSquadSize) )
+<a name="397"></a>		AttackSquad = AddSquadWithLeader(<span class="source_type">B</span>, GetPriorityAttackObjectiveFor(None));
+<a name="398"></a>	else
+<a name="399"></a>		AttackSquad.AddBot(<span class="source_type">B</span>);
+<a name="400"></a>}
+<a name="401"></a>
+<a name="402"></a>function PutOnFreelance(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>)
+<a name="403"></a>{
+<a name="404"></a>	if ( (FreelanceSquad == None) || (FreelanceSquad.<span class="source_type">Size</span> &gt;= FreelanceSquad.MaxSquadSize) )
+<a name="405"></a>		FreelanceSquad = AddSquadWithLeader(<span class="source_type">B</span>, GetPriorityFreelanceObjective());
+<a name="406"></a>	else
+<a name="407"></a>		FreelanceSquad.AddBot(<span class="source_type">B</span>);
+<a name="408"></a>	if ( !FreelanceSquad.bFreelance )
+<a name="409"></a>	{
+<a name="410"></a>		FreelanceSquad.bFreelance = true;
+<a name="411"></a>		NetUpdateTime = <span class="source_type">Level</span>.Timeseconds - <span class="source_int">1</span>;
+<a name="412"></a>	}
+<a name="413"></a>}
+<a name="414"></a>
+<a name="415"></a><span class="source_comment">/*
+<a name="416"></a>SetBotOrders - based on RosterEntry recommendations
+<a name="417"></a>
+<a name="418"></a>FIXME - need assault type pick leader when leader dies for attacking
+<a name="419"></a>freelance squad - backs up defenders under attack, or joins in attacks
+<a name="420"></a>*/</span>
+<a name="421"></a>function SetBotOrders(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> NewBot, <span class="source_type"><a href="../unrealgame/rosterentry.html" class="source">RosterEntry</a></span> <span class="source_type">R</span>)
+<a name="422"></a>{
+<a name="423"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> HumanSquad;
+<a name="424"></a>	local <span class="source_type">name</span> NewOrders;
+<a name="425"></a>
+<a name="426"></a>	if ( Objectives == None )
+<a name="427"></a>		SetObjectiveLists();
+<a name="428"></a>
+<a name="429"></a>	if ( (<span class="source_type">R</span>==None) || <span class="source_type">R</span>.NoRecommendation() )
+<a name="430"></a>	{
+<a name="431"></a>		<span class="source_comment">// pick orders
+</span><a name="432"></a>		if ( <span class="source_type">Team</span>.<span class="source_type">Size</span> == <span class="source_int">0</span> )
+<a name="433"></a>			OrderOffset = <span class="source_int">0</span>;
+<a name="434"></a>		NewOrders = OrderList[OrderOffset % <span class="source_int">8</span>];
+<a name="435"></a>		OrderOffset++;
+<a name="436"></a>	}
+<a name="437"></a>	else if ( <span class="source_type">R</span>.RecommendDefense() )
+<a name="438"></a>		NewOrders = <span class="source_name">'DEFEND'</span>;
+<a name="439"></a>	else if ( <span class="source_type">R</span>.RecommendAttack() )
+<a name="440"></a>		NewOrders = <span class="source_name">'ATTACK'</span>;
+<a name="441"></a>	else if ( <span class="source_type">R</span>.RecommendSupport() )
+<a name="442"></a>		NewOrders = <span class="source_name">'FOLLOW'</span>;
+<a name="443"></a>	else
+<a name="444"></a>		NewOrders = <span class="source_name">'FREELANCE'</span>;
+<a name="445"></a>
+<a name="446"></a>	<span class="source_comment">// log(NewBot$" set Initial orders "$NewOrders);
+</span><a name="447"></a>	if ( (NewOrders == <span class="source_name">'DEFEND'</span>) && PutOnDefense(NewBot) )
+<a name="448"></a>		return;
+<a name="449"></a>
+<a name="450"></a>	if ( NewOrders == <span class="source_name">'FREELANCE'</span> )
+<a name="451"></a>	{
+<a name="452"></a>		PutOnFreelance(NewBot);
+<a name="453"></a>		return;
+<a name="454"></a>	}
+<a name="455"></a>
+<a name="456"></a>	if ( NewOrders == <span class="source_name">'ATTACK'</span> )
+<a name="457"></a>	{
+<a name="458"></a>		PutOnOffense(NewBot);
+<a name="459"></a>		return;
+<a name="460"></a>	}
+<a name="461"></a>
+<a name="462"></a>	if ( NewOrders == <span class="source_name">'FOLLOW'</span> )
+<a name="463"></a>	{
+<a name="464"></a>		<span class="source_comment">// Follow any human player
+</span><a name="465"></a>		HumanSquad = AddHumanSquad();
+<a name="466"></a>		if ( HumanSquad != None )
+<a name="467"></a>		{
+<a name="468"></a>			HumanSquad.AddBot(NewBot);
+<a name="469"></a>			return;
+<a name="470"></a>		}
+<a name="471"></a>	}
+<a name="472"></a>	PutOnOffense(NewBot);
+<a name="473"></a>}
+<a name="474"></a>
+<a name="475"></a><span class="source_comment">/* SetOrders()
+<a name="476"></a>Called when player gives orders to bot
+<a name="477"></a>*/</span>
+<a name="478"></a>function SetOrders(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>, <span class="source_type">name</span> NewOrders, <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> OrderGiver)
+<a name="479"></a>{
+<a name="480"></a>	local <span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span> PRI;
+<a name="481"></a>
+<a name="482"></a>	PRI = <span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(<span class="source_type">B</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="483"></a>	if ( <span class="source_type"><a href="../unrealgame/holdspot.html" class="source">HoldSpot</a></span>(<span class="source_type">B</span>.GoalScript) != None )
+<a name="484"></a>	{
+<a name="485"></a>		PRI.bHolding = false;
+<a name="486"></a>		<span class="source_type">B</span>.FreeScript();
+<a name="487"></a>	}
+<a name="488"></a>	if ( NewOrders == <span class="source_name">'Hold'</span> )
+<a name="489"></a>	{
+<a name="490"></a>		PRI.bHolding = true;
+<a name="491"></a>		PutBotOnSquadLedBy(OrderGiver,<span class="source_type">B</span>);
+<a name="492"></a>		<span class="source_type">B</span>.GoalScript = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(OrderGiver).<span class="source_type">ViewTarget</span>.Spawn(<span class="source_type">class</span><span class="source_name">'HoldSpot'</span>);
+<a name="493"></a>		if ( <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(OrderGiver).<span class="source_type">ViewTarget</span>) != None )
+<a name="494"></a>			<span class="source_type"><a href="../unrealgame/holdspot.html" class="source">HoldSpot</a></span>(<span class="source_type">B</span>.GoalScript).HoldVehicle = <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(OrderGiver).<span class="source_type">ViewTarget</span>);
+<a name="495"></a>		if ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(OrderGiver).<span class="source_type">ViewTarget</span>.Physics == PHYS_Ladder )
+<a name="496"></a>			<span class="source_type">B</span>.GoalScript.SetPhysics(PHYS_Ladder);
+<a name="497"></a>	}
+<a name="498"></a>	else if ( NewOrders == <span class="source_name">'Defend'</span> )
+<a name="499"></a>		PutOnDefense(<span class="source_type">B</span>);
+<a name="500"></a>	else if ( NewOrders == <span class="source_name">'Attack'</span> )
+<a name="501"></a>		PutOnOffense(<span class="source_type">B</span>);
+<a name="502"></a>	else if ( NewOrders == <span class="source_name">'Follow'</span> )
+<a name="503"></a>	{
+<a name="504"></a>		<span class="source_type">B</span>.FreeScript();
+<a name="505"></a>		PutBotOnSquadLedBy(OrderGiver,<span class="source_type">B</span>);
+<a name="506"></a>	}
+<a name="507"></a>	else if ( NewOrders == <span class="source_name">'Freelance'</span> )
+<a name="508"></a>	{
+<a name="509"></a>		PutOnFreelance(<span class="source_type">B</span>);
+<a name="510"></a>		return;
+<a name="511"></a>	}
+<a name="512"></a>}
+<a name="513"></a>
+<a name="514"></a>function CallForHelp(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>)
+<a name="515"></a>{
+<a name="516"></a>}
+<a name="517"></a>
+<a name="518"></a>function RemoveFromTeam(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">Other</span>)
+<a name="519"></a>{
+<a name="520"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="521"></a>
+<a name="522"></a>	if ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Other</span>) != None )
+<a name="523"></a>	{
+<a name="524"></a>		for ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="525"></a>			<span class="source_type">S</span>.RemovePlayer(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Other</span>));
+<a name="526"></a>	}
+<a name="527"></a>	else if ( <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type">Other</span>) != None )
+<a name="528"></a>	{
+<a name="529"></a>		for ( <span class="source_type">S</span>=Squads; <span class="source_type">S</span>!=None; <span class="source_type">S</span>=<span class="source_type">S</span>.NextSquad )
+<a name="530"></a>			<span class="source_type">S</span>.RemoveBot(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type">Other</span>));
+<a name="531"></a>	}
+<a name="532"></a>}
+<a name="533"></a>
+<a name="534"></a>defaultproperties
+<a name="535"></a>{
+<a name="536"></a>     SquadType=<span class="source_type">Class</span><span class="source_name">'UnrealGame.SquadAI'</span>
+<a name="537"></a>     OrderList(<span class="source_int">0</span>)=<span class="source_string">"Follow"</span>
+<a name="538"></a>     OrderList(<span class="source_int">1</span>)=<span class="source_string">"Attack"</span>
+<a name="539"></a>     OrderList(<span class="source_int">2</span>)=<span class="source_string">"Defend"</span>
+<a name="540"></a>     OrderList(<span class="source_int">3</span>)=<span class="source_string">"Freelance"</span>
+<a name="541"></a>     OrderList(<span class="source_int">4</span>)=<span class="source_string">"Follow"</span>
+<a name="542"></a>     OrderList(<span class="source_int">5</span>)=<span class="source_string">"Attack"</span>
+<a name="543"></a>     OrderList(<span class="source_int">6</span>)=<span class="source_string">"Defend"</span>
+<a name="544"></a>     OrderList(<span class="source_int">7</span>)=<span class="source_string">"Freelance"</span>
+<a name="545"></a>}
+<a name="546"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/teamai.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#TeamAI">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/stringmessageplus.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/teamgame.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:09.507 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

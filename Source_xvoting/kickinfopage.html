@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XVoting.KickInfoPage</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xvoting/xvoting-overview.html">Package</a></td>
+	<td class="header"><a href="../xvoting/kickinfopage.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KickInfoPage">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xvoting/defaultmaplistloader.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xvoting/kickvotemulticolumnlist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xvoting/kickinfopage.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xvoting/xvoting-overview.html">XVoting</a>.<a href="../xvoting/kickinfopage.html">KickInfoPage</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//====================================================================
+</span><a name="2"></a><span class="source_comment">//  xVoting.KickInfoPage
+</span><a name="3"></a><span class="source_comment">//  Player Information Page.
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">//  Written by Bruce Bickar
+</span><a name="6"></a><span class="source_comment">//  (c) 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="7"></a><span class="source_comment">// ====================================================================
+</span><a name="8"></a>
+<a name="9"></a><span class="source_type">class</span> <span class="source_type"><a href="../xvoting/kickinfopage.html" class="source">KickInfoPage</a></span> extends <span class="source_type"><a href="../gui2k4/largewindow.html" class="source">LargeWindow</a></span>;
+<a name="10"></a>
+<a name="11"></a>var automated <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>        b_ReturnButton;
+<a name="12"></a>var automated <span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>         i_PlayerPortrait;
+<a name="13"></a>var automated <span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span>         l_PlayerName;
+<a name="14"></a>var automated <span class="source_type"><a href="../xvoting/playerinfomulticolumnlistbox.html" class="source">PlayerInfoMultiColumnListBox</a></span> lb_PlayerInfoBox;
+<a name="15"></a>
+<a name="16"></a>var localized <span class="source_type">string</span> PlayerText, PingText, ScoreText, IDText, IPText, KillsText,
+<a name="17"></a>                     DeathsText, SuicidesText, MultiKillsText, SpreesText;
+<a name="18"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="19"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="20"></a>{
+<a name="21"></a>	Super.Initcomponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="22"></a>	b_ReturnButton.OnClick=ReturnButtonOnClick;
+<a name="23"></a>}
+<a name="24"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="25"></a>function HandleParameters(<span class="source_type">string</span> Param1, <span class="source_type">string</span> <span class="source_type">Param2</span>)
+<a name="26"></a>{
+<a name="27"></a>    LoadInfo(Param1);
+<a name="28"></a>}
+<a name="29"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="30"></a>function LoadInfo(<span class="source_type">string</span> <span class="source_type">PlayerName</span>)
+<a name="31"></a>{
+<a name="32"></a>	local <span class="source_type">int</span> <span class="source_type">i</span><span class="source_comment">/*, MultiKills, Sprees*/</span>;
+<a name="33"></a>	local <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> Portrait;
+<a name="34"></a>	local <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI;
+<a name="35"></a>
+<a name="36"></a>    if(<span class="source_type">PlayerName</span> == <span class="source_string">""</span>)
+<a name="37"></a>        return;
+<a name="38"></a>
+<a name="39"></a>    if (!<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized)
+<a name="40"></a>        return;
+<a name="41"></a>
+<a name="42"></a>	for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PlayerOwner().<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.PRIArray.Length; <span class="source_type">i</span>++ )
+<a name="43"></a>	{
+<a name="44"></a>		if( PlayerOwner().<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.PRIArray[<span class="source_type">i</span>].<span class="source_type">PlayerName</span> == <span class="source_type">PlayerName</span> )
+<a name="45"></a>		{
+<a name="46"></a>			PRI = PlayerOwner().<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.PRIArray[<span class="source_type">i</span>];
+<a name="47"></a>			break;
+<a name="48"></a>		}
+<a name="49"></a>	}
+<a name="50"></a>
+<a name="51"></a><span class="source_comment">// if _RO_
+</span><a name="52"></a>    Portrait = PRI.getRolePortrait();
+<a name="53"></a><span class="source_comment">// else
+</span><a name="54"></a><span class="source_comment">//  Portrait = PRI.GetPortrait();
+</span><a name="55"></a><span class="source_comment">// end if _RO_
+</span><a name="56"></a>
+<a name="57"></a>	<span class="source_comment">// ifdef _RO_
+</span><a name="58"></a>    if(Portrait == None)
+<a name="59"></a>        Portrait = <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>(DynamicLoadObject(<span class="source_string">"Engine.BlackTexture"</span>, <span class="source_type">class</span><span class="source_name">'Material'</span>));
+<a name="60"></a>	<span class="source_comment">//else
+</span><a name="61"></a>	<span class="source_comment">//if(Portrait == None)
+</span><a name="62"></a>    <span class="source_comment">//    Portrait = Material(DynamicLoadObject("PlayerPictures.cDefault", class'Material'));
+</span><a name="63"></a>
+<a name="64"></a>    i_PlayerPortrait.<span class="source_type">Image</span> = Portrait;
+<a name="65"></a>    l_PlayerName.<span class="source_type">Caption</span> = <span class="source_type">PlayerName</span>;
+<a name="66"></a>
+<a name="67"></a>    lb_PlayerInfoBox.Add(PingText,<span class="source_type">string</span>(PRI.Ping));
+<a name="68"></a>	lb_PlayerInfoBox.Add(ScoreText,<span class="source_type">string</span>(PRI.<span class="source_type">Score</span>));
+<a name="69"></a>	lb_PlayerInfoBox.Add(KillsText,<span class="source_type">string</span>(PRI.Kills));
+<a name="70"></a>	lb_PlayerInfoBox.Add(DeathsText,<span class="source_type">string</span>(PRI.Deaths));
+<a name="71"></a>
+<a name="72"></a>	if( <span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRI) != none )
+<a name="73"></a>	{
+<a name="74"></a>		lb_PlayerInfoBox.Add(SuicidesText,<span class="source_type">string</span>(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRI).Suicides));
+<a name="75"></a><span class="source_comment">// if _RO_
+</span><a name="76"></a><span class="source_comment">/*
+<a name="77"></a>// end if _RO_
+<a name="78"></a>		for (i = 0; i &lt; 7; i++)
+<a name="79"></a>			MultiKills += TeamPlayerReplicationInfo(PRI).MultiKills[i];
+<a name="80"></a>		lb_PlayerInfoBox.Add(MultiKillsText,string(MultiKills));
+<a name="81"></a>		for (i = 0; i &lt; 6; i++)
+<a name="82"></a>			Sprees += TeamPlayerReplicationInfo(PRI).Spree[i];
+<a name="83"></a>		lb_PlayerInfoBox.Add(SpreesText,string(Sprees));
+<a name="84"></a>// if _RO_
+<a name="85"></a>*/</span>
+<a name="86"></a><span class="source_comment">// end if _RO_
+</span><a name="87"></a>	}
+<a name="88"></a>}
+<a name="89"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="90"></a>function <span class="source_type">bool</span> ReturnButtonOnClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="91"></a>{
+<a name="92"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseMenu(true);
+<a name="93"></a>	return true;
+<a name="94"></a>}
+<a name="95"></a><span class="source_comment">//------------------------------------------------------------------------------------------------
+</span><a name="96"></a>
+<a name="97"></a>defaultproperties
+<a name="98"></a>{
+<a name="99"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=ExitButton
+<a name="100"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Close"</span>
+<a name="101"></a>         WinTop=<span class="source_int">0.531692</span>
+<a name="102"></a>         WinLeft=<span class="source_int">0.670934</span>
+<a name="103"></a>         WinWidth=<span class="source_int">0.120000</span>
+<a name="104"></a>         WinHeight=<span class="source_int">0.033203</span>
+<a name="105"></a>         RenderWeight=<span class="source_int">1.000000</span>
+<a name="106"></a>         TabOrder=<span class="source_int">2</span>
+<a name="107"></a>         OnKeyEvent=ExitButton.InternalOnKeyEvent
+<a name="108"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="109"></a>     b_ReturnButton=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'XVoting.KickInfoPage.ExitButton'</span>
+<a name="110"></a>
+<a name="111"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=KickImagePlayerPortrait
+<a name="112"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="113"></a>         ImageStyle=ISTY_Justified
+<a name="114"></a>         ImageRenderStyle=MSTY_Normal
+<a name="115"></a>         ImageAlign=IMGA_Center
+<a name="116"></a>         WinTop=<span class="source_int">0.193199</span>
+<a name="117"></a>         WinLeft=<span class="source_int">0.206924</span>
+<a name="118"></a>         WinWidth=<span class="source_int">0.155814</span>
+<a name="119"></a>         WinHeight=<span class="source_int">0.358525</span>
+<a name="120"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="121"></a>     i_PlayerPortrait=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'XVoting.KickInfoPage.KickImagePlayerPortrait'</span>
+<a name="122"></a>
+<a name="123"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span> <span class="source_type">Name</span>=PlayerNameLabel
+<a name="124"></a>         <span class="source_type">Caption</span>=<span class="source_string">"PlayerName"</span>
+<a name="125"></a>         TextAlign=TXTA_Center
+<a name="126"></a>         TextColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>)
+<a name="127"></a>         TextFont=<span class="source_string">"UT2SmallHeaderFont"</span>
+<a name="128"></a>         WinTop=<span class="source_int">0.195429</span>
+<a name="129"></a>         WinLeft=<span class="source_int">0.365679</span>
+<a name="130"></a>         WinWidth=<span class="source_int">0.425371</span>
+<a name="131"></a>         WinHeight=<span class="source_int">0.038297</span>
+<a name="132"></a>         RenderWeight=<span class="source_int">0.300000</span>
+<a name="133"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="134"></a>     l_PlayerName=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span><span class="source_name">'XVoting.KickInfoPage.PlayerNameLabel'</span>
+<a name="135"></a>
+<a name="136"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xvoting/playerinfomulticolumnlistbox.html" class="source">PlayerInfoMultiColumnListBox</a></span> <span class="source_type">Name</span>=PlayerInfoBoxControl
+<a name="137"></a>         bVisibleWhenEmpty=True
+<a name="138"></a>         OnCreateComponent=PlayerInfoBoxControl.InternalOnCreateComponent
+<a name="139"></a>         StyleName=<span class="source_string">"ServerBrowserGrid"</span>
+<a name="140"></a>         WinTop=<span class="source_int">0.234286</span>
+<a name="141"></a>         WinLeft=<span class="source_int">0.366960</span>
+<a name="142"></a>         WinWidth=<span class="source_int">0.422477</span>
+<a name="143"></a>         WinHeight=<span class="source_int">0.299483</span>
+<a name="144"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="145"></a>     lb_PlayerInfoBox=<span class="source_type"><a href="../xvoting/playerinfomulticolumnlistbox.html" class="source">PlayerInfoMultiColumnListBox</a></span><span class="source_name">'XVoting.KickInfoPage.PlayerInfoBoxControl'</span>
+<a name="146"></a>
+<a name="147"></a>     PingText=<span class="source_string">"Ping"</span>
+<a name="148"></a>     ScoreText=<span class="source_string">"Score"</span>
+<a name="149"></a>     IDText=<span class="source_string">"Player ID"</span>
+<a name="150"></a>     IPText=<span class="source_string">"IP Address"</span>
+<a name="151"></a>     KillsText=<span class="source_string">"Kills"</span>
+<a name="152"></a>     DeathsText=<span class="source_string">"Deaths"</span>
+<a name="153"></a>     SuicidesText=<span class="source_string">"Suicides"</span>
+<a name="154"></a>     MultiKillsText=<span class="source_string">"MultiKills"</span>
+<a name="155"></a>     SpreesText=<span class="source_string">"Sprees"</span>
+<a name="156"></a>     bRequire640x480=False
+<a name="157"></a>     bAllowedAsLast=True
+<a name="158"></a>     WinTop=<span class="source_int">0.151276</span>
+<a name="159"></a>     WinLeft=<span class="source_int">0.188743</span>
+<a name="160"></a>     WinWidth=<span class="source_int">0.622502</span>
+<a name="161"></a>     WinHeight=<span class="source_int">0.440703</span>
+<a name="162"></a>     bAcceptsInput=False
+<a name="163"></a>}
+<a name="164"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xvoting/xvoting-overview.html">Package</a></td>
+	<td class="header"><a href="../xvoting/kickinfopage.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KickInfoPage">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xvoting/defaultmaplistloader.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xvoting/kickvotemulticolumnlist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:04.712 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

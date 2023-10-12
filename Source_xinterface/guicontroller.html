@@ -1,0 +1,1600 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.GUIController</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guicontroller.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUIController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guicontextmenu.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guieditbox.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/guicontroller.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/guicontroller.html">GUIController</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022<br />01023<br />01024<br />01025<br />01026<br />01027<br />01028<br />01029<br />01030<br />01031<br />01032<br />01033<br />01034<br />01035<br />01036<br />01037<br />01038<br />01039<br />01040<br />
+01041<br />01042<br />01043<br />01044<br />01045<br />01046<br />01047<br />01048<br />01049<br />01050<br />01051<br />01052<br />01053<br />01054<br />01055<br />01056<br />01057<br />01058<br />01059<br />01060<br />
+01061<br />01062<br />01063<br />01064<br />01065<br />01066<br />01067<br />01068<br />01069<br />01070<br />01071<br />01072<br />01073<br />01074<br />01075<br />01076<br />01077<br />01078<br />01079<br />01080<br />
+01081<br />01082<br />01083<br />01084<br />01085<br />01086<br />01087<br />01088<br />01089<br />01090<br />01091<br />01092<br />01093<br />01094<br />01095<br />01096<br />01097<br />01098<br />01099<br />01100<br />
+01101<br />01102<br />01103<br />01104<br />01105<br />01106<br />01107<br />01108<br />01109<br />01110<br />01111<br />01112<br />01113<br />01114<br />01115<br />01116<br />01117<br />01118<br />01119<br />01120<br />
+01121<br />01122<br />01123<br />01124<br />01125<br />01126<br />01127<br />01128<br />01129<br />01130<br />01131<br />01132<br />01133<br />01134<br />01135<br />01136<br />01137<br />01138<br />01139<br />01140<br />
+01141<br />01142<br />01143<br />01144<br />01145<br />01146<br />01147<br />01148<br />01149<br />01150<br />01151<br />01152<br />01153<br />01154<br />01155<br />01156<br />01157<br />01158<br />01159<br />01160<br />
+01161<br />01162<br />01163<br />01164<br />01165<br />01166<br />01167<br />01168<br />01169<br />01170<br />01171<br />01172<br />01173<br />01174<br />01175<br />01176<br />01177<br />01178<br />01179<br />01180<br />
+01181<br />01182<br />01183<br />01184<br />01185<br />01186<br />01187<br />01188<br />01189<br />01190<br />01191<br />01192<br />01193<br />01194<br />01195<br />01196<br />01197<br />01198<br />01199<br />01200<br />
+01201<br />01202<br />01203<br />01204<br />01205<br />01206<br />01207<br />01208<br />01209<br />01210<br />01211<br />01212<br />01213<br />01214<br />01215<br />01216<br />01217<br />01218<br />01219<br />01220<br />
+01221<br />01222<br />01223<br />01224<br />01225<br />01226<br />01227<br />01228<br />01229<br />01230<br />01231<br />01232<br />01233<br />01234<br />01235<br />01236<br />01237<br />01238<br />01239<br />01240<br />
+01241<br />01242<br />01243<br />01244<br />01245<br />01246<br />01247<br />01248<br />01249<br />01250<br />01251<br />01252<br />01253<br />01254<br />01255<br />01256<br />01257<br />01258<br />01259<br />01260<br />
+01261<br />01262<br />01263<br />01264<br />01265<br />01266<br />01267<br />01268<br />01269<br />01270<br />01271<br />01272<br />01273<br />01274<br />01275<br />01276<br />01277<br />01278<br />01279<br />01280<br />
+01281<br />01282<br />01283<br />01284<br />01285<br />01286<br />01287<br />01288<br />01289<br />01290<br />01291<br />01292<br />01293<br />01294<br />01295<br />01296<br />01297<br />01298<br />01299<br />01300<br />
+01301<br />01302<br />01303<br />01304<br />01305<br />01306<br />01307<br />01308<br />01309<br />01310<br />01311<br />01312<br />01313<br />01314<br />01315<br />01316<br />01317<br />01318<br />01319<br />01320<br />
+01321<br />01322<br />01323<br />01324<br />01325<br />01326<br />01327<br />01328<br />01329<br />01330<br />01331<br />01332<br />01333<br />01334<br />01335<br />01336<br />01337<br />01338<br />01339<br />01340<br />
+01341<br />01342<br />01343<br />01344<br />01345<br />01346<br />01347<br />01348<br />01349<br />01350<br />01351<br />01352<br />01353<br />01354<br />01355<br />01356<br />01357<br />01358<br />01359<br />01360<br />
+01361<br />01362<br />01363<br />01364<br />01365<br />01366<br />01367<br />01368<br />01369<br />01370<br />01371<br />01372<br />01373<br />01374<br />01375<br />01376<br />01377<br />01378<br />01379<br />01380<br />
+01381<br />01382<br />01383<br />01384<br />01385<br />01386<br />01387<br />01388<br />01389<br />01390<br />01391<br />01392<br />01393<br />01394<br />01395<br />01396<br />01397<br />01398<br />01399<br />01400<br />
+01401<br />01402<br />01403<br />01404<br />01405<br />01406<br />01407<br />01408<br />01409<br />01410<br />01411<br />01412<br />01413<br />01414<br />01415<br />01416<br />01417<br />01418<br />01419<br />01420<br />
+01421<br />01422<br />01423<br />01424<br />01425<br />01426<br />01427<br />01428<br />01429<br />01430<br />01431<br />01432<br />01433<br />01434<br />01435<br />01436<br />01437<br />01438<br />01439<br />01440<br />
+01441<br />01442<br />01443<br />01444<br />01445<br />01446<br />01447<br />01448<br />01449<br />01450<br />01451<br />01452<br />01453<br />01454<br />01455<br />01456<br />01457<br />01458<br />01459<br />01460<br />
+01461<br />01462<br />01463<br />01464<br />01465<br />01466<br />01467<br />01468<br />01469</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// ====================================================================
+</span><a name="2"></a><span class="source_comment">//  Class:  Engine.GUIController
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">//  The GUIController is a simple FILO menu stack.  You have 3 things
+</span><a name="5"></a><span class="source_comment">//  you can do.  You can Open a menu which adds the menu to the top of the
+</span><a name="6"></a><span class="source_comment">//  stack.  You can Replace a menu which replaces the current menu with the
+</span><a name="7"></a><span class="source_comment">//  new menu.  And you can close a menu, which returns you to the last menu
+</span><a name="8"></a><span class="source_comment">//  on the stack.
+</span><a name="9"></a><span class="source_comment">//
+</span><a name="10"></a><span class="source_comment">//  Written by Joe Wilcox
+</span><a name="11"></a><span class="source_comment">//  (c) 2002, Epic Games, Inc.  All Rights Reserved
+</span><a name="12"></a><span class="source_comment">// ====================================================================
+</span><a name="13"></a>
+<a name="14"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> extends <span class="source_type"><a href="../engine/baseguicontroller.html" class="source">BaseGUIController</a></span>
+<a name="15"></a>    DependsOn(<span class="source_type"><a href="../xinterface/gui.html" class="source">GUI</a></span>)
+<a name="16"></a>    Config(<span class="source_type">User</span>)
+<a name="17"></a>    Abstract
+<a name="18"></a>    Native;
+<a name="19"></a>
+<a name="20"></a>
+<a name="21"></a><span class="source_comment">// if _RO_
+</span><a name="22"></a><span class="source_comment">// else
+</span><a name="23"></a><span class="source_comment">//#exec OBJ LOAD FILE=InterfaceContent.utx
+</span><a name="24"></a><span class="source_comment">// end if _RO_
+</span><a name="25"></a>
+<a name="26"></a><span class="source_comment">// (cpptext)
+</span><a name="27"></a><span class="source_comment">// (cpptext)
+</span><a name="28"></a><span class="source_comment">// (cpptext)
+</span><a name="29"></a><span class="source_comment">// (cpptext)
+</span><a name="30"></a><span class="source_comment">// (cpptext)
+</span><a name="31"></a><span class="source_comment">// (cpptext)
+</span><a name="32"></a><span class="source_comment">// (cpptext)
+</span><a name="33"></a><span class="source_comment">// (cpptext)
+</span><a name="34"></a><span class="source_comment">// (cpptext)
+</span><a name="35"></a><span class="source_comment">// (cpptext)
+</span><a name="36"></a><span class="source_comment">// (cpptext)
+</span><a name="37"></a><span class="source_comment">// (cpptext)
+</span><a name="38"></a><span class="source_comment">// (cpptext)
+</span><a name="39"></a><span class="source_comment">// (cpptext)
+</span><a name="40"></a><span class="source_comment">// (cpptext)
+</span><a name="41"></a><span class="source_comment">// (cpptext)
+</span><a name="42"></a><span class="source_comment">// (cpptext)
+</span><a name="43"></a><span class="source_comment">// (cpptext)
+</span><a name="44"></a><span class="source_comment">// (cpptext)
+</span><a name="45"></a><span class="source_comment">// (cpptext)
+</span><a name="46"></a><span class="source_comment">// (cpptext)
+</span><a name="47"></a><span class="source_comment">// (cpptext)
+</span><a name="48"></a><span class="source_comment">// (cpptext)
+</span><a name="49"></a><span class="source_comment">// (cpptext)
+</span><a name="50"></a><span class="source_comment">// (cpptext)
+</span><a name="51"></a><span class="source_comment">// (cpptext)
+</span><a name="52"></a><span class="source_comment">// (cpptext)
+</span><a name="53"></a><span class="source_comment">// (cpptext)
+</span><a name="54"></a><span class="source_comment">// (cpptext)
+</span><a name="55"></a><span class="source_comment">// (cpptext)
+</span><a name="56"></a><span class="source_comment">// (cpptext)
+</span><a name="57"></a><span class="source_comment">// (cpptext)
+</span><a name="58"></a><span class="source_comment">// (cpptext)
+</span><a name="59"></a><span class="source_comment">// (cpptext)
+</span><a name="60"></a><span class="source_comment">// (cpptext)
+</span><a name="61"></a><span class="source_comment">// (cpptext)
+</span><a name="62"></a><span class="source_comment">// (cpptext)
+</span><a name="63"></a><span class="source_comment">// (cpptext)
+</span><a name="64"></a><span class="source_comment">// (cpptext)
+</span><a name="65"></a><span class="source_comment">// (cpptext)
+</span><a name="66"></a>
+<a name="67"></a>const DoCounter = <span class="source_int">1</span>;
+<a name="68"></a>var const <span class="source_type">int</span> FONT_NUM;
+<a name="69"></a>var const <span class="source_type">int</span> STYLE_NUM;
+<a name="70"></a>var const <span class="source_type">int</span> CURSOR_NUM;
+<a name="71"></a>
+<a name="72"></a>struct native <span class="source_type"><a href="../xinterface/guicontroller.html#ProfileStruct" class="source">ProfileStruct</a></span>
+<a name="73"></a>{
+<a name="74"></a>	var <span class="source_type">string</span> ProfileName;
+<a name="75"></a>	var <span class="source_type">float</span> ProfileSeconds;
+<a name="76"></a>};
+<a name="77"></a>
+<a name="78"></a>struct native <span class="source_type"><a href="../xinterface/guicontroller.html#eOwnageMap" class="source">eOwnageMap</a></span>
+<a name="79"></a>{
+<a name="80"></a>	var		<span class="source_type">int</span>		RLevel;
+<a name="81"></a>	var 	<span class="source_type">string</span>	<span class="source_type">MapName</span>;
+<a name="82"></a>    var		<span class="source_type">string</span> 	MapDesc;
+<a name="83"></a>    var		<span class="source_type">string</span>	<span class="source_type">MapURL</span>;
+<a name="84"></a>};
+<a name="85"></a>
+<a name="86"></a>var array&lt;<span class="source_type"><a href="../xinterface/guicontroller.html#ProfileStruct" class="source">ProfileStruct</a></span>&gt; Profilers;
+<a name="87"></a>
+<a name="88"></a>var              const  <span class="source_type"><a href="../core/object.html#FloatBox" class="source">floatbox</a></span>            MouseCursorBounds;
+<a name="89"></a>var editinline          Array&lt;<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>&gt;       MouseCursorOffset;  <span class="source_comment">// Only X,Y used, between 0 and 1. 'Hot Spot' of cursor material.
+</span><a name="90"></a>var editinline export   protected array&lt;<span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span>&gt;      MenuStack;          <span class="source_comment">// Holds the stack of menus
+</span><a name="91"></a>var                     protected Array&lt;<span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span>&gt;      PersistentStack;    <span class="source_comment">// Holds the set of pages which are persistent across close/open
+</span><a name="92"></a>var editinline          protected Array&lt;<span class="source_type"><a href="../xinterface/guifont.html" class="source">GUIFont</a></span>&gt;      FontStack;          <span class="source_comment">// Holds all the possible fonts
+</span><a name="93"></a>var                     protected Array&lt;<span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span>&gt;    StyleStack;         <span class="source_comment">// Holds all of the possible styles
+</span><a name="94"></a>var editinline          protected Array&lt;<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>&gt;     MouseCursors;       <span class="source_comment">// Holds a list of all possible mouse
+</span><a name="95"></a>var 					array&lt;<span class="source_type"><a href="../engine/material.html" class="source">material</a></span>&gt;	              ImageList;          <span class="source_comment">// List of various images
+</span><a name="96"></a>
+<a name="97"></a>struct native <span class="source_type"><a href="../xinterface/guicontroller.html#AutoLoadMenu" class="source">AutoLoadMenu</a></span>
+<a name="98"></a>{
+<a name="99"></a>	var <span class="source_type">string</span> MenuClassName;
+<a name="100"></a>	var <span class="source_type">bool</span>   bPreInitialize;
+<a name="101"></a>};
+<a name="102"></a>
+<a name="103"></a>struct native init <span class="source_type"><a href="../xinterface/guicontroller.html#RestoreMenuItem" class="source">RestoreMenuItem</a></span>
+<a name="104"></a>{
+<a name="105"></a>	var() <span class="source_type">string</span> MenuClassName;
+<a name="106"></a>	var() <span class="source_type">string</span> Param1, <span class="source_type">Param2</span>;
+<a name="107"></a>};
+<a name="108"></a>
+<a name="109"></a>var                     Array&lt;<span class="source_type">string</span>&gt;       DefaultStyleNames;      <span class="source_comment">// Holds the name of all styles to use
+</span><a name="110"></a>var                     Array&lt;<span class="source_type">string</span>&gt;       StyleNames;             <span class="source_comment">// Holds the name of all styles to use
+</span><a name="111"></a>var config              array&lt;<span class="source_type"><a href="../xinterface/guicontroller.html#AutoLoadMenu" class="source">AutoLoadMenu</a></span>&gt; AutoLoad;               <span class="source_comment">// Any menu classes in here will be automatically loaded
+</span><a name="112"></a>var                  array&lt;<span class="source_type"><a href="../xinterface/guicontroller.html#RestoreMenuItem" class="source">RestoreMenuItem</a></span>&gt; RestoreMenus;
+<a name="113"></a>
+<a name="114"></a>struct native <span class="source_type"><a href="../xinterface/guicontroller.html#DesignModeHint" class="source">DesignModeHint</a></span>
+<a name="115"></a>{
+<a name="116"></a>	var() localized <span class="source_type">string</span> Key, Description;
+<a name="117"></a>};
+<a name="118"></a>
+<a name="119"></a>var           array&lt;<span class="source_type"><a href="../xinterface/guicontroller.html#DesignModeHint" class="source">DesignModeHint</a></span>&gt;         DesignModeHints;        <span class="source_comment">// List of commands for design mode
+</span><a name="120"></a>var config              <span class="source_type">float</span>               MenuMouseSens;
+<a name="121"></a>var                     <span class="source_type">float</span>               MouseX,MouseY;          <span class="source_comment">// Where is the mouse currently located
+</span><a name="122"></a>var                     <span class="source_type">float</span>               LastMouseX, LastMouseY;
+<a name="123"></a>var                     <span class="source_type">float</span>               DblClickWindow;         <span class="source_comment">// How long do you have for a double click
+</span><a name="124"></a>var                     <span class="source_type">float</span>               LastClickTime;          <span class="source_comment">// When did the last click occur
+</span><a name="125"></a>var                     <span class="source_type">float</span>               ButtonRepeatDelay;      <span class="source_comment">// The amount of delay for faking button repeats
+</span><a name="126"></a>var                     <span class="source_type">float</span>               RepeatDelta;            <span class="source_comment">// Data var
+</span><a name="127"></a>var                     <span class="source_type">float</span>               RepeatTime;             <span class="source_comment">// How long until the next repeat;
+</span><a name="128"></a>var                     <span class="source_type">float</span>               CursorFade;             <span class="source_comment">// How visible is the cursor
+</span><a name="129"></a>var                     <span class="source_type">float</span>               FastCursorFade;         <span class="source_comment">// How visible is the cursor
+</span><a name="130"></a>
+<a name="131"></a>var globalconfig        <span class="source_type">int</span>                 MaxSimultaneousPings;   <span class="source_comment">// Upper limit to number of open connections (for server pinging only - not does include game channels)
+</span><a name="132"></a><span class="source_comment">//ifdef _KF_
+</span><a name="133"></a>var globalconfig        <span class="source_type">int</span>                 MaxPingsPerSecond;
+<a name="134"></a><span class="source_comment">//endif _KF_
+</span><a name="135"></a>var                     <span class="source_type">int</span>                 FastCursorStep;         <span class="source_comment">// Are we fading in or out
+</span><a name="136"></a>var const               <span class="source_type">int</span>                 <span class="source_type">ResX</span>, <span class="source_type">ResY</span>;             <span class="source_comment">// Current resolution
+</span><a name="137"></a>var                     <span class="source_type">int</span>                 LastClickX, LastClickY; <span class="source_comment">// Who was the active component
+</span><a name="138"></a>var                     <span class="source_type">int</span>                 CursorStep;             <span class="source_comment">// Are we fading in or out
+</span><a name="139"></a>var const private   <span class="source_type">pointer</span>                 Designer;               <span class="source_comment">// GUI design editor window reference
+</span><a name="140"></a>
+<a name="141"></a><span class="source_comment">// Sounds
+</span><a name="142"></a>var                     <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>               MouseOverSound;
+<a name="143"></a>var                     <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>               ClickSound;
+<a name="144"></a>var                     <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>               EditSound;
+<a name="145"></a>var                     <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>               UpSound;
+<a name="146"></a>var                     <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>               DownSound;
+<a name="147"></a>var						<span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>				DragSound;
+<a name="148"></a>var						<span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>				FadeSound;
+<a name="149"></a>
+<a name="150"></a>var                     <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span>             ActivePage;             <span class="source_comment">// Points to the currently active page
+</span><a name="151"></a>var                     <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>        FocusedControl;         <span class="source_comment">// Top most Focused control
+</span><a name="152"></a>var                     <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>        ActiveControl;          <span class="source_comment">// Which control is currently active
+</span><a name="153"></a>var deprecated          <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>        SkipControl;            <span class="source_comment">// This control should be skipped over and drawn at the end
+</span><a name="154"></a>var                     <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>        MoveControl;            <span class="source_comment">// Used for visual design
+</span><a name="155"></a>
+<a name="156"></a><span class="source_comment">// Drag - n - Drop support
+</span><a name="157"></a>var                     <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>        DropSource;             <span class="source_comment">// Source component for a drag-n-drop operation currently in progress
+</span><a name="158"></a>var                     <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>        DropTarget;             <span class="source_comment">// Target component for a drag-n-drop operation currently in progress
+</span><a name="159"></a>var <span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span>      ContextMenu;                                <span class="source_comment">// Used for Right Click menus
+</span><a name="160"></a>var <span class="source_type"><a href="../xinterface/guitooltip.html" class="source">GUIToolTip</a></span>          MouseOver;
+<a name="161"></a>var <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>            WhiteBorder;
+<a name="162"></a>
+<a name="163"></a>
+<a name="164"></a>var                     <span class="source_type">string</span>              GameResolution;
+<a name="165"></a>var transient           <span class="source_type">string</span>              LastGameType;           <span class="source_comment">// Used for some places where we need to know the last gametype selected
+</span><a name="166"></a>
+<a name="167"></a><span class="source_comment">// Menu types
+</span><a name="168"></a>var              config <span class="source_type">string</span>              RequestDataMenu;        <span class="source_comment">// Menu for single item data entry
+</span><a name="169"></a>var              config <span class="source_type">string</span>              ArrayPropertyMenu;      <span class="source_comment">// Menu for editing static array playinfo properties
+</span><a name="170"></a>var              config <span class="source_type">string</span>              DynArrayPropertyMenu;   <span class="source_comment">// Menu for editing dynamic array playinfo properties
+</span><a name="171"></a><span class="source_comment">// ifdef _KF_
+</span><a name="172"></a>var                     <span class="source_type">string</span>              FilterMenu;             <span class="source_comment">// Menu for configuring server browser filters
+</span><a name="173"></a><span class="source_comment">// else
+</span><a name="174"></a><span class="source_comment">//var              config string              FilterMenu;             // Menu for configuring server browser filters
+</span><a name="175"></a><span class="source_comment">// endif _KF_
+</span><a name="176"></a>var              config <span class="source_type">string</span>              MapVotingMenu;          <span class="source_comment">// Menu that appears for map voting
+</span><a name="177"></a>var              config <span class="source_type">string</span>              KickVotingMenu;
+<a name="178"></a>var              config <span class="source_type">string</span>              MatchSetupMenu;
+<a name="179"></a>var              config <span class="source_type">string</span>              EditFavoriteMenu;
+<a name="180"></a>var               array&lt;<span class="source_type">string</span>&gt;             MainMenuOptions;        <span class="source_comment">// Menu classes that will be displayed on the main menu
+</span><a name="181"></a>var        globalconfig <span class="source_type">string</span>              DesignerMenu;           <span class="source_comment">// Menu for in-game GUI designer
+</span><a name="182"></a>
+<a name="183"></a>
+<a name="184"></a>var                     <span class="source_type">byte</span>                RepeatKey;              <span class="source_comment">// Used to determine what should repeat
+</span><a name="185"></a>var                     <span class="source_type">bool</span>                bIgnoreNextRelease;     <span class="source_comment">// Used to make sure discard errant releases.
+</span><a name="186"></a>var                     <span class="source_type">bool</span>                ShiftPressed;           <span class="source_comment">// Shift key is being held
+</span><a name="187"></a>var                     <span class="source_type">bool</span>                AltPressed;             <span class="source_comment">// Alt key is being held
+</span><a name="188"></a>var                     <span class="source_type">bool</span>                CtrlPressed;            <span class="source_comment">// Ctrl key is being held
+</span><a name="189"></a>var						<span class="source_type">bool</span>				bModulateStackedMenus;	<span class="source_comment">// If true, all menus except the topmost will be greyed
+</span><a name="190"></a>
+<a name="191"></a>var globalconfig		<span class="source_type">bool</span>				bQuietMenu;
+<a name="192"></a>var globalconfig        <span class="source_type">bool</span>                bNoToolTips;            <span class="source_comment">// Do not display mouse-over tool-tips
+</span><a name="193"></a>var globalconfig        <span class="source_type">bool</span>                bDesignModeToolTips;    <span class="source_comment">// Whether tooltips are displayed while in design mode
+</span><a name="194"></a>var globalconfig        <span class="source_type">bool</span>                bAutoRefreshBrowser;	<span class="source_comment">// Auto refresh server browser when returning from the game or another menu
+</span><a name="195"></a>var globalconfig        <span class="source_type">bool</span>                bModAuthor;             <span class="source_comment">// Allows bDesign Mode
+</span><a name="196"></a>var globalconfig        <span class="source_type">bool</span>                bExpertMode;            <span class="source_comment">// Display all advanced settings
+</span><a name="197"></a>var globalconfig        <span class="source_type">bool</span>                bDesignMode;            <span class="source_comment">// Are we in design mode;
+</span><a name="198"></a>var                     <span class="source_type">bool</span>                bInteractiveMode;     <span class="source_comment">// All input goes to design mode
+</span><a name="199"></a>var globalconfig        <span class="source_type">bool</span>                bHighlightCurrent;      <span class="source_comment">// Highlight the current control being edited
+</span><a name="200"></a>var globalconfig        <span class="source_type">bool</span>                bDrawFullPaths;         <span class="source_comment">// Display full menu paths in design mode
+</span><a name="201"></a>var 		            <span class="source_type">bool</span>                MainNotWanted;          <span class="source_comment">// Prevents main menu from being opened when last menu is closed and isn't bAllowedAsLast
+</span><a name="202"></a>var                     <span class="source_type">bool</span>                bCurMenuInitialized;    <span class="source_comment">// Has the current Menu Finished initialization
+</span><a name="203"></a>var                     <span class="source_type">bool</span>                bForceMouseCheck;       <span class="source_comment">// HACK
+</span><a name="204"></a>var                     <span class="source_type">bool</span>                bIgnoreUntilPress;      <span class="source_comment">// HACK //???
+</span><a name="205"></a>var                     <span class="source_type">bool</span>                bSnapCursor;            <span class="source_comment">// Snap cursor to first component when page is opened
+</span><a name="206"></a>
+<a name="207"></a>var						<span class="source_type">float</span>				RenderDelta, LastRenderTime;	<span class="source_comment">// Used for timing
+</span><a name="208"></a>
+<a name="209"></a>var	config				<span class="source_type">bool</span>				bFixedMouseSize;		<span class="source_comment">// Keep the mouse from scaling
+</span><a name="210"></a>
+<a name="211"></a>var const <span class="source_type">byte</span>          KeyDown[<span class="source_int">255</span>];			<span class="source_comment">// Bit mask of keys currently held down
+</span><a name="212"></a>
+<a name="213"></a>var array&lt;<span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>&gt; &gt; RegisteredClasses;
+<a name="214"></a>
+<a name="215"></a>var <span class="source_type">bool</span>				bECEEdition;	<span class="source_comment">// Set to true if this is the ECE edition
+</span><a name="216"></a>
+<a name="217"></a><span class="source_comment">// G15 Support
+</span><a name="218"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>				LCDLogo;
+<a name="219"></a>
+<a name="220"></a>var <span class="source_type">font</span>				LCDTinyFont;
+<a name="221"></a>var <span class="source_type">font</span>				LCDSmallFont;
+<a name="222"></a>var <span class="source_type">font</span>				LCDMedFont;
+<a name="223"></a>var <span class="source_type">font</span>				LCDLargeFont;
+<a name="224"></a><span class="source_comment">// end G15 support
+</span><a name="225"></a>
+<a name="226"></a>delegate <span class="source_type">bool</span> OnNeedRawKeyPress(<span class="source_type">byte</span> NewKey);
+<a name="227"></a>delegate AddBuddy( optional <span class="source_type">string</span> NewBuddyName );
+<a name="228"></a>
+<a name="229"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="230"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="231"></a><span class="source_comment">//  Utility functions for the UI
+</span><a name="232"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="233"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="234"></a>
+<a name="235"></a>
+<a name="236"></a>native event <span class="source_type"><a href="../xinterface/guifont.html" class="source">GUIFont</a></span> GetMenuFont(<span class="source_type">string</span> FontName);  <span class="source_comment">// Finds a given font in the FontStack
+</span><a name="237"></a>native event <span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span> GetStyle(<span class="source_type">string</span> StyleName, out <span class="source_type"><a href="../xinterface/gui.html" class="source">GUI</a></span>.<span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#EFontScale" class="source">eFontScale</a></span> FontScale);  <span class="source_comment">// Find a style on the stack
+</span><a name="238"></a>native final function <span class="source_type">string</span> GetCurrentRes();             <span class="source_comment">// Returns the current res as a string
+</span><a name="239"></a>
+<a name="240"></a><span class="source_comment">// Attempts to set the render device to the class specified by NewRenderDevice - returns whether change was successful
+</span><a name="241"></a>native final function <span class="source_type">bool</span> SetRenderDevice( <span class="source_type">string</span> <span class="source_type">NewRenderDevice</span> );
+<a name="242"></a>native private final function ResetDesigner();
+<a name="243"></a>
+<a name="244"></a>native final function ResetInput();
+<a name="245"></a>native final function GetProfileList(<span class="source_type">string</span> Prefix, out array&lt;<span class="source_type">string</span>&gt; ProfileList);
+<a name="246"></a>native final function ResetKeyboard();
+<a name="247"></a>native final function GetOGGList(out array&lt;<span class="source_type">string</span>&gt; OGGFiles);
+<a name="248"></a>
+<a name="249"></a>native final function PlayInterfaceSound( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>.<span class="source_type"><a href="../xinterface/guicomponent.html#EClickSound" class="source">EClickSound</a></span> SoundType );
+<a name="250"></a>
+<a name="251"></a>native final function SetMoveControl( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">C</span> );
+<a name="252"></a>native function Profile(<span class="source_type">string</span> ProfileName);
+<a name="253"></a>
+<a name="254"></a><span class="source_comment">// Used by a demo manager
+</span><a name="255"></a>native function GetDEMList(out array&lt;<span class="source_type">string</span>&gt; DEMFiles);
+<a name="256"></a>native function <span class="source_type">bool</span> GetDEMHeader(<span class="source_type">string</span> DemoName, out <span class="source_type">string</span> <span class="source_type">MapName</span>, out <span class="source_type">string</span> <span class="source_type">GameType</span>,
+<a name="257"></a>								  out <span class="source_type">int</span> ScoreLimit, out <span class="source_type">int</span> TimeLimit, out <span class="source_type">int</span> ClientSide,
+<a name="258"></a>                                  out <span class="source_type">string</span> RecordedBy, out <span class="source_type">string</span> Timestamp, out <span class="source_type">String</span> ReqPackages);
+<a name="259"></a>
+<a name="260"></a><span class="source_comment">// Used by Ownage Maps
+</span><a name="261"></a>
+<a name="262"></a>native function GetOwnageList(out array&lt;<span class="source_type">int</span>&gt; RLevel, out array&lt;<span class="source_type">string</span>&gt; MNames, out array&lt;<span class="source_type">string</span>&gt; MDesc, out array&lt;<span class="source_type">string</span>&gt; mURL);
+<a name="263"></a>native function SaveOwnageList(array&lt;<span class="source_type"><a href="../xinterface/guicontroller.html#eOwnageMap" class="source">eOwnageMap</a></span>&gt; <span class="source_type">Maps</span>);
+<a name="264"></a>
+<a name="265"></a><span class="source_comment">// deprecated -- Use CacheManager/xUtil instead
+</span><a name="266"></a>native final function GetWeaponList(out array&lt;<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>&gt; &gt; <span class="source_type">WeaponClass</span>, out array&lt;<span class="source_type">string</span>&gt; WeaponDesc);
+<a name="267"></a>native final function GetMapList( <span class="source_type">string</span> Prefix, <span class="source_type"><a href="../xinterface/guilist.html" class="source">GUIList</a></span> <span class="source_type">list</span>, optional <span class="source_type">bool</span> bDecoText );
+<a name="268"></a>
+<a name="269"></a><span class="source_comment">// URL stuff
+</span><a name="270"></a>
+<a name="271"></a>native function LaunchURL(<span class="source_type">string</span> <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>);
+<a name="272"></a>
+<a name="273"></a><span class="source_comment">// Firewall stuff
+</span><a name="274"></a>
+<a name="275"></a>native function <span class="source_type">bool</span> CheckFirewall();
+<a name="276"></a>native function <span class="source_type">bool</span> AuthroizeFirewall();
+<a name="277"></a>
+<a name="278"></a>native function <span class="source_type">bool</span> CheckForECE();
+<a name="279"></a>
+<a name="280"></a><span class="source_comment">//@ G15 Support
+</span><a name="281"></a><span class="source_comment">// LCD Functions
+</span><a name="282"></a>
+<a name="283"></a>native function <span class="source_type">bool</span> bLCDAvailable();
+<a name="284"></a>native function LCDDrawTile(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span> <span class="source_type">Tex</span>, <span class="source_type">int</span> <span class="source_type">X</span>, <span class="source_type">int</span> <span class="source_type">Y</span>, <span class="source_type">int</span> XL, <span class="source_type">int</span> <span class="source_type">YL</span>, <span class="source_type">int</span> <span class="source_type">U</span>, <span class="source_type">int</span> <span class="source_type">V</span>, <span class="source_type">int</span> UL, <span class="source_type">int</span> VL);
+<a name="285"></a>native function LCDDrawText(<span class="source_type">string</span> <span class="source_type">Text</span>, <span class="source_type">int</span> <span class="source_type">X</span>, <span class="source_type">int</span> <span class="source_type">Y</span>, <span class="source_type">Font</span> <span class="source_type">Font</span>);
+<a name="286"></a>native function LCDStrLen(<span class="source_type">string</span> <span class="source_type">Text</span>, <span class="source_type">Font</span> <span class="source_type">Font</span>, out <span class="source_type">int</span> XL, out <span class="source_type">int</span> <span class="source_type">YL</span>);
+<a name="287"></a>native function LCDCls();
+<a name="288"></a>native function LCDRepaint();
+<a name="289"></a>
+<a name="290"></a>native function <span class="source_type">bool</span> CheckSteam();
+<a name="291"></a>
+<a name="292"></a><span class="source_comment">// Steam interface functions
+</span><a name="293"></a><span class="source_comment">// _RO
+</span><a name="294"></a>native function <span class="source_type">bool</span> SteamRefreshLogin(<span class="source_type">string</span> <span class="source_type">Password</span>);
+<a name="295"></a>native function <span class="source_type">string</span> SteamGetUserName();
+<a name="296"></a>native function <span class="source_type">string</span> SteamGetUserID();
+<a name="297"></a>simulated event ResolutionChanged(){}
+<a name="298"></a><span class="source_comment">// end _RO_
+</span><a name="299"></a>
+<a name="300"></a>function <span class="source_type">string</span> LoadDecoText(<span class="source_type">string</span> PackageName, <span class="source_type">string</span> DecoTextName)
+<a name="301"></a>{
+<a name="302"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="303"></a>    local <span class="source_type"><a href="../xgame/decotext.html" class="source">DecoText</a></span> Deco;
+<a name="304"></a>    local <span class="source_type">string</span> <span class="source_type"><a href="../xgame/decotext.html" class="source">DecoText</a></span>;
+<a name="305"></a>
+<a name="306"></a>    if (InStr(DecoTextName, <span class="source_string">"."</span>) != -<span class="source_int">1</span>)
+<a name="307"></a>    {
+<a name="308"></a>        if (PackageName == <span class="source_string">""</span>)
+<a name="309"></a>            Divide(DecoTextName, <span class="source_string">"."</span>, PackageName, DecoTextName);
+<a name="310"></a>        else DecoTextName = Mid(DecoTextName, InStr(DecoTextName, <span class="source_string">"."</span>) + <span class="source_int">1</span>);
+<a name="311"></a>    }
+<a name="312"></a>
+<a name="313"></a>    Deco = <span class="source_type">class</span><span class="source_name">'xUtil'</span>.static.LoadDecoText(PackageName, DecoTextName);
+<a name="314"></a>    if (Deco == None)
+<a name="315"></a>        return <span class="source_string">""</span>;
+<a name="316"></a>
+<a name="317"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Deco.Rows.Length; <span class="source_type">i</span>++)
+<a name="318"></a>    {
+<a name="319"></a>        if (<span class="source_type"><a href="../xgame/decotext.html" class="source">DecoText</a></span> != <span class="source_string">""</span>)
+<a name="320"></a>            <span class="source_type"><a href="../xgame/decotext.html" class="source">DecoText</a></span> $= <span class="source_string">"|"</span>;
+<a name="321"></a>        <span class="source_type"><a href="../xgame/decotext.html" class="source">DecoText</a></span> $= Deco.Rows[<span class="source_type">i</span>];
+<a name="322"></a>    }
+<a name="323"></a>
+<a name="324"></a>    return <span class="source_type"><a href="../xgame/decotext.html" class="source">DecoText</a></span>;
+<a name="325"></a>}
+<a name="326"></a>final function GetTeamSymbolList(out array&lt;<span class="source_type">string</span>&gt; SymbolNames, optional <span class="source_type">bool</span> bNoSinglePlayer)
+<a name="327"></a>{
+<a name="328"></a>	<span class="source_comment">// Moved to CacheManager so GameInfo can access this
+</span><a name="329"></a>	<span class="source_type">class</span><span class="source_name">'CacheManager'</span>.static.GetTeamSymbolList(SymbolNames, bNoSinglePlayer);
+<a name="330"></a>}
+<a name="331"></a>
+<a name="332"></a><span class="source_comment">// -- deprecated
+</span><a name="333"></a>
+<a name="334"></a>function <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> TopPage()
+<a name="335"></a>{
+<a name="336"></a>    return ActivePage;
+<a name="337"></a>}
+<a name="338"></a>
+<a name="339"></a>
+<a name="340"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="341"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="342"></a><span class="source_comment">//  Initialization
+</span><a name="343"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="344"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="345"></a>
+<a name="346"></a>event InitializeController()
+<a name="347"></a>{
+<a name="348"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="349"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span>&gt; NewStyleClass;
+<a name="350"></a>
+<a name="351"></a>	LCDDrawTile(LCDLogo,<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">64</span>,<span class="source_int">43</span>,<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">64</span>,<span class="source_int">43</span>);
+<a name="352"></a>	LCDDrawText(<span class="source_string">"Loading..."</span>,<span class="source_int">55</span>,<span class="source_int">10</span>,LCDMedFont);
+<a name="353"></a>	LCDDrawText(<span class="source_string">"Killing Floor"</span>,<span class="source_int">55</span>,<span class="source_int">26</span>,LCDMedFont);
+<a name="354"></a>	LCDRePaint();
+<a name="355"></a>
+<a name="356"></a>	PrecachePlayerRecords();
+<a name="357"></a>
+<a name="358"></a>    for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;DefaultStyleNames.Length;<span class="source_type">i</span>++)
+<a name="359"></a>    {
+<a name="360"></a>        NewStyleClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span>&gt;(DynamicLoadObject(DefaultStyleNames[<span class="source_type">i</span>],<span class="source_type">class</span><span class="source_name">'class'</span>));
+<a name="361"></a>        if (NewStyleClass != None)
+<a name="362"></a>            if (!RegisterStyle(NewStyleClass))
+<a name="363"></a>                log(<span class="source_string">"Could not create requested style"</span>@DefaultStyleNames[<span class="source_type">i</span>]);
+<a name="364"></a>    }
+<a name="365"></a>
+<a name="366"></a>    for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;StyleNames.Length;<span class="source_type">i</span>++)
+<a name="367"></a>    {
+<a name="368"></a>        NewStyleClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span>&gt;(DynamicLoadObject(StyleNames[<span class="source_type">i</span>],<span class="source_type">class</span><span class="source_name">'class'</span>));
+<a name="369"></a>        if (NewStyleClass != None)
+<a name="370"></a>            if (!RegisterStyle(NewStyleClass))
+<a name="371"></a>                log(<span class="source_string">"Could not create requested style"</span>@StyleNames[<span class="source_type">i</span>]);
+<a name="372"></a>    }
+<a name="373"></a>
+<a name="374"></a>
+<a name="375"></a>	for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;FontStack.length;<span class="source_type">i</span>++)
+<a name="376"></a>    	FontStack[<span class="source_type">i</span>].<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> = self;
+<a name="377"></a>
+<a name="378"></a>    <span class="source_type">class</span><span class="source_name">'CacheManager'</span>.static.InitCache();
+<a name="379"></a>
+<a name="380"></a>    bECEEdition = CheckForECE();
+<a name="381"></a>}
+<a name="382"></a>
+<a name="383"></a>function PrecachePlayerRecords()
+<a name="384"></a>{
+<a name="385"></a>    local <span class="source_type"><a href="../xgame/xutil.html" class="source">xUtil</a></span>.<span class="source_type"><a href="../xgame/xutil.html#PlayerRecord" class="source">PlayerRecord</a></span> Rec;
+<a name="386"></a>
+<a name="387"></a>	Rec = <span class="source_type">class</span><span class="source_name">'xUtil'</span>.static.GetPlayerRecord(<span class="source_int">0</span>);
+<a name="388"></a>}
+<a name="389"></a>
+<a name="390"></a>function <span class="source_type">bool</span> RegisterStyle(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span>&gt; StyleClass, optional <span class="source_type">bool</span> bTemporary)
+<a name="391"></a>{
+<a name="392"></a>	local <span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span> NewStyle;
+<a name="393"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>,<span class="source_type">index</span>;
+<a name="394"></a>
+<a name="395"></a>	<span class="source_type">Index</span> = -<span class="source_int">1</span>;
+<a name="396"></a>    if (StyleClass != None)
+<a name="397"></a>    {
+<a name="398"></a>        for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; StyleStack.Length; <span class="source_type">i</span>++)
+<a name="399"></a>        {
+<a name="400"></a>            if (StyleStack[<span class="source_type">i</span>].<span class="source_type">Class</span> == StyleClass)
+<a name="401"></a>            {
+<a name="402"></a>            	log(<span class="source_string">"Style already registered '"</span>$StyleClass$<span class="source_string">"'"</span>);
+<a name="403"></a>            	return true;
+<a name="404"></a>            }
+<a name="405"></a>
+<a name="406"></a>			if (StyleStack[<span class="source_type">i</span>].KeyName == StyleClass.Default.KeyName)
+<a name="407"></a>            	<span class="source_type">Index</span> = <span class="source_type">i</span>;
+<a name="408"></a>        }
+<a name="409"></a>
+<a name="410"></a>		NewStyle = new(None) StyleClass;
+<a name="411"></a>        if (NewStyle != None)
+<a name="412"></a>        {
+<a name="413"></a>           <span class="source_comment">// Dynamic Array Auto Sizes StyleStack.
+</span><a name="414"></a>            if (<span class="source_type">Index</span>&lt;<span class="source_int">0</span>)
+<a name="415"></a>            {
+<a name="416"></a><span class="source_comment">//            	if ( bModAuthor )
+</span><a name="417"></a><span class="source_comment">//	            	log("Registering Style"@NewStyle,'ModAuthor');
+</span><a name="418"></a>	            StyleStack[StyleStack.Length] = NewStyle;
+<a name="419"></a>            }
+<a name="420"></a>            else
+<a name="421"></a>            {
+<a name="422"></a>            	if ( bModAuthor )
+<a name="423"></a>	            	log(<span class="source_string">"Replacing Style"</span>@StyleStack[<span class="source_type">Index</span>].KeyName@<span class="source_string">"with"</span>@NewStyle,<span class="source_name">'ModAuthor'</span>);
+<a name="424"></a>            	StyleStack[<span class="source_type">Index</span>].<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> = none;
+<a name="425"></a>            	StyleStack[<span class="source_type">Index</span>] = NewStyle;
+<a name="426"></a>            }
+<a name="427"></a>            NewStyle.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> = self;
+<a name="428"></a>            NewStyle.Initialize();
+<a name="429"></a>            NewStyle.bTemporary = bTemporary;
+<a name="430"></a>            return true;
+<a name="431"></a>        }
+<a name="432"></a>    }
+<a name="433"></a>    return false;
+<a name="434"></a>}
+<a name="435"></a>
+<a name="436"></a><span class="source_comment">//event class&lt;GUIComponent&gt; AddComponentClass(string ClassName) { return None; }
+</span><a name="437"></a>event <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>&gt; AddComponentClass(<span class="source_type">string</span> <span class="source_type">ClassName</span>)
+<a name="438"></a>{
+<a name="439"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="440"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>&gt; Cls;
+<a name="441"></a>
+<a name="442"></a>
+<a name="443"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; RegisteredClasses.Length; <span class="source_type">i</span>++ )
+<a name="444"></a>		if ( <span class="source_type">string</span>(RegisteredClasses[<span class="source_type">i</span>]) ~= <span class="source_type">ClassName</span> )
+<a name="445"></a>			return RegisteredClasses[<span class="source_type">i</span>];
+<a name="446"></a>
+<a name="447"></a>	Cls = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>&gt;(DynamicLoadObject(<span class="source_type">ClassName</span>,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="448"></a>	if ( Cls != None )
+<a name="449"></a>
+<a name="450"></a>		RegisteredClasses[RegisteredClasses.Length] = Cls;
+<a name="451"></a>
+<a name="452"></a>	return Cls;
+<a name="453"></a>}
+<a name="454"></a>
+<a name="455"></a>
+<a name="456"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="457"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="458"></a><span class="source_comment">//  Menu manipulation
+</span><a name="459"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="460"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="461"></a>
+<a name="462"></a>event <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> FindPersistentMenuByName( <span class="source_type">string</span> <span class="source_type">MenuClass</span> )
+<a name="463"></a>{
+<a name="464"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="465"></a>
+<a name="466"></a>	if ( <span class="source_type">MenuClass</span> == <span class="source_string">""</span> )
+<a name="467"></a>		return None;
+<a name="468"></a>
+<a name="469"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; PersistentStack.Length; <span class="source_type">i</span>++ )
+<a name="470"></a>		if ( <span class="source_type">MenuClass</span> ~= <span class="source_type">string</span>(PersistentStack[<span class="source_type">i</span>].<span class="source_type">Class</span>) )
+<a name="471"></a>			return PersistentStack[<span class="source_type">i</span>];
+<a name="472"></a>
+<a name="473"></a>	return None;
+<a name="474"></a>}
+<a name="475"></a>
+<a name="476"></a>event <span class="source_type">int</span> FindMenuIndexByName( <span class="source_type">string</span> <span class="source_type">MenuClass</span> )
+<a name="477"></a>{
+<a name="478"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="479"></a>
+<a name="480"></a>	if ( <span class="source_type">MenuClass</span> == <span class="source_string">""</span> )
+<a name="481"></a>		return -<span class="source_int">1</span>;
+<a name="482"></a>
+<a name="483"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MenuStack.Length; <span class="source_type">i</span>++ )
+<a name="484"></a>		if ( <span class="source_type">MenuClass</span> ~= <span class="source_type">string</span>(MenuStack[<span class="source_type">i</span>].<span class="source_type">Class</span>) )
+<a name="485"></a>			return <span class="source_type">i</span>;
+<a name="486"></a>	return -<span class="source_int">1</span>;
+<a name="487"></a>}
+<a name="488"></a>
+<a name="489"></a>event <span class="source_type">int</span> FindMenuIndex( <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> <span class="source_type">Menu</span> )
+<a name="490"></a>{
+<a name="491"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="492"></a>
+<a name="493"></a>	if ( <span class="source_type">Menu</span> == None )
+<a name="494"></a>		return -<span class="source_int">1</span>;
+<a name="495"></a>
+<a name="496"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MenuStack.Length; <span class="source_type">i</span>++ )
+<a name="497"></a>		if ( MenuStack[<span class="source_type">i</span>] == <span class="source_type">Menu</span> )
+<a name="498"></a>			return <span class="source_type">i</span>;
+<a name="499"></a>
+<a name="500"></a>	return -<span class="source_int">1</span>;
+<a name="501"></a>}
+<a name="502"></a>
+<a name="503"></a>event <span class="source_type">int</span> FindPersistentMenuIndex( <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> <span class="source_type">Menu</span> )
+<a name="504"></a>{
+<a name="505"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="506"></a>
+<a name="507"></a>	if ( <span class="source_type">Menu</span> == None )
+<a name="508"></a>		return -<span class="source_int">1</span>;
+<a name="509"></a>
+<a name="510"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; PersistentStack.Length; <span class="source_type">i</span>++ )
+<a name="511"></a>		if ( <span class="source_type">Menu</span> == PersistentStack[<span class="source_type">i</span>] )
+<a name="512"></a>			return <span class="source_type">i</span>;
+<a name="513"></a>
+<a name="514"></a>	return -<span class="source_int">1</span>;
+<a name="515"></a>}
+<a name="516"></a>
+<a name="517"></a>function <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> FindPersistentMenuByClass( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span>&gt; <span class="source_type">PageClass</span> )
+<a name="518"></a>{
+<a name="519"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="520"></a>
+<a name="521"></a>	if ( <span class="source_type">PageClass</span> == None )
+<a name="522"></a>		return None;
+<a name="523"></a>
+<a name="524"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; PersistentStack.Length; <span class="source_type">i</span>++ )
+<a name="525"></a>		if ( ClassIsChildOf(PersistentStack[<span class="source_type">i</span>].<span class="source_type">Class</span>, <span class="source_type">PageClass</span>) )
+<a name="526"></a>			return PersistentStack[<span class="source_type">i</span>];
+<a name="527"></a>
+<a name="528"></a>	return None;
+<a name="529"></a>}
+<a name="530"></a>
+<a name="531"></a>function <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> FindMenuByClass( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span>&gt; <span class="source_type">PageClass</span> )
+<a name="532"></a>{
+<a name="533"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="534"></a>
+<a name="535"></a>	if ( <span class="source_type">PageClass</span> == None )
+<a name="536"></a>		return None;
+<a name="537"></a>
+<a name="538"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MenuStack.Length; <span class="source_type">i</span>++ )
+<a name="539"></a>		if ( ClassIsChildOf(MenuStack[<span class="source_type">i</span>].<span class="source_type">Class</span>,<span class="source_type">PageClass</span>) )
+<a name="540"></a>			return MenuStack[<span class="source_type">i</span>];
+<a name="541"></a>
+<a name="542"></a>	return None;
+<a name="543"></a>}
+<a name="544"></a>
+<a name="545"></a><span class="source_comment">// CreateMenu - Attempts to Create a menu.  Returns none if it can't
+</span><a name="546"></a>event <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> CreateMenu(<span class="source_type">string</span> NewMenuName)
+<a name="547"></a>{
+<a name="548"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span>&gt; NewMenuClass;
+<a name="549"></a>    local <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> NewMenu;
+<a name="550"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="551"></a>
+<a name="552"></a>
+<a name="553"></a>    <span class="source_comment">// Big hack here - If the menu we are creating is XInterface.UT2MainMenu then
+</span><a name="554"></a>    <span class="source_comment">// Pull the actual main menu from native code
+</span><a name="555"></a>    if (NewMenuName ~= <span class="source_string">"XInterface.UT2MainMenu"</span>)
+<a name="556"></a>        NewMenuName = GetMainMenuClass();
+<a name="557"></a>
+<a name="558"></a>    <span class="source_comment">// Load the menu's package if needed
+</span><a name="559"></a>
+<a name="560"></a>    NewMenuClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span>&gt;(AddComponentClass(NewMenuName));
+<a name="561"></a>    if (NewMenuClass != None)
+<a name="562"></a>    {
+<a name="563"></a>        <span class="source_comment">// If it's persistent, try to find an instance in the PersistentStack.
+</span><a name="564"></a>        if( NewMenuClass.default.bPersistent )
+<a name="565"></a>        {
+<a name="566"></a>            for( <span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;PersistentStack.Length;<span class="source_type">i</span>++ )
+<a name="567"></a>            {
+<a name="568"></a>                if( PersistentStack[<span class="source_type">i</span>].<span class="source_type">Class</span> == NewMenuClass )
+<a name="569"></a>                {
+<a name="570"></a>                    NewMenu = PersistentStack[<span class="source_type">i</span>];
+<a name="571"></a>                    break;
+<a name="572"></a>                }
+<a name="573"></a>            }
+<a name="574"></a>        }
+<a name="575"></a>
+<a name="576"></a>        <span class="source_comment">// Not found, spawn a new menu
+</span><a name="577"></a>        if( NewMenu == None )
+<a name="578"></a>        {
+<a name="579"></a>            NewMenu = new(None) NewMenuClass;
+<a name="580"></a>
+<a name="581"></a>            <span class="source_comment">// Check for errors
+</span><a name="582"></a>            if (NewMenu == None)
+<a name="583"></a>            {
+<a name="584"></a>                log(<span class="source_string">"Could not create requested menu"</span>@NewMenuName);
+<a name="585"></a>                return None;
+<a name="586"></a>            }
+<a name="587"></a>            else
+<a name="588"></a>            if( NewMenuClass.default.bPersistent )
+<a name="589"></a>            {
+<a name="590"></a>                <span class="source_comment">// Save in PersistentStack if it's persistent.
+</span><a name="591"></a>                <span class="source_type">i</span> = PersistentStack.Length;
+<a name="592"></a>                PersistentStack.Length = <span class="source_type">i</span>+<span class="source_int">1</span>;
+<a name="593"></a>                PersistentStack[<span class="source_type">i</span>] = NewMenu;
+<a name="594"></a>            }
+<a name="595"></a>        }
+<a name="596"></a>
+<a name="597"></a>		bCurMenuInitialized = false;
+<a name="598"></a>        return NewMenu;
+<a name="599"></a>    }
+<a name="600"></a>
+<a name="601"></a>	log(<span class="source_string">"Could not DLO menu '"</span>$NewMenuName$<span class="source_string">"'"</span>);
+<a name="602"></a>    return none;
+<a name="603"></a>}
+<a name="604"></a>
+<a name="605"></a>
+<a name="606"></a>
+<a name="607"></a><span class="source_comment">// ================================================
+</span><a name="608"></a><span class="source_comment">// OpenMenu - Opens a new menu and places it on top of the stack
+</span><a name="609"></a>event <span class="source_type">bool</span> OpenMenu(<span class="source_type">string</span> NewMenuName, optional <span class="source_type">string</span> Param1, optional <span class="source_type">string</span> <span class="source_type">Param2</span>)
+<a name="610"></a>{
+<a name="611"></a>    local <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> NewMenu;
+<a name="612"></a>
+<a name="613"></a>    <span class="source_comment">// Sanity Check
+</span><a name="614"></a>	if ( bModAuthor )
+<a name="615"></a>		log(<span class="source_type">Class</span>@<span class="source_string">"OpenMenu ["</span>$NewMenuName$<span class="source_string">"] ("</span>$Param1$<span class="source_string">") ("</span>$<span class="source_type">Param2</span>$<span class="source_string">")"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="616"></a>
+<a name="617"></a>	if (ActivePage != none)
+<a name="618"></a>	{
+<a name="619"></a>		if ( !ActivePage.AllowOpen(NewMenuName) )
+<a name="620"></a>			return false;
+<a name="621"></a>	}
+<a name="622"></a>
+<a name="623"></a>	if ( !bCurMenuInitialized && MenuStack.Length &gt; <span class="source_int">0</span> )
+<a name="624"></a>	{
+<a name="625"></a>		if ( bModAuthor )
+<a name="626"></a>			log(<span class="source_string">"Cannot open menu until menu initialization is complete!"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="627"></a>
+<a name="628"></a>		return false;
+<a name="629"></a>	}
+<a name="630"></a>
+<a name="631"></a>    NewMenu = CreateMenu(NewMenuName);
+<a name="632"></a>    if (NewMenu!=None)
+<a name="633"></a>    {
+<a name="634"></a>    	<span class="source_comment">// do not allow the same menu to be duplicated in the stack
+</span><a name="635"></a>    	if ( FindMenuIndex(NewMenu) != -<span class="source_int">1</span> )
+<a name="636"></a>    	{
+<a name="637"></a>    		bCurMenuInitialized = True;
+<a name="638"></a>    		return false;
+<a name="639"></a>    	}
+<a name="640"></a>
+<a name="641"></a>        NewMenu.ParentPage = ActivePage;
+<a name="642"></a>        ResetFocus();
+<a name="643"></a>		PushMenu( MenuStack.Length, NewMenu, Param1, <span class="source_type">Param2</span> );
+<a name="644"></a>
+<a name="645"></a>		if ( NewMenu.bDisconnectOnOpen )
+<a name="646"></a>			ConsoleCommand(<span class="source_string">"DISCONNECT"</span>);
+<a name="647"></a>
+<a name="648"></a>        return true;
+<a name="649"></a>    }
+<a name="650"></a>
+<a name="651"></a>	log(<span class="source_string">"Could not open menu"</span>@NewMenuName);
+<a name="652"></a>
+<a name="653"></a>	return false;
+<a name="654"></a>}
+<a name="655"></a>
+<a name="656"></a>event AutoLoadMenus()
+<a name="657"></a>{
+<a name="658"></a>    local <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> NewMenu;
+<a name="659"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="660"></a>
+<a name="661"></a>    super.AutoLoadMenus();
+<a name="662"></a>
+<a name="663"></a>    for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt; AutoLoad.Length; <span class="source_type">i</span>++ )
+<a name="664"></a>    {
+<a name="665"></a>        NewMenu = CreateMenu(AutoLoad[<span class="source_type">i</span>].MenuClassName);
+<a name="666"></a>        if ( NewMenu == None )
+<a name="667"></a>        {
+<a name="668"></a>            log(<span class="source_string">"Could not auto-load"</span>@AutoLoad[<span class="source_type">i</span>].MenuClassName);
+<a name="669"></a>            continue;
+<a name="670"></a>        }
+<a name="671"></a>
+<a name="672"></a>		if ( AutoLoad[<span class="source_type">i</span>].bPreInitialize )
+<a name="673"></a>	        NewMenu.InitComponent(Self, None);
+<a name="674"></a>    }
+<a name="675"></a>}
+<a name="676"></a>
+<a name="677"></a><span class="source_comment">// ================================================
+</span><a name="678"></a><span class="source_comment">// Replaces a menu in the stack.  returns true if success
+</span><a name="679"></a>event <span class="source_type">bool</span> ReplaceMenu(<span class="source_type">string</span> NewMenuName, optional <span class="source_type">string</span> Param1, optional <span class="source_type">string</span> <span class="source_type">Param2</span>, optional <span class="source_type">bool</span> <span class="source_type">bCancelled</span>)
+<a name="680"></a>{
+<a name="681"></a>    local <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> NewMenu;
+<a name="682"></a>
+<a name="683"></a>	if ( ActivePage == None || MenuStack.Length == <span class="source_int">0</span> )
+<a name="684"></a>		return OpenMenu(NewMenuName, Param1, <span class="source_type">Param2</span>);
+<a name="685"></a>
+<a name="686"></a>	if ( bModAuthor )
+<a name="687"></a>		log(<span class="source_type">Class</span>@<span class="source_string">"ReplaceMenu ["</span>$NewMenuName$<span class="source_string">"]  ("</span>$Param1$<span class="source_string">")  ("</span>$<span class="source_type">Param2</span>$<span class="source_string">")"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="688"></a>
+<a name="689"></a>	if ( !bCurMenuInitialized && MenuStack.Length &gt; <span class="source_int">0</span> )
+<a name="690"></a>	{
+<a name="691"></a>		if ( bModAuthor )
+<a name="692"></a>			log(<span class="source_string">"Cannot replace menu until menu initialization is complete!"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="693"></a>		return false;
+<a name="694"></a>	}
+<a name="695"></a>
+<a name="696"></a>    NewMenu = CreateMenu(NewMenuName);
+<a name="697"></a>    if (NewMenu != None)
+<a name="698"></a>    {
+<a name="699"></a>        NewMenu.ParentPage = ActivePage.ParentPage;
+<a name="700"></a>        ResetFocus();
+<a name="701"></a>
+<a name="702"></a>        <span class="source_comment">// Remove the old menu
+</span><a name="703"></a>        PopMenu( -<span class="source_int">1</span>, ActivePage, <span class="source_type">bCancelled</span> );
+<a name="704"></a>
+<a name="705"></a>        <span class="source_comment">// Add this menu to the stack and give it focus
+</span><a name="706"></a>        PushMenu( MenuStack.Length - <span class="source_int">1</span>, NewMenu, Param1, <span class="source_type">Param2</span> );
+<a name="707"></a>
+<a name="708"></a>        return true;
+<a name="709"></a>    }
+<a name="710"></a>
+<a name="711"></a>    return false;
+<a name="712"></a>}
+<a name="713"></a>
+<a name="714"></a><span class="source_comment">// Initialize a new menu and add to the stack at the specified point.
+</span><a name="715"></a>protected event PushMenu( <span class="source_type">int</span> <span class="source_type">Index</span>, <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> NewMenu, optional <span class="source_type">string</span> Param1, optional <span class="source_type">string</span> <span class="source_type">Param2</span> )
+<a name="716"></a>{
+<a name="717"></a>	if ( NewMenu == None )
+<a name="718"></a>	{
+<a name="719"></a>		log(<span class="source_string">"Call to GUIController.PushMenu() with invalid NewMenu!!!"</span>);
+<a name="720"></a>		return;
+<a name="721"></a>	}
+<a name="722"></a>
+<a name="723"></a>	SetControllerStatus(true);
+<a name="724"></a>	if ( <span class="source_type">Index</span> &gt;= <span class="source_int">0</span> )
+<a name="725"></a>	{
+<a name="726"></a>		MenuStack[<span class="source_type">Index</span>] = NewMenu;
+<a name="727"></a>		ActivePage = NewMenu;
+<a name="728"></a>	}
+<a name="729"></a>
+<a name="730"></a>	CloseOverlays();
+<a name="731"></a>	ResetInput();
+<a name="732"></a>	if (NewMenu.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None)
+<a name="733"></a>	    NewMenu.InitComponent(Self, None);
+<a name="734"></a>
+<a name="735"></a>	NewMenu.CheckResolution(false,Self);
+<a name="736"></a>
+<a name="737"></a>	<span class="source_comment">// Pass along the event
+</span><a name="738"></a>	NewMenu.Opened(NewMenu);
+<a name="739"></a>
+<a name="740"></a>	NewMenu.MenuState = MSAT_Focused;
+<a name="741"></a>	NewMenu.PlayOpenSound();
+<a name="742"></a>
+<a name="743"></a>	bCurMenuInitialized = true;
+<a name="744"></a>
+<a name="745"></a>	NewMenu.HandleParameters(Param1, <span class="source_type">Param2</span>);
+<a name="746"></a>	bForceMouseCheck = true;
+<a name="747"></a>
+<a name="748"></a>	NewMenu.OnOpen();
+<a name="749"></a>}
+<a name="750"></a>
+<a name="751"></a>protected event PopMenu( <span class="source_type">int</span> <span class="source_type">Index</span>, <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> CurMenu, optional <span class="source_type">bool</span> <span class="source_type">bCancelled</span> )
+<a name="752"></a>{
+<a name="753"></a>	CloseOverlays();
+<a name="754"></a>
+<a name="755"></a>    <span class="source_comment">// Close out the current page
+</span><a name="756"></a>    CurMenu.Closed( CurMenu, <span class="source_type">bCancelled</span> );
+<a name="757"></a>
+<a name="758"></a>    if ( <span class="source_type">Index</span> &gt;= <span class="source_int">0</span> && <span class="source_type">Index</span> + <span class="source_int">1</span> &lt; MenuStack.Length && MenuStack[<span class="source_type">Index</span> + <span class="source_int">1</span>] != None )
+<a name="759"></a>    	MenuStack[<span class="source_type">Index</span> + <span class="source_int">1</span>].ParentPage = CurMenu.ParentPage;
+<a name="760"></a>
+<a name="761"></a>    CurMenu.ParentPage = None;
+<a name="762"></a>
+<a name="763"></a>    <span class="source_comment">// Free all object references
+</span><a name="764"></a>    CurMenu.Free();
+<a name="765"></a>
+<a name="766"></a>	<span class="source_comment">// Sanity check - something may have changed the order of the menustack between
+</span><a name="767"></a>	<span class="source_comment">// now and the original call to CloseMenu()/RemoveMenu()
+</span><a name="768"></a>	if ( <span class="source_type">Index</span> &lt; <span class="source_int">0</span> )
+<a name="769"></a>		return;
+<a name="770"></a>
+<a name="771"></a>	if ( <span class="source_type">Index</span> &gt;= MenuStack.Length || MenuStack[<span class="source_type">Index</span>] != CurMenu )
+<a name="772"></a>		<span class="source_type">Index</span> = FindMenuIndex(CurMenu);
+<a name="773"></a>
+<a name="774"></a>    if ( <span class="source_type">Index</span> &gt;= <span class="source_int">0</span> && <span class="source_type">Index</span> &lt; MenuStack.Length )
+<a name="775"></a>   		MenuStack.Remove( <span class="source_type">Index</span>, <span class="source_int">1</span> );
+<a name="776"></a>}
+<a name="777"></a>
+<a name="778"></a>function <span class="source_type">bool</span> RemoveMenuAt( <span class="source_type">int</span> <span class="source_type">Index</span>, optional <span class="source_type">bool</span> <span class="source_type">bCancelled</span> )
+<a name="779"></a>{
+<a name="780"></a>	if ( <span class="source_type">Index</span> &lt; <span class="source_int">0</span> || <span class="source_type">Index</span> &gt;= MenuStack.Length )
+<a name="781"></a>		return False;
+<a name="782"></a>
+<a name="783"></a>	return RemoveMenu(MenuStack[<span class="source_type">Index</span>], <span class="source_type">bCancelled</span>);
+<a name="784"></a>}
+<a name="785"></a>
+<a name="786"></a><span class="source_comment">// Close a menu that isn't the top menu
+</span><a name="787"></a>event <span class="source_type">bool</span> RemoveMenu( <span class="source_type"><a href="../xinterface/guipage.html" class="source">GUIPage</a></span> <span class="source_type">Menu</span>, optional <span class="source_type">bool</span> <span class="source_type">bCancelled</span> )
+<a name="788"></a>{
+<a name="789"></a>    if ( MenuStack.Length == <span class="source_int">0</span> )
+<a name="790"></a>    {
+<a name="791"></a>        log(<span class="source_string">"GUIController.RemoveMenu() - Attempting to close a non-existing menu page"</span>);
+<a name="792"></a>        return false;
+<a name="793"></a>    }
+<a name="794"></a>
+<a name="795"></a>	if ( <span class="source_type">Menu</span> == None || <span class="source_type">Menu</span> == ActivePage )
+<a name="796"></a>		return CloseMenu(<span class="source_type">bCancelled</span>);
+<a name="797"></a>
+<a name="798"></a>	if ( bModAuthor )
+<a name="799"></a>		log(<span class="source_type">Class</span>@<span class="source_string">"RemoveMenu ["</span>$<span class="source_type">Menu</span>.<span class="source_type">Name</span>$<span class="source_string">"]"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="800"></a>
+<a name="801"></a>	if ( !bCurMenuInitialized )
+<a name="802"></a>	{
+<a name="803"></a>		if ( bModAuthor )
+<a name="804"></a>			log(<span class="source_string">"Cannot remove menu until initialization is complete!"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="805"></a>		return false;
+<a name="806"></a>	}
+<a name="807"></a>
+<a name="808"></a>	if ( !<span class="source_type">Menu</span>.OnCanClose(<span class="source_type">bCancelled</span>) )
+<a name="809"></a>		return false;
+<a name="810"></a>
+<a name="811"></a>    ResetInput();
+<a name="812"></a>    <span class="source_type">Menu</span>.PlayCloseSound();       <span class="source_comment">// Play the closing sound
+</span><a name="813"></a>
+<a name="814"></a>	PopMenu( FindMenuIndex(<span class="source_type">Menu</span>), <span class="source_type">Menu</span>, <span class="source_type">bCancelled</span> );
+<a name="815"></a>
+<a name="816"></a>    <span class="source_comment">// Gab the next page on the stack
+</span><a name="817"></a>    if ( MenuStack.Length == <span class="source_int">0</span> ) <span class="source_comment">// Pass control back to the previous menu
+</span><a name="818"></a>    {
+<a name="819"></a>        if ( !<span class="source_type">Menu</span>.bAllowedAsLast && !MainNotWanted )
+<a name="820"></a>            return OpenMenu(GetMainMenuClass());
+<a name="821"></a>
+<a name="822"></a>        ActivePage = None;
+<a name="823"></a>        SetControllerStatus(false);
+<a name="824"></a>    }
+<a name="825"></a>
+<a name="826"></a>	VerifyStack();
+<a name="827"></a>    bForceMouseCheck = true;
+<a name="828"></a>    return true;
+<a name="829"></a>}
+<a name="830"></a>
+<a name="831"></a>event <span class="source_type">bool</span> CloseMenu( optional <span class="source_type">bool</span> <span class="source_type">bCancelled</span> )   <span class="source_comment">// Close the top menu.  returns true if success.
+</span><a name="832"></a>{
+<a name="833"></a>    if ( MenuStack.Length == <span class="source_int">0</span> || ActivePage == None )
+<a name="834"></a>    {
+<a name="835"></a>        log(<span class="source_string">"Attempting to close a non-existing menu page"</span>);
+<a name="836"></a>        return false;
+<a name="837"></a>    }
+<a name="838"></a>
+<a name="839"></a>	if ( bModAuthor )
+<a name="840"></a>		log(<span class="source_type">Class</span>@<span class="source_string">"CloseMenu ["</span>$ActivePage.<span class="source_type">Name</span>$<span class="source_string">"]"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="841"></a>
+<a name="842"></a>	if ( !bCurMenuInitialized )
+<a name="843"></a>	{
+<a name="844"></a>		if ( bModAuthor )
+<a name="845"></a>			log(<span class="source_string">"Cannot close menu until initialization is complete!"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="846"></a>		return false;
+<a name="847"></a>	}
+<a name="848"></a>
+<a name="849"></a>	if ( !ActivePage.OnCanClose(<span class="source_type">bCancelled</span>) )
+<a name="850"></a>		return false;
+<a name="851"></a>
+<a name="852"></a>    ResetInput();
+<a name="853"></a>    ActivePage.PlayCloseSound();       <span class="source_comment">// Play the closing sound
+</span><a name="854"></a>
+<a name="855"></a>	PopMenu( FindMenuIndex(ActivePage), ActivePage, <span class="source_type">bCancelled</span> );
+<a name="856"></a>	ActivePage.CheckResolution(True,Self);
+<a name="857"></a>
+<a name="858"></a>    <span class="source_comment">// Gab the next page on the stack
+</span><a name="859"></a>    bCurMenuInitialized=false;
+<a name="860"></a>    if ( MenuStack.Length &gt; <span class="source_int">0</span> ) <span class="source_comment">// Pass control back to the previous menu
+</span><a name="861"></a>    {
+<a name="862"></a>        ActivePage = MenuStack[MenuStack.Length-<span class="source_int">1</span>];
+<a name="863"></a>        ActivePage.MenuState = MSAT_Focused;
+<a name="864"></a>
+<a name="865"></a>        ResetFocus();
+<a name="866"></a>        ActivePage.FocusFirst(None);
+<a name="867"></a>        if ( !ActivePage.bNeverFocus )
+<a name="868"></a>	        ActivePage.OnActivate();
+<a name="869"></a>    }
+<a name="870"></a>    else
+<a name="871"></a>    {
+<a name="872"></a>        if (!ActivePage.bAllowedAsLast && !MainNotWanted)
+<a name="873"></a>        {
+<a name="874"></a>        	ActivePage = none;
+<a name="875"></a>            return OpenMenu(GetMainMenuClass());
+<a name="876"></a>        }
+<a name="877"></a>
+<a name="878"></a>        ActivePage = None;
+<a name="879"></a>        SetControllerStatus(false);
+<a name="880"></a>    }
+<a name="881"></a>
+<a name="882"></a>    bCurMenuInitialized=true;
+<a name="883"></a>    if ( ActivePage != None )
+<a name="884"></a>    	ActivePage.OnReopen();
+<a name="885"></a>
+<a name="886"></a>    bForceMouseCheck = true;
+<a name="887"></a>
+<a name="888"></a>    return true;
+<a name="889"></a>}
+<a name="890"></a>
+<a name="891"></a>event CloseAll(<span class="source_type">bool</span> bCancel, optional <span class="source_type">bool</span> bForced)
+<a name="892"></a>{
+<a name="893"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="894"></a>
+<a name="895"></a>	if ( bModAuthor )
+<a name="896"></a>	{
+<a name="897"></a>		log(<span class="source_type">Name</span>@<span class="source_string">"CloseAll bCancel:"</span>$bCancel@<span class="source_string">"Forced:"</span>$bForced@<span class="source_string">"(Currently"</span>@MenuStack.Length@<span class="source_string">"menus open)"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="898"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MenuStack.Length; <span class="source_type">i</span>++ )
+<a name="899"></a>		{
+<a name="900"></a>			if ( MenuStack[<span class="source_type">i</span>] == None )
+<a name="901"></a>				log(<span class="source_string">"   Menu["</span>$<span class="source_type">i</span>$<span class="source_string">"]: None"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="902"></a>			else
+<a name="903"></a>				log(<span class="source_string">"   Menu["</span>$<span class="source_type">i</span>$<span class="source_string">"]:"</span>$MenuStack[<span class="source_type">i</span>].<span class="source_type">Name</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="904"></a>		}
+<a name="905"></a>	}
+<a name="906"></a>
+<a name="907"></a>    <span class="source_comment">// Close the current menu manually before we clean up the stack.
+</span><a name="908"></a>    if ( bForced )
+<a name="909"></a>    	MainNotWanted = True;
+<a name="910"></a>
+<a name="911"></a>	if ( MenuStack.Length &gt; <span class="source_int">0</span> )
+<a name="912"></a>		SaveRestorePages();
+<a name="913"></a>
+<a name="914"></a>    if( MenuStack.Length &gt;= <span class="source_int">0</span> )
+<a name="915"></a>        CloseMenu(bCancel);
+<a name="916"></a>
+<a name="917"></a>    MainNotWanted = False;
+<a name="918"></a>
+<a name="919"></a>    for ( <span class="source_type">i</span> = MenuStack.Length - <span class="source_int">1</span>;<span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="920"></a>        PopMenu(<span class="source_type">i</span>, MenuStack[<span class="source_type">i</span>], bCancel);
+<a name="921"></a>
+<a name="922"></a>    <span class="source_comment">//log("GUIController::CloseAll - After Menu closing "@GameResolution);
+</span><a name="923"></a>    if (GameResolution != <span class="source_string">""</span>)
+<a name="924"></a>    {
+<a name="925"></a>        <span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>(Master.<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>).DelayedConsoleCommand(<span class="source_string">"SETRES"</span>@GameResolution);
+<a name="926"></a>        GameResolution=<span class="source_string">""</span>;
+<a name="927"></a>    }
+<a name="928"></a>
+<a name="929"></a>    ActivePage=None;
+<a name="930"></a>    SetControllerStatus(false);
+<a name="931"></a>}
+<a name="932"></a>
+<a name="933"></a>function <span class="source_type">int</span> Count()
+<a name="934"></a>{
+<a name="935"></a>	return MenuStack.Length;
+<a name="936"></a>}
+<a name="937"></a>
+<a name="938"></a>function SaveRestorePages()
+<a name="939"></a>{
+<a name="940"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="941"></a>	local <span class="source_type">string</span> Param1, <span class="source_type">Param2</span>, <span class="source_type">MenuClass</span>;
+<a name="942"></a>
+<a name="943"></a>	<span class="source_comment">// First, clear any current entries
+</span><a name="944"></a>	RestoreMenus.Remove( <span class="source_int">0</span>, RestoreMenus.Length );
+<a name="945"></a>
+<a name="946"></a>	for ( <span class="source_type">i</span> = MenuStack.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="947"></a>	{
+<a name="948"></a>		if ( MenuStack[<span class="source_type">i</span>] != None )
+<a name="949"></a>		{
+<a name="950"></a>			if ( MenuStack[<span class="source_type">i</span>].bRestorable )
+<a name="951"></a>			{
+<a name="952"></a>				<span class="source_type">MenuClass</span> = <span class="source_type">string</span>(MenuStack[<span class="source_type">i</span>].<span class="source_type">Class</span>);
+<a name="953"></a>				Param1 = <span class="source_string">""</span>;
+<a name="954"></a>				<span class="source_type">Param2</span> = <span class="source_string">""</span>;
+<a name="955"></a>
+<a name="956"></a>				if ( MenuStack[<span class="source_type">i</span>].GetRestoreParams(Param1, <span class="source_type">Param2</span>) )
+<a name="957"></a>				{
+<a name="958"></a>					RestoreMenus.Insert(<span class="source_int">0</span>, <span class="source_int">1</span>);
+<a name="959"></a>					RestoreMenus[<span class="source_int">0</span>].MenuClassName = <span class="source_type">MenuClass</span>;
+<a name="960"></a>					RestoreMenus[<span class="source_int">0</span>].Param1 = Param1;
+<a name="961"></a>					RestoreMenus[<span class="source_int">0</span>].<span class="source_type">Param2</span> = <span class="source_type">Param2</span>;
+<a name="962"></a>				}
+<a name="963"></a>			}
+<a name="964"></a>		}
+<a name="965"></a>	}
+<a name="966"></a>}
+<a name="967"></a>
+<a name="968"></a>function PerformRestore()
+<a name="969"></a>{
+<a name="970"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">idx</span>;
+<a name="971"></a>
+<a name="972"></a>	if ( bModAuthor )
+<a name="973"></a>		log(<span class="source_string">"Restoring previously open menus ("</span>$RestoreMenus.Length$<span class="source_string">" menus to restore)"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="974"></a>
+<a name="975"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; RestoreMenus.Length; <span class="source_type">i</span>++ )
+<a name="976"></a>	{
+<a name="977"></a>		<span class="source_type">idx</span> = FindMenuIndexByName(RestoreMenus[<span class="source_type">i</span>].MenuClassName);
+<a name="978"></a>		if ( <span class="source_type">idx</span> == -<span class="source_int">1</span> )
+<a name="979"></a>			OpenMenu(RestoreMenus[<span class="source_type">i</span>].MenuClassName, RestoreMenus[<span class="source_type">i</span>].Param1, RestoreMenus[<span class="source_type">i</span>].<span class="source_type">Param2</span>);
+<a name="980"></a>	}
+<a name="981"></a>
+<a name="982"></a>	RestoreMenus.Remove(<span class="source_int">0</span>, RestoreMenus.Length);
+<a name="983"></a>}
+<a name="984"></a>
+<a name="985"></a>function SetControllerStatus(<span class="source_type">bool</span> On)
+<a name="986"></a>{
+<a name="987"></a>	local <span class="source_type">bool</span> bWasActive;
+<a name="988"></a>
+<a name="989"></a>	if ( bActive && !On && ViewportOwner != None && ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> != None )
+<a name="990"></a>		ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.UnpressButtons();
+<a name="991"></a>
+<a name="992"></a>	bWasActive = bActive;
+<a name="993"></a>
+<a name="994"></a>    bActive = On;
+<a name="995"></a>    bVisible = On;
+<a name="996"></a>    bRequiresTick=On;
+<a name="997"></a>
+<a name="998"></a>	if ( bActive && !bWasActive && ViewportOwner != None && ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> != None )
+<a name="999"></a>		ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.UnpressButtons();
+<a name="1000"></a>
+<a name="1001"></a>    ViewportOwner.bShowWindowsMouse = On && ViewportOwner.bWindowsMouseAvailable;
+<a name="1002"></a>
+<a name="1003"></a>    if (On)
+<a name="1004"></a>        bIgnoreUntilPress = true;
+<a name="1005"></a>    else
+<a name="1006"></a>    {
+<a name="1007"></a>    	ResetDesigner();
+<a name="1008"></a>        ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand(<span class="source_string">"toggleime 0"</span>);
+<a name="1009"></a>    }
+<a name="1010"></a>
+<a name="1011"></a>    PurgeComponentClasses();
+<a name="1012"></a>}
+<a name="1013"></a>
+<a name="1014"></a>event ChangeFocus(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> Who)
+<a name="1015"></a>{
+<a name="1016"></a>	if ( Who != None )
+<a name="1017"></a>		Who.SetFocus(None);
+<a name="1018"></a>
+<a name="1019"></a>    return;
+<a name="1020"></a>}
+<a name="1021"></a>
+<a name="1022"></a>function ResetFocus()
+<a name="1023"></a>{
+<a name="1024"></a>    MoveControl = None;
+<a name="1025"></a>
+<a name="1026"></a>    if (ActiveControl!=None)
+<a name="1027"></a>    {
+<a name="1028"></a>    	ActiveControl.MenuStateChange(MSAT_Blurry);
+<a name="1029"></a>        ActiveControl = None;
+<a name="1030"></a>    }
+<a name="1031"></a>
+<a name="1032"></a>    if ( FocusedControl != None )
+<a name="1033"></a>    	FocusedControl.LoseFocus(None);
+<a name="1034"></a>
+<a name="1035"></a>    RepeatKey=<span class="source_int">0</span>;
+<a name="1036"></a>    RepeatTime=<span class="source_int">0</span>;
+<a name="1037"></a>}
+<a name="1038"></a>
+<a name="1039"></a>event MoveFocused(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">C</span>, <span class="source_type">int</span> bmLeft, <span class="source_type">int</span> bmTop, <span class="source_type">int</span> bmWidth, <span class="source_type">int</span> bmHeight, <span class="source_type">float</span> ClipX, <span class="source_type">float</span> ClipY, <span class="source_type">float</span> Val)
+<a name="1040"></a>{
+<a name="1041"></a>	if ( <span class="source_type">C</span>.bScaleToParent && <span class="source_type">C</span>.MenuOwner != None )
+<a name="1042"></a>	{
+<a name="1043"></a>		ClipX = <span class="source_type">C</span>.MenuOwner.ActualWidth();
+<a name="1044"></a>		ClipY = <span class="source_type">C</span>.MenuOwner.ActualHeight();
+<a name="1045"></a>	}
+<a name="1046"></a>
+<a name="1047"></a>	if (bmLeft!=<span class="source_int">0</span>)
+<a name="1048"></a>    {
+<a name="1049"></a>        if ( <span class="source_type">C</span>.WinLeft &lt; <span class="source_int">2.0</span> && <span class="source_type">C</span>.WinLeft &gt; -<span class="source_int">2.0</span> && !<span class="source_type">C</span>.bNeverScale )
+<a name="1050"></a>        	<span class="source_type">C</span>.WinLeft += (Val/ClipX) * bmLeft;
+<a name="1051"></a>        else
+<a name="1052"></a>            <span class="source_type">C</span>.WinLeft += Val*bmLeft;
+<a name="1053"></a>    }
+<a name="1054"></a>
+<a name="1055"></a>    if (bmTop!=<span class="source_int">0</span>)
+<a name="1056"></a>    {
+<a name="1057"></a>        if ( <span class="source_type">C</span>.WinTop &lt; <span class="source_int">2.0</span> && <span class="source_type">C</span>.WinTop &gt; -<span class="source_int">2.0</span> && !<span class="source_type">C</span>.bNeverScale )
+<a name="1058"></a>            <span class="source_type">C</span>.WinTop += (Val/ClipY) * bmTop;
+<a name="1059"></a>        else
+<a name="1060"></a>            <span class="source_type">C</span>.WinTop += Val*bmTop;
+<a name="1061"></a>    }
+<a name="1062"></a>
+<a name="1063"></a>    if (bmWidth!=<span class="source_int">0</span>)
+<a name="1064"></a>    {
+<a name="1065"></a>        if (<span class="source_type">C</span>.WinWidth &lt; <span class="source_int">2.0</span> && <span class="source_type">C</span>.WinWidth &gt; -<span class="source_int">2.0</span> && !<span class="source_type">C</span>.bNeverScale)
+<a name="1066"></a>            <span class="source_type">C</span>.WinWidth += (Val/ClipX) * bmWidth;
+<a name="1067"></a>        else
+<a name="1068"></a>            <span class="source_type">C</span>.WinWidth += Val*bmWidth;
+<a name="1069"></a>    }
+<a name="1070"></a>
+<a name="1071"></a>    if (bmHeight!=<span class="source_int">0</span>)
+<a name="1072"></a>    {
+<a name="1073"></a>        if (<span class="source_type">C</span>.WinHeight &lt;= <span class="source_int">2.0</span>)
+<a name="1074"></a>            <span class="source_type">C</span>.WinHeight += (Val/ClipX) * bmHeight;
+<a name="1075"></a>        else
+<a name="1076"></a>            <span class="source_type">C</span>.WinHeight += Val*bmHeight;
+<a name="1077"></a>    }
+<a name="1078"></a>}
+<a name="1079"></a>
+<a name="1080"></a>function <span class="source_type">bool</span> HasMouseMoved( optional <span class="source_type">float</span> <span class="source_type">ErrorMargin</span> )
+<a name="1081"></a>{
+<a name="1082"></a>	return Abs(MouseX - LastMouseX) &gt; Abs(<span class="source_type">ErrorMargin</span>) || Abs(MouseY - LastMouseY) &gt; Abs(<span class="source_type">ErrorMargin</span>);
+<a name="1083"></a>}
+<a name="1084"></a>
+<a name="1085"></a>event <span class="source_type">bool</span> CanShowHints()
+<a name="1086"></a>{
+<a name="1087"></a>	if ( bNoToolTips )
+<a name="1088"></a>		return false;
+<a name="1089"></a>
+<a name="1090"></a>	if ( ActivePage != None && ActivePage.bCaptureMouse )
+<a name="1091"></a>		return false;
+<a name="1092"></a>
+<a name="1093"></a>	if ( DropSource != None || DropTarget != None )
+<a name="1094"></a>		return false;
+<a name="1095"></a>
+<a name="1096"></a>	if ( !bDesignModeToolTips && bDesignMode && bHighlightCurrent )
+<a name="1097"></a>		return false;
+<a name="1098"></a>
+<a name="1099"></a>	return true;
+<a name="1100"></a>}
+<a name="1101"></a>
+<a name="1102"></a>event <span class="source_type">bool</span> NeedsMenuResolution()
+<a name="1103"></a>{
+<a name="1104"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1105"></a>
+<a name="1106"></a>	for ( <span class="source_type">i</span> = MenuStack.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="1107"></a>	{
+<a name="1108"></a>		if ( MenuStack[<span class="source_type">i</span>] != None && MenuStack[<span class="source_type">i</span>].bRequire640x480 )
+<a name="1109"></a>			return true;
+<a name="1110"></a>
+<a name="1111"></a>		if ( !MenuStack[<span class="source_type">i</span>].bRenderWorld )
+<a name="1112"></a>			break;
+<a name="1113"></a>	}
+<a name="1114"></a>
+<a name="1115"></a>	return false;
+<a name="1116"></a>}
+<a name="1117"></a>
+<a name="1118"></a>event SetRequiredGameResolution(<span class="source_type">string</span> GameRes)
+<a name="1119"></a>{
+<a name="1120"></a>    GameResolution = GameRes;
+<a name="1121"></a>}
+<a name="1122"></a>
+<a name="1123"></a>event NotifyLevelChange()
+<a name="1124"></a>{
+<a name="1125"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1126"></a>
+<a name="1127"></a>	if ( bModAuthor )
+<a name="1128"></a>		log(<span class="source_type">Class</span>@<span class="source_string">"NotifyLevelChange()"</span>,<span class="source_name">'ModAuthor'</span>);
+<a name="1129"></a>
+<a name="1130"></a>	ResetDesigner();
+<a name="1131"></a>
+<a name="1132"></a>	if ( bActive && ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> != None && ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type">Level</span> != None && ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type">Level</span>.IsPendingConnection() )
+<a name="1133"></a>		SaveRestorePages();
+<a name="1134"></a>
+<a name="1135"></a>    for (<span class="source_type">i</span> = MenuStack.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span> && MenuStack.Length != <span class="source_int">0</span>; <span class="source_type">i</span>--)
+<a name="1136"></a>    {
+<a name="1137"></a>        <span class="source_comment">// Menus might start closing other menus during NotifyLevelChange, so always check for None
+</span><a name="1138"></a>        if (MenuStack[<span class="source_type">i</span>] != None)
+<a name="1139"></a>        {
+<a name="1140"></a>            <span class="source_comment">// If menu is in persistent stack, skip notification here.
+</span><a name="1141"></a>        	if ( MenuStack[<span class="source_type">i</span>].bPersistent )
+<a name="1142"></a>        		continue;
+<a name="1143"></a>
+<a name="1144"></a>			if ( MenuStack[<span class="source_type">i</span>].NotifyLevelChange() )
+<a name="1145"></a>				RemoveMenu(MenuStack[<span class="source_type">i</span>], True);
+<a name="1146"></a>        }
+<a name="1147"></a>    }
+<a name="1148"></a>
+<a name="1149"></a>    for (<span class="source_type">i</span> = PersistentStack.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>--)
+<a name="1150"></a>    {
+<a name="1151"></a>        if (PersistentStack[<span class="source_type">i</span>] != None && PersistentStack[<span class="source_type">i</span>].NotifyLevelChange())
+<a name="1152"></a>        {
+<a name="1153"></a>        	if ( PersistentStack[<span class="source_type">i</span>].IsOpen() )
+<a name="1154"></a>        		RemoveMenu( PersistentStack[<span class="source_type">i</span>], True);
+<a name="1155"></a>        	else PersistentStack[<span class="source_type">i</span>].Free();
+<a name="1156"></a>
+<a name="1157"></a>			if ( !PersistentStack[<span class="source_type">i</span>].bPersistent )
+<a name="1158"></a>	        	PersistentStack.Remove(<span class="source_type">i</span>,<span class="source_int">1</span>);
+<a name="1159"></a>        }
+<a name="1160"></a>    }
+<a name="1161"></a>
+<a name="1162"></a>	PurgeObjectReferences();
+<a name="1163"></a>	VerifyStack();
+<a name="1164"></a>
+<a name="1165"></a>	if ( MenuStack.Length &gt; <span class="source_int">0</span> )
+<a name="1166"></a>		RestoreMenus.Remove(<span class="source_int">0</span>,RestoreMenus.Length);
+<a name="1167"></a>}
+<a name="1168"></a>
+<a name="1169"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1170"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1171"></a><span class="source_comment">//  Menu-stack maintenance & cleanup
+</span><a name="1172"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1173"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1174"></a>
+<a name="1175"></a>function CloseOverlays()
+<a name="1176"></a>{
+<a name="1177"></a>	MouseOver = None;
+<a name="1178"></a>	ContextMenu = None;
+<a name="1179"></a>}
+<a name="1180"></a>
+<a name="1181"></a>function VerifyStack()
+<a name="1182"></a>{
+<a name="1183"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1184"></a>
+<a name="1185"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MenuStack.Length; <span class="source_type">i</span>++ )
+<a name="1186"></a>	{
+<a name="1187"></a>		if ( MenuStack[<span class="source_type">i</span>] == None || (MenuStack[<span class="source_type">i</span>].<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None && bCurMenuInitialized) )
+<a name="1188"></a>		{
+<a name="1189"></a>			MenuStack.Remove(<span class="source_type">i</span>--, <span class="source_int">1</span>);
+<a name="1190"></a>			continue;
+<a name="1191"></a>		}
+<a name="1192"></a>
+<a name="1193"></a>		if ( <span class="source_type">i</span> &gt; <span class="source_int">0</span> )
+<a name="1194"></a>			MenuStack[<span class="source_type">i</span>].ParentPage = MenuStack[<span class="source_type">i</span>-<span class="source_int">1</span>];
+<a name="1195"></a>	}
+<a name="1196"></a>
+<a name="1197"></a>	ConsolidateMenus();
+<a name="1198"></a>}
+<a name="1199"></a>
+<a name="1200"></a>function PurgeObjectReferences()
+<a name="1201"></a>{
+<a name="1202"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span>&gt; OriginalStyle;
+<a name="1203"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1204"></a>
+<a name="1205"></a>	<span class="source_comment">// Remove any temporary (i.e. mod-defined) styles
+</span><a name="1206"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; STYLE_NUM; <span class="source_type">i</span>++ )
+<a name="1207"></a>	{
+<a name="1208"></a>		if ( StyleStack[<span class="source_type">i</span>] == None )
+<a name="1209"></a>		{
+<a name="1210"></a>			OriginalStyle = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span>&gt;(DynamicLoadObject(DefaultStyleNames[<span class="source_type">i</span>],<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="1211"></a>			if ( !RegisterStyle(OriginalStyle) )
+<a name="1212"></a>			{
+<a name="1213"></a>				log(<span class="source_string">"Could not restore default style "</span>$<span class="source_type">i</span>$<span class="source_string">" ("</span>$DefaultStyleNames[<span class="source_type">i</span>]$<span class="source_string">")"</span>);
+<a name="1214"></a>				continue;
+<a name="1215"></a>			}
+<a name="1216"></a>		}
+<a name="1217"></a>
+<a name="1218"></a>		if ( StyleStack[<span class="source_type">i</span>].bTemporary )
+<a name="1219"></a>		{
+<a name="1220"></a>			OriginalStyle = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span>&gt;(DynamicLoadObject(DefaultStyleNames[<span class="source_type">i</span>],<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="1221"></a>			if ( !RegisterStyle(OriginalStyle) )
+<a name="1222"></a>			{
+<a name="1223"></a>				log(<span class="source_string">"Could not restore default style "</span>$<span class="source_type">i</span>$<span class="source_string">" ("</span>$DefaultStyleNames[<span class="source_type">i</span>]$<span class="source_string">")"</span>);
+<a name="1224"></a>				StyleStack[<span class="source_type">i</span>] = None;
+<a name="1225"></a>			}
+<a name="1226"></a>		}
+<a name="1227"></a>	}
+<a name="1228"></a>
+<a name="1229"></a>	if (StyleStack.Length &gt; STYLE_NUM)
+<a name="1230"></a>		StyleStack.Remove(STYLE_NUM, StyleStack.Length - STYLE_NUM);
+<a name="1231"></a>
+<a name="1232"></a>	if (FontStack.Length &gt; FONT_NUM)
+<a name="1233"></a>		FontStack.Remove(FONT_NUM, FontStack.Length - FONT_NUM);
+<a name="1234"></a>
+<a name="1235"></a>	if (MouseCursors.Length &gt; CURSOR_NUM)
+<a name="1236"></a>		MouseCursors.Remove(CURSOR_NUM, MouseCursors.Length - CURSOR_NUM);
+<a name="1237"></a>
+<a name="1238"></a>	PurgeComponentClasses();
+<a name="1239"></a>}
+<a name="1240"></a>
+<a name="1241"></a><span class="source_comment">// Should be overridden
+</span><a name="1242"></a>function PurgeComponentClasses();
+<a name="1243"></a>
+<a name="1244"></a><span class="source_comment">// This is used to remove any duplicate clases from the menu stack (keeping the topmost one)
+</span><a name="1245"></a>function ConsolidateMenus()
+<a name="1246"></a>{
+<a name="1247"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="1248"></a>
+<a name="1249"></a>	for ( <span class="source_type">i</span> = MenuStack.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="1250"></a>	{
+<a name="1251"></a>		for ( j = <span class="source_int">0</span>; j &lt; <span class="source_type">i</span>; j++ )
+<a name="1252"></a>		{
+<a name="1253"></a>			if ( MenuStack[<span class="source_type">i</span>].<span class="source_type">Class</span> == MenuStack[j].<span class="source_type">Class</span> )
+<a name="1254"></a>			{
+<a name="1255"></a>				MenuStack[j+<span class="source_int">1</span>].ParentPage = MenuStack[j].ParentPage;
+<a name="1256"></a>				MenuStack.Remove(j,<span class="source_int">1</span>);
+<a name="1257"></a>				break;
+<a name="1258"></a>			}
+<a name="1259"></a>		}
+<a name="1260"></a>	}
+<a name="1261"></a>}
+<a name="1262"></a>
+<a name="1263"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1264"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1265"></a><span class="source_comment">//  Main menu classes - should be overridden in child classes
+</span><a name="1266"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1267"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1268"></a>
+<a name="1269"></a>static event Validate();
+<a name="1270"></a>native static final function <span class="source_type">string</span> GetMainMenuClass();          <span class="source_comment">// Returns GameEngine.MainMenuClass
+</span><a name="1271"></a>static function <span class="source_type">string</span> GetSinglePlayerPage();
+<a name="1272"></a>static function <span class="source_type">string</span> GetServerBrowserPage();
+<a name="1273"></a>static function <span class="source_type">string</span> GetMultiplayerPage();
+<a name="1274"></a>static function <span class="source_type">string</span> GetInstantActionPage();
+<a name="1275"></a>static function <span class="source_type">string</span> GetModPage();
+<a name="1276"></a>static function <span class="source_type">string</span> GetSettingsPage();
+<a name="1277"></a>static function <span class="source_type">string</span> GetQuitPage();
+<a name="1278"></a>
+<a name="1279"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1280"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1281"></a><span class="source_comment">//  Keybind management
+</span><a name="1282"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1283"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1284"></a>
+<a name="1285"></a><span class="source_comment">// SetKeyBind( "Space", "Jump" ); return true if successful
+</span><a name="1286"></a>final function <span class="source_type">bool</span> SetKeyBind( <span class="source_type">string</span> BindKeyName, <span class="source_type">string</span> <span class="source_type">BindKeyValue</span> )
+<a name="1287"></a>{
+<a name="1288"></a>	ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand(<span class="source_string">"set Input"</span> @ BindKeyName @ <span class="source_type">BindKeyValue</span> );
+<a name="1289"></a>	return true;
+<a name="1290"></a>}
+<a name="1291"></a>
+<a name="1292"></a>final function <span class="source_type">bool</span> KeyNameFromIndex( <span class="source_type">byte</span> <span class="source_type">iKey</span>, out <span class="source_type">string</span> KeyName, out <span class="source_type">string</span> <span class="source_type">LocalizedKeyName</span> )
+<a name="1293"></a>{
+<a name="1294"></a>	KeyName = ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand(<span class="source_string">"KEYNAME"</span> @ <span class="source_type">iKey</span>);
+<a name="1295"></a>	<span class="source_type">LocalizedKeyName</span> = ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand(<span class="source_string">"LOCALIZEDKEYNAME"</span> @ <span class="source_type">iKey</span>);
+<a name="1296"></a>
+<a name="1297"></a>	return KeyName != <span class="source_string">""</span>;
+<a name="1298"></a>}
+<a name="1299"></a>
+<a name="1300"></a><span class="source_comment">// GetCurrentBind( "Space", CommandBoundToSpace ); return true if successful
+</span><a name="1301"></a>final function <span class="source_type">bool</span> GetCurrentBind( <span class="source_type">string</span> BindKeyName, out <span class="source_type">string</span> <span class="source_type">BindKeyValue</span> )
+<a name="1302"></a>{
+<a name="1303"></a>	if ( BindKeyName != <span class="source_string">""</span> )
+<a name="1304"></a>	{
+<a name="1305"></a>		<span class="source_type">BindKeyValue</span> = ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand(<span class="source_string">"KEYBINDING"</span> @ BindKeyName);
+<a name="1306"></a>		return <span class="source_type">BindKeyValue</span> != <span class="source_string">""</span>;
+<a name="1307"></a>	}
+<a name="1308"></a>
+<a name="1309"></a>	return false;
+<a name="1310"></a>}
+<a name="1311"></a>
+<a name="1312"></a><span class="source_comment">// GetAssignedKeys( "Jump", ArrayOfKeysThatPerformJump ); return true if successful
+</span><a name="1313"></a>final function <span class="source_type">bool</span> GetAssignedKeys( <span class="source_type">string</span> BindAlias, out array&lt;<span class="source_type">string</span>&gt; BindKeyNames, out array&lt;<span class="source_type">string</span>&gt; <span class="source_type">LocalizedBindKeyNames</span> )
+<a name="1314"></a>{
+<a name="1315"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">iKey</span>;
+<a name="1316"></a>	local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="1317"></a>
+<a name="1318"></a>	BindKeyNames.Length = <span class="source_int">0</span>;
+<a name="1319"></a>	<span class="source_type">LocalizedBindKeyNames</span>.Length = <span class="source_int">0</span>;
+<a name="1320"></a>	<span class="source_type">s</span> = ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand(<span class="source_string">"BINDINGTOKEY"</span> @ <span class="source_string">"\""</span> $ BindAlias $ <span class="source_string">"\""</span>);
+<a name="1321"></a>	if ( <span class="source_type">s</span> != <span class="source_string">""</span> )
+<a name="1322"></a>	{
+<a name="1323"></a>		Split(<span class="source_type">s</span>, <span class="source_string">","</span>, BindKeyNames);
+<a name="1324"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; BindKeyNames.Length; <span class="source_type">i</span>++ )
+<a name="1325"></a>		{
+<a name="1326"></a>			<span class="source_type">iKey</span> = <span class="source_type">int</span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand(<span class="source_string">"KEYNUMBER"</span> @ BindKeyNames[<span class="source_type">i</span>]));
+<a name="1327"></a>			if ( <span class="source_type">iKey</span> != -<span class="source_int">1</span> )
+<a name="1328"></a>				<span class="source_type">LocalizedBindKeyNames</span>[<span class="source_type">i</span>] = ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand(<span class="source_string">"LOCALIZEDKEYNAME"</span> @ <span class="source_type">iKey</span>);
+<a name="1329"></a>		}
+<a name="1330"></a>	}
+<a name="1331"></a>
+<a name="1332"></a>	return BindKeyNames.Length &gt; <span class="source_int">0</span>;
+<a name="1333"></a>}
+<a name="1334"></a>
+<a name="1335"></a><span class="source_comment">// SearchBinds( "switchweapon ", ArrayofAliasesThatBeginWithSwitchWeapon ); return true if successful
+</span><a name="1336"></a>final function <span class="source_type">bool</span> SearchBinds( <span class="source_type">string</span> BindAliasMask, out array&lt;<span class="source_type">string</span>&gt; <span class="source_type">BindAliases</span> )
+<a name="1337"></a>{
+<a name="1338"></a>	local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="1339"></a>
+<a name="1340"></a>	<span class="source_type">BindAliases</span>.Length = <span class="source_int">0</span>;
+<a name="1341"></a>	<span class="source_type">s</span> = ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand(<span class="source_string">"FINDKEYBINDS"</span> @ <span class="source_string">"\""</span> $ BindAliasMask $ <span class="source_string">"\""</span>);
+<a name="1342"></a>	if ( <span class="source_type">s</span> != <span class="source_string">""</span> )
+<a name="1343"></a>		Split(<span class="source_type">s</span>, <span class="source_string">","</span>, <span class="source_type">BindAliases</span>);
+<a name="1344"></a>
+<a name="1345"></a>	return <span class="source_type">BindAliases</span>.Length &gt; <span class="source_int">0</span>;
+<a name="1346"></a>}
+<a name="1347"></a>
+<a name="1348"></a>final function <span class="source_type">bool</span> KeyPressed( <span class="source_type"><a href="../engine/interactions.html#EInputKey" class="source">EInputKey</a></span> <span class="source_type">iKey</span> )
+<a name="1349"></a>{
+<a name="1350"></a>	return KeyDown[<span class="source_type">iKey</span>] != <span class="source_int">0</span>;
+<a name="1351"></a>}
+<a name="1352"></a>
+<a name="1353"></a><span class="source_comment">/** show a Question menu, when the page succesfully opens it returns the handle to it. by default the btnOk is used */</span>
+<a name="1354"></a>function <span class="source_type"><a href="../xinterface/guiquestionpage.html" class="source">GUIQuestionPage</a></span> ShowQuestionDialog(<span class="source_type">string</span> Question, optional <span class="source_type">byte</span> Buttons, optional <span class="source_type">byte</span> defButton)
+<a name="1355"></a>{
+<a name="1356"></a>	local <span class="source_type"><a href="../xinterface/guiquestionpage.html" class="source">GUIQuestionPage</a></span> QPage;
+<a name="1357"></a>
+<a name="1358"></a>	if (Buttons == <span class="source_int">0</span>) Buttons = <span class="source_int">1</span>;
+<a name="1359"></a>
+<a name="1360"></a>	if (OpenMenu(QuestionMenuClass))
+<a name="1361"></a>	{
+<a name="1362"></a>		QPage = <span class="source_type"><a href="../xinterface/guiquestionpage.html" class="source">GUIQuestionPage</a></span>(TopPage());
+<a name="1363"></a>		QPage.SetupQuestion(Question, Buttons, defButton);
+<a name="1364"></a>		return QPage;
+<a name="1365"></a>	}
+<a name="1366"></a>	return none;
+<a name="1367"></a>}
+<a name="1368"></a>
+<a name="1369"></a>defaultproperties
+<a name="1370"></a>{
+<a name="1371"></a>     FONT_NUM=<span class="source_int">9</span>
+<a name="1372"></a>     STYLE_NUM=<span class="source_int">30</span>
+<a name="1373"></a>     CURSOR_NUM=<span class="source_int">7</span>
+<a name="1374"></a>     MouseCursorOffset(<span class="source_int">1</span>)=(<span class="source_type">X</span>=<span class="source_int">0.500000</span>,<span class="source_type">Y</span>=<span class="source_int">0.500000</span>)
+<a name="1375"></a>     MouseCursorOffset(<span class="source_int">2</span>)=(<span class="source_type">X</span>=<span class="source_int">0.500000</span>,<span class="source_type">Y</span>=<span class="source_int">0.500000</span>)
+<a name="1376"></a>     MouseCursorOffset(<span class="source_int">3</span>)=(<span class="source_type">X</span>=<span class="source_int">0.500000</span>,<span class="source_type">Y</span>=<span class="source_int">0.500000</span>)
+<a name="1377"></a>     MouseCursorOffset(<span class="source_int">4</span>)=(<span class="source_type">X</span>=<span class="source_int">0.500000</span>,<span class="source_type">Y</span>=<span class="source_int">0.500000</span>)
+<a name="1378"></a>     MouseCursorOffset(<span class="source_int">5</span>)=(<span class="source_type">X</span>=<span class="source_int">0.500000</span>,<span class="source_type">Y</span>=<span class="source_int">0.500000</span>)
+<a name="1379"></a>     FontStack(<span class="source_int">0</span>)=<span class="source_type"><a href="../xinterface/ut2menufont.html" class="source">UT2MenuFont</a></span><span class="source_name">'XInterface.GUIController.GUIMenuFont'</span>
+<a name="1380"></a>     FontStack(<span class="source_int">1</span>)=<span class="source_type"><a href="../xinterface/ut2defaultfont.html" class="source">UT2DefaultFont</a></span><span class="source_name">'XInterface.GUIController.GUIDefaultFont'</span>
+<a name="1381"></a>     FontStack(<span class="source_int">2</span>)=<span class="source_type"><a href="../xinterface/ut2largefont.html" class="source">UT2LargeFont</a></span><span class="source_name">'XInterface.GUIController.GUILargeFont'</span>
+<a name="1382"></a>     FontStack(<span class="source_int">3</span>)=<span class="source_type"><a href="../xinterface/ut2headerfont.html" class="source">UT2HeaderFont</a></span><span class="source_name">'XInterface.GUIController.GUIHeaderFont'</span>
+<a name="1383"></a>     FontStack(<span class="source_int">4</span>)=<span class="source_type"><a href="../xinterface/ut2smallfont.html" class="source">UT2SmallFont</a></span><span class="source_name">'XInterface.GUIController.GUISmallFont'</span>
+<a name="1384"></a>     FontStack(<span class="source_int">5</span>)=<span class="source_type"><a href="../xinterface/ut2midgamefont.html" class="source">UT2MidGameFont</a></span><span class="source_name">'XInterface.GUIController.GUIMidGameFont'</span>
+<a name="1385"></a>     FontStack(<span class="source_int">6</span>)=<span class="source_type"><a href="../xinterface/ut2smallheaderfont.html" class="source">UT2SmallHeaderFont</a></span><span class="source_name">'XInterface.GUIController.GUISmallHeaderFont'</span>
+<a name="1386"></a>     FontStack(<span class="source_int">7</span>)=<span class="source_type"><a href="../xinterface/ut2serverlistfont.html" class="source">UT2ServerListFont</a></span><span class="source_name">'XInterface.GUIController.GUIServerListFont'</span>
+<a name="1387"></a>     FontStack(<span class="source_int">8</span>)=<span class="source_type"><a href="../xinterface/ut2ircfont.html" class="source">UT2IRCFont</a></span><span class="source_name">'XInterface.GUIController.GUIIRCFont'</span>
+<a name="1388"></a>     DefaultStyleNames(<span class="source_int">0</span>)=<span class="source_string">"XInterface.STY_RoundButton"</span>
+<a name="1389"></a>     DefaultStyleNames(<span class="source_int">1</span>)=<span class="source_string">"XInterface.STY_RoundScaledButton"</span>
+<a name="1390"></a>     DefaultStyleNames(<span class="source_int">2</span>)=<span class="source_string">"XInterface.STY_SquareButton"</span>
+<a name="1391"></a>     DefaultStyleNames(<span class="source_int">3</span>)=<span class="source_string">"XInterface.STY_ListBox"</span>
+<a name="1392"></a>     DefaultStyleNames(<span class="source_int">4</span>)=<span class="source_string">"XInterface.STY_ScrollZone"</span>
+<a name="1393"></a>     DefaultStyleNames(<span class="source_int">5</span>)=<span class="source_string">"XInterface.STY_TextButton"</span>
+<a name="1394"></a>     DefaultStyleNames(<span class="source_int">6</span>)=<span class="source_string">"XInterface.STY_Page"</span>
+<a name="1395"></a>     DefaultStyleNames(<span class="source_int">7</span>)=<span class="source_string">"XInterface.STY_Header"</span>
+<a name="1396"></a>     DefaultStyleNames(<span class="source_int">8</span>)=<span class="source_string">"XInterface.STY_Footer"</span>
+<a name="1397"></a>     DefaultStyleNames(<span class="source_int">9</span>)=<span class="source_string">"XInterface.STY_TabButton"</span>
+<a name="1398"></a>     DefaultStyleNames(<span class="source_int">10</span>)=<span class="source_string">"XInterface.STY_CharButton"</span>
+<a name="1399"></a>     DefaultStyleNames(<span class="source_int">11</span>)=<span class="source_string">"XInterface.STY_ArrowLeft"</span>
+<a name="1400"></a>     DefaultStyleNames(<span class="source_int">12</span>)=<span class="source_string">"XInterface.STY_ArrowRight"</span>
+<a name="1401"></a>     DefaultStyleNames(<span class="source_int">13</span>)=<span class="source_string">"XInterface.STY_ServerBrowserGrid"</span>
+<a name="1402"></a>     DefaultStyleNames(<span class="source_int">14</span>)=<span class="source_string">"XInterface.STY_NoBackground"</span>
+<a name="1403"></a>     DefaultStyleNames(<span class="source_int">15</span>)=<span class="source_string">"XInterface.STY_ServerBrowserGridHeader"</span>
+<a name="1404"></a>     DefaultStyleNames(<span class="source_int">16</span>)=<span class="source_string">"XInterface.STY_SliderCaption"</span>
+<a name="1405"></a>     DefaultStyleNames(<span class="source_int">17</span>)=<span class="source_string">"XInterface.STY_LadderButton"</span>
+<a name="1406"></a>     DefaultStyleNames(<span class="source_int">18</span>)=<span class="source_string">"XInterface.STY_LadderButtonHi"</span>
+<a name="1407"></a>     DefaultStyleNames(<span class="source_int">19</span>)=<span class="source_string">"XInterface.STY_LadderButtonActive"</span>
+<a name="1408"></a>     DefaultStyleNames(<span class="source_int">20</span>)=<span class="source_string">"XInterface.STY_BindBox"</span>
+<a name="1409"></a>     DefaultStyleNames(<span class="source_int">21</span>)=<span class="source_string">"XInterface.STY_SquareBar"</span>
+<a name="1410"></a>     DefaultStyleNames(<span class="source_int">22</span>)=<span class="source_string">"XInterface.STY_MidGameButton"</span>
+<a name="1411"></a>     DefaultStyleNames(<span class="source_int">23</span>)=<span class="source_string">"XInterface.STY_TextLabel"</span>
+<a name="1412"></a>     DefaultStyleNames(<span class="source_int">24</span>)=<span class="source_string">"XInterface.STY_ComboListBox"</span>
+<a name="1413"></a>     DefaultStyleNames(<span class="source_int">25</span>)=<span class="source_string">"XInterface.STY_SquareMenuButton"</span>
+<a name="1414"></a>     DefaultStyleNames(<span class="source_int">26</span>)=<span class="source_string">"XInterface.STY_IRCText"</span>
+<a name="1415"></a>     DefaultStyleNames(<span class="source_int">27</span>)=<span class="source_string">"XInterface.STY_IRCEntry"</span>
+<a name="1416"></a>     DefaultStyleNames(<span class="source_int">28</span>)=<span class="source_string">"XInterface.STY_ListSelection"</span>
+<a name="1417"></a>     DefaultStyleNames(<span class="source_int">29</span>)=<span class="source_string">"XInterface.STY_EditBox"</span>
+<a name="1418"></a>     DesignModeHints(<span class="source_int">0</span>)=(Key=<span class="source_string">" Key"</span>,Description=<span class="source_string">"                                Description"</span>)
+<a name="1419"></a>     DesignModeHints(<span class="source_int">1</span>)=(Key=<span class="source_string">" (F1)"</span>,Description=<span class="source_string">"                                View this help screen"</span>)
+<a name="1420"></a>     DesignModeHints(<span class="source_int">2</span>)=(Key=<span class="source_string">" Ctrl + Alt + D"</span>,Description=<span class="source_string">"                      Toggles design mode"</span>)
+<a name="1421"></a>     DesignModeHints(<span class="source_int">3</span>)=(Key=<span class="source_string">" Ctrl + Alt + E"</span>,Description=<span class="source_string">"                      Toggles property editor mode"</span>)
+<a name="1422"></a>     DesignModeHints(<span class="source_int">4</span>)=(Key=<span class="source_string">" [Ctrl +] H"</span>,Description=<span class="source_string">"                          Toggles active/focused info"</span>)
+<a name="1423"></a>     DesignModeHints(<span class="source_int">5</span>)=(Key=<span class="source_string">" [Ctrl +] I"</span>,Description=<span class="source_string">"                          Toggle interactive mode"</span>)
+<a name="1424"></a>     DesignModeHints(<span class="source_int">6</span>)=(Key=<span class="source_string">" [Ctrl +] P"</span>,Description=<span class="source_string">"                          Toggles full MenuOwner chains for active/focused"</span>)
+<a name="1425"></a>     DesignModeHints(<span class="source_int">7</span>)=(Key=<span class="source_string">" [Ctrl +] C"</span>,Description=<span class="source_string">"                          Copy MoveControl position to clipboard"</span>)
+<a name="1426"></a>     DesignModeHints(<span class="source_int">8</span>)=(Key=<span class="source_string">" [Ctrl +] X"</span>,Description=<span class="source_string">"                          Export MoveControl to clipboard"</span>)
+<a name="1427"></a>     DesignModeHints(<span class="source_int">9</span>)=(Key=<span class="source_string">" [Ctrl +] U"</span>,Description=<span class="source_string">"                          Refresh the property window in the designer"</span>)
+<a name="1428"></a>     DesignModeHints(<span class="source_int">10</span>)=(Key=<span class="source_string">" [Ctrl +] Up/Down/Left/Right"</span>,Description=<span class="source_string">"         Reposition MoveControl using arrow keys"</span>)
+<a name="1429"></a>     DesignModeHints(<span class="source_int">11</span>)=(Key=<span class="source_string">" [Ctrl +] +/-"</span>,Description=<span class="source_string">"                        Resize MoveControl vertically"</span>)
+<a name="1430"></a>     DesignModeHints(<span class="source_int">12</span>)=(Key=<span class="source_string">" [Ctrl +] Num+/Num-"</span>,Description=<span class="source_string">"                  Resize selected component horizontally"</span>)
+<a name="1431"></a>     DesignModeHints(<span class="source_int">13</span>)=(Key=<span class="source_string">" [Ctrl +] WheelUp"</span>,Description=<span class="source_string">"                    Set MoveControl to MoveControl's menuowner"</span>)
+<a name="1432"></a>     DesignModeHints(<span class="source_int">14</span>)=(Key=<span class="source_string">" [Ctrl +] WheenDown"</span>,Description=<span class="source_string">"                  Set MoveControl to MoveControl's focused control"</span>)
+<a name="1433"></a>     DesignModeHints(<span class="source_int">15</span>)=(Key=<span class="source_string">" [(Ctrl + Alt) +] MouseX/Y+LMouse"</span>,Description=<span class="source_string">"    Reposition MoveControl using mouse"</span>)
+<a name="1434"></a>     DesignModeHints(<span class="source_int">16</span>)=(Key=<span class="source_string">" (Shift)"</span>,Description=<span class="source_string">"                             Hides all design mode indicators"</span>)
+<a name="1435"></a>     DesignModeHints(<span class="source_int">17</span>)=(Key=<span class="source_string">" (Ctrl + Alt)"</span>,Description=<span class="source_string">"                        View focus chain"</span>)
+<a name="1436"></a>     DesignModeHints(<span class="source_int">18</span>)=(Key=<span class="source_string">" [Ctrl +] Tab"</span>,Description=<span class="source_string">"                        Select new MoveControl"</span>)
+<a name="1437"></a>     DesignModeHints(<span class="source_int">19</span>)=(Key=<span class="source_string">" [Ctrl +] LMouse"</span>,Description=<span class="source_string">"                     Select new MoveControl"</span>)
+<a name="1438"></a>     MenuMouseSens=<span class="source_int">1.000000</span>
+<a name="1439"></a>     DblClickWindow=<span class="source_int">0.500000</span>
+<a name="1440"></a>     ButtonRepeatDelay=<span class="source_int">0.250000</span>
+<a name="1441"></a>     FastCursorStep=<span class="source_int">1</span>
+<a name="1442"></a>     CursorStep=<span class="source_int">1</span>
+<a name="1443"></a>     MouseOverSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'KF_MenuSnd.Generic.msfxMouseOver'</span>
+<a name="1444"></a>     ClickSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'KF_MenuSnd.Generic.msfxMouseClick'</span>
+<a name="1445"></a>     EditSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'KF_MenuSnd.Generic.msfxEdit'</span>
+<a name="1446"></a>     UpSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'KF_MenuSnd.Generic.msfxUp'</span>
+<a name="1447"></a>     DownSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'KF_MenuSnd.Generic.msfxDown'</span>
+<a name="1448"></a>     WhiteBorder=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.WhiteBorder'</span>
+<a name="1449"></a>     RequestDataMenu=<span class="source_string">"GUI2K4.UT2K4GetDataMenu"</span>
+<a name="1450"></a>     ArrayPropertyMenu=<span class="source_string">"GUI2K4.GUIArrayPropPage"</span>
+<a name="1451"></a>     DynArrayPropertyMenu=<span class="source_string">"GUI2K4.GUIDynArrayPage"</span>
+<a name="1452"></a>     FilterMenu=<span class="source_string">"GUI2K4.UT2K4_FilterListPage"</span>
+<a name="1453"></a>     MapVotingMenu=<span class="source_string">"xVoting.MapVotingPage"</span>
+<a name="1454"></a>     KickVotingMenu=<span class="source_string">"xVoting.KickVotingPage"</span>
+<a name="1455"></a>     MatchSetupMenu=<span class="source_string">"xVoting.MatchConfigPage"</span>
+<a name="1456"></a>     EditFavoriteMenu=<span class="source_string">"GUI2K4.EditFavoritePage"</span>
+<a name="1457"></a>     DesignerMenu=<span class="source_string">"GUIDesigner.PropertyManager"</span>
+<a name="1458"></a>     bModulateStackedMenus=True
+<a name="1459"></a>     bHighlightCurrent=True
+<a name="1460"></a>     bCurMenuInitialized=True
+<a name="1461"></a>     LCDLogo=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'G15LCD.Logos.BWLogoRGB8A'</span>
+<a name="1462"></a>     LCDTinyFont=<span class="source_type">Font</span><span class="source_name">'Engine.DefaultFont'</span>
+<a name="1463"></a>     LCDSmallFont=<span class="source_type">Font</span><span class="source_name">'G15LCDFonts.LCDSmallFont'</span>
+<a name="1464"></a>     LCDMedFont=<span class="source_type">Font</span><span class="source_name">'G15LCDFonts.LCDMedFont'</span>
+<a name="1465"></a>     LCDLargeFont=<span class="source_type">Font</span><span class="source_name">'G15LCDFonts.LCDLargeFont'</span>
+<a name="1466"></a>     NetworkMsgMenu=<span class="source_string">"GUI2K4.UT2K4NetworkStatusMsg"</span>
+<a name="1467"></a>     QuestionMenuClass=<span class="source_string">"XInterface.GUIQuestionPage"</span>
+<a name="1468"></a>}
+<a name="1469"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guicontroller.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUIController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guicontextmenu.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guieditbox.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:02.379 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

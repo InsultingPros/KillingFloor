@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMutators.KFGoreFastMut</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmutators/kfmutators-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmutators/kfgorefastmut.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFGoreFastMut">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmutators/kffpmut.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmutators/kfsirenmut.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmutators/kfgorefastmut.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmutators/kfmutators-overview.html">KFMutators</a>.<a href="../kfmutators/kfgorefastmut.html">KFGoreFastMut</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//-----------------------------------------------------------
+</span><a name="2"></a><span class="source_comment">//
+</span><a name="3"></a><span class="source_comment">//-----------------------------------------------------------
+</span><a name="4"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmutators/kfgorefastmut.html" class="source">KFGoreFastMut</a></span> extends <span class="source_type"><a href="../engine/mutator.html" class="source">Mutator</a></span>;
+<a name="5"></a>
+<a name="6"></a>function PostBeginPlay()
+<a name="7"></a>{
+<a name="8"></a>	SetTimer(<span class="source_int">0.1</span>,False);
+<a name="9"></a>}
+<a name="10"></a>function Timer()
+<a name="11"></a>{
+<a name="12"></a>	local <span class="source_type"><a href="../kfmod/kfgametype.html" class="source">KFGameType</a></span> KF;
+<a name="13"></a>	local <span class="source_type">byte</span> <span class="source_type">i</span>;
+<a name="14"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>&gt; <span class="source_type">MC</span>;
+<a name="15"></a>	local <span class="source_type">int</span> MSquadLength;
+<a name="16"></a>
+<a name="17"></a>	KF = <span class="source_type"><a href="../kfmod/kfgametype.html" class="source">KFGameType</a></span>(<span class="source_type">Level</span>.Game);
+<a name="18"></a>	<span class="source_type">MC</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>&gt;(DynamicLoadObject(KF.GetEventGoreFastClassName(),<span class="source_type">Class</span><span class="source_name">'Class'</span>));
+<a name="19"></a>	if ( KF!=None && <span class="source_type">MC</span>!=None )
+<a name="20"></a>	{
+<a name="21"></a>		<span class="source_comment">// groups of monsters that will be spawned
+</span><a name="22"></a>		KF.InitSquads.Length = <span class="source_int">1</span>;
+<a name="23"></a>		MSquadLength = Min( <span class="source_int">8</span>, KF.MaxZombiesOnce );
+<a name="24"></a>		KF.InitSquads[<span class="source_int">0</span>].MSquad.Length = MSquadLength;
+<a name="25"></a>		for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;MSquadLength; <span class="source_type">i</span>++ )
+<a name="26"></a>			KF.InitSquads[<span class="source_int">0</span>].MSquad[<span class="source_type">i</span>] = <span class="source_type">MC</span>;
+<a name="27"></a>	}
+<a name="28"></a>	Destroy();
+<a name="29"></a>}
+<a name="30"></a>
+<a name="31"></a>defaultproperties
+<a name="32"></a>{
+<a name="33"></a>     GroupName=<span class="source_string">"KF-MonsterMut"</span>
+<a name="34"></a>     <span class="source_type">FriendlyName</span>=<span class="source_string">"Gored Fast"</span>
+<a name="35"></a>     Description=<span class="source_string">"Only GoreFasts will appear during the game."</span>
+<a name="36"></a>}
+<a name="37"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmutators/kfmutators-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmutators/kfgorefastmut.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFGoreFastMut">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmutators/kffpmut.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmutators/kfsirenmut.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:03.453 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

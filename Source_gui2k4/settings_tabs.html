@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.Settings_Tabs</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/settings_tabs.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Settings_Tabs">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/serverbrowsermclistbox.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/simplefilterpage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/settings_tabs.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/settings_tabs.html">Settings_Tabs</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//  Base class for all settings pages
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">//  Created by Ron Prestenback
+</span><a name="5"></a><span class="source_comment">//  © 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="6"></a><span class="source_comment">//==============================================================================
+</span><a name="7"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/settings_tabs.html" class="source">Settings_Tabs</a></span> extends <span class="source_type"><a href="../xinterface/ut2k4tabpanel.html" class="source">UT2K4TabPanel</a></span>;
+<a name="8"></a>
+<a name="9"></a><span class="source_comment">//var automated GUIImage iBackground;
+</span><a name="10"></a>
+<a name="11"></a>var <span class="source_type"><a href="../xinterface/guifooter.html" class="source">GUIFooter</a></span>           t_Footer;
+<a name="12"></a>var <span class="source_type"><a href="../gui2k4/ut2k4settingspage.html" class="source">UT2K4SettingsPage</a></span>   Setting;
+<a name="13"></a>var <span class="source_type">bool</span>                bAlwaysApply;
+<a name="14"></a>var <span class="source_type">bool</span>                bNeedApply;
+<a name="15"></a>var globalconfig <span class="source_type">bool</span>   bExpert;
+<a name="16"></a>
+<a name="17"></a>var <span class="source_type">string</span>              PerformanceWarningMenu;
+<a name="18"></a>var localized <span class="source_type">string</span>    PerformanceWarningText;
+<a name="19"></a>var <span class="source_type">float</span>               WarningCounter, WarningLength;
+<a name="20"></a>
+<a name="21"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="22"></a>{
+<a name="23"></a>    if ( <span class="source_type"><a href="../gui2k4/ut2k4settingspage.html" class="source">UT2K4SettingsPage</a></span>(<span class="source_type">MyOwner</span>.MenuOwner) != None )
+<a name="24"></a>    {
+<a name="25"></a>        Setting = <span class="source_type"><a href="../gui2k4/ut2k4settingspage.html" class="source">UT2K4SettingsPage</a></span>(<span class="source_type">MyOwner</span>.MenuOwner);
+<a name="26"></a>        bAlwaysApply = bAlwaysApply && Setting.bApplyImmediately;
+<a name="27"></a>        t_Footer = Setting.t_Footer;
+<a name="28"></a>    }
+<a name="29"></a>
+<a name="30"></a>    Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="31"></a>}
+<a name="32"></a>
+<a name="33"></a><span class="source_comment">// To catch any weirdness
+</span><a name="34"></a>event Opened(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="35"></a>{
+<a name="36"></a>    if ( (Setting == None || t_Footer == None) && <span class="source_type"><a href="../gui2k4/ut2k4settingspage.html" class="source">UT2K4SettingsPage</a></span>(<span class="source_type">Sender</span>) != None )
+<a name="37"></a>    {
+<a name="38"></a>        Setting = <span class="source_type"><a href="../gui2k4/ut2k4settingspage.html" class="source">UT2K4SettingsPage</a></span>(<span class="source_type">Sender</span>);
+<a name="39"></a>        bAlwaysApply = bAlwaysApply && Setting.bApplyImmediately;
+<a name="40"></a>        t_Footer = Setting.t_Footer;
+<a name="41"></a>    }
+<a name="42"></a>
+<a name="43"></a>    Super.Opened(<span class="source_type">Sender</span>);
+<a name="44"></a>}
+<a name="45"></a>
+<a name="46"></a>function ShowPanel(<span class="source_type">bool</span> <span class="source_type">bShow</span>)
+<a name="47"></a>{
+<a name="48"></a>    Super.ShowPanel(<span class="source_type">bShow</span>);
+<a name="49"></a>
+<a name="50"></a>    if (<span class="source_type">bShow</span>)
+<a name="51"></a>    {
+<a name="52"></a>    	if ( Setting.b_Apply != None )
+<a name="53"></a>    	{
+<a name="54"></a>	        if ( bAlwaysApply )
+<a name="55"></a>	        {
+<a name="56"></a>	        	DisableComponent(Setting.b_Apply);
+<a name="57"></a>	        	Setting.b_Apply.Hide();
+<a name="58"></a>	        	Setting.GetSizingButton();
+<a name="59"></a>	        }
+<a name="60"></a>
+<a name="61"></a>	        else
+<a name="62"></a>	        {
+<a name="63"></a>	        	Setting.b_Apply.Show();
+<a name="64"></a>	        	Setting.GetSizingButton();
+<a name="65"></a>
+<a name="66"></a>	            if (bNeedApply)
+<a name="67"></a>	                EnableComponent(Setting.b_Apply);
+<a name="68"></a>	            else DisableComponent(Setting.b_Apply);
+<a name="69"></a>	        }
+<a name="70"></a>	    }
+<a name="71"></a>
+<a name="72"></a>        Setting.t_Header.SetCaption(Setting.PageCaption @ <span class="source_string">"|"</span> @ PanelCaption);
+<a name="73"></a>    }
+<a name="74"></a>
+<a name="75"></a>    else if (!bAlwaysApply)
+<a name="76"></a>    {
+<a name="77"></a>        if (Setting.b_Apply.MenuState != MSAT_Disabled)
+<a name="78"></a>            bNeedApply = True;
+<a name="79"></a>        else bNeedApply = False;
+<a name="80"></a>    }
+<a name="81"></a>}
+<a name="82"></a>
+<a name="83"></a>function AcceptClicked()
+<a name="84"></a>{
+<a name="85"></a>    if (!bAlwaysApply)
+<a name="86"></a>        DisableComponent(Setting.b_Apply);
+<a name="87"></a>
+<a name="88"></a>    SaveSettings();
+<a name="89"></a>}
+<a name="90"></a>
+<a name="91"></a>event Closed(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">bool</span> <span class="source_type">bCancelled</span>)
+<a name="92"></a>{
+<a name="93"></a>	Super.Closed(<span class="source_type">Sender</span>, <span class="source_type">bCancelled</span>);
+<a name="94"></a>	if ( bAlwaysApply )
+<a name="95"></a>	{
+<a name="96"></a>		AcceptClicked();
+<a name="97"></a>		return;
+<a name="98"></a>	}
+<a name="99"></a>
+<a name="100"></a>	if (!<span class="source_type">bCancelled</span>)
+<a name="101"></a>		SaveSettings();
+<a name="102"></a>}
+<a name="103"></a>
+<a name="104"></a>function SaveSettings();
+<a name="105"></a>function ResetClicked();
+<a name="106"></a>
+<a name="107"></a>function <span class="source_type">string</span> GetNativeClassName(<span class="source_type">string</span> VarName)
+<a name="108"></a>{
+<a name="109"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="110"></a>	local <span class="source_type">string</span> <span class="source_type">Str</span>;
+<a name="111"></a>
+<a name="112"></a>	<span class="source_type">Str</span> = PlayerOwner().ConsoleCommand(<span class="source_string">"get ini:"</span>$VarName@<span class="source_string">"Class"</span>);
+<a name="113"></a>	<span class="source_type">i</span> = InStr(<span class="source_type">Str</span>, <span class="source_string">"'"</span>);
+<a name="114"></a>	if (<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="115"></a>	{
+<a name="116"></a>		<span class="source_type">Str</span> = Mid(<span class="source_type">Str</span>, InStr(<span class="source_type">Str</span>, <span class="source_string">"'"</span>) + <span class="source_int">1</span>);
+<a name="117"></a>		<span class="source_type">Str</span> = Left(<span class="source_type">Str</span>, <span class="source_type">Len</span>(<span class="source_type">Str</span>) - <span class="source_int">1</span>);
+<a name="118"></a>	}
+<a name="119"></a>
+<a name="120"></a>	return <span class="source_type">Str</span>;
+<a name="121"></a>}
+<a name="122"></a>
+<a name="123"></a>function ShowPerformanceWarning( optional <span class="source_type">float</span> <span class="source_type">Seconds</span> )
+<a name="124"></a>{
+<a name="125"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None || default.bExpert )
+<a name="126"></a>		return;
+<a name="127"></a>
+<a name="128"></a>	if ( !<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(PerformanceWarningMenu, <span class="source_type">string</span>(<span class="source_type">Seconds</span>)) )
+<a name="129"></a>	{
+<a name="130"></a>	    if ( <span class="source_type">Seconds</span> &lt;= <span class="source_int">0.0</span> )
+<a name="131"></a>		   	<span class="source_type">Seconds</span>	= <span class="source_int">3.5</span>;
+<a name="132"></a>
+<a name="133"></a>		WarningLength = <span class="source_type">Seconds</span>;
+<a name="134"></a>		WarningCounter = <span class="source_int">0.0</span>;
+<a name="135"></a>
+<a name="136"></a>		SetTimer( <span class="source_int">0.1</span>, True );
+<a name="137"></a>
+<a name="138"></a>		OnRendered = DrawPerfWarn;
+<a name="139"></a>	}
+<a name="140"></a>}
+<a name="141"></a>
+<a name="142"></a>event Timer()
+<a name="143"></a>{
+<a name="144"></a>	WarningCounter += <span class="source_int">0.1</span>;
+<a name="145"></a>}
+<a name="146"></a>
+<a name="147"></a>function DrawPerfWarn( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span> )
+<a name="148"></a>{
+<a name="149"></a>	<span class="source_type">C</span>.Style = <span class="source_int">5</span>;	<span class="source_comment">// Alpha
+</span><a name="150"></a>	<span class="source_type">C</span>.SetDrawColor( <span class="source_int">250</span>, <span class="source_int">250</span>, <span class="source_int">250</span>, <span class="source_int">255</span> * FMax( ((WarningLength - WarningCounter)/WarningLength), <span class="source_int">0.0</span> ) );
+<a name="151"></a>	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.GetMenuFont(<span class="source_string">"UT2SmallHeaderFont"</span>).GetFont(<span class="source_type">C</span>.SizeX);
+<a name="152"></a>	<span class="source_type">C</span>.DrawTextJustified( PerformanceWarningText, <span class="source_int">1</span>, ActualLeft(), ActualTop(), ActualLeft() + ActualWidth(), (ActualTop() + ActualHeight()) * <span class="source_int">0.8</span> );
+<a name="153"></a>	if ( WarningCounter &gt;= WarningLength )
+<a name="154"></a>	{
+<a name="155"></a>		WarningLength  = <span class="source_int">0.0</span>;
+<a name="156"></a>		WarningCounter = <span class="source_int">0.0</span>;
+<a name="157"></a>		OnRendered = None;
+<a name="158"></a>		KillTimer();
+<a name="159"></a>	}
+<a name="160"></a>}
+<a name="161"></a>
+<a name="162"></a>function InternalOnChange(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="163"></a>{
+<a name="164"></a>	if ( !bAlwaysApply && Setting.b_Apply != None )
+<a name="165"></a>		EnableComponent(Setting.b_Apply);
+<a name="166"></a>}
+<a name="167"></a>
+<a name="168"></a>defaultproperties
+<a name="169"></a>{
+<a name="170"></a>     bAlwaysApply=True
+<a name="171"></a>     PerformanceWarningMenu=<span class="source_string">"GUI2K4.UT2K4PerformWarn"</span>
+<a name="172"></a>     PerformanceWarningText=<span class="source_string">"The change you are making may adversely affect your performance."</span>
+<a name="173"></a>     FadeInTime=<span class="source_int">0.150000</span>
+<a name="174"></a>}
+<a name="175"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/settings_tabs.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Settings_Tabs">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/serverbrowsermclistbox.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/simplefilterpage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:08.160 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

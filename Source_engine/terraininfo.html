@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.TerrainInfo</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/terraininfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#TerrainInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/teleporter.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/terrainmaterial.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/terraininfo.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/terraininfo.html">TerrainInfo</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/terraininfo.html" class="source">TerrainInfo</a></span> extends <span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>
+<a name="2"></a>	noexport
+<a name="3"></a>	showcategories(<span class="source_type"><a href="../utv2004c/utvreplication.html#Movement" class="source">Movement</a></span>,Collision,Lighting,LightColor,Karma,Force)
+<a name="4"></a>	native
+<a name="5"></a>	placeable;
+<a name="6"></a>
+<a name="7"></a><span class="source_macro">#exec Texture Import File=Textures\Terrain_info.pcx Name=S_TerrainInfo Mips=Off MASKED=1
+</span><a name="8"></a><span class="source_macro">#exec Texture Import File=Textures\S_WhiteCircle.pcx Name=S_WhiteCircle Mips=Off MASKED=1
+</span><a name="9"></a><span class="source_macro">#exec Texture Import File=Textures\Bad.pcx Name=TerrainBad Mips=Off
+</span><a name="10"></a><span class="source_macro">#exec Texture Import File=Textures\DecoPaint.pcx Name=DecoPaint Mips=Off
+</span><a name="11"></a>
+<a name="12"></a>struct <span class="source_type"><a href="../engine/terraininfo.html#NormalPair" class="source">NormalPair</a></span>
+<a name="13"></a>{
+<a name="14"></a>	var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Normal1;
+<a name="15"></a>	var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Normal2;
+<a name="16"></a>};
+<a name="17"></a>
+<a name="18"></a>enum <span class="source_type"><a href="../engine/terraininfo.html#ETexMapAxis" class="source">ETexMapAxis</a></span>
+<a name="19"></a>{
+<a name="20"></a>	TEXMAPAXIS_XY,
+<a name="21"></a>	TEXMAPAXIS_XZ,
+<a name="22"></a>	TEXMAPAXIS_YZ,
+<a name="23"></a>};
+<a name="24"></a>
+<a name="25"></a>enum <span class="source_type"><a href="../engine/terraininfo.html#ESortOrder" class="source">ESortOrder</a></span>
+<a name="26"></a>{
+<a name="27"></a>	SORT_NoSort,
+<a name="28"></a>	SORT_BackToFront,
+<a name="29"></a>	SORT_FrontToBack
+<a name="30"></a>};
+<a name="31"></a>
+<a name="32"></a>struct <span class="source_type"><a href="../engine/terraininfo.html#TerrainLayer" class="source">TerrainLayer</a></span>
+<a name="33"></a>{
+<a name="34"></a>	var() <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>	<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>;
+<a name="35"></a>	var() <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>	AlphaMap;
+<a name="36"></a>	var() <span class="source_type">float</span>		UScale;
+<a name="37"></a>	var() <span class="source_type">float</span>		VScale;
+<a name="38"></a>	var() <span class="source_type">float</span>		UPan;
+<a name="39"></a>	var() <span class="source_type">float</span>		VPan;
+<a name="40"></a>	var() <span class="source_type"><a href="../engine/terraininfo.html#ETexMapAxis" class="source">ETexMapAxis</a></span> TextureMapAxis;
+<a name="41"></a>	var() <span class="source_type">float</span>		TextureRotation;
+<a name="42"></a>	var() <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span>	LayerRotation;
+<a name="43"></a>	var   <span class="source_type"><a href="../core/object.html#Matrix" class="source">Matrix</a></span>	TerrainMatrix;
+<a name="44"></a>	var() <span class="source_type">float</span>		KFriction;
+<a name="45"></a>	var() <span class="source_type">float</span>		KRestitution;
+<a name="46"></a>	var   transient <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>	LayerWeightMap;
+<a name="47"></a>};
+<a name="48"></a>
+<a name="49"></a>struct <span class="source_type"><a href="../engine/terraininfo.html#DecorationLayer" class="source">DecorationLayer</a></span>
+<a name="50"></a>{
+<a name="51"></a>	var() <span class="source_type">int</span>			ShowOnTerrain;
+<a name="52"></a>	var() <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>		ScaleMap;
+<a name="53"></a>	var() <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>		DensityMap;
+<a name="54"></a>	var() <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>		ColorMap;
+<a name="55"></a>	var() <span class="source_type">StaticMesh</span>	<span class="source_type">StaticMesh</span>;
+<a name="56"></a>	var() <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span>	ScaleMultiplier;
+<a name="57"></a>	var() <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span>			FadeoutRadius;
+<a name="58"></a>	var() <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span>			DensityMultiplier;
+<a name="59"></a>	var() <span class="source_type">int</span>			MaxPerQuad;
+<a name="60"></a>	var() <span class="source_type">int</span>			Seed;
+<a name="61"></a>	var() <span class="source_type">int</span>			AlignToTerrain;
+<a name="62"></a>	var() <span class="source_type"><a href="../engine/terraininfo.html#ESortOrder" class="source">ESortOrder</a></span>	DrawOrder;
+<a name="63"></a>	var() <span class="source_type">int</span>			ShowOnInvisibleTerrain;
+<a name="64"></a>	var() <span class="source_type">int</span>			LitDirectional;
+<a name="65"></a>	var() <span class="source_type">int</span>			DisregardTerrainLighting;
+<a name="66"></a>	var() <span class="source_type">int</span>			RandomYaw;
+<a name="67"></a>	var() <span class="source_type"><a href="../core/object.html#EDetailMode" class="source">EDetailMode</a></span>	DetailMode;
+<a name="68"></a>	<span class="source_comment">//RO JUSTIN H - GIVES MAPPERS ABILITY TO FORCE DECOLAYER RENDERING
+</span><a name="69"></a>	var() <span class="source_type">int</span>			ForceDraw;
+<a name="70"></a>};
+<a name="71"></a>
+<a name="72"></a>
+<a name="73"></a>struct <span class="source_type"><a href="../engine/terraininfo.html#DecoInfo" class="source">DecoInfo</a></span>
+<a name="74"></a>{
+<a name="75"></a>	var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>	Location;
+<a name="76"></a>	var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>	<span class="source_type">Rotation</span>;
+<a name="77"></a>	var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>	<span class="source_type"><a href="../core/object.html#Scale" class="source">Scale</a></span>;
+<a name="78"></a>	var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>	TempScale;
+<a name="79"></a>	var <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>	<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>;
+<a name="80"></a>	var <span class="source_type">int</span>		<span class="source_type">Distance</span>;
+<a name="81"></a>}; 
+<a name="82"></a>
+<a name="83"></a>struct <span class="source_type"><a href="../engine/terraininfo.html#DecoSectorInfo" class="source">DecoSectorInfo</a></span>
+<a name="84"></a>{
+<a name="85"></a>	var array&lt;<span class="source_type"><a href="../engine/terraininfo.html#DecoInfo" class="source">DecoInfo</a></span>&gt;	<span class="source_type"><a href="../engine/terraininfo.html#DecoInfo" class="source">DecoInfo</a></span>;
+<a name="86"></a>	var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>			Location;
+<a name="87"></a>	var <span class="source_type">float</span>			<span class="source_type">Radius</span>;
+<a name="88"></a>};
+<a name="89"></a>
+<a name="90"></a>struct <span class="source_type"><a href="../engine/terraininfo.html#DecorationLayerData" class="source">DecorationLayerData</a></span>
+<a name="91"></a>{
+<a name="92"></a>	var array&lt;<span class="source_type"><a href="../engine/terraininfo.html#DecoSectorInfo" class="source">DecoSectorInfo</a></span>&gt; Sectors;
+<a name="93"></a>};
+<a name="94"></a>
+<a name="95"></a>var() <span class="source_type">int</span>						TerrainSectorSize;
+<a name="96"></a>var() <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>					TerrainMap;
+<a name="97"></a>var() <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>					VertexLightMap; <span class="source_comment">// sjs
+</span><a name="98"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>					TerrainScale;
+<a name="99"></a>var() <span class="source_type"><a href="../engine/terraininfo.html#TerrainLayer" class="source">TerrainLayer</a></span>				Layers[<span class="source_int">32</span>];
+<a name="100"></a>var() array&lt;<span class="source_type"><a href="../engine/terraininfo.html#DecorationLayer" class="source">DecorationLayer</a></span>&gt;	DecoLayers;
+<a name="101"></a>var() <span class="source_type">float</span>						DecoLayerOffset;
+<a name="102"></a>var() <span class="source_type">bool</span>						Inverted;
+<a name="103"></a>
+<a name="104"></a><span class="source_comment">// This option means use half the graphics res for Karma collision.
+</span><a name="105"></a><span class="source_comment">// Note - Karma ignores per-quad info (eg. 'invisible' and 'edge-turned') with this set to true.
+</span><a name="106"></a>var() <span class="source_type">bool</span>						bKCollisionHalfRes;
+<a name="107"></a>
+<a name="108"></a><span class="source_comment">//
+</span><a name="109"></a><span class="source_comment">// Internal data
+</span><a name="110"></a><span class="source_comment">//
+</span><a name="111"></a>var transient <span class="source_type">int</span>							JustLoaded;
+<a name="112"></a>var	native const array&lt;<span class="source_type"><a href="../engine/terraininfo.html#DecorationLayerData" class="source">DecorationLayerData</a></span>&gt; DecoLayerData;
+<a name="113"></a>var native const array&lt;<span class="source_type">TerrainSector</span>&gt;	Sectors;
+<a name="114"></a>var native const array&lt;<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>&gt; Vertices;
+<a name="115"></a>var native const <span class="source_type">int</span> HeightmapX;
+<a name="116"></a>var native const <span class="source_type">int</span> HeightmapY;
+<a name="117"></a>var native const <span class="source_type">int</span> SectorsX;
+<a name="118"></a>var native const <span class="source_type">int</span> SectorsY;
+<a name="119"></a>var native const <span class="source_type">TerrainPrimitive</span> <span class="source_type">Primitive</span>;
+<a name="120"></a>var native const array&lt;<span class="source_type"><a href="../engine/terraininfo.html#NormalPair" class="source">NormalPair</a></span>&gt; FaceNormals;
+<a name="121"></a>var native const <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ToWorld[<span class="source_int">4</span>];
+<a name="122"></a>var native const <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ToHeightmap[<span class="source_int">4</span>];
+<a name="123"></a>var native const array&lt;<span class="source_type">int</span>&gt;	SelectedVertices;
+<a name="124"></a>var native const <span class="source_type">int</span> ShowGrid;
+<a name="125"></a>var const array&lt;<span class="source_type">int</span>&gt; QuadVisibilityBitmap;
+<a name="126"></a>var const array&lt;<span class="source_type">int</span>&gt; EdgeTurnBitmap;
+<a name="127"></a>var const array&lt;<span class="source_type"><a href="../engine/material.html" class="source">material</a></span>&gt; QuadDomMaterialBitmap;
+<a name="128"></a>var native const array&lt;<span class="source_type">int</span>&gt;					RenderCombinations;
+<a name="129"></a>var native const array&lt;<span class="source_type">int</span>&gt;					VertexStreams;
+<a name="130"></a>var native const array&lt;<span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>&gt;				VertexColors;
+<a name="131"></a>var native const array&lt;<span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>&gt;				PaintedColor;		<span class="source_comment">// editor only
+</span><a name="132"></a>var native const <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span> CollapsedLayers;
+<a name="133"></a>
+<a name="134"></a><span class="source_comment">// OLD
+</span><a name="135"></a>var native const <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span> OldTerrainMap;
+<a name="136"></a>var native const array&lt;<span class="source_type">byte</span>&gt; OldHeightmap;
+<a name="137"></a>
+<a name="138"></a><span class="source_comment">// Heightmap manipulation functions
+</span><a name="139"></a>native final function PokeTerrain( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> WorldLocation, <span class="source_type">int</span> <span class="source_type">Radius</span>, <span class="source_type">int</span> MaxDepth );
+<a name="140"></a>
+<a name="141"></a>defaultproperties
+<a name="142"></a>{
+<a name="143"></a>     TerrainSectorSize=<span class="source_int">16</span>
+<a name="144"></a>     TerrainScale=(<span class="source_type">X</span>=<span class="source_int">64.000000</span>,<span class="source_type">Y</span>=<span class="source_int">64.000000</span>,<span class="source_type">Z</span>=<span class="source_int">64.000000</span>)
+<a name="145"></a>     bUseDynamicLights=True
+<a name="146"></a>     bStatic=True
+<a name="147"></a>     bWorldGeometry=True
+<a name="148"></a>     <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Engine.S_TerrainInfo'</span>
+<a name="149"></a>     bStaticLighting=True
+<a name="150"></a>}
+<a name="151"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/terraininfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#TerrainInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/teleporter.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/terrainmaterial.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:09.567 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

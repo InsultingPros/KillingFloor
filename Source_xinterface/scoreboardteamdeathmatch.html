@@ -1,0 +1,544 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.ScoreBoardTeamDeathMatch</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/scoreboardteamdeathmatch.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ScoreBoardTeamDeathMatch">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/scoreboarddeathmatch.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/serverbrowser.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/scoreboardteamdeathmatch.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/scoreboardteamdeathmatch.html">ScoreBoardTeamDeathMatch</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/scoreboardteamdeathmatch.html" class="source">ScoreBoardTeamDeathMatch</a></span> extends <span class="source_type"><a href="../xinterface/scoreboarddeathmatch.html" class="source">ScoreBoardDeathMatch</a></span>;
+<a name="2"></a>
+<a name="3"></a><span class="source_comment">// if _RO_
+</span><a name="4"></a><span class="source_macro">#exec OBJ LOAD FILE=InterfaceArt_Tex.utx
+</span><a name="5"></a><span class="source_comment">// else
+</span><a name="6"></a><span class="source_comment">//#exec OBJ LOAD FILE=MenuEffects.utx
+</span><a name="7"></a><span class="source_comment">// end if _RO_
+</span><a name="8"></a>
+<a name="9"></a>var <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> TeamBoxMaterial[<span class="source_int">2</span>];
+<a name="10"></a>var <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> ScoreBack;
+<a name="11"></a>var <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> FlagIcon, ScoreboardU;
+<a name="12"></a>var <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span> TeamColors[<span class="source_int">2</span>];
+<a name="13"></a>
+<a name="14"></a>simulated function UpdatePrecacheMaterials()
+<a name="15"></a>{
+<a name="16"></a><span class="source_comment">// if _RO_
+</span><a name="17"></a>    <span class="source_comment">//Level.AddPrecacheMaterial(Material'MenuEffects.ScoreboardU');
+</span><a name="18"></a>    <span class="source_type">Level</span>.AddPrecacheMaterial(TeamBoxMaterial[<span class="source_int">0</span>]);
+<a name="19"></a>    <span class="source_type">Level</span>.AddPrecacheMaterial(TeamBoxMaterial[<span class="source_int">1</span>]);
+<a name="20"></a>    <span class="source_comment">//Level.AddPrecacheMaterial(Material'MenuEffects.ScoreIcon');
+</span><a name="21"></a>    <span class="source_comment">//Level.AddPrecacheMaterial(Material'InterfaceContent.SymbolShader');
+</span><a name="22"></a>
+<a name="23"></a>	super.UpdatePrecacheMaterials();
+<a name="24"></a>}
+<a name="25"></a>
+<a name="26"></a>simulated event UpdateScoreBoard(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="27"></a>{
+<a name="28"></a>	local <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI, OwnerPRI;
+<a name="29"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, FontReduction,HeaderOffsetY,HeadFoot,PlayerBoxSizeY, BoxSpaceY;
+<a name="30"></a>	local <span class="source_type">float</span> XL,<span class="source_type">YL</span>, IconSize, MaxScaling, MessageFoot;
+<a name="31"></a>	local <span class="source_type">int</span> BluePlayerCount, RedPlayerCount, RedOwnerOffset, BlueOwnerOffset, MaxPlayerCount;
+<a name="32"></a>	local <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> RedPRI[MAXPLAYERS], BluePRI[MaxPlayers];
+<a name="33"></a>	local <span class="source_type">font</span> MainFont;
+<a name="34"></a>
+<a name="35"></a>	OwnerPRI = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>;
+<a name="36"></a>	RedOwnerOffset = -<span class="source_int">1</span>;
+<a name="37"></a>	BlueOwnerOffset = -<span class="source_int">1</span>;
+<a name="38"></a>    for (<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;GRI.PRIArray.Length; <span class="source_type">i</span>++)
+<a name="39"></a>	{
+<a name="40"></a>		PRI = GRI.PRIArray[<span class="source_type">i</span>];
+<a name="41"></a>		if ( (PRI.<span class="source_type">Team</span> != None) && (!PRI.bIsSpectator || PRI.bWaitingPlayer) )
+<a name="42"></a>		{
+<a name="43"></a>			if ( PRI.<span class="source_type">Team</span>.TeamIndex == <span class="source_int">0</span> )
+<a name="44"></a>			{
+<a name="45"></a>				if ( RedPlayerCount &lt; MAXPLAYERS )
+<a name="46"></a>				{
+<a name="47"></a>					RedPRI[RedPlayerCount] = PRI;
+<a name="48"></a>					if ( PRI == OwnerPRI )
+<a name="49"></a>						RedOwnerOffset = RedPlayerCount;
+<a name="50"></a>					RedPlayerCount++;
+<a name="51"></a>				}
+<a name="52"></a>			}
+<a name="53"></a>			else if ( BluePlayerCount &lt; MAXPLAYERS )
+<a name="54"></a>			{
+<a name="55"></a>				BluePRI[BluePlayerCount] = PRI;
+<a name="56"></a>				if ( PRI == OwnerPRI )
+<a name="57"></a>					BlueOwnerOffset = BluePlayerCount;
+<a name="58"></a>				BluePlayerCount++;
+<a name="59"></a>			}
+<a name="60"></a>		}
+<a name="61"></a>	}
+<a name="62"></a>	MaxPlayerCount = <span class="source_type">Max</span>(RedPlayerCount,BluePlayerCount);
+<a name="63"></a>
+<a name="64"></a>	<span class="source_comment">// Select best font size and box size to fit as many players as possible on screen
+</span><a name="65"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = HUDClass.static.GetMediumFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="66"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_string">"Test"</span>, XL, <span class="source_type">YL</span>);
+<a name="67"></a>	IconSize = FMax(<span class="source_int">2</span> * <span class="source_type">YL</span>, <span class="source_int">64</span> * <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX/<span class="source_int">1024</span>);
+<a name="68"></a>	BoxSpaceY = <span class="source_int">0.25</span> * <span class="source_type">YL</span>;
+<a name="69"></a>	if ( HaveHalfFont(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, FontReduction) )
+<a name="70"></a>		PlayerBoxSizeY = <span class="source_int">2.125</span> * <span class="source_type">YL</span>;
+<a name="71"></a>	else
+<a name="72"></a>		PlayerBoxSizeY = <span class="source_int">1.75</span> * <span class="source_type">YL</span>;
+<a name="73"></a>	HeadFoot = <span class="source_int">4</span>*<span class="source_type">YL</span> + IconSize;
+<a name="74"></a>	MessageFoot = <span class="source_int">1.5</span> * HeadFoot;
+<a name="75"></a>	if ( MaxPlayerCount &gt; (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY - <span class="source_int">1.5</span> * HeadFoot)/(PlayerBoxSizeY + BoxSpaceY) )
+<a name="76"></a>	{
+<a name="77"></a>		BoxSpaceY = <span class="source_int">0.125</span> * <span class="source_type">YL</span>;
+<a name="78"></a>		if ( MaxPlayerCount &gt; (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY - <span class="source_int">1.5</span> * HeadFoot)/(PlayerBoxSizeY + BoxSpaceY) )
+<a name="79"></a>		{
+<a name="80"></a>			if ( MaxPlayerCount &gt; (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY - <span class="source_int">1.5</span> * HeadFoot)/(PlayerBoxSizeY + BoxSpaceY) )
+<a name="81"></a>			{
+<a name="82"></a>				FontReduction++;
+<a name="83"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallerFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction);
+<a name="84"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_string">"Test"</span>, XL, <span class="source_type">YL</span>);
+<a name="85"></a>				BoxSpaceY = <span class="source_int">0.125</span> * <span class="source_type">YL</span>;
+<a name="86"></a>				if ( HaveHalfFont(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, FontReduction) )
+<a name="87"></a>					PlayerBoxSizeY = <span class="source_int">2.125</span> * <span class="source_type">YL</span>;
+<a name="88"></a>				else
+<a name="89"></a>					PlayerBoxSizeY = <span class="source_int">1.75</span> * <span class="source_type">YL</span>;
+<a name="90"></a>				HeadFoot = <span class="source_int">4</span>*<span class="source_type">YL</span> + IconSize;
+<a name="91"></a>				if ( MaxPlayerCount &gt; (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY - <span class="source_int">1.5</span> * HeadFoot)/(PlayerBoxSizeY + BoxSpaceY) )
+<a name="92"></a>				{
+<a name="93"></a>					FontReduction++;
+<a name="94"></a>					<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallerFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction);
+<a name="95"></a>					<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_string">"Test"</span>, XL, <span class="source_type">YL</span>);
+<a name="96"></a>					BoxSpaceY = <span class="source_int">0.125</span> * <span class="source_type">YL</span>;
+<a name="97"></a>					if ( HaveHalfFont(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, FontReduction) )
+<a name="98"></a>						PlayerBoxSizeY = <span class="source_int">2.125</span> * <span class="source_type">YL</span>;
+<a name="99"></a>					else
+<a name="100"></a>						PlayerBoxSizeY = <span class="source_int">1.75</span> * <span class="source_type">YL</span>;
+<a name="101"></a>					HeadFoot = <span class="source_int">4</span>*<span class="source_type">YL</span> + IconSize;
+<a name="102"></a>					if ( (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY &gt;= <span class="source_int">600</span>) && (MaxPlayerCount &gt; (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY - HeadFoot)/(PlayerBoxSizeY + BoxSpaceY)) )
+<a name="103"></a>					{
+<a name="104"></a>						FontReduction++;
+<a name="105"></a>						<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallerFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction);
+<a name="106"></a>						<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_string">"Test"</span>, XL, <span class="source_type">YL</span>);
+<a name="107"></a>						BoxSpaceY = <span class="source_int">0.125</span> * <span class="source_type">YL</span>;
+<a name="108"></a>						if ( HaveHalfFont(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, FontReduction) )
+<a name="109"></a>							PlayerBoxSizeY = <span class="source_int">2.125</span> * <span class="source_type">YL</span>;
+<a name="110"></a>						else
+<a name="111"></a>							PlayerBoxSizeY = <span class="source_int">1.75</span> * <span class="source_type">YL</span>;
+<a name="112"></a>						HeadFoot = <span class="source_int">4</span>*<span class="source_type">YL</span> + IconSize;
+<a name="113"></a>						if ( MaxPlayerCount &gt; (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY - HeadFoot)/(PlayerBoxSizeY + BoxSpaceY) )
+<a name="114"></a>						{
+<a name="115"></a>							FontReduction++;
+<a name="116"></a>							<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallerFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction);
+<a name="117"></a>							<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_string">"Test"</span>, XL, <span class="source_type">YL</span>);
+<a name="118"></a>							BoxSpaceY = <span class="source_int">0.125</span> * <span class="source_type">YL</span>;
+<a name="119"></a>							if ( HaveHalfFont(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, FontReduction) )
+<a name="120"></a>								PlayerBoxSizeY = <span class="source_int">2.125</span> * <span class="source_type">YL</span>;
+<a name="121"></a>							else
+<a name="122"></a>								PlayerBoxSizeY = <span class="source_int">1.75</span> * <span class="source_type">YL</span>;
+<a name="123"></a>							HeadFoot = <span class="source_int">4</span>*<span class="source_type">YL</span> + IconSize;
+<a name="124"></a>						}
+<a name="125"></a>					}
+<a name="126"></a>				}
+<a name="127"></a>			}
+<a name="128"></a>		}
+<a name="129"></a>	}
+<a name="130"></a>
+<a name="131"></a>	MaxPlayerCount = Min(MaxPlayerCount, <span class="source_int">1</span>+(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY - HeadFoot)/(PlayerBoxSizeY + BoxSpaceY) );
+<a name="132"></a>	if ( FontReduction &gt; <span class="source_int">2</span> )
+<a name="133"></a>		MaxScaling = <span class="source_int">3</span>;
+<a name="134"></a>	else
+<a name="135"></a>		MaxScaling = <span class="source_int">2.125</span>;
+<a name="136"></a>	PlayerBoxSizeY = FClamp((<span class="source_int">1</span>+(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY - <span class="source_int">0.67</span> * MessageFoot))/MaxPlayerCount - BoxSpaceY, PlayerBoxSizeY, MaxScaling * <span class="source_type">YL</span>);
+<a name="137"></a>	bDisplayMessages = (MaxPlayerCount &lt; (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY - MessageFoot)/(PlayerBoxSizeY + BoxSpaceY));
+<a name="138"></a>	RedPlayerCount = Min(RedPlayerCount,MaxPlayerCount);
+<a name="139"></a>	BluePlayerCount = Min(BluePlayerCount,MaxPlayerCount);
+<a name="140"></a>	if ( RedOwnerOffset &gt;= RedPlayerCount )
+<a name="141"></a>		RedPlayerCount -= <span class="source_int">1</span>;
+<a name="142"></a>	if ( BlueOwnerOffset &gt;= BluePlayerCount )
+<a name="143"></a>		BluePlayerCount -= <span class="source_int">1</span>;
+<a name="144"></a>	HeaderOffsetY = <span class="source_int">1.5</span>*<span class="source_type">YL</span> + IconSize;
+<a name="145"></a>
+<a name="146"></a>	<span class="source_comment">// draw title
+</span><a name="147"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Normal;
+<a name="148"></a>	DrawTitle(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, HeaderOffsetY, (MaxPlayerCount+<span class="source_int">1</span>)*(PlayerBoxSizeY + BoxSpaceY), PlayerBoxSizeY);
+<a name="149"></a>
+<a name="150"></a>	if ( GRI != None )
+<a name="151"></a>	{
+<a name="152"></a>		<span class="source_comment">// draw red team
+</span><a name="153"></a>		MainFont = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span>;
+<a name="154"></a>		for (<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">32</span>; <span class="source_type">i</span>++ )
+<a name="155"></a>			PRIArray[<span class="source_type">i</span>] = RedPRI[<span class="source_type">i</span>];
+<a name="156"></a>		DrawTeam(<span class="source_int">0</span>,RedPlayerCount,RedOwnerOffset,<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, FontReduction,BoxSpaceY,PlayerBoxSizeY,HeaderOffsetY);
+<a name="157"></a>
+<a name="158"></a>		<span class="source_comment">// draw blue team
+</span><a name="159"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = MainFont;
+<a name="160"></a>		for (<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">32</span>; <span class="source_type">i</span>++ )
+<a name="161"></a>			PRIArray[<span class="source_type">i</span>] = BluePRI[<span class="source_type">i</span>];
+<a name="162"></a>		DrawTeam(<span class="source_int">1</span>,BluePlayerCount,BlueOwnerOffset,<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, FontReduction,BoxSpaceY,PlayerBoxSizeY,HeaderOffsetY);
+<a name="163"></a>	}
+<a name="164"></a>
+<a name="165"></a>	if ( <span class="source_type">Level</span>.NetMode != NM_Standalone )
+<a name="166"></a>		DrawMatchID(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction);
+<a name="167"></a>}
+<a name="168"></a>
+<a name="169"></a>function DrawTeam(<span class="source_type">int</span> <span class="source_type">TeamNum</span>, <span class="source_type">int</span> PlayerCount, <span class="source_type">int</span> OwnerOffset, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, <span class="source_type">int</span> FontReduction, <span class="source_type">int</span> BoxSpaceY, <span class="source_type">int</span> PlayerBoxSizeY, <span class="source_type">int</span> HeaderOffsetY)
+<a name="170"></a>{
+<a name="171"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, OwnerPos, NetXPos, NameXPos, BoxTextOffsetY, ScoreXPos, ScoreYPos, BoxXPos, BoxWidth, LineCount,NameY;
+<a name="172"></a>	local <span class="source_type">float</span> XL,<span class="source_type">YL</span>,IconScale,ScoreBackScale,ScoreYL,MaxNamePos,LongestNameLength, oXL, oYL;
+<a name="173"></a>	local <span class="source_type">string</span> <span class="source_type">PlayerName</span>[MAXPLAYERS], OrdersText, LongestName;
+<a name="174"></a>	local <span class="source_type">font</span> MainFont, ReducedFont;
+<a name="175"></a>	local <span class="source_type">bool</span> bHaveHalfFont, bNameFontReduction;
+<a name="176"></a>	local <span class="source_type">int</span> SymbolUSize, SymbolVSize, OtherTeam, LastLine;
+<a name="177"></a>
+<a name="178"></a>	BoxWidth = <span class="source_int">0.47</span> * <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX;
+<a name="179"></a>	BoxXPos = <span class="source_int">0.5</span> * (<span class="source_int">0.5</span> * <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX - BoxWidth);
+<a name="180"></a>	BoxWidth = <span class="source_int">0.5</span> * <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX - <span class="source_int">2</span>*BoxXPos;
+<a name="181"></a>	BoxXPos = BoxXPos + <span class="source_type">TeamNum</span> * <span class="source_int">0.5</span> * <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX;
+<a name="182"></a>	NameXPos = BoxXPos + <span class="source_int">0.05</span> * BoxWidth;
+<a name="183"></a>	ScoreXPos = BoxXPos + <span class="source_int">0.55</span> * BoxWidth;
+<a name="184"></a>	NetXPos = BoxXPos + <span class="source_int">0.76</span> * BoxWidth;
+<a name="185"></a>	bHaveHalfFont = HaveHalfFont(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, FontReduction);
+<a name="186"></a>
+<a name="187"></a>	<span class="source_comment">// draw background box
+</span><a name="188"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Alpha;
+<a name="189"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.WhiteColor;
+<a name="190"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(BoxXPos, HeaderOffsetY);
+<a name="191"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched( TeamBoxMaterial[<span class="source_type">TeamNum</span>], BoxWidth, PlayerCount * (PlayerBoxSizeY + BoxSpaceY));
+<a name="192"></a>
+<a name="193"></a>	<span class="source_comment">// draw team header
+</span><a name="194"></a>	IconScale = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX/<span class="source_int">4096</span>;
+<a name="195"></a>	ScoreBackScale = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX/<span class="source_int">1024</span>;
+<a name="196"></a>	if ( GRI.TeamSymbols[<span class="source_type">TeamNum</span>] != None )
+<a name="197"></a>	{
+<a name="198"></a>		SymbolUSize = GRI.TeamSymbols[<span class="source_type">TeamNum</span>].USize;
+<a name="199"></a>		SymbolVSize = GRI.TeamSymbols[<span class="source_type">TeamNum</span>].VSize;
+<a name="200"></a>	}
+<a name="201"></a>	else
+<a name="202"></a>	{
+<a name="203"></a>		SymbolUSize = <span class="source_int">256</span>;
+<a name="204"></a>		SymbolVSize = <span class="source_int">256</span>;
+<a name="205"></a>	}
+<a name="206"></a>	ScoreYPos = HeaderOffsetY - SymbolVSize * IconScale - BoxSpaceY;
+<a name="207"></a>
+<a name="208"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = <span class="source_int">0.75</span> * HUDClass.default.WhiteColor;
+<a name="209"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(BoxXPos, ScoreYPos - BoxSpaceY);
+<a name="210"></a><span class="source_comment">// if _RO_
+</span><a name="211"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched( <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.RODisplay'</span>, BoxWidth, HeaderOffsetY + BoxSpaceY - ScoreYPos);
+<a name="212"></a><span class="source_comment">// else
+</span><a name="213"></a><span class="source_comment">//	Canvas.DrawTileStretched( Material'InterfaceContent.ScoreBoxA', BoxWidth, HeaderOffsetY + BoxSpaceY - ScoreYPos);
+</span><a name="214"></a><span class="source_comment">// end if _RO_
+</span><a name="215"></a>
+<a name="216"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Normal;
+<a name="217"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = TeamColors[<span class="source_type">TeamNum</span>];
+<a name="218"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos((<span class="source_int">0.25</span> + <span class="source_int">0.5</span>*<span class="source_type">TeamNum</span>) * <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX - (SymbolUSize + <span class="source_int">32</span>) * IconScale, ScoreYPos);
+<a name="219"></a>	if ( GRI.TeamSymbols[<span class="source_type">TeamNum</span>] != None )
+<a name="220"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawIcon(GRI.TeamSymbols[<span class="source_type">TeamNum</span>],IconScale);
+<a name="221"></a>	MainFont = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span>;
+<a name="222"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = HUDClass.static.LargerFontThan(MainFont);
+<a name="223"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_string">"TEST"</span>,XL,ScoreYL);
+<a name="224"></a>	if ( ScoreYPos == <span class="source_int">0</span> )
+<a name="225"></a>		ScoreYPos = HeaderOffsetY - ScoreYL;
+<a name="226"></a>	else
+<a name="227"></a>		ScoreYPos = ScoreYPos + <span class="source_int">0.5</span> * SymbolVSize * IconScale - <span class="source_int">0.5</span> * ScoreYL;
+<a name="228"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos((<span class="source_int">0.25</span> + <span class="source_int">0.5</span>*<span class="source_type">TeamNum</span>) * <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX + <span class="source_int">32</span>*IconScale,ScoreYPos);
+<a name="229"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">int</span>(GRI.Teams[<span class="source_type">TeamNum</span>].<span class="source_type">Score</span>));
+<a name="230"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = MainFont;
+<a name="231"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.WhiteColor;
+<a name="232"></a>
+<a name="233"></a>	IconScale = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX/<span class="source_int">1024</span>;
+<a name="234"></a>
+<a name="235"></a>	if ( PlayerCount &lt;= <span class="source_int">0</span> )
+<a name="236"></a>		return;
+<a name="237"></a>
+<a name="238"></a>	<span class="source_comment">// draw lines between sections
+</span><a name="239"></a>	if ( <span class="source_type">TeamNum</span> == <span class="source_int">0</span> )
+<a name="240"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.RedColor;
+<a name="241"></a>	else
+<a name="242"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.BlueColor;
+<a name="243"></a>	if ( OwnerOffset &gt;= PlayerCount )
+<a name="244"></a>		LastLine = PlayerCount+<span class="source_int">1</span>;
+<a name="245"></a>	else
+<a name="246"></a>		LastLine = PlayerCount;
+<a name="247"></a>	for ( <span class="source_type">i</span>=<span class="source_int">1</span>; <span class="source_type">i</span>&lt;LastLine; <span class="source_type">i</span>++ )
+<a name="248"></a>	{
+<a name="249"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos( NameXPos, HeaderOffsetY + (PlayerBoxSizeY + BoxSpaceY)*<span class="source_type">i</span> - <span class="source_int">0.5</span>*BoxSpaceY);
+<a name="250"></a><span class="source_comment">// if _RO_
+</span><a name="251"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched( <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.RODisplay'</span>, <span class="source_int">0.9</span>*BoxWidth, ScorebackScale*<span class="source_int">3</span>);
+<a name="252"></a><span class="source_comment">// else
+</span><a name="253"></a><span class="source_comment">//		Canvas.DrawTileStretched( Material'InterfaceContent.ButtonBob', 0.9*BoxWidth, ScorebackScale*3);
+</span><a name="254"></a><span class="source_comment">// end if _RO_
+</span><a name="255"></a>	}
+<a name="256"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.WhiteColor;
+<a name="257"></a>
+<a name="258"></a>	<span class="source_comment">// draw player names
+</span><a name="259"></a>	MaxNamePos = <span class="source_int">0.95</span> * (ScoreXPos - NameXPos);
+<a name="260"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PlayerCount; <span class="source_type">i</span>++ )
+<a name="261"></a>	{
+<a name="262"></a>		<span class="source_type">playername</span>[<span class="source_type">i</span>] = GRI.PRIArray[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>;
+<a name="263"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_type">playername</span>[<span class="source_type">i</span>], XL, <span class="source_type">YL</span>);
+<a name="264"></a>		if ( XL &gt; FMax(LongestNameLength,MaxNamePos) )
+<a name="265"></a>		{
+<a name="266"></a>			LongestName = <span class="source_type">PlayerName</span>[<span class="source_type">i</span>];
+<a name="267"></a>			LongestNameLength = XL;
+<a name="268"></a>		}
+<a name="269"></a>	}
+<a name="270"></a>	if ( OwnerOffset &gt;= PlayerCount )
+<a name="271"></a>	{
+<a name="272"></a>		<span class="source_type">playername</span>[OwnerOffset] = GRI.PRIArray[OwnerOffset].<span class="source_type">PlayerName</span>;
+<a name="273"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_type">playername</span>[OwnerOffset], XL, <span class="source_type">YL</span>);
+<a name="274"></a>		if ( XL &gt; FMax(LongestNameLength,MaxNamePos) )
+<a name="275"></a>		{
+<a name="276"></a>			LongestName = <span class="source_type">PlayerName</span>[<span class="source_type">i</span>];
+<a name="277"></a>			LongestNameLength = XL;
+<a name="278"></a>		}
+<a name="279"></a>	}
+<a name="280"></a>
+<a name="281"></a>	if ( LongestNameLength &gt; <span class="source_int">0</span> )
+<a name="282"></a>	{
+<a name="283"></a>		bNameFontReduction = true;
+<a name="284"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallerFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction+<span class="source_int">1</span>);
+<a name="285"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(LongestName, XL, <span class="source_type">YL</span>);
+<a name="286"></a>		if ( XL &gt; MaxNamePos )
+<a name="287"></a>		{
+<a name="288"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallerFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction+<span class="source_int">2</span>);
+<a name="289"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(LongestName, XL, <span class="source_type">YL</span>);
+<a name="290"></a>			if ( XL &gt; MaxNamePos )
+<a name="291"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallerFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction+<span class="source_int">3</span>);
+<a name="292"></a>		}
+<a name="293"></a>		ReducedFont = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span>;
+<a name="294"></a>	}
+<a name="295"></a>
+<a name="296"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PlayerCount; <span class="source_type">i</span>++ )
+<a name="297"></a>	{
+<a name="298"></a>		<span class="source_type">playername</span>[<span class="source_type">i</span>] = PRIArray[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>;
+<a name="299"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_type">playername</span>[<span class="source_type">i</span>], XL, <span class="source_type">YL</span>);
+<a name="300"></a>		if ( XL &gt; MaxNamePos )
+<a name="301"></a>			<span class="source_type">playername</span>[<span class="source_type">i</span>] = left(<span class="source_type">playername</span>[<span class="source_type">i</span>], MaxNamePos/XL * <span class="source_type">len</span>(<span class="source_type">PlayerName</span>[<span class="source_type">i</span>]));
+<a name="302"></a>	}
+<a name="303"></a>	if ( OwnerOffset &gt;= PlayerCount )
+<a name="304"></a>	{
+<a name="305"></a>		<span class="source_type">playername</span>[OwnerOffset] = PRIArray[OwnerOffset].<span class="source_type">PlayerName</span>;
+<a name="306"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_type">playername</span>[OwnerOffset], XL, <span class="source_type">YL</span>);
+<a name="307"></a>		if ( XL &gt; MaxNamePos )
+<a name="308"></a>			<span class="source_type">playername</span>[OwnerOffset] = left(<span class="source_type">playername</span>[OwnerOffset], MaxNamePos/XL * <span class="source_type">len</span>(<span class="source_type">PlayerName</span>[OwnerOffset]));
+<a name="309"></a>	}
+<a name="310"></a>
+<a name="311"></a>	if ( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX &lt; <span class="source_int">512</span> )
+<a name="312"></a>		NameY = <span class="source_int">0.5</span> * <span class="source_type">YL</span>;
+<a name="313"></a>	else if ( !bHaveHalfFont )
+<a name="314"></a>		NameY = <span class="source_int">0.125</span> * <span class="source_type">YL</span>;
+<a name="315"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Normal;
+<a name="316"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.WhiteColor;
+<a name="317"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">0.5</span> * <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX, HeaderOffsetY + <span class="source_int">4</span>);
+<a name="318"></a>	BoxTextOffsetY = HeaderOffsetY + <span class="source_int">0.5</span> * PlayerBoxSizeY - <span class="source_int">0.5</span> * <span class="source_type">YL</span>;
+<a name="319"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.WhiteColor;
+<a name="320"></a>
+<a name="321"></a>	if ( OwnerOffset == -<span class="source_int">1</span> )
+<a name="322"></a>	{
+<a name="323"></a>		for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PlayerCount; <span class="source_type">i</span>++ )
+<a name="324"></a>			if ( <span class="source_type">i</span> != OwnerOffset )
+<a name="325"></a>			{
+<a name="326"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(NameXPos, (PlayerBoxSizeY + BoxSpaceY)*<span class="source_type">i</span> + BoxTextOffsetY);
+<a name="327"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">playername</span>[<span class="source_type">i</span>],true);
+<a name="328"></a>			}
+<a name="329"></a>	}
+<a name="330"></a>	else
+<a name="331"></a>	{
+<a name="332"></a>		for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PlayerCount; <span class="source_type">i</span>++ )
+<a name="333"></a>			if ( <span class="source_type">i</span> != OwnerOffset )
+<a name="334"></a>			{
+<a name="335"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(NameXPos, (PlayerBoxSizeY + BoxSpaceY)*<span class="source_type">i</span> + BoxTextOffsetY - <span class="source_int">0.5</span> * <span class="source_type">YL</span> + NameY);
+<a name="336"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">playername</span>[<span class="source_type">i</span>],true);
+<a name="337"></a>			}
+<a name="338"></a>	}
+<a name="339"></a>	if ( bNameFontReduction )
+<a name="340"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallerFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction);
+<a name="341"></a>
+<a name="342"></a>	<span class="source_comment">// draw scores
+</span><a name="343"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.WhiteColor;
+<a name="344"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PlayerCount; <span class="source_type">i</span>++ )
+<a name="345"></a>		if ( <span class="source_type">i</span> != OwnerOffset )
+<a name="346"></a>		{
+<a name="347"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(ScoreXPos, (PlayerBoxSizeY + BoxSpaceY)*<span class="source_type">i</span> + BoxTextOffsetY);
+<a name="348"></a>			if ( PRIArray[<span class="source_type">i</span>].bOutOfLives )
+<a name="349"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(OutText,true);
+<a name="350"></a>			else
+<a name="351"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">int</span>(PRIArray[<span class="source_type">i</span>].<span class="source_type">Score</span>),true);
+<a name="352"></a>		}
+<a name="353"></a>
+<a name="354"></a>	<span class="source_comment">// draw owner line
+</span><a name="355"></a>	if ( OwnerOffset &gt;= <span class="source_int">0</span> )
+<a name="356"></a>	{
+<a name="357"></a>		if ( OwnerOffset &gt;= PlayerCount )
+<a name="358"></a>		{
+<a name="359"></a>			OwnerPos = (PlayerBoxSizeY + BoxSpaceY)*PlayerCount + BoxTextOffsetY;
+<a name="360"></a>			<span class="source_comment">// draw extra box
+</span><a name="361"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Alpha;
+<a name="362"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(BoxXPos, HeaderOffsetY + (PlayerBoxSizeY + BoxSpaceY)*PlayerCount);
+<a name="363"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched( TeamBoxMaterial[<span class="source_type">TeamNum</span>], BoxWidth, PlayerBoxSizeY);
+<a name="364"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Normal;
+<a name="365"></a>			if ( PRIArray[OwnerOffset].HasFlag != None )
+<a name="366"></a>			{
+<a name="367"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.WhiteColor;
+<a name="368"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(NameXPos - <span class="source_int">48</span>*IconScale, OwnerPos - <span class="source_int">16</span>*IconScale);
+<a name="369"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTile( FlagIcon, <span class="source_int">64</span>*IconScale, <span class="source_int">32</span>*IconScale, <span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">256</span>, <span class="source_int">128</span>);
+<a name="370"></a>			}
+<a name="371"></a>		}
+<a name="372"></a>		else
+<a name="373"></a>			OwnerPos = (PlayerBoxSizeY + BoxSpaceY)*OwnerOffset + BoxTextOffsetY;
+<a name="374"></a>
+<a name="375"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.GoldColor;
+<a name="376"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(NameXPos, OwnerPos-<span class="source_int">0.5</span>*<span class="source_type">YL</span>+NameY);
+<a name="377"></a>		if ( bNameFontReduction )
+<a name="378"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = ReducedFont;
+<a name="379"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">playername</span>[OwnerOffset],true);
+<a name="380"></a>		if ( bNameFontReduction )
+<a name="381"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallerFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction);
+<a name="382"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(ScoreXPos, OwnerPos);
+<a name="383"></a>		if ( PRIArray[OwnerOffset].bOutOfLives )
+<a name="384"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(OutText,true);
+<a name="385"></a>		else
+<a name="386"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">int</span>(PRIArray[OwnerOffset].<span class="source_type">Score</span>),true);
+<a name="387"></a>	}
+<a name="388"></a>
+<a name="389"></a>	<span class="source_comment">// draw flag icons
+</span><a name="390"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.WhiteColor;
+<a name="391"></a>	if ( <span class="source_type">TeamNum</span> == <span class="source_int">0</span> )
+<a name="392"></a>		OtherTeam = <span class="source_int">1</span>;
+<a name="393"></a>	if ( (GRI.FlagState[OtherTeam] != <span class="source_type"><a href="../engine/actor.html#EFlagState" class="source">EFlagState</a></span>.FLAG_Home) && (GRI.FlagState[OtherTeam] != <span class="source_type"><a href="../engine/actor.html#EFlagState" class="source">EFlagState</a></span>.FLAG_Down) )
+<a name="394"></a>	{
+<a name="395"></a>		for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PlayerCount; <span class="source_type">i</span>++ )
+<a name="396"></a>			if ( (PRIArray[<span class="source_type">i</span>].HasFlag != None) || (PRIArray[<span class="source_type">i</span>] == GRI.FlagHolder[<span class="source_type">TeamNum</span>]) )
+<a name="397"></a>			{
+<a name="398"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(NameXPos - <span class="source_int">48</span>*IconScale, (PlayerBoxSizeY + BoxSpaceY)*<span class="source_type">i</span> + BoxTextOffsetY - <span class="source_int">16</span>*IconScale);
+<a name="399"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTile( FlagIcon, <span class="source_int">64</span>*IconScale, <span class="source_int">32</span>*IconScale, <span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">256</span>, <span class="source_int">128</span>);
+<a name="400"></a>			}
+<a name="401"></a>	}
+<a name="402"></a>
+<a name="403"></a>	<span class="source_comment">// draw location and/or orders
+</span><a name="404"></a>	if ( (OwnerOffset &gt;= <span class="source_int">0</span>) && (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX &gt;= <span class="source_int">512</span>) )
+<a name="405"></a>	{
+<a name="406"></a>		BoxTextOffsetY = HeaderOffsetY + <span class="source_int">0.5</span>*PlayerBoxSizeY + NameY;
+<a name="407"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = HUDClass.default.CyanColor;
+<a name="408"></a>		if ( FontReduction &gt; <span class="source_int">3</span> )
+<a name="409"></a>			bHaveHalfFont = false;
+<a name="410"></a>		if ( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX &gt;= <span class="source_int">1280</span> )
+<a name="411"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX, FontReduction+<span class="source_int">2</span>);
+<a name="412"></a>		else
+<a name="413"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetSmallFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX, FontReduction+<span class="source_int">1</span>);
+<a name="414"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_string">"Test"</span>, XL, <span class="source_type">YL</span>);
+<a name="415"></a>		for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PlayerCount; <span class="source_type">i</span>++ )
+<a name="416"></a>		{
+<a name="417"></a>			LineCount = <span class="source_int">0</span>;
+<a name="418"></a>			if( PRIArray[<span class="source_type">i</span>].bBot && (<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRIArray[<span class="source_type">i</span>]) != None) && (<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRIArray[<span class="source_type">i</span>]).Squad != None) )
+<a name="419"></a>			{
+<a name="420"></a>				LineCount = <span class="source_int">1</span>;
+<a name="421"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(NameXPos, (PlayerBoxSizeY + BoxSpaceY)*<span class="source_type">i</span> + BoxTextOffsetY);
+<a name="422"></a>				if ( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX &lt; <span class="source_int">800</span> )
+<a name="423"></a>					OrdersText = <span class="source_string">"("</span>$PRIArray[<span class="source_type">i</span>].GetCallSign()$<span class="source_string">") "</span>$<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRIArray[<span class="source_type">i</span>]).Squad.GetShortOrderStringFor(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRIArray[<span class="source_type">i</span>]));
+<a name="424"></a>				else
+<a name="425"></a>				{
+<a name="426"></a>					OrdersText = <span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRIArray[<span class="source_type">i</span>]).Squad.GetOrderStringFor(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRIArray[<span class="source_type">i</span>]));
+<a name="427"></a>					OrdersText = <span class="source_string">"("</span>$PRIArray[<span class="source_type">i</span>].GetCallSign()$<span class="source_string">") "</span>$OrdersText;
+<a name="428"></a>					<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(OrdersText, oXL, oYL);
+<a name="429"></a>					if ( oXL &gt;= ScoreXPos - NameXPos )
+<a name="430"></a>						OrdersText = <span class="source_string">"("</span>$PRIArray[<span class="source_type">i</span>].GetCallSign()$<span class="source_string">") "</span>$<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRIArray[<span class="source_type">i</span>]).Squad.GetShortOrderStringFor(<span class="source_type"><a href="../unrealgame/teamplayerreplicationinfo.html" class="source">TeamPlayerReplicationInfo</a></span>(PRIArray[<span class="source_type">i</span>]));
+<a name="431"></a>				}
+<a name="432"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(OrdersText,true);
+<a name="433"></a>			}
+<a name="434"></a>			if ( bHaveHalfFont || !PRIArray[<span class="source_type">i</span>].bBot )
+<a name="435"></a>			{
+<a name="436"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(NameXPos, (PlayerBoxSizeY + BoxSpaceY)*<span class="source_type">i</span> + BoxTextOffsetY + LineCount*<span class="source_type">YL</span>);
+<a name="437"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(PRIArray[<span class="source_type">i</span>].GetLocationName(),true);
+<a name="438"></a>			}
+<a name="439"></a>		}
+<a name="440"></a>		if ( OwnerOffset &gt;= PlayerCount )
+<a name="441"></a>		{
+<a name="442"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(NameXPos, (PlayerBoxSizeY + BoxSpaceY)*<span class="source_type">i</span> + BoxTextOffsetY);
+<a name="443"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(PRIArray[OwnerOffset].GetLocationName(),true);
+<a name="444"></a>		}
+<a name="445"></a>	}
+<a name="446"></a>
+<a name="447"></a>	if ( <span class="source_type">Level</span>.NetMode == NM_Standalone )
+<a name="448"></a>		return;
+<a name="449"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = MainFont;
+<a name="450"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_string">"Test"</span>,XL,<span class="source_type">YL</span>);
+<a name="451"></a>	BoxTextOffsetY = HeaderOffsetY + <span class="source_int">0.5</span> * PlayerBoxSizeY - <span class="source_int">0.5</span> * <span class="source_type">YL</span>;
+<a name="452"></a>	DrawNetInfo(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,FontReduction,HeaderOffsetY,PlayerBoxSizeY,BoxSpaceY,BoxTextOffsetY,OwnerOffset,PlayerCount,NetXPos);
+<a name="453"></a>}
+<a name="454"></a>
+<a name="455"></a>defaultproperties
+<a name="456"></a>{
+<a name="457"></a>     TeamBoxMaterial(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.RODisplay'</span>
+<a name="458"></a>     TeamBoxMaterial(<span class="source_int">1</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.RODisplay'</span>
+<a name="459"></a>     TeamColors(<span class="source_int">0</span>)=(<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="460"></a>     TeamColors(<span class="source_int">1</span>)=(<span class="source_type">B</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="461"></a>     FragLimit=<span class="source_string">"SCORE LIMIT:"</span>
+<a name="462"></a>}
+<a name="463"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/scoreboardteamdeathmatch.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ScoreBoardTeamDeathMatch">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/scoreboarddeathmatch.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/serverbrowser.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:08.023 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

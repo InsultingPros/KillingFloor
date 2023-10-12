@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Engine.AIController</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/aicontroller.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#AIController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/adminbase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/aimarker.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#engine/aicontroller.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.AIController</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../engine/controller.html">Controller</a></dd>
+<dt>Modifiers</dt><dd>native </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/controller.html">Controller</a>
+      |   
+      +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/aicontroller.html">AIController</a>
+</pre>
+
+<h4>Direct Known Subclasses:</h4>
+<blockquote>
+	<a href="../gameplay/scriptedcontroller.html">ScriptedController</a>, <a href="../unrealgame/turretcontroller.html">TurretController</a>
+</blockquote>
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Contants from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/controller.html">Controller</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/controller.html#LATENT_MOVETOWARD">LATENT_MOVETOWARD</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Contants from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#MAINCOLLISIONINDEX">MAINCOLLISIONINDEX</a>, <a href="../engine/actor.html#MAXSTEPHEIGHT">MAXSTEPHEIGHT</a>, <a href="../engine/actor.html#MINFLOORZ">MINFLOORZ</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bAdjustFromWalls" name="bAdjustFromWalls" title="go to the details">bAdjustFromWalls</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bHunting" name="bHunting" title="go to the details">bHunting</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bPlannedJump" name="bPlannedJump" title="go to the details">bPlannedJump</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/aiscript.html">AIScript</a></td><td width="66%"><a href="#_MyScript" name="MyScript" title="go to the details">MyScript</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_Skill" name="Skill" title="go to the details">Skill</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/controller.html">Controller</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/controller.html#AcquisitionYawRate">AcquisitionYawRate</a>, <a href="../engine/controller.html#AdjustLoc">AdjustLoc</a>, <a href="../engine/controller.html#Adrenaline">Adrenaline</a>, <a href="../engine/controller.html#AdrenalineMax">AdrenalineMax</a>, <a href="../engine/controller.html#bAdjusting">bAdjusting</a>, <a href="../engine/controller.html#bAdrenalineEnabled">bAdrenalineEnabled</a>, <a href="../engine/controller.html#bAdvancedTactics">bAdvancedTactics</a>, <a href="../engine/controller.html#bAllowedToImpactJump">bAllowedToImpactJump</a>, <a href="../engine/controller.html#bAllowedToTranslocate">bAllowedToTranslocate</a>, <a href="../engine/controller.html#bAltFire">bAltFire</a>, <a href="../engine/controller.html#bCanDoSpecial">bCanDoSpecial</a>, <a href="../engine/controller.html#bCanOpenDoors">bCanOpenDoors</a>, <a href="../engine/controller.html#bControlAnimations">bControlAnimations</a>, <a href="../engine/controller.html#bCrawl">bCrawl</a>, <a href="../engine/controller.html#bDuck">bDuck</a>, <a href="../engine/controller.html#bEnemyAcquired">bEnemyAcquired</a>, <a href="../engine/controller.html#bEnemyInfoValid">bEnemyInfoValid</a>, <a href="../engine/controller.html#bFire">bFire</a>, <a href="../engine/controller.html#bForceStrafe">bForceStrafe</a>, <a href="../engine/controller.html#bGodMode">bGodMode</a>, <a href="../engine/controller.html#bHuntPlayer">bHuntPlayer</a>, <a href="../engine/controller.html#bInDodgeMove">bInDodgeMove</a>, <a href="../engine/controller.html#bIsPlayer">bIsPlayer</a>, <a href="../engine/controller.html#bJumpOverWall">bJumpOverWall</a>, <a href="../engine/controller.html#bLOSflag">bLOSflag</a>, <a href="../engine/controller.html#bNotifyApex">bNotifyApex</a>, <a href="../engine/controller.html#bNotifyFallingHitWall">bNotifyFallingHitWall</a>, <a href="../engine/controller.html#bNotifyPostLanded">bNotifyPostLanded</a>, <a href="../engine/controller.html#bPreparingMove">bPreparingMove</a>, <a href="../engine/controller.html#bRun">bRun</a>, <a href="../engine/controller.html#bSlowerZAcquire">bSlowerZAcquire</a>, <a href="../engine/controller.html#bSoaking">bSoaking</a>, <a href="../engine/controller.html#bSprint">bSprint</a>, <a href="../engine/controller.html#bUsePlayerHearing">bUsePlayerHearing</a>, <a href="../engine/controller.html#bVehicleTransition">bVehicleTransition</a>, <a href="../engine/controller.html#bVoiceTalk">bVoiceTalk</a>, <a href="../engine/controller.html#CurrentPath">CurrentPath</a>, <a href="../engine/controller.html#CurrentPathDir">CurrentPathDir</a>, <a href="../engine/controller.html#Destination">Destination</a>, <a href="../engine/controller.html#DirectionHint">DirectionHint</a>, <a href="../engine/controller.html#DodgeLandZ">DodgeLandZ</a>, <a href="../engine/controller.html#DodgeToGoalPct">DodgeToGoalPct</a>, <a href="../engine/controller.html#Enemy">Enemy</a>, <a href="../engine/controller.html#FailedReachLocation">FailedReachLocation</a>, <a href="../engine/controller.html#FailedReachTime">FailedReachTime</a>, <a href="../engine/controller.html#FearSpots[2]">FearSpots[2]</a>, <a href="../engine/controller.html#FocalPoint">FocalPoint</a>, <a href="../engine/controller.html#Focus">Focus</a>, <a href="../engine/controller.html#FocusLead">FocusLead</a>, <a href="../engine/controller.html#FovAngle">FovAngle</a>, <a href="../engine/controller.html#GoalList[4]">GoalList[4]</a>, <a href="../engine/controller.html#GroundPitchTime">GroundPitchTime</a>, <a href="../engine/controller.html#Handedness">Handedness</a>, <a href="../engine/controller.html#home">home</a>, <a href="../engine/controller.html#LastBlockingVehicle">LastBlockingVehicle</a>, <a href="../engine/controller.html#LastFailedReach">LastFailedReach</a>, <a href="../engine/controller.html#LastPawnWeapon">LastPawnWeapon</a>, <a href="../engine/controller.html#LastRouteFind">LastRouteFind</a>, <a href="../engine/controller.html#LastSeeingPos">LastSeeingPos</a>, <a href="../engine/controller.html#LastSeenPos">LastSeenPos</a>, <a href="../engine/controller.html#LastSeenTime">LastSeenTime</a>, <a href="../engine/controller.html#MinHitWall">MinHitWall</a>, <a href="../engine/controller.html#MonitoredPawn">MonitoredPawn</a>, <a href="../engine/controller.html#MonitorMaxDistSq">MonitorMaxDistSq</a>, <a href="../engine/controller.html#MonitorStartLoc">MonitorStartLoc</a>, <a href="../engine/controller.html#MoveTarget">MoveTarget</a>, <a href="../engine/controller.html#MoveTimer">MoveTimer</a>, <a href="../engine/controller.html#nextController">nextController</a>, <a href="../engine/controller.html#NextRoutePath">NextRoutePath</a>, <a href="../engine/controller.html#OldMessageTime">OldMessageTime</a>, <a href="../engine/controller.html#Pawn">Pawn</a>, <a href="../engine/controller.html#PawnClass">PawnClass</a>, <a href="../engine/controller.html#PendingMover">PendingMover</a>, <a href="../engine/controller.html#PlayerNum">PlayerNum</a>, <a href="../engine/controller.html#PlayerReplicationInfo">PlayerReplicationInfo</a>, <a href="../engine/controller.html#PlayerReplicationInfoClass">PlayerReplicationInfoClass</a>, <a href="../engine/controller.html#PreviousPawnClass">PreviousPawnClass</a>, <a href="../engine/controller.html#RespawnPredictionTime">RespawnPredictionTime</a>, <a href="../engine/controller.html#RouteCache[16]">RouteCache[16]</a>, <a href="../engine/controller.html#RouteDist">RouteDist</a>, <a href="../engine/controller.html#RouteGoal">RouteGoal</a>, <a href="../engine/controller.html#ShotTarget">ShotTarget</a>, <a href="../engine/controller.html#SightCounter">SightCounter</a>, <a href="../engine/controller.html#StartSpot">StartSpot</a>, <a href="../engine/controller.html#Stimulus">Stimulus</a>, <a href="../engine/controller.html#Target">Target</a>, <a href="../engine/controller.html#ViewX">ViewX</a>, <a href="../engine/controller.html#ViewY">ViewY</a>, <a href="../engine/controller.html#ViewZ">ViewZ</a>, <a href="../engine/controller.html#VoiceType">VoiceType</a>, <a href="../engine/controller.html#WarningDelay">WarningDelay</a>, <a href="../engine/controller.html#WarningProjectile">WarningProjectile</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#Acceleration">Acceleration</a>, <a href="../engine/actor.html#AccumKarmaAngleError">AccumKarmaAngleError</a>, <a href="../engine/actor.html#ActorRenderData">ActorRenderData</a>, <a href="../engine/actor.html#AmbientGlow">AmbientGlow</a>, <a href="../engine/actor.html#AmbientSound">AmbientSound</a>, <a href="../engine/actor.html#AntiPortal">AntiPortal</a>, <a href="../engine/actor.html#Attached">Attached</a>, <a href="../engine/actor.html#AttachmentBone">AttachmentBone</a>, <a href="../engine/actor.html#AttachTag">AttachTag</a>, <a href="../engine/actor.html#bAcceptsProjectors">bAcceptsProjectors</a>, <a href="../engine/actor.html#bActorShadows">bActorShadows</a>, <a href="../engine/actor.html#bAlreadyPrecachedMaterials">bAlreadyPrecachedMaterials</a>, <a href="../engine/actor.html#bAlreadyPrecachedMeshes">bAlreadyPrecachedMeshes</a>, <a href="../engine/actor.html#bAlwaysFaceCamera">bAlwaysFaceCamera</a>, <a href="../engine/actor.html#bAlwaysRelevant">bAlwaysRelevant</a>, <a href="../engine/actor.html#bAlwaysTick">bAlwaysTick</a>, <a href="../engine/actor.html#bAlwaysZeroBoneOffset">bAlwaysZeroBoneOffset</a>, <a href="../engine/actor.html#bAnimByOwner">bAnimByOwner</a>, <a href="../engine/actor.html#Base">Base</a>, <a href="../engine/actor.html#bAttenByLife">bAttenByLife</a>, <a href="../engine/actor.html#bAutoAlignToTerrain">bAutoAlignToTerrain</a>, <a href="../engine/actor.html#bAutoTraceNotify">bAutoTraceNotify</a>, <a href="../engine/actor.html#bBadStateCode">bBadStateCode</a>, <a href="../engine/actor.html#bBlockActors">bBlockActors</a>, <a href="../engine/actor.html#bBlockHitPointTraces">bBlockHitPointTraces</a>, <a href="../engine/actor.html#bBlockKarma">bBlockKarma</a>, <a href="../engine/actor.html#bBlockNonZeroExtentTraces">bBlockNonZeroExtentTraces</a>, <a href="../engine/actor.html#bBlockPlayers">bBlockPlayers</a>, <a href="../engine/actor.html#bBlockProjectiles">bBlockProjectiles</a>, <a href="../engine/actor.html#bBlocksTeleport">bBlocksTeleport</a>, <a href="../engine/actor.html#bBlockZeroExtentTraces">bBlockZeroExtentTraces</a>, <a href="../engine/actor.html#bBounce">bBounce</a>, <a href="../engine/actor.html#bCanAutoTraceSelect">bCanAutoTraceSelect</a>, <a href="../engine/actor.html#bCanBeDamaged">bCanBeDamaged</a>, <a href="../engine/actor.html#bCanTeleport">bCanTeleport</a>, <a href="../engine/actor.html#bClientAnim">bClientAnim</a>, <a href="../engine/actor.html#bClientAuthoritative">bClientAuthoritative</a>, <a href="../engine/actor.html#bClientDemoNetFunc">bClientDemoNetFunc</a>, <a href="../engine/actor.html#bClientDemoRecording">bClientDemoRecording</a>, <a href="../engine/actor.html#bClientTrigger">bClientTrigger</a>, <a href="../engine/actor.html#bCollideActors">bCollideActors</a>, <a href="../engine/actor.html#bCollideWhenPlacing">bCollideWhenPlacing</a>, <a href="../engine/actor.html#bCollideWorld">bCollideWorld</a>, <a href="../engine/actor.html#bCompressedPosition">bCompressedPosition</a>, <a href="../engine/actor.html#bCorona">bCorona</a>, <a href="../engine/actor.html#bDeferRendering">bDeferRendering</a>, <a href="../engine/actor.html#bDeleteMe">bDeleteMe</a>, <a href="../engine/actor.html#bDemoOwner">bDemoOwner</a>, <a href="../engine/actor.html#bDemoRecording">bDemoRecording</a>, <a href="../engine/actor.html#bDestroyInPainVolume">bDestroyInPainVolume</a>, <a href="../engine/actor.html#bDetailAttachment">bDetailAttachment</a>, <a href="../engine/actor.html#bDirectional">bDirectional</a>, <a href="../engine/actor.html#bDirectionalCorona">bDirectionalCorona</a>, <a href="../engine/actor.html#bDisableSorting">bDisableSorting</a>, <a href="../engine/actor.html#bDisturbFluidSurface">bDisturbFluidSurface</a>, <a href="../engine/actor.html#bDramaticLighting">bDramaticLighting</a>, <a href="../engine/actor.html#bDynamicLight">bDynamicLight</a>, <a href="../engine/actor.html#bEdShouldSnap">bEdShouldSnap</a>, <a href="../engine/actor.html#bEdSnap">bEdSnap</a>, <a href="../engine/actor.html#bFixedRotationDir">bFixedRotationDir</a>, <a href="../engine/actor.html#bForceSkelUpdate">bForceSkelUpdate</a>, <a href="../engine/actor.html#bFullVolume">bFullVolume</a>, <a href="../engine/actor.html#bGameRelevant">bGameRelevant</a>, <a href="../engine/actor.html#bHardAttach">bHardAttach</a>, <a href="../engine/actor.html#bHidden">bHidden</a>, <a href="../engine/actor.html#bHiddenEd">bHiddenEd</a>, <a href="../engine/actor.html#bHiddenEdGroup">bHiddenEdGroup</a>, <a href="../engine/actor.html#bHighDetail">bHighDetail</a>, <a href="../engine/actor.html#bHurtEntry">bHurtEntry</a>, <a href="../engine/actor.html#bIgnoreEncroachers">bIgnoreEncroachers</a>, <a href="../engine/actor.html#bIgnoreOutOfWorld">bIgnoreOutOfWorld</a>, <a href="../engine/actor.html#bIgnoreTerminalVelocity">bIgnoreTerminalVelocity</a>, <a href="../engine/actor.html#bIgnoreVehicles">bIgnoreVehicles</a>, <a href="../engine/actor.html#bInterpolating">bInterpolating</a>, <a href="../engine/actor.html#bJustTeleported">bJustTeleported</a>, <a href="../engine/actor.html#bLightChanged">bLightChanged</a>, <a href="../engine/actor.html#bLightingVisibility">bLightingVisibility</a>, <a href="../engine/actor.html#bLockLocation">bLockLocation</a>, <a href="../engine/actor.html#bMovable">bMovable</a>, <a href="../engine/actor.html#bNetDirty">bNetDirty</a>, <a href="../engine/actor.html#bNetInitial">bNetInitial</a>, <a href="../engine/actor.html#bNetInitialRotation">bNetInitialRotation</a>, <a href="../engine/actor.html#bNetNotify">bNetNotify</a>, <a href="../engine/actor.html#bNetOwner">bNetOwner</a>, <a href="../engine/actor.html#bNetRelevant">bNetRelevant</a>, <a href="../engine/actor.html#bNetTemporary">bNetTemporary</a>, <a href="../engine/actor.html#bNoDelete">bNoDelete</a>, <a href="../engine/actor.html#bNoRepMesh">bNoRepMesh</a>, <a href="../engine/actor.html#bNotifyLocalPlayerTeamReceived">bNotifyLocalPlayerTeamReceived</a>, <a href="../engine/actor.html#bNotOnDedServer">bNotOnDedServer</a>, <a href="../engine/actor.html#bObsolete">bObsolete</a>, <a href="../engine/actor.html#bOnlyAffectPawns">bOnlyAffectPawns</a>, <a href="../engine/actor.html#bOnlyDirtyReplication">bOnlyDirtyReplication</a>, <a href="../engine/actor.html#bOnlyDrawIfAttached">bOnlyDrawIfAttached</a>, <a href="../engine/actor.html#bOnlyOwnerSee">bOnlyOwnerSee</a>, <a href="../engine/actor.html#bOnlyRelevantToOwner">bOnlyRelevantToOwner</a>, <a href="../engine/actor.html#bOrientOnSlope">bOrientOnSlope</a>, <a href="../engine/actor.html#bOrientToVelocity">bOrientToVelocity</a>, <a href="../engine/actor.html#bOwnerNoSee">bOwnerNoSee</a>, <a href="../engine/actor.html#bPathColliding">bPathColliding</a>, <a href="../engine/actor.html#bPathTemp">bPathTemp</a>, <a href="../engine/actor.html#bPendingDelete">bPendingDelete</a>, <a href="../engine/actor.html#bProjTarget">bProjTarget</a>, <a href="../engine/actor.html#bRepClientDemo">bRepClientDemo</a>, <a href="../engine/actor.html#bReplicateAnimations">bReplicateAnimations</a>, <a href="../engine/actor.html#bReplicateInstigator">bReplicateInstigator</a>, <a href="../engine/actor.html#bReplicateMovement">bReplicateMovement</a>, <a href="../engine/actor.html#bRotateToDesired">bRotateToDesired</a>, <a href="../engine/actor.html#Brush">Brush</a>, <a href="../engine/actor.html#bScriptInitialized">bScriptInitialized</a>, <a href="../engine/actor.html#bSelected">bSelected</a>, <a href="../engine/actor.html#bShadowCast">bShadowCast</a>, <a href="../engine/actor.html#bShouldBaseAtStartup">bShouldBaseAtStartup</a>, <a href="../engine/actor.html#bShouldStopKarma">bShouldStopKarma</a>, <a href="../engine/actor.html#bShowOctreeNodes">bShowOctreeNodes</a>, <a href="../engine/actor.html#bSkipActorPropertyReplication">bSkipActorPropertyReplication</a>, <a href="../engine/actor.html#bSmoothKarmaStateUpdates">bSmoothKarmaStateUpdates</a>, <a href="../engine/actor.html#bSpecialLit">bSpecialLit</a>, <a href="../engine/actor.html#bStasis">bStasis</a>, <a href="../engine/actor.html#bStatic">bStatic</a>, <a href="../engine/actor.html#bStaticLighting">bStaticLighting</a>, <a href="../engine/actor.html#bSuperHighDetail">bSuperHighDetail</a>, <a href="../engine/actor.html#bTearOff">bTearOff</a>, <a href="../engine/actor.html#bTempEditor">bTempEditor</a>, <a href="../engine/actor.html#bTicked">bTicked</a>, <a href="../engine/actor.html#bTimerLoop">bTimerLoop</a>, <a href="../engine/actor.html#bTraceWater">bTraceWater</a>, <a href="../engine/actor.html#bTrailerAllowRotation">bTrailerAllowRotation</a>, <a href="../engine/actor.html#bTrailerPrePivot">bTrailerPrePivot</a>, <a href="../engine/actor.html#bTrailerSameRotation">bTrailerSameRotation</a>, <a href="../engine/actor.html#bTravel">bTravel</a>, <a href="../engine/actor.html#bUnlit">bUnlit</a>, <a href="../engine/actor.html#Buoyancy">Buoyancy</a>, <a href="../engine/actor.html#bUpdateSimulatedPosition">bUpdateSimulatedPosition</a>, <a href="../engine/actor.html#bUseCollisionStaticMesh">bUseCollisionStaticMesh</a>, <a href="../engine/actor.html#bUseCylinderCollision">bUseCylinderCollision</a>, <a href="../engine/actor.html#bUseDynamicLights">bUseDynamicLights</a>, <a href="../engine/actor.html#bUseHighDetailOverlayIndex">bUseHighDetailOverlayIndex</a>, <a href="../engine/actor.html#bUseLightingFromBase">bUseLightingFromBase</a>, <a href="../engine/actor.html#bWasSNFiltered">bWasSNFiltered</a>, <a href="../engine/actor.html#bWorldGeometry">bWorldGeometry</a>, <a href="../engine/actor.html#CachedLocalToWorld">CachedLocalToWorld</a>, <a href="../engine/actor.html#CachedLocation">CachedLocation</a>, <a href="../engine/actor.html#CachedRotation">CachedRotation</a>, <a href="../engine/actor.html#ClientOverlayCounter">ClientOverlayCounter</a>, <a href="../engine/actor.html#ClientOverlayTimer">ClientOverlayTimer</a>, <a href="../engine/actor.html#CollisionHeight">CollisionHeight</a>, <a href="../engine/actor.html#CollisionRadius">CollisionRadius</a>, <a href="../engine/actor.html#CollisionTag">CollisionTag</a>, <a href="../engine/actor.html#ColLocation">ColLocation</a>, <a href="../engine/actor.html#CullDistance">CullDistance</a>, <a href="../engine/actor.html#Deleted">Deleted</a>, <a href="../engine/actor.html#DesiredRotation">DesiredRotation</a>, <a href="../engine/actor.html#DrawScale">DrawScale</a>, <a href="../engine/actor.html#DrawScale3D">DrawScale3D</a>, <a href="../engine/actor.html#DrawType">DrawType</a>, <a href="../engine/actor.html#Event">Event</a>, <a href="../engine/actor.html#ExcludeTag[8]">ExcludeTag[8]</a>, <a href="../engine/actor.html#FluidSurfaceShootStrengthMod">FluidSurfaceShootStrengthMod</a>, <a href="../engine/actor.html#ForcedVisibilityZoneTag">ForcedVisibilityZoneTag</a>, <a href="../engine/actor.html#ForceNoise">ForceNoise</a>, <a href="../engine/actor.html#ForceRadius">ForceRadius</a>, <a href="../engine/actor.html#ForceScale">ForceScale</a>, <a href="../engine/actor.html#ForceType">ForceType</a>, <a href="../engine/actor.html#Group">Group</a>, <a href="../engine/actor.html#HardRelMatrix">HardRelMatrix</a>, <a href="../engine/actor.html#HighDetailOverlay">HighDetailOverlay</a>, <a href="../engine/actor.html#HighDetailOverlayIndex">HighDetailOverlayIndex</a>, <a href="../engine/actor.html#InitialState">InitialState</a>, <a href="../engine/actor.html#Instigator">Instigator</a>, <a href="../engine/actor.html#Inventory">Inventory</a>, <a href="../engine/actor.html#JoinedTag">JoinedTag</a>, <a href="../engine/actor.html#KParams">KParams</a>, <a href="../engine/actor.html#KStepTag">KStepTag</a>, <a href="../engine/actor.html#LastRenderTime">LastRenderTime</a>, <a href="../engine/actor.html#LastReplicateTime">LastReplicateTime</a>, <a href="../engine/actor.html#LatentFloat">LatentFloat</a>, <a href="../engine/actor.html#Leaves">Leaves</a>, <a href="../engine/actor.html#Level">Level</a>, <a href="../engine/actor.html#LifeSpan">LifeSpan</a>, <a href="../engine/actor.html#LightBrightness">LightBrightness</a>, <a href="../engine/actor.html#LightCone">LightCone</a>, <a href="../engine/actor.html#LightEffect">LightEffect</a>, <a href="../engine/actor.html#LightHue">LightHue</a>, <a href="../engine/actor.html#LightPeriod">LightPeriod</a>, <a href="../engine/actor.html#LightPhase">LightPhase</a>, <a href="../engine/actor.html#LightRadius">LightRadius</a>, <a href="../engine/actor.html#LightRenderData">LightRenderData</a>, <a href="../engine/actor.html#LightSaturation">LightSaturation</a>, <a href="../engine/actor.html#LightType">LightType</a>, <a href="../engine/actor.html#Location">Location</a>, <a href="../engine/actor.html#LODBias">LODBias</a>, <a href="../engine/actor.html#Mass">Mass</a>, <a href="../engine/actor.html#MaxLights">MaxLights</a>, <a href="../engine/actor.html#Mesh">Mesh</a>, <a href="../engine/actor.html#MeshInstance">MeshInstance</a>, <a href="../engine/actor.html#MessageClass">MessageClass</a>, <a href="../engine/actor.html#NetPriority">NetPriority</a>, <a href="../engine/actor.html#NetTag">NetTag</a>, <a href="../engine/actor.html#NetUpdateFrequency">NetUpdateFrequency</a>, <a href="../engine/actor.html#NetUpdateTime">NetUpdateTime</a>, <a href="../engine/actor.html#OctreeBox">OctreeBox</a>, <a href="../engine/actor.html#OctreeBoxCenter">OctreeBoxCenter</a>, <a href="../engine/actor.html#OctreeBoxRadii">OctreeBoxRadii</a>, <a href="../engine/actor.html#OctreeNodes">OctreeNodes</a>, <a href="../engine/actor.html#OverlayMaterial">OverlayMaterial</a>, <a href="../engine/actor.html#OverlayTimer">OverlayTimer</a>, <a href="../engine/actor.html#Owner">Owner</a>, <a href="../engine/actor.html#PendingTouch">PendingTouch</a>, <a href="../engine/actor.html#Physics">Physics</a>, <a href="../engine/actor.html#PhysicsVolume">PhysicsVolume</a>, <a href="../engine/actor.html#PrePivot">PrePivot</a>, <a href="../engine/actor.html#Projectors">Projectors</a>, <a href="../engine/actor.html#Region">Region</a>, <a href="../engine/actor.html#RelativeLocation">RelativeLocation</a>, <a href="../engine/actor.html#RelativeRotation">RelativeRotation</a>, <a href="../engine/actor.html#RemoteRole">RemoteRole</a>, <a href="../engine/actor.html#RenderRevision">RenderRevision</a>, <a href="../engine/actor.html#RepSkin">RepSkin</a>, <a href="../engine/actor.html#Role">Role</a>, <a href="../engine/actor.html#Rotation">Rotation</a>, <a href="../engine/actor.html#RotationRate">RotationRate</a>, <a href="../engine/actor.html#ScaleGlow">ScaleGlow</a>, <a href="../engine/actor.html#SimAnim">SimAnim</a>, <a href="../engine/actor.html#Skins">Skins</a>, <a href="../engine/actor.html#SoundOcclusion">SoundOcclusion</a>, <a href="../engine/actor.html#SoundPitch">SoundPitch</a>, <a href="../engine/actor.html#SoundRadius">SoundRadius</a>, <a href="../engine/actor.html#SoundVolume">SoundVolume</a>, <a href="../engine/actor.html#StaticFilterState">StaticFilterState</a>, <a href="../engine/actor.html#StaticMesh">StaticMesh</a>, <a href="../engine/actor.html#StaticMeshInstance">StaticMeshInstance</a>, <a href="../engine/actor.html#StaticMeshProjectors">StaticMeshProjectors</a>, <a href="../engine/actor.html#StaticSectionBatches">StaticSectionBatches</a>, <a href="../engine/actor.html#Style">Style</a>, <a href="../engine/actor.html#SurfaceType">SurfaceType</a>, <a href="../engine/actor.html#Tag">Tag</a>, <a href="../engine/actor.html#Texture">Texture</a>, <a href="../engine/actor.html#TimerCounter">TimerCounter</a>, <a href="../engine/actor.html#TimerRate">TimerRate</a>, <a href="../engine/actor.html#Touching">Touching</a>, <a href="../engine/actor.html#TransientSoundRadius">TransientSoundRadius</a>, <a href="../engine/actor.html#TransientSoundVolume">TransientSoundVolume</a>, <a href="../engine/actor.html#UV2Mode">UV2Mode</a>, <a href="../engine/actor.html#UV2Texture">UV2Texture</a>, <a href="../engine/actor.html#Velocity">Velocity</a>, <a href="../engine/actor.html#XLevel">XLevel</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#EDoubleClickDir">EDoubleClickDir</a>, <a href="../engine/actor.html#EDrawType">EDrawType</a>, <a href="../engine/actor.html#EFilterState">EFilterState</a>, <a href="../engine/actor.html#EFlagState">EFlagState</a>, <a href="../engine/actor.html#EForceType">EForceType</a>, <a href="../engine/actor.html#eKillZType">eKillZType</a>, <a href="../engine/actor.html#ELightEffect">ELightEffect</a>, <a href="../engine/actor.html#ELightType">ELightType</a>, <a href="../engine/actor.html#EMusicTransition">EMusicTransition</a>, <a href="../engine/actor.html#ENetRole">ENetRole</a>, <a href="../engine/actor.html#EPhysics">EPhysics</a>, <a href="../engine/actor.html#ERenderStyle">ERenderStyle</a>, <a href="../engine/actor.html#ESoundOcclusion">ESoundOcclusion</a>, <a href="../engine/actor.html#ESoundSlot">ESoundSlot</a>, <a href="../engine/actor.html#ESurfaceTypes">ESurfaceTypes</a>, <a href="../engine/actor.html#ETravelType">ETravelType</a>, <a href="../engine/actor.html#EUV2Mode">EUV2Mode</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#ActorRenderDataPtr">ActorRenderDataPtr</a>, <a href="../engine/actor.html#AnimRep">AnimRep</a>, <a href="../engine/actor.html#BatchReference">BatchReference</a>, <a href="../engine/actor.html#FireProperties">FireProperties</a>, <a href="../engine/actor.html#KRBVec">KRBVec</a>, <a href="../engine/actor.html#KRigidBodyState">KRigidBodyState</a>, <a href="../engine/actor.html#KSimParams">KSimParams</a>, <a href="../engine/actor.html#LightRenderDataPtr">LightRenderDataPtr</a>, <a href="../engine/actor.html#PointRegion">PointRegion</a>, <a href="../engine/actor.html#ProjectorRenderInfoPtr">ProjectorRenderInfoPtr</a>, <a href="../engine/actor.html#StaticMeshProjectorRenderInfoPtr">StaticMeshProjectorRenderInfoPtr</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>float&nbsp;</td><td><a href="#_AdjustDesireFor-" name="AdjustDesireFor" title="go to the details">AdjustDesireFor</a> (<a href="../engine/pickup.html">Pickup</a> P))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AdjustView-" name="AdjustView" title="go to the details">AdjustView</a> (float DeltaTime))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DisplayDebug-" name="DisplayDebug" title="go to the details">DisplayDebug</a> (<a href="../engine/canvas.html">Canvas</a> Canvas, out float YL, out float YPos))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_GetFacingDirection-" name="GetFacingDirection" title="go to the details">GetFacingDirection</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/actor.html">actor</a>&nbsp;</td><td><a href="#_GetOrderObject-" name="GetOrderObject" title="go to the details">GetOrderObject</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>name&nbsp;</td><td><a href="#_GetOrders-" name="GetOrders" title="go to the details">GetOrders</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_MoverFinished-" name="MoverFinished" title="go to the details">MoverFinished</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_PreBeginPlay-" name="PreBeginPlay" title="go to the details">PreBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_PrepareForMove-" name="PrepareForMove" title="go to the details">PrepareForMove</a> (<a href="../engine/navigationpoint.html">NavigationPoint</a> Goal, <a href="../engine/reachspec.html">ReachSpec</a> Path)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_PriorityObjective-" name="PriorityObjective" title="go to the details">PriorityObjective</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>float&nbsp;</td><td><a href="#_RateWeapon-" name="RateWeapon" title="go to the details">RateWeapon</a> (<a href="../engine/weapon.html">Weapon</a> w))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetOrders-" name="SetOrders" title="go to the details">SetOrders</a> (name NewOrders, <a href="../engine/controller.html">Controller</a> OrderGiver)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Startle-" name="Startle" title="go to the details">Startle</a> (<a href="../engine/actor.html">Actor</a> A)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_TriggerScript-" name="TriggerScript" title="go to the details">TriggerScript</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UnderLift-" name="UnderLift" title="go to the details">UnderLift</a> (<a href="../engine/mover.html">Mover</a> M))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_WaitForMover-" name="WaitForMover" title="go to the details">WaitForMover</a> (<a href="../engine/mover.html">Mover</a> M))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_WaitToSeeEnemy-" name="WaitToSeeEnemy" title="go to the details">WaitToSeeEnemy</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_WeaponFireAgain-" name="WeaponFireAgain" title="go to the details">WeaponFireAgain</a> (float RefireRate, bool bFinishedFire))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/controller.html">Controller</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/controller.html#actorReachable">actorReachable</a>, <a href="../engine/controller.html#AddController">AddController</a>, <a href="../engine/controller.html#AdjustAim">AdjustAim</a>, <a href="../engine/controller.html#AdjustDesireFor">AdjustDesireFor</a>, <a href="../engine/controller.html#AdjustToss">AdjustToss</a>, <a href="../engine/controller.html#AdjustView">AdjustView</a>, <a href="../engine/controller.html#AIHearSound">AIHearSound</a>, <a href="../engine/controller.html#AllowDetourTo">AllowDetourTo</a>, <a href="../engine/controller.html#AllowVoiceMessage">AllowVoiceMessage</a>, <a href="../engine/controller.html#AutoTaunt">AutoTaunt</a>, <a href="../engine/controller.html#AvoidCertainDeath">AvoidCertainDeath</a>, <a href="../engine/controller.html#AwardAdrenaline">AwardAdrenaline</a>, <a href="../engine/controller.html#BeginState">BeginState</a>, <a href="../engine/controller.html#BotVoiceMessage">BotVoiceMessage</a>, <a href="../engine/controller.html#CanMakePathTo">CanMakePathTo</a>, <a href="../engine/controller.html#CanSee">CanSee</a>, <a href="../engine/controller.html#ChangedWeapon">ChangedWeapon</a>, <a href="../engine/controller.html#CheckFutureSight">CheckFutureSight</a>, <a href="../engine/controller.html#ClientDying">ClientDying</a>, <a href="../engine/controller.html#ClientGameEnded">ClientGameEnded</a>, <a href="../engine/controller.html#ClientRoundEnded">ClientRoundEnded</a>, <a href="../engine/controller.html#ClientSetLocation">ClientSetLocation</a>, <a href="../engine/controller.html#ClientSetRotation">ClientSetRotation</a>, <a href="../engine/controller.html#ClientSetWeapon">ClientSetWeapon</a>, <a href="../engine/controller.html#ClientSwitchToBestWeapon">ClientSwitchToBestWeapon</a>, <a href="../engine/controller.html#ClientVoiceMessage">ClientVoiceMessage</a>, <a href="../engine/controller.html#damageAttitudeTo">damageAttitudeTo</a>, <a href="../engine/controller.html#DamageShake">DamageShake</a>, <a href="../engine/controller.html#DelayedWarning">DelayedWarning</a>, <a href="../engine/controller.html#Desireability">Desireability</a>, <a href="../engine/controller.html#Destroyed">Destroyed</a>, <a href="../engine/controller.html#DisplayDebug">DisplayDebug</a>, <a href="../engine/controller.html#DontReuseTaunt">DontReuseTaunt</a>, <a href="../engine/controller.html#EAdjustJump">EAdjustJump</a>, <a href="../engine/controller.html#EndClimbLadder">EndClimbLadder</a>, <a href="../engine/controller.html#EnemyNotVisible">EnemyNotVisible</a>, <a href="../engine/controller.html#FearThisSpot">FearThisSpot</a>, <a href="../engine/controller.html#FindBestInventoryPath">FindBestInventoryPath</a>, <a href="../engine/controller.html#FindBestSuperPickup">FindBestSuperPickup</a>, <a href="../engine/controller.html#FindPathTo">FindPathTo</a>, <a href="../engine/controller.html#FindPathToIntercept">FindPathToIntercept</a>, <a href="../engine/controller.html#FindPathToward">FindPathToward</a>, <a href="../engine/controller.html#FindPathTowardNearest">FindPathTowardNearest</a>, <a href="../engine/controller.html#FindRandomDest">FindRandomDest</a>, <a href="../engine/controller.html#FinishRotation">FinishRotation</a>, <a href="../engine/controller.html#FireWeaponAt">FireWeaponAt</a>, <a href="../engine/controller.html#GameHasEnded">GameHasEnded</a>, <a href="../engine/controller.html#GetFacingDirection">GetFacingDirection</a>, <a href="../engine/controller.html#GetHumanReadableName">GetHumanReadableName</a>, <a href="../engine/controller.html#GetLastWeapon">GetLastWeapon</a>, <a href="../engine/controller.html#GetMessageIndex">GetMessageIndex</a>, <a href="../engine/controller.html#GetTeamNum">GetTeamNum</a>, <a href="../engine/controller.html#GetViewRotation">GetViewRotation</a>, <a href="../engine/controller.html#HandlePickup">HandlePickup</a>, <a href="../engine/controller.html#HearNoise">HearNoise</a>, <a href="../engine/controller.html#InitPlayerReplicationInfo">InitPlayerReplicationInfo</a>, <a href="../engine/controller.html#InLatentExecution">InLatentExecution</a>, <a href="../engine/controller.html#InstantWarnTarget">InstantWarnTarget</a>, <a href="../engine/controller.html#LineOfSightTo">LineOfSightTo</a>, <a href="../engine/controller.html#LongFall">LongFall</a>, <a href="../engine/controller.html#MayDodgeToMoveTarget">MayDodgeToMoveTarget</a>, <a href="../engine/controller.html#MayFall">MayFall</a>, <a href="../engine/controller.html#MissedDodge">MissedDodge</a>, <a href="../engine/controller.html#MonitoredPawnAlert">MonitoredPawnAlert</a>, <a href="../engine/controller.html#MoverFinished">MoverFinished</a>, <a href="../engine/controller.html#MoveTo">MoveTo</a>, <a href="../engine/controller.html#MoveToward">MoveToward</a>, <a href="../engine/controller.html#NeedsAdrenaline">NeedsAdrenaline</a>, <a href="../engine/controller.html#NotifyAddInventory">NotifyAddInventory</a>, <a href="../engine/controller.html#NotifyBump">NotifyBump</a>, <a href="../engine/controller.html#NotifyFallingHitWall">NotifyFallingHitWall</a>, <a href="../engine/controller.html#NotifyHeadVolumeChange">NotifyHeadVolumeChange</a>, <a href="../engine/controller.html#NotifyHitMover">NotifyHitMover</a>, <a href="../engine/controller.html#NotifyHitWall">NotifyHitWall</a>, <a href="../engine/controller.html#NotifyJumpApex">NotifyJumpApex</a>, <a href="../engine/controller.html#NotifyKilled">NotifyKilled</a>, <a href="../engine/controller.html#NotifyLanded">NotifyLanded</a>, <a href="../engine/controller.html#NotifyMissedJump">NotifyMissedJump</a>, <a href="../engine/controller.html#NotifyPhysicsVolumeChange">NotifyPhysicsVolumeChange</a>, <a href="../engine/controller.html#NotifyPostLanded">NotifyPostLanded</a>, <a href="../engine/controller.html#NotifyTakeHit">NotifyTakeHit</a>, <a href="../engine/controller.html#ParseChatPercVar">ParseChatPercVar</a>, <a href="../engine/controller.html#PawnDied">PawnDied</a>, <a href="../engine/controller.html#PawnIsInPain">PawnIsInPain</a>, <a href="../engine/controller.html#PendingStasis">PendingStasis</a>, <a href="../engine/controller.html#PickAnyTarget">PickAnyTarget</a>, <a href="../engine/controller.html#PickTarget">PickTarget</a>, <a href="../engine/controller.html#PickWallAdjust">PickWallAdjust</a>, <a href="../engine/controller.html#pointReachable">pointReachable</a>, <a href="../engine/controller.html#Possess">Possess</a>, <a href="../engine/controller.html#PostBeginPlay">PostBeginPlay</a>, <a href="../engine/controller.html#PreBeginPlay">PreBeginPlay</a>, <a href="../engine/controller.html#PrepareForMove">PrepareForMove</a>, <a href="../engine/controller.html#RateWeapon">RateWeapon</a>, <a href="../engine/controller.html#ReceiveProjectileWarning">ReceiveProjectileWarning</a>, <a href="../engine/controller.html#ReceiveWarning">ReceiveWarning</a>, <a href="../engine/controller.html#RemoveController">RemoveController</a>, <a href="../engine/controller.html#RenderOverlays">RenderOverlays</a>, <a href="../engine/controller.html#Reset">Reset</a>, <a href="../engine/controller.html#Restart">Restart</a>, <a href="../engine/controller.html#RoundHasEnded">RoundHasEnded</a>, <a href="../engine/controller.html#SameTeamAs">SameTeamAs</a>, <a href="../engine/controller.html#SeeMonster">SeeMonster</a>, <a href="../engine/controller.html#SeePlayer">SeePlayer</a>, <a href="../engine/controller.html#SendMessage">SendMessage</a>, <a href="../engine/controller.html#SendVoiceMessage">SendVoiceMessage</a>, <a href="../engine/controller.html#ServerGivePawn">ServerGivePawn</a>, <a href="../engine/controller.html#ServerReStartPlayer">ServerReStartPlayer</a>, <a href="../engine/controller.html#SetDoubleJump">SetDoubleJump</a>, <a href="../engine/controller.html#SetFall">SetFall</a>, <a href="../engine/controller.html#SetPawnClass">SetPawnClass</a>, <a href="../engine/controller.html#SetPawnFemale">SetPawnFemale</a>, <a href="../engine/controller.html#SetupSpecialPathAbilities">SetupSpecialPathAbilities</a>, <a href="../engine/controller.html#ShakeView">ShakeView</a>, <a href="../engine/controller.html#SoakStop">SoakStop</a>, <a href="../engine/controller.html#StartMonitoring">StartMonitoring</a>, <a href="../engine/controller.html#StopFiring">StopFiring</a>, <a href="../engine/controller.html#StopWaiting">StopWaiting</a>, <a href="../engine/controller.html#SuperDesireability">SuperDesireability</a>, <a href="../engine/controller.html#SwitchToBestWeapon">SwitchToBestWeapon</a>, <a href="../engine/controller.html#UnderLift">UnderLift</a>, <a href="../engine/controller.html#UnPossess">UnPossess</a>, <a href="../engine/controller.html#WaitForLanding">WaitForLanding</a>, <a href="../engine/controller.html#WaitForMover">WaitForMover</a>, <a href="../engine/controller.html#WantsSmoothedView">WantsSmoothedView</a>, <a href="../engine/controller.html#WasKilledBy">WasKilledBy</a>, <a href="../engine/controller.html#WeaponPreference">WeaponPreference</a>, <a href="../engine/controller.html#WouldReactToNoise">WouldReactToNoise</a>, <a href="../engine/controller.html#WouldReactToSeeing">WouldReactToSeeing</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#*">*</a>, <a href="../engine/actor.html#+">+</a>, <a href="../engine/actor.html#-">-</a>, <a href="../engine/actor.html#AddToPackageMap">AddToPackageMap</a>, <a href="../engine/actor.html#AdjustVolume">AdjustVolume</a>, <a href="../engine/actor.html#AllActors">AllActors</a>, <a href="../engine/actor.html#AllowMusicPlayback">AllowMusicPlayback</a>, <a href="../engine/actor.html#AnimBlendParams">AnimBlendParams</a>, <a href="../engine/actor.html#AnimBlendToAlpha">AnimBlendToAlpha</a>, <a href="../engine/actor.html#AnimEnd">AnimEnd</a>, <a href="../engine/actor.html#AnimIsInGroup">AnimIsInGroup</a>, <a href="../engine/actor.html#AnimStopLooping">AnimStopLooping</a>, <a href="../engine/actor.html#Attach">Attach</a>, <a href="../engine/actor.html#AttachToBone">AttachToBone</a>, <a href="../engine/actor.html#AutonomousPhysics">AutonomousPhysics</a>, <a href="../engine/actor.html#BaseChange">BaseChange</a>, <a href="../engine/actor.html#BasedActors">BasedActors</a>, <a href="../engine/actor.html#BecomeViewTarget">BecomeViewTarget</a>, <a href="../engine/actor.html#BeginEvent">BeginEvent</a>, <a href="../engine/actor.html#BeginPlay">BeginPlay</a>, <a href="../engine/actor.html#BlocksShotAt">BlocksShotAt</a>, <a href="../engine/actor.html#BoneRefresh">BoneRefresh</a>, <a href="../engine/actor.html#BroadcastLocalizedMessage">BroadcastLocalizedMessage</a>, <a href="../engine/actor.html#Bump">Bump</a>, <a href="../engine/actor.html#CanSplash">CanSplash</a>, <a href="../engine/actor.html#ChangeBaseParamsFeedbackEffect">ChangeBaseParamsFeedbackEffect</a>, <a href="../engine/actor.html#ChangeSpringFeedbackEffect">ChangeSpringFeedbackEffect</a>, <a href="../engine/actor.html#CheckAchievementEvents">CheckAchievementEvents</a>, <a href="../engine/actor.html#CheckForErrors">CheckForErrors</a>, <a href="../engine/actor.html#CheckMaxEffectDistance">CheckMaxEffectDistance</a>, <a href="../engine/actor.html#ChildActors">ChildActors</a>, <a href="../engine/actor.html#ClearStayingDebugLines">ClearStayingDebugLines</a>, <a href="../engine/actor.html#ClientTrigger">ClientTrigger</a>, <a href="../engine/actor.html#Clock">Clock</a>, <a href="../engine/actor.html#CollidingActors">CollidingActors</a>, <a href="../engine/actor.html#ConsoleCommand">ConsoleCommand</a>, <a href="../engine/actor.html#CopyObjectToClipboard">CopyObjectToClipboard</a>, <a href="../engine/actor.html#Crash">Crash</a>, <a href="../engine/actor.html#CurrentLIPSincAnim">CurrentLIPSincAnim</a>, <a href="../engine/actor.html#DebugClock">DebugClock</a>, <a href="../engine/actor.html#DebugUnclock">DebugUnclock</a>, <a href="../engine/actor.html#DemoPlaySound">DemoPlaySound</a>, <a href="../engine/actor.html#Destroy">Destroy</a>, <a href="../engine/actor.html#Destroyed">Destroyed</a>, <a href="../engine/actor.html#Detach">Detach</a>, <a href="../engine/actor.html#DetachFromBone">DetachFromBone</a>, <a href="../engine/actor.html#DisplayDebug">DisplayDebug</a>, <a href="../engine/actor.html#DrawDebugCircle">DrawDebugCircle</a>, <a href="../engine/actor.html#DrawDebugLine">DrawDebugLine</a>, <a href="../engine/actor.html#DrawDebugSphere">DrawDebugSphere</a>, <a href="../engine/actor.html#DrawStayingDebugLine">DrawStayingDebugLine</a>, <a href="../engine/actor.html#DynamicActors">DynamicActors</a>, <a href="../engine/actor.html#EffectIsRelevant">EffectIsRelevant</a>, <a href="../engine/actor.html#EnableChannelNotify">EnableChannelNotify</a>, <a href="../engine/actor.html#EncroachedBy">EncroachedBy</a>, <a href="../engine/actor.html#EncroachingOn">EncroachingOn</a>, <a href="../engine/actor.html#EndedRotation">EndedRotation</a>, <a href="../engine/actor.html#EndEvent">EndEvent</a>, <a href="../engine/actor.html#Error">Error</a>, <a href="../engine/actor.html#Falling">Falling</a>, <a href="../engine/actor.html#FastTrace">FastTrace</a>, <a href="../engine/actor.html#FellOutOfWorld">FellOutOfWorld</a>, <a href="../engine/actor.html#FinishAnim">FinishAnim</a>, <a href="../engine/actor.html#FinishedInterpolation">FinishedInterpolation</a>, <a href="../engine/actor.html#FinishInterpolation">FinishInterpolation</a>, <a href="../engine/actor.html#ForceFeedbackSupported">ForceFeedbackSupported</a>, <a href="../engine/actor.html#FreezeAnimAt">FreezeAnimAt</a>, <a href="../engine/actor.html#GainedChild">GainedChild</a>, <a href="../engine/actor.html#GetAllInt">GetAllInt</a>, <a href="../engine/actor.html#GetAllIntDesc">GetAllIntDesc</a>, <a href="../engine/actor.html#GetAnimDuration">GetAnimDuration</a>, <a href="../engine/actor.html#GetAnimParams">GetAnimParams</a>, <a href="../engine/actor.html#GetBoneCoords">GetBoneCoords</a>, <a href="../engine/actor.html#GetBoneRotation">GetBoneRotation</a>, <a href="../engine/actor.html#GetCacheEntry">GetCacheEntry</a>, <a href="../engine/actor.html#GetClosestBone">GetClosestBone</a>, <a href="../engine/actor.html#GetCollisionExtent">GetCollisionExtent</a>, <a href="../engine/actor.html#GetDebugName">GetDebugName</a>, <a href="../engine/actor.html#GetEventColor">GetEventColor</a>, <a href="../engine/actor.html#GetEvents">GetEvents</a>, <a href="../engine/actor.html#GetHumanReadableName">GetHumanReadableName</a>, <a href="../engine/actor.html#GetLocalString">GetLocalString</a>, <a href="../engine/actor.html#GetMapName">GetMapName</a>, <a href="../engine/actor.html#GetMeshName">GetMeshName</a>, <a href="../engine/actor.html#GetNextInt">GetNextInt</a>, <a href="../engine/actor.html#GetNextIntDesc">GetNextIntDesc</a>, <a href="../engine/actor.html#GetNextSkin">GetNextSkin</a>, <a href="../engine/actor.html#GetNotifyChannel">GetNotifyChannel</a>, <a href="../engine/actor.html#GetRenderBoundingSphere">GetRenderBoundingSphere</a>, <a href="../engine/actor.html#GetRootLocation">GetRootLocation</a>, <a href="../engine/actor.html#GetRootLocationDelta">GetRootLocationDelta</a>, <a href="../engine/actor.html#GetRootRotation">GetRootRotation</a>, <a href="../engine/actor.html#GetRootRotationDelta">GetRootRotationDelta</a>, <a href="../engine/actor.html#GetSoundDuration">GetSoundDuration</a>, <a href="../engine/actor.html#GetURLMap">GetURLMap</a>, <a href="../engine/actor.html#GetUrlOption">GetUrlOption</a>, <a href="../engine/actor.html#HasAnim">HasAnim</a>, <a href="../engine/actor.html#HasLIPSincAnim">HasLIPSincAnim</a>, <a href="../engine/actor.html#HealDamage">HealDamage</a>, <a href="../engine/actor.html#HitPointTrace">HitPointTrace</a>, <a href="../engine/actor.html#HitWall">HitWall</a>, <a href="../engine/actor.html#HurtRadius">HurtRadius</a>, <a href="../engine/actor.html#IsAnimating">IsAnimating</a>, <a href="../engine/actor.html#IsInPain">IsInPain</a>, <a href="../engine/actor.html#IsInVolume">IsInVolume</a>, <a href="../engine/actor.html#IsJoinedTo">IsJoinedTo</a>, <a href="../engine/actor.html#IsPlayingLIPSincAnim">IsPlayingLIPSincAnim</a>, <a href="../engine/actor.html#IsStationary">IsStationary</a>, <a href="../engine/actor.html#IsTweening">IsTweening</a>, <a href="../engine/actor.html#KAddAngularImpulse">KAddAngularImpulse</a>, <a href="../engine/actor.html#KAddBoneLifter">KAddBoneLifter</a>, <a href="../engine/actor.html#KAddImpulse">KAddImpulse</a>, <a href="../engine/actor.html#KApplyForce">KApplyForce</a>, <a href="../engine/actor.html#KDisableCollision">KDisableCollision</a>, <a href="../engine/actor.html#KDrawRigidBodyState">KDrawRigidBodyState</a>, <a href="../engine/actor.html#KEnableCollision">KEnableCollision</a>, <a href="../engine/actor.html#KFreezeRagdoll">KFreezeRagdoll</a>, <a href="../engine/actor.html#KGetActorGravScale">KGetActorGravScale</a>, <a href="../engine/actor.html#KGetCOMOffset">KGetCOMOffset</a>, <a href="../engine/actor.html#KGetCOMPosition">KGetCOMPosition</a>, <a href="../engine/actor.html#KGetDampingProps">KGetDampingProps</a>, <a href="../engine/actor.html#KGetFriction">KGetFriction</a>, <a href="../engine/actor.html#KGetImpactThreshold">KGetImpactThreshold</a>, <a href="../engine/actor.html#KGetInertiaTensor">KGetInertiaTensor</a>, <a href="../engine/actor.html#KGetMass">KGetMass</a>, <a href="../engine/actor.html#KGetRBQuaternion">KGetRBQuaternion</a>, <a href="../engine/actor.html#KGetRestitution">KGetRestitution</a>, <a href="../engine/actor.html#KGetRigidBodyState">KGetRigidBodyState</a>, <a href="../engine/actor.html#KGetSimParams">KGetSimParams</a>, <a href="../engine/actor.html#KGetSkelMass">KGetSkelMass</a>, <a href="../engine/actor.html#KilledBy">KilledBy</a>, <a href="../engine/actor.html#KImpact">KImpact</a>, <a href="../engine/actor.html#KIsAwake">KIsAwake</a>, <a href="../engine/actor.html#KIsRagdollAvailable">KIsRagdollAvailable</a>, <a href="../engine/actor.html#KMakeRagdollAvailable">KMakeRagdollAvailable</a>, <a href="../engine/actor.html#KRBVecFromVector">KRBVecFromVector</a>, <a href="../engine/actor.html#KRBVecToVector">KRBVecToVector</a>, <a href="../engine/actor.html#KRemoveAllBoneLifters">KRemoveAllBoneLifters</a>, <a href="../engine/actor.html#KRemoveLifterFromBone">KRemoveLifterFromBone</a>, <a href="../engine/actor.html#KScaleJointLimits">KScaleJointLimits</a>, <a href="../engine/actor.html#KSetActorGravScale">KSetActorGravScale</a>, <a href="../engine/actor.html#KSetBlockKarma">KSetBlockKarma</a>, <a href="../engine/actor.html#KSetCOMOffset">KSetCOMOffset</a>, <a href="../engine/actor.html#KSetDampingProps">KSetDampingProps</a>, <a href="../engine/actor.html#KSetFriction">KSetFriction</a>, <a href="../engine/actor.html#KSetImpactThreshold">KSetImpactThreshold</a>, <a href="../engine/actor.html#KSetInertiaTensor">KSetInertiaTensor</a>, <a href="../engine/actor.html#KSetMass">KSetMass</a>, <a href="../engine/actor.html#KSetRestitution">KSetRestitution</a>, <a href="../engine/actor.html#KSetSimParams">KSetSimParams</a>, <a href="../engine/actor.html#KSetSkelVel">KSetSkelVel</a>, <a href="../engine/actor.html#KSetStayUpright">KSetStayUpright</a>, <a href="../engine/actor.html#KSetStayUprightParams">KSetStayUprightParams</a>, <a href="../engine/actor.html#KSkelConvulse">KSkelConvulse</a>, <a href="../engine/actor.html#KUpdateState">KUpdateState</a>, <a href="../engine/actor.html#KVelDropBelow">KVelDropBelow</a>, <a href="../engine/actor.html#KWake">KWake</a>, <a href="../engine/actor.html#Landed">Landed</a>, <a href="../engine/actor.html#LinkMesh">LinkMesh</a>, <a href="../engine/actor.html#LinkSkelAnim">LinkSkelAnim</a>, <a href="../engine/actor.html#LIPSincAnimEnd">LIPSincAnimEnd</a>, <a href="../engine/actor.html#LockRootMotion">LockRootMotion</a>, <a href="../engine/actor.html#LoopAnim">LoopAnim</a>, <a href="../engine/actor.html#LostChild">LostChild</a>, <a href="../engine/actor.html#MakeNoise">MakeNoise</a>, <a href="../engine/actor.html#MatchStarting">MatchStarting</a>, <a href="../engine/actor.html#Move">Move</a>, <a href="../engine/actor.html#MoveCacheEntry">MoveCacheEntry</a>, <a href="../engine/actor.html#MoveSmooth">MoveSmooth</a>, <a href="../engine/actor.html#NearSpot">NearSpot</a>, <a href="../engine/actor.html#NotifyLocalPlayerDead">NotifyLocalPlayerDead</a>, <a href="../engine/actor.html#NotifyLocalPlayerTeamReceived">NotifyLocalPlayerTeamReceived</a>, <a href="../engine/actor.html#NotifySelected">NotifySelected</a>, <a href="../engine/actor.html#OnlyAffectPawns">OnlyAffectPawns</a>, <a href="../engine/actor.html#PauseStream">PauseStream</a>, <a href="../engine/actor.html#PawnBaseDied">PawnBaseDied</a>, <a href="../engine/actor.html#PhysicsVolumeChange">PhysicsVolumeChange</a>, <a href="../engine/actor.html#PlayAnim">PlayAnim</a>, <a href="../engine/actor.html#PlayerCanSeeMe">PlayerCanSeeMe</a>, <a href="../engine/actor.html#PlayFeedbackEffect">PlayFeedbackEffect</a>, <a href="../engine/actor.html#PlayLIPSincAnim">PlayLIPSincAnim</a>, <a href="../engine/actor.html#PlayMusic">PlayMusic</a>, <a href="../engine/actor.html#PlayOwnedSound">PlayOwnedSound</a>, <a href="../engine/actor.html#PlaySound">PlaySound</a>, <a href="../engine/actor.html#PlayStream">PlayStream</a>, <a href="../engine/actor.html#PlayTeleportEffect">PlayTeleportEffect</a>, <a href="../engine/actor.html#PostBeginPlay">PostBeginPlay</a>, <a href="../engine/actor.html#PostLoadSavedGame">PostLoadSavedGame</a>, <a href="../engine/actor.html#PostNetBeginPlay">PostNetBeginPlay</a>, <a href="../engine/actor.html#PostNetReceive">PostNetReceive</a>, <a href="../engine/actor.html#PostTeleport">PostTeleport</a>, <a href="../engine/actor.html#PostTouch">PostTouch</a>, <a href="../engine/actor.html#POVChanged">POVChanged</a>, <a href="../engine/actor.html#PreBeginPlay">PreBeginPlay</a>, <a href="../engine/actor.html#PrecacheAnnouncer">PrecacheAnnouncer</a>, <a href="../engine/actor.html#PreSaveGame">PreSaveGame</a>, <a href="../engine/actor.html#PreTeleport">PreTeleport</a>, <a href="../engine/actor.html#RadiusActors">RadiusActors</a>, <a href="../engine/actor.html#RanInto">RanInto</a>, <a href="../engine/actor.html#ReceivedEvent">ReceivedEvent</a>, <a href="../engine/actor.html#RecoverFromBadStateCode">RecoverFromBadStateCode</a>, <a href="../engine/actor.html#RenderOverlays">RenderOverlays</a>, <a href="../engine/actor.html#RenderTexture">RenderTexture</a>, <a href="../engine/actor.html#Reset">Reset</a>, <a href="../engine/actor.html#ResetStaticFilterState">ResetStaticFilterState</a>, <a href="../engine/actor.html#SeekStream">SeekStream</a>, <a href="../engine/actor.html#SelfTriggered">SelfTriggered</a>, <a href="../engine/actor.html#SetAnimFrame">SetAnimFrame</a>, <a href="../engine/actor.html#SetBase">SetBase</a>, <a href="../engine/actor.html#SetBoneDirection">SetBoneDirection</a>, <a href="../engine/actor.html#SetBoneLocation">SetBoneLocation</a>, <a href="../engine/actor.html#SetBoneRotation">SetBoneRotation</a>, <a href="../engine/actor.html#SetBoneScale">SetBoneScale</a>, <a href="../engine/actor.html#SetCollision">SetCollision</a>, <a href="../engine/actor.html#SetCollisionSize">SetCollisionSize</a>, <a href="../engine/actor.html#SetDefaultDisplayProperties">SetDefaultDisplayProperties</a>, <a href="../engine/actor.html#SetDelayedDamageInstigatorController">SetDelayedDamageInstigatorController</a>, <a href="../engine/actor.html#SetDisplayProperties">SetDisplayProperties</a>, <a href="../engine/actor.html#SetDrawScale">SetDrawScale</a>, <a href="../engine/actor.html#SetDrawScale3D">SetDrawScale3D</a>, <a href="../engine/actor.html#SetDrawType">SetDrawType</a>, <a href="../engine/actor.html#SetGRI">SetGRI</a>, <a href="../engine/actor.html#SetInitialState">SetInitialState</a>, <a href="../engine/actor.html#SetLocation">SetLocation</a>, <a href="../engine/actor.html#SetOverlayMaterial">SetOverlayMaterial</a>, <a href="../engine/actor.html#SetOwner">SetOwner</a>, <a href="../engine/actor.html#SetPhysics">SetPhysics</a>, <a href="../engine/actor.html#SetRelativeLocation">SetRelativeLocation</a>, <a href="../engine/actor.html#SetRelativeRotation">SetRelativeRotation</a>, <a href="../engine/actor.html#SetRotation">SetRotation</a>, <a href="../engine/actor.html#SetStaticMesh">SetStaticMesh</a>, <a href="../engine/actor.html#SetTimer">SetTimer</a>, <a href="../engine/actor.html#ShouldBeHidden">ShouldBeHidden</a>, <a href="../engine/actor.html#Sleep">Sleep</a>, <a href="../engine/actor.html#Spawn">Spawn</a>, <a href="../engine/actor.html#SpecialHandling">SpecialHandling</a>, <a href="../engine/actor.html#StartInterpolation">StartInterpolation</a>, <a href="../engine/actor.html#StopAllMusic">StopAllMusic</a>, <a href="../engine/actor.html#StopAnimating">StopAnimating</a>, <a href="../engine/actor.html#StopFeedbackEffect">StopFeedbackEffect</a>, <a href="../engine/actor.html#StopLIPSincAnim">StopLIPSincAnim</a>, <a href="../engine/actor.html#StopMusic">StopMusic</a>, <a href="../engine/actor.html#StopStream">StopStream</a>, <a href="../engine/actor.html#SuggestFallVelocity">SuggestFallVelocity</a>, <a href="../engine/actor.html#TakeDamage">TakeDamage</a>, <a href="../engine/actor.html#TeamLink">TeamLink</a>, <a href="../engine/actor.html#TextToSpeech">TextToSpeech</a>, <a href="../engine/actor.html#Tick">Tick</a>, <a href="../engine/actor.html#Timer">Timer</a>, <a href="../engine/actor.html#TimerPop">TimerPop</a>, <a href="../engine/actor.html#TornOff">TornOff</a>, <a href="../engine/actor.html#Touch">Touch</a>, <a href="../engine/actor.html#TouchingActor">TouchingActor</a>, <a href="../engine/actor.html#TouchingActors">TouchingActors</a>, <a href="../engine/actor.html#Trace">Trace</a>, <a href="../engine/actor.html#TraceActors">TraceActors</a>, <a href="../engine/actor.html#TraceThisActor">TraceThisActor</a>, <a href="../engine/actor.html#TravelPostAccept">TravelPostAccept</a>, <a href="../engine/actor.html#TravelPreAccept">TravelPreAccept</a>, <a href="../engine/actor.html#Trigger">Trigger</a>, <a href="../engine/actor.html#TriggerEvent">TriggerEvent</a>, <a href="../engine/actor.html#TweenAnim">TweenAnim</a>, <a href="../engine/actor.html#UnClock">UnClock</a>, <a href="../engine/actor.html#UnTouch">UnTouch</a>, <a href="../engine/actor.html#UnTrigger">UnTrigger</a>, <a href="../engine/actor.html#UntriggerEvent">UntriggerEvent</a>, <a href="../engine/actor.html#UpdateAnnouncements">UpdateAnnouncements</a>, <a href="../engine/actor.html#UpdateDefaultMesh">UpdateDefaultMesh</a>, <a href="../engine/actor.html#UpdateDefaultStaticMesh">UpdateDefaultStaticMesh</a>, <a href="../engine/actor.html#UpdatePrecacheMaterials">UpdatePrecacheMaterials</a>, <a href="../engine/actor.html#UpdatePrecacheStaticMeshes">UpdatePrecacheStaticMeshes</a>, <a href="../engine/actor.html#UpdateURL">UpdateURL</a>, <a href="../engine/actor.html#UsedBy">UsedBy</a>, <a href="../engine/actor.html#VisibleActors">VisibleActors</a>, <a href="../engine/actor.html#VisibleCollidingActors">VisibleCollidingActors</a>, <a href="../engine/actor.html#ZoneChange">ZoneChange</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_bAdjustFromWalls" class="hidden"></a>bAdjustFromWalls <a href="../Source_engine/aicontroller.html#15" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bAdjustFromWalls;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bHunting" class="hidden"></a>bHunting <a href="../Source_engine/aicontroller.html#12" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bHunting;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bPlannedJump" class="hidden"></a>bPlannedJump <a href="../Source_engine/aicontroller.html#17" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bPlannedJump;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MyScript" class="hidden"></a>MyScript <a href="../Source_engine/aicontroller.html#19" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/aiscript.html" class="source">AIScript</a></span> MyScript;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Skill" class="hidden"></a>Skill <a href="../Source_engine/aicontroller.html#20" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> Skill;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_AdjustDesireFor-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AdjustDesireFor <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#128" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">float</span> AdjustDesireFor ( <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span> <span class="source_type">P</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AdjustView-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AdjustView <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#164" class="small">Source code</a></h4>
+<div class="declaration"> function  AdjustView ( <span class="source_type">float</span> DeltaTime) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DisplayDebug-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DisplayDebug <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#85" class="small">Source code</a></h4>
+<div class="declaration"> function  DisplayDebug ( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, out <span class="source_type">float</span> YL, out <span class="source_type">float</span> YPos) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetFacingDirection-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetFacingDirection <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#141" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> GetFacingDirection ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetOrderObject-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetOrderObject <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#212" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> GetOrderObject ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetOrders-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetOrders <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#217" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">name</span> GetOrders ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MoverFinished-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> MoverFinished <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#249" class="small">Source code</a></h4>
+<div class="declaration"> function  MoverFinished ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PreBeginPlay-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> PreBeginPlay <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#24" class="small">Source code</a></h4>
+<div class="declaration"> event  PreBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PrepareForMove-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> PrepareForMove <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#231" class="small">Source code</a></h4>
+<div class="declaration"> event  PrepareForMove ( <span class="source_type"><a href="../engine/navigationpoint.html" class="source">NavigationPoint</a></span> Goal, <span class="source_type"><a href="../engine/reachspec.html" class="source">ReachSpec</a></span> Path )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PriorityObjective-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PriorityObjective <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#279" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> PriorityObjective ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RateWeapon-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> RateWeapon <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#42" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">float</span> RateWeapon ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> w) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#35" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetOrders-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetOrders <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#210" class="small">Source code</a></h4>
+<div class="declaration"> function  SetOrders ( <span class="source_type">name</span> NewOrders, <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> OrderGiver )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Startle-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Startle <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#284" class="small">Source code</a></h4>
+<div class="declaration"> function  Startle ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> A )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#47" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> Other, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TriggerScript-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TriggerScript <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#72" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> TriggerScript ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> Other, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UnderLift-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UnderLift <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#261" class="small">Source code</a></h4>
+<div class="declaration"> function  UnderLift ( <span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span> M) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WaitForMover-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> WaitForMover <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#236" class="small">Source code</a></h4>
+<div class="declaration"> function  WaitForMover ( <span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span> M) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WaitToSeeEnemy-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> WaitToSeeEnemy <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#22" class="small">Source code</a></h4>
+<div class="declaration">native(<span class="source_int">510</span>) final latent function  WaitToSeeEnemy (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WeaponFireAgain-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> WeaponFireAgain <span class="function_state"></span> <a href="../Source_engine/aicontroller.html#58" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> WeaponFireAgain ( <span class="source_type">float</span> RefireRate, <span class="source_type">bool</span> bFinishedFire) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     bAdjustFromWalls=True
+     bCanOpenDoors=True
+     bCanDoSpecial=True
+     MinHitWall=-<span class="source_int">0.500000</span>
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/aicontroller.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#AIController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/adminbase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/aimarker.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:41.200 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

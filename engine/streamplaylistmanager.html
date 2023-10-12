@@ -1,0 +1,665 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Engine.StreamPlaylistManager</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/streamplaylistmanager.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#StreamPlaylistManager">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/streamplaylist.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/streamtag.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#engine/streamplaylistmanager.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.StreamPlaylistManager</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../engine/streambase.html">StreamBase</a></dd>
+<dt>Modifiers</dt><dd>Config ( UPlaylists ) </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/streambase.html">StreamBase</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/streamplaylistmanager.html">StreamPlaylistManager</a>
+</pre>
+
+
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Contants from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#ALLIES_TEAM_INDEX">ALLIES_TEAM_INDEX</a>, <a href="../core/object.html#AXIS_TEAM_INDEX">AXIS_TEAM_INDEX</a>, <a href="../core/object.html#MaxInt">MaxInt</a>, <a href="../core/object.html#NEUTRAL_TEAM_INDEX">NEUTRAL_TEAM_INDEX</a>, <a href="../core/object.html#Pi">Pi</a>, <a href="../core/object.html#RF_NotForClient">RF_NotForClient</a>, <a href="../core/object.html#RF_NotForEdit">RF_NotForEdit</a>, <a href="../core/object.html#RF_NotForServer">RF_NotForServer</a>, <a href="../core/object.html#RF_Public">RF_Public</a>, <a href="../core/object.html#RF_Standalone">RF_Standalone</a>, <a href="../core/object.html#RF_Transactional">RF_Transactional</a>, <a href="../core/object.html#RF_Transient">RF_Transient</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><th colspan="2" class="small">StreamPlaylistManager</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDirty" name="bDirty" title="go to the details">bDirty</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDisableNotification" name="bDisableNotification" title="go to the details">bDisableNotification</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bRepeat" name="bRepeat" title="go to the details">bRepeat</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bRepeatAll" name="bRepeatAll" title="go to the details">bRepeatAll</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bShuffle" name="bShuffle" title="go to the details">bShuffle</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bShuffleAll" name="bShuffleAll" title="go to the details">bShuffleAll</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_CurrentPlaylist" name="CurrentPlaylist" title="go to the details">CurrentPlaylist</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_DefaultPlaylistName" name="DefaultPlaylistName" title="go to the details">DefaultPlaylistName</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/streaminterface.html">StreamInterface</a></td><td width="66%"><a href="#_FileManager" name="FileManager" title="go to the details">FileManager</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/playlistparserbase.html">PlaylistParserBase</a>&gt;</td><td width="66%"><a href="#_Parsers" name="Parsers" title="go to the details">Parsers</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/streamplaylistmanager.html#PlaylistParser">PlaylistParser</a>&gt;</td><td width="66%"><a href="#_ParserType" name="ParserType" title="go to the details">ParserType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/streamplaylist.html">StreamPlaylist</a>&gt;</td><td width="66%"><a href="#_Playlists" name="Playlists" title="go to the details">Playlists</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#Class">Class</a>, <a href="../core/object.html#Name">Name</a>, <a href="../core/object.html#ObjectFlags">ObjectFlags</a>, <a href="../core/object.html#ObjectInternal[7]">ObjectInternal[7]</a>, <a href="../core/object.html#Outer">Outer</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/streambase.html">StreamBase</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/streambase.html#EFileType">EFileType</a>, <a href="../engine/streambase.html#EStreamPlaylistType">EStreamPlaylistType</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#EAxis">EAxis</a>, <a href="../core/object.html#ECamOrientation">ECamOrientation</a>, <a href="../core/object.html#EDetailMode">EDetailMode</a>, <a href="../core/object.html#EDrawPivot">EDrawPivot</a>, <a href="../core/object.html#ESheerAxis">ESheerAxis</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+<tr><td><a href="#_PlaylistParser" name="PlaylistParser" title="go to the details">PlaylistParser</a><br /><span class="small">Type, ParserClass</span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/streambase.html">StreamBase</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/streambase.html#FilePath">FilePath</a>, <a href="../engine/streambase.html#ID3Field">ID3Field</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#BoundingVolume">BoundingVolume</a>, <a href="../core/object.html#Box">Box</a>, <a href="../core/object.html#Color">Color</a>, <a href="../core/object.html#CompressedPosition">CompressedPosition</a>, <a href="../core/object.html#Coords">Coords</a>, <a href="../core/object.html#FloatBox">FloatBox</a>, <a href="../core/object.html#Guid">Guid</a>, <a href="../core/object.html#IntBox">IntBox</a>, <a href="../core/object.html#InterpCurve">InterpCurve</a>, <a href="../core/object.html#InterpCurvePoint">InterpCurvePoint</a>, <a href="../core/object.html#Matrix">Matrix</a>, <a href="../core/object.html#Plane">Plane</a>, <a href="../core/object.html#Quat">Quat</a>, <a href="../core/object.html#Range">Range</a>, <a href="../core/object.html#RangeVector">RangeVector</a>, <a href="../core/object.html#Rotator">Rotator</a>, <a href="../core/object.html#Scale">Scale</a>, <a href="../core/object.html#TMultiMap">TMultiMap</a>, <a href="../core/object.html#Vector">Vector</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Delegates Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_delegate.gif" alt="delegate" title="delegate"></td><td>&nbsp;</td><td><a href="#_ChangedActivePlaylist+" name="ChangedActivePlaylist" title="go to the details">ChangedActivePlaylist</a> (<a href="../engine/streamplaylist.html">StreamPlaylist</a> NewPlaylist)</td></tr>
+
+</table>
+
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ActivatePlaylist-" name="ActivatePlaylist" title="go to the details">ActivatePlaylist</a> (int ListIndex, optional bool bNoFail ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_AddDirectory-" name="AddDirectory" title="go to the details">AddDirectory</a> (int PlaylistIndex, int InsertPosition, string Path, bool bRecurseDirectories ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_AddPlaylist-" name="AddPlaylist" title="go to the details">AddPlaylist</a> (out string NewPlaylistName ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_AddToPlaylist-" name="AddToPlaylist" title="go to the details">AddToPlaylist</a> (int PlaylistIndex, string Path, optional bool bSkipNotification ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_AppendPlaylist-" name="AppendPlaylist" title="go to the details">AppendPlaylist</a> (StreamPlaylist Playlist ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ClearCurrentPlaylist-" name="ClearCurrentPlaylist" title="go to the details">ClearCurrentPlaylist</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/streamplaylist.html">StreamPlaylist</a>&nbsp;</td><td><a href="#_CreateDefaultPlaylist-" name="CreateDefaultPlaylist" title="go to the details">CreateDefaultPlaylist</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/streamplaylist.html">StreamPlaylist</a>&nbsp;</td><td><a href="#_CreatePlaylist-" name="CreatePlaylist" title="go to the details">CreatePlaylist</a> (string PlaylistName))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_FindNameIndex-" name="FindNameIndex" title="go to the details">FindNameIndex</a> (string PlaylistName ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_FindPlaylistIndex-" name="FindPlaylistIndex" title="go to the details">FindPlaylistIndex</a> (StreamPlaylist Playlist ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_GetCurrentIndex-" name="GetCurrentIndex" title="go to the details">GetCurrentIndex</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/streamplaylist.html">StreamPlaylist</a>&nbsp;</td><td><a href="#_GetCurrentPlaylist-" name="GetCurrentPlaylist" title="go to the details">GetCurrentPlaylist</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_GetCurrentTitle-" name="GetCurrentTitle" title="go to the details">GetCurrentTitle</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/streamplaylist.html">StreamPlaylist</a>&nbsp;</td><td><a href="#_GetPlaylistAt-" name="GetPlaylistAt" title="go to the details">GetPlaylistAt</a> (int idx ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_GetPlaylistCount-" name="GetPlaylistCount" title="go to the details">GetPlaylistCount</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/streambase.html#EStreamPlaylistType">EStreamPlaylistType</a>&nbsp;</td><td><a href="#_GetPlaylistType-" name="GetPlaylistType" title="go to the details">GetPlaylistType</a> (string Path ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/streamplaylist.html">StreamPlaylist</a>&nbsp;</td><td><a href="#_GetRandomPlaylist-" name="GetRandomPlaylist" title="go to the details">GetRandomPlaylist</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_GetRandomSong-" name="GetRandomSong" title="go to the details">GetRandomSong</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_GetRepeat-" name="GetRepeat" title="go to the details">GetRepeat</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_GetRepeatAll-" name="GetRepeatAll" title="go to the details">GetRepeatAll</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_GetShuffle-" name="GetShuffle" title="go to the details">GetShuffle</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_GetShuffleAll-" name="GetShuffleAll" title="go to the details">GetShuffleAll</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_HandleDebugExec-" name="HandleDebugExec" title="go to the details">HandleDebugExec</a> (string Command, string Param ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ImportPlaylist-" name="ImportPlaylist" title="go to the details">ImportPlaylist</a> (int PlaylistIndex, int InsertPosition, string Path ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Initialize-" name="Initialize" title="go to the details">Initialize</a> (StreamInterface InFileManager ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_InitializeParsers-" name="InitializeParsers" title="go to the details">InitializeParsers</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_InitializePlaylists-" name="InitializePlaylists" title="go to the details">InitializePlaylists</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_InsertInPlaylist-" name="InsertInPlaylist" title="go to the details">InsertInPlaylist</a> (int PlaylistIndex, int InsertPosition, string Path, optional bool bSkipNotification ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_NextSong-" name="NextSong" title="go to the details">NextSong</a> (optional bool bForce ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_PrevSong-" name="PrevSong" title="go to the details">PrevSong</a> (optional bool bForce ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_RemoveFromCurrentPlaylist-" name="RemoveFromCurrentPlaylist" title="go to the details">RemoveFromCurrentPlaylist</a> (string Path, optional bool bSkipNotification ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_RemovePlaylist-" name="RemovePlaylist" title="go to the details">RemovePlaylist</a> (string PlaylistName ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_RemovePlaylistAt-" name="RemovePlaylistAt" title="go to the details">RemovePlaylistAt</a> (int Index ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_RenamePlaylist-" name="RenamePlaylist" title="go to the details">RenamePlaylist</a> (int Index, out string NewName ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Save-" name="Save" title="go to the details">Save</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetRepeat-" name="SetRepeat" title="go to the details">SetRepeat</a> (bool bEnable ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetRepeatAll-" name="SetRepeatAll" title="go to the details">SetRepeatAll</a> (bool bEnable ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetShuffle-" name="SetShuffle" title="go to the details">SetShuffle</a> (bool bEnable ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetShuffleAll-" name="SetShuffleAll" title="go to the details">SetShuffleAll</a> (bool bEnable ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ValidIndex-" name="ValidIndex" title="go to the details">ValidIndex</a> (int Index ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ValidName-" name="ValidName" title="go to the details">ValidName</a> (string Test ))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/streambase.html">StreamBase</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/streambase.html#*">*</a>, <a href="../engine/streambase.html#*=">*=</a>, <a href="../engine/streambase.html#CompareNames">CompareNames</a>, <a href="../engine/streambase.html#ConvertToFileExtension">ConvertToFileExtension</a>, <a href="../engine/streambase.html#ConvertToFileType">ConvertToFileType</a>, <a href="../engine/streambase.html#FormatTimeDisplay">FormatTimeDisplay</a>, <a href="../engine/streambase.html#GetPathRoot">GetPathRoot</a>, <a href="../engine/streambase.html#GetPathSeparator">GetPathSeparator</a>, <a href="../engine/streambase.html#HandleDebugExec">HandleDebugExec</a>, <a href="../engine/streambase.html#HasExtension">HasExtension</a>, <a href="../engine/streambase.html#IsCaseSensitive">IsCaseSensitive</a>, <a href="../engine/streambase.html#ParseDirectories">ParseDirectories</a>, <a href="../engine/streambase.html#ParseExtension">ParseExtension</a>, <a href="../engine/streambase.html#ParsePath">ParsePath</a>, <a href="../engine/streambase.html#RevInStr">RevInStr</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#!">!</a>, <a href="../core/object.html#!=">!=</a>, <a href="../core/object.html#$">$</a>, <a href="../core/object.html#$=">$=</a>, <a href="../core/object.html#%">%</a>, <a href="../core/object.html#&">&</a>, <a href="../core/object.html#&&">&&</a>, <a href="../core/object.html#*">*</a>, <a href="../core/object.html#**">**</a>, <a href="../core/object.html#*=">*=</a>, <a href="../core/object.html#+">+</a>, <a href="../core/object.html#++">++</a>, <a href="../core/object.html#+=">+=</a>, <a href="../core/object.html#-">-</a>, <a href="../core/object.html#--">--</a>, <a href="../core/object.html#-=">-=</a>, <a href="../core/object.html#/ ">/ </a>, <a href="../core/object.html#/=">/=</a>, <a href="../core/object.html#&lt;">&lt;</a>, <a href="../core/object.html#&lt;&lt;">&lt;&lt;</a>, <a href="../core/object.html#&lt;=">&lt;=</a>, <a href="../core/object.html#==">==</a>, <a href="../core/object.html#&gt;">&gt;</a>, <a href="../core/object.html#&gt;=">&gt;=</a>, <a href="../core/object.html#&gt;&gt;">&gt;&gt;</a>, <a href="../core/object.html#&gt;&gt;&gt;">&gt;&gt;&gt;</a>, <a href="../core/object.html#@">@</a>, <a href="../core/object.html#@=">@=</a>, <a href="../core/object.html#Abs">Abs</a>, <a href="../core/object.html#Acos">Acos</a>, <a href="../core/object.html#AllObjects">AllObjects</a>, <a href="../core/object.html#Asc">Asc</a>, <a href="../core/object.html#Asin">Asin</a>, <a href="../core/object.html#Atan">Atan</a>, <a href="../core/object.html#BeginState">BeginState</a>, <a href="../core/object.html#Caps">Caps</a>, <a href="../core/object.html#Ceil">Ceil</a>, <a href="../core/object.html#Chr">Chr</a>, <a href="../core/object.html#Clamp">Clamp</a>, <a href="../core/object.html#ClassIsChildOf">ClassIsChildOf</a>, <a href="../core/object.html#ClearConfig">ClearConfig</a>, <a href="../core/object.html#ClockwiseFrom">ClockwiseFrom</a>, <a href="../core/object.html#Cos">Cos</a>, <a href="../core/object.html#Created">Created</a>, <a href="../core/object.html#Cross">Cross</a>, <a href="../core/object.html#Disable">Disable</a>, <a href="../core/object.html#Divide">Divide</a>, <a href="../core/object.html#Dot">Dot</a>, <a href="../core/object.html#DynamicLoadObject">DynamicLoadObject</a>, <a href="../core/object.html#EatStr">EatStr</a>, <a href="../core/object.html#Enable">Enable</a>, <a href="../core/object.html#EndState">EndState</a>, <a href="../core/object.html#Eval">Eval</a>, <a href="../core/object.html#Exp">Exp</a>, <a href="../core/object.html#FClamp">FClamp</a>, <a href="../core/object.html#FindObject">FindObject</a>, <a href="../core/object.html#FMax">FMax</a>, <a href="../core/object.html#FMin">FMin</a>, <a href="../core/object.html#FRand">FRand</a>, <a href="../core/object.html#GetAxes">GetAxes</a>, <a href="../core/object.html#GetEnum">GetEnum</a>, <a href="../core/object.html#GetItemName">GetItemName</a>, <a href="../core/object.html#GetPerObjectNames">GetPerObjectNames</a>, <a href="../core/object.html#GetPropertyText">GetPropertyText</a>, <a href="../core/object.html#GetReferencers">GetReferencers</a>, <a href="../core/object.html#GetStateName">GetStateName</a>, <a href="../core/object.html#GetUnAxes">GetUnAxes</a>, <a href="../core/object.html#GotoState">GotoState</a>, <a href="../core/object.html#InStr">InStr</a>, <a href="../core/object.html#InterpCurveEval">InterpCurveEval</a>, <a href="../core/object.html#InterpCurveGetInputDomain">InterpCurveGetInputDomain</a>, <a href="../core/object.html#InterpCurveGetOutputRange">InterpCurveGetOutputRange</a>, <a href="../core/object.html#Invert">Invert</a>, <a href="../core/object.html#IsA">IsA</a>, <a href="../core/object.html#IsInState">IsInState</a>, <a href="../core/object.html#IsOnConsole">IsOnConsole</a>, <a href="../core/object.html#IsSoaking">IsSoaking</a>, <a href="../core/object.html#Left">Left</a>, <a href="../core/object.html#Len">Len</a>, <a href="../core/object.html#Lerp">Lerp</a>, <a href="../core/object.html#Localize">Localize</a>, <a href="../core/object.html#Locs">Locs</a>, <a href="../core/object.html#Log">Log</a>, <a href="../core/object.html#Loge">Loge</a>, <a href="../core/object.html#Max">Max</a>, <a href="../core/object.html#Mid">Mid</a>, <a href="../core/object.html#Min">Min</a>, <a href="../core/object.html#MirrorVectorByNormal">MirrorVectorByNormal</a>, <a href="../core/object.html#Normal">Normal</a>, <a href="../core/object.html#Normalize">Normalize</a>, <a href="../core/object.html#OrthoRotation">OrthoRotation</a>, <a href="../core/object.html#PlatformIs64Bit">PlatformIs64Bit</a>, <a href="../core/object.html#PlatformIsMacOS">PlatformIsMacOS</a>, <a href="../core/object.html#PlatformIsOpenGL">PlatformIsOpenGL</a>, <a href="../core/object.html#PlatformIsUnix">PlatformIsUnix</a>, <a href="../core/object.html#PlatformIsWindows">PlatformIsWindows</a>, <a href="../core/object.html#QuatFindBetween">QuatFindBetween</a>, <a href="../core/object.html#QuatFromAxisAndAngle">QuatFromAxisAndAngle</a>, <a href="../core/object.html#QuatFromRotator">QuatFromRotator</a>, <a href="../core/object.html#QuatInvert">QuatInvert</a>, <a href="../core/object.html#QuatProduct">QuatProduct</a>, <a href="../core/object.html#QuatRotateVector">QuatRotateVector</a>, <a href="../core/object.html#QuatSlerp">QuatSlerp</a>, <a href="../core/object.html#QuatToRotator">QuatToRotator</a>, <a href="../core/object.html#Rand">Rand</a>, <a href="../core/object.html#RandRange">RandRange</a>, <a href="../core/object.html#Repl">Repl</a>, <a href="../core/object.html#ReplaceText">ReplaceText</a>, <a href="../core/object.html#ResetConfig">ResetConfig</a>, <a href="../core/object.html#Right">Right</a>, <a href="../core/object.html#RotRand">RotRand</a>, <a href="../core/object.html#Round">Round</a>, <a href="../core/object.html#SaveConfig">SaveConfig</a>, <a href="../core/object.html#SetPropertyText">SetPropertyText</a>, <a href="../core/object.html#Sin">Sin</a>, <a href="../core/object.html#Smerp">Smerp</a>, <a href="../core/object.html#Split">Split</a>, <a href="../core/object.html#Sqrt">Sqrt</a>, <a href="../core/object.html#Square">Square</a>, <a href="../core/object.html#StaticClearConfig">StaticClearConfig</a>, <a href="../core/object.html#StaticSaveConfig">StaticSaveConfig</a>, <a href="../core/object.html#StopWatch">StopWatch</a>, <a href="../core/object.html#StrCmp">StrCmp</a>, <a href="../core/object.html#Tan">Tan</a>, <a href="../core/object.html#VRand">VRand</a>, <a href="../core/object.html#VSize">VSize</a>, <a href="../core/object.html#VSizeSquared">VSizeSquared</a>, <a href="../core/object.html#Warn">Warn</a>, <a href="../core/object.html#^">^</a>, <a href="../core/object.html#^^">^^</a>, <a href="../core/object.html#|">|</a>, <a href="../core/object.html#||">||</a>, <a href="../core/object.html#~">~</a>, <a href="../core/object.html#~=">~=</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h3 class="vartag">StreamPlaylistManager</h3>
+<h4><a name="_bDirty" class="hidden"></a>bDirty <a href="../Source_engine/streamplaylistmanager.html#15" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) transient noexport protected <span class="source_type">bool</span> bDirty;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDisableNotification" class="hidden"></a>bDisableNotification <a href="../Source_engine/streamplaylistmanager.html#14" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) protected <span class="source_type">bool</span> bDisableNotification;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bRepeat" class="hidden"></a>bRepeat <a href="../Source_engine/streamplaylistmanager.html#17" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) protected config <span class="source_type">bool</span> <span class="source_type">bRepeat</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bRepeatAll" class="hidden"></a>bRepeatAll <a href="../Source_engine/streamplaylistmanager.html#17" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) protected config <span class="source_type">bool</span> bRepeatAll;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bShuffle" class="hidden"></a>bShuffle <a href="../Source_engine/streamplaylistmanager.html#17" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) protected config <span class="source_type">bool</span> bShuffle;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bShuffleAll" class="hidden"></a>bShuffleAll <a href="../Source_engine/streamplaylistmanager.html#17" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) protected config <span class="source_type">bool</span> bShuffleAll;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CurrentPlaylist" class="hidden"></a>CurrentPlaylist <a href="../Source_engine/streamplaylistmanager.html#11" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) editconst protected config <span class="source_type">int</span> CurrentPlaylist;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DefaultPlaylistName" class="hidden"></a>DefaultPlaylistName <a href="../Source_engine/streamplaylistmanager.html#18" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) localized <span class="source_type">string</span> DefaultPlaylistName;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FileManager" class="hidden"></a>FileManager <a href="../Source_engine/streamplaylistmanager.html#12" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) editinline editconst noexport <span class="source_type"><a href="../engine/streaminterface.html" class="source">StreamInterface</a></span> FileManager;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Parsers" class="hidden"></a>Parsers <a href="../Source_engine/streamplaylistmanager.html#27" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) editconst noexport editinline editconstarray array&lt;<span class="source_type"><a href="../engine/playlistparserbase.html" class="source">PlaylistParserBase</a></span>&gt; Parsers;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ParserType" class="hidden"></a>ParserType <a href="../Source_engine/streamplaylistmanager.html#26" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) config array&lt;<span class="source_type"><a href="../engine/streamplaylistmanager.html#PlaylistParser" class="source">PlaylistParser</a></span>&gt; ParserType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Playlists" class="hidden"></a>Playlists <a href="../Source_engine/streamplaylistmanager.html#13" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) editinline editconstarray protected array&lt;<span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span>&gt; Playlists;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Structures Detail</th>
+</tr>
+</table>
+
+<h4><a name="_PlaylistParser" class="hidden"></a>PlaylistParser <a href="../Source_engine/streamplaylistmanager.html#20" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../engine/streamplaylistmanager.html#PlaylistParser" class="source">PlaylistParser</a></span><br />
+{<blockquote>var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) <span class="source_type">string</span> ParserClass;<br />
+var(<span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>) <span class="source_type"><a href="../engine/streambase.html#EStreamPlaylistType" class="source">EStreamPlaylistType</a></span> <span class="source_type">Type</span>;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Delegates Detail</th>
+</tr>
+</table>
+
+<h4><a name="_ChangedActivePlaylist+" class="hidden"></a><img src="../img_delegate.gif" alt="" title="delegate"> ChangedActivePlaylist <a href="../Source_engine/streamplaylistmanager.html#35" class="small">Source code</a></h4>
+<div class="declaration"> delegate  ChangedActivePlaylist ( <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> NewPlaylist )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_ActivatePlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ActivatePlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#106" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ActivatePlaylist ( <span class="source_type">int</span> <span class="source_type">ListIndex</span>, optional <span class="source_type">bool</span> <span class="source_type">bNoFail</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AddDirectory-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AddDirectory <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#320" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> AddDirectory ( <span class="source_type">int</span> PlaylistIndex, <span class="source_type">int</span> <span class="source_type">InsertPosition</span>, <span class="source_type">string</span> <span class="source_type">Path</span>, <span class="source_type">bool</span> <span class="source_type">bRecurseDirectories</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AddPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AddPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#138" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> AddPlaylist ( out <span class="source_type">string</span> <span class="source_type">NewPlaylistName</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AddToPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AddToPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#232" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> AddToPlaylist ( <span class="source_type">int</span> PlaylistIndex, <span class="source_type">string</span> <span class="source_type">Path</span>, optional <span class="source_type">bool</span> <span class="source_type">bSkipNotification</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AppendPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AppendPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#153" class="small">Source code</a></h4>
+<div class="declaration">protected function <span class="source_type">int</span> AppendPlaylist ( <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> <span class="source_type">Playlist</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClearCurrentPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ClearCurrentPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#295" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ClearCurrentPlaylist ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CreateDefaultPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CreateDefaultPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#87" class="small">Source code</a></h4>
+<div class="declaration">protected function <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> CreateDefaultPlaylist ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CreatePlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CreatePlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#617" class="small">Source code</a></h4>
+<div class="declaration">protected function <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> CreatePlaylist ( <span class="source_type">string</span> <span class="source_type">PlaylistName</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FindNameIndex-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FindNameIndex <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#517" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> FindNameIndex ( <span class="source_type">string</span> <span class="source_type">PlaylistName</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FindPlaylistIndex-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FindPlaylistIndex <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#531" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> FindPlaylistIndex ( <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> <span class="source_type">Playlist</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetCurrentIndex-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetCurrentIndex <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#459" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> GetCurrentIndex ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetCurrentPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetCurrentPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#467" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> GetCurrentPlaylist ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetCurrentTitle-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetCurrentTitle <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#679" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> GetCurrentTitle ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetPlaylistAt-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetPlaylistAt <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#497" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> GetPlaylistAt ( <span class="source_type">int</span> <span class="source_type">idx</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetPlaylistCount-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetPlaylistCount <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#505" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> GetPlaylistCount ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetPlaylistType-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetPlaylistType <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#303" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/streambase.html#EStreamPlaylistType" class="source">EStreamPlaylistType</a></span> GetPlaylistType ( <span class="source_type">string</span> <span class="source_type">Path</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetRandomPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetRandomPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#478" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> GetRandomPlaylist ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetRandomSong-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetRandomSong <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#437" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> GetRandomSong ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetRepeat-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetRepeat <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#566" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> GetRepeat ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetRepeatAll-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetRepeatAll <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#571" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> GetRepeatAll ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetShuffle-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetShuffle <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#556" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> GetShuffle ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetShuffleAll-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetShuffleAll <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#561" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> GetShuffleAll ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HandleDebugExec-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> HandleDebugExec <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#634" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> HandleDebugExec ( <span class="source_type">string</span> <span class="source_type">Command</span>, <span class="source_type">string</span> <span class="source_type">Param</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ImportPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ImportPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#349" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ImportPlaylist ( <span class="source_type">int</span> PlaylistIndex, <span class="source_type">int</span> <span class="source_type">InsertPosition</span>, <span class="source_type">string</span> <span class="source_type">Path</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Initialize-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Initialize <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#37" class="small">Source code</a></h4>
+<div class="declaration"> function  Initialize ( <span class="source_type"><a href="../engine/streaminterface.html" class="source">StreamInterface</a></span> <span class="source_type">InFileManager</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_InitializeParsers-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> InitializeParsers <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#67" class="small">Source code</a></h4>
+<div class="declaration">protected function  InitializeParsers ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_InitializePlaylists-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> InitializePlaylists <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#44" class="small">Source code</a></h4>
+<div class="declaration">protected function  InitializePlaylists ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_InsertInPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> InsertInPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#245" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> InsertInPlaylist ( <span class="source_type">int</span> PlaylistIndex, <span class="source_type">int</span> <span class="source_type">InsertPosition</span>, <span class="source_type">string</span> <span class="source_type">Path</span>, optional <span class="source_type">bool</span> <span class="source_type">bSkipNotification</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NextSong-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NextSong <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#365" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> NextSong ( optional <span class="source_type">bool</span> <span class="source_type">bForce</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PrevSong-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PrevSong <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#401" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> PrevSong ( optional <span class="source_type">bool</span> <span class="source_type">bForce</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RemoveFromCurrentPlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> RemoveFromCurrentPlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#286" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> RemoveFromCurrentPlaylist ( <span class="source_type">string</span> <span class="source_type">Path</span>, optional <span class="source_type">bool</span> <span class="source_type">bSkipNotification</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RemovePlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> RemovePlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#170" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> RemovePlaylist ( <span class="source_type">string</span> <span class="source_type">PlaylistName</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RemovePlaylistAt-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> RemovePlaylistAt <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#182" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> RemovePlaylistAt ( <span class="source_type">int</span> <span class="source_type">Index</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RenamePlaylist-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> RenamePlaylist <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#202" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> RenamePlaylist ( <span class="source_type">int</span> <span class="source_type">Index</span>, out <span class="source_type">string</span> <span class="source_type">NewName</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Save-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Save <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#665" class="small">Source code</a></h4>
+<div class="declaration"> function  Save ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetRepeat-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetRepeat <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#599" class="small">Source code</a></h4>
+<div class="declaration"> function  SetRepeat ( <span class="source_type">bool</span> <span class="source_type">bEnable</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetRepeatAll-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetRepeatAll <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#608" class="small">Source code</a></h4>
+<div class="declaration"> function  SetRepeatAll ( <span class="source_type">bool</span> <span class="source_type">bEnable</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetShuffle-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetShuffle <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#582" class="small">Source code</a></h4>
+<div class="declaration"> function  SetShuffle ( <span class="source_type">bool</span> <span class="source_type">bEnable</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetShuffleAll-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetShuffleAll <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#591" class="small">Source code</a></h4>
+<div class="declaration"> function  SetShuffleAll ( <span class="source_type">bool</span> <span class="source_type">bEnable</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ValidIndex-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ValidIndex <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#512" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ValidIndex ( <span class="source_type">int</span> <span class="source_type">Index</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ValidName-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ValidName <span class="function_state"></span> <a href="../Source_engine/streamplaylistmanager.html#545" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ValidName ( <span class="source_type">string</span> <span class="source_type">Test</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     bRepeatAll=True
+     DefaultPlaylistName=<span class="source_string">"New Playlist"</span>
+     ParserType(<span class="source_int">0</span>)=(<span class="source_type">Type</span>=SPT_B4S,ParserClass=<span class="source_string">"Engine.B4SParser"</span>)
+     ParserType(<span class="source_int">1</span>)=(<span class="source_type">Type</span>=SPT_M3U,ParserClass=<span class="source_string">"Engine.M3UParser"</span>)
+     ParserType(<span class="source_int">2</span>)=(<span class="source_type">Type</span>=SPT_PLS,ParserClass=<span class="source_string">"Engine.PLSParser"</span>)
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/streamplaylistmanager.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#StreamPlaylistManager">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/streamplaylist.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/streamtag.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:54.677 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.LocalMessage</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/localmessage.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#LocalMessage">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/linkedreplicationinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/logentry.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/localmessage.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/localmessage.html">LocalMessage</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// LocalMessage
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">// LocalMessages are abstract classes which contain an array of localized text.
+</span><a name="5"></a><span class="source_comment">// The PlayerController function ReceiveLocalizedMessage() is used to send messages
+</span><a name="6"></a><span class="source_comment">// to a specific player by specifying the LocalMessage class and index.  This allows
+</span><a name="7"></a><span class="source_comment">// the message to be localized on the client side, and saves network bandwidth since
+</span><a name="8"></a><span class="source_comment">// the text is not sent.  Actors (such as the GameInfo) use one or more LocalMessage
+</span><a name="9"></a><span class="source_comment">// classes to send messages.  The BroadcastHandler function BroadcastLocalizedMessage()
+</span><a name="10"></a><span class="source_comment">// is used to broadcast localized messages to all the players.
+</span><a name="11"></a><span class="source_comment">//
+</span><a name="12"></a><span class="source_comment">//=============================================================================
+</span><a name="13"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/localmessage.html" class="source">LocalMessage</a></span> extends <span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>;
+<a name="14"></a>
+<a name="15"></a>var(Message) <span class="source_type">bool</span>   bComplexString;                                 <span class="source_comment">// Indicates a multicolor string message class.
+</span><a name="16"></a>var(Message) <span class="source_type">bool</span>   bIsSpecial;                                     <span class="source_comment">// If true, don't add to normal queue.
+</span><a name="17"></a>var(Message) <span class="source_type">bool</span>   bIsUnique;                                      <span class="source_comment">// If true and special, only one can be in the HUD queue at a time.
+</span><a name="18"></a>var(Message) <span class="source_type">bool</span>   bIsPartiallyUnique;                             <span class="source_comment">// If true and special, only one can be in the HUD queue with the same switch value
+</span><a name="19"></a>var(Message) <span class="source_type">bool</span>   bIsConsoleMessage;                              <span class="source_comment">// If true, put a GetString on the console.
+</span><a name="20"></a>var(Message) <span class="source_type">bool</span>   bFadeMessage;                                   <span class="source_comment">// If true, use fade out effect on message.
+</span><a name="21"></a>var(Message) <span class="source_type">bool</span>   bBeep;                                          <span class="source_comment">// If true, beep!
+</span><a name="22"></a>var(Message) <span class="source_type">int</span>    Lifetime;                                       <span class="source_comment">// # of seconds to stay in HUD message queue.
+</span><a name="23"></a>
+<a name="24"></a>var(Message) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/localmessage.html" class="source">LocalMessage</a></span>&gt; ChildMessage;                      <span class="source_comment">// In some cases, we need to refer to a child message.
+</span><a name="25"></a>
+<a name="26"></a>enum <span class="source_type"><a href="../engine/localmessage.html#EStackMode" class="source">EStackMode</a></span>
+<a name="27"></a>{
+<a name="28"></a>    SM_None,
+<a name="29"></a>    SM_Up,
+<a name="30"></a>    SM_Down,
+<a name="31"></a>};
+<a name="32"></a>
+<a name="33"></a>var(Message) <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>  DrawColor;
+<a name="34"></a>var(Message) <span class="source_type"><a href="../core/object.html#EDrawPivot" class="source">EDrawPivot</a></span> DrawPivot;
+<a name="35"></a>var(Message) <span class="source_type"><a href="../engine/localmessage.html#EStackMode" class="source">EStackMode</a></span> StackMode;                                  <span class="source_comment">// Brutal hack!
+</span><a name="36"></a>var(Message) <span class="source_type">float</span> PosX, PosY;
+<a name="37"></a>var(Message) <span class="source_type">int</span> FontSize;                                          <span class="source_comment">// 0: Huge, 1: Big, 2: Small ...
+</span><a name="38"></a>
+<a name="39"></a>static function RenderComplexMessage(
+<a name="40"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,
+<a name="41"></a>    out <span class="source_type">float</span> XL,
+<a name="42"></a>    out <span class="source_type">float</span> <span class="source_type">YL</span>,
+<a name="43"></a>    optional <span class="source_type">String</span> <span class="source_type">MessageString</span>,
+<a name="44"></a>    optional <span class="source_type">int</span> <span class="source_type">Switch</span>,
+<a name="45"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_1</span>,
+<a name="46"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_2</span>,
+<a name="47"></a>    optional <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">OptionalObject</span>
+<a name="48"></a>    );
+<a name="49"></a>
+<a name="50"></a>static function <span class="source_type">string</span> GetRelatedString(
+<a name="51"></a>    optional <span class="source_type">int</span> <span class="source_type">Switch</span>,
+<a name="52"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_1</span>,
+<a name="53"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_2</span>,
+<a name="54"></a>    optional <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">OptionalObject</span>
+<a name="55"></a>    )
+<a name="56"></a>{
+<a name="57"></a>    return static.GetString(<span class="source_type">Switch</span>,<span class="source_type">RelatedPRI_1</span>,<span class="source_type">RelatedPRI_2</span>,<span class="source_type">OptionalObject</span>);
+<a name="58"></a>}
+<a name="59"></a>
+<a name="60"></a>static function <span class="source_type">string</span> GetString(
+<a name="61"></a>    optional <span class="source_type">int</span> <span class="source_type">Switch</span>,
+<a name="62"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_1</span>,
+<a name="63"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_2</span>,
+<a name="64"></a>    optional <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">OptionalObject</span>
+<a name="65"></a>    )
+<a name="66"></a>{
+<a name="67"></a>    if ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>&gt;(<span class="source_type">OptionalObject</span>) != None )
+<a name="68"></a>        return <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>&gt;(<span class="source_type">OptionalObject</span>).static.GetLocalString(<span class="source_type">Switch</span>, <span class="source_type">RelatedPRI_1</span>, <span class="source_type">RelatedPRI_2</span>);
+<a name="69"></a>    return <span class="source_string">""</span>;
+<a name="70"></a>}
+<a name="71"></a>
+<a name="72"></a>static function <span class="source_type">string</span> AssembleString(
+<a name="73"></a>    <span class="source_type"><a href="../engine/hud.html" class="source">HUD</a></span> myHUD,
+<a name="74"></a>    optional <span class="source_type">int</span> <span class="source_type">Switch</span>,
+<a name="75"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_1</span>,
+<a name="76"></a>    optional <span class="source_type">String</span> <span class="source_type">MessageString</span>
+<a name="77"></a>    )
+<a name="78"></a>{
+<a name="79"></a>    return <span class="source_string">""</span>;
+<a name="80"></a>}
+<a name="81"></a>
+<a name="82"></a>static function ClientReceive(
+<a name="83"></a>    <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">P</span>,
+<a name="84"></a>    optional <span class="source_type">int</span> <span class="source_type">Switch</span>,
+<a name="85"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_1</span>,
+<a name="86"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_2</span>,
+<a name="87"></a>    optional <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">OptionalObject</span>
+<a name="88"></a>    )
+<a name="89"></a>{
+<a name="90"></a>	if ( <span class="source_type">P</span>.myHud != None )
+<a name="91"></a>		<span class="source_type">P</span>.myHUD.LocalizedMessage( Default.<span class="source_type">Class</span>, <span class="source_type">Switch</span>, <span class="source_type">RelatedPRI_1</span>, <span class="source_type">RelatedPRI_2</span>, <span class="source_type">OptionalObject</span> );
+<a name="92"></a>    if ( <span class="source_type">P</span>.DemoViewer != None )
+<a name="93"></a>		<span class="source_type">P</span>.DemoViewer.myHUD.LocalizedMessage( Default.<span class="source_type">Class</span>, <span class="source_type">Switch</span>, <span class="source_type">RelatedPRI_1</span>, <span class="source_type">RelatedPRI_2</span>, <span class="source_type">OptionalObject</span> );
+<a name="94"></a>
+<a name="95"></a>    if ( IsConsoleMessage(<span class="source_type">Switch</span>) && (<span class="source_type">P</span>.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span> != None) && (<span class="source_type">P</span>.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span> != None) )
+<a name="96"></a>        <span class="source_type">P</span>.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../engine/interactionmaster.html" class="source">InteractionMaster</a></span>.Process_Message( Static.GetString( <span class="source_type">Switch</span>, <span class="source_type">RelatedPRI_1</span>, <span class="source_type">RelatedPRI_2</span>, <span class="source_type">OptionalObject</span> ), <span class="source_int">6.0</span>, <span class="source_type">P</span>.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.LocalInteractions);
+<a name="97"></a>}
+<a name="98"></a>
+<a name="99"></a>static function <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> GetConsoleColor( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_1</span> )
+<a name="100"></a>{
+<a name="101"></a>    return Default.DrawColor;
+<a name="102"></a>}
+<a name="103"></a>
+<a name="104"></a>static function <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> GetColor(
+<a name="105"></a>    optional <span class="source_type">int</span> <span class="source_type">Switch</span>,
+<a name="106"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_1</span>,
+<a name="107"></a>    optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_2</span>
+<a name="108"></a>    )
+<a name="109"></a>{
+<a name="110"></a>    return Default.DrawColor;
+<a name="111"></a>}
+<a name="112"></a>
+<a name="113"></a>static function GetPos( <span class="source_type">int</span> <span class="source_type">Switch</span>, out <span class="source_type"><a href="../core/object.html#EDrawPivot" class="source">EDrawPivot</a></span> OutDrawPivot, out <span class="source_type"><a href="../engine/localmessage.html#EStackMode" class="source">EStackMode</a></span> OutStackMode, out <span class="source_type">float</span> OutPosX, out <span class="source_type">float</span> <span class="source_type">OutPosY</span> )
+<a name="114"></a>{
+<a name="115"></a>    OutDrawPivot = default.DrawPivot;
+<a name="116"></a>    OutStackMode = default.StackMode;
+<a name="117"></a>    OutPosX = default.PosX;
+<a name="118"></a>    <span class="source_type">OutPosY</span> = default.PosY;
+<a name="119"></a>}
+<a name="120"></a>
+<a name="121"></a>static function <span class="source_type">int</span> GetFontSize( <span class="source_type">int</span> <span class="source_type">Switch</span>, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> RelatedPRI1, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> RelatedPRI2, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">LocalPlayer</span> )
+<a name="122"></a>{
+<a name="123"></a>    return default.FontSize;
+<a name="124"></a>}
+<a name="125"></a>
+<a name="126"></a>static function <span class="source_type">float</span> GetLifeTime(<span class="source_type">int</span> <span class="source_type">Switch</span>)
+<a name="127"></a>{
+<a name="128"></a>    return default.LifeTime;
+<a name="129"></a>}
+<a name="130"></a>
+<a name="131"></a>static function <span class="source_type">bool</span> IsConsoleMessage(<span class="source_type">int</span> <span class="source_type">Switch</span>)
+<a name="132"></a>{
+<a name="133"></a>    return default.bIsConsoleMessage;
+<a name="134"></a>}
+<a name="135"></a>
+<a name="136"></a>defaultproperties
+<a name="137"></a>{
+<a name="138"></a>     bIsSpecial=True
+<a name="139"></a>     bIsConsoleMessage=True
+<a name="140"></a>     Lifetime=<span class="source_int">3</span>
+<a name="141"></a>     DrawColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="142"></a>     DrawPivot=DP_MiddleMiddle
+<a name="143"></a>     PosX=<span class="source_int">0.500000</span>
+<a name="144"></a>     PosY=<span class="source_int">0.830000</span>
+<a name="145"></a>}
+<a name="146"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/localmessage.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#LocalMessage">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/linkedreplicationinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/logentry.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.998 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

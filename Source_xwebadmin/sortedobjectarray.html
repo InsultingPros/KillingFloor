@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XWebAdmin.SortedObjectArray</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xwebadmin/xwebadmin-overview.html">Package</a></td>
+	<td class="header"><a href="../xwebadmin/sortedobjectarray.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#SortedObjectArray">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xwebadmin/roostskin.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xwebadmin/sortedstringarray.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xwebadmin/sortedobjectarray.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xwebadmin/xwebadmin-overview.html">XWebAdmin</a>.<a href="../xwebadmin/sortedobjectarray.html">SortedObjectArray</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// ====================================================================
+</span><a name="2"></a><span class="source_comment">//  Class:  xWebAdmin.SortedObjectArray
+</span><a name="3"></a><span class="source_comment">//  Parent: xWebAdmin.ObjectArray
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">//  Sorted list - sorts by tag
+</span><a name="6"></a><span class="source_comment">// ====================================================================
+</span><a name="7"></a>
+<a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../xwebadmin/sortedobjectarray.html" class="source">SortedObjectArray</a></span> extends <span class="source_type"><a href="../xwebadmin/objectarray.html" class="source">ObjectArray</a></span>;
+<a name="9"></a>
+<a name="10"></a>var const <span class="source_type">bool</span> debug;
+<a name="11"></a>
+<a name="12"></a>function Add(<span class="source_type"><a href="../core/object.html" class="source">object</a></span> <span class="source_type">item</span>, <span class="source_type">string</span> tag)
+<a name="13"></a>{
+<a name="14"></a>local <span class="source_type">int</span> <span class="source_type">pos</span>;
+<a name="15"></a>
+<a name="16"></a>	if (debug)
+<a name="17"></a>	{
+<a name="18"></a>		for (<span class="source_type">pos</span> = <span class="source_int">0</span>; <span class="source_type">pos</span> &lt; AllItems.Length; <span class="source_type">pos</span>++)
+<a name="19"></a>			log(<span class="source_string">" Member"</span>@<span class="source_type">pos</span>@AllItems[<span class="source_type">pos</span>].Tag);
+<a name="20"></a>	}
+<a name="21"></a>
+<a name="22"></a>	<span class="source_type">pos</span> = FindTagId(tag);
+<a name="23"></a>
+<a name="24"></a>	if (<span class="source_type">pos</span> &lt; <span class="source_int">0</span>)
+<a name="25"></a>		InsertAt(-<span class="source_type">pos</span>-<span class="source_int">1</span>, <span class="source_type">item</span>, tag);
+<a name="26"></a>	else
+<a name="27"></a>		InsertAt(<span class="source_type">pos</span>, <span class="source_type">item</span>, tag);
+<a name="28"></a>
+<a name="29"></a>	if (debug)
+<a name="30"></a>	{
+<a name="31"></a>		log(<span class="source_string">"~~Inserting new member at"</span>@<span class="source_type">pos</span>@tag);
+<a name="32"></a>		for (<span class="source_type">pos</span> = <span class="source_int">0</span>; <span class="source_type">pos</span> &lt; AllItems.Length; <span class="source_type">pos</span>++)
+<a name="33"></a>			log(<span class="source_string">"   Member"</span>@<span class="source_type">pos</span>@AllItems[<span class="source_type">pos</span>].Tag);
+<a name="34"></a>	}
+<a name="35"></a>}
+<a name="36"></a>
+<a name="37"></a>function <span class="source_type">int</span> FindTagId(<span class="source_type">string</span> Tag)
+<a name="38"></a>{
+<a name="39"></a>local <span class="source_type">int</span> sz, min, <span class="source_type">max</span>, <span class="source_type">pos</span>;
+<a name="40"></a>
+<a name="41"></a>    sz = AllItems.Length - <span class="source_int">1</span>;
+<a name="42"></a>    if (sz &lt; <span class="source_int">0</span> || IsBefore(Tag, AllItems[<span class="source_int">0</span>].tag))
+<a name="43"></a>	{
+<a name="44"></a>		if (debug)
+<a name="45"></a>			log(tag@<span class="source_string">"was before first member, so returning -1"</span>);
+<a name="46"></a>	    return -<span class="source_int">1</span>;
+<a name="47"></a>	}
+<a name="48"></a>	if (Tag ~= AllItems[<span class="source_int">0</span>].Tag)
+<a name="49"></a>		return <span class="source_int">0</span>;
+<a name="50"></a>
+<a name="51"></a>	if (Tag ~= AllItems[sz].Tag)
+<a name="52"></a>		return sz;
+<a name="53"></a>
+<a name="54"></a>	if (sz == <span class="source_int">1</span>)
+<a name="55"></a>		return -<span class="source_int">3</span>;
+<a name="56"></a>	<span class="source_comment">// Add tag to end of list
+</span><a name="57"></a>    if (!IsBefore(Tag,AllItems[sz].tag))
+<a name="58"></a>	{
+<a name="59"></a>		if (debug)
+<a name="60"></a>			log(tag@<span class="source_string">"was after last member, so returning"</span>@(-(sz+<span class="source_int">1</span>))-<span class="source_int">1</span>);
+<a name="61"></a>        return (-(sz+<span class="source_int">1</span>))-<span class="source_int">1</span>;
+<a name="62"></a>	}
+<a name="63"></a>
+<a name="64"></a>    <span class="source_comment">// Find the position of insertion
+</span><a name="65"></a>    <span class="source_type">max</span> = sz;
+<a name="66"></a>    <span class="source_type">pos</span> = sz;
+<a name="67"></a>    do {
+<a name="68"></a>        if (tag ~= AllItems[<span class="source_type">pos</span>].tag)
+<a name="69"></a>            return <span class="source_type">pos</span>;
+<a name="70"></a>        if (IsBefore(Tag,AllItems[<span class="source_type">pos</span>].tag))
+<a name="71"></a>            <span class="source_type">max</span> = <span class="source_type">pos</span>;
+<a name="72"></a>        else min = <span class="source_type">pos</span>;
+<a name="73"></a>
+<a name="74"></a>		if (debug)
+<a name="75"></a>			log(<span class="source_string">"Min:"</span>$Min@<span class="source_string">"Max:"</span>$<span class="source_type">Max</span>@<span class="source_string">"Pos:"</span>$((Min + <span class="source_type">Max</span>)/<span class="source_int">2</span>));
+<a name="76"></a>
+<a name="77"></a>        <span class="source_type">pos</span> = (min + <span class="source_type">max</span>)/<span class="source_int">2</span>;
+<a name="78"></a>    } until (<span class="source_type">max</span>-min &lt; <span class="source_int">2</span>);
+<a name="79"></a>
+<a name="80"></a>    <span class="source_comment">// Min = 1 and Max = 2, return 1
+</span><a name="81"></a>    if (<span class="source_type">pos</span> == <span class="source_int">0</span>)
+<a name="82"></a>	{
+<a name="83"></a>		if (debug)
+<a name="84"></a>			log(tag@<span class="source_string">"wanted to be added at 0, so adding at 1 instead"</span>);
+<a name="85"></a>		return <span class="source_int">1</span>;
+<a name="86"></a>	}
+<a name="87"></a>	if (debug)
+<a name="88"></a>		log(tag@<span class="source_string">"will be inserted at position"</span>@-<span class="source_type">pos</span>-<span class="source_int">2</span>);
+<a name="89"></a>    return -<span class="source_type">pos</span>-<span class="source_int">2</span>;
+<a name="90"></a>}
+<a name="91"></a>
+<a name="92"></a><span class="source_comment">/*
+<a name="93"></a>singular function ToggleSort()
+<a name="94"></a>{
+<a name="95"></a>	ReverseSort = !ReverseSort;
+<a name="96"></a>log("ToggleSort.  ReverseSort is now:"$ReverseSort);
+<a name="97"></a>}
+<a name="98"></a>
+<a name="99"></a>*/</span>
+<a name="100"></a>function <span class="source_type">bool</span> IsBefore(<span class="source_type">string</span> <span class="source_type">test</span>, <span class="source_type">string</span> tag)
+<a name="101"></a>{
+<a name="102"></a>local <span class="source_type">bool</span> <span class="source_type">b</span>;
+<a name="103"></a>	if (debug)
+<a name="104"></a>	{
+<a name="105"></a>		<span class="source_type">b</span> = ((!ReverseSort && <span class="source_type">test</span> &lt; tag) || (ReverseSort && <span class="source_type">test</span> &gt; tag));
+<a name="106"></a>		log(<span class="source_string">"IsBefore"</span>);
+<a name="107"></a>		log(<span class="source_string">"  ReverseSort:"</span>$ReverseSort);
+<a name="108"></a>		log(<span class="source_string">"  "</span>$<span class="source_type">Test</span>@<span class="source_string">"is before"</span>@Tag$<span class="source_string">":"</span>@<span class="source_type">b</span>);
+<a name="109"></a>		log(<span class="source_string">""</span>);
+<a name="110"></a>		return ((!ReverseSort && <span class="source_type">test</span> &lt; tag) || (ReverseSort && <span class="source_type">test</span> &gt; tag));
+<a name="111"></a>	}
+<a name="112"></a>
+<a name="113"></a>	return Super.IsBefore(<span class="source_type">test</span>,tag);
+<a name="114"></a>}
+<a name="115"></a>
+<a name="116"></a>defaultproperties
+<a name="117"></a>{
+<a name="118"></a>}
+<a name="119"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xwebadmin/xwebadmin-overview.html">Package</a></td>
+	<td class="header"><a href="../xwebadmin/sortedobjectarray.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#SortedObjectArray">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xwebadmin/roostskin.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xwebadmin/sortedstringarray.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:08.782 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

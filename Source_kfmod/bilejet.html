@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.BileJet</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/bilejet.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#BileJet">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/bileexplosion_halloween.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/blinds.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/bilejet.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/bilejet.html">BileJet</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//-----------------------------------------------------------
+</span><a name="2"></a><span class="source_comment">//
+</span><a name="3"></a><span class="source_comment">//-----------------------------------------------------------
+</span><a name="4"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/bilejet.html" class="source">BileJet</a></span> extends <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>;
+<a name="5"></a>
+<a name="6"></a>var() <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> BileRotation;
+<a name="7"></a>
+<a name="8"></a>function PostBeginPlay()
+<a name="9"></a>{
+<a name="10"></a>	settimer(<span class="source_int">0.1</span>, false);
+<a name="11"></a>}
+<a name="12"></a>
+<a name="13"></a>simulated function timer()
+<a name="14"></a>{
+<a name="15"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>;
+<a name="16"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="17"></a>	local <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">R</span>;
+<a name="18"></a>
+<a name="19"></a>	GetAxes(<span class="source_type">Rotation</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>);
+<a name="20"></a>
+<a name="21"></a>    <span class="source_comment">// Randomly chuch out vomit globs
+</span><a name="22"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_int">4</span>; <span class="source_type">i</span>++)
+<a name="23"></a>    {
+<a name="24"></a>        <span class="source_type">R</span>.Yaw = BileRotation.Yaw * FRand();
+<a name="25"></a>        <span class="source_type">R</span>.Pitch = BileRotation.Pitch;
+<a name="26"></a>        <span class="source_type">R</span>.Roll = BileRotation.Roll;
+<a name="27"></a>        Spawn(<span class="source_type">Class</span><span class="source_name">'KFMod.KFBloatVomit'</span>,,,Location,<span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span>(<span class="source_type">X</span> &gt;&gt; <span class="source_type">R</span>));
+<a name="28"></a>    }
+<a name="29"></a>
+<a name="30"></a>}
+<a name="31"></a>
+<a name="32"></a>defaultproperties
+<a name="33"></a>{
+<a name="34"></a>     BileRotation=(Pitch=<span class="source_int">2000</span>,Yaw=<span class="source_int">65535</span>)
+<a name="35"></a>     bHidden=True
+<a name="36"></a>     LifeSpan=<span class="source_int">2.500000</span>
+<a name="37"></a>}
+<a name="38"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/bilejet.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#BileJet">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/bileexplosion_halloween.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/blinds.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:00.197 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

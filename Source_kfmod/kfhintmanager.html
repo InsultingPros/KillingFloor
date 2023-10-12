@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.KFHintManager</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfhintmanager.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFHintManager">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfhighroffire.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfhiteffect.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/kfhintmanager.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/kfhintmanager.html">KFHintManager</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// KFHintManager
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_comment">// This class manages (most) of the hinting system stuff. It is spawned and
+</span><a name="5"></a><span class="source_comment">// referenced in KFPlayerController. It also interfaces with KFHud to display the hints
+</span><a name="6"></a><span class="source_comment">// on screen. Finally, config variables are used to
+</span><a name="7"></a><span class="source_comment">//=============================================================================
+</span><a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/kfhintmanager.html" class="source">KFHintManager</a></span> extends <span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>
+<a name="9"></a>    config(<span class="source_type">User</span>);
+<a name="10"></a>
+<a name="11"></a><span class="source_comment">// Data structures
+</span><a name="12"></a>struct <span class="source_type"><a href="../roengine/rohintmanager.html#HintInfo" class="source">HintInfo</a></span>
+<a name="13"></a>{
+<a name="14"></a>    var() <span class="source_type">int</span>                   <span class="source_type">type</span>;
+<a name="15"></a>    var() <span class="source_type">int</span>                   priority; <span class="source_comment">// 1 = highest priority, 2 = lower than 0, etc
+</span><a name="16"></a>    var() <span class="source_type">int</span>                   delay; <span class="source_comment">// how many seconds to wait before displaying the hint
+</span><a name="17"></a>    var() localized <span class="source_type">string</span>      title;
+<a name="18"></a>    var() localized <span class="source_type">string</span>      hint;   <span class="source_comment">// actual hint text
+</span><a name="19"></a>    var <span class="source_type">int</span>                     <span class="source_type">index</span>; <span class="source_comment">// set in code, do not use!
+</span><a name="20"></a>};
+<a name="21"></a>
+<a name="22"></a><span class="source_comment">// Constants
+</span><a name="23"></a>const                           MAX_HINT_TYPES = <span class="source_int">61</span>;
+<a name="24"></a>const                           MAX_HINTS = <span class="source_int">61</span>;
+<a name="25"></a>
+<a name="26"></a><span class="source_comment">// config variables
+</span><a name="27"></a>var()   <span class="source_type">float</span>                   PostHintDisplayDelay;           <span class="source_comment">// How long to wait before displaying any other hint (value higher than 0 needed)
+</span><a name="28"></a>var()   <span class="source_type">float</span>                   SameHintTypePostDisplayDelay;   <span class="source_comment">// How long to wait before authorizing a hint from same type to be displayed (value higher than 0 needed)
+</span><a name="29"></a>var()   <span class="source_type"><a href="../roengine/rohintmanager.html#HintInfo" class="source">HintInfo</a></span>                Hints[MAX_HINTS];
+<a name="30"></a>var     config  <span class="source_type">int</span>             bUsedUpHints[MAX_HINTS]; <span class="source_comment">// 0 = hint unused, 1 = hint used before
+</span><a name="31"></a>var     <span class="source_type">float</span>                   RandomHintTimerDelay;
+<a name="32"></a>
+<a name="33"></a><span class="source_comment">// Hints array
+</span><a name="34"></a>var     <span class="source_type">int</span>                     HintsAvailableByType[MAX_HINT_TYPES];
+<a name="35"></a>var     array&lt;<span class="source_type"><a href="../roengine/rohintmanager.html#HintInfo" class="source">HintInfo</a></span>&gt;         SortedHints;
+<a name="36"></a>
+<a name="37"></a><span class="source_comment">// State variables
+</span><a name="38"></a>var     <span class="source_type"><a href="../roengine/rohintmanager.html#HintInfo" class="source">HintInfo</a></span>                CurrentHint; <span class="source_comment">// Copy of hint for convenience
+</span><a name="39"></a>var     <span class="source_type">int</span>                     CurrentHintIndex; <span class="source_comment">// Index in the SortedHints array
+</span><a name="40"></a>var     <span class="source_type">float</span>                   LastHintDisplayTime;
+<a name="41"></a>var     <span class="source_type">int</span>                     LastHintType;
+<a name="42"></a>
+<a name="43"></a>
+<a name="44"></a>function PostBeginPlay()
+<a name="45"></a>{
+<a name="46"></a>    super.PostBeginPlay();
+<a name="47"></a>    LastHintType = -<span class="source_int">1</span>;
+<a name="48"></a>    LoadHints();
+<a name="49"></a>}
+<a name="50"></a>
+<a name="51"></a>static function StaticReset()
+<a name="52"></a>{
+<a name="53"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="54"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MAX_HINT_TYPES; <span class="source_type">i</span>++)
+<a name="55"></a>        default.bUsedUpHints[<span class="source_type">i</span>] = <span class="source_int">0</span>;
+<a name="56"></a>    StaticSaveConfig();
+<a name="57"></a>}
+<a name="58"></a>
+<a name="59"></a>function NonStaticReset()
+<a name="60"></a>{
+<a name="61"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="62"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MAX_HINT_TYPES; <span class="source_type">i</span>++)
+<a name="63"></a>        bUsedUpHints[<span class="source_type">i</span>] = <span class="source_int">0</span>;
+<a name="64"></a>    SaveConfig();
+<a name="65"></a>    Reload();
+<a name="66"></a>}
+<a name="67"></a>
+<a name="68"></a>function Reload()
+<a name="69"></a>{
+<a name="70"></a>    StopHinting();
+<a name="71"></a>    LoadHints();
+<a name="72"></a>}
+<a name="73"></a>
+<a name="74"></a>function LoadHints()
+<a name="75"></a>{
+<a name="76"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>, j, <span class="source_type">index</span>, priority;
+<a name="77"></a>
+<a name="78"></a>    <span class="source_comment">// Initialize arrays to 0
+</span><a name="79"></a>    SortedHints.Length = <span class="source_int">0</span>;
+<a name="80"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MAX_HINT_TYPES; <span class="source_type">i</span>++)
+<a name="81"></a>        HintsAvailableByType[<span class="source_type">i</span>] = <span class="source_int">0</span>;
+<a name="82"></a>
+<a name="83"></a>    <span class="source_comment">// Sort hints in the SortedHints by priority -- highest priority hints
+</span><a name="84"></a>    <span class="source_comment">// get placed first. At same time, build array of available hints
+</span><a name="85"></a>    <span class="source_comment">// using id of used hints
+</span><a name="86"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MAX_HINT_TYPES; <span class="source_type">i</span>++)
+<a name="87"></a>    {
+<a name="88"></a>        Hints[<span class="source_type">i</span>].<span class="source_type">index</span> = <span class="source_type">i</span>;
+<a name="89"></a>
+<a name="90"></a>        <span class="source_comment">// Check if we should add this hint
+</span><a name="91"></a>        if (bUsedUpHints[<span class="source_type">i</span>] == <span class="source_int">0</span> && Hints[<span class="source_type">i</span>].title != <span class="source_string">""</span>)
+<a name="92"></a>        {
+<a name="93"></a>            HintsAvailableByType[Hints[<span class="source_type">i</span>].<span class="source_type">type</span>]++;
+<a name="94"></a>
+<a name="95"></a>            <span class="source_comment">// Find where we should insert the new hint
+</span><a name="96"></a>            priority = Hints[<span class="source_type">i</span>].priority;
+<a name="97"></a>            <span class="source_type">index</span> = -<span class="source_int">1</span>;
+<a name="98"></a>            for (j = <span class="source_int">0</span>; j &lt; SortedHints.Length; j++)
+<a name="99"></a>                if (SortedHints[j].priority &gt;= priority)
+<a name="100"></a>                {
+<a name="101"></a>                    <span class="source_type">index</span> = j;
+<a name="102"></a>                    break;
+<a name="103"></a>                }
+<a name="104"></a>
+<a name="105"></a>            <span class="source_comment">// Add hint to proper position
+</span><a name="106"></a>            if (<span class="source_type">index</span> == -<span class="source_int">1</span>)
+<a name="107"></a>                SortedHints[SortedHints.Length] = Hints[<span class="source_type">i</span>];
+<a name="108"></a>            else
+<a name="109"></a>            {
+<a name="110"></a>                SortedHints.Insert(<span class="source_type">index</span>, <span class="source_int">1</span>);
+<a name="111"></a>                SortedHints[<span class="source_type">index</span>] = Hints[<span class="source_type">i</span>];
+<a name="112"></a>            }
+<a name="113"></a>        }
+<a name="114"></a>    }
+<a name="115"></a>}
+<a name="116"></a>
+<a name="117"></a>function CheckForHint(<span class="source_type">int</span> hintType)
+<a name="118"></a>{
+<a name="119"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="120"></a>
+<a name="121"></a>    if (HintsAvailableByType[hintType] == <span class="source_int">0</span>)
+<a name="122"></a>        return;
+<a name="123"></a>
+<a name="124"></a>    <span class="source_comment">// Check if we're allowed to display a hint of this type at this time
+</span><a name="125"></a>    if (LastHintType == hintType)
+<a name="126"></a>        if (<span class="source_type">level</span>.TimeSeconds - LastHintDisplayTime &lt; SameHintTypePostDisplayDelay)
+<a name="127"></a>            return;
+<a name="128"></a>
+<a name="129"></a>    <span class="source_comment">// We have available hints! Search array for first non-used hint of that type.
+</span><a name="130"></a>    <span class="source_comment">// (first == highest priority)
+</span><a name="131"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; SortedHints.Length; <span class="source_type">i</span>++)
+<a name="132"></a>    {
+<a name="133"></a>        if (SortedHints[<span class="source_type">i</span>].<span class="source_type">type</span> == hintType)
+<a name="134"></a>        {
+<a name="135"></a>            CurrentHint = SortedHints[<span class="source_type">i</span>];
+<a name="136"></a>            CurrentHintIndex = <span class="source_type">i</span>;
+<a name="137"></a>            SetTimer(<span class="source_int">0</span>, false);
+<a name="138"></a>            GotoState(<span class="source_name">'PreHintDelay'</span>);
+<a name="139"></a>            return;
+<a name="140"></a>        }
+<a name="141"></a>    }
+<a name="142"></a>
+<a name="143"></a>    <span class="source_comment">// If we got here it means that hint couldn't be found. wtf?
+</span><a name="144"></a>    warn(<span class="source_string">"Unable to find hint type '"</span> $ hintType $ <span class="source_string">"' in SortedHints array, even though HintsAvailableByType"</span>
+<a name="145"></a>        $ <span class="source_string">" indicates that there are "</span> $ HintsAvailableByType[hintType] $ <span class="source_string">" hints of that type available!"</span>);
+<a name="146"></a>}
+<a name="147"></a>
+<a name="148"></a>function StopHinting()
+<a name="149"></a>{
+<a name="150"></a>    GotoState(<span class="source_name">''</span>);
+<a name="151"></a>    SetTimer(<span class="source_int">0</span>, false);
+<a name="152"></a>}
+<a name="153"></a>
+<a name="154"></a><span class="source_comment">// Implemented in WaitHintDone state
+</span><a name="155"></a>function NotifyHintRenderingDone() {}
+<a name="156"></a>
+<a name="157"></a><span class="source_comment">// Used to dump hint info to console
+</span><a name="158"></a>function DumpHints()
+<a name="159"></a>{
+<a name="160"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="161"></a>    log(<span class="source_string">"Hint availability list:"</span>);
+<a name="162"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MAX_HINT_TYPES; <span class="source_type">i</span>++)
+<a name="163"></a>        log(<span class="source_string">"#"</span> $ <span class="source_type">i</span> $ <span class="source_string">" availability: "</span> $ HintsAvailableByType[<span class="source_type">i</span>]);
+<a name="164"></a>    log(<span class="source_string">"Max number of hints in db: "</span> $ MAX_HINT_TYPES);
+<a name="165"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MAX_HINT_TYPES; <span class="source_type">i</span>++)
+<a name="166"></a>        log(<span class="source_string">"#"</span> $ <span class="source_type">i</span> $ <span class="source_string">", type = "</span> $ hints[<span class="source_type">i</span>].<span class="source_type">type</span>
+<a name="167"></a>            $ <span class="source_string">", pri = "</span> $ hints[<span class="source_type">i</span>].priority
+<a name="168"></a>            $ <span class="source_string">", delay = "</span> $ hints[<span class="source_type">i</span>].delay
+<a name="169"></a>            $ <span class="source_string">", used = "</span> $ bUsedUpHints[<span class="source_type">i</span>]
+<a name="170"></a>            $ <span class="source_string">", title = '"</span> $ hints[<span class="source_type">i</span>].title $ <span class="source_string">"'"</span>
+<a name="171"></a>            $ <span class="source_string">", text = '"</span> $ hints[<span class="source_type">i</span>].hint $ <span class="source_string">"'"</span>);
+<a name="172"></a>    log(<span class="source_string">"Hints in sorted array: "</span> $ SortedHints.Length);
+<a name="173"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; SortedHints.length; <span class="source_type">i</span>++)
+<a name="174"></a>        log(<span class="source_string">"#"</span> $ <span class="source_type">i</span> $ <span class="source_string">", type = "</span> $ SortedHints[<span class="source_type">i</span>].<span class="source_type">type</span>
+<a name="175"></a>            $ <span class="source_string">", pri = "</span> $ SortedHints[<span class="source_type">i</span>].priority
+<a name="176"></a>            $ <span class="source_string">", delay = "</span> $ SortedHints[<span class="source_type">i</span>].delay
+<a name="177"></a>            $ <span class="source_string">", used = "</span> $ bUsedUpHints[SortedHints[<span class="source_type">i</span>].<span class="source_type">index</span>]
+<a name="178"></a>            $ <span class="source_string">", title = '"</span> $ SortedHints[<span class="source_type">i</span>].title $ <span class="source_string">"'"</span>
+<a name="179"></a>            $ <span class="source_string">", text = '"</span> $ SortedHints[<span class="source_type">i</span>].hint $ <span class="source_string">"'"</span>);
+<a name="180"></a>
+<a name="181"></a>}
+<a name="182"></a>
+<a name="183"></a>simulated function Timer()
+<a name="184"></a>{
+<a name="185"></a>    CheckForHint(<span class="source_int">60</span>);
+<a name="186"></a>}
+<a name="187"></a>
+<a name="188"></a><span class="source_comment">// This state is used when we want to show a hint.
+</span><a name="189"></a><span class="source_type">state</span> PreHintDelay
+<a name="190"></a>{
+<a name="191"></a>    function BeginState()
+<a name="192"></a>    {
+<a name="193"></a>        if (CurrentHint.delay ~= <span class="source_int">0</span>)
+<a name="194"></a>            GotoState(<span class="source_name">'WaitHintDone'</span>);
+<a name="195"></a>        else
+<a name="196"></a>            SetTimer(CurrentHint.delay, false);
+<a name="197"></a>    }
+<a name="198"></a>
+<a name="199"></a>    <span class="source_comment">// Don't allow another hint to be scheduled when we have one scheduled already
+</span><a name="200"></a>    function CheckForHint(<span class="source_type">int</span> hintType) {}
+<a name="201"></a>
+<a name="202"></a>    function Timer()
+<a name="203"></a>    {
+<a name="204"></a>        GotoState(<span class="source_name">'WaitHintDone'</span>);
+<a name="205"></a>    }
+<a name="206"></a>}
+<a name="207"></a>
+<a name="208"></a><span class="source_type">state</span> WaitHintDone
+<a name="209"></a>{
+<a name="210"></a>    function BeginState()
+<a name="211"></a>    {
+<a name="212"></a>        local <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">player</a></span>;
+<a name="213"></a>        
+<a name="214"></a>        <span class="source_comment">// Tell HUDKillingFloor to display the hint
+</span><a name="215"></a>        <span class="source_type"><a href="../engine/player.html" class="source">player</a></span> = <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">Owner</span>);
+<a name="216"></a>        
+<a name="217"></a>		if ( <span class="source_type"><a href="../engine/player.html" class="source">player</a></span> != none && <span class="source_type"><a href="../kfmod/hudkillingfloor.html" class="source">HUDKillingFloor</a></span>(<span class="source_type"><a href="../engine/player.html" class="source">player</a></span>.myHud) != none &&
+<a name="218"></a>             !<span class="source_type"><a href="../kfmod/hudkillingfloor.html" class="source">HUDKillingFloor</a></span>(<span class="source_type"><a href="../engine/player.html" class="source">player</a></span>.myHud).bHideHud )
+<a name="219"></a>        {
+<a name="220"></a>            <span class="source_type"><a href="../kfmod/hudkillingfloor.html" class="source">HUDKillingFloor</a></span>(<span class="source_type"><a href="../engine/player.html" class="source">player</a></span>.myHud).ShowHint(CurrentHint.title, CurrentHint.hint);
+<a name="221"></a>        }
+<a name="222"></a>        else
+<a name="223"></a>        {
+<a name="224"></a>            SetTimer(RandomHintTimerDelay, true);
+<a name="225"></a>            GotoState(<span class="source_name">''</span>);
+<a name="226"></a>        }
+<a name="227"></a>    }
+<a name="228"></a>
+<a name="229"></a>    <span class="source_comment">// Don't allow another hint to be scheduled when we're displaying one already
+</span><a name="230"></a>    function CheckForHint(<span class="source_type">int</span> hintType) {}
+<a name="231"></a>
+<a name="232"></a>    function NotifyHintRenderingDone()
+<a name="233"></a>    {
+<a name="234"></a>        <span class="source_comment">// Hurray, hint done rendering! Switch to post-hint state.
+</span><a name="235"></a>        GotoState(<span class="source_name">'PostDisplay'</span>);
+<a name="236"></a>    }
+<a name="237"></a>}
+<a name="238"></a>
+<a name="239"></a><span class="source_type">state</span> PostDisplay
+<a name="240"></a>{
+<a name="241"></a>    function BeginState()
+<a name="242"></a>    {
+<a name="243"></a>        LastHintType = CurrentHint.<span class="source_type">type</span>;
+<a name="244"></a>        LastHintDisplayTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="245"></a>        SetTimer(PostHintDisplayDelay, false);
+<a name="246"></a>    }
+<a name="247"></a>
+<a name="248"></a>    <span class="source_comment">// Don't allow another hint to be scheduled until post-display delay is completed.
+</span><a name="249"></a>    function CheckForHint(<span class="source_type">int</span> hintType) {}
+<a name="250"></a>
+<a name="251"></a>    function Timer()
+<a name="252"></a>    {
+<a name="253"></a>        <span class="source_comment">// Mark this hint as used up
+</span><a name="254"></a>        <span class="source_comment">//log("setting hint #" $ CurrentHint.index $ " as used up.");
+</span><a name="255"></a>        log(<span class="source_string">"bUsedUpHints["</span>$CurrentHint.<span class="source_type">index</span>$<span class="source_string">"] was:"</span> @ bUsedUpHints[CurrentHint.<span class="source_type">index</span>]);
+<a name="256"></a>		bUsedUpHints[CurrentHint.<span class="source_type">index</span>] = <span class="source_int">1</span>;
+<a name="257"></a>        SaveConfig();
+<a name="258"></a>		
+<a name="259"></a>        log(<span class="source_string">"bUsedUpHints["</span>$CurrentHint.<span class="source_type">index</span>$<span class="source_string">"] is now:"</span> @ bUsedUpHints[CurrentHint.<span class="source_type">index</span>]);
+<a name="260"></a>
+<a name="261"></a>        <span class="source_comment">// Update hint availability list
+</span><a name="262"></a>        HintsAvailableByType[CurrentHint.<span class="source_type">type</span>]--;
+<a name="263"></a>
+<a name="264"></a>        <span class="source_comment">// Remove current hint from hints list
+</span><a name="265"></a>        <span class="source_comment">//log("Removing from sortedhints array. old length = " $ SortedHints.Length);
+</span><a name="266"></a>        SortedHints.Remove(CurrentHintIndex, <span class="source_int">1</span>);
+<a name="267"></a>        <span class="source_comment">//log("                                 new length = " $ SortedHints.Length);
+</span><a name="268"></a>
+<a name="269"></a>        <span class="source_comment">// Go back to 'idle' state
+</span><a name="270"></a>        SetTimer(RandomHintTimerDelay, true);
+<a name="271"></a>        GotoState(<span class="source_name">''</span>);
+<a name="272"></a>    }
+<a name="273"></a>}
+<a name="274"></a>
+<a name="275"></a>defaultproperties
+<a name="276"></a>{
+<a name="277"></a>     PostHintDisplayDelay=<span class="source_int">1.000000</span>
+<a name="278"></a>     SameHintTypePostDisplayDelay=<span class="source_int">2.000000</span>
+<a name="279"></a>     Hints(<span class="source_int">0</span>)=(<span class="source_type">Type</span>=<span class="source_int">10</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Welcome!"</span>,Hint=<span class="source_string">"Use %ToggleAiming% to aim better, %ReloadWeapon% key to reload a clip. Use %PrevWeapon% or %NextWeapon% to switch weapons."</span>)
+<a name="280"></a>     Hints(<span class="source_int">1</span>)=(<span class="source_type">Type</span>=<span class="source_int">11</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Aiming and Reloading"</span>,Hint=<span class="source_string">"Use %ToggleAiming% to aim better, %ReloadWeapon% to reload a clip."</span>)
+<a name="281"></a>     Hints(<span class="source_int">3</span>)=(<span class="source_type">Type</span>=<span class="source_int">12</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Aiming and Reloading"</span>,Hint=<span class="source_string">"Use %ToggleAiming% to aim better, %ReloadWeapon% to reload a clip."</span>)
+<a name="282"></a>     Hints(<span class="source_int">4</span>)=(<span class="source_type">Type</span>=<span class="source_int">13</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Aiming and Reloading"</span>,Hint=<span class="source_string">"Use %ToggleAiming% to aim better, %ReloadWeapon% to reload a clip. Use %AltFire% to switch between full and semi auto."</span>)
+<a name="283"></a>     Hints(<span class="source_int">5</span>)=(<span class="source_type">Type</span>=<span class="source_int">14</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Aiming and Reloading"</span>,Hint=<span class="source_string">"Use %ToggleAiming% to aim better, %ReloadWeapon% to reload."</span>)
+<a name="284"></a>     Hints(<span class="source_int">6</span>)=(<span class="source_type">Type</span>=<span class="source_int">15</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Aiming and Reloading"</span>,Hint=<span class="source_string">"Use %ToggleAiming% to aim better, %ReloadWeapon% to reload."</span>)
+<a name="285"></a>     Hints(<span class="source_int">7</span>)=(<span class="source_type">Type</span>=<span class="source_int">16</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Aiming"</span>,Hint=<span class="source_string">"Use %ToggleAiming% gives you a scope for long-distance shooting."</span>)
+<a name="286"></a>     Hints(<span class="source_int">8</span>)=(<span class="source_type">Type</span>=<span class="source_int">17</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Firing"</span>,Hint=<span class="source_string">"Hit %Fire% for one barrel, %AltFire% for the both."</span>)
+<a name="287"></a>     Hints(<span class="source_int">9</span>)=(<span class="source_type">Type</span>=<span class="source_int">18</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Watch The Flames!"</span>,Hint=<span class="source_string">"Flame-thrower - it burns! Just don't let burning creatures get too close or you'll burn too!"</span>)
+<a name="288"></a>     Hints(<span class="source_int">10</span>)=(<span class="source_type">Type</span>=<span class="source_int">19</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"The LAW"</span>,Hint=<span class="source_string">"If you've got far enough to be carrying this baby, you shouldn't need any more hints on weapons!"</span>)
+<a name="289"></a>     Hints(<span class="source_int">11</span>)=(<span class="source_type">Type</span>=<span class="source_int">20</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Knife"</span>,Hint=<span class="source_string">"Switch to this weapon to run your fastest!"</span>)
+<a name="290"></a>     Hints(<span class="source_int">12</span>)=(<span class="source_type">Type</span>=<span class="source_int">21</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Machete"</span>,Hint=<span class="source_string">"Like a knife. Just bigger and nastier."</span>)
+<a name="291"></a>     Hints(<span class="source_int">13</span>)=(<span class="source_type">Type</span>=<span class="source_int">22</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Fire-axe"</span>,Hint=<span class="source_string">"You need hints on what to do with THIS?!"</span>)
+<a name="292"></a>     Hints(<span class="source_int">14</span>)=(<span class="source_type">Type</span>=<span class="source_int">30</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Specimen Counter"</span>,Hint=<span class="source_string">"Shows you how many of the blighters there are left to 'remove'. Or is that how many there are trying to 'remove' YOU?"</span>)
+<a name="293"></a>     Hints(<span class="source_int">15</span>)=(<span class="source_type">Type</span>=<span class="source_int">31</span>,Title=<span class="source_string">"Way to the Trader"</span>,Hint=<span class="source_string">"Trader arrow and the red 'follow-me' shows you where the Trader's shop is and how far away - get there before the timer runs out!"</span>)
+<a name="294"></a>     Hints(<span class="source_int">16</span>)=(<span class="source_type">Type</span>=<span class="source_int">32</span>,Title=<span class="source_string">"Running"</span>,Hint=<span class="source_string">"Hit %SwitchWeapon 1% or use %PrevWeapon% or %NextWeapon% to switch to the knife so you can run your fastest"</span>)
+<a name="295"></a>     Hints(<span class="source_int">17</span>)=(<span class="source_type">Type</span>=<span class="source_int">33</span>,Title=<span class="source_string">"Watch the time!"</span>,Hint=<span class="source_string">"Clock indicates how long you have before the next wave of specimens comes for you - time to go shopping!"</span>)
+<a name="296"></a>     Hints(<span class="source_int">18</span>)=(<span class="source_type">Type</span>=<span class="source_int">40</span>,Title=<span class="source_string">"They are coming!!"</span>,Hint=<span class="source_string">"You only have a few seconds left before the next wave arrives - think about where you're going to fight them!"</span>)
+<a name="297"></a>     Hints(<span class="source_int">19</span>)=(<span class="source_type">Type</span>=<span class="source_int">45</span>,Title=<span class="source_string">"Trader arrow"</span>,Hint=<span class="source_string">"Shows you where the Trader will be AFTER the incoming wave."</span>)
+<a name="298"></a>     Hints(<span class="source_int">20</span>)=(<span class="source_type">Type</span>=<span class="source_int">50</span>,Title=<span class="source_string">"Doors"</span>,Hint=<span class="source_string">"If you want to block off a door, pull out your welder and use it! It will keep them at bay - for a while."</span>)
+<a name="299"></a>     Hints(<span class="source_int">21</span>)=(<span class="source_type">Type</span>=<span class="source_int">51</span>,Title=<span class="source_string">"Healing"</span>,Hint=<span class="source_string">"Use the med-syringe on yourself - %QuickHeal% for a quick boost!"</span>)
+<a name="300"></a>     Hints(<span class="source_int">22</span>)=(<span class="source_type">Type</span>=<span class="source_int">52</span>,Title=<span class="source_string">"At the shop"</span>,Hint=<span class="source_string">"Press %Use% to start shopping for new kit"</span>)
+<a name="301"></a>     Hints(<span class="source_int">23</span>)=(<span class="source_type">Type</span>=<span class="source_int">53</span>,Title=<span class="source_string">"Healing"</span>,Hint=<span class="source_string">"You must be near another player to heal them.|Press %Fire% to heal a team mate or %AltFire% to heal yourself"</span>)
+<a name="302"></a>     Hints(<span class="source_int">24</span>)=(<span class="source_type">Type</span>=<span class="source_int">54</span>,Title=<span class="source_string">"Welding"</span>,Hint=<span class="source_string">"You must be near a weldable door to use the welder."</span>)
+<a name="303"></a>     Hints(<span class="source_int">40</span>)=(<span class="source_type">Type</span>=<span class="source_int">60</span>,Priority=<span class="source_int">20</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Grenades"</span>,Hint=<span class="source_string">"Hit %ThrowNade% to toss a grenade out, if it is a target-rich environment!"</span>)
+<a name="304"></a>     Hints(<span class="source_int">41</span>)=(<span class="source_type">Type</span>=<span class="source_int">60</span>,Priority=<span class="source_int">20</span>,Delay=<span class="source_int">1</span>,Title=<span class="source_string">"Healing"</span>,Hint=<span class="source_string">"Use the med-syringe on a friend - it works way better on them than it does in your own arm!"</span>)
+<a name="305"></a>     RandomHintTimerDelay=<span class="source_int">29.000000</span>
+<a name="306"></a>}
+<a name="307"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfhintmanager.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFHintManager">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfhighroffire.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfhiteffect.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:03.482 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

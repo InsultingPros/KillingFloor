@@ -1,0 +1,648 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: IPDrv.UdpGameSpyQuery</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../ipdrv/ipdrv-overview.html">Package</a></td>
+	<td class="header"><a href="../ipdrv/udpgamespyquery.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UdpGameSpyQuery">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_ipdrv/tcplink.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_ipdrv/udpgamespyuplink.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_ipdrv/udpgamespyquery.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../ipdrv/ipdrv-overview.html">IPDrv</a>.<a href="../ipdrv/udpgamespyquery.html">UdpGameSpyQuery</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// UdpGameSpyQuery
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">// Version: 1.5
+</span><a name="5"></a><span class="source_comment">//
+</span><a name="6"></a><span class="source_comment">// This query server is compliant with the GameSpy Uplink Specification.
+</span><a name="7"></a><span class="source_comment">// The specification is available at http://www.gamespy.com/developer
+</span><a name="8"></a><span class="source_comment">// and might be of use to progammers who are writing or maintaining
+</span><a name="9"></a><span class="source_comment">// their own stat gathering/game querying software.
+</span><a name="10"></a><span class="source_comment">//
+</span><a name="11"></a><span class="source_comment">// Note: Currently, SendText returns false if successful.
+</span><a name="12"></a><span class="source_comment">//
+</span><a name="13"></a><span class="source_comment">// Full documentation on this class is available at http://unreal.epicgames.com/
+</span><a name="14"></a><span class="source_comment">//
+</span><a name="15"></a><span class="source_comment">//=============================================================================
+</span><a name="16"></a><span class="source_type">class</span> <span class="source_type"><a href="../ipdrv/udpgamespyquery.html" class="source">UdpGameSpyQuery</a></span> extends <span class="source_type"><a href="../ipdrv/udplink.html" class="source">UdpLink</a></span> config;
+<a name="17"></a>
+<a name="18"></a><span class="source_comment">// Game Server Config.
+</span><a name="19"></a>var() <span class="source_type">name</span>					QueryName;			<span class="source_comment">// Name to set this object's Tag to.
+</span><a name="20"></a>var <span class="source_type">int</span>					    CurrentQueryNum;	<span class="source_comment">// Query ID Number.
+</span><a name="21"></a><span class="source_comment">//crt
+</span><a name="22"></a>var <span class="source_type">string</span> ReplyData;
+<a name="23"></a>
+<a name="24"></a>var globalconfig <span class="source_type">int</span>		MinNetVer;
+<a name="25"></a>
+<a name="26"></a><span class="source_comment">//!! Hack to prevent port swapping
+</span><a name="27"></a>var globalconfig <span class="source_type">int</span>		OldQueryPortNumber;
+<a name="28"></a>var globalconfig <span class="source_type">bool</span>		bRestartServerOnPortSwap;
+<a name="29"></a>var globalconfig <span class="source_type">bool</span>       bDebugPortSwaps;
+<a name="30"></a>
+<a name="31"></a><span class="source_comment">// Initialize.
+</span><a name="32"></a>function PreBeginPlay()
+<a name="33"></a>{
+<a name="34"></a>	local <span class="source_type">int</span> boundport, requestport;
+<a name="35"></a>
+<a name="36"></a>	<span class="source_comment">// Set the Tag
+</span><a name="37"></a>	Tag = QueryName;
+<a name="38"></a>
+<a name="39"></a>	<span class="source_comment">// Bind the listen socket
+</span><a name="40"></a>	requestport = <span class="source_type">Level</span>.Game.GetServerPort()+<span class="source_int">10</span>;
+<a name="41"></a>	boundport = BindPort(requestport, true);
+<a name="42"></a>	if( boundport == <span class="source_int">0</span> )
+<a name="43"></a>	{
+<a name="44"></a>		Log(<span class="source_string">"UdpServerQuery: Port failed to bind."</span>);
+<a name="45"></a>		return;
+<a name="46"></a>	}
+<a name="47"></a>	Log(<span class="source_string">"UdpServerQuery(crt): Port "</span>$boundport$<span class="source_string">" successfully bound."</span>);
+<a name="48"></a>
+<a name="49"></a>	if( bRestartServerOnPortSwap )
+<a name="50"></a>	{
+<a name="51"></a>		if( OldQueryPortNumber != <span class="source_int">0</span> )
+<a name="52"></a>		{
+<a name="53"></a>			if( OldQueryPortNumber != boundport )
+<a name="54"></a>			{
+<a name="55"></a>				Log(<span class="source_string">"PORTSWAP detected, exiting...  old port: "</span>$OldQueryPortNumber$<span class="source_string">", new port: "</span>$boundport$<span class="source_string">", requested port: "</span>$requestport);
+<a name="56"></a>				if ( bDebugPortSwaps )
+<a name="57"></a>					DebugPortSwap(<span class="source_type">Level</span>);
+<a name="58"></a>				assert( OldQueryPortNumber == boundport );
+<a name="59"></a>			}
+<a name="60"></a>		}
+<a name="61"></a>		OldQueryPortNumber = boundport;
+<a name="62"></a>		SaveConfig();
+<a name="63"></a>	}
+<a name="64"></a>}
+<a name="65"></a>
+<a name="66"></a>static function DebugPortSwap( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Ref</span> )
+<a name="67"></a>{
+<a name="68"></a>	local array&lt;<span class="source_type"><a href="../ipdrv/udpgamespyquery.html" class="source">UdpGamespyQuery</a></span>&gt; Queries;
+<a name="69"></a>	local array&lt;<span class="source_type"><a href="../core/object.html" class="source">Object</a></span>&gt; Referencers;
+<a name="70"></a>	local <span class="source_type"><a href="../ipdrv/udpgamespyquery.html" class="source">UdpGamespyQuery</a></span> Q;
+<a name="71"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="72"></a>	local <span class="source_type">string</span> <span class="source_type">str</span>;
+<a name="73"></a>
+<a name="74"></a>	Log(<span class="source_string">"***************"</span>);
+<a name="75"></a>	Log(<span class="source_string">" Complete OBJ LIST:"</span>);
+<a name="76"></a>
+<a name="77"></a>	<span class="source_type">Ref</span>.ConsoleCommand(<span class="source_string">"obj list"</span>, true);
+<a name="78"></a>	Log(<span class="source_string">"***************"</span>);
+<a name="79"></a>	log(<span class="source_string">""</span>);
+<a name="80"></a>	Log(<span class="source_string">"Current UdpGameSpyQuery objects:"</span>);
+<a name="81"></a>	
+<a name="82"></a>	foreach <span class="source_type">Ref</span>.AllObjects( <span class="source_type">class</span><span class="source_name">'UdpGamespyQuery'</span>, Q )
+<a name="83"></a>		Queries[Queries.Length] = Q;
+<a name="84"></a>	
+<a name="85"></a>	if ( Queries.Length == <span class="source_int">0</span> )
+<a name="86"></a>	{
+<a name="87"></a>		log(<span class="source_string">"No UdpGamespyQuery objects found!"</span>);
+<a name="88"></a>		return;
+<a name="89"></a>	}
+<a name="90"></a>	
+<a name="91"></a>	<span class="source_type">Ref</span>.ConsoleCommand(<span class="source_string">"obj list class=udpgamespyquery"</span>, true);
+<a name="92"></a>	log(<span class="source_string">"***************"</span>);
+<a name="93"></a>	
+<a name="94"></a>	log(<span class="source_string">"Tracing UdpGamespyQuery objects"</span>);
+<a name="95"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Queries.Length; <span class="source_type">i</span>++ )
+<a name="96"></a>	{
+<a name="97"></a>		<span class="source_type">str</span> = GetFullName(Queries[<span class="source_type">i</span>]);
+<a name="98"></a>		log(<span class="source_string">"==================================================================="</span>);
+<a name="99"></a>		Log(<span class="source_string">" Referencers of '"</span>$<span class="source_type">str</span>$<span class="source_string">"'"</span>);
+<a name="100"></a>		<span class="source_type">Ref</span>.ConsoleCommand(<span class="source_string">"obj refs class=udpgamespyquery name="</span>$<span class="source_type">str</span>, true);
+<a name="101"></a>		
+<a name="102"></a>		<span class="source_type">Ref</span>.GetReferencers( Queries[<span class="source_type">i</span>], Referencers );
+<a name="103"></a>		for ( j = <span class="source_int">0</span>; j &lt; Referencers.Length; j++ )
+<a name="104"></a>		{
+<a name="105"></a>			if ( <span class="source_type">Level</span>(Referencers[j]) == None && <span class="source_type"><a href="../engine/gameengine.html" class="source">GameEngine</a></span>(Referencers[j]) == None )
+<a name="106"></a>			{
+<a name="107"></a>				<span class="source_type">str</span> = GetFullName(Referencers[j]);
+<a name="108"></a>				log(<span class="source_string">""</span>);
+<a name="109"></a>				log(<span class="source_string">" Referencers of '"</span>$<span class="source_type">str</span>$<span class="source_string">"'"</span>);
+<a name="110"></a>				<span class="source_type">Ref</span>.ConsoleCommand(<span class="source_string">"obj refs class="</span>$Referencers[j].<span class="source_type">Class</span>$<span class="source_string">" name="</span>$<span class="source_type">str</span>, true);
+<a name="111"></a>				log(<span class="source_string">"**************************************************************************"</span>);
+<a name="112"></a>			}
+<a name="113"></a>		}
+<a name="114"></a>		
+<a name="115"></a>		log(<span class="source_string">"==================================================================="</span>);
+<a name="116"></a>		log(<span class="source_string">""</span>);
+<a name="117"></a>		
+<a name="118"></a>	}
+<a name="119"></a>
+<a name="120"></a>	log(<span class="source_string">"Performing garbage collection"</span>);
+<a name="121"></a>	<span class="source_type">Ref</span>.ConsoleCommand(<span class="source_string">"obj garbage"</span>, true);
+<a name="122"></a>	Log(<span class="source_string">"***************"</span>);
+<a name="123"></a>	Log(<span class="source_string">"Remaining UdpGameSpyQuery objects:"</span>);
+<a name="124"></a>	<span class="source_type">Ref</span>.ConsoleCommand(<span class="source_string">"obj list class=udpgamespyquery"</span>, true);
+<a name="125"></a>	Log(<span class="source_string">"***************"</span>);
+<a name="126"></a>}
+<a name="127"></a>
+<a name="128"></a>static function <span class="source_type">string</span> GetFullName( <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Obj</span> )
+<a name="129"></a>{
+<a name="130"></a>	local <span class="source_type">string</span> <span class="source_type">FullName</span>;
+<a name="131"></a>	local array&lt;<span class="source_type"><a href="../core/object.html" class="source">Object</a></span>&gt; Outers;
+<a name="132"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="133"></a>	
+<a name="134"></a>	if ( <span class="source_type">Obj</span> == None )
+<a name="135"></a>		return <span class="source_string">""</span>;
+<a name="136"></a>		
+<a name="137"></a>	Outers[<span class="source_int">0</span>] = <span class="source_type">Obj</span>;
+<a name="138"></a>	while ( Outers[<span class="source_int">0</span>].Outer != None )
+<a name="139"></a>	{
+<a name="140"></a>		Outers.Insert(<span class="source_int">0</span>, <span class="source_int">1</span>);
+<a name="141"></a>		Outers[<span class="source_int">0</span>] = Outers[<span class="source_int">1</span>].Outer;
+<a name="142"></a>	}
+<a name="143"></a>	
+<a name="144"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Outers.Length; <span class="source_type">i</span>++ )
+<a name="145"></a>	{
+<a name="146"></a>		if ( <span class="source_type">FullName</span> != <span class="source_string">""</span> )
+<a name="147"></a>			<span class="source_type">FullName</span> $= <span class="source_string">"."</span>;
+<a name="148"></a>			
+<a name="149"></a>		<span class="source_type">FullName</span> $= Outers[<span class="source_type">i</span>].<span class="source_type">Name</span>;
+<a name="150"></a>	}
+<a name="151"></a>	
+<a name="152"></a>	return <span class="source_type">FullName</span>;
+<a name="153"></a>}
+<a name="154"></a>
+<a name="155"></a><span class="source_comment">// Received a query request.
+</span><a name="156"></a>event ReceivedText( <span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span> <span class="source_type">Addr</span>, <span class="source_type">string</span> <span class="source_type">Text</span> )
+<a name="157"></a>{
+<a name="158"></a>	local <span class="source_type">string</span> Query;
+<a name="159"></a>	local <span class="source_type">bool</span> QueryRemaining;
+<a name="160"></a>	local <span class="source_type">int</span>  QueryNum, <span class="source_type">PacketNum</span>;
+<a name="161"></a>
+<a name="162"></a>	<span class="source_comment">// Assign this packet a unique value from 1 to 100
+</span><a name="163"></a>	CurrentQueryNum++;
+<a name="164"></a>	if (CurrentQueryNum &gt; <span class="source_int">100</span>)
+<a name="165"></a>		CurrentQueryNum = <span class="source_int">1</span>;
+<a name="166"></a>	QueryNum = CurrentQueryNum;
+<a name="167"></a>
+<a name="168"></a>	Query = <span class="source_type">Text</span>;
+<a name="169"></a>	if (Query == <span class="source_string">""</span>)		<span class="source_comment">// If the string is empty, don't parse it
+</span><a name="170"></a>		QueryRemaining = false;
+<a name="171"></a>	else
+<a name="172"></a>		QueryRemaining = true;
+<a name="173"></a>	<span class="source_comment">//crt
+</span><a name="174"></a>	<span class="source_type">PacketNum</span> =  <span class="source_int">0</span>;
+<a name="175"></a>	ReplyData = <span class="source_string">""</span>;
+<a name="176"></a>	while (QueryRemaining) {
+<a name="177"></a>		Query = ParseQuery(<span class="source_type">Addr</span>, Query, QueryNum, <span class="source_type">PacketNum</span>);
+<a name="178"></a>		if (Query == <span class="source_string">""</span>)
+<a name="179"></a>			QueryRemaining = false;
+<a name="180"></a>		else
+<a name="181"></a>			QueryRemaining = true;
+<a name="182"></a>	}
+<a name="183"></a>}
+<a name="184"></a>
+<a name="185"></a>function <span class="source_type">bool</span> ParseNextQuery( <span class="source_type">string</span> Query, out <span class="source_type">string</span> QueryType, out <span class="source_type">string</span> QueryValue, out <span class="source_type">string</span> QueryRest, out <span class="source_type">int</span> <span class="source_type">bFinalPacket</span> )
+<a name="186"></a>{
+<a name="187"></a>	local <span class="source_type">string</span> TempQuery;
+<a name="188"></a>	local <span class="source_type">int</span> ClosingSlash;
+<a name="189"></a>
+<a name="190"></a>	if (Query == <span class="source_string">""</span>)
+<a name="191"></a>		return false;
+<a name="192"></a>
+<a name="193"></a>	<span class="source_comment">// Query should be:
+</span><a name="194"></a>	<span class="source_comment">//   \[type]\&lt;value&gt;
+</span><a name="195"></a>	if (Left(Query, <span class="source_int">1</span>) == <span class="source_string">"\\"</span>)
+<a name="196"></a>	{
+<a name="197"></a>		<span class="source_comment">// Check to see if closed.
+</span><a name="198"></a>		ClosingSlash = InStr(Right(Query, <span class="source_type">Len</span>(Query)-<span class="source_int">1</span>), <span class="source_string">"\\"</span>);
+<a name="199"></a>		if (ClosingSlash == <span class="source_int">0</span>)
+<a name="200"></a>			return false;
+<a name="201"></a>
+<a name="202"></a>		TempQuery = Query;
+<a name="203"></a>
+<a name="204"></a>		<span class="source_comment">// Query looks like:
+</span><a name="205"></a>		<span class="source_comment">//  \[type]\
+</span><a name="206"></a>		QueryType = Right(Query, <span class="source_type">Len</span>(Query)-<span class="source_int">1</span>);
+<a name="207"></a>		QueryType = Left(QueryType, ClosingSlash);
+<a name="208"></a>
+<a name="209"></a>		QueryRest = Right(Query, <span class="source_type">Len</span>(Query) - (<span class="source_type">Len</span>(QueryType) + <span class="source_int">2</span>));
+<a name="210"></a>
+<a name="211"></a>		if ((QueryRest == <span class="source_string">""</span>) || (<span class="source_type">Len</span>(QueryRest) == <span class="source_int">1</span>))
+<a name="212"></a>		{
+<a name="213"></a>			<span class="source_type">bFinalPacket</span> = <span class="source_int">1</span>;
+<a name="214"></a>			return true;
+<a name="215"></a>		} else if (Left(QueryRest, <span class="source_int">1</span>) == <span class="source_string">"\\"</span>)
+<a name="216"></a>			return true;	<span class="source_comment">// \type\\
+</span><a name="217"></a>
+<a name="218"></a>		<span class="source_comment">// Query looks like:
+</span><a name="219"></a>		<span class="source_comment">//  \type\value
+</span><a name="220"></a>		ClosingSlash = InStr(QueryRest, <span class="source_string">"\\"</span>);
+<a name="221"></a>		if (ClosingSlash &gt;= <span class="source_int">0</span>)
+<a name="222"></a>			QueryValue = Left(QueryRest, ClosingSlash);
+<a name="223"></a>		else
+<a name="224"></a>			QueryValue = QueryRest;
+<a name="225"></a>
+<a name="226"></a>		QueryRest = Right(Query, <span class="source_type">Len</span>(Query) - (<span class="source_type">Len</span>(QueryType) + <span class="source_type">Len</span>(QueryValue) + <span class="source_int">3</span>));
+<a name="227"></a>		if (QueryRest == <span class="source_string">""</span>)
+<a name="228"></a>		{
+<a name="229"></a>			<span class="source_type">bFinalPacket</span> = <span class="source_int">1</span>;
+<a name="230"></a>			return true;
+<a name="231"></a>		} else
+<a name="232"></a>			return true;
+<a name="233"></a>	} else {
+<a name="234"></a>		return false;
+<a name="235"></a>	}
+<a name="236"></a>}
+<a name="237"></a>
+<a name="238"></a>function <span class="source_type">string</span> ParseQuery( <span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span> <span class="source_type">Addr</span>, coerce <span class="source_type">string</span> Query, <span class="source_type">int</span> QueryNum, out <span class="source_type">int</span> <span class="source_type">PacketNum</span> )
+<a name="239"></a>{
+<a name="240"></a>	local <span class="source_type">string</span> QueryType, QueryValue, QueryRest, ValidationString;
+<a name="241"></a>	local <span class="source_type">bool</span> <span class="source_type">Result</span>;
+<a name="242"></a>	local <span class="source_type">int</span> <span class="source_type">bFinalPacket</span>;
+<a name="243"></a>
+<a name="244"></a>	<span class="source_type">bFinalPacket</span> = <span class="source_int">0</span>;
+<a name="245"></a>	<span class="source_type">Result</span> = ParseNextQuery(Query, QueryType, QueryValue, QueryRest, <span class="source_type">bFinalPacket</span>);
+<a name="246"></a>	if( !<span class="source_type">Result</span> )
+<a name="247"></a>		return <span class="source_string">""</span>;
+<a name="248"></a>
+<a name="249"></a>	<span class="source_comment">//Log("Got  Query: "  $ QueryNum $ "." $ PacketNum $ ":" $ QueryType);
+</span><a name="250"></a>
+<a name="251"></a>	if( QueryType==<span class="source_string">"basic"</span> )
+<a name="252"></a>	{
+<a name="253"></a>		<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetBasic(), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="254"></a>	}
+<a name="255"></a>	else if( QueryType==<span class="source_string">"info"</span> )
+<a name="256"></a>	{
+<a name="257"></a>		<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetInfo(), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="258"></a>	}
+<a name="259"></a>	else if( QueryType==<span class="source_string">"rules"</span> )
+<a name="260"></a>	{
+<a name="261"></a>		<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetRules(), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="262"></a>	}
+<a name="263"></a>	else if( QueryType==<span class="source_string">"players"</span> )
+<a name="264"></a>	{
+<a name="265"></a>		if( <span class="source_type">Level</span>.Game.NumPlayers &gt; <span class="source_int">0</span> )
+<a name="266"></a>			<span class="source_type">Result</span> = SendPlayers(<span class="source_type">Addr</span>, QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="267"></a>		else
+<a name="268"></a>			<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, <span class="source_string">""</span>, QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="269"></a>	}
+<a name="270"></a>	else if( QueryType==<span class="source_string">"status"</span> )
+<a name="271"></a>	{
+<a name="272"></a>		<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetBasic(), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_int">0</span>);
+<a name="273"></a>		<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetInfo(), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_int">0</span>);
+<a name="274"></a>		if( <span class="source_type">Level</span>.Game.NumPlayers == <span class="source_int">0</span> )
+<a name="275"></a>		{
+<a name="276"></a>			<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetRules(), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="277"></a>		}
+<a name="278"></a>		else
+<a name="279"></a>		{
+<a name="280"></a>			<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetRules(), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_int">0</span>);
+<a name="281"></a>			<span class="source_type">Result</span> = SendPlayers(<span class="source_type">Addr</span>, QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="282"></a>		}
+<a name="283"></a>	}
+<a name="284"></a>	else if( QueryType==<span class="source_string">"echo"</span> )
+<a name="285"></a>	{
+<a name="286"></a>		<span class="source_comment">// Respond to an echo with the same string
+</span><a name="287"></a>		<span class="source_comment">//!! disabled due to security problem - the remote ip/port could be spoofed to cause an echo loop!
+</span><a name="288"></a>		<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, <span class="source_string">"\\ignoring\\"</span>$QueryValue, QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="289"></a>	}
+<a name="290"></a>	else if( QueryType==<span class="source_string">"secure"</span> )
+<a name="291"></a>	{
+<a name="292"></a>		ValidationString = <span class="source_string">"\\validate\\"</span>$GameSpyValidate(QueryValue);
+<a name="293"></a>		<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, ValidationString, QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="294"></a>	}
+<a name="295"></a>	else if( QueryType==<span class="source_string">"level_property"</span> )
+<a name="296"></a>	{
+<a name="297"></a>		<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetLevelProperty(QueryValue), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="298"></a>	}
+<a name="299"></a>	else if( QueryType==<span class="source_string">"game_property"</span> )
+<a name="300"></a>	{
+<a name="301"></a>			<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetGameProperty(QueryValue), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="302"></a>	}
+<a name="303"></a>	else if( QueryType==<span class="source_string">"player_property"</span> )
+<a name="304"></a>	{
+<a name="305"></a>		<span class="source_type">Result</span> = SendQueryPacket(<span class="source_type">Addr</span>, GetPlayerProperty(QueryValue), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="306"></a>	}
+<a name="307"></a>	return QueryRest;
+<a name="308"></a>}
+<a name="309"></a>
+<a name="310"></a>function <span class="source_type">bool</span> SendAPacket(<span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span> <span class="source_type">Addr</span>, <span class="source_type">int</span> QueryNum, out <span class="source_type">int</span> <span class="source_type">PacketNum</span>, <span class="source_type">int</span> <span class="source_type">bFinalPacket</span>)
+<a name="311"></a>{
+<a name="312"></a>	local <span class="source_type">bool</span> <span class="source_type">Result</span>;
+<a name="313"></a>
+<a name="314"></a>	ReplyData = ReplyData$<span class="source_string">"\\queryid\\"</span>$QueryNum$<span class="source_string">"."</span>$++<span class="source_type">PacketNum</span>;
+<a name="315"></a>	if (<span class="source_type">bFinalPacket</span> == <span class="source_int">1</span>) {
+<a name="316"></a>		ReplyData = ReplyData $ <span class="source_string">"\\final\\"</span>;
+<a name="317"></a>	}
+<a name="318"></a>	<span class="source_type">Result</span> = SendText(<span class="source_type">Addr</span>, ReplyData);
+<a name="319"></a>	ReplyData = <span class="source_string">""</span>;
+<a name="320"></a>
+<a name="321"></a>	return <span class="source_type">Result</span>;
+<a name="322"></a>
+<a name="323"></a>}
+<a name="324"></a>
+<a name="325"></a><span class="source_comment">// SendQueryPacket is a wrapper for SendText that allows for packet numbering.
+</span><a name="326"></a>function <span class="source_type">bool</span> SendQueryPacket(<span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span> <span class="source_type">Addr</span>, coerce <span class="source_type">string</span> SendString, <span class="source_type">int</span> QueryNum, out <span class="source_type">int</span> <span class="source_type">PacketNum</span>, <span class="source_type">int</span> <span class="source_type">bFinalPacket</span>)
+<a name="327"></a>{
+<a name="328"></a>	local <span class="source_type">bool</span> <span class="source_type">Result</span>;
+<a name="329"></a>
+<a name="330"></a>	<span class="source_comment">//Log("Send Query: "  $ QueryNum $ "." $ PacketNum $ ":" $ bFinalPacket);
+</span><a name="331"></a>	<span class="source_type">result</span> = true;
+<a name="332"></a>	if (<span class="source_type">len</span>(ReplyData) + <span class="source_type">len</span>(SendString) &gt; <span class="source_int">1000</span>)
+<a name="333"></a>		<span class="source_type">result</span> = SendAPacket(<span class="source_type">Addr</span>, QueryNum, <span class="source_type">PacketNum</span>, <span class="source_int">0</span>);
+<a name="334"></a>
+<a name="335"></a>	ReplyData = ReplyData $ SendString;
+<a name="336"></a>
+<a name="337"></a>	if (<span class="source_type">bFinalPacket</span> == <span class="source_int">1</span>)
+<a name="338"></a>		<span class="source_type">result</span> = SendAPacket(<span class="source_type">Addr</span>, QueryNum, <span class="source_type">PacketNum</span>, <span class="source_type">bFinalPacket</span>);
+<a name="339"></a>
+<a name="340"></a>	return <span class="source_type">Result</span>;
+<a name="341"></a>}
+<a name="342"></a>
+<a name="343"></a><span class="source_comment">// Return a string of basic information.
+</span><a name="344"></a>function <span class="source_type">string</span> GetBasic() {
+<a name="345"></a>	local <span class="source_type">string</span> ResultSet;
+<a name="346"></a>
+<a name="347"></a>	<span class="source_comment">// The name of this game.
+</span><a name="348"></a>	ResultSet = <span class="source_string">"\\gamename\\"</span>$GameSpyGameName();
+<a name="349"></a>
+<a name="350"></a>	<span class="source_comment">// The version of this game.
+</span><a name="351"></a>	ResultSet = ResultSet$<span class="source_string">"\\gamever\\"</span>$<span class="source_type">Level</span>.EngineVersion;
+<a name="352"></a>
+<a name="353"></a>	<span class="source_comment">// The most recent network compatible version.
+</span><a name="354"></a>	if( MinNetVer &gt;= <span class="source_type">Int</span>(<span class="source_type">Level</span>.MinNetVersion) &&
+<a name="355"></a>		MinNetVer &lt;= <span class="source_type">Int</span>(<span class="source_type">Level</span>.EngineVersion) )
+<a name="356"></a>		ResultSet = ResultSet$<span class="source_string">"\\minnetver\\"</span>$<span class="source_type">string</span>(MinNetVer);
+<a name="357"></a>	else
+<a name="358"></a>		ResultSet = ResultSet$<span class="source_string">"\\minnetver\\"</span>$<span class="source_type">Level</span>.MinNetVersion;
+<a name="359"></a>
+<a name="360"></a>	<span class="source_comment">// The regional location of this game.
+</span><a name="361"></a>	ResultSet = ResultSet$<span class="source_string">"\\location\\"</span>$<span class="source_type">class</span><span class="source_name">'UdpGamespyUplink'</span>.default.ServerRegion;
+<a name="362"></a>
+<a name="363"></a>	return ResultSet;
+<a name="364"></a>}
+<a name="365"></a>
+<a name="366"></a><span class="source_comment">// Return a string of important system information.
+</span><a name="367"></a>function <span class="source_type">string</span> GetInfo() {
+<a name="368"></a>	local <span class="source_type">string</span> ResultSet;
+<a name="369"></a>	local <span class="source_type">string</span> <span class="source_type">ServerName</span>;
+<a name="370"></a>	local <span class="source_type">int</span> NumPlayers;
+<a name="371"></a>
+<a name="372"></a>	<span class="source_type">ServerName</span> = <span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.<span class="source_type">ServerName</span>;
+<a name="373"></a>	ReplaceText(<span class="source_type">ServerName</span>,<span class="source_string">"\\"</span>,<span class="source_string">""</span>);	<span class="source_comment">// strip \'s
+</span><a name="374"></a>
+<a name="375"></a>	<span class="source_comment">// The server name, i.e.: Bob's Server
+</span><a name="376"></a>	ResultSet = <span class="source_string">"\\hostname\\"</span>$<span class="source_type">ServerName</span>;
+<a name="377"></a>
+<a name="378"></a>	<span class="source_comment">// The short server name
+</span><a name="379"></a>	<span class="source_comment">//ResultSet = ResultSet$"\\shortname\\"$Level.Game.GameReplicationInfo.ShortName;
+</span><a name="380"></a>
+<a name="381"></a>	<span class="source_comment">// The server port.
+</span><a name="382"></a>	ResultSet = ResultSet$<span class="source_string">"\\hostport\\"</span>$<span class="source_type">Level</span>.Game.GetServerPort();
+<a name="383"></a>
+<a name="384"></a>	<span class="source_comment">// (optional) The server IP
+</span><a name="385"></a>	<span class="source_comment">// if (ServerIP != "")
+</span><a name="386"></a>	<span class="source_comment">//	ResultSet = ResultSet$"\\hostip\\"$ServerIP;
+</span><a name="387"></a>
+<a name="388"></a>	<span class="source_comment">// The map/level title
+</span><a name="389"></a>	ResultSet = ResultSet$<span class="source_string">"\\maptitle\\"</span>$<span class="source_type">Level</span>.Title;
+<a name="390"></a>
+<a name="391"></a>	<span class="source_comment">// Map name
+</span><a name="392"></a>	ResultSet = ResultSet$<span class="source_string">"\\mapname\\"</span>$Left(<span class="source_type">string</span>(<span class="source_type">Level</span>), InStr(<span class="source_type">string</span>(<span class="source_type">Level</span>), <span class="source_string">"."</span>));
+<a name="393"></a>
+<a name="394"></a>	<span class="source_comment">// The mod or game type
+</span><a name="395"></a>	ResultSet = ResultSet$<span class="source_string">"\\gametype\\"</span>$GetItemName(<span class="source_type">string</span>(<span class="source_type">Level</span>.Game.<span class="source_type">Class</span>));
+<a name="396"></a>
+<a name="397"></a>	<span class="source_comment">// The number of players
+</span><a name="398"></a>	NumPlayers = <span class="source_type">Level</span>.Game.GetNumPlayers();
+<a name="399"></a>	if ( NumPlayers == <span class="source_int">0</span> )
+<a name="400"></a>		NumPlayers = Min(<span class="source_type">Level</span>.Game.MultiMinPlayers(), <span class="source_type">Level</span>.Game.MaxPlayers-<span class="source_int">1</span>);
+<a name="401"></a>	ResultSet = ResultSet$<span class="source_string">"\\numplayers\\"</span>$NumPlayers;
+<a name="402"></a>
+<a name="403"></a>	<span class="source_comment">// The maximum number of players
+</span><a name="404"></a>	ResultSet = ResultSet$<span class="source_string">"\\maxplayers\\"</span>$<span class="source_type">Level</span>.Game.MaxPlayers;
+<a name="405"></a>
+<a name="406"></a>	<span class="source_comment">// The game mode: openplaying
+</span><a name="407"></a>	ResultSet = ResultSet$<span class="source_string">"\\gamemode\\openplaying"</span>;
+<a name="408"></a>
+<a name="409"></a>	<span class="source_comment">// The version of this game.
+</span><a name="410"></a>	ResultSet = ResultSet$<span class="source_string">"\\gamever\\"</span>$<span class="source_type">Level</span>.EngineVersion;
+<a name="411"></a>
+<a name="412"></a>	<span class="source_comment">// The most recent network compatible version.
+</span><a name="413"></a>	if( MinNetVer &gt;= <span class="source_type">Int</span>(<span class="source_type">Level</span>.MinNetVersion) &&
+<a name="414"></a>		MinNetVer &lt;= <span class="source_type">Int</span>(<span class="source_type">Level</span>.EngineVersion) )
+<a name="415"></a>		ResultSet = ResultSet$<span class="source_string">"\\minnetver\\"</span>$<span class="source_type">string</span>(MinNetVer);
+<a name="416"></a>	else
+<a name="417"></a>		ResultSet = ResultSet$<span class="source_string">"\\minnetver\\"</span>$<span class="source_type">Level</span>.MinNetVersion;
+<a name="418"></a>
+<a name="419"></a>	<span class="source_comment">//ResultSet = ResultSet$Level.Game.GetInfo();
+</span><a name="420"></a>
+<a name="421"></a>	return ResultSet;
+<a name="422"></a>}
+<a name="423"></a>
+<a name="424"></a><span class="source_comment">// Return a string of miscellaneous information.
+</span><a name="425"></a><span class="source_comment">// Game specific information, user defined data, custom parameters for the command line.
+</span><a name="426"></a>function <span class="source_type">string</span> GetRules()
+<a name="427"></a>{
+<a name="428"></a>	local <span class="source_type">string</span> ResultSet;
+<a name="429"></a>
+<a name="430"></a>	<span class="source_comment">//ResultSet = Level.Game.GetRules();
+</span><a name="431"></a>
+<a name="432"></a>	<span class="source_comment">// Admin's Name
+</span><a name="433"></a>	if( <span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.<span class="source_type">AdminName</span> != <span class="source_string">""</span> )
+<a name="434"></a>		ResultSet = ResultSet$<span class="source_string">"\\AdminName\\"</span>$<span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.<span class="source_type">AdminName</span>;
+<a name="435"></a>
+<a name="436"></a>	<span class="source_comment">// Admin's Email
+</span><a name="437"></a>	if( <span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.AdminEmail != <span class="source_string">""</span> )
+<a name="438"></a>		ResultSet = ResultSet$<span class="source_string">"\\AdminEMail\\"</span>$<span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.AdminEmail;
+<a name="439"></a>
+<a name="440"></a>	<span class="source_comment">// Whether the server is password protected.
+</span><a name="441"></a>	if( <span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/accesscontrol.html" class="source">AccessControl</a></span> != None && <span class="source_type">Level</span>.Game.<span class="source_type"><a href="../engine/accesscontrol.html" class="source">AccessControl</a></span>.RequiresPassword() )
+<a name="442"></a>		ResultSet = ResultSet$<span class="source_string">"\\password\\1"</span>;
+<a name="443"></a>	else
+<a name="444"></a>		ResultSet = ResultSet$<span class="source_string">"\\password\\0"</span>;
+<a name="445"></a>
+<a name="446"></a>	return ResultSet;
+<a name="447"></a>}
+<a name="448"></a>
+<a name="449"></a><span class="source_comment">// Return a string of information on a player.
+</span><a name="450"></a>function <span class="source_type">string</span> GetPlayer( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">P</span>, <span class="source_type">int</span> <span class="source_type">PlayerNum</span> )
+<a name="451"></a>{
+<a name="452"></a>	local <span class="source_type">string</span> ResultSet;
+<a name="453"></a>	local <span class="source_type">string</span> <span class="source_type">PlayerName</span>;
+<a name="454"></a>
+<a name="455"></a>	<span class="source_type">PlayerName</span> = <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>;
+<a name="456"></a>
+<a name="457"></a>	<span class="source_comment">// Name
+</span><a name="458"></a>	ReplaceText(<span class="source_type">PlayerName</span>,<span class="source_string">"\\"</span>,<span class="source_string">""</span>);	<span class="source_comment">// strip \'s
+</span><a name="459"></a>	ResultSet = <span class="source_string">"\\player_"</span>$<span class="source_type">PlayerNum</span>$<span class="source_string">"\\"</span>$<span class="source_type">PlayerName</span>;
+<a name="460"></a>
+<a name="461"></a>	<span class="source_comment">// Frags
+</span><a name="462"></a>	ResultSet = ResultSet$<span class="source_string">"\\frags_"</span>$<span class="source_type">PlayerNum</span>$<span class="source_string">"\\"</span>$<span class="source_type">int</span>(<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Score</span>);
+<a name="463"></a>
+<a name="464"></a>	<span class="source_comment">// Ping
+</span><a name="465"></a>	ResultSet = ResultSet$<span class="source_string">"\\ping_"</span>$<span class="source_type">PlayerNum</span>$<span class="source_string">"\\"</span>$<span class="source_type">P</span>.ConsoleCommand(<span class="source_string">"GETPING"</span>);
+<a name="466"></a>
+<a name="467"></a>	<span class="source_comment">// Team
+</span><a name="468"></a>	if(<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> != None)
+<a name="469"></a>		ResultSet = ResultSet$<span class="source_string">"\\team_"</span>$<span class="source_type">PlayerNum</span>$<span class="source_string">"\\"</span>$<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex;
+<a name="470"></a>	else
+<a name="471"></a>		ResultSet = ResultSet$<span class="source_string">"\\team_"</span>$<span class="source_type">PlayerNum</span>$<span class="source_string">"\\0"</span>;
+<a name="472"></a>
+<a name="473"></a>	return ResultSet;
+<a name="474"></a>}
+<a name="475"></a>
+<a name="476"></a><span class="source_comment">// Send data for each player
+</span><a name="477"></a>function <span class="source_type">bool</span> SendPlayers(<span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span> <span class="source_type">Addr</span>, <span class="source_type">int</span> QueryNum, out <span class="source_type">int</span> <span class="source_type">PacketNum</span>, <span class="source_type">int</span> <span class="source_type">bFinalPacket</span>)
+<a name="478"></a>{
+<a name="479"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="480"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="481"></a>	local <span class="source_type">bool</span> <span class="source_type">Result</span>, SendResult;
+<a name="482"></a>
+<a name="483"></a>	<span class="source_type">Result</span> = false;
+<a name="484"></a>
+<a name="485"></a>	<span class="source_type">C</span> = <span class="source_type">Level</span>.ControllerList;
+<a name="486"></a>	while( <span class="source_type">i</span> &lt; <span class="source_type">Level</span>.Game.NumPlayers )
+<a name="487"></a>	{
+<a name="488"></a>		if (<span class="source_type">C</span> == None)
+<a name="489"></a>		{
+<a name="490"></a>			if(<span class="source_type">bFinalPacket</span>==<span class="source_int">1</span>)
+<a name="491"></a>				SendResult = SendAPacket(<span class="source_type">Addr</span>,QueryNum,<span class="source_type">PacketNum</span>,<span class="source_type">bFinalPacket</span>);
+<a name="492"></a>			<span class="source_type">Result</span> = SendResult || <span class="source_type">Result</span>;
+<a name="493"></a>			break;
+<a name="494"></a>		}
+<a name="495"></a>		else if (<span class="source_type">C</span>.IsA(<span class="source_name">'PlayerController'</span>) && <span class="source_type">C</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None && !<span class="source_type">C</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOnlySpectator)
+<a name="496"></a>		{
+<a name="497"></a>			if( <span class="source_type">i</span>==<span class="source_type">Level</span>.Game.NumPlayers-<span class="source_int">1</span> && <span class="source_type">bFinalPacket</span>==<span class="source_int">1</span>)
+<a name="498"></a>				SendResult = SendQueryPacket(<span class="source_type">Addr</span>, GetPlayer(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">C</span>), <span class="source_type">i</span>), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_int">1</span>);
+<a name="499"></a>			else
+<a name="500"></a>				SendResult = SendQueryPacket(<span class="source_type">Addr</span>, GetPlayer(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">C</span>), <span class="source_type">i</span>), QueryNum, <span class="source_type">PacketNum</span>, <span class="source_int">0</span>);
+<a name="501"></a>			<span class="source_type">Result</span> = SendResult || <span class="source_type">Result</span>;
+<a name="502"></a>			<span class="source_type">i</span>++;
+<a name="503"></a>		}
+<a name="504"></a>		<span class="source_type">C</span> = <span class="source_type">C</span>.NextController;
+<a name="505"></a>	}
+<a name="506"></a>
+<a name="507"></a>	return <span class="source_type">Result</span>;
+<a name="508"></a>}
+<a name="509"></a>
+<a name="510"></a><span class="source_comment">// Get an arbitrary property from the level object.
+</span><a name="511"></a>function <span class="source_type">string</span> GetLevelProperty( <span class="source_type">string</span> <span class="source_type">Prop</span> )
+<a name="512"></a>{
+<a name="513"></a>	local <span class="source_type">string</span> ResultSet;
+<a name="514"></a>
+<a name="515"></a>	ResultSet = <span class="source_string">"\\"</span>$<span class="source_type">Prop</span>$<span class="source_string">"\\"</span>$<span class="source_type">Level</span>.GetPropertyText(<span class="source_type">Prop</span>);
+<a name="516"></a>
+<a name="517"></a>	return ResultSet;
+<a name="518"></a>}
+<a name="519"></a>
+<a name="520"></a><span class="source_comment">// Get an arbitrary property from the game object.
+</span><a name="521"></a>function <span class="source_type">string</span> GetGameProperty( <span class="source_type">string</span> <span class="source_type">Prop</span> )
+<a name="522"></a>{
+<a name="523"></a>	local <span class="source_type">string</span> ResultSet;
+<a name="524"></a>
+<a name="525"></a>	ResultSet = <span class="source_string">"\\"</span>$<span class="source_type">Prop</span>$<span class="source_string">"\\"</span>$<span class="source_type">Level</span>.Game.GetPropertyText(<span class="source_type">Prop</span>);
+<a name="526"></a>
+<a name="527"></a>	return ResultSet;
+<a name="528"></a>}
+<a name="529"></a>
+<a name="530"></a><span class="source_comment">// Get an arbitrary property from the players.
+</span><a name="531"></a>function <span class="source_type">string</span> GetPlayerProperty( <span class="source_type">string</span> <span class="source_type">Prop</span> )
+<a name="532"></a>{
+<a name="533"></a>	local <span class="source_type">string</span> ResultSet;
+<a name="534"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="535"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="536"></a>
+<a name="537"></a>	foreach AllActors(<span class="source_type">class</span><span class="source_name">'Controller'</span>, <span class="source_type">C</span>)
+<a name="538"></a>	{
+<a name="539"></a>		if( <span class="source_type">C</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>!=None && !<span class="source_type">C</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bBot )
+<a name="540"></a>		{
+<a name="541"></a>			<span class="source_type">i</span>++;
+<a name="542"></a>			ResultSet = ResultSet$
+<a name="543"></a>				<span class="source_string">"\\"</span>$
+<a name="544"></a>				<span class="source_type">Prop</span>$
+<a name="545"></a>				<span class="source_string">"_"</span>$
+<a name="546"></a>				<span class="source_type">i</span>$
+<a name="547"></a>				<span class="source_string">"\\"</span>$
+<a name="548"></a>				<span class="source_type">C</span>.GetPropertyText(<span class="source_type">Prop</span>);
+<a name="549"></a>		}
+<a name="550"></a>	}
+<a name="551"></a>
+<a name="552"></a>
+<a name="553"></a>	return ResultSet;
+<a name="554"></a>}
+<a name="555"></a>
+<a name="556"></a>defaultproperties
+<a name="557"></a>{
+<a name="558"></a>     QueryName=<span class="source_string">"MasterUplink"</span>
+<a name="559"></a>     bRestartServerOnPortSwap=True
+<a name="560"></a>     bDebugPortSwaps=True
+<a name="561"></a>}
+<a name="562"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../ipdrv/ipdrv-overview.html">Package</a></td>
+	<td class="header"><a href="../ipdrv/udpgamespyquery.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UdpGameSpyQuery">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_ipdrv/tcplink.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_ipdrv/udpgamespyuplink.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:09.702 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

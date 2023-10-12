@@ -1,0 +1,915 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.UT2K4Browser_ServersList</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4browser_serverslist.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Browser_ServersList">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4browser_serverlistpagems.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4chatpassword.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/ut2k4browser_serverslist.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/ut2k4browser_serverslist.html">UT2K4Browser_ServersList</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/ut2k4browser_serverslist.html" class="source">UT2K4Browser_ServersList</a></span> extends <span class="source_type"><a href="../gui2k4/serverbrowsermclist.html" class="source">ServerBrowserMCList</a></span>;
+<a name="2"></a>
+<a name="3"></a><span class="source_comment">// if _RO_
+</span><a name="4"></a><span class="source_comment">// else
+</span><a name="5"></a><span class="source_comment">//#exec OBJ LOAD file=..\Textures\Old2k4\ServerIcons.utx
+</span><a name="6"></a><span class="source_comment">//#exec texture Import File=..\Xinterface\textures\UTClassicIcon.tga Name=S_UTClassic Mips=Off Alpha=1
+</span><a name="7"></a><span class="source_comment">// end if _RO_
+</span><a name="8"></a>
+<a name="9"></a>var() array&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span>&gt; Servers;
+<a name="10"></a>
+<a name="11"></a><span class="source_comment">// OutstandingPings keeps track of simultaneous open connections vs. remaining servers awaiting pings
+</span><a name="12"></a>var() array&lt;<span class="source_type">int</span>&gt; OutstandingPings;
+<a name="13"></a>var() <span class="source_type">int</span>   UseSimultaneousPings;
+<a name="14"></a>var() <span class="source_type">int</span>   NumReceivedPings;
+<a name="15"></a>var() <span class="source_type">int</span>   NumPlayers;
+<a name="16"></a>var() <span class="source_type">int</span>   RedialId;               <span class="source_comment">// ListID of the server we're redialing
+</span><a name="17"></a><span class="source_comment">//ifdef _KF_
+</span><a name="18"></a>var() <span class="source_type">int</span>   MaxPingsPerSecond;
+<a name="19"></a>var   <span class="source_type">float</span> LastPingTime;
+<a name="20"></a>var() <span class="source_type">int</span>   PingStart;
+<a name="21"></a>var   <span class="source_type">bool</span>	bAutoPinging;
+<a name="22"></a><span class="source_comment">//endif _KF_
+</span><a name="23"></a>
+<a name="24"></a>var() <span class="source_type">bool</span> bPresort;
+<a name="25"></a>var() <span class="source_type">bool</span> bInitialized;
+<a name="26"></a>var() array&lt;<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>&gt;                   Icons;
+<a name="27"></a>var() localized array&lt;<span class="source_type">String</span>&gt;           IconDescriptions;
+<a name="28"></a>
+<a name="29"></a>struct <span class="source_type"><a href="../gui2k4/ut2k4browser_serverslist.html#report" class="source">report</a></span>
+<a name="30"></a>{
+<a name="31"></a>	var <span class="source_type">int</span> listid;
+<a name="32"></a>	var <span class="source_type">string</span> ping, receive;
+<a name="33"></a>};
+<a name="34"></a>
+<a name="35"></a>var array&lt;<span class="source_type"><a href="../gui2k4/ut2k4browser_serverslist.html#report" class="source">report</a></span>&gt; reports;
+<a name="36"></a>
+<a name="37"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> InController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">InOwner</span>)
+<a name="38"></a>{
+<a name="39"></a>	Super.InitComponent(InController,<span class="source_type">InOwner</span>);
+<a name="40"></a>}
+<a name="41"></a>
+<a name="42"></a>function AddPingReport( <span class="source_type">int</span> id, <span class="source_type">string</span> <span class="source_type">s</span> )
+<a name="43"></a>{
+<a name="44"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="45"></a>
+<a name="46"></a>	if ( !bDebugging )
+<a name="47"></a>		return;
+<a name="48"></a>
+<a name="49"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; reports.Length; <span class="source_type">i</span>++ )
+<a name="50"></a>	{
+<a name="51"></a>		if ( reports[<span class="source_type">i</span>].listid == id )
+<a name="52"></a>		{
+<a name="53"></a>			log(<span class="source_string">"Warning, overwriting existing ping report ("</span>$<span class="source_type">i</span>$<span class="source_string">") for listid:"</span>$id@<span class="source_type">s</span>);
+<a name="54"></a>			reports[<span class="source_type">i</span>].ping = <span class="source_type">s</span>;
+<a name="55"></a>			return;
+<a name="56"></a>		}
+<a name="57"></a>
+<a name="58"></a>		if ( reports[<span class="source_type">i</span>].listid &gt; id )
+<a name="59"></a>			break;
+<a name="60"></a>	}
+<a name="61"></a>
+<a name="62"></a>	Reports.insert(<span class="source_type">i</span>,<span class="source_int">1</span>);
+<a name="63"></a>	Reports[<span class="source_type">i</span>].listid = id;
+<a name="64"></a>	reports[<span class="source_type">i</span>].ping = <span class="source_type">s</span>;
+<a name="65"></a>}
+<a name="66"></a>
+<a name="67"></a>function AddReceiveReport( <span class="source_type">int</span> id, <span class="source_type">string</span> <span class="source_type">s</span> )
+<a name="68"></a>{
+<a name="69"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="70"></a>
+<a name="71"></a>	if ( !bDebugging )
+<a name="72"></a>		return;
+<a name="73"></a>
+<a name="74"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; reports.Length; <span class="source_type">i</span>++ )
+<a name="75"></a>	{
+<a name="76"></a>		if ( reports[<span class="source_type">i</span>].listid == id )
+<a name="77"></a>		{
+<a name="78"></a>			reports[<span class="source_type">i</span>].receive = <span class="source_type">s</span>;
+<a name="79"></a>			return;
+<a name="80"></a>		}
+<a name="81"></a>
+<a name="82"></a>		if ( reports[<span class="source_type">i</span>].listid &gt; id )
+<a name="83"></a>			break;
+<a name="84"></a>	}
+<a name="85"></a>
+<a name="86"></a>	log(<span class="source_string">"Warning, no matching ping report found for listid:"</span>$id@<span class="source_type">s</span>);
+<a name="87"></a>
+<a name="88"></a>	Reports.insert(<span class="source_type">i</span>,<span class="source_int">1</span>);
+<a name="89"></a>	Reports[<span class="source_type">i</span>].listid = id;
+<a name="90"></a>	reports[<span class="source_type">i</span>].receive = <span class="source_type">s</span>;
+<a name="91"></a>}
+<a name="92"></a>
+<a name="93"></a>function <span class="source_type">string</span> getreportsortstring( <span class="source_type">int</span> <span class="source_type">idx</span> )
+<a name="94"></a>{
+<a name="95"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="96"></a>	local <span class="source_type">string</span> <span class="source_type">s</span>,<span class="source_type">port</span>;
+<a name="97"></a>	local array&lt;<span class="source_type">string</span>&gt; parts;
+<a name="98"></a>
+<a name="99"></a>	divide(reports[<span class="source_type">idx</span>].ping, <span class="source_string">":"</span>, <span class="source_type">s</span>, <span class="source_type">port</span>);
+<a name="100"></a>	split(<span class="source_type">s</span>, <span class="source_string">"."</span>, parts);
+<a name="101"></a>
+<a name="102"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_int">4</span>; <span class="source_type">i</span>++ )
+<a name="103"></a>		padleft(parts[<span class="source_type">i</span>],<span class="source_int">4</span>,<span class="source_string">"0"</span>);
+<a name="104"></a>
+<a name="105"></a>	padleft(<span class="source_type">port</span>,<span class="source_int">5</span>,<span class="source_string">"0"</span>);
+<a name="106"></a>	return JoinArray(parts,<span class="source_string">"."</span>) $ <span class="source_type">port</span>;
+<a name="107"></a>}
+<a name="108"></a>
+<a name="109"></a>function logall()
+<a name="110"></a>{
+<a name="111"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, id;
+<a name="112"></a>	local <span class="source_type">string</span> <span class="source_type">idx</span>, listid, outping, inping;
+<a name="113"></a>
+<a name="114"></a>	local <span class="source_type"><a href="../xinterface/guimulticolumnlist.html" class="source">GUIMultiColumnList</a></span> temp;
+<a name="115"></a>
+<a name="116"></a>
+<a name="117"></a>	if ( !bDebugging )
+<a name="118"></a>		return;
+<a name="119"></a>
+<a name="120"></a>	<span class="source_type">idx</span> = <span class="source_string">"Index"</span>;
+<a name="121"></a>	listId = <span class="source_string">"ListID"</span>;
+<a name="122"></a>	outping = <span class="source_string">"Address Pinged"</span>;
+<a name="123"></a>	inping = <span class="source_string">"Received"</span>;
+<a name="124"></a>
+<a name="125"></a>	PadRight(<span class="source_type">idx</span>, <span class="source_int">8</span>);
+<a name="126"></a>	PadRight(listid, <span class="source_int">8</span>);
+<a name="127"></a>	PadRight(outping, <span class="source_int">22</span>);
+<a name="128"></a>
+<a name="129"></a>
+<a name="130"></a>	<span class="source_comment">// Add to a temporary list for sorting
+</span><a name="131"></a>	temp = new(None) <span class="source_type">class</span><span class="source_name">'guimulticolumnlist'</span>;
+<a name="132"></a>	temp.SortColumn = <span class="source_int">0</span>;
+<a name="133"></a>	temp.GetSortString = getreportsortstring;
+<a name="134"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; reports.Length; <span class="source_type">i</span>++ )
+<a name="135"></a>		temp.addeditem();
+<a name="136"></a>	temp.sort();
+<a name="137"></a>
+<a name="138"></a>	log(<span class="source_type">idx</span>$listid$outping$inping);
+<a name="139"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; reports.Length; <span class="source_type">i</span>++ )
+<a name="140"></a>	{
+<a name="141"></a>		id = temp.sortdata[<span class="source_type">i</span>].sortitem;
+<a name="142"></a>		<span class="source_type">idx</span> = <span class="source_type">string</span>(id);
+<a name="143"></a>		listid = <span class="source_type">string</span>(reports[id].listid);
+<a name="144"></a>		outping = reports[id].ping;
+<a name="145"></a>		inping = reports[id].receive;
+<a name="146"></a>
+<a name="147"></a>		PadRight(<span class="source_type">idx</span>, <span class="source_int">8</span>);
+<a name="148"></a>		PadRight(listid, <span class="source_int">8</span>);
+<a name="149"></a>		PadRight(outping, <span class="source_int">22</span>);
+<a name="150"></a>
+<a name="151"></a>		log(<span class="source_type">idx</span>$listid$outping$inping);
+<a name="152"></a>	}
+<a name="153"></a>}
+<a name="154"></a>
+<a name="155"></a>event Timer()
+<a name="156"></a>{
+<a name="157"></a><span class="source_comment">//ifdef _KF_
+</span><a name="158"></a>	if( bAutoPinging )
+<a name="159"></a>		AutoPingServers();
+<a name="160"></a>	else if( IsValid() && OutstandingPings.Length &lt;= <span class="source_int">5</span> && bVisible )
+<a name="161"></a>		tp_MyPage.RefreshCurrentServer();
+<a name="162"></a><span class="source_comment">//else
+</span><a name="163"></a>	<span class="source_comment">//if( IsValid() && OutstandingPings.Length &lt;= 5 && bVisible )
+</span><a name="164"></a>	<span class="source_comment">//	tp_MyPage.RefreshCurrentServer();
+</span><a name="165"></a><span class="source_comment">//endif _KF_
+</span><a name="166"></a>}
+<a name="167"></a>
+<a name="168"></a>function SetAnchor(<span class="source_type"><a href="../gui2k4/ut2k4browser_serverlistpagebase.html" class="source">UT2K4Browser_ServerListPageBase</a></span> Anchor)
+<a name="169"></a>{
+<a name="170"></a>	Super.SetAnchor(Anchor);
+<a name="171"></a>	if ( Anchor != None )
+<a name="172"></a>	{
+<a name="173"></a>		UseSimultaneousPings = tp_MyPage.<span class="source_type">Browser</span>.GetMaxConnections();
+<a name="174"></a><span class="source_comment">//ifdef _KF_
+</span><a name="175"></a>		MaxPingsPerSecond = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.MaxPingsPerSecond;
+<a name="176"></a><span class="source_comment">//endif _KF_
+</span><a name="177"></a>	}
+<a name="178"></a>}
+<a name="179"></a>
+<a name="180"></a>function Clear()
+<a name="181"></a>{
+<a name="182"></a>    PingStart = <span class="source_int">0</span>;
+<a name="183"></a>    StopPings();
+<a name="184"></a>    Servers.Remove(<span class="source_int">0</span>,Servers.Length);
+<a name="185"></a>    ItemCount = <span class="source_int">0</span>;
+<a name="186"></a>    Super.Clear();
+<a name="187"></a>}
+<a name="188"></a>
+<a name="189"></a>function CopyServerToClipboard()
+<a name="190"></a>{
+<a name="191"></a>    local <span class="source_type">string</span> <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>;
+<a name="192"></a>
+<a name="193"></a>    if( IsValid() )
+<a name="194"></a>    {
+<a name="195"></a>        <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> = PlayerOwner().GetURLProtocol()$<span class="source_string">"://"</span>$Servers[CurrentListId()].IP$<span class="source_string">":"</span>$<span class="source_type">string</span>(Servers[CurrentListId()].<span class="source_type">Port</span>);
+<a name="196"></a>        PlayerOwner().CopyToClipboard(<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>);
+<a name="197"></a>    }
+<a name="198"></a>}
+<a name="199"></a>
+<a name="200"></a>function Connect(<span class="source_type">bool</span> Spectator)
+<a name="201"></a>{
+<a name="202"></a>    local <span class="source_type">string</span> <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>;
+<a name="203"></a>    if( IsValid() )
+<a name="204"></a>    {
+<a name="205"></a>        <span class="source_comment">//!!
+</span><a name="206"></a>        <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> = PlayerOwner().GetURLProtocol()$<span class="source_string">"://"</span>$Servers[CurrentListId()].IP$<span class="source_string">":"</span>$<span class="source_type">string</span>(Servers[SortData[<span class="source_type">Index</span>].SortItem].<span class="source_type">Port</span>);
+<a name="207"></a>        if( Spectator )
+<a name="208"></a>            <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> = <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> $ <span class="source_string">"?SpectatorOnly=1"</span>;
+<a name="209"></a>
+<a name="210"></a>        if( tp_MyPage.ConnectLAN )
+<a name="211"></a>            <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> = <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> $ <span class="source_string">"?LAN"</span>;
+<a name="212"></a>
+<a name="213"></a>        <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseAll(false,True);
+<a name="214"></a>        PlayerOwner().ClientTravel( <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>, TRAVEL_Absolute, False );
+<a name="215"></a>    }
+<a name="216"></a>}
+<a name="217"></a>
+<a name="218"></a>function AddFavorite( <span class="source_type"><a href="../gui2k4/ut2k4serverbrowser.html" class="source">UT2K4ServerBrowser</a></span> <span class="source_type">Browser</span> )
+<a name="219"></a>{
+<a name="220"></a>    if( IsValid() )
+<a name="221"></a>        <span class="source_type">Browser</span>.OnAddFavorite( Servers[CurrentListId()] );
+<a name="222"></a>}
+<a name="223"></a>
+<a name="224"></a>function <span class="source_type">bool</span> MyOnDblClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="225"></a>{
+<a name="226"></a>    Connect(false);
+<a name="227"></a>    return true;
+<a name="228"></a>}
+<a name="229"></a>
+<a name="230"></a>function <span class="source_type">bool</span> InternalOnKeyEvent(out <span class="source_type">byte</span> Key, out <span class="source_type">byte</span> <span class="source_type">State</span>, <span class="source_type">float</span> <span class="source_type">delta</span>)
+<a name="231"></a>{
+<a name="232"></a>    if( Super.InternalOnKeyEvent(Key, <span class="source_type">State</span>, <span class="source_type">delta</span>) )
+<a name="233"></a>        return true;
+<a name="234"></a>
+<a name="235"></a>    if( <span class="source_type">State</span>==<span class="source_int">3</span> )
+<a name="236"></a>    {
+<a name="237"></a>        <span class="source_type">switch</span>( <span class="source_type"><a href="../engine/interactions.html#EInputKey" class="source">EInputKey</a></span>(Key) )
+<a name="238"></a>        {
+<a name="239"></a>        case IK_Enter:
+<a name="240"></a>            Connect(false);
+<a name="241"></a>            return true;
+<a name="242"></a>
+<a name="243"></a>        case IK_F5:
+<a name="244"></a>            tp_MyPage.RefreshList();
+<a name="245"></a>            return true;
+<a name="246"></a>
+<a name="247"></a>        case IK_C:
+<a name="248"></a>            if(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CtrlPressed)
+<a name="249"></a>            {
+<a name="250"></a>                <span class="source_comment">// Ctrl-C on the server list copies selected server to clipboard.
+</span><a name="251"></a>                CopyServerToClipboard();
+<a name="252"></a>                return true;
+<a name="253"></a>            }
+<a name="254"></a>            break;
+<a name="255"></a>        }
+<a name="256"></a>    }
+<a name="257"></a>    return false;
+<a name="258"></a>}
+<a name="259"></a>
+<a name="260"></a>function MyOnReceivedServer( <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">s</span> )
+<a name="261"></a>{
+<a name="262"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="263"></a>	local <span class="source_type"><a href="../gui2k4/ut2k4serverbrowser.html" class="source">UT2K4ServerBrowser</a></span> SB;
+<a name="264"></a>
+<a name="265"></a><span class="source_comment">/*	if ( bPreSort && bool(s.Flags & 32) && (!bool(s.Flags & 8)) )	// if it's standard, but not listen, add it to the front
+<a name="266"></a>		i = 0;
+<a name="267"></a>	else
+<a name="268"></a>*/</span>		<span class="source_type">i</span> = Servers.Length;
+<a name="269"></a>
+<a name="270"></a>	Servers.Insert(<span class="source_type">i</span>,<span class="source_int">1</span>);
+<a name="271"></a>
+<a name="272"></a>    Servers[<span class="source_type">i</span>] = <span class="source_type">s</span>;
+<a name="273"></a>    if( Servers[<span class="source_type">i</span>].Ping == <span class="source_int">0</span> )
+<a name="274"></a>        Servers[<span class="source_type">i</span>].Ping = <span class="source_int">9999</span>;
+<a name="275"></a>
+<a name="276"></a>	if ( !bPresort )
+<a name="277"></a>	    AddedItem(<span class="source_type">i</span>);
+<a name="278"></a>
+<a name="279"></a>	<span class="source_comment">// Add the item to the cache
+</span><a name="280"></a>
+<a name="281"></a>	SB = <span class="source_type"><a href="../gui2k4/ut2k4serverbrowser.html" class="source">UT2K4ServerBrowser</a></span>(PageOwner);
+<a name="282"></a>	if ( SB!=None && SB.Verified )
+<a name="283"></a>		SB.AddToServerCache(<span class="source_type">s</span>);
+<a name="284"></a>}
+<a name="285"></a>
+<a name="286"></a>function MyPingTimeout( <span class="source_type">int</span> listid, <span class="source_type"><a href="../ipdrv/serverqueryclient.html" class="source">ServerQueryClient</a></span>.<span class="source_type"><a href="../ipdrv/serverqueryclient.html#EPingCause" class="source">EPingCause</a></span> <span class="source_type">PingCause</span>  )
+<a name="287"></a>{
+<a name="288"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="289"></a>
+<a name="290"></a>	AddReceiveReport(listid,<span class="source_string">"TIMEOUT"</span>);
+<a name="291"></a>    if(listid &lt; <span class="source_int">0</span> || listid &gt;= Servers.Length)
+<a name="292"></a>    {
+<a name="293"></a>    	PingStart = <span class="source_int">0</span>;
+<a name="294"></a>        return;
+<a name="295"></a>    }
+<a name="296"></a>
+<a name="297"></a>    <span class="source_comment">// remove from the outstanding ping list
+</span><a name="298"></a>    for( <span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;OutstandingPings.Length;<span class="source_type">i</span>++ )
+<a name="299"></a>        if( OutstandingPings[<span class="source_type">i</span>] == listid )
+<a name="300"></a>        {
+<a name="301"></a>            OutstandingPings.Remove(<span class="source_type">i</span>,<span class="source_int">1</span>);
+<a name="302"></a>            break;
+<a name="303"></a>        }
+<a name="304"></a>
+<a name="305"></a>    if( Servers[listid].Ping == <span class="source_int">9999</span> )
+<a name="306"></a>    {
+<a name="307"></a>        Servers[listid].Ping = <span class="source_int">20000</span>;
+<a name="308"></a>        UpdatedItem(listid);
+<a name="309"></a>    }
+<a name="310"></a>
+<a name="311"></a>    <span class="source_comment">// continue pinging
+</span><a name="312"></a>    if( <span class="source_type">PingCause</span> == PC_AutoPing )
+<a name="313"></a>    {
+<a name="314"></a>        NumReceivedPings++;
+<a name="315"></a>        NeedsSorting = True;
+<a name="316"></a>        AutoPingServers();
+<a name="317"></a>    }
+<a name="318"></a>}
+<a name="319"></a>
+<a name="320"></a>function MyReceivedPingInfo( <span class="source_type">int</span> listid, <span class="source_type"><a href="../ipdrv/serverqueryclient.html" class="source">ServerQueryClient</a></span>.<span class="source_type"><a href="../ipdrv/serverqueryclient.html#EPingCause" class="source">EPingCause</a></span> <span class="source_type">PingCause</span>, <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">s</span> )
+<a name="321"></a>{
+<a name="322"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>,<span class="source_type">Flags</span>;
+<a name="323"></a>    local <span class="source_type">bool</span> bFound;
+<a name="324"></a>
+<a name="325"></a>    if( listid &lt; <span class="source_int">0</span> || listid &gt;= Servers.Length )
+<a name="326"></a>    {
+<a name="327"></a>        PingStart = <span class="source_int">0</span>;
+<a name="328"></a>        AddReceiveReport(listid,<span class="source_type">s</span>.ip$<span class="source_string">":"</span>$<span class="source_type">s</span>.<span class="source_type">port</span>);
+<a name="329"></a>        return;
+<a name="330"></a>    }
+<a name="331"></a>    else AddReceiveReport(listid,<span class="source_type">s</span>.ip$<span class="source_string">":"</span>$<span class="source_type">s</span>.<span class="source_type">port</span>);
+<a name="332"></a>
+<a name="333"></a>
+<a name="334"></a>	<span class="source_type">Flags</span> = Servers[listid].<span class="source_type">Flags</span>;
+<a name="335"></a>    Servers[listid] = <span class="source_type">s</span>;
+<a name="336"></a>    Servers[listid].<span class="source_type">Flags</span> = <span class="source_type">Flags</span>;
+<a name="337"></a>
+<a name="338"></a>    <span class="source_comment">// see if we can move the ping start marker down
+</span><a name="339"></a>    for( <span class="source_type">i</span>=PingStart;<span class="source_type">i</span>&lt;listid && <span class="source_type">i</span>&lt;Servers.Length;<span class="source_type">i</span>++ )
+<a name="340"></a>        if( Servers[<span class="source_type">i</span>].Ping == <span class="source_int">9999</span> )
+<a name="341"></a>            break;
+<a name="342"></a>
+<a name="343"></a>    if( <span class="source_type">i</span> &lt; listid )
+<a name="344"></a>        PingStart = listid;
+<a name="345"></a>
+<a name="346"></a>    <span class="source_comment">// remove from the outstanding ping list
+</span><a name="347"></a>    for( <span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;OutstandingPings.Length;<span class="source_type">i</span>++ )
+<a name="348"></a>        if( OutstandingPings[<span class="source_type">i</span>] == listid )
+<a name="349"></a>        {
+<a name="350"></a>        	bFound = True;
+<a name="351"></a>            OutstandingPings.Remove(<span class="source_type">i</span>,<span class="source_int">1</span>);
+<a name="352"></a>            break;
+<a name="353"></a>        }
+<a name="354"></a>
+<a name="355"></a>    UpdatedItem(listid);
+<a name="356"></a>
+<a name="357"></a>    <span class="source_comment">// update rules/player info
+</span><a name="358"></a>    if( IsValid() && listid == SortData[<span class="source_type">Index</span>].SortItem )
+<a name="359"></a>        OnChange(None);
+<a name="360"></a>
+<a name="361"></a>    <span class="source_comment">// continue pinging
+</span><a name="362"></a>    if( <span class="source_type">PingCause</span> == PC_AutoPing )
+<a name="363"></a>    {
+<a name="364"></a>        NumReceivedPings++;
+<a name="365"></a>        NumPlayers += <span class="source_type">s</span>.CurrentPlayers;
+<a name="366"></a>        NeedsSorting = True;
+<a name="367"></a>        AutoPingServers();
+<a name="368"></a>    }
+<a name="369"></a>}
+<a name="370"></a>
+<a name="371"></a>function RepingServers()
+<a name="372"></a>{
+<a name="373"></a>    InvalidatePings();
+<a name="374"></a>    AutoPingServers();
+<a name="375"></a>}
+<a name="376"></a>
+<a name="377"></a>function FakeFinished()
+<a name="378"></a>{
+<a name="379"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="380"></a>	for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">I</span>&lt;Servers.Length;<span class="source_type">i</span>++)
+<a name="381"></a>		AddedItem();
+<a name="382"></a>
+<a name="383"></a>	RepingServers();
+<a name="384"></a>	SetTimer(<span class="source_int">5.0</span>,true);
+<a name="385"></a>}
+<a name="386"></a>
+<a name="387"></a>function MyQueryFinished( <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#EResponseInfo" class="source">EResponseInfo</a></span> ResponseInfo, <span class="source_type">int</span> <span class="source_type"><a href="../engine/info.html" class="source">Info</a></span> )
+<a name="388"></a>{
+<a name="389"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="390"></a>
+<a name="391"></a>    if( ResponseInfo == RI_Success )
+<a name="392"></a>    {
+<a name="393"></a>    	if ( bPreSort )
+<a name="394"></a>    	{
+<a name="395"></a>    		if ( ItemCount &gt; <span class="source_int">0</span> )
+<a name="396"></a>    		{
+<a name="397"></a>    			log(<span class="source_type">Name</span>@<span class="source_string">"RECEIVED QUERYFINISHED NOTICE WITH ITEMCOUNT &gt; 0!!! ITEMCOUNT:"</span>$ItemCount@<span class="source_string">"Info:"</span>$<span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>);
+<a name="398"></a>    			return;
+<a name="399"></a>    		}
+<a name="400"></a>
+<a name="401"></a>    		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Servers.Length; <span class="source_type">i</span>++ )
+<a name="402"></a>    			AddedItem();
+<a name="403"></a>    	}
+<a name="404"></a>
+<a name="405"></a>		<span class="source_comment">// if _RO_
+</span><a name="406"></a>        <span class="source_comment">/* Commented out for Steam Master Server Integration
+<a name="407"></a>        // endif
+<a name="408"></a>        RepingServers();
+<a name="409"></a>		// if _RO_
+<a name="410"></a>        */</span>
+<a name="411"></a>        <span class="source_comment">// endif
+</span><a name="412"></a>        SetTimer(<span class="source_int">5.0</span>, True);
+<a name="413"></a>    }
+<a name="414"></a>}
+<a name="415"></a>
+<a name="416"></a>function InvalidatePings()
+<a name="417"></a>{
+<a name="418"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="419"></a>
+<a name="420"></a>	reports.Remove(<span class="source_int">0</span>,reports.length);
+<a name="421"></a>    StopPings();
+<a name="422"></a>    PingStart = <span class="source_int">0</span>;
+<a name="423"></a>    NumReceivedPings=<span class="source_int">0</span>;
+<a name="424"></a>    NumPlayers=<span class="source_int">0</span>;
+<a name="425"></a>    for( <span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;Servers.Length;<span class="source_type">i</span>++ )
+<a name="426"></a>    {
+<a name="427"></a>        Servers[<span class="source_type">i</span>].Ping = <span class="source_int">9999</span>;
+<a name="428"></a>        UpdatedItem(<span class="source_type">i</span>);
+<a name="429"></a>    }
+<a name="430"></a>}
+<a name="431"></a>
+<a name="432"></a>function AutoPingServers()
+<a name="433"></a>{
+<a name="434"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="435"></a>
+<a name="436"></a><span class="source_comment">//ifdef _KF_
+</span><a name="437"></a>    bAutoPinging = true;
+<a name="438"></a>
+<a name="439"></a>    if ( MaxPingsPerSecond &gt; <span class="source_int">0</span> )
+<a name="440"></a>	{
+<a name="441"></a>		if ( PlayerOwner().<span class="source_type">Level</span>.TimeSeconds - LastPingTime &gt; <span class="source_int">1.0</span> / MaxPingsPerSecond )
+<a name="442"></a>		{
+<a name="443"></a>			UseSimultaneousPings = OutstandingPings.Length + <span class="source_int">1</span>;
+<a name="444"></a>			LastPingTime = PlayerOwner().<span class="source_type">Level</span>.TimeSeconds;
+<a name="445"></a>		}
+<a name="446"></a>		else
+<a name="447"></a>		{
+<a name="448"></a>			UseSimultaneousPings = -<span class="source_int">1</span>;
+<a name="449"></a>		}
+<a name="450"></a>	}
+<a name="451"></a><span class="source_comment">//endif _KF_
+</span><a name="452"></a>
+<a name="453"></a>    for( <span class="source_type">i</span>=PingStart;<span class="source_type">i</span>&lt;Servers.Length && OutstandingPings.Length &lt; UseSimultaneousPings;<span class="source_type">i</span>++ )
+<a name="454"></a>    {
+<a name="455"></a>        if( Servers[<span class="source_type">i</span>].Ping == <span class="source_int">9999</span> )
+<a name="456"></a>        {
+<a name="457"></a>            <span class="source_comment">// see if we already have an outstanding ping for this server.
+</span><a name="458"></a>            for( j=<span class="source_int">0</span>;j&lt;OutstandingPings.Length;j++ )
+<a name="459"></a>                if( OutstandingPings[j] == <span class="source_type">i</span> )
+<a name="460"></a>                    break;
+<a name="461"></a>
+<a name="462"></a>            if( j == OutstandingPings.Length )
+<a name="463"></a>            {
+<a name="464"></a>                <span class="source_comment">// add out outstanding ping list
+</span><a name="465"></a>                OutstandingPings[j] = <span class="source_type">i</span>;
+<a name="466"></a>
+<a name="467"></a>                <span class="source_comment">// ping
+</span><a name="468"></a>                AddPingReport(<span class="source_type">i</span>,Servers[<span class="source_type">i</span>].IP$<span class="source_string">":"</span>$Servers[<span class="source_type">i</span>].<span class="source_type">Port</span>);
+<a name="469"></a>                tp_MyPage.PingServer( <span class="source_type">i</span>, PC_AutoPing, Servers[<span class="source_type">i</span>] );
+<a name="470"></a>            }
+<a name="471"></a>        }
+<a name="472"></a>    }
+<a name="473"></a>
+<a name="474"></a><span class="source_comment">//    if(OutstandingPings.Length == 0)
+</span><a name="475"></a><span class="source_comment">//        NumReceivedPings = Servers.Length;  // debugging
+</span><a name="476"></a>
+<a name="477"></a><span class="source_comment">//ifdef _KF_
+</span><a name="478"></a>	if ( OutstandingPings.Length == <span class="source_int">0</span> && (MaxPingsPerSecond &lt;= <span class="source_int">0</span> || PlayerOwner().<span class="source_type">Level</span>.TimeSeconds - LastPingTime &gt; <span class="source_int">1.0</span> / MaxPingsPerSecond) )
+<a name="479"></a>	{
+<a name="480"></a>		bAutoPinging = false;
+<a name="481"></a>		logall();
+<a name="482"></a>	}
+<a name="483"></a>	else if ( MaxPingsPerSecond &gt; <span class="source_int">0</span> )
+<a name="484"></a>	{
+<a name="485"></a>		SetTimer(<span class="source_int">1.0</span> / MaxPingsPerSecond, true);
+<a name="486"></a>	}
+<a name="487"></a><span class="source_comment">//else
+</span><a name="488"></a>	<span class="source_comment">//if ( OutstandingPings.Length == 0 )
+</span><a name="489"></a>	<span class="source_comment">//	logall();
+</span><a name="490"></a><span class="source_comment">//endif _KF_
+</span><a name="491"></a>}
+<a name="492"></a>
+<a name="493"></a>function StopPings()
+<a name="494"></a>{
+<a name="495"></a><span class="source_comment">//	log(Name@"StopPings   OutstandingPings:"$OutstandingPings.Length);
+</span><a name="496"></a>    OutstandingPings.Remove(<span class="source_int">0</span>,OutstandingPings.Length);
+<a name="497"></a>
+<a name="498"></a>    if ( tp_MyPage != None )
+<a name="499"></a>	    tp_MyPage.CancelPings();
+<a name="500"></a>}
+<a name="501"></a>
+<a name="502"></a>function <span class="source_type">int</span> RemoveServerAt( <span class="source_type">int</span> <span class="source_type">Pos</span> )
+<a name="503"></a>{
+<a name="504"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="505"></a>
+<a name="506"></a>
+<a name="507"></a>	if ( !IsValidIndex(<span class="source_type">pos</span>) )
+<a name="508"></a>		return -<span class="source_int">1</span>;
+<a name="509"></a>
+<a name="510"></a>	<span class="source_comment">// In order to avoid having to search for the SortData that has SortItem == Pos,
+</span><a name="511"></a>	<span class="source_comment">// just do a switcharoo and pull out the last server
+</span><a name="512"></a>	<span class="source_type">i</span> = Servers.Length - <span class="source_int">1</span>;
+<a name="513"></a>	if ( <span class="source_type">pos</span> &lt; <span class="source_type">i</span> )
+<a name="514"></a>		Servers[<span class="source_type">pos</span>] = Servers[<span class="source_type">i</span>];
+<a name="515"></a>
+<a name="516"></a>	Servers.Remove(<span class="source_type">i</span>,<span class="source_int">1</span>);
+<a name="517"></a>
+<a name="518"></a>	if ( <span class="source_type">i</span> == <span class="source_type">Index</span> )
+<a name="519"></a>	{
+<a name="520"></a>		tp_MyPage.li_Rules.Clear();
+<a name="521"></a>		tp_MyPage.li_Players.Clear();
+<a name="522"></a>	}
+<a name="523"></a>
+<a name="524"></a>	RemovedItem(<span class="source_type">i</span>);
+<a name="525"></a>	SetIndex(<span class="source_type">Index</span>);
+<a name="526"></a>
+<a name="527"></a>	NeedsSorting = True;
+<a name="528"></a>
+<a name="529"></a>	return <span class="source_type">pos</span>;
+<a name="530"></a>}
+<a name="531"></a>
+<a name="532"></a>function <span class="source_type">int</span> RemoveCurrentServer()
+<a name="533"></a>{
+<a name="534"></a>	local <span class="source_type">int</span> OldItem;
+<a name="535"></a>
+<a name="536"></a>	if ( IsValid() )
+<a name="537"></a>	{
+<a name="538"></a>		OldItem = SortData[<span class="source_type">Index</span>].SortItem;
+<a name="539"></a>		if ( RemoveServerAt(<span class="source_type">Index</span>) != -<span class="source_int">1</span> )
+<a name="540"></a>			return OldItem;
+<a name="541"></a>	}
+<a name="542"></a>
+<a name="543"></a>	return -<span class="source_int">1</span>;
+<a name="544"></a>}
+<a name="545"></a>
+<a name="546"></a>function MyOnDrawItem(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, <span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">float</span> <span class="source_type">X</span>, <span class="source_type">float</span> <span class="source_type">Y</span>, <span class="source_type">float</span> W, <span class="source_type">float</span> H, <span class="source_type">bool</span> bSelected, <span class="source_type">bool</span> bPending)
+<a name="547"></a>{
+<a name="548"></a>    local <span class="source_type">float</span> CellLeft, CellWidth, DrawX;
+<a name="549"></a>    local <span class="source_type">float</span> IconPosX, IconPosY;
+<a name="550"></a>    local <span class="source_type">string</span> Ping;
+<a name="551"></a>    local <span class="source_type">int</span> k, <span class="source_type">flags</span>, checkFlag;
+<a name="552"></a>    local <span class="source_type"><a href="../xinterface/guistyles.html" class="source">GUIStyles</a></span> DStyle;
+<a name="553"></a>
+<a name="554"></a>    <span class="source_comment">// Draw the selection border
+</span><a name="555"></a>    if( bSelected )
+<a name="556"></a>    {
+<a name="557"></a>        SelectedStyle.Draw(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,MenuState,<span class="source_type">X</span>,<span class="source_type">Y</span>,W,H+<span class="source_int">1</span>);
+<a name="558"></a>        DStyle = SelectedStyle;
+<a name="559"></a>    }
+<a name="560"></a>    else
+<a name="561"></a>        DStyle = Style;
+<a name="562"></a>
+<a name="563"></a>    <span class="source_comment">//////////////////////////////////////////////////////////////////////
+</span><a name="564"></a>    <span class="source_comment">// Here we get the flags for this server.
+</span><a name="565"></a>    <span class="source_comment">// Passworded      1
+</span><a name="566"></a>    <span class="source_comment">// Stats           2
+</span><a name="567"></a>    <span class="source_comment">// LatestVersion   4
+</span><a name="568"></a>    <span class="source_comment">// Listen Server   8
+</span><a name="569"></a>    <span class="source_comment">// Vac Secured	   16		// Was Instagib        16
+</span><a name="570"></a>    <span class="source_comment">// Beginner        32		// Was Standard        32
+</span><a name="571"></a>    <span class="source_comment">// Normal          64		// Was UT CLassic      64
+</span><a name="572"></a>    <span class="source_comment">// Hard            128
+</span><a name="573"></a>    <span class="source_comment">// Suicidal        256
+</span><a name="574"></a>	<span class="source_type">flags</span> = Servers[SortData[<span class="source_type">i</span>].SortItem].<span class="source_type">Flags</span>;
+<a name="575"></a>
+<a name="576"></a>    <span class="source_comment">//////////////////////////////////////////////////////////////////////
+</span><a name="577"></a>
+<a name="578"></a>    GetCellLeftWidth( <span class="source_int">0</span>, CellLeft, CellWidth );
+<a name="579"></a>    IconPosX = CellLeft;
+<a name="580"></a>    IconPosY = <span class="source_type">Y</span>;
+<a name="581"></a>
+<a name="582"></a>
+<a name="583"></a>
+<a name="584"></a>    <span class="source_comment">// First flag is in the second to most sig bit (dont want to mess with sign bit). Then we work down.
+</span><a name="585"></a>    checkFlag = <span class="source_int">1</span>;
+<a name="586"></a>
+<a name="587"></a>    <span class="source_comment">// While we still have icon, and we can fit another one in.
+</span><a name="588"></a>    for(k=<span class="source_int">0</span>; (k&lt;Icons.Length) && (IconPosX &lt; CellLeft + CellWidth); k++)
+<a name="589"></a>    {
+<a name="590"></a><span class="source_comment">// if _RO_
+</span><a name="591"></a>        if (Icons[k] != none)
+<a name="592"></a>        {
+<a name="593"></a><span class="source_comment">// end if _RO_
+</span><a name="594"></a>        if((<span class="source_type">flags</span> & checkFlag) != <span class="source_int">0</span>)
+<a name="595"></a>        {
+<a name="596"></a>            DrawX = Min(<span class="source_int">14</span>, (CellLeft + CellWidth) - IconPosX);
+<a name="597"></a>
+<a name="598"></a>            <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.MakeColor(<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">255</span>);
+<a name="599"></a>
+<a name="600"></a>            <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(IconPosX, IconPosY);
+<a name="601"></a>            <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTile(Icons[k], DrawX, <span class="source_int">14</span>, <span class="source_int">0</span>, <span class="source_int">0</span>, DrawX+<span class="source_int">1.0</span>, <span class="source_int">15.0</span>);
+<a name="602"></a>
+<a name="603"></a>            IconPosX += <span class="source_int">14</span>;
+<a name="604"></a>        }
+<a name="605"></a><span class="source_comment">// if _RO_
+</span><a name="606"></a>        }
+<a name="607"></a><span class="source_comment">// end if _RO_
+</span><a name="608"></a>
+<a name="609"></a>        checkFlag = checkFlag &lt;&lt; <span class="source_int">1</span>;
+<a name="610"></a>    }
+<a name="611"></a>
+<a name="612"></a>
+<a name="613"></a>    GetCellLeftWidth( <span class="source_int">1</span>, CellLeft, CellWidth );
+<a name="614"></a>    DStyle.DrawText( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, MenuState, CellLeft, <span class="source_type">Y</span>, CellWidth, H, TXTA_Left, Servers[SortData[<span class="source_type">i</span>].SortItem].<span class="source_type">ServerName</span>, FontScale );
+<a name="615"></a>
+<a name="616"></a>    GetCellLeftWidth( <span class="source_int">2</span>, CellLeft, CellWidth );
+<a name="617"></a>    DStyle.DrawText( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, MenuState, CellLeft, <span class="source_type">Y</span>, CellWidth, H, TXTA_Left, Servers[SortData[<span class="source_type">i</span>].SortItem].<span class="source_type">MapName</span>, FontScale );
+<a name="618"></a>
+<a name="619"></a>    GetCellLeftWidth( <span class="source_int">3</span>, CellLeft, CellWidth );
+<a name="620"></a>    if( Servers[SortData[<span class="source_type">i</span>].SortItem].CurrentPlayers&gt;<span class="source_int">0</span> || Servers[SortData[<span class="source_type">i</span>].SortItem].MaxPlayers&gt;<span class="source_int">0</span> )
+<a name="621"></a>        DStyle.DrawText( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, MenuState, CellLeft, <span class="source_type">Y</span>, CellWidth, H, TXTA_Left, <span class="source_type">string</span>(Servers[SortData[<span class="source_type">i</span>].SortItem].CurrentPlayers)$<span class="source_string">"/"</span>$<span class="source_type">string</span>((Servers[SortData[<span class="source_type">i</span>].SortItem].MaxPlayers&<span class="source_int">255</span>)), FontScale );
+<a name="622"></a>
+<a name="623"></a>    GetCellLeftWidth( <span class="source_int">4</span>, CellLeft, CellWidth );
+<a name="624"></a>    if( Servers[SortData[<span class="source_type">i</span>].SortItem].CurrentWave&gt;<span class="source_int">0</span> || Servers[SortData[<span class="source_type">i</span>].SortItem].<span class="source_type">FinalWave</span>&gt;<span class="source_int">0</span> )
+<a name="625"></a>        DStyle.DrawText( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, MenuState, CellLeft, <span class="source_type">Y</span>, CellWidth, H, TXTA_Left, <span class="source_type">string</span>(Servers[SortData[<span class="source_type">i</span>].SortItem].CurrentWave)$<span class="source_string">"/"</span>$<span class="source_type">string</span>((Servers[SortData[<span class="source_type">i</span>].SortItem].<span class="source_type">FinalWave</span>)), FontScale );
+<a name="626"></a>
+<a name="627"></a>    GetCellLeftWidth( <span class="source_int">5</span>, CellLeft, CellWidth );
+<a name="628"></a>    if( Servers[SortData[<span class="source_type">i</span>].SortItem].Ping == <span class="source_int">9999</span> )
+<a name="629"></a>        Ping = <span class="source_string">"?"</span>;
+<a name="630"></a>    else
+<a name="631"></a>    if( Servers[SortData[<span class="source_type">i</span>].SortItem].Ping &gt; <span class="source_int">9999</span> )
+<a name="632"></a>        Ping = <span class="source_string">"N/A"</span>;
+<a name="633"></a>    else
+<a name="634"></a>        Ping = <span class="source_type">string</span>(Servers[SortData[<span class="source_type">i</span>].SortItem].Ping);
+<a name="635"></a>    DStyle.DrawText( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, MenuState, CellLeft, <span class="source_type">Y</span>, CellWidth, H, TXTA_Left, Ping, FontScale );
+<a name="636"></a>}
+<a name="637"></a>
+<a name="638"></a>function <span class="source_type">string</span> GetSortString( <span class="source_type">int</span> <span class="source_type">i</span> )
+<a name="639"></a>{
+<a name="640"></a>    local <span class="source_type">string</span> <span class="source_type">s</span>, <span class="source_type">t</span>;
+<a name="641"></a>
+<a name="642"></a>    <span class="source_type">switch</span>( SortColumn )
+<a name="643"></a>    {
+<a name="644"></a>    case <span class="source_int">0</span>:
+<a name="645"></a>    	<span class="source_type">s</span> = BuildFlagString(Servers[<span class="source_type">i</span>].<span class="source_type">Flags</span>) $ <span class="source_type">i</span>;
+<a name="646"></a>    	break;
+<a name="647"></a>
+<a name="648"></a>    case <span class="source_int">1</span>:
+<a name="649"></a>        <span class="source_type">s</span> = Left(caps(Servers[<span class="source_type">i</span>].<span class="source_type">ServerName</span>), <span class="source_int">8</span>);
+<a name="650"></a>        break;
+<a name="651"></a>
+<a name="652"></a>    case <span class="source_int">2</span>:
+<a name="653"></a>        <span class="source_type">s</span> = Left(caps(Servers[<span class="source_type">i</span>].<span class="source_type">MapName</span>), <span class="source_int">8</span>);
+<a name="654"></a>        break;
+<a name="655"></a>
+<a name="656"></a>    case <span class="source_int">3</span>:
+<a name="657"></a>        <span class="source_type">s</span> = <span class="source_type">string</span>(Servers[<span class="source_type">i</span>].CurrentPlayers);
+<a name="658"></a>        PadLeft(<span class="source_type">S</span>, <span class="source_int">4</span>, <span class="source_string">"0"</span>);
+<a name="659"></a>
+<a name="660"></a>        <span class="source_type">t</span> = <span class="source_type">string</span>((Servers[<span class="source_type">i</span>].MaxPlayers&<span class="source_int">255</span>));
+<a name="661"></a>        PadLeft(<span class="source_type">T</span>, <span class="source_int">4</span>, <span class="source_string">"0"</span>);
+<a name="662"></a>        <span class="source_type">s</span> $= <span class="source_type">t</span> $ <span class="source_type">i</span>;
+<a name="663"></a>        break;
+<a name="664"></a>
+<a name="665"></a>    case <span class="source_int">4</span>:
+<a name="666"></a>        <span class="source_type">s</span> = <span class="source_type">string</span>(Servers[<span class="source_type">i</span>].CurrentWave);
+<a name="667"></a>        PadLeft(<span class="source_type">s</span>, <span class="source_int">4</span>, <span class="source_string">"0"</span>);
+<a name="668"></a>
+<a name="669"></a>        <span class="source_type">t</span> = <span class="source_type">string</span>(Servers[<span class="source_type">i</span>].<span class="source_type">FinalWave</span>);
+<a name="670"></a>        PadLeft(<span class="source_type">t</span>, <span class="source_int">4</span>, <span class="source_string">"0"</span>);
+<a name="671"></a>        <span class="source_type">s</span> $= <span class="source_type">t</span> $ <span class="source_type">i</span>;
+<a name="672"></a>        break;
+<a name="673"></a>
+<a name="674"></a>    default:
+<a name="675"></a>        <span class="source_type">s</span> = <span class="source_type">string</span>(Servers[<span class="source_type">i</span>].Ping);
+<a name="676"></a>	    PadLeft(<span class="source_type">S</span>,<span class="source_int">5</span>,<span class="source_string">"0"</span>);
+<a name="677"></a>
+<a name="678"></a>        <span class="source_type">s</span> $= <span class="source_type">i</span>;
+<a name="679"></a>
+<a name="680"></a>        break;
+<a name="681"></a>    }
+<a name="682"></a>    return <span class="source_type">s</span>;
+<a name="683"></a>}
+<a name="684"></a>
+<a name="685"></a>function <span class="source_type">string</span> Get(optional <span class="source_type">bool</span> <span class="source_type">bGuarantee</span>)
+<a name="686"></a>{
+<a name="687"></a>	local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="688"></a>
+<a name="689"></a>	if ( IsValid() )
+<a name="690"></a>		<span class="source_type">s</span> = Servers[CurrentListId()].IP $ <span class="source_string">":"</span> $ Servers[CurrentListId()].<span class="source_type">Port</span>;
+<a name="691"></a>	else if ( Servers.Length &gt; <span class="source_int">0</span> && <span class="source_type">bGuarantee</span> )
+<a name="692"></a>		<span class="source_type">s</span> = Servers[SortData[<span class="source_int">0</span>].SortItem].IP $ <span class="source_string">":"</span> $ Servers[SortData[<span class="source_int">0</span>].SortItem].<span class="source_type">Port</span>;
+<a name="693"></a>
+<a name="694"></a>	return <span class="source_type">s</span>;
+<a name="695"></a>}
+<a name="696"></a>
+<a name="697"></a>function <span class="source_type">bool</span> GetCurrent( out <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">s</span> )
+<a name="698"></a>{
+<a name="699"></a>	if ( !IsValid() )
+<a name="700"></a>		return false;
+<a name="701"></a>
+<a name="702"></a>	<span class="source_type">s</span> = Servers[CurrentListId()];
+<a name="703"></a>	return true;
+<a name="704"></a>}
+<a name="705"></a>
+<a name="706"></a>function <span class="source_type">int</span> FindIndex( <span class="source_type">string</span> IP, optional <span class="source_type">string</span> <span class="source_type">Port</span> )
+<a name="707"></a>{
+<a name="708"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="709"></a>
+<a name="710"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Servers.Length; <span class="source_type">i</span>++ )
+<a name="711"></a>		if ( Servers[<span class="source_type">i</span>].IP == IP && (<span class="source_type">Port</span> == <span class="source_string">""</span> || Servers[<span class="source_type">i</span>].<span class="source_type">Port</span> == <span class="source_type">int</span>(<span class="source_type">Port</span>)) )
+<a name="712"></a>			return <span class="source_type">i</span>;
+<a name="713"></a>
+<a name="714"></a>	return -<span class="source_int">1</span>;
+<a name="715"></a>}
+<a name="716"></a>
+<a name="717"></a>function <span class="source_type">bool</span> IsValid()
+<a name="718"></a>{
+<a name="719"></a>	return <span class="source_type">Index</span> &gt;= <span class="source_int">0</span> && <span class="source_type">Index</span> &lt; Servers.Length;
+<a name="720"></a>}
+<a name="721"></a>
+<a name="722"></a>function <span class="source_type">bool</span> IsValidIndex(<span class="source_type">int</span> <span class="source_type">Test</span>)
+<a name="723"></a>{
+<a name="724"></a>	return <span class="source_type">Test</span> &gt;= <span class="source_int">0</span> && <span class="source_type">Test</span> &lt; Servers.Length;
+<a name="725"></a>}
+<a name="726"></a>
+<a name="727"></a>
+<a name="728"></a>event Opened(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="729"></a>{
+<a name="730"></a>	Super.Opened(<span class="source_type">Sender</span>);
+<a name="731"></a>	if ( bInitialized && tp_MyPage != None )
+<a name="732"></a>		AutoPingServers();
+<a name="733"></a>	else bInitialized = True;
+<a name="734"></a>}
+<a name="735"></a>
+<a name="736"></a>event Closed(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">bool</span> <span class="source_type">bCancelled</span>)
+<a name="737"></a>{
+<a name="738"></a>	Super.Closed(<span class="source_type">Sender</span>, <span class="source_type">bCancelled</span>);
+<a name="739"></a>
+<a name="740"></a>	StopPings();
+<a name="741"></a>}
+<a name="742"></a>
+<a name="743"></a>function <span class="source_type">string</span> BuildFlagString( <span class="source_type">int</span> <span class="source_type">Flags</span> )
+<a name="744"></a>{
+<a name="745"></a>    <span class="source_comment">// Passworded      1
+</span><a name="746"></a>    <span class="source_comment">// Stats           2
+</span><a name="747"></a>    <span class="source_comment">// LatestVersion   4
+</span><a name="748"></a>    <span class="source_comment">// Listen Server   8
+</span><a name="749"></a>    <span class="source_comment">// Instagib        16
+</span><a name="750"></a>    <span class="source_comment">// Standard        32
+</span><a name="751"></a>    <span class="source_comment">// UT CLassic      64
+</span><a name="752"></a>    local <span class="source_type">int</span> <span class="source_type">Value</span>;
+<a name="753"></a>    local <span class="source_type">string</span> <span class="source_type">Result</span>;
+<a name="754"></a>
+<a name="755"></a>    <span class="source_type">Value</span> = <span class="source_int">9999</span>;
+<a name="756"></a>
+<a name="757"></a>    if ( <span class="source_type">bool</span>(<span class="source_type">Flags</span> & <span class="source_int">256</span>) )
+<a name="758"></a>    	<span class="source_type">Value</span> -= <span class="source_int">1000</span>;
+<a name="759"></a>    else if ( <span class="source_type">bool</span>(<span class="source_type">Flags</span> & <span class="source_int">128</span>) )
+<a name="760"></a>    	<span class="source_type">Value</span> -= <span class="source_int">2000</span>;
+<a name="761"></a>    else if ( <span class="source_type">bool</span>(<span class="source_type">Flags</span> & <span class="source_int">64</span>) )
+<a name="762"></a>    	<span class="source_type">Value</span> -= <span class="source_int">3000</span>;
+<a name="763"></a>    else if ( <span class="source_type">bool</span>(<span class="source_type">Flags</span> & <span class="source_int">32</span>) )
+<a name="764"></a>    	<span class="source_type">Value</span> -= <span class="source_int">4000</span>;
+<a name="765"></a>
+<a name="766"></a>    if ( !<span class="source_type">bool</span>(<span class="source_type">Flags</span> & <span class="source_int">8</span>) )
+<a name="767"></a>    	<span class="source_type">Value</span> -= <span class="source_int">50</span>;
+<a name="768"></a>
+<a name="769"></a>    if ( !<span class="source_type">bool</span>(<span class="source_type">Flags</span> & <span class="source_int">16</span>) )
+<a name="770"></a>    	<span class="source_type">Value</span> -= <span class="source_int">85</span>;
+<a name="771"></a>
+<a name="772"></a>    if ( <span class="source_type">bool</span>(<span class="source_type">Flags</span> & <span class="source_int">2</span>) )
+<a name="773"></a>    	<span class="source_type">Value</span> -= <span class="source_int">100</span>;
+<a name="774"></a>
+<a name="775"></a>    <span class="source_type">Result</span> = <span class="source_type">string</span>(<span class="source_type">Value</span>);
+<a name="776"></a>    PadLeft(<span class="source_type">Result</span>,<span class="source_int">4</span>,<span class="source_string">"0"</span>);
+<a name="777"></a>
+<a name="778"></a>    return <span class="source_type">Result</span>;
+<a name="779"></a>}
+<a name="780"></a>
+<a name="781"></a>defaultproperties
+<a name="782"></a>{
+<a name="783"></a>     Icons(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.ServerIcons.passworded'</span>
+<a name="784"></a>     Icons(<span class="source_int">1</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.ServerIcons.Stats'</span>
+<a name="785"></a>     Icons(<span class="source_int">3</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.ServerIcons.listen2'</span>
+<a name="786"></a>     Icons(<span class="source_int">4</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.ServerIcons.VAC_Servericon'</span>
+<a name="787"></a>     Icons(<span class="source_int">5</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt2_tex.Server_Icons.Easy'</span>
+<a name="788"></a>     Icons(<span class="source_int">6</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt2_tex.Server_Icons.Normal'</span>
+<a name="789"></a>     Icons(<span class="source_int">7</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt2_tex.Server_Icons.Hard'</span>
+<a name="790"></a>     Icons(<span class="source_int">8</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt2_tex.Server_Icons.Suicide'</span>
+<a name="791"></a>     Icons(<span class="source_int">9</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt2_tex.Server_Icons.HellonEarth'</span>
+<a name="792"></a>     IconDescriptions(<span class="source_int">0</span>)=<span class="source_string">"Passworded"</span>
+<a name="793"></a>     IconDescriptions(<span class="source_int">1</span>)=<span class="source_string">"Stats Enabled"</span>
+<a name="794"></a>     IconDescriptions(<span class="source_int">3</span>)=<span class="source_string">"Listen Server"</span>
+<a name="795"></a>     IconDescriptions(<span class="source_int">4</span>)=<span class="source_string">"VAC Secured"</span>
+<a name="796"></a>     IconDescriptions(<span class="source_int">5</span>)=<span class="source_string">"Beginner Difficulty"</span>
+<a name="797"></a>     IconDescriptions(<span class="source_int">6</span>)=<span class="source_string">"Normal Difficulty"</span>
+<a name="798"></a>     IconDescriptions(<span class="source_int">7</span>)=<span class="source_string">"Hard Difficulty"</span>
+<a name="799"></a>     IconDescriptions(<span class="source_int">8</span>)=<span class="source_string">"Suicidal Difficulty"</span>
+<a name="800"></a>     IconDescriptions(<span class="source_int">9</span>)=<span class="source_string">"Hell Difficulty"</span>
+<a name="801"></a>     ColumnHeadings(<span class="source_int">1</span>)=<span class="source_string">"Server Name"</span>
+<a name="802"></a>     ColumnHeadings(<span class="source_int">2</span>)=<span class="source_string">"Map"</span>
+<a name="803"></a>     ColumnHeadings(<span class="source_int">3</span>)=<span class="source_string">"Players"</span>
+<a name="804"></a>     ColumnHeadings(<span class="source_int">4</span>)=<span class="source_string">"Wave"</span>
+<a name="805"></a>     ColumnHeadings(<span class="source_int">5</span>)=<span class="source_string">"Ping"</span>
+<a name="806"></a>     InitColumnPerc(<span class="source_int">0</span>)=<span class="source_int">0.100000</span>
+<a name="807"></a>     InitColumnPerc(<span class="source_int">1</span>)=<span class="source_int">0.400000</span>
+<a name="808"></a>     InitColumnPerc(<span class="source_int">2</span>)=<span class="source_int">0.200000</span>
+<a name="809"></a>     InitColumnPerc(<span class="source_int">3</span>)=<span class="source_int">0.100000</span>
+<a name="810"></a>     InitColumnPerc(<span class="source_int">4</span>)=<span class="source_int">0.100000</span>
+<a name="811"></a>     InitColumnPerc(<span class="source_int">5</span>)=<span class="source_int">0.100000</span>
+<a name="812"></a>     SortColumn=<span class="source_int">5</span>
+<a name="813"></a>     OnDrawItem=<span class="source_type"><a href="../gui2k4/ut2k4browser_serverslist.html" class="source">UT2k4Browser_ServersList</a></span>.MyOnDrawItem
+<a name="814"></a>     WinHeight=<span class="source_int">1.000000</span>
+<a name="815"></a>     OnDblClick=<span class="source_type"><a href="../gui2k4/ut2k4browser_serverslist.html" class="source">UT2k4Browser_ServersList</a></span>.MyOnDblClick
+<a name="816"></a>}
+<a name="817"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4browser_serverslist.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Browser_ServersList">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4browser_serverlistpagems.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4chatpassword.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:09.861 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

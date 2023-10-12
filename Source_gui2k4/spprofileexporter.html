@@ -1,0 +1,591 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.SPProfileExporter</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/spprofileexporter.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#SPProfileExporter">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/sphighscorebase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/streamdirectorynode.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/spprofileexporter.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/spprofileexporter.html">SPProfileExporter</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">// Exports the profile to a text file
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">// Written by Michiel Hendriks
+</span><a name="5"></a><span class="source_comment">// (c) 2003, Epic Games, Inc. All Rights Reserved
+</span><a name="6"></a><span class="source_comment">//==============================================================================
+</span><a name="7"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/spprofileexporter.html" class="source">SPProfileExporter</a></span> extends <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>;
+<a name="8"></a>
+<a name="9"></a>var <span class="source_type">string</span> ResultFile;
+<a name="10"></a>var protected <span class="source_type">string</span> <span class="source_type">FileName</span>;
+<a name="11"></a>var protected <span class="source_type">string</span> FileExt;
+<a name="12"></a>
+<a name="13"></a>var protected <span class="source_type"><a href="../xgame/ut2k4gameprofile.html" class="source">UT2K4GameProfile</a></span> GP;
+<a name="14"></a>var protected <span class="source_type"><a href="../engine/filelog.html" class="source">FileLog</a></span> Output;
+<a name="15"></a>var protected <span class="source_type"><a href="../engine/levelinfo.html" class="source">LevelInfo</a></span> <span class="source_type">Level</span>;
+<a name="16"></a>
+<a name="17"></a>function <span class="source_type">bool</span> Create(<span class="source_type"><a href="../xgame/ut2k4gameprofile.html" class="source">UT2K4GameProfile</a></span> myGP, <span class="source_type"><a href="../engine/levelinfo.html" class="source">LevelInfo</a></span> myLevel, optional <span class="source_type">string</span> myFilename, optional <span class="source_type">string</span> myExt)
+<a name="18"></a>{
+<a name="19"></a>	GP = myGP;
+<a name="20"></a>	<span class="source_type">Level</span> = myLevel;
+<a name="21"></a>	if (myFilename != <span class="source_string">""</span>) <span class="source_type">filename</span> = myFilename;
+<a name="22"></a>	<span class="source_type">filename</span> = FormatString(<span class="source_type">filename</span>);
+<a name="23"></a>	if (myExt != <span class="source_string">""</span>) FileExt = MyExt;
+<a name="24"></a>	return (GP != none) && (<span class="source_type">Level</span> != none);
+<a name="25"></a>}
+<a name="26"></a>
+<a name="27"></a>function ExportProfile()
+<a name="28"></a>{
+<a name="29"></a>	if (!(GP != none) && (<span class="source_type">Level</span> != none)) return;
+<a name="30"></a>	Output = <span class="source_type">Level</span>.spawn(<span class="source_type">class</span><span class="source_name">'FileLog'</span>);
+<a name="31"></a>	Output.OpenLog(<span class="source_type">FileName</span>, FileExt, true);
+<a name="32"></a>	ResultFile = Output.LogFileName;
+<a name="33"></a>	expHeader();
+<a name="34"></a>	expBody();
+<a name="35"></a>	expFooter();
+<a name="36"></a>	Output.CloseLog();
+<a name="37"></a>}
+<a name="38"></a>
+<a name="39"></a><span class="source_comment">/** export the header */</span>
+<a name="40"></a>protected function expHeader()
+<a name="41"></a>{
+<a name="42"></a>	output.Logf(<span class="source_string">"&lt;!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"&gt;"</span>);
+<a name="43"></a>	output.Logf(<span class="source_string">"&lt;html&gt;&lt;head&gt;"</span>);
+<a name="44"></a>	output.Logf(<span class="source_string">"&lt;title&gt;UT2004 Exported Single Player Details -"</span>@GP.PackageName@<span class="source_string">"&lt;/title&gt;"</span>);
+<a name="45"></a>	output.Logf(<span class="source_string">"&lt;meta name=\"Generator\" content=\"UnrealEngine2 build "</span>$<span class="source_type">Level</span>.EngineVersion$<span class="source_string">" - exporter: "</span>$<span class="source_type">string</span>(self.<span class="source_type">Class</span>)$<span class="source_string">"\"&gt;"</span>);
+<a name="46"></a>	expStyle();
+<a name="47"></a>	output.Logf(<span class="source_string">"&lt;/head&gt;&lt;body&gt;"</span>);
+<a name="48"></a>	output.Logf(<span class="source_string">"&lt;div class=\"title\"&gt;UT2004 Exported Profile&lt;/div&gt;"</span>);
+<a name="49"></a>	output.Logf(<span class="source_string">"&lt;table class=\"tabpages\"&gt;"</span>);
+<a name="50"></a>	output.Logf(<span class="source_string">"&lt;colgroup&gt;&lt;col width=\"1*\"&gt;&lt;col width=\"1*\"&gt;&lt;col width=\"1*\"&gt;&lt;col width=\"1*\"&gt;&lt;col width=\"1*\"&gt;&lt;col width=\"1*\"&gt;&lt;col width=\"1*\"&gt;&lt;/colgroup&gt;"</span>);
+<a name="51"></a>	output.Logf(<span class="source_string">"&lt;tr&gt;"</span>);
+<a name="52"></a>	output.Logf(<span class="source_string">"&lt;td class=\"tab\" id=\"a_d_basic\" onclick=\"showDiv('d_basic');\" onmouseover=\"tabHover('a_d_basic', true);\" onmouseout=\"tabHover('a_d_basic', false);\"&gt;Basic&lt;/td&gt;"</span>);
+<a name="53"></a>	output.Logf(<span class="source_string">"&lt;td class=\"tab\" id=\"a_d_awards\" onclick=\"showDiv('d_awards');\" onmouseover=\"tabHover('a_d_awards', true);\" onmouseout=\"tabHover('a_d_awards', false);\"&gt;Awards&lt;/td&gt;"</span>);
+<a name="54"></a>	output.Logf(<span class="source_string">"&lt;td class=\"tab\" id=\"a_d_ladders\" onclick=\"showDiv('d_ladders');\" onmouseover=\"tabHover('a_d_ladders', true);\" onmouseout=\"tabHover('a_d_ladders', false);\"&gt;Ladders&lt;/td&gt;"</span>);
+<a name="55"></a>	output.Logf(<span class="source_string">"&lt;td class=\"tab\" id=\"a_d_botstats\" onclick=\"showDiv('d_botstats');\" onmouseover=\"tabHover('a_d_botstats', true);\" onmouseout=\"tabHover('a_d_botstats', false);\"&gt;Bot stats&lt;/td&gt;"</span>);
+<a name="56"></a>	output.Logf(<span class="source_string">"&lt;td class=\"tab\" id=\"a_d_teamstats\" onclick=\"showDiv('d_teamstats');\" onmouseover=\"tabHover('a_d_teamstats', true);\" onmouseout=\"tabHover('a_d_teamstats', false);\"&gt;Team stats&lt;/td&gt;"</span>);
+<a name="57"></a>	output.Logf(<span class="source_string">"&lt;td class=\"tab\" id=\"a_d_lastmatch\" onclick=\"showDiv('d_lastmatch');\" onmouseover=\"tabHover('a_d_lastmatch', true);\" onmouseout=\"tabHover('a_d_lastmatch', false);\"&gt;Last match&lt;/td&gt;"</span>);
+<a name="58"></a>	output.Logf(<span class="source_string">"&lt;td class=\"tab\" id=\"a_d_history\" onclick=\"showDiv('d_history');\" onmouseover=\"tabHover('a_d_history', true);\" onmouseout=\"tabHover('a_d_history', false);\"&gt;Fight history&lt;/td&gt;"</span>);
+<a name="59"></a>	output.Logf(<span class="source_string">"&lt;/tr&gt;"</span>);
+<a name="60"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="61"></a>
+<a name="62"></a>}
+<a name="63"></a>
+<a name="64"></a><span class="source_comment">/** write inline style */</span>
+<a name="65"></a>protected function expStyle()
+<a name="66"></a>{
+<a name="67"></a>	output.Logf(<span class="source_string">"&lt;style&gt;"</span>);
+<a name="68"></a>	output.Logf(<span class="source_string">"BODY { font-family: sans-serif; color: white; background-color: midnightblue; }"</span>);
+<a name="69"></a>	output.Logf(<span class="source_string">"TABLE { border: 2px outset navy;  text-align: center; width: 100%; }"</span>);
+<a name="70"></a>	output.Logf(<span class="source_string">"TH { color: gold; font-size: smaller; text-align: center; }"</span>);
+<a name="71"></a>	output.Logf(<span class="source_string">"TD { vertical-align: top; border: 1px inset navy;  empty-cells: show; padding: 2px; text-align: center; }"</span>);
+<a name="72"></a>	output.Logf(<span class="source_string">"TD.right { text-align: right; }"</span>);
+<a name="73"></a>	output.Logf(<span class="source_string">"DIV.title { font-size: xx-large; width: 100%; border: 3px outset gold;  text-align: center;  font-weight: bold;  background-color: gold;  color: midnightblue;  margin-bottom: 10px;      }"</span>);
+<a name="74"></a>	output.Logf(<span class="source_string">"H1 { border-bottom: 2px solid gold; text-align: center; }"</span>);
+<a name="75"></a>	output.Logf(<span class="source_string">"H2 { border-bottom: 2px solid gold; text-align: center; }"</span>);
+<a name="76"></a>	output.Logf(<span class="source_string">"H3 { border-bottom: 1px solid gold; text-align: center; }"</span>);
+<a name="77"></a>	output.Logf(<span class="source_string">"TR:Hover { background-color: navy; }"</span>);
+<a name="78"></a>	output.Logf(<span class="source_string">"DIV.hidden { visibility: hidden; position: absolute; width: 75%; margin-left: 12.5%; }"</span>);
+<a name="79"></a>	output.Logf(<span class="source_string">"TABLE.tabpages { border: none; }"</span>);
+<a name="80"></a>	output.Logf(<span class="source_string">"TD.tab { vertical-align: top; border: 2px outset navy; padding: 2px; background-color: midnightblue; cursor: pointer; }"</span>);
+<a name="81"></a>	output.Logf(<span class="source_string">"TD.tab_hover { border: 2px outset gold; background-color: navy; cursor: pointer; }"</span>);
+<a name="82"></a>	output.Logf(<span class="source_string">"TD.activetab { vertical-align: top; border: 2px outset gold; padding: 2px; background-color: gold; color: navy; cursor: default; }"</span>);
+<a name="83"></a>	output.Logf(<span class="source_string">"&lt;/style&gt;"</span>);
+<a name="84"></a>}
+<a name="85"></a>
+<a name="86"></a><span class="source_comment">/** export the footer */</span>
+<a name="87"></a>protected function expFooter()
+<a name="88"></a>{
+<a name="89"></a>	output.Logf(<span class="source_string">"&lt;script language=\"javascript\"&gt;"</span>);
+<a name="90"></a>	output.Logf(<span class="source_string">"curtd = null;"</span>);
+<a name="91"></a>	output.Logf(<span class="source_string">"curlb = null;"</span>);
+<a name="92"></a>
+<a name="93"></a>	output.Logf(<span class="source_string">"function showDiv(divname)"</span>);
+<a name="94"></a>	output.Logf(<span class="source_string">"{"</span>);
+<a name="95"></a>	output.Logf(<span class="source_string">"	seltd = document.getElementById(divname);"</span>);
+<a name="96"></a>	output.Logf(<span class="source_string">"	if (curtd && seltd == curtd) return;"</span>);
+<a name="97"></a>	output.Logf(<span class="source_string">"	seltd.style.visibility = 'visible';"</span>);
+<a name="98"></a>	output.Logf(<span class="source_string">"	if (curtd) curtd.style.visibility = 'hidden';"</span>);
+<a name="99"></a>	output.Logf(<span class="source_string">"	curtd = seltd;"</span>);
+<a name="100"></a>	output.Logf(<span class="source_string">"	seltb = document.getElementById(\"a_\"+divname);"</span>);
+<a name="101"></a>	output.Logf(<span class="source_string">"	seltb.className = \"activetab\";"</span>);
+<a name="102"></a>	output.Logf(<span class="source_string">"	if (curlb) curlb.className = \"tab\";"</span>);
+<a name="103"></a>	output.Logf(<span class="source_string">"	curlb = seltb;"</span>);
+<a name="104"></a>	output.Logf(<span class="source_string">"}"</span>);
+<a name="105"></a>
+<a name="106"></a>	output.Logf(<span class="source_string">"function tabHover(divname, active)"</span>);
+<a name="107"></a>	output.Logf(<span class="source_string">"{"</span>);
+<a name="108"></a>	output.Logf(<span class="source_string">"	hovertd = document.getElementById(divname);"</span>);
+<a name="109"></a>	output.Logf(<span class="source_string">"	if (hovertd == curlb) return;"</span>);
+<a name="110"></a>	output.Logf(<span class="source_string">"	if (hovertd) "</span>);
+<a name="111"></a>	output.Logf(<span class="source_string">"	{"</span>);
+<a name="112"></a>	output.Logf(<span class="source_string">"		if (active) hovertd.className = \"tab_hover\""</span>);
+<a name="113"></a>	output.Logf(<span class="source_string">"		else hovertd.className = \"tab\";"</span>);
+<a name="114"></a>	output.Logf(<span class="source_string">"	}"</span>);
+<a name="115"></a>	output.Logf(<span class="source_string">"}"</span>);
+<a name="116"></a>
+<a name="117"></a>	output.Logf(<span class="source_string">"showDiv(\"d_basic\");"</span>);
+<a name="118"></a>	output.Logf(<span class="source_string">"&lt;/script&gt;"</span>);
+<a name="119"></a>	output.Logf(<span class="source_string">"&lt;/body&gt;&lt;/html&gt;"</span>);
+<a name="120"></a>}
+<a name="121"></a>
+<a name="122"></a><span class="source_comment">/** export all the content */</span>
+<a name="123"></a>protected function expBody()
+<a name="124"></a>{
+<a name="125"></a>	expBasic();
+<a name="126"></a>	expSprees();
+<a name="127"></a>	expMultiKills();
+<a name="128"></a>	expSpecialAwards();
+<a name="129"></a>	expLadderStatus();
+<a name="130"></a>	expBotstats();
+<a name="131"></a>	expTeamstats();
+<a name="132"></a>	expLastmatch();
+<a name="133"></a>	expOtherMatches();
+<a name="134"></a>	expHistory();
+<a name="135"></a>}
+<a name="136"></a>
+<a name="137"></a>protected function expBasic()
+<a name="138"></a>{
+<a name="139"></a>	output.Logf(<span class="source_string">"&lt;div id=\"d_basic\" class=\"hidden\"&gt;"</span>);
+<a name="140"></a>	output.Logf(<span class="source_string">"&lt;h1&gt;Profile&lt;/h1&gt;"</span>);
+<a name="141"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_basic\"&gt;"</span>);
+<a name="142"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_profile\"&gt;&lt;td&gt;Profile name&lt;/td&gt;&lt;td&gt;"</span>@GP.PackageName@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="143"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_name\"&gt;&lt;td&gt;Player name&lt;/td&gt;&lt;td&gt;"</span>@GP.<span class="source_type">PlayerName</span>@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="144"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_difficulty\"&gt;&lt;td&gt;Difficulty&lt;/td&gt;&lt;td&gt;"</span>@GP.BaseDifficulty@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="145"></a>	if (GP.IsCheater()) output.logf(<span class="source_string">"&lt;tr id=\"b_cheated\"&gt;&lt;td&gt;CHEATED&lt;/td&gt;&lt;td&gt;true&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="146"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_character\"&gt;&lt;td&gt;Character&lt;/td&gt;&lt;td&gt;"</span>@GP.PlayerCharacter@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="147"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_teamname\"&gt;&lt;td&gt;Team name&lt;/td&gt;&lt;td&gt;"</span>@GP.TeamName@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="148"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_teammembers\"&gt;&lt;td&gt;Team members&lt;/td&gt;&lt;td&gt;"</span>@JoinArray(GP.PlayerTeam, <span class="source_string">"&lt;br /&gt;"</span>, true)@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="149"></a>
+<a name="150"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_balance\"&gt;&lt;td&gt;Balance&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.MoneyToString(GP.Balance)@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="151"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_matches\"&gt;&lt;td&gt;Matches&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.matches@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="152"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_wins\"&gt;&lt;td&gt;Wins&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.wins@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="153"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_kills\"&gt;&lt;td&gt;Kills&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.kills@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="154"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"b_deaths\"&gt;&lt;td&gt;Deaths&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.deaths@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="155"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="156"></a>	output.Logf(<span class="source_string">"&lt;/div&gt;"</span>);
+<a name="157"></a>}
+<a name="158"></a>
+<a name="159"></a>protected function expSprees()
+<a name="160"></a>{
+<a name="161"></a>	output.Logf(<span class="source_string">"&lt;div id=\"d_awards\" class=\"hidden\"&gt;"</span>);
+<a name="162"></a>	output.Logf(<span class="source_string">"&lt;h1&gt;Killing sprees&lt;/h1&gt;"</span>);
+<a name="163"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_sprees\"&gt;"</span>);
+<a name="164"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"ks_spree\"&gt;&lt;td&gt;Killing Spree&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.spree[<span class="source_int">0</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="165"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"ks_rampage\"&gt;&lt;td&gt;Rampage&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.spree[<span class="source_int">1</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="166"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"ks_dominating\"&gt;&lt;td&gt;Dominating&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.spree[<span class="source_int">2</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="167"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"ks_unstoppable\"&gt;&lt;td&gt;Unstoppable&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.spree[<span class="source_int">3</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="168"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"ks_godlike\"&gt;&lt;td&gt;GODLIKE&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.spree[<span class="source_int">4</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="169"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"ks_wickedsick\"&gt;&lt;td&gt;WICKED SICK&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.spree[<span class="source_int">5</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="170"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="171"></a>}
+<a name="172"></a>
+<a name="173"></a>protected function expMultiKills()
+<a name="174"></a>{
+<a name="175"></a>	output.Logf(<span class="source_string">"&lt;h1&gt;Multi kills&lt;/h1&gt;"</span>);
+<a name="176"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_multikills\"&gt;"</span>);
+<a name="177"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"mk_double\"&gt;&lt;td&gt;Double Kill&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.MultiKills[<span class="source_int">0</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="178"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"mk_multi\"&gt;&lt;td&gt;MultiKill&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.MultiKills[<span class="source_int">1</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="179"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"mk_mega\"&gt;&lt;td&gt;MegaKill&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.MultiKills[<span class="source_int">2</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="180"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"mk_ultra\"&gt;&lt;td&gt;UltraKill&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.MultiKills[<span class="source_int">3</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="181"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"mk_monster\"&gt;&lt;td&gt;MONSTER KILL&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.MultiKills[<span class="source_int">4</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="182"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"mk_ludicrous\"&gt;&lt;td&gt;LUDICROUS KILL&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.MultiKills[<span class="source_int">5</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="183"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"mk_holyshit\"&gt;&lt;td&gt;HOLY SHIT&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.MultiKills[<span class="source_int">6</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="184"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="185"></a>}
+<a name="186"></a>
+<a name="187"></a>protected function expSpecialAwards()
+<a name="188"></a>{
+<a name="189"></a>	output.Logf(<span class="source_string">"&lt;h1&gt;Special awards&lt;/h1&gt;"</span>);
+<a name="190"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_awards\"&gt;"</span>);
+<a name="191"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"sa_monkey\"&gt;&lt;td&gt;Flak Monkey&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.SpecialAwards[<span class="source_int">0</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="192"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"sa_whore\"&gt;&lt;td&gt;Combo Whore&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.SpecialAwards[<span class="source_int">1</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="193"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"sa_hunter\"&gt;&lt;td&gt;Head Hunter&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.SpecialAwards[<span class="source_int">2</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="194"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"sa_rampage\"&gt;&lt;td&gt;Road Rampage&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.SpecialAwards[<span class="source_int">3</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="195"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"sa_trick\"&gt;&lt;td&gt;Hat Trick&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.SpecialAwards[<span class="source_int">4</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="196"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"sa_untouchable\"&gt;&lt;td&gt;Untouchable&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>@GP.SpecialAwards[<span class="source_int">5</span>]@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="197"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="198"></a>	output.Logf(<span class="source_string">"&lt;/div&gt;"</span>);
+<a name="199"></a>}
+<a name="200"></a>
+<a name="201"></a>protected function expLadderStatus()
+<a name="202"></a>{
+<a name="203"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="204"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/customladderinfo.html" class="source">CustomLadderInfo</a></span>&gt; cl;
+<a name="205"></a>
+<a name="206"></a>	output.Logf(<span class="source_string">"&lt;div id=\"d_ladders\" class=\"hidden\"&gt;"</span>);
+<a name="207"></a>	output.Logf(<span class="source_string">"&lt;h1&gt;Ladder status&lt;/h1&gt;"</span>);
+<a name="208"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_ladders\"&gt;"</span>);
+<a name="209"></a>	if (GP.LadderProgress[GP.UT2K4GameLadder.default.LID_DM] &gt; -<span class="source_int">1</span>)
+<a name="210"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"ls_qualification\"&gt;&lt;td&gt;Qualification&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$(GP.LadderProgress[GP.UT2K4GameLadder.default.LID_DM]*<span class="source_int">100</span>/GP.LengthOfLadder(GP.UT2K4GameLadder.default.LID_DM))$<span class="source_string">"%&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="211"></a>		else output.Logf(<span class="source_string">"&lt;tr id=\"ls_qualification\"&gt;&lt;td&gt;Qualification&lt;/td&gt;&lt;td&gt;locked&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="212"></a>	if (GP.LadderProgress[GP.UT2K4GameLadder.default.LID_TDM] &gt; -<span class="source_int">1</span>)
+<a name="213"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"ls_teamqualification\"&gt;&lt;td&gt;Team Qualification&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$(GP.LadderProgress[GP.UT2K4GameLadder.default.LID_TDM]*<span class="source_int">100</span>/GP.LengthOfLadder(GP.UT2K4GameLadder.default.LID_TDM))$<span class="source_string">"%&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="214"></a>		else output.Logf(<span class="source_string">"&lt;tr id=\"ls_teamqualification\"&gt;&lt;td&gt;Team Qualification&lt;/td&gt;&lt;td&gt;locked&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="215"></a>	if (GP.LadderProgress[GP.UT2K4GameLadder.default.LID_CTF] &gt; -<span class="source_int">1</span>)
+<a name="216"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"ls_ctf\"&gt;&lt;td&gt;Capture The Flag&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$(GP.LadderProgress[GP.UT2K4GameLadder.default.LID_CTF]*<span class="source_int">100</span>/GP.LengthOfLadder(GP.UT2K4GameLadder.default.LID_CTF))$<span class="source_string">"%&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="217"></a>		else output.Logf(<span class="source_string">"&lt;tr id=\"ls_ctf\"&gt;&lt;td&gt;Capture The Flag&lt;/td&gt;&lt;td&gt;locked&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="218"></a>	if (GP.LadderProgress[GP.UT2K4GameLadder.default.LID_BR] &gt; -<span class="source_int">1</span>)
+<a name="219"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"ls_br\"&gt;&lt;td&gt;Bombing Run&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$(GP.LadderProgress[GP.UT2K4GameLadder.default.LID_BR]*<span class="source_int">100</span>/GP.LengthOfLadder(GP.UT2K4GameLadder.default.LID_BR))$<span class="source_string">"%&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="220"></a>		else output.Logf(<span class="source_string">"&lt;tr id=\"ls_br\"&gt;&lt;td&gt;Bombing Run&lt;/td&gt;&lt;td&gt;locked&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="221"></a>	if (GP.LadderProgress[GP.UT2K4GameLadder.default.LID_DOM] &gt; -<span class="source_int">1</span>)
+<a name="222"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"ls_dom\"&gt;&lt;td&gt;Double Domination&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$(GP.LadderProgress[GP.UT2K4GameLadder.default.LID_DOM]*<span class="source_int">100</span>/GP.LengthOfLadder(GP.UT2K4GameLadder.default.LID_DOM))$<span class="source_string">"%&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="223"></a>		else output.Logf(<span class="source_string">"&lt;tr id=\"ls_dom\"&gt;&lt;td&gt;Double Domination&lt;/td&gt;&lt;td&gt;locked&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="224"></a>	if (GP.LadderProgress[GP.UT2K4GameLadder.default.LID_AS] &gt; -<span class="source_int">1</span>)
+<a name="225"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"ls_as\"&gt;&lt;td&gt;Assault&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$(GP.LadderProgress[GP.UT2K4GameLadder.default.LID_AS]*<span class="source_int">100</span>/GP.LengthOfLadder(GP.UT2K4GameLadder.default.LID_AS))$<span class="source_string">"%&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="226"></a>		else output.Logf(<span class="source_string">"&lt;tr id=\"ls_as\"&gt;&lt;td&gt;Assault&lt;/td&gt;&lt;td&gt;locked&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="227"></a>	if (GP.LadderProgress[GP.UT2K4GameLadder.default.LID_CHAMP] &gt; -<span class="source_int">1</span>)
+<a name="228"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"ls_champ\"&gt;&lt;td&gt;Championship&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$(GP.LadderProgress[GP.UT2K4GameLadder.default.LID_CHAMP]*<span class="source_int">100</span>/GP.LengthOfLadder(GP.UT2K4GameLadder.default.LID_CHAMP))$<span class="source_string">"%&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="229"></a>		else output.Logf(<span class="source_string">"&lt;tr id=\"ls_champ\"&gt;&lt;td&gt;Championship&lt;/td&gt;&lt;td&gt;locked&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="230"></a>
+<a name="231"></a>	if (GP.CustomLadders.Length &gt; <span class="source_int">0</span>)
+<a name="232"></a>	{
+<a name="233"></a>		output.Logf(<span class="source_string">"&lt;tr&gt;&lt;td colspan=\"2\"&gt;Additional ladders&lt;/tr&gt;&lt;/td&gt;"</span>);
+<a name="234"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GP.CustomLadders.Length; <span class="source_type">i</span>++)
+<a name="235"></a>		{
+<a name="236"></a>			cl = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/customladderinfo.html" class="source">CustomLadderInfo</a></span>&gt;(DynamicLoadObject(GP.CustomLadders[<span class="source_type">i</span>].LadderClass, <span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="237"></a>			if (cl != none)
+<a name="238"></a>			{
+<a name="239"></a>				output.Logf(<span class="source_string">"&lt;tr id=\"lsc_"</span>$repl(GP.CustomLadders[<span class="source_type">i</span>].LadderClass, <span class="source_string">"."</span>, <span class="source_string">"_"</span>)$<span class="source_string">"\"&gt;&lt;td&gt;"</span>$cl.default.LadderName$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$(GP.CustomLadders[<span class="source_type">i</span>].<span class="source_type">progress</span>*<span class="source_int">100</span>/cl.default.Matches.Length)$<span class="source_string">"%&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="240"></a>			}
+<a name="241"></a>			else {
+<a name="242"></a>				output.Logf(<span class="source_string">"&lt;tr id=\"lsc_"</span>$repl(GP.CustomLadders[<span class="source_type">i</span>].LadderClass, <span class="source_string">"."</span>, <span class="source_string">"_"</span>)$<span class="source_string">"\"&gt;&lt;td&gt;"</span>$GP.CustomLadders[<span class="source_type">i</span>].LadderClass$<span class="source_string">"&lt;/td&gt;&lt;td&gt;"</span>$GP.CustomLadders[<span class="source_type">i</span>].<span class="source_type">progress</span>@<span class="source_string">"matches&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="243"></a>			}
+<a name="244"></a>		}
+<a name="245"></a>	}
+<a name="246"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="247"></a>	output.Logf(<span class="source_string">"&lt;/div&gt;"</span>);
+<a name="248"></a>}
+<a name="249"></a>
+<a name="250"></a>protected function expBotstats()
+<a name="251"></a>{
+<a name="252"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="253"></a>	output.Logf(<span class="source_string">"&lt;div id=\"d_botstats\" class=\"hidden\"&gt;"</span>);
+<a name="254"></a>	output.Logf(<span class="source_string">"&lt;h1&gt;Bot stats&lt;/h1&gt;"</span>);
+<a name="255"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_botstats\"&gt;"</span>);
+<a name="256"></a>	output.Logf(<span class="source_string">"&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Price&lt;/th&gt;&lt;th&gt;Health&lt;/th&gt;&lt;th&gt;Team ID&lt;/th&gt;&lt;tr&gt;"</span>);
+<a name="257"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GP.BotStats.length; <span class="source_type">i</span>++)
+<a name="258"></a>	{
+<a name="259"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"bs_"</span>$repl(GP.BotStats[<span class="source_type">i</span>].<span class="source_type">Name</span>, <span class="source_string">"."</span>, <span class="source_string">"_"</span>)$<span class="source_string">"\"&gt;&lt;td&gt;"</span>$GP.BotStats[<span class="source_type">i</span>].<span class="source_type">Name</span>$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.MoneyToString(GP.BotStats[<span class="source_type">i</span>].Price)$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.BotStats[<span class="source_type">i</span>].Health$<span class="source_string">"%&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.BotStats[<span class="source_type">i</span>].TeamId$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="260"></a>	}
+<a name="261"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="262"></a>	output.Logf(<span class="source_string">"&lt;/div&gt;"</span>);
+<a name="263"></a>}
+<a name="264"></a>
+<a name="265"></a>protected function expTeamstats()
+<a name="266"></a>{
+<a name="267"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="268"></a>	local <span class="source_type">string</span> tmp;
+<a name="269"></a>
+<a name="270"></a>	output.Logf(<span class="source_string">"&lt;div id=\"d_teamstats\" class=\"hidden\"&gt;"</span>);
+<a name="271"></a>	output.Logf(<span class="source_string">"&lt;h1&gt;Team stats&lt;/h1&gt;"</span>);
+<a name="272"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_teamstats\"&gt;"</span>);
+<a name="273"></a>	output.Logf(<span class="source_string">"&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Matches&lt;/th&gt;&lt;th&gt;Lost from&lt;/th&gt;&lt;th&gt;Rating&lt;/th&gt;&lt;th&gt;Level&lt;/th&gt;&lt;th&gt;Roster&lt;/th&gt;&lt;tr&gt;"</span>);
+<a name="274"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GP.TeamStats.length; <span class="source_type">i</span>++)
+<a name="275"></a>	{
+<a name="276"></a>		if (GP.TeamStats[<span class="source_type">i</span>].<span class="source_type">Name</span> == <span class="source_string">""</span>) continue;
+<a name="277"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"ts_"</span>$repl(GP.TeamStats[<span class="source_type">i</span>].<span class="source_type">Name</span>, <span class="source_string">"."</span>, <span class="source_string">"_"</span>)$<span class="source_string">"\"&gt;&lt;td class=\"right\"&gt;"</span>$<span class="source_type">i</span>$<span class="source_string">"&lt;/td&gt;&lt;td&gt;"</span>$getTeamName(GP.TeamStats[<span class="source_type">i</span>].<span class="source_type">Name</span>, tmp)$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.TeamStats[<span class="source_type">i</span>].Matches$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.TeamStats[<span class="source_type">i</span>].Won$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.TeamStats[<span class="source_type">i</span>].<span class="source_type">Rating</span>$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.TeamStats[<span class="source_type">i</span>].<span class="source_type">Level</span>$<span class="source_string">"&lt;/td&gt;&lt;td&gt;"</span>$tmp$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="278"></a>	}
+<a name="279"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="280"></a>	output.Logf(<span class="source_string">"&lt;/div&gt;"</span>);
+<a name="281"></a>}
+<a name="282"></a>
+<a name="283"></a>
+<a name="284"></a>protected function expLastmatch()
+<a name="285"></a>{
+<a name="286"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="287"></a>	local <span class="source_type">string</span> tmp;
+<a name="288"></a>
+<a name="289"></a>	output.Logf(<span class="source_string">"&lt;div id=\"d_lastmatch\" class=\"hidden\"&gt;"</span>);
+<a name="290"></a>	output.Logf(<span class="source_string">"&lt;h1&gt;Last match&lt;/h1&gt;"</span>);
+<a name="291"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_lastmatch_basic\"&gt;"</span>);
+<a name="292"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"lm_gametype\"&gt;&lt;td&gt;Game type&lt;/td&gt;&lt;td&gt;"</span>$GP.lmdGameType$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="293"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"lm_map\"&gt;&lt;td&gt;Map&lt;/td&gt;&lt;td&gt;"</span>$GP.lmdMap$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="294"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"lm_won\"&gt;&lt;td&gt;Won match&lt;/td&gt;&lt;td&gt;"</span>$GP.lmdWonMatch$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="295"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"lm_time\"&gt;&lt;td&gt;Game time&lt;/td&gt;&lt;td&gt;"</span>$(GP.lmdGameTime/<span class="source_int">60</span>)@<span class="source_string">"minutes&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="296"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"lm_prize\"&gt;&lt;td&gt;Prize money&lt;/td&gt;&lt;td&gt;"</span>$GP.MoneyToString(GP.lmdPrizeMoney)$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="297"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"lm_bonus\"&gt;&lt;td&gt;Total bonus money&lt;/td&gt;&lt;td&gt;"</span>$GP.MoneyToString(GP.lmdTotalBonusMoney)$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="298"></a>	output.Logf(<span class="source_string">"&lt;tr id=\"lm_balance\"&gt;&lt;td&gt;Balance change&lt;/td&gt;&lt;td&gt;"</span>$GP.MoneyToString(GP.lmdBalanceChange)$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="299"></a>	if (GP.lmdInjury &gt; -<span class="source_int">1</span>)
+<a name="300"></a>	{
+<a name="301"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"lm_injured\"&gt;&lt;td&gt;Injured team mate&lt;/td&gt;&lt;td&gt;"</span>$GP.BotStats[GP.lmdInjury].<span class="source_type">Name</span>$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="302"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"lm_injury_health\"&gt;&lt;td&gt;Injury health&lt;/td&gt;&lt;td&gt;"</span>$GP.lmdInjuryHealth$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="303"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"lm_treatment\"&gt;&lt;td&gt;Injury treatment&lt;/td&gt;&lt;td&gt;"</span>$GP.MoneyToString(GP.lmdInjuryTreatment)$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="304"></a>	}
+<a name="305"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="306"></a>
+<a name="307"></a>	if (GP.PayCheck.length &gt; <span class="source_int">0</span>)
+<a name="308"></a>	{
+<a name="309"></a>		output.Logf(<span class="source_string">"&lt;h2&gt;Pay check overview&lt;/h2&gt;"</span>);
+<a name="310"></a>		output.Logf(<span class="source_string">"&lt;table id=\"t_lastmatch_paycheck\"&gt;"</span>);
+<a name="311"></a>		output.Logf(<span class="source_string">"&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Payment&lt;/th&gt;&lt;/tr&gt;"</span>);
+<a name="312"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GP.PayCheck.length; <span class="source_type">i</span>++)
+<a name="313"></a>		{
+<a name="314"></a>			output.Logf(<span class="source_string">"&lt;tr id=\"lmp_"</span>$repl(GP.BotStats[GP.PayCheck[<span class="source_type">i</span>].BotId].<span class="source_type">Name</span>, <span class="source_string">"."</span>, <span class="source_string">"_"</span>)$<span class="source_string">"\"&gt;&lt;td&gt;"</span>$GP.BotStats[GP.PayCheck[<span class="source_type">i</span>].BotId].<span class="source_type">Name</span>$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.MoneyToString(GP.PayCheck[<span class="source_type">i</span>].Payment)$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="315"></a>		}
+<a name="316"></a>		output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="317"></a>	}
+<a name="318"></a>
+<a name="319"></a>	output.Logf(<span class="source_string">"&lt;h2&gt;Last match player overview&lt;/h2&gt;"</span>);
+<a name="320"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_lastmatch_overview\"&gt;"</span>);
+<a name="321"></a>	output.Logf(<span class="source_string">"&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Kills&lt;/th&gt;&lt;th&gt;Score&lt;/th&gt;&lt;th&gt;Deaths&lt;/th&gt;&lt;th&gt;Special Awards&lt;/th&gt;&lt;/tr&gt;"</span>);
+<a name="322"></a>	if (GP.lmdTeamGame)
+<a name="323"></a>	{
+<a name="324"></a>		output.Logf(<span class="source_string">"&lt;tr&gt;&lt;th colspan=\"5\"&gt;"</span>$GP.TeamName$<span class="source_string">"&lt;/th&gt;&lt;/tr&gt;"</span>);
+<a name="325"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GP.PlayerMatchDetails.length; <span class="source_type">i</span>++)
+<a name="326"></a>		{
+<a name="327"></a>			if (GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Team</span> == GP.lmdMyTeam)
+<a name="328"></a>			{
+<a name="329"></a>				output.Logf(<span class="source_string">"&lt;tr id=\"lmd_"</span>$repl(GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Name</span>, <span class="source_string">"."</span>, <span class="source_string">"_"</span>)$<span class="source_string">"\"&gt;&lt;td&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Name</span>$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].Kills$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Score</span>$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].Deaths$<span class="source_string">"&lt;/td&gt;&lt;td&gt;"</span>$JoinArray(GP.PlayerMatchDetails[<span class="source_type">i</span>].SpecialAwards, <span class="source_string">", "</span>)$<span class="source_string">"&lt;/td&gt;&lt;/tr"</span>);
+<a name="330"></a>			}
+<a name="331"></a>		}
+<a name="332"></a>		output.Logf(<span class="source_string">"&lt;tr&gt;&lt;th colspan=\"5\"&gt;"</span>$getTeamName(GP.lmdEnemyTeam, tmp)$<span class="source_string">"&lt;/th&gt;&lt;/tr&gt;"</span>);
+<a name="333"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GP.PlayerMatchDetails.length; <span class="source_type">i</span>++)
+<a name="334"></a>		{
+<a name="335"></a>			if (GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Team</span> != GP.lmdMyTeam)
+<a name="336"></a>			{
+<a name="337"></a>				output.Logf(<span class="source_string">"&lt;tr id=\"lmd_"</span>$repl(GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Name</span>, <span class="source_string">"."</span>, <span class="source_string">"_"</span>)$<span class="source_string">"\"&gt;&lt;td&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Name</span>$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].Kills$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Score</span>$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].Deaths$<span class="source_string">"&lt;/td&gt;&lt;td&gt;"</span>$JoinArray(GP.PlayerMatchDetails[<span class="source_type">i</span>].SpecialAwards, <span class="source_string">", "</span>)$<span class="source_string">"&lt;/td&gt;&lt;/tr"</span>);
+<a name="338"></a>			}
+<a name="339"></a>		}
+<a name="340"></a>	}
+<a name="341"></a>	else {
+<a name="342"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GP.PlayerMatchDetails.length; <span class="source_type">i</span>++)
+<a name="343"></a>		{
+<a name="344"></a>			output.Logf(<span class="source_string">"&lt;tr id=\"lmd_"</span>$repl(GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Name</span>, <span class="source_string">"."</span>, <span class="source_string">"_"</span>)$<span class="source_string">"\"&gt;&lt;td&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Name</span>$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].Kills$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].<span class="source_type">Score</span>$<span class="source_string">"&lt;/td&gt;&lt;td class=\"right\"&gt;"</span>$GP.PlayerMatchDetails[<span class="source_type">i</span>].Deaths$<span class="source_string">"&lt;/td&gt;&lt;td&gt;"</span>$JoinArray(GP.PlayerMatchDetails[<span class="source_type">i</span>].SpecialAwards, <span class="source_string">", "</span>)$<span class="source_string">"&lt;/td&gt;&lt;/tr"</span>);
+<a name="345"></a>		}
+<a name="346"></a>	}
+<a name="347"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="348"></a>}
+<a name="349"></a>
+<a name="350"></a>protected function expOtherMatches()
+<a name="351"></a>{
+<a name="352"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="353"></a>	local <span class="source_type">string</span> tmp;
+<a name="354"></a>	local <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span> MI;
+<a name="355"></a>
+<a name="356"></a>	if (GP.PhantomMatches.length &lt;= <span class="source_int">0</span>)
+<a name="357"></a>	{
+<a name="358"></a>		output.Logf(<span class="source_string">"&lt;/div&gt;"</span>);
+<a name="359"></a>		return;
+<a name="360"></a>	}
+<a name="361"></a>
+<a name="362"></a>	output.Logf(<span class="source_string">"&lt;h2&gt;Other tournament matches&lt;/h2&gt;"</span>);
+<a name="363"></a>	output.Logf(<span class="source_string">"&lt;table id=\"t_othermatches\"&gt;"</span>);
+<a name="364"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GP.PhantomMatches.length; <span class="source_type">i</span>++)
+<a name="365"></a>	{
+<a name="366"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"om_"</span>$<span class="source_type">i</span>$<span class="source_string">"_vs\"&gt;&lt;th&gt;"</span>$getTeamName(GP.TeamStats[GP.PhantomMatches[<span class="source_type">i</span>].Team1].<span class="source_type">Name</span>, tmp)@<span class="source_string">"&lt;/th&gt;&lt;td&gt;vs&lt;/td&gt;&lt;th&gt;"</span>@getTeamName(GP.TeamStats[GP.PhantomMatches[<span class="source_type">i</span>].Team2].<span class="source_type">Name</span>, tmp)$<span class="source_string">"&lt;/th&gt;&lt;tr&gt;"</span>);
+<a name="367"></a>		MI = <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(GP.getMatchInfo(GP.PhantomMatches[<span class="source_type">i</span>].LadderId, GP.PhantomMatches[<span class="source_type">i</span>].MatchId));
+<a name="368"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"om_"</span>$<span class="source_type">i</span>$<span class="source_string">"_game\"&gt;&lt;td colspan=\"3\"&gt;"</span>$GP.GetLadderDescription(GP.PhantomMatches[<span class="source_type">i</span>].LadderId, GP.PhantomMatches[<span class="source_type">i</span>].MatchId)@<span class="source_string">"in"</span>@MI.LevelName$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="369"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"om_"</span>$<span class="source_type">i</span>$<span class="source_string">"_score\"&gt;&lt;td colspan=\"3\"&gt;Score"</span>@<span class="source_type">int</span>(round(GP.PhantomMatches[<span class="source_type">i</span>].ScoreTeam1))@<span class="source_string">"-"</span>@<span class="source_type">int</span>(round(GP.PhantomMatches[<span class="source_type">i</span>].ScoreTeam2))$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="370"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"om_"</span>$<span class="source_type">i</span>$<span class="source_string">"_time\"&gt;&lt;td colspan=\"3\"&gt;Game time"</span>@(GP.PhantomMatches[<span class="source_type">i</span>].GameTime/<span class="source_int">60</span>)@<span class="source_string">"minutes&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="371"></a>	}
+<a name="372"></a>	output.Logf(<span class="source_string">"&lt;/table&gt;"</span>);
+<a name="373"></a>	output.Logf(<span class="source_string">"&lt;/div&gt;"</span>);
+<a name="374"></a>}
+<a name="375"></a>
+<a name="376"></a>protected function expHistory()
+<a name="377"></a>{
+<a name="378"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="379"></a>	local array&lt;<span class="source_type">string</span>&gt; tmpa;
+<a name="380"></a>	local <span class="source_type">string</span> tmp;
+<a name="381"></a>
+<a name="382"></a>	if (GP.FightHistory.Length == <span class="source_int">0</span>) return;
+<a name="383"></a>	output.Logf(<span class="source_string">"&lt;div id=\"d_history\" class=\"hidden\"&gt;"</span>);
+<a name="384"></a>	output.Logf(<span class="source_string">"&lt;h1&gt;Fight history&lt;/h1&gt;"</span>);
+<a name="385"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GP.FightHistory.Length; <span class="source_type">i</span>++)
+<a name="386"></a>	{
+<a name="387"></a>		output.Logf(<span class="source_string">"&lt;table id=\"history_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;"</span>);
+<a name="388"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_date_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;th colspan=\"2\"&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].Date[<span class="source_int">0</span>]$<span class="source_string">"-"</span>$Right(<span class="source_string">"0"</span>$GP.FightHistory[<span class="source_type">i</span>].Date[<span class="source_int">1</span>], <span class="source_int">2</span>)$<span class="source_string">"-"</span>$Right(<span class="source_string">"0"</span>$GP.FightHistory[<span class="source_type">i</span>].Date[<span class="source_int">2</span>], <span class="source_int">2</span>)$<span class="source_string">" "</span>$Right(<span class="source_string">"0"</span>$GP.FightHistory[<span class="source_type">i</span>].<span class="source_type"><a href="../core/time.html" class="source">Time</a></span>[<span class="source_int">0</span>], <span class="source_int">2</span>)$<span class="source_string">":"</span>$Right(<span class="source_string">"0"</span>$GP.FightHistory[<span class="source_type">i</span>].<span class="source_type"><a href="../core/time.html" class="source">Time</a></span>[<span class="source_int">1</span>], <span class="source_int">2</span>)$<span class="source_string">"&lt;/th&gt;&lt;/tr&gt;"</span>);
+<a name="389"></a>		split(GP.FightHistory[<span class="source_type">i</span>].MatchData, <span class="source_string">";"</span>, tmpa);
+<a name="390"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_matchtype_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;"</span>$tmpa[<span class="source_int">0</span>]$<span class="source_string">"&lt;/td&gt;&lt;td&gt;"</span>$tmpa[<span class="source_int">1</span>]$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="391"></a>     	if (GP.FightHistory[<span class="source_type">i</span>].MatchExtra != <span class="source_string">""</span>) output.Logf(<span class="source_string">"&lt;tr id=\"his_matchdata_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Additional info&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].MatchExtra$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="392"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_gametype_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Game type&lt;/td&gt;&lt;td&gt;"</span>$getGameTypeString(GP.FightHistory[<span class="source_type">i</span>].<span class="source_type">GameType</span>)@<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="393"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_level_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Map&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].<span class="source_type">Level</span>$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="394"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_prize_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Prize money&lt;/td&gt;&lt;td&gt;"</span>$GP.MoneyToString(GP.FightHistory[<span class="source_type">i</span>].PriceMoney)$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="395"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_balancechange_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Balance change&lt;/td&gt;&lt;td&gt;"</span>$GP.MoneyToString(GP.FightHistory[<span class="source_type">i</span>].BalanceChange)$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="396"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_bonus_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Bonus money&lt;/td&gt;&lt;td&gt;"</span>$GP.MoneyToString(GP.FightHistory[<span class="source_type">i</span>].BonusMoney)$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="397"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_time_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Game time&lt;/td&gt;&lt;td&gt;"</span>$(GP.FightHistory[<span class="source_type">i</span>].GameTime/<span class="source_int">60</span>)$<span class="source_string">" minutes&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="398"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_won_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Won game&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].WonGame$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="399"></a>		if (GP.FightHistory[<span class="source_type">i</span>].<span class="source_type"><a href="../unrealgame/teamgame.html" class="source">TeamGame</a></span>)
+<a name="400"></a>		{
+<a name="401"></a>			output.Logf(<span class="source_string">"&lt;tr id=\"his_team1name_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Team 1 name&lt;/td&gt;&lt;td&gt;"</span>$getTeamName(GP.FightHistory[<span class="source_type">i</span>].EnemyTeam, tmp)$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="402"></a>			output.Logf(<span class="source_string">"&lt;tr id=\"his_team1score_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Team 1 layout&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].TeamLayout[<span class="source_int">0</span>]$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="403"></a>			output.Logf(<span class="source_string">"&lt;tr id=\"his_team1score_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Team 1 score&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].TeamScore[<span class="source_int">0</span>]$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="404"></a>
+<a name="405"></a>			output.Logf(<span class="source_string">"&lt;tr id=\"his_team2name_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Team 2 name&lt;/td&gt;&lt;td&gt;"</span>$GP.TeamName$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="406"></a>			output.Logf(<span class="source_string">"&lt;tr id=\"his_team2score_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Team 2 layout&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].TeamLayout[<span class="source_int">1</span>]$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="407"></a>			output.Logf(<span class="source_string">"&lt;tr id=\"his_team2score_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;Team 2 score&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].TeamScore[<span class="source_int">1</span>]$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="408"></a>		}
+<a name="409"></a>
+<a name="410"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_myscore_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;My score&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].MyScore$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="411"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_mykills_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;My kills&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].MyKills$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="412"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_mydeath_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;My deaths&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].MyDeaths$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="413"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_myaward_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;My awards&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].MyAwards$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="414"></a>		output.Logf(<span class="source_string">"&lt;tr id=\"his_myrating_"</span>$<span class="source_type">i</span>$<span class="source_string">"\"&gt;&lt;td&gt;My rating&lt;/td&gt;&lt;td&gt;"</span>$GP.FightHistory[<span class="source_type">i</span>].MyRating$<span class="source_string">"&lt;/td&gt;&lt;/tr&gt;"</span>);
+<a name="415"></a>
+<a name="416"></a>
+<a name="417"></a>		output.Logf(<span class="source_string">"&lt;/table&gt;&lt;br /&gt;"</span>);
+<a name="418"></a>	}
+<a name="419"></a>	output.Logf(<span class="source_string">"&lt;/div&gt;"</span>);
+<a name="420"></a>}
+<a name="421"></a>
+<a name="422"></a><span class="source_comment">/** return the official name of a gametype */</span>
+<a name="423"></a>function <span class="source_type">string</span> getGameTypeString(<span class="source_type">string</span> <span class="source_type">GameType</span>)
+<a name="424"></a>{
+<a name="425"></a>	local <span class="source_type"><a href="../engine/cachemanager.html" class="source">CacheManager</a></span>.<span class="source_type"><a href="../engine/cachemanager.html#GameRecord" class="source">GameRecord</a></span> GR;
+<a name="426"></a>	GR = <span class="source_type">class</span><span class="source_name">'CacheManager'</span>.static.GetGameRecord(<span class="source_type">GameType</span>);
+<a name="427"></a>	if (GR.GameName != <span class="source_string">""</span>) return GR.GameName;
+<a name="428"></a>	return <span class="source_type">GameType</span>;
+<a name="429"></a>}
+<a name="430"></a>
+<a name="431"></a><span class="source_comment">/** get the real team name and the list of players */</span>
+<a name="432"></a>function <span class="source_type">string</span> getTeamName(<span class="source_type">string</span> TeamClass, out <span class="source_type">string</span> TeamRoster)
+<a name="433"></a>{
+<a name="434"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/ut2k4teamroster.html" class="source">UT2K4TeamRoster</a></span>&gt; ETI;
+<a name="435"></a>	local array&lt;<span class="source_type">string</span>&gt; Roster;
+<a name="436"></a>	ETI = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/ut2k4teamroster.html" class="source">UT2K4TeamRoster</a></span>&gt;(DynamicLoadObject(TeamClass, <span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="437"></a>	if (ETI == none)
+<a name="438"></a>	{
+<a name="439"></a>		Warn(TeamClass@<span class="source_string">"is not a valid UT2K4TeamRoster subclass"</span>);
+<a name="440"></a>		return <span class="source_string">""</span>;
+<a name="441"></a>	}
+<a name="442"></a>	if (!GP.GetAltTeamRoster(TeamClass, Roster))
+<a name="443"></a>	{
+<a name="444"></a>		Roster = ETI.default.RosterNames;
+<a name="445"></a>	}
+<a name="446"></a>	TeamRoster = JoinArray(Roster, <span class="source_string">", "</span>, true);
+<a name="447"></a>	return ETI.default.TeamName;
+<a name="448"></a>}
+<a name="449"></a>
+<a name="450"></a><span class="source_comment">/**
+<a name="451"></a>	return the filename to use for the log file. The following formatting rules are accepted:
+<a name="452"></a>	%N		profile name (the actual filename)
+<a name="453"></a>	%P		player name
+<a name="454"></a>	%Y		year
+<a name="455"></a>	%M		month
+<a name="456"></a>	%D		day
+<a name="457"></a>	%H		hour
+<a name="458"></a>	%I		minute
+<a name="459"></a>	%S		second
+<a name="460"></a>	%W		day of the week
+<a name="461"></a>	%%		'%'
+<a name="462"></a>*/</span>
+<a name="463"></a>protected function <span class="source_type">string</span> FormatString(<span class="source_type">string</span> LogFileName)
+<a name="464"></a>{
+<a name="465"></a>  local <span class="source_type">string</span> <span class="source_type">result</span>;
+<a name="466"></a>  <span class="source_type">result</span> = LogFileName;
+<a name="467"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%Y"</span>, Right(<span class="source_string">"0000"</span>$<span class="source_type">string</span>(<span class="source_type">Level</span>.Year), <span class="source_int">4</span>));
+<a name="468"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%M"</span>, Right(<span class="source_string">"00"</span>$<span class="source_type">string</span>(<span class="source_type">Level</span>.Month), <span class="source_int">2</span>));
+<a name="469"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%D"</span>, Right(<span class="source_string">"00"</span>$<span class="source_type">string</span>(<span class="source_type">Level</span>.Day), <span class="source_int">2</span>));
+<a name="470"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%H"</span>, Right(<span class="source_string">"00"</span>$<span class="source_type">string</span>(<span class="source_type">Level</span>.Hour), <span class="source_int">2</span>));
+<a name="471"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%I"</span>, Right(<span class="source_string">"00"</span>$<span class="source_type">string</span>(<span class="source_type">Level</span>.Minute), <span class="source_int">2</span>));
+<a name="472"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%W"</span>, Right(<span class="source_string">"0"</span>$<span class="source_type">string</span>(<span class="source_type">Level</span>.DayOfWeek), <span class="source_int">1</span>));
+<a name="473"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%S"</span>, Right(<span class="source_string">"00"</span>$<span class="source_type">string</span>(<span class="source_type">Level</span>.Second), <span class="source_int">2</span>));
+<a name="474"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%%"</span>, <span class="source_string">"%"</span>);
+<a name="475"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%N"</span>, GP.PackageName);
+<a name="476"></a>  <span class="source_type">result</span> = repl(<span class="source_type">result</span>, <span class="source_string">"%P"</span>, GP.<span class="source_type">PlayerName</span>);
+<a name="477"></a>  return <span class="source_type">result</span>;
+<a name="478"></a>}
+<a name="479"></a>
+<a name="480"></a><span class="source_comment">/** Join together array elements into a single string */</span>
+<a name="481"></a>static final function <span class="source_type">string</span> JoinArray(array&lt;<span class="source_type">string</span>&gt; <span class="source_type"><a href="../xwebadmin/stringarray.html" class="source">StringArray</a></span>, optional <span class="source_type">string</span> delim, optional <span class="source_type">bool</span> bIgnoreBlanks)
+<a name="482"></a>{
+<a name="483"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="484"></a>    local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="485"></a>
+<a name="486"></a>    if (delim == <span class="source_string">""</span>)
+<a name="487"></a>        delim = <span class="source_string">","</span>;
+<a name="488"></a>
+<a name="489"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type"><a href="../xwebadmin/stringarray.html" class="source">StringArray</a></span>.Length; <span class="source_type">i</span>++)
+<a name="490"></a>    {
+<a name="491"></a>        if ((<span class="source_type"><a href="../xwebadmin/stringarray.html" class="source">StringArray</a></span>[<span class="source_type">i</span>] != <span class="source_string">""</span>) || (!bIgnoreBlanks))
+<a name="492"></a>        {
+<a name="493"></a>            if (<span class="source_type">s</span> != <span class="source_string">""</span>)
+<a name="494"></a>                <span class="source_type">s</span> $= delim;
+<a name="495"></a>
+<a name="496"></a>            <span class="source_type">s</span> $= <span class="source_type"><a href="../xwebadmin/stringarray.html" class="source">StringArray</a></span>[<span class="source_type">i</span>];
+<a name="497"></a>        }
+<a name="498"></a>    }
+<a name="499"></a>
+<a name="500"></a>    return <span class="source_type">s</span>;
+<a name="501"></a>}
+<a name="502"></a>
+<a name="503"></a>defaultproperties
+<a name="504"></a>{
+<a name="505"></a>     <span class="source_type">Filename</span>=<span class="source_string">"%N_%Y_%M_%D_%H_%I"</span>
+<a name="506"></a>     FileExt=<span class="source_string">"html"</span>
+<a name="507"></a>}
+<a name="508"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/spprofileexporter.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#SPProfileExporter">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/sphighscorebase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/streamdirectorynode.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:08.914 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

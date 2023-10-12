@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFStoryGame.KF_PlaceableStoryPickup</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfstorygame/kfstorygame-overview.html">Package</a></td>
+	<td class="header"><a href="../kfstorygame/kf_placeablestorypickup.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KF_PlaceableStoryPickup">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfstorygame/kf_pawnwelder.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfstorygame/kf_storycheckpointvolume.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfstorygame/kf_placeablestorypickup.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfstorygame/kfstorygame-overview.html">KFStoryGame</a>.<a href="../kfstorygame/kf_placeablestorypickup.html">KF_PlaceableStoryPickup</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240
+</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_comment">/*
+<a name="2"></a>	--------------------------------------------------------------
+<a name="3"></a>	KF_StoryInvPickupSpot
+<a name="4"></a>	--------------------------------------------------------------
+<a name="5"></a>
+<a name="6"></a>    When placing Inventory Pickups in Story maps this actor should be used
+<a name="7"></a>    in place of KF_StoryInventoryPickups.
+<a name="8"></a>
+<a name="9"></a>	Author :  Alex Quick
+<a name="10"></a>
+<a name="11"></a>	--------------------------------------------------------------
+<a name="12"></a>*/</span>
+<a name="13"></a>
+<a name="14"></a><span class="source_type">class</span>   <span class="source_type"><a href="../kfstorygame/kf_placeablestorypickup.html" class="source">KF_PlaceableStoryPickup</a></span> extends <span class="source_type"><a href="../engine/xpickupbase.html" class="source">xPickupBase</a></span>
+<a name="15"></a>hidecategories(PickupBase);
+<a name="16"></a>
+<a name="17"></a><span class="source_comment">/* Icon to render for this Pickup on the holding player's HUD */</span>
+<a name="18"></a>var(Pickup_HUD)        <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>                         HUDMaterial;
+<a name="19"></a>
+<a name="20"></a><span class="source_comment">/* Icon to render over top of this Pickup while it's sitting on the ground */</span>
+<a name="21"></a>var(Pickup_HUD)        <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>                         GroundMaterial;
+<a name="22"></a>
+<a name="23"></a><span class="source_comment">/* If true, don't perform line traces to determine if we should render the GroundMaterial  (setting this true is an optimization) */</span>
+<a name="24"></a>var(Pickup_HUD)             <span class="source_type">bool</span>                        bRenderIconThroughWalls;
+<a name="25"></a>
+<a name="26"></a><span class="source_comment">/* Modifier to apply to the holding player's groundspeed */</span>
+<a name="27"></a>var(Pickup_PawnModifiers)   <span class="source_type">float</span>                       MovementSpeedModifier;
+<a name="28"></a>
+<a name="29"></a>var(Pickup_Feedback)        localized <span class="source_type">string</span>            Message_Dropped; <span class="source_comment">// Human readable description when dropped.
+</span><a name="30"></a>
+<a name="31"></a>var(Pickup_Feedback)        localized <span class="source_type">string</span>            Message_PickedUp;
+<a name="32"></a>
+<a name="33"></a>var(Pickup_Feedback)        localized <span class="source_type">string</span>            Message_Use;
+<a name="34"></a>
+<a name="35"></a>var(Pickup_Audio)           <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>                       Sound_Dropped,Sound_PickedUp;
+<a name="36"></a>
+<a name="37"></a>var(Pickup_3P)      <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>                              Attachment_Offset;
+<a name="38"></a>
+<a name="39"></a>var(Pickup_3P)      <span class="source_type">name</span>                                Attachment_Bone;
+<a name="40"></a>
+<a name="41"></a>var(Pickup_3P)      <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>                             Attachment_Rotation;
+<a name="42"></a>
+<a name="43"></a>var(Pickup_1P)      <span class="source_type">bool</span>                                bRender1PMesh;
+<a name="44"></a>
+<a name="45"></a><span class="source_comment">/* When holding this item, display it with an 'X-Ray' shader in first person */</span>
+<a name="46"></a>var(Pickup_1P)      <span class="source_type">bool</span>                                bUseFirstPersonXRayEffect;
+<a name="47"></a>
+<a name="48"></a>var(Pickup_1P)      <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>                             ViewRotationOffset;
+<a name="49"></a>
+<a name="50"></a>var(Pickup_1P)      <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>                              ViewLocationOffset;
+<a name="51"></a>
+<a name="52"></a><span class="source_comment">/* Multiplies the height of the player's jumpZ by this amount */</span>
+<a name="53"></a>var(Pickup_PawnModifiers)   <span class="source_type">float</span>                       JumpZModifier;
+<a name="54"></a>
+<a name="55"></a><span class="source_comment">/* List of weapons which cannot be used when this Item is carrieed */</span>
+<a name="56"></a>var(Pickup_Restrictions)                               array&lt; <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>&gt; &gt;             Weapons_Restricted;
+<a name="57"></a>
+<a name="58"></a><span class="source_comment">/* List of weapons which can *only* be used when this item is carried */</span>
+<a name="59"></a>var(Pickup_Restrictions)                               array &lt; <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>&gt; &gt;            Weapons_Allowed;
+<a name="60"></a>
+<a name="61"></a><span class="source_comment">/* Changes the amount of interest ZEDs will show in the player holding this item */</span>
+<a name="62"></a>var(Pickup_PawnModifiers)   <span class="source_type">float</span>                       AIThreatModifier;
+<a name="63"></a>
+<a name="64"></a><span class="source_comment">/* Number of items of this class which can be held by a pawn at once */</span>
+<a name="65"></a>var(Pickup_Restrictions)    <span class="source_type">int</span>                         MaxHeldCopies;
+<a name="66"></a>
+<a name="67"></a><span class="source_comment">/* Number of Inventory blocks this item takes up of the holder's weight allowance */</span>
+<a name="68"></a>var(Pickup_Restrictions)    <span class="source_type">int</span>                         InventoryWeight;
+<a name="69"></a>
+<a name="70"></a><span class="source_comment">/* Determines when the pickup actor should be spawned for this pickupspot */</span>
+<a name="71"></a>enum <span class="source_type"><a href="../kfstorygame/kf_placeablestorypickup.html#EPickupSpawnMethod" class="source">EPickupSpawnMethod</a></span>
+<a name="72"></a>{
+<a name="73"></a>    Spawn_OnMapLoad,
+<a name="74"></a>    Spawn_OnMatchBegin,
+<a name="75"></a>    Spawn_OnTrigger,
+<a name="76"></a>};
+<a name="77"></a>
+<a name="78"></a>var(Pickup_Spawning)        <span class="source_type"><a href="../kfstorygame/kf_placeablestorypickup.html#EPickupSpawnMethod" class="source">EPickupSpawnMethod</a></span>          SpawnMethod;
+<a name="79"></a>
+<a name="80"></a>var                         <span class="source_type"><a href="../kfstorygame/kf_storyinventorypickup.html" class="source">KF_StoryInventoryPickup</a></span>     MyStoryPickup;
+<a name="81"></a>
+<a name="82"></a>struct <span class="source_type"><a href="../kfstorygame/kf_placeablestorypickup.html#SCarriedEvent" class="source">SCarriedEvent</a></span>
+<a name="83"></a>{
+<a name="84"></a>    var()       <span class="source_type">name</span>        <span class="source_type">EventName</span>;
+<a name="85"></a>    var()       <span class="source_type">float</span>       TriggerInterval;
+<a name="86"></a>    var()       <span class="source_type">int</span>         NumRepeats;
+<a name="87"></a>    var         <span class="source_type">int</span>         NumTimesTriggered;
+<a name="88"></a>    var         <span class="source_type">float</span>       LastTriggerTime;
+<a name="89"></a>};
+<a name="90"></a>
+<a name="91"></a>var(Events)          array&lt;<span class="source_type"><a href="../kfstorygame/kf_placeablestorypickup.html#SCarriedEvent" class="source">SCarriedEvent</a></span>&gt;               CarriedEvents;
+<a name="92"></a>
+<a name="93"></a>var(Events)          <span class="source_type">name</span>                               DroppedEvent;
+<a name="94"></a>
+<a name="95"></a><span class="source_comment">/* UUs per second this pickup should travel at when tossed by a player */</span>
+<a name="96"></a>var(Pickup_Tossing)         <span class="source_type">float</span>                       Pickup_TossVelocity;
+<a name="97"></a>
+<a name="98"></a><span class="source_comment">/* If true, orient this pickup's toss direction from the players camera instead of his pawn rotation */</span>
+<a name="99"></a>var(Pickup_Tossing)         <span class="source_type">bool</span>                        bDropFromCameraLoc;
+<a name="100"></a>
+<a name="101"></a><span class="source_comment">/* Type of damage this pickup does when it smacks into something :- )  */</span>
+<a name="102"></a>var(Pickup_Tossing)         <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt;           ImpactDamType;
+<a name="103"></a>
+<a name="104"></a>var(Pickup_Tossing)         <span class="source_type">int</span>                         ImpactDamage;
+<a name="105"></a>
+<a name="106"></a>
+<a name="107"></a>simulated event PostBeginPlay()
+<a name="108"></a>{
+<a name="109"></a>    if(SpawnMethod == Spawn_OnMapLoad)
+<a name="110"></a>    {
+<a name="111"></a>	   Super.PostBeginPlay();
+<a name="112"></a>    }
+<a name="113"></a>}
+<a name="114"></a>
+<a name="115"></a>function MatchStarting()
+<a name="116"></a>{
+<a name="117"></a>    Super.MatchStarting();
+<a name="118"></a>
+<a name="119"></a>    if(SpawnMethod == Spawn_OnMatchBegin)
+<a name="120"></a>    {
+<a name="121"></a>        SpawnPickup();
+<a name="122"></a>    }
+<a name="123"></a>}
+<a name="124"></a>
+<a name="125"></a>event <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">EventInstigator</span> )
+<a name="126"></a>{
+<a name="127"></a>    Super.<span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>(<span class="source_type">Other</span>,<span class="source_type">EventInstigator</span>);
+<a name="128"></a>
+<a name="129"></a>    if(SpawnMethod == Spawn_OnTrigger)
+<a name="130"></a>    {
+<a name="131"></a>        SpawnPickup();
+<a name="132"></a>    }
+<a name="133"></a>}
+<a name="134"></a>
+<a name="135"></a>simulated function CopyPropertiesTo(<span class="source_type"><a href="../kfstorygame/kf_storyinventorypickup.html" class="source">KF_StoryInventoryPickup</a></span>  NewPickup)
+<a name="136"></a>{
+<a name="137"></a><span class="source_comment">//    log("*******************************************************");
+</span><a name="138"></a><span class="source_comment">//    log("Client Copy properties from : "@self@" to - :"@NewPickup);
+</span><a name="139"></a>
+<a name="140"></a>    NewPickup.StoryPickupBase = self;
+<a name="141"></a>
+<a name="142"></a>    NewPickup.Event = event;
+<a name="143"></a>    NewPickup.tag = tag;
+<a name="144"></a>    NewPickup.MaxHeldCopies = MaxHeldCopies;
+<a name="145"></a>    NewPickup.SetCollisionSize(CollisionRadius,CollisionHeight);
+<a name="146"></a>    NewPickup.PrePivot = PrePivot;
+<a name="147"></a>    NewPickup.PlacedRotation = <span class="source_type">Rotation</span>;
+<a name="148"></a>    NewPickup.SetDrawType(DrawType);
+<a name="149"></a>    NewPickup.SetStaticMesh(<span class="source_type">StaticMesh</span>);
+<a name="150"></a>    NewPickup.LinkMesh(<span class="source_type">Mesh</span>);
+<a name="151"></a>    NewPickup.SetDrawScale(DrawScale);
+<a name="152"></a>    NewPickup.SetDrawScale3D(DrawScale3D);
+<a name="153"></a>    NewPickup.bRenderIconThroughWalls = bRenderIconThroughWalls;
+<a name="154"></a>    NewPickup.bUseFirstPersonXRayEffect = bUseFirstPersonXRayEffect;
+<a name="155"></a>    NewPickup.MovementSpeedModifier = MovementSpeedModifier;
+<a name="156"></a>    NewPickup.AIThreatModifier = AIThreatModifier;
+<a name="157"></a>    NewPickup.<span class="source_type">Weight</span> = InventoryWeight;
+<a name="158"></a>    NewPickup.default.DroppedMessage = Message_Dropped;
+<a name="159"></a>    NewPickup.default.UseMeMessage = Message_Use;
+<a name="160"></a>    NewPickup.default.PickupMessage = Message_PickedUp;
+<a name="161"></a>    NewPickup.CarriedMaterial = HUDMaterial ;
+<a name="162"></a>    Newpickup.GroundMaterial = GroundMaterial;
+<a name="163"></a>    NewPickup.PickupSound = Sound_PickedUp;
+<a name="164"></a>    NewPickup.DroppedSound = Sound_Dropped;
+<a name="165"></a>    NewPickup.UV2Texture = UV2Texture;
+<a name="166"></a>    NewPickup.bRender1PMesh = bRender1PMesh;
+<a name="167"></a>    NewPickup.ViewLocationOffset = ViewLocationOffset;
+<a name="168"></a>    NewPickup.ViewRotationOffset = ViewRotationOffset;
+<a name="169"></a>    NewPickup.Pickup_TossVelocity = Pickup_TossVelocity;
+<a name="170"></a>    NewPickup.bDropFromCameraLoc = bDropFromCameraLoc;
+<a name="171"></a>    NewPickup.ImpactDamType = ImpactDamType;
+<a name="172"></a>    NewPickup.ImpactDamage = ImpactDamage;
+<a name="173"></a>
+<a name="174"></a>    <span class="source_comment">// Lighting
+</span><a name="175"></a>
+<a name="176"></a>    NewPickup.LightType = LightType;
+<a name="177"></a>    NewPickup.LightCone = LightCone;
+<a name="178"></a>    NewPickup.LightBrightness = LightBrightness;
+<a name="179"></a>    NewPickup.LightRadius = LightRadius;
+<a name="180"></a>    NewPickup.bUseDynamicLights = bUseDynamicLights;
+<a name="181"></a>    NewPickup.LightSaturation = LightSaturation;
+<a name="182"></a>    NewPickup.bDynamicLight = bDynamicLight;
+<a name="183"></a>    NewPickup.AmbientGlow = AmbientGlow;
+<a name="184"></a>    NewPickup.LightHue = LightHue;
+<a name="185"></a>
+<a name="186"></a>    NewPickup.bLightChanged = true;
+<a name="187"></a>}
+<a name="188"></a>
+<a name="189"></a>function SpawnPickup()
+<a name="190"></a>{
+<a name="191"></a>    if( myPickUp != none || PowerUp == None || <span class="source_type">Level</span>.NetMode == NM_Client )
+<a name="192"></a>        return;
+<a name="193"></a>
+<a name="194"></a>    myPickUp = Spawn(PowerUp,,,Location,<span class="source_type">Rotation</span>);
+<a name="195"></a>    if(myPickup != none)
+<a name="196"></a>    {
+<a name="197"></a>        myPickUp.PickUpBase = self;
+<a name="198"></a>
+<a name="199"></a>        MyStoryPickup = <span class="source_type"><a href="../kfstorygame/kf_storyinventorypickup.html" class="source">KF_StoryInventoryPickup</a></span>(myPickup);
+<a name="200"></a>        if(MyStoryPickup != none)
+<a name="201"></a>        {
+<a name="202"></a>            CopyPropertiesTo(MyStoryPickup);
+<a name="203"></a>        }
+<a name="204"></a>    }
+<a name="205"></a>
+<a name="206"></a>	if (myMarker != None)
+<a name="207"></a>	{
+<a name="208"></a>		myMarker.markedItem = myPickUp;
+<a name="209"></a>		myMarker.ExtraCost = ExtraPathCost;
+<a name="210"></a>        if (myPickUp != None)
+<a name="211"></a>		    myPickup.MyMarker = MyMarker;
+<a name="212"></a>	}
+<a name="213"></a>	else log(<span class="source_string">"No marker for "</span>$self);
+<a name="214"></a>}
+<a name="215"></a>
+<a name="216"></a>defaultproperties
+<a name="217"></a>{
+<a name="218"></a>     bRenderIconThroughWalls=True
+<a name="219"></a>     MovementSpeedModifier=<span class="source_int">1.000000</span>
+<a name="220"></a>     Message_Use=<span class="source_string">"Press USE key to Pick up"</span>
+<a name="221"></a>     Sound_Dropped=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'Inf_Player.RagdollImpacts.BodyImpact'</span>
+<a name="222"></a>     Sound_PickedUp=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_AxeSnd.Axe_Select'</span>
+<a name="223"></a>     bRender1PMesh=True
+<a name="224"></a>     JumpZModifier=<span class="source_int">1.000000</span>
+<a name="225"></a>     AIThreatModifier=<span class="source_int">1.000000</span>
+<a name="226"></a>     Pickup_TossVelocity=<span class="source_int">250.000000</span>
+<a name="227"></a>     ImpactDamType=<span class="source_type">Class</span><span class="source_name">'Engine.Crushed'</span>
+<a name="228"></a>     PowerUp=<span class="source_type">Class</span><span class="source_name">'KFStoryGame.KF_StoryInventoryPickup'</span>
+<a name="229"></a>     DrawType=DT_StaticMesh
+<a name="230"></a>     <span class="source_type">StaticMesh</span>=<span class="source_type">StaticMesh</span><span class="source_name">'DetailSM.Crates.WoodBox_B'</span>
+<a name="231"></a>     bUseDynamicLights=True
+<a name="232"></a>     bStatic=False
+<a name="233"></a>     bHidden=True
+<a name="234"></a>     bNoDelete=True
+<a name="235"></a>     bNetInitialRotation=True
+<a name="236"></a>     PrePivot=(<span class="source_type">Z</span>=<span class="source_int">10.000000</span>)
+<a name="237"></a>     CollisionRadius=<span class="source_int">30.000000</span>
+<a name="238"></a>     CollisionHeight=<span class="source_int">10.000000</span>
+<a name="239"></a>}
+<a name="240"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfstorygame/kfstorygame-overview.html">Package</a></td>
+	<td class="header"><a href="../kfstorygame/kf_placeablestorypickup.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KF_PlaceableStoryPickup">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfstorygame/kf_pawnwelder.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfstorygame/kf_storycheckpointvolume.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:04.563 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

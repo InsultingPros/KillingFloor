@@ -1,0 +1,637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - ROEngine.ROTankCannon</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roengine/roengine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_roengine/rotankcannon.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#ROTankCannon">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../roengine/rosuicided.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../roengine/rotankshellexplosiondamage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#roengine/rotankcannon.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../roengine/roengine-overview.html">ROEngine</a>.ROTankCannon</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../roengine/rovehicleweapon.html">ROVehicleWeapon</a></dd>
+<dt>Modifiers</dt><dd>abstract </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/vehicleweapon.html">VehicleWeapon</a>
+      |   
+      +-- <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rovehicleweapon.html">ROVehicleWeapon</a>
+         |   
+         +-- <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rotankcannon.html">ROTankCannon</a>
+</pre>
+
+
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bCannonShellDebugging" name="bCannonShellDebugging" title="go to the details">bCannonShellDebugging</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bClientCanFireCannon" name="bClientCanFireCannon" title="go to the details">bClientCanFireCannon</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/emitter.html">Emitter</a></td><td width="66%"><a href="#_CannonDustEmitter" name="CannonDustEmitter" title="go to the details">CannonDustEmitter</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../roengine/rotankcannon.html#ECannonReloadState">ECannonReloadState</a></td><td width="66%"><a href="#_CannonReloadState" name="CannonReloadState" title="go to the details">CannonReloadState</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_NumAltMags" name="NumAltMags" title="go to the details">NumAltMags</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;string&gt;</td><td width="66%"><a href="#_ProjectileDescriptions" name="ProjectileDescriptions" title="go to the details">ProjectileDescriptions</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_TankShootClosedAnim" name="TankShootClosedAnim" title="go to the details">TankShootClosedAnim</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_TankShootOpenAnim" name="TankShootOpenAnim" title="go to the details">TankShootOpenAnim</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_TraceHitLocation" name="TraceHitLocation" title="go to the details">TraceHitLocation</a></td></tr>
+<tr><th colspan="2" class="small">ROTankCannon</th></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_AddedPitch" name="AddedPitch" title="go to the details">AddedPitch</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/emitter.html">Emitter</a>&gt;</td><td width="66%"><a href="#_CannonDustEmitterClass" name="CannonDustEmitterClass" title="go to the details">CannonDustEmitterClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_CannonFireSound[3]" name="CannonFireSound[3]" title="go to the details">CannonFireSound[3]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MaxDriverHitAngle" name="MaxDriverHitAngle" title="go to the details">MaxDriverHitAngle</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/projectile.html">Projectile</a>&gt;</td><td width="66%"><a href="#_PendingProjectileClass" name="PendingProjectileClass" title="go to the details">PendingProjectileClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;int&gt;</td><td width="66%"><a href="#_RangeSettings" name="RangeSettings" title="go to the details">RangeSettings</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_ReloadSound" name="ReloadSound" title="go to the details">ReloadSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_ReloadSoundFour" name="ReloadSoundFour" title="go to the details">ReloadSoundFour</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_ReloadSoundOne" name="ReloadSoundOne" title="go to the details">ReloadSoundOne</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_ReloadSoundThree" name="ReloadSoundThree" title="go to the details">ReloadSoundThree</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_ReloadSoundTwo" name="ReloadSoundTwo" title="go to the details">ReloadSoundTwo</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rovehicleweapon.html">ROVehicleWeapon</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/rovehicleweapon.html#bAltFireTracersOnly">bAltFireTracersOnly</a>, <a href="../roengine/rovehicleweapon.html#bIsMountedTankMG">bIsMountedTankMG</a>, <a href="../roengine/rovehicleweapon.html#bUsesTracers">bUsesTracers</a>, <a href="../roengine/rovehicleweapon.html#DummyTracerClass">DummyTracerClass</a>, <a href="../roengine/rovehicleweapon.html#hudAltAmmoIcon">hudAltAmmoIcon</a>, <a href="../roengine/rovehicleweapon.html#mLastTracerTime">mLastTracerTime</a>, <a href="../roengine/rovehicleweapon.html#mTracerInterval">mTracerInterval</a>, <a href="../roengine/rovehicleweapon.html#VehHitpoints">VehHitpoints</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/vehicleweapon.html">VehicleWeapon</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/vehicleweapon.html#AIInfo[2]">AIInfo[2]</a>, <a href="../roengine/vehicleweapon.html#AimLockReleaseTime">AimLockReleaseTime</a>, <a href="../roengine/vehicleweapon.html#AimTraceRange">AimTraceRange</a>, <a href="../roengine/vehicleweapon.html#AltAmmoCharge">AltAmmoCharge</a>, <a href="../roengine/vehicleweapon.html#AltFireEndSound">AltFireEndSound</a>, <a href="../roengine/vehicleweapon.html#AltFireForce">AltFireForce</a>, <a href="../roengine/vehicleweapon.html#AltFireInterval">AltFireInterval</a>, <a href="../roengine/vehicleweapon.html#AltFireOffset">AltFireOffset</a>, <a href="../roengine/vehicleweapon.html#AltFireProjectileClass">AltFireProjectileClass</a>, <a href="../roengine/vehicleweapon.html#AltFireSoundClass">AltFireSoundClass</a>, <a href="../roengine/vehicleweapon.html#AltFireSoundRadius">AltFireSoundRadius</a>, <a href="../roengine/vehicleweapon.html#AltFireSoundScaling">AltFireSoundScaling</a>, <a href="../roengine/vehicleweapon.html#AltFireSoundVolume">AltFireSoundVolume</a>, <a href="../roengine/vehicleweapon.html#AltFireSpread">AltFireSpread</a>, <a href="../roengine/vehicleweapon.html#AltShakeOffsetMag">AltShakeOffsetMag</a>, <a href="../roengine/vehicleweapon.html#AltShakeOffsetRate">AltShakeOffsetRate</a>, <a href="../roengine/vehicleweapon.html#AltShakeOffsetTime">AltShakeOffsetTime</a>, <a href="../roengine/vehicleweapon.html#AltShakeRotMag">AltShakeRotMag</a>, <a href="../roengine/vehicleweapon.html#AltShakeRotRate">AltShakeRotRate</a>, <a href="../roengine/vehicleweapon.html#AltShakeRotTime">AltShakeRotTime</a>, <a href="../roengine/vehicleweapon.html#AmbientEffectEmitter">AmbientEffectEmitter</a>, <a href="../roengine/vehicleweapon.html#AmbientEffectEmitterClass">AmbientEffectEmitterClass</a>, <a href="../roengine/vehicleweapon.html#AmbientSoundScaling">AmbientSoundScaling</a>, <a href="../roengine/vehicleweapon.html#bActive">bActive</a>, <a href="../roengine/vehicleweapon.html#bAimable">bAimable</a>, <a href="../roengine/vehicleweapon.html#bAmbientAltFireSound">bAmbientAltFireSound</a>, <a href="../roengine/vehicleweapon.html#bAmbientEmitterAltFireOnly">bAmbientEmitterAltFireOnly</a>, <a href="../roengine/vehicleweapon.html#bAmbientFireSound">bAmbientFireSound</a>, <a href="../roengine/vehicleweapon.html#bCallInstigatorPostRender">bCallInstigatorPostRender</a>, <a href="../roengine/vehicleweapon.html#bCorrectAim">bCorrectAim</a>, <a href="../roengine/vehicleweapon.html#bDoOffsetTrace">bDoOffsetTrace</a>, <a href="../roengine/vehicleweapon.html#bDualIndependantTargeting">bDualIndependantTargeting</a>, <a href="../roengine/vehicleweapon.html#BeginningIdleAnim">BeginningIdleAnim</a>, <a href="../roengine/vehicleweapon.html#bFiredPendingPrimary">bFiredPendingPrimary</a>, <a href="../roengine/vehicleweapon.html#bForceCenterAim">bForceCenterAim</a>, <a href="../roengine/vehicleweapon.html#bInheritVelocity">bInheritVelocity</a>, <a href="../roengine/vehicleweapon.html#bInstantFire">bInstantFire</a>, <a href="../roengine/vehicleweapon.html#bInstantRotation">bInstantRotation</a>, <a href="../roengine/vehicleweapon.html#bIsAltFire">bIsAltFire</a>, <a href="../roengine/vehicleweapon.html#bIsRepeatingFF">bIsRepeatingFF</a>, <a href="../roengine/vehicleweapon.html#bLimitYaw">bLimitYaw</a>, <a href="../roengine/vehicleweapon.html#bMultipleRoundTypes">bMultipleRoundTypes</a>, <a href="../roengine/vehicleweapon.html#bPrimaryIgnoreFireCountdown">bPrimaryIgnoreFireCountdown</a>, <a href="../roengine/vehicleweapon.html#bReflective">bReflective</a>, <a href="../roengine/vehicleweapon.html#bRotateSoundFromPawn">bRotateSoundFromPawn</a>, <a href="../roengine/vehicleweapon.html#bShowAimCrosshair">bShowAimCrosshair</a>, <a href="../roengine/vehicleweapon.html#bShowChargingBar">bShowChargingBar</a>, <a href="../roengine/vehicleweapon.html#bUseTankTurretRotation">bUseTankTurretRotation</a>, <a href="../roengine/vehicleweapon.html#CurrentAim">CurrentAim</a>, <a href="../roengine/vehicleweapon.html#CurrentHitLocation">CurrentHitLocation</a>, <a href="../roengine/vehicleweapon.html#CurrentRangeIndex">CurrentRangeIndex</a>, <a href="../roengine/vehicleweapon.html#CustomPitchDownLimit">CustomPitchDownLimit</a>, <a href="../roengine/vehicleweapon.html#CustomPitchUpLimit">CustomPitchUpLimit</a>, <a href="../roengine/vehicleweapon.html#DamageMax">DamageMax</a>, <a href="../roengine/vehicleweapon.html#DamageMin">DamageMin</a>, <a href="../roengine/vehicleweapon.html#DamageType">DamageType</a>, <a href="../roengine/vehicleweapon.html#DebugInfo">DebugInfo</a>, <a href="../roengine/vehicleweapon.html#DualFireOffset">DualFireOffset</a>, <a href="../roengine/vehicleweapon.html#EffectEmitter">EffectEmitter</a>, <a href="../roengine/vehicleweapon.html#EffectEmitterClass">EffectEmitterClass</a>, <a href="../roengine/vehicleweapon.html#FireCountdown">FireCountdown</a>, <a href="../roengine/vehicleweapon.html#FireEndSound">FireEndSound</a>, <a href="../roengine/vehicleweapon.html#FireForce">FireForce</a>, <a href="../roengine/vehicleweapon.html#FireInterval">FireInterval</a>, <a href="../roengine/vehicleweapon.html#FireIntervalAimLock">FireIntervalAimLock</a>, <a href="../roengine/vehicleweapon.html#FireSoundClass">FireSoundClass</a>, <a href="../roengine/vehicleweapon.html#FireSoundPitch">FireSoundPitch</a>, <a href="../roengine/vehicleweapon.html#FireSoundRadius">FireSoundRadius</a>, <a href="../roengine/vehicleweapon.html#FireSoundVolume">FireSoundVolume</a>, <a href="../roengine/vehicleweapon.html#FiringMode">FiringMode</a>, <a href="../roengine/vehicleweapon.html#FlashCount">FlashCount</a>, <a href="../roengine/vehicleweapon.html#FlashEmitter">FlashEmitter</a>, <a href="../roengine/vehicleweapon.html#FlashEmitterClass">FlashEmitterClass</a>, <a href="../roengine/vehicleweapon.html#GunnerAttachmentBone">GunnerAttachmentBone</a>, <a href="../roengine/vehicleweapon.html#HitCount">HitCount</a>, <a href="../roengine/vehicleweapon.html#InitialAltAmmo">InitialAltAmmo</a>, <a href="../roengine/vehicleweapon.html#InitialPrimaryAmmo">InitialPrimaryAmmo</a>, <a href="../roengine/vehicleweapon.html#InitialSecondaryAmmo">InitialSecondaryAmmo</a>, <a href="../roengine/vehicleweapon.html#LastHitLocation">LastHitLocation</a>, <a href="../roengine/vehicleweapon.html#LastRotation">LastRotation</a>, <a href="../roengine/vehicleweapon.html#MainAmmoCharge[2]">MainAmmoCharge[2]</a>, <a href="../roengine/vehicleweapon.html#MaxNegativeYaw">MaxNegativeYaw</a>, <a href="../roengine/vehicleweapon.html#MaxPositiveYaw">MaxPositiveYaw</a>, <a href="../roengine/vehicleweapon.html#Momentum">Momentum</a>, <a href="../roengine/vehicleweapon.html#OldFlashCount">OldFlashCount</a>, <a href="../roengine/vehicleweapon.html#OldHitCount">OldHitCount</a>, <a href="../roengine/vehicleweapon.html#PitchBone">PitchBone</a>, <a href="../roengine/vehicleweapon.html#PitchDownLimit">PitchDownLimit</a>, <a href="../roengine/vehicleweapon.html#PitchUpLimit">PitchUpLimit</a>, <a href="../roengine/vehicleweapon.html#PrimaryProjectileClass">PrimaryProjectileClass</a>, <a href="../roengine/vehicleweapon.html#ProjectileClass">ProjectileClass</a>, <a href="../roengine/vehicleweapon.html#Projectiles">Projectiles</a>, <a href="../roengine/vehicleweapon.html#RotateSound">RotateSound</a>, <a href="../roengine/vehicleweapon.html#RotateSoundThreshold">RotateSoundThreshold</a>, <a href="../roengine/vehicleweapon.html#RotationsPerSecond">RotationsPerSecond</a>, <a href="../roengine/vehicleweapon.html#SavedFireProperties[2]">SavedFireProperties[2]</a>, <a href="../roengine/vehicleweapon.html#SecondaryProjectileClass">SecondaryProjectileClass</a>, <a href="../roengine/vehicleweapon.html#ShakeOffsetMag">ShakeOffsetMag</a>, <a href="../roengine/vehicleweapon.html#ShakeOffsetRate">ShakeOffsetRate</a>, <a href="../roengine/vehicleweapon.html#ShakeOffsetTime">ShakeOffsetTime</a>, <a href="../roengine/vehicleweapon.html#ShakeRotMag">ShakeRotMag</a>, <a href="../roengine/vehicleweapon.html#ShakeRotRate">ShakeRotRate</a>, <a href="../roengine/vehicleweapon.html#ShakeRotTime">ShakeRotTime</a>, <a href="../roengine/vehicleweapon.html#Spread">Spread</a>, <a href="../roengine/vehicleweapon.html#TraceRange">TraceRange</a>, <a href="../roengine/vehicleweapon.html#WeaponFireAttachmentBone">WeaponFireAttachmentBone</a>, <a href="../roengine/vehicleweapon.html#WeaponFireLocation">WeaponFireLocation</a>, <a href="../roengine/vehicleweapon.html#WeaponFireOffset">WeaponFireOffset</a>, <a href="../roengine/vehicleweapon.html#WeaponFireRotation">WeaponFireRotation</a>, <a href="../roengine/vehicleweapon.html#WeaponOffset">WeaponOffset</a>, <a href="../roengine/vehicleweapon.html#YawBone">YawBone</a>, <a href="../roengine/vehicleweapon.html#YawConstraintDelta">YawConstraintDelta</a>, <a href="../roengine/vehicleweapon.html#YawEndConstraint">YawEndConstraint</a>, <a href="../roengine/vehicleweapon.html#YawStartConstraint">YawStartConstraint</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+<tr><td><a href="#_ECannonReloadState" name="ECannonReloadState" title="go to the details">ECannonReloadState</a><br /><span class="small">CR_Waiting,
+CR_Empty,
+CR_ReloadedPart1,
+CR_ReloadedPart2,
+CR_ReloadedPart3,
+CR_ReloadedPart4,
+CR_ReadyToFire,
+</span></td></tr>
+
+</table>
+
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rovehicleweapon.html">ROVehicleWeapon</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/rovehicleweapon.html#Hitpoint">Hitpoint</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/vehicleweapon.html">VehicleWeapon</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/vehicleweapon.html#VehicleWeaponAIInfo">VehicleWeaponAIInfo</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AnimEnd-ProjectileFireMode" name="AnimEnd" title="go to the details">AnimEnd</a> (int channel))<br /><span class="function_state">ProjectileFireMode</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>bool&nbsp;</td><td><a href="#_AttemptFire-" name="AttemptFire" title="go to the details">AttemptFire</a> (<a href="../engine/controller.html">Controller</a> C, bool bAltFire))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_BelowDriverAngle-" name="BelowDriverAngle" title="go to the details">BelowDriverAngle</a> (<a href="../core/object.html#Vector">vector</a> loc, <a href="../core/object.html#Vector">vector</a> ray))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>byte&nbsp;</td><td><a href="#_BestMode-" name="BestMode" title="go to the details">BestMode</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CeaseFire-" name="CeaseFire" title="go to the details">CeaseFire</a> (<a href="../engine/controller.html">Controller</a> C, bool bWasAltFire))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ClientDoReload-" name="ClientDoReload" title="go to the details">ClientDoReload</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ClientSetReloadState-" name="ClientSetReloadState" title="go to the details">ClientSetReloadState</a> (ECannonReloadState NewState ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ClientStartFire-" name="ClientStartFire" title="go to the details">ClientStartFire</a> (<a href="../engine/controller.html">Controller</a> C, bool bAltFire))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DecrementRange-" name="DecrementRange" title="go to the details">DecrementRange</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DestroyEffects-" name="DestroyEffects" title="go to the details">DestroyEffects</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_FlashMuzzleFlash-" name="FlashMuzzleFlash" title="go to the details">FlashMuzzleFlash</a> (bool bWasAltFire))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_getNumMags-" name="getNumMags" title="go to the details">getNumMags</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_GetPendingRoundIndex-" name="GetPendingRoundIndex" title="go to the details">GetPendingRoundIndex</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_GetRange-" name="GetRange" title="go to the details">GetRange</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_GetRoundsDescription-" name="GetRoundsDescription" title="go to the details">GetRoundsDescription</a> (out array&lt;string&gt; descriptions))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_GiveInitialAmmo-" name="GiveInitialAmmo" title="go to the details">GiveInitialAmmo</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_HandleReload-" name="HandleReload" title="go to the details">HandleReload</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_HandleShellDebug-" name="HandleShellDebug" title="go to the details">HandleShellDebug</a> (<a href="../core/object.html#Vector">vector</a> RealHitLocation))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_IncrementRange-" name="IncrementRange" title="go to the details">IncrementRange</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_OwnerEffects-" name="OwnerEffects" title="go to the details">OwnerEffects</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ReadyToFire-" name="ReadyToFire" title="go to the details">ReadyToFire</a> (bool bAltFire))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ServerManualReload-" name="ServerManualReload" title="go to the details">ServerManualReload</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/projectile.html">Projectile</a>&nbsp;</td><td><a href="#_SpawnProjectile-" name="SpawnProjectile" title="go to the details">SpawnProjectile</a> (class&lt;<a href="../engine/projectile.html">Projectile</a>&gt; ProjClass, bool bAltFire))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StaticPrecache-" name="StaticPrecache" title="go to the details">StaticPrecache</a> (<a href="../engine/levelinfo.html">LevelInfo</a> L))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ToggleRoundType-" name="ToggleRoundType" title="go to the details">ToggleRoundType</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UpdatePrecacheMaterials-" name="UpdatePrecacheMaterials" title="go to the details">UpdatePrecacheMaterials</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UpdatePrecacheStaticMeshes-" name="UpdatePrecacheStaticMeshes" title="go to the details">UpdatePrecacheStaticMeshes</a> ()))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rovehicleweapon.html">ROVehicleWeapon</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/rovehicleweapon.html#AltFire">AltFire</a>, <a href="../roengine/rovehicleweapon.html#AnimEnd">AnimEnd</a>, <a href="../roengine/rovehicleweapon.html#BelowDriverAngle">BelowDriverAngle</a>, <a href="../roengine/rovehicleweapon.html#ClientSpawnHitEffects">ClientSpawnHitEffects</a>, <a href="../roengine/rovehicleweapon.html#Fire">Fire</a>, <a href="../roengine/rovehicleweapon.html#FlashMuzzleFlash">FlashMuzzleFlash</a>, <a href="../roengine/rovehicleweapon.html#getNumMags">getNumMags</a>, <a href="../roengine/rovehicleweapon.html#HitDriver">HitDriver</a>, <a href="../roengine/rovehicleweapon.html#HitDriverArea">HitDriverArea</a>, <a href="../roengine/rovehicleweapon.html#IsPointShot">IsPointShot</a>, <a href="../roengine/rovehicleweapon.html#LimitYaw">LimitYaw</a>, <a href="../roengine/rovehicleweapon.html#OwnerEffects">OwnerEffects</a>, <a href="../roengine/rovehicleweapon.html#SpawnHitEffects">SpawnHitEffects</a>, <a href="../roengine/rovehicleweapon.html#TakeDamage">TakeDamage</a>, <a href="../roengine/rovehicleweapon.html#tick">tick</a>, <a href="../roengine/rovehicleweapon.html#UpdateTracer">UpdateTracer</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/vehicleweapon.html">VehicleWeapon</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/vehicleweapon.html#AdjustAim">AdjustAim</a>, <a href="../roengine/vehicleweapon.html#AltAmmoCount">AltAmmoCount</a>, <a href="../roengine/vehicleweapon.html#AltFire">AltFire</a>, <a href="../roengine/vehicleweapon.html#AttemptFire">AttemptFire</a>, <a href="../roengine/vehicleweapon.html#BestMode">BestMode</a>, <a href="../roengine/vehicleweapon.html#CalcWeaponFire">CalcWeaponFire</a>, <a href="../roengine/vehicleweapon.html#CanAttack">CanAttack</a>, <a href="../roengine/vehicleweapon.html#CeaseFire">CeaseFire</a>, <a href="../roengine/vehicleweapon.html#ChargeBar">ChargeBar</a>, <a href="../roengine/vehicleweapon.html#ClientPlayForceFeedback">ClientPlayForceFeedback</a>, <a href="../roengine/vehicleweapon.html#ClientSpawnHitEffects">ClientSpawnHitEffects</a>, <a href="../roengine/vehicleweapon.html#ClientStartFire">ClientStartFire</a>, <a href="../roengine/vehicleweapon.html#ClientStopFire">ClientStopFire</a>, <a href="../roengine/vehicleweapon.html#ConsumeAmmo">ConsumeAmmo</a>, <a href="../roengine/vehicleweapon.html#CustomLimitPitch">CustomLimitPitch</a>, <a href="../roengine/vehicleweapon.html#DecrementRange">DecrementRange</a>, <a href="../roengine/vehicleweapon.html#Destroyed">Destroyed</a>, <a href="../roengine/vehicleweapon.html#DestroyEffects">DestroyEffects</a>, <a href="../roengine/vehicleweapon.html#DisplayDebug">DisplayDebug</a>, <a href="../roengine/vehicleweapon.html#DoCombo">DoCombo</a>, <a href="../roengine/vehicleweapon.html#Fire">Fire</a>, <a href="../roengine/vehicleweapon.html#FlashMuzzleFlash">FlashMuzzleFlash</a>, <a href="../roengine/vehicleweapon.html#GetRange">GetRange</a>, <a href="../roengine/vehicleweapon.html#GetRoundDescription">GetRoundDescription</a>, <a href="../roengine/vehicleweapon.html#GiveInitialAmmo">GiveInitialAmmo</a>, <a href="../roengine/vehicleweapon.html#HasAmmo">HasAmmo</a>, <a href="../roengine/vehicleweapon.html#IncrementRange">IncrementRange</a>, <a href="../roengine/vehicleweapon.html#InitEffects">InitEffects</a>, <a href="../roengine/vehicleweapon.html#LimitPitch">LimitPitch</a>, <a href="../roengine/vehicleweapon.html#MaxRange">MaxRange</a>, <a href="../roengine/vehicleweapon.html#OwnerEffects">OwnerEffects</a>, <a href="../roengine/vehicleweapon.html#PostBeginPlay">PostBeginPlay</a>, <a href="../roengine/vehicleweapon.html#PostNetBeginPlay">PostNetBeginPlay</a>, <a href="../roengine/vehicleweapon.html#PrimaryAmmoCount">PrimaryAmmoCount</a>, <a href="../roengine/vehicleweapon.html#ReadyToFire">ReadyToFire</a>, <a href="../roengine/vehicleweapon.html#SetFireRateModifier">SetFireRateModifier</a>, <a href="../roengine/vehicleweapon.html#SetGRI">SetGRI</a>, <a href="../roengine/vehicleweapon.html#ShakeView">ShakeView</a>, <a href="../roengine/vehicleweapon.html#SimulateTraceFire">SimulateTraceFire</a>, <a href="../roengine/vehicleweapon.html#SpawnBeamEffect">SpawnBeamEffect</a>, <a href="../roengine/vehicleweapon.html#SpawnHitEffects">SpawnHitEffects</a>, <a href="../roengine/vehicleweapon.html#SpawnProjectile">SpawnProjectile</a>, <a href="../roengine/vehicleweapon.html#StaticPrecache">StaticPrecache</a>, <a href="../roengine/vehicleweapon.html#StopForceFeedback">StopForceFeedback</a>, <a href="../roengine/vehicleweapon.html#TraceFire">TraceFire</a>, <a href="../roengine/vehicleweapon.html#WeaponCeaseFire">WeaponCeaseFire</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">States Summary</th>
+</tr>
+</table>
+
+<table>
+<tr>
+	<th>ProjectileFireMode <a href="../Source_roengine/rotankcannon.html#703" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> ProjectileFireMode <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_AnimEnd+ProjectileFireMode">AnimEnd</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_bCannonShellDebugging" class="hidden"></a>bCannonShellDebugging <a href="../Source_roengine/rotankcannon.html#52" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bCannonShellDebugging;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bClientCanFireCannon" class="hidden"></a>bClientCanFireCannon <a href="../Source_roengine/rotankcannon.html#35" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bClientCanFireCannon;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CannonDustEmitter" class="hidden"></a>CannonDustEmitter <a href="../Source_roengine/rotankcannon.html#46" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span> CannonDustEmitter;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CannonReloadState" class="hidden"></a>CannonReloadState <a href="../Source_roengine/rotankcannon.html#24" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../roengine/rotankcannon.html#ECannonReloadState" class="source">ECannonReloadState</a></span> CannonReloadState;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NumAltMags" class="hidden"></a>NumAltMags <a href="../Source_roengine/rotankcannon.html#56" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> NumAltMags;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ProjectileDescriptions" class="hidden"></a>ProjectileDescriptions <a href="../Source_roengine/rotankcannon.html#43" class="small">Source code</a></h4>
+<div class="declaration">var localized array&lt;<span class="source_type">string</span>&gt; ProjectileDescriptions;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TankShootClosedAnim" class="hidden"></a>TankShootClosedAnim <a href="../Source_roengine/rotankcannon.html#37" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> TankShootClosedAnim;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TankShootOpenAnim" class="hidden"></a>TankShootOpenAnim <a href="../Source_roengine/rotankcannon.html#38" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> TankShootOpenAnim;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TraceHitLocation" class="hidden"></a>TraceHitLocation <a href="../Source_roengine/rotankcannon.html#53" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> TraceHitLocation;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">ROTankCannon</h3>
+<h4><a name="_AddedPitch" class="hidden"></a>AddedPitch <a href="../Source_roengine/rotankcannon.html#50" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type">int</span> AddedPitch;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CannonDustEmitterClass" class="hidden"></a>CannonDustEmitterClass <a href="../Source_roengine/rotankcannon.html#45" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span>&gt; CannonDustEmitterClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CannonFireSound[3]" class="hidden"></a>CannonFireSound[3] <a href="../Source_roengine/rotankcannon.html#22" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> CannonFireSound[<span class="source_int">3</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxDriverHitAngle" class="hidden"></a>MaxDriverHitAngle <a href="../Source_roengine/rotankcannon.html#40" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type">float</span> MaxDriverHitAngle;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PendingProjectileClass" class="hidden"></a>PendingProjectileClass <a href="../Source_roengine/rotankcannon.html#58" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/projectile.html" class="source">Projectile</a></span>&gt; PendingProjectileClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RangeSettings" class="hidden"></a>RangeSettings <a href="../Source_roengine/rotankcannon.html#49" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) array&lt;<span class="source_type">int</span>&gt; RangeSettings;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReloadSound" class="hidden"></a>ReloadSound <a href="../Source_roengine/rotankcannon.html#55" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ReloadSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReloadSoundFour" class="hidden"></a>ReloadSoundFour <a href="../Source_roengine/rotankcannon.html#20" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ReloadSoundFour;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReloadSoundOne" class="hidden"></a>ReloadSoundOne <a href="../Source_roengine/rotankcannon.html#17" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ReloadSoundOne;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReloadSoundThree" class="hidden"></a>ReloadSoundThree <a href="../Source_roengine/rotankcannon.html#19" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ReloadSoundThree;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReloadSoundTwo" class="hidden"></a>ReloadSoundTwo <a href="../Source_roengine/rotankcannon.html#18" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ReloadSoundTwo;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Enumerations Detail</th>
+</tr>
+</table>
+
+<h4><a name="_ECannonReloadState" class="hidden"></a>ECannonReloadState <a href="../Source_roengine/rotankcannon.html#24" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../roengine/rotankcannon.html#ECannonReloadState" class="source">ECannonReloadState</a></span><br />
+{<blockquote>CR_Waiting,
+CR_Empty,
+CR_ReloadedPart1,
+CR_ReloadedPart2,
+CR_ReloadedPart3,
+CR_ReloadedPart4,
+CR_ReadyToFire,
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_AnimEnd-ProjectileFireMode" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AnimEnd <span class="function_state">ProjectileFireMode</span> <a href="../Source_roengine/rotankcannon.html#706" class="small">Source code</a></h4>
+<div class="declaration">simulated function  AnimEnd ( <span class="source_type">int</span> <span class="source_type">channel</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AttemptFire-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> AttemptFire <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#564" class="small">Source code</a></h4>
+<div class="declaration"> event <span class="source_type">bool</span> AttemptFire ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>, <span class="source_type">bool</span> bAltFire) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BelowDriverAngle-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BelowDriverAngle <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#216" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">bool</span> BelowDriverAngle ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> loc, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ray) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BestMode-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BestMode <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#694" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">byte</span> BestMode ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CeaseFire-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CeaseFire <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#81" class="small">Source code</a></h4>
+<div class="declaration"> function  CeaseFire ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>, <span class="source_type">bool</span> bWasAltFire) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClientDoReload-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ClientDoReload <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#104" class="small">Source code</a></h4>
+<div class="declaration">simulated function  ClientDoReload ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClientSetReloadState-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ClientSetReloadState <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#558" class="small">Source code</a></h4>
+<div class="declaration">simulated function  ClientSetReloadState ( <span class="source_type"><a href="../roengine/rotankcannon.html#ECannonReloadState" class="source">ECannonReloadState</a></span> <span class="source_type">NewState</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClientStartFire-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ClientStartFire <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#500" class="small">Source code</a></h4>
+<div class="declaration">simulated function  ClientStartFire ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>, <span class="source_type">bool</span> bAltFire) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DecrementRange-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DecrementRange <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#146" class="small">Source code</a></h4>
+<div class="declaration"> function  DecrementRange ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DestroyEffects-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DestroyEffects <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#761" class="small">Source code</a></h4>
+<div class="declaration">simulated function  DestroyEffects ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FlashMuzzleFlash-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> FlashMuzzleFlash <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#717" class="small">Source code</a></h4>
+<div class="declaration">simulated event  FlashMuzzleFlash ( <span class="source_type">bool</span> bWasAltFire) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_getNumMags-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> getNumMags <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#769" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">int</span> getNumMags ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetPendingRoundIndex-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetPendingRoundIndex <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#175" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">int</span> GetPendingRoundIndex ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetRange-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetRange <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#130" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">int</span> GetRange ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetRoundsDescription-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetRoundsDescription <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#159" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">int</span> GetRoundsDescription ( out array&lt;<span class="source_type">string</span>&gt; descriptions) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GiveInitialAmmo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GiveInitialAmmo <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#110" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> GiveInitialAmmo ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HandleReload-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> HandleReload <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#89" class="small">Source code</a></h4>
+<div class="declaration"> function  HandleReload ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HandleShellDebug-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> HandleShellDebug <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#493" class="small">Source code</a></h4>
+<div class="declaration">simulated function  HandleShellDebug ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RealHitLocation) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_IncrementRange-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> IncrementRange <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#135" class="small">Source code</a></h4>
+<div class="declaration"> function  IncrementRange ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OwnerEffects-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> OwnerEffects <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#330" class="small">Source code</a></h4>
+<div class="declaration">simulated event  OwnerEffects ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReadyToFire-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ReadyToFire <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#518" class="small">Source code</a></h4>
+<div class="declaration">simulated function <span class="source_type">bool</span> ReadyToFire ( <span class="source_type">bool</span> bAltFire) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerManualReload-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ServerManualReload <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#538" class="small">Source code</a></h4>
+<div class="declaration"> function  ServerManualReload ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnProjectile-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnProjectile <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#403" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/projectile.html" class="source">Projectile</a></span> SpawnProjectile ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/projectile.html" class="source">Projectile</a></span>&gt; ProjClass, <span class="source_type">bool</span> bAltFire) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StaticPrecache-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StaticPrecache <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#665" class="small">Source code</a></h4>
+<div class="declaration">static function  StaticPrecache ( <span class="source_type"><a href="../engine/levelinfo.html" class="source">LevelInfo</a></span> L) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#255" class="small">Source code</a></h4>
+<div class="declaration">simulated function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ToggleRoundType-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ToggleRoundType <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#197" class="small">Source code</a></h4>
+<div class="declaration"> function  ToggleRoundType ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpdatePrecacheMaterials-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UpdatePrecacheMaterials <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#674" class="small">Source code</a></h4>
+<div class="declaration">simulated function  UpdatePrecacheMaterials ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpdatePrecacheStaticMeshes-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UpdatePrecacheStaticMeshes <span class="function_state"></span> <a href="../Source_roengine/rotankcannon.html#685" class="small">Source code</a></h4>
+<div class="declaration">simulated function  UpdatePrecacheStaticMeshes ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     CannonReloadState=CR_ReadyToFire
+     bClientCanFireCannon=True
+     TankShootClosedAnim=<span class="source_string">"shoot_close"</span>
+     TankShootOpenAnim=<span class="source_string">"shoot_open"</span>
+     MaxDriverHitAngle=<span class="source_int">2.500000</span>
+     ProjectileDescriptions(<span class="source_int">0</span>)=<span class="source_string">"AP"</span>
+     ProjectileDescriptions(<span class="source_int">1</span>)=<span class="source_string">"HE"</span>
+     CannonDustEmitterClass=<span class="source_type">Class</span><span class="source_name">'ROEffects.TankCannonDust'</span>
+     hudAltAmmoIcon=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.HUD.dp27_ammo'</span>
+     bShowAimCrosshair=False
+     AltFireSpread=<span class="source_int">0.015000</span>
+     FireSoundRadius=<span class="source_int">4000.000000</span>
+     RotateSoundThreshold=<span class="source_int">750.000000</span>
+     AIInfo(<span class="source_int">0</span>)=(aimerror=<span class="source_int">0.000000</span>,RefireRate=<span class="source_int">5.000000</span>)
+     bRotateSoundFromPawn=True
+     bUseTankTurretRotation=True
+     bMultipleRoundTypes=True
+     bPrimaryIgnoreFireCountdown=True
+     bCollideActors=True
+     bBlockActors=True
+     bProjTarget=True
+     bBlockZeroExtentTraces=True
+     bBlockNonZeroExtentTraces=True
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roengine/roengine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_roengine/rotankcannon.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#ROTankCannon">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../roengine/rosuicided.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../roengine/rotankshellexplosiondamage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:52.487 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

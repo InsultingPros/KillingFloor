@@ -1,0 +1,980 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - XVoting.xVotingHandler</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xvoting/xvoting-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_xvoting/xvotinghandler.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#xVotingHandler">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../xvoting/votingreplicationinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../xvoting/defaultmaplistloader.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#xvoting/xvotinghandler.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xvoting/xvoting-overview.html">XVoting</a>.xVotingHandler</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../engine/votinghandler.html">VotingHandler</a></dd>
+<dt>Modifiers</dt><dd>config </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/info.html">Info</a>
+      |   
+      +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/votinghandler.html">VotingHandler</a>
+         |   
+         +-- <a href="../xvoting/xvoting-overview.html">XVoting</a>.<a href="../xvoting/xvotinghandler.html">xVotingHandler</a>
+</pre>
+
+
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Summary</th>
+</tr>
+<tr><td width="40%"><a href="#_KICKVOTEALLOWED" name="KICKVOTEALLOWED" title="go to the details">KICKVOTEALLOWED</a></td><td width="10%">=</td><td width="50%">True</td></tr>
+<tr><td width="40%"><a href="#_MAPVOTEALLOWED" name="MAPVOTEALLOWED" title="go to the details">MAPVOTEALLOWED</a></td><td width="10%">=</td><td width="50%">True</td></tr>
+<tr><td width="40%"><a href="#_MATCHSETUPALLOWED" name="MATCHSETUPALLOWED" title="go to the details">MATCHSETUPALLOWED</a></td><td width="10%">=</td><td width="50%">False</td></tr>
+
+</table>
+
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bAutoDetectMode" name="bAutoDetectMode" title="go to the details">bAutoDetectMode</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bLevelSwitchPending" name="bLevelSwitchPending" title="go to the details">bLevelSwitchPending</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bMidGameVote" name="bMidGameVote" title="go to the details">bMidGameVote</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_GameConfigPage" name="GameConfigPage" title="go to the details">GameConfigPage</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../xvoting/mapvotehistory.html">MapVoteHistory</a></td><td width="66%"><a href="#_History" name="History" title="go to the details">History</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/votinghandler.html#KickVoteScore">KickVoteScore</a>&gt;</td><td width="66%"><a href="#_KickVoteCount" name="KickVoteCount" title="go to the details">KickVoteCount</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgAdminMapChange" name="lmsgAdminMapChange" title="go to the details">lmsgAdminMapChange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgAnonymousKickVote" name="lmsgAnonymousKickVote" title="go to the details">lmsgAnonymousKickVote</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgGameConfigColumnTitle[6]" name="lmsgGameConfigColumnTitle[6]" title="go to the details">lmsgGameConfigColumnTitle[6]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgInvalidPassword" name="lmsgInvalidPassword" title="go to the details">lmsgInvalidPassword</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgKickVote" name="lmsgKickVote" title="go to the details">lmsgKickVote</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgKickVoteAdmin" name="lmsgKickVoteAdmin" title="go to the details">lmsgKickVoteAdmin</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgMapVotedFor" name="lmsgMapVotedFor" title="go to the details">lmsgMapVotedFor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgMapVotedForWithCount" name="lmsgMapVotedForWithCount" title="go to the details">lmsgMapVotedForWithCount</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgMapWon" name="lmsgMapWon" title="go to the details">lmsgMapWon</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgMatchSetupPermission" name="lmsgMatchSetupPermission" title="go to the details">lmsgMatchSetupPermission</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgMidGameVote" name="lmsgMidGameVote" title="go to the details">lmsgMidGameVote</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_lmsgSpectatorsCantVote" name="lmsgSpectatorsCantVote" title="go to the details">lmsgSpectatorsCantVote</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_MapCount" name="MapCount" title="go to the details">MapCount</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/votinghandler.html#MapVoteMapList">MapVoteMapList</a>&gt;</td><td width="66%"><a href="#_MapList" name="MapList" title="go to the details">MapList</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_MapListConfigPage" name="MapListConfigPage" title="go to the details">MapListConfigPage</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/votinghandler.html#MapVoteScore">MapVoteScore</a>&gt;</td><td width="66%"><a href="#_MapVoteCount" name="MapVoteCount" title="go to the details">MapVoteCount</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../xvoting/mapvotehistory.html">MapVoteHistory</a>&gt;</td><td width="66%"><a href="#_MapVoteHistoryClass" name="MapVoteHistoryClass" title="go to the details">MapVoteHistoryClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../xvoting/matchconfig.html">MatchConfig</a></td><td width="66%"><a href="#_MatchProfile" name="MatchProfile" title="go to the details">MatchProfile</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../xvoting/votingreplicationinfo.html">VotingReplicationInfo</a>&gt;</td><td width="66%"><a href="#_MVRI" name="MVRI" title="go to the details">MVRI</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_PropDescription[17]" name="PropDescription[17]" title="go to the details">PropDescription[17]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_PropsDisplayText[17]" name="PropsDisplayText[17]" title="go to the details">PropsDisplayText[17]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_ScoreBoardTime" name="ScoreBoardTime" title="go to the details">ScoreBoardTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_ServerTravelString" name="ServerTravelString" title="go to the details">ServerTravelString</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_ServerTravelTime" name="ServerTravelTime" title="go to the details">ServerTravelTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_TextMessage" name="TextMessage" title="go to the details">TextMessage</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_TimeLeft" name="TimeLeft" title="go to the details">TimeLeft</a></td></tr>
+<tr><th colspan="2" class="small">xVotingHandler</th></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/votinghandler.html#AccumulationData">AccumulationData</a>&gt;</td><td width="66%"><a href="#_AccInfo" name="AccInfo" title="go to the details">AccInfo</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bAccumulationMode" name="bAccumulationMode" title="go to the details">bAccumulationMode</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bAnonymousKicking" name="bAnonymousKicking" title="go to the details">bAnonymousKicking</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bAutoOpen" name="bAutoOpen" title="go to the details">bAutoOpen</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDefaultToCurrentGameType" name="bDefaultToCurrentGameType" title="go to the details">bDefaultToCurrentGameType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bEliminationMode" name="bEliminationMode" title="go to the details">bEliminationMode</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bKickVote" name="bKickVote" title="go to the details">bKickVote</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bMapVote" name="bMapVote" title="go to the details">bMapVote</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bMatchSetup" name="bMatchSetup" title="go to the details">bMatchSetup</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bScoreMode" name="bScoreMode" title="go to the details">bScoreMode</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_CurrentGameConfig" name="CurrentGameConfig" title="go to the details">CurrentGameConfig</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_DefaultGameConfig" name="DefaultGameConfig" title="go to the details">DefaultGameConfig</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/votinghandler.html#MapVoteGameConfig">MapVoteGameConfig</a>&gt;</td><td width="66%"><a href="#_GameConfig" name="GameConfig" title="go to the details">GameConfig</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_KickPercent" name="KickPercent" title="go to the details">KickPercent</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_MapListLoaderType" name="MapListLoaderType" title="go to the details">MapListLoaderType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_MapVoteHistoryType" name="MapVoteHistoryType" title="go to the details">MapVoteHistoryType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_MidGameVotePercent" name="MidGameVotePercent" title="go to the details">MidGameVotePercent</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_MinMapCount" name="MinMapCount" title="go to the details">MinMapCount</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_RepeatLimit" name="RepeatLimit" title="go to the details">RepeatLimit</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_ScoreBoardDelay" name="ScoreBoardDelay" title="go to the details">ScoreBoardDelay</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_ServerNumber" name="ServerNumber" title="go to the details">ServerNumber</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_VoteTimeLimit" name="VoteTimeLimit" title="go to the details">VoteTimeLimit</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/info.html">Info</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/info.html#BotsGroup">BotsGroup</a>, <a href="../engine/info.html#ChatGroup">ChatGroup</a>, <a href="../engine/info.html#GameGroup">GameGroup</a>, <a href="../engine/info.html#KickVoteGroup">KickVoteGroup</a>, <a href="../engine/info.html#MapVoteGroup">MapVoteGroup</a>, <a href="../engine/info.html#RulesGroup">RulesGroup</a>, <a href="../engine/info.html#ServerGroup">ServerGroup</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/votinghandler.html">VotingHandler</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/votinghandler.html#AccumulationData">AccumulationData</a>, <a href="../engine/votinghandler.html#KickVoteScore">KickVoteScore</a>, <a href="../engine/votinghandler.html#MapHistoryInfo">MapHistoryInfo</a>, <a href="../engine/votinghandler.html#MapVoteGameConfig">MapVoteGameConfig</a>, <a href="../engine/votinghandler.html#MapVoteGameConfigLite">MapVoteGameConfigLite</a>, <a href="../engine/votinghandler.html#MapVoteMapList">MapVoteMapList</a>, <a href="../engine/votinghandler.html#MapVoteScore">MapVoteScore</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>bool&nbsp;</td><td><a href="#_AcceptPlayInfoProperty-" name="AcceptPlayInfoProperty" title="go to the details">AcceptPlayInfoProperty</a> (string PropertyName))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_AddConfigArrayItem-" name="AddConfigArrayItem" title="go to the details">AddConfigArrayItem</a> (string ConfigArrayName))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AddMap-" name="AddMap" title="go to the details">AddMap</a> (string MapName, string Mutators, string GameOptions))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_AddMapVoteReplicationInfo-" name="AddMapVoteReplicationInfo" title="go to the details">AddMapVoteReplicationInfo</a> (<a href="../engine/playercontroller.html">PlayerController</a> Player))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CloseAllVoteWindows-" name="CloseAllVoteWindows" title="go to the details">CloseAllVoteWindows</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../xvoting/matchconfig.html">MatchConfig</a>&nbsp;</td><td><a href="#_CreateMatchProfile-" name="CreateMatchProfile" title="go to the details">CreateMatchProfile</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DeleteConfigArrayItem-" name="DeleteConfigArrayItem" title="go to the details">DeleteConfigArrayItem</a> (string ConfigArrayName, int RowIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_FillPlayInfo-" name="FillPlayInfo" title="go to the details">FillPlayInfo</a> (<a href="../engine/playinfo.html">PlayInfo</a> PlayInfo))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_GetAccVote-" name="GetAccVote" title="go to the details">GetAccVote</a> (<a href="../engine/playercontroller.html">PlayerController</a> Player))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_GetConfigArrayColumnTitle-" name="GetConfigArrayColumnTitle" title="go to the details">GetConfigArrayColumnTitle</a> (string ConfigArrayName, int ColumnIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_GetConfigArrayData-" name="GetConfigArrayData" title="go to the details">GetConfigArrayData</a> (string ConfigArrayName, int RowIndex, int ColumnIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_GetConfigArrayItemCount-" name="GetConfigArrayItemCount" title="go to the details">GetConfigArrayItemCount</a> (string ConfigArrayName))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_GetDefaultMap-" name="GetDefaultMap" title="go to the details">GetDefaultMap</a> (out int mapidx, out int gameidx))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>string&nbsp;</td><td><a href="#_GetDescriptionText-" name="GetDescriptionText" title="go to the details">GetDescriptionText</a> (string PropName))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/votinghandler.html#MapVoteGameConfigLite">MapVoteGameConfigLite</a>&nbsp;</td><td><a href="#_GetGameConfig-" name="GetGameConfig" title="go to the details">GetGameConfig</a> (int p_GameConfigIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/votinghandler.html#MapVoteMapList">MapVoteMapList</a>&nbsp;</td><td><a href="#_GetMapList-" name="GetMapList" title="go to the details">GetMapList</a> (int p_MapIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_GetMVRIIndex-" name="GetMVRIIndex" title="go to the details">GetMVRIIndex</a> (<a href="../engine/playercontroller.html">PlayerController</a> Player))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>float&nbsp;</td><td><a href="#_GetPlayerScore-" name="GetPlayerScore" title="go to the details">GetPlayerScore</a> (<a href="../engine/playercontroller.html">PlayerController</a> Player))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_GetServerDetails-" name="GetServerDetails" title="go to the details">GetServerDetails</a> (out GameInfo.ServerResponseLine ServerState ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_HandleRestartGame-" name="HandleRestartGame" title="go to the details">HandleRestartGame</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_IsEnabled-" name="IsEnabled" title="go to the details">IsEnabled</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_IsValidVote-" name="IsValidVote" title="go to the details">IsValidVote</a> (int MapIndex, int GameIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_KickPlayer-" name="KickPlayer" title="go to the details">KickPlayer</a> (int PlayerIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_LoadMapList-" name="LoadMapList" title="go to the details">LoadMapList</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_MatchSetupLogin-" name="MatchSetupLogin" title="go to the details">MatchSetupLogin</a> (string UserID, string Password, <a href="../engine/actor.html">Actor</a> Requestor, out int SecLevel))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_MatchSetupLogout-" name="MatchSetupLogout" title="go to the details">MatchSetupLogout</a> (<a href="../engine/actor.html">Actor</a> Requestor))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_OpenAllVoteWindows-" name="OpenAllVoteWindows" title="go to the details">OpenAllVoteWindows</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayerExit-" name="PlayerExit" title="go to the details">PlayerExit</a> (<a href="../engine/controller.html">Controller</a> Exiting))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PlayerJoin-" name="PlayerJoin" title="go to the details">PlayerJoin</a> (<a href="../engine/playercontroller.html">PlayerController</a> Player))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PostBeginPlay-" name="PostBeginPlay" title="go to the details">PostBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PropagateValue-" name="PropagateValue" title="go to the details">PropagateValue</a> (<a href="../xvoting/votingreplicationinfo.html">VotingReplicationInfo</a> Sender, string Type, string SettingName, string NewValue ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ReloadAll-" name="ReloadAll" title="go to the details">ReloadAll</a> (optional bool bParam ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ReloadMatchConfig-" name="ReloadMatchConfig" title="go to the details">ReloadMatchConfig</a> (bool bRefreshMaps, bool bRefreshMuts, optional PlayerController Caller ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SaveAccVotes-" name="SaveAccVotes" title="go to the details">SaveAccVotes</a> (int WinningMapIndex, int WinningGameIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_SetupGameMap-" name="SetupGameMap" title="go to the details">SetupGameMap</a> (<a href="../engine/votinghandler.html#MapVoteMapList">MapVoteMapList</a> MapInfo, int GameIndex, <a href="../engine/votinghandler.html#MapHistoryInfo">MapHistoryInfo</a> MapHistoryInfo))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SubmitKickVote-" name="SubmitKickVote" title="go to the details">SubmitKickVote</a> (int PlayerID, <a href="../engine/actor.html">Actor</a> Voter))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SubmitMapVote-" name="SubmitMapVote" title="go to the details">SubmitMapVote</a> (int MapIndex, int GameIndex, <a href="../engine/actor.html">Actor</a> Voter))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TallyKickVotes-" name="TallyKickVotes" title="go to the details">TallyKickVotes</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TallyVotes-" name="TallyVotes" title="go to the details">TallyVotes</a> (bool bForceMapSwitch))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_timer-" name="timer" title="go to the details">timer</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UpdateConfigArrayItem-" name="UpdateConfigArrayItem" title="go to the details">UpdateConfigArrayItem</a> (string ConfigArrayName, int RowIndex, int ColumnIndex, string NewValue))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UpdateKickVoteCount-" name="UpdateKickVoteCount" title="go to the details">UpdateKickVoteCount</a> (int PlayerID, int VoteCountDelta))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UpdateVoteCount-" name="UpdateVoteCount" title="go to the details">UpdateVoteCount</a> (int MapIndex, int GameIndex, int VoteCount))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/votinghandler.html">VotingHandler</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/votinghandler.html#AddConfigArrayItem">AddConfigArrayItem</a>, <a href="../engine/votinghandler.html#DeleteConfigArrayItem">DeleteConfigArrayItem</a>, <a href="../engine/votinghandler.html#FillPlayInfo">FillPlayInfo</a>, <a href="../engine/votinghandler.html#GetConfigArrayColumnTitle">GetConfigArrayColumnTitle</a>, <a href="../engine/votinghandler.html#GetConfigArrayData">GetConfigArrayData</a>, <a href="../engine/votinghandler.html#GetConfigArrayItemCount">GetConfigArrayItemCount</a>, <a href="../engine/votinghandler.html#GetServerDetails">GetServerDetails</a>, <a href="../engine/votinghandler.html#HandleRestartGame">HandleRestartGame</a>, <a href="../engine/votinghandler.html#IsEnabled">IsEnabled</a>, <a href="../engine/votinghandler.html#PlayerExit">PlayerExit</a>, <a href="../engine/votinghandler.html#PlayerJoin">PlayerJoin</a>, <a href="../engine/votinghandler.html#ReloadAll">ReloadAll</a>, <a href="../engine/votinghandler.html#UpdateConfigArrayItem">UpdateConfigArrayItem</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/info.html">Info</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/info.html#AcceptPlayInfoProperty">AcceptPlayInfoProperty</a>, <a href="../engine/info.html#AllowClassRemoval">AllowClassRemoval</a>, <a href="../engine/info.html#FillPlayInfo">FillPlayInfo</a>, <a href="../engine/info.html#GetDescriptionText">GetDescriptionText</a>, <a href="../engine/info.html#GetSecurityLevel">GetSecurityLevel</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Detail</th>
+</tr>
+</table>
+
+<h4><a name="_KICKVOTEALLOWED" class="hidden"></a>KICKVOTEALLOWED <a href="../Source_xvoting/xvotinghandler.html#73" class="small">Source code</a></h4>
+<div class="declaration">const KICKVOTEALLOWED = True;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MAPVOTEALLOWED" class="hidden"></a>MAPVOTEALLOWED <a href="../Source_xvoting/xvotinghandler.html#72" class="small">Source code</a></h4>
+<div class="declaration">const MAPVOTEALLOWED = True;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MATCHSETUPALLOWED" class="hidden"></a>MATCHSETUPALLOWED <a href="../Source_xvoting/xvotinghandler.html#74" class="small">Source code</a></h4>
+<div class="declaration">const MATCHSETUPALLOWED = False;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_bAutoDetectMode" class="hidden"></a>bAutoDetectMode <a href="../Source_xvoting/xvotinghandler.html#25" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bAutoDetectMode;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bLevelSwitchPending" class="hidden"></a>bLevelSwitchPending <a href="../Source_xvoting/xvotinghandler.html#15" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bLevelSwitchPending;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bMidGameVote" class="hidden"></a>bMidGameVote <a href="../Source_xvoting/xvotinghandler.html#16" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bMidGameVote;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GameConfigPage" class="hidden"></a>GameConfigPage <a href="../Source_xvoting/xvotinghandler.html#53" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> GameConfigPage;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_History" class="hidden"></a>History <a href="../Source_xvoting/xvotinghandler.html#22" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../xvoting/mapvotehistory.html" class="source">MapVoteHistory</a></span> History;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KickVoteCount" class="hidden"></a>KickVoteCount <a href="../Source_xvoting/xvotinghandler.html#19" class="small">Source code</a></h4>
+<div class="declaration">var array&lt;<span class="source_type"><a href="../engine/votinghandler.html#KickVoteScore" class="source">KickVoteScore</a></span>&gt; KickVoteCount;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgAdminMapChange" class="hidden"></a>lmsgAdminMapChange <a href="../Source_xvoting/xvotinghandler.html#69" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgAdminMapChange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgAnonymousKickVote" class="hidden"></a>lmsgAnonymousKickVote <a href="../Source_xvoting/xvotinghandler.html#60" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgAnonymousKickVote;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgGameConfigColumnTitle[6]" class="hidden"></a>lmsgGameConfigColumnTitle[6] <a href="../Source_xvoting/xvotinghandler.html#70" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgGameConfigColumnTitle[<span class="source_int">6</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgInvalidPassword" class="hidden"></a>lmsgInvalidPassword <a href="../Source_xvoting/xvotinghandler.html#57" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgInvalidPassword;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgKickVote" class="hidden"></a>lmsgKickVote <a href="../Source_xvoting/xvotinghandler.html#59" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgKickVote;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgKickVoteAdmin" class="hidden"></a>lmsgKickVoteAdmin <a href="../Source_xvoting/xvotinghandler.html#61" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgKickVoteAdmin;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgMapVotedFor" class="hidden"></a>lmsgMapVotedFor <a href="../Source_xvoting/xvotinghandler.html#65" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgMapVotedFor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgMapVotedForWithCount" class="hidden"></a>lmsgMapVotedForWithCount <a href="../Source_xvoting/xvotinghandler.html#66" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgMapVotedForWithCount;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgMapWon" class="hidden"></a>lmsgMapWon <a href="../Source_xvoting/xvotinghandler.html#62" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgMapWon;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgMatchSetupPermission" class="hidden"></a>lmsgMatchSetupPermission <a href="../Source_xvoting/xvotinghandler.html#58" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgMatchSetupPermission;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgMidGameVote" class="hidden"></a>lmsgMidGameVote <a href="../Source_xvoting/xvotinghandler.html#63" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgMidGameVote;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_lmsgSpectatorsCantVote" class="hidden"></a>lmsgSpectatorsCantVote <a href="../Source_xvoting/xvotinghandler.html#64" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> lmsgSpectatorsCantVote;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MapCount" class="hidden"></a>MapCount <a href="../Source_xvoting/xvotinghandler.html#14" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> MapCount;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MapList" class="hidden"></a>MapList <a href="../Source_xvoting/xvotinghandler.html#21" class="small">Source code</a></h4>
+<div class="declaration">var array&lt;<span class="source_type"><a href="../engine/votinghandler.html#MapVoteMapList" class="source">MapVoteMapList</a></span>&gt; <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MapListConfigPage" class="hidden"></a>MapListConfigPage <a href="../Source_xvoting/xvotinghandler.html#54" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> MapListConfigPage;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MapVoteCount" class="hidden"></a>MapVoteCount <a href="../Source_xvoting/xvotinghandler.html#18" class="small">Source code</a></h4>
+<div class="declaration">var array&lt;<span class="source_type"><a href="../engine/votinghandler.html#MapVoteScore" class="source">MapVoteScore</a></span>&gt; MapVoteCount;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MapVoteHistoryClass" class="hidden"></a>MapVoteHistoryClass <a href="../Source_xvoting/xvotinghandler.html#20" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xvoting/mapvotehistory.html" class="source">MapVoteHistory</a></span>&gt; MapVoteHistoryClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MatchProfile" class="hidden"></a>MatchProfile <a href="../Source_xvoting/xvotinghandler.html#52" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../xvoting/matchconfig.html" class="source">MatchConfig</a></span> MatchProfile;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MVRI" class="hidden"></a>MVRI <a href="../Source_xvoting/xvotinghandler.html#13" class="small">Source code</a></h4>
+<div class="declaration">var array&lt;<span class="source_type"><a href="../xvoting/votingreplicationinfo.html" class="source">VotingReplicationInfo</a></span>&gt; MVRI;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PropDescription[17]" class="hidden"></a>PropDescription[17] <a href="../Source_xvoting/xvotinghandler.html#68" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> PropDescription[<span class="source_int">17</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PropsDisplayText[17]" class="hidden"></a>PropsDisplayText[17] <a href="../Source_xvoting/xvotinghandler.html#67" class="small">Source code</a></h4>
+<div class="declaration">var localized <span class="source_type">string</span> PropsDisplayText[<span class="source_int">17</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ScoreBoardTime" class="hidden"></a>ScoreBoardTime <a href="../Source_xvoting/xvotinghandler.html#17" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> ScoreBoardTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerTravelString" class="hidden"></a>ServerTravelString <a href="../Source_xvoting/xvotinghandler.html#24" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> ServerTravelString;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerTravelTime" class="hidden"></a>ServerTravelTime <a href="../Source_xvoting/xvotinghandler.html#17" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> ServerTravelTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TextMessage" class="hidden"></a>TextMessage <a href="../Source_xvoting/xvotinghandler.html#23" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> TextMessage;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimeLeft" class="hidden"></a>TimeLeft <a href="../Source_xvoting/xvotinghandler.html#17" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> TimeLeft;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">xVotingHandler</h3>
+<h4><a name="_AccInfo" class="hidden"></a>AccInfo <a href="../Source_xvoting/xvotinghandler.html#47" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config array&lt;<span class="source_type"><a href="../engine/votinghandler.html#AccumulationData" class="source">AccumulationData</a></span>&gt; AccInfo;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bAccumulationMode" class="hidden"></a>bAccumulationMode <a href="../Source_xvoting/xvotinghandler.html#34" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">bool</span> bAccumulationMode;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bAnonymousKicking" class="hidden"></a>bAnonymousKicking <a href="../Source_xvoting/xvotinghandler.html#45" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">bool</span> bAnonymousKicking;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bAutoOpen" class="hidden"></a>bAutoOpen <a href="../Source_xvoting/xvotinghandler.html#31" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">bool</span> bAutoOpen;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDefaultToCurrentGameType" class="hidden"></a>bDefaultToCurrentGameType <a href="../Source_xvoting/xvotinghandler.html#40" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">bool</span> bDefaultToCurrentGameType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bEliminationMode" class="hidden"></a>bEliminationMode <a href="../Source_xvoting/xvotinghandler.html#35" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">bool</span> bEliminationMode;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bKickVote" class="hidden"></a>bKickVote <a href="../Source_xvoting/xvotinghandler.html#42" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">bool</span> bKickVote;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bMapVote" class="hidden"></a>bMapVote <a href="../Source_xvoting/xvotinghandler.html#41" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">bool</span> bMapVote;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bMatchSetup" class="hidden"></a>bMatchSetup <a href="../Source_xvoting/xvotinghandler.html#43" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">bool</span> bMatchSetup;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bScoreMode" class="hidden"></a>bScoreMode <a href="../Source_xvoting/xvotinghandler.html#33" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">bool</span> bScoreMode;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CurrentGameConfig" class="hidden"></a>CurrentGameConfig <a href="../Source_xvoting/xvotinghandler.html#49" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">int</span> CurrentGameConfig;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DefaultGameConfig" class="hidden"></a>DefaultGameConfig <a href="../Source_xvoting/xvotinghandler.html#39" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">int</span> DefaultGameConfig;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GameConfig" class="hidden"></a>GameConfig <a href="../Source_xvoting/xvotinghandler.html#28" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config array&lt;<span class="source_type"><a href="../engine/votinghandler.html#MapVoteGameConfig" class="source">MapVoteGameConfig</a></span>&gt; GameConfig;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KickPercent" class="hidden"></a>KickPercent <a href="../Source_xvoting/xvotinghandler.html#44" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">int</span> KickPercent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MapListLoaderType" class="hidden"></a>MapListLoaderType <a href="../Source_xvoting/xvotinghandler.html#46" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">string</span> MapListLoaderType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MapVoteHistoryType" class="hidden"></a>MapVoteHistoryType <a href="../Source_xvoting/xvotinghandler.html#37" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">string</span> MapVoteHistoryType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MidGameVotePercent" class="hidden"></a>MidGameVotePercent <a href="../Source_xvoting/xvotinghandler.html#32" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">int</span> MidGameVotePercent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MinMapCount" class="hidden"></a>MinMapCount <a href="../Source_xvoting/xvotinghandler.html#36" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">int</span> MinMapCount;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RepeatLimit" class="hidden"></a>RepeatLimit <a href="../Source_xvoting/xvotinghandler.html#38" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">int</span> RepeatLimit;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ScoreBoardDelay" class="hidden"></a>ScoreBoardDelay <a href="../Source_xvoting/xvotinghandler.html#30" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">int</span> ScoreBoardDelay;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ServerNumber" class="hidden"></a>ServerNumber <a href="../Source_xvoting/xvotinghandler.html#48" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">int</span> ServerNumber;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VoteTimeLimit" class="hidden"></a>VoteTimeLimit <a href="../Source_xvoting/xvotinghandler.html#29" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../xvoting/xvotinghandler.html" class="source">xVotingHandler</a></span>) config <span class="source_type">int</span> VoteTimeLimit;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_AcceptPlayInfoProperty-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> AcceptPlayInfoProperty <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1428" class="small">Source code</a></h4>
+<div class="declaration">static event <span class="source_type">bool</span> AcceptPlayInfoProperty ( <span class="source_type">string</span> PropertyName) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AddConfigArrayItem-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AddConfigArrayItem <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1553" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> AddConfigArrayItem ( <span class="source_type">string</span> ConfigArrayName) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AddMap-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AddMap <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#327" class="small">Source code</a></h4>
+<div class="declaration"> function  AddMap ( <span class="source_type">string</span> <span class="source_type">MapName</span>, <span class="source_type">string</span> Mutators, <span class="source_type">string</span> GameOptions) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AddMapVoteReplicationInfo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AddMapVoteReplicationInfo <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#227" class="small">Source code</a></h4>
+<div class="declaration"> function  AddMapVoteReplicationInfo ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CloseAllVoteWindows-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CloseAllVoteWindows <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#766" class="small">Source code</a></h4>
+<div class="declaration"> function  CloseAllVoteWindows ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CreateMatchProfile-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CreateMatchProfile <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1662" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../xvoting/matchconfig.html" class="source">MatchConfig</a></span> CreateMatchProfile ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DeleteConfigArrayItem-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DeleteConfigArrayItem <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1537" class="small">Source code</a></h4>
+<div class="declaration"> function  DeleteConfigArrayItem ( <span class="source_type">string</span> ConfigArrayName, <span class="source_type">int</span> RowIndex) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FillPlayInfo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FillPlayInfo <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1398" class="small">Source code</a></h4>
+<div class="declaration">static function  FillPlayInfo ( <span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span> <span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetAccVote-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetAccVote <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#914" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> GetAccVote ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetConfigArrayColumnTitle-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetConfigArrayColumnTitle <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1522" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> GetConfigArrayColumnTitle ( <span class="source_type">string</span> ConfigArrayName, <span class="source_type">int</span> ColumnIndex) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetConfigArrayData-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetConfigArrayData <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1489" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> GetConfigArrayData ( <span class="source_type">string</span> ConfigArrayName, <span class="source_type">int</span> RowIndex, <span class="source_type">int</span> ColumnIndex) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetConfigArrayItemCount-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetConfigArrayItemCount <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1610" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> GetConfigArrayItemCount ( <span class="source_type">string</span> ConfigArrayName) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetDefaultMap-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetDefaultMap <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1024" class="small">Source code</a></h4>
+<div class="declaration"> function  GetDefaultMap ( out <span class="source_type">int</span> mapidx, out <span class="source_type">int</span> gameidx) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetDescriptionText-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> GetDescriptionText <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1464" class="small">Source code</a></h4>
+<div class="declaration">static event <span class="source_type">string</span> GetDescriptionText ( <span class="source_type">string</span> <span class="source_type">PropName</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetGameConfig-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetGameConfig <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#888" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/votinghandler.html#MapVoteGameConfigLite" class="source">MapVoteGameConfigLite</a></span> GetGameConfig ( <span class="source_type">int</span> p_GameConfigIndex) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetMapList-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetMapList <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#883" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/votinghandler.html#MapVoteMapList" class="source">MapVoteMapList</a></span> GetMapList ( <span class="source_type">int</span> p_MapIndex) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetMVRIIndex-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetMVRIIndex <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#371" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">int</span> GetMVRIIndex ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetPlayerScore-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetPlayerScore <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#899" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">float</span> GetPlayerScore ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetServerDetails-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetServerDetails <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1667" class="small">Source code</a></h4>
+<div class="declaration"> function  GetServerDetails ( out <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">ServerState</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HandleRestartGame-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> HandleRestartGame <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#849" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> HandleRestartGame ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_IsEnabled-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> IsEnabled <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#76" class="small">Source code</a></h4>
+<div class="declaration">static function <span class="source_type">bool</span> IsEnabled ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_IsValidVote-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> IsValidVote <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#492" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> IsValidVote ( <span class="source_type">int</span> <span class="source_type">MapIndex</span>, <span class="source_type">int</span> GameIndex) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KickPlayer-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> KickPlayer <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1313" class="small">Source code</a></h4>
+<div class="declaration"> function  KickPlayer ( <span class="source_type">int</span> PlayerIndex) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LoadMapList-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> LoadMapList <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#245" class="small">Source code</a></h4>
+<div class="declaration"> function  LoadMapList ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MatchSetupLogin-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> MatchSetupLogin <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1344" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> MatchSetupLogin ( <span class="source_type">string</span> UserID, <span class="source_type">string</span> <span class="source_type">Password</span>, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Requestor, out <span class="source_type">int</span> SecLevel) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MatchSetupLogout-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> MatchSetupLogout <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1390" class="small">Source code</a></h4>
+<div class="declaration"> function  MatchSetupLogout ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Requestor) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OpenAllVoteWindows-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> OpenAllVoteWindows <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#780" class="small">Source code</a></h4>
+<div class="declaration"> function  OpenAllVoteWindows ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayerExit-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayerExit <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#163" class="small">Source code</a></h4>
+<div class="declaration"> function  PlayerExit ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">Exiting</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayerJoin-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PlayerJoin <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#147" class="small">Source code</a></h4>
+<div class="declaration"> function  PlayerJoin ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PostBeginPlay <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#84" class="small">Source code</a></h4>
+<div class="declaration"> function  PostBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PropagateValue-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PropagateValue <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1629" class="small">Source code</a></h4>
+<div class="declaration"> function  PropagateValue ( <span class="source_type"><a href="../xvoting/votingreplicationinfo.html" class="source">VotingReplicationInfo</a></span> <span class="source_type">Sender</span>, <span class="source_type">string</span> <span class="source_type">Type</span>, <span class="source_type">string</span> SettingName, <span class="source_type">string</span> <span class="source_type">NewValue</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReloadAll-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ReloadAll <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1623" class="small">Source code</a></h4>
+<div class="declaration"> function  ReloadAll ( optional <span class="source_type">bool</span> <span class="source_type">bParam</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReloadMatchConfig-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ReloadMatchConfig <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1644" class="small">Source code</a></h4>
+<div class="declaration"> function  ReloadMatchConfig ( <span class="source_type">bool</span> bRefreshMaps, <span class="source_type">bool</span> bRefreshMuts, optional <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">Caller</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SaveAccVotes-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SaveAccVotes <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#941" class="small">Source code</a></h4>
+<div class="declaration"> function  SaveAccVotes ( <span class="source_type">int</span> WinningMapIndex, <span class="source_type">int</span> WinningGameIndex) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetupGameMap-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetupGameMap <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#794" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> SetupGameMap ( <span class="source_type"><a href="../engine/votinghandler.html#MapVoteMapList" class="source">MapVoteMapList</a></span> <span class="source_type"><a href="../xvoting/matchsetupmaps.html#MapInfo" class="source">MapInfo</a></span>, <span class="source_type">int</span> GameIndex, <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span> <span class="source_type"><a href="../engine/votinghandler.html#MapHistoryInfo" class="source">MapHistoryInfo</a></span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SubmitKickVote-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SubmitKickVote <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1129" class="small">Source code</a></h4>
+<div class="declaration"> function  SubmitKickVote ( <span class="source_type">int</span> <span class="source_type">PlayerID</span>, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Voter) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SubmitMapVote-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SubmitMapVote <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#381" class="small">Source code</a></h4>
+<div class="declaration"> function  SubmitMapVote ( <span class="source_type">int</span> <span class="source_type">MapIndex</span>, <span class="source_type">int</span> GameIndex, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Voter) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TallyKickVotes-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TallyKickVotes <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1257" class="small">Source code</a></h4>
+<div class="declaration"> function  TallyKickVotes ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TallyVotes-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TallyVotes <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#546" class="small">Source code</a></h4>
+<div class="declaration"> function  TallyVotes ( <span class="source_type">bool</span> bForceMapSwitch) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_timer-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> timer <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#718" class="small">Source code</a></h4>
+<div class="declaration"> event  timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpdateConfigArrayItem-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UpdateConfigArrayItem <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1573" class="small">Source code</a></h4>
+<div class="declaration"> function  UpdateConfigArrayItem ( <span class="source_type">string</span> ConfigArrayName, <span class="source_type">int</span> RowIndex, <span class="source_type">int</span> ColumnIndex, <span class="source_type">string</span> <span class="source_type">NewValue</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpdateKickVoteCount-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UpdateKickVoteCount <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#1216" class="small">Source code</a></h4>
+<div class="declaration"> function  UpdateKickVoteCount ( <span class="source_type">int</span> <span class="source_type">PlayerID</span>, <span class="source_type">int</span> VoteCountDelta) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpdateVoteCount-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UpdateVoteCount <span class="function_state"></span> <a href="../Source_xvoting/xvotinghandler.html#507" class="small">Source code</a></h4>
+<div class="declaration"> function  UpdateVoteCount ( <span class="source_type">int</span> <span class="source_type">MapIndex</span>, <span class="source_type">int</span> GameIndex, <span class="source_type">int</span> VoteCount) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     VoteTimeLimit=<span class="source_int">70</span>
+     ScoreBoardDelay=<span class="source_int">5</span>
+     bAutoOpen=True
+     MidGameVotePercent=<span class="source_int">50</span>
+     MinMapCount=<span class="source_int">2</span>
+     MapVoteHistoryType=<span class="source_string">"xVoting.MapVoteHistory_INI"</span>
+     RepeatLimit=<span class="source_int">4</span>
+     bDefaultToCurrentGameType=True
+     KickPercent=<span class="source_int">51</span>
+     bAnonymousKicking=True
+     MapListLoaderType=<span class="source_string">"xVoting.DefaultMapListLoader"</span>
+     ServerNumber=<span class="source_int">1</span>
+     GameConfigPage=<span class="source_string">"xVoting.MapVoteGameConfigPage"</span>
+     MapListConfigPage=<span class="source_string">"xVoting.MapVoteMapListConfigPage"</span>
+     lmsgInvalidPassword=<span class="source_string">"The password entered is invalid !"</span>
+     lmsgMatchSetupPermission=<span class="source_string">"Sorry, you do not have permission to use Match Setup !"</span>
+     lmsgKickVote=<span class="source_string">"%playername1% placed a kick vote against %playername2%"</span>
+     lmsgAnonymousKickVote=<span class="source_string">"A kick vote has been placed against %playername%"</span>
+     lmsgKickVoteAdmin=<span class="source_string">"%playername% attempted to submit a kick vote against the server administrator !"</span>
+     lmsgMapWon=<span class="source_string">"%mapname% has won !"</span>
+     lmsgMidGameVote=<span class="source_string">"Mid-Game Map Voting has been initiated !!!!"</span>
+     lmsgSpectatorsCantVote=<span class="source_string">"Sorry, Spectators can not vote."</span>
+     lmsgMapVotedFor=<span class="source_string">"%playername% has voted for %mapname%"</span>
+     lmsgMapVotedForWithCount=<span class="source_string">"%playername% has placed %votecount% votes for %mapname%"</span>
+     PropsDisplayText(<span class="source_int">0</span>)=<span class="source_string">"Enable Map Voting"</span>
+     PropsDisplayText(<span class="source_int">1</span>)=<span class="source_string">"Auto Open GUI"</span>
+     PropsDisplayText(<span class="source_int">2</span>)=<span class="source_string">"ScoreBoard Delay"</span>
+     PropsDisplayText(<span class="source_int">3</span>)=<span class="source_string">"Score Mode"</span>
+     PropsDisplayText(<span class="source_int">4</span>)=<span class="source_string">"Accumulation Mode"</span>
+     PropsDisplayText(<span class="source_int">5</span>)=<span class="source_string">"Elimination Mode"</span>
+     PropsDisplayText(<span class="source_int">6</span>)=<span class="source_string">"Minimum Maps"</span>
+     PropsDisplayText(<span class="source_int">7</span>)=<span class="source_string">"Repeat Limit"</span>
+     PropsDisplayText(<span class="source_int">8</span>)=<span class="source_string">"Voting Time Limit"</span>
+     PropsDisplayText(<span class="source_int">9</span>)=<span class="source_string">"Mid-Game Vote Percent"</span>
+     PropsDisplayText(<span class="source_int">10</span>)=<span class="source_string">"Default Current GameType"</span>
+     PropsDisplayText(<span class="source_int">11</span>)=<span class="source_string">"Enable Kick Voting"</span>
+     PropsDisplayText(<span class="source_int">12</span>)=<span class="source_string">"Kick Vote Percent"</span>
+     PropsDisplayText(<span class="source_int">13</span>)=<span class="source_string">"Anonymous Kick Voting"</span>
+     PropsDisplayText(<span class="source_int">14</span>)=<span class="source_string">"Allow Match Setup"</span>
+     PropsDisplayText(<span class="source_int">15</span>)=<span class="source_string">"Game Configuration"</span>
+     PropsDisplayText(<span class="source_int">16</span>)=<span class="source_string">"Map List Configuration"</span>
+     PropDescription(<span class="source_int">0</span>)=<span class="source_string">"If enabled players can vote for maps."</span>
+     PropDescription(<span class="source_int">1</span>)=<span class="source_string">"If enabled the Map voting interface will automatically open at the end of each game."</span>
+     PropDescription(<span class="source_int">2</span>)=<span class="source_string">"Sets the number of seconds to delay after the end of each game before opening the voting interface."</span>
+     PropDescription(<span class="source_int">3</span>)=<span class="source_string">"If enabled, each player gets his or her score worth of votes."</span>
+     PropDescription(<span class="source_int">4</span>)=<span class="source_string">"If enabled, each player will accumulate votes each game until they win."</span>
+     PropDescription(<span class="source_int">5</span>)=<span class="source_string">"If enabled, available maps are disabled as they are played until there are X maps left."</span>
+     PropDescription(<span class="source_int">6</span>)=<span class="source_string">"The number of enabled maps that remain in the map list (in Elimination mode) before the map list is reset."</span>
+     PropDescription(<span class="source_int">7</span>)=<span class="source_string">"Number of previously played maps that should not be votable."</span>
+     PropDescription(<span class="source_int">8</span>)=<span class="source_string">"Limits how much time (in seconds) to allow for voting."</span>
+     PropDescription(<span class="source_int">9</span>)=<span class="source_string">"Percentage of players that must vote to trigger a Mid-Game vote."</span>
+     PropDescription(<span class="source_int">10</span>)=<span class="source_string">"If enabled, and there are no players on the server then the server will stay on the current game type."</span>
+     PropDescription(<span class="source_int">11</span>)=<span class="source_string">"If enable players can vote to kick other players."</span>
+     PropDescription(<span class="source_int">12</span>)=<span class="source_string">"The percentage of players that must vote against an individual player to have them kicked from the server."</span>
+     PropDescription(<span class="source_int">13</span>)=<span class="source_string">"If enabled players can place Kick votes without anyone knowing who placed the vote."</span>
+     PropDescription(<span class="source_int">14</span>)=<span class="source_string">"Enables match setup on the server - valid admin username & password is required in order to use this feature"</span>
+     PropDescription(<span class="source_int">15</span>)=<span class="source_string">"Opens the map voting game configuration screen"</span>
+     PropDescription(<span class="source_int">16</span>)=<span class="source_string">"Opens the map voting list configuration screen"</span>
+     lmsgAdminMapChange=<span class="source_string">"Admin has forced map switch to %mapname%"</span>
+     lmsgGameConfigColumnTitle(<span class="source_int">0</span>)=<span class="source_string">"GameType"</span>
+     lmsgGameConfigColumnTitle(<span class="source_int">1</span>)=<span class="source_string">"MapPrefixes"</span>
+     lmsgGameConfigColumnTitle(<span class="source_int">2</span>)=<span class="source_string">"Abbreviation"</span>
+     lmsgGameConfigColumnTitle(<span class="source_int">3</span>)=<span class="source_string">"Name"</span>
+     lmsgGameConfigColumnTitle(<span class="source_int">4</span>)=<span class="source_string">"Mutators"</span>
+     lmsgGameConfigColumnTitle(<span class="source_int">5</span>)=<span class="source_string">"Options"</span>
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xvoting/xvoting-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_xvoting/xvotinghandler.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#xVotingHandler">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../xvoting/votingreplicationinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../xvoting/defaultmaplistloader.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:57.706 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.ZombieSirenBase</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/zombiesirenbase.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ZombieSirenBase">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/zombieshotgunbullet.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/zombiestalkerbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/zombiesirenbase.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/zombiesirenbase.html">ZombieSirenBase</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// Zombie Monster for KF Invasion gametype
+</span><a name="2"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/zombiesirenbase.html" class="source">ZombieSirenBase</a></span> extends <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>
+<a name="3"></a>    abstract;
+<a name="4"></a>
+<a name="5"></a>var () <span class="source_type">int</span> ScreamRadius; <span class="source_comment">// AOE for scream attack.
+</span><a name="6"></a>
+<a name="7"></a>var () <span class="source_type">class</span> &lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; ScreamDamageType;
+<a name="8"></a>var () <span class="source_type">int</span> ScreamForce;
+<a name="9"></a>
+<a name="10"></a>var(Shake)  <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> RotMag;            <span class="source_comment">// how far to rot view
+</span><a name="11"></a>var(Shake)  <span class="source_type">float</span>   RotRate;           <span class="source_comment">// how fast to rot view
+</span><a name="12"></a>var(Shake)  <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>  OffsetMag;         <span class="source_comment">// max view offset vertically
+</span><a name="13"></a>var(Shake)  <span class="source_type">float</span>   OffsetRate;        <span class="source_comment">// how fast to offset view vertically
+</span><a name="14"></a>var(Shake)  <span class="source_type">float</span>   ShakeTime;         <span class="source_comment">// how long to shake for per scream
+</span><a name="15"></a>var(Shake)  <span class="source_type">float</span>   ShakeFadeTime;     <span class="source_comment">// how long after starting to shake to start fading out
+</span><a name="16"></a>var(Shake)  <span class="source_type">float</span>	ShakeEffectScalar; <span class="source_comment">// Overall scale for shake/blur effect
+</span><a name="17"></a>var(Shake)  <span class="source_type">float</span>	MinShakeEffectScale;<span class="source_comment">// The minimum that the shake effect drops off over distance
+</span><a name="18"></a>var(Shake)  <span class="source_type">float</span>	ScreamBlurScale;   <span class="source_comment">// How much motion blur to give from screams
+</span><a name="19"></a>
+<a name="20"></a>var <span class="source_type">bool</span> bAboutToDie;
+<a name="21"></a>var <span class="source_type">float</span> DeathTimer;
+<a name="22"></a>
+<a name="23"></a><span class="source_comment">//-------------------------------------------------------------------------------
+</span><a name="24"></a><span class="source_comment">// NOTE: All Code resides in the child class(this class was only created to
+</span><a name="25"></a><span class="source_comment">//         eliminate hitching caused by loading default properties during play)
+</span><a name="26"></a><span class="source_comment">//-------------------------------------------------------------------------------
+</span><a name="27"></a>
+<a name="28"></a>defaultproperties
+<a name="29"></a>{
+<a name="30"></a>     ScreamRadius=<span class="source_int">700</span>
+<a name="31"></a>     ScreamDamageType=<span class="source_type">Class</span><span class="source_name">'KFMod.SirenScreamDamage'</span>
+<a name="32"></a>     ScreamForce=-<span class="source_int">150000</span>
+<a name="33"></a>     RotMag=(Pitch=<span class="source_int">150</span>,Yaw=<span class="source_int">150</span>,Roll=<span class="source_int">150</span>)
+<a name="34"></a>     RotRate=<span class="source_int">500.000000</span>
+<a name="35"></a>     OffsetMag=(<span class="source_type">Y</span>=<span class="source_int">5.000000</span>,<span class="source_type">Z</span>=<span class="source_int">1.000000</span>)
+<a name="36"></a>     OffsetRate=<span class="source_int">500.000000</span>
+<a name="37"></a>     ShakeTime=<span class="source_int">2.000000</span>
+<a name="38"></a>     ShakeFadeTime=<span class="source_int">0.250000</span>
+<a name="39"></a>     ShakeEffectScalar=<span class="source_int">1.000000</span>
+<a name="40"></a>     MinShakeEffectScale=<span class="source_int">0.600000</span>
+<a name="41"></a>     ScreamBlurScale=<span class="source_int">0.850000</span>
+<a name="42"></a>     MeleeAnims(<span class="source_int">0</span>)=<span class="source_string">"Siren_Bite"</span>
+<a name="43"></a>     MeleeAnims(<span class="source_int">1</span>)=<span class="source_string">"Siren_Bite2"</span>
+<a name="44"></a>     MeleeAnims(<span class="source_int">2</span>)=<span class="source_string">"Siren_Bite"</span>
+<a name="45"></a>     HitAnims(<span class="source_int">0</span>)=<span class="source_string">"HitReactionF"</span>
+<a name="46"></a>     HitAnims(<span class="source_int">1</span>)=<span class="source_string">"HitReactionF"</span>
+<a name="47"></a>     HitAnims(<span class="source_int">2</span>)=<span class="source_string">"HitReactionF"</span>
+<a name="48"></a>     ZapThreshold=<span class="source_int">0.500000</span>
+<a name="49"></a>     ZappedDamageMod=<span class="source_int">1.500000</span>
+<a name="50"></a>     ZombieFlag=<span class="source_int">1</span>
+<a name="51"></a>     <span class="source_type"><a href="../old2k4/meleedamage.html" class="source">MeleeDamage</a></span>=<span class="source_int">13</span>
+<a name="52"></a>     damageForce=<span class="source_int">5000</span>
+<a name="53"></a>     KFRagdollName=<span class="source_string">"Siren_Trip"</span>
+<a name="54"></a>     ZombieDamType(<span class="source_int">0</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.DamTypeSlashingAttack'</span>
+<a name="55"></a>     ZombieDamType(<span class="source_int">1</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.DamTypeSlashingAttack'</span>
+<a name="56"></a>     ZombieDamType(<span class="source_int">2</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.DamTypeSlashingAttack'</span>
+<a name="57"></a>     ScreamDamage=<span class="source_int">8</span>
+<a name="58"></a>     CrispUpThreshhold=<span class="source_int">7</span>
+<a name="59"></a>     bCanDistanceAttackDoors=True
+<a name="60"></a>     bUseExtendedCollision=True
+<a name="61"></a>     ColOffset=(<span class="source_type">Z</span>=<span class="source_int">48.000000</span>)
+<a name="62"></a>     ColRadius=<span class="source_int">25.000000</span>
+<a name="63"></a>     ColHeight=<span class="source_int">5.000000</span>
+<a name="64"></a>     ExtCollAttachBoneName=<span class="source_string">"Collision_Attach"</span>
+<a name="65"></a>     SeveredLegAttachScale=<span class="source_int">0.700000</span>
+<a name="66"></a>     PlayerCountHealthScale=<span class="source_int">0.100000</span>
+<a name="67"></a>     OnlineHeadshotOffset=(<span class="source_type">X</span>=<span class="source_int">6.000000</span>,<span class="source_type">Z</span>=<span class="source_int">41.000000</span>)
+<a name="68"></a>     OnlineHeadshotScale=<span class="source_int">1.200000</span>
+<a name="69"></a>     HeadHealth=<span class="source_int">200.000000</span>
+<a name="70"></a>     PlayerNumHeadHealthScale=<span class="source_int">0.050000</span>
+<a name="71"></a>     MotionDetectorThreat=<span class="source_int">2.000000</span>
+<a name="72"></a>     ChallengeSound(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_EnemiesFinalSnd.siren.Siren_Challenge'</span>
+<a name="73"></a>     ChallengeSound(<span class="source_int">1</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_EnemiesFinalSnd.siren.Siren_Challenge'</span>
+<a name="74"></a>     ChallengeSound(<span class="source_int">2</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_EnemiesFinalSnd.siren.Siren_Challenge'</span>
+<a name="75"></a>     ChallengeSound(<span class="source_int">3</span>)=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_EnemiesFinalSnd.siren.Siren_Challenge'</span>
+<a name="76"></a>     ScoringValue=<span class="source_int">25</span>
+<a name="77"></a>     SoundGroupClass=<span class="source_type">Class</span><span class="source_name">'KFMod.KFFemaleZombieSounds'</span>
+<a name="78"></a>     IdleHeavyAnim=<span class="source_string">"Siren_Idle"</span>
+<a name="79"></a>     IdleRifleAnim=<span class="source_string">"Siren_Idle"</span>
+<a name="80"></a>     MeleeRange=<span class="source_int">45.000000</span>
+<a name="81"></a>     GroundSpeed=<span class="source_int">100.000000</span>
+<a name="82"></a>     WaterSpeed=<span class="source_int">80.000000</span>
+<a name="83"></a>     HealthMax=<span class="source_int">300.000000</span>
+<a name="84"></a>     Health=<span class="source_int">300</span>
+<a name="85"></a>     HeadHeight=<span class="source_int">1.000000</span>
+<a name="86"></a>     HeadScale=<span class="source_int">1.000000</span>
+<a name="87"></a>     MenuName=<span class="source_string">"Siren"</span>
+<a name="88"></a>     MovementAnims(<span class="source_int">0</span>)=<span class="source_string">"Siren_Walk"</span>
+<a name="89"></a>     MovementAnims(<span class="source_int">1</span>)=<span class="source_string">"Siren_Walk"</span>
+<a name="90"></a>     MovementAnims(<span class="source_int">2</span>)=<span class="source_string">"Siren_Walk"</span>
+<a name="91"></a>     MovementAnims(<span class="source_int">3</span>)=<span class="source_string">"Siren_Walk"</span>
+<a name="92"></a>     WalkAnims(<span class="source_int">0</span>)=<span class="source_string">"Siren_Walk"</span>
+<a name="93"></a>     WalkAnims(<span class="source_int">1</span>)=<span class="source_string">"Siren_Walk"</span>
+<a name="94"></a>     WalkAnims(<span class="source_int">2</span>)=<span class="source_string">"Siren_Walk"</span>
+<a name="95"></a>     WalkAnims(<span class="source_int">3</span>)=<span class="source_string">"Siren_Walk"</span>
+<a name="96"></a>     IdleCrouchAnim=<span class="source_string">"Siren_Idle"</span>
+<a name="97"></a>     IdleWeaponAnim=<span class="source_string">"Siren_Idle"</span>
+<a name="98"></a>     IdleRestAnim=<span class="source_string">"Siren_Idle"</span>
+<a name="99"></a>     DrawScale=<span class="source_int">1.050000</span>
+<a name="100"></a>     PrePivot=(<span class="source_type">Z</span>=<span class="source_int">3.000000</span>)
+<a name="101"></a>     RotationRate=(Yaw=<span class="source_int">45000</span>,Roll=<span class="source_int">0</span>)
+<a name="102"></a>}
+<a name="103"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/zombiesirenbase.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ZombieSirenBase">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/zombieshotgunbullet.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/zombiestalkerbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:11.403 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

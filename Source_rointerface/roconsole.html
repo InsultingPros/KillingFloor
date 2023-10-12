@@ -1,0 +1,1362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: ROInterface.ROConsole</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/roconsole.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROConsole">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/rocommunicationpage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/rocontrolbinder.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_rointerface/roconsole.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../rointerface/rointerface-overview.html">ROInterface</a>.<a href="../rointerface/roconsole.html">ROConsole</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022<br />01023<br />01024<br />01025<br />01026<br />01027<br />01028<br />01029<br />01030<br />01031<br />01032<br />01033<br />01034<br />01035<br />01036<br />01037<br />01038<br />01039<br />01040<br />
+01041<br />01042<br />01043<br />01044<br />01045<br />01046<br />01047<br />01048<br />01049<br />01050<br />01051<br />01052<br />01053<br />01054<br />01055<br />01056<br />01057<br />01058<br />01059<br />01060<br />
+01061<br />01062<br />01063<br />01064<br />01065<br />01066<br />01067<br />01068<br />01069<br />01070<br />01071<br />01072<br />01073<br />01074<br />01075<br />01076<br />01077<br />01078<br />01079<br />01080<br />
+01081<br />01082<br />01083<br />01084<br />01085<br />01086<br />01087<br />01088<br />01089<br />01090<br />01091<br />01092<br />01093<br />01094<br />01095<br />01096<br />01097<br />01098<br />01099<br />01100<br />
+01101<br />01102<br />01103<br />01104<br />01105<br />01106<br />01107<br />01108<br />01109<br />01110<br />01111<br />01112<br />01113<br />01114<br />01115<br />01116<br />01117<br />01118<br />01119<br />01120<br />
+01121<br />01122<br />01123<br />01124<br />01125<br />01126<br />01127<br />01128<br />01129<br />01130<br />01131<br />01132<br />01133<br />01134<br />01135<br />01136<br />01137<br />01138<br />01139<br />01140<br />
+01141<br />01142<br />01143<br />01144<br />01145<br />01146<br />01147<br />01148<br />01149<br />01150<br />01151<br />01152<br />01153<br />01154<br />01155<br />01156<br />01157<br />01158<br />01159<br />01160<br />
+01161<br />01162<br />01163<br />01164<br />01165<br />01166<br />01167<br />01168<br />01169<br />01170<br />01171<br />01172<br />01173<br />01174<br />01175<br />01176<br />01177<br />01178<br />01179<br />01180<br />
+01181<br />01182<br />01183<br />01184<br />01185<br />01186<br />01187<br />01188<br />01189<br />01190<br />01191<br />01192<br />01193<br />01194<br />01195<br />01196<br />01197<br />01198<br />01199<br />01200<br />
+01201<br />01202<br />01203<br />01204<br />01205<br />01206<br />01207<br />01208<br />01209<br />01210<br />01211<br />01212<br />01213<br />01214<br />01215<br />01216<br />01217<br />01218<br />01219<br />01220<br />
+01221<br />01222<br />01223<br />01224<br />01225<br />01226<br />01227<br />01228<br />01229<br />01230<br />01231<br />01232<br />01233<br />01234<br />01235<br />01236<br />01237<br />01238<br />01239<br />01240<br />
+01241<br />01242</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//------------------------------------------------------------------------------
+</span><a name="2"></a><span class="source_comment">// $Id: ROConsole.uc,v 1.5 2004/02/10 05:14:48 bwright Exp $
+</span><a name="3"></a><span class="source_comment">// @description : Added support for RO voice command system.
+</span><a name="4"></a><span class="source_comment">// This implementation allows players with leader role to have access
+</span><a name="5"></a><span class="source_comment">// to an orders voice menu, other do not.
+</span><a name="6"></a><span class="source_comment">//------------------------------------------------------------------------------
+</span><a name="7"></a>
+<a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../rointerface/roconsole.html" class="source">ROConsole</a></span> extends <span class="source_type"><a href="../xinterface/extendedconsole.html" class="source">ExtendedConsole</a></span>;
+<a name="9"></a>
+<a name="10"></a>var enum <span class="source_type"><a href="../rointerface/roconsole.html#EROSpeechMenuState" class="source">EROSpeechMenuState</a></span>
+<a name="11"></a>{
+<a name="12"></a>    ROSMS_Main,
+<a name="13"></a>	ROSMS_Support,
+<a name="14"></a>	ROSMS_Ack,
+<a name="15"></a>	ROSMS_Enemy,
+<a name="16"></a>	ROSMS_Alert,
+<a name="17"></a>	ROSMS_Vehicle_Orders,
+<a name="18"></a>	ROSMS_Vehicle_Alerts,
+<a name="19"></a>	ROSMS_Commanders,
+<a name="20"></a>	ROSMS_Extras,
+<a name="21"></a>
+<a name="22"></a>	<span class="source_comment">// Sub menus
+</span><a name="23"></a>	ROSMS_Attack,
+<a name="24"></a>	ROSMS_Defend,
+<a name="25"></a>	ROSMS_Vehicle_Goto,
+<a name="26"></a>	ROSMS_HelpAt,
+<a name="27"></a>	ROSMS_UnderAttackAt,
+<a name="28"></a>	ROSMS_SelectSquad
+<a name="29"></a>} ROSMState, PreviousStateName;
+<a name="30"></a>
+<a name="31"></a>var localized <span class="source_type">string</span>    AllPlayersSquad, OwnSquad, SquadSuffix;
+<a name="32"></a>var array&lt;<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>&gt; PRIs;      <span class="source_comment">// List of squad leaders on the player's team, cleared when speech menu is closed
+</span><a name="33"></a>
+<a name="34"></a>var <span class="source_type">int</span> savedSelectedObjective;
+<a name="35"></a>
+<a name="36"></a>
+<a name="37"></a><span class="source_type">state</span> SpeechMenuVisible
+<a name="38"></a>{
+<a name="39"></a>	function <span class="source_type">bool</span> KeyType( <span class="source_type"><a href="../engine/interactions.html#EInputKey" class="source">EInputKey</a></span> Key, optional <span class="source_type">string</span> <span class="source_type">Unicode</span> )
+<a name="40"></a>	{
+<a name="41"></a>		if (bIgnoreKeys)
+<a name="42"></a>			return true;
+<a name="43"></a>
+<a name="44"></a>		return false;
+<a name="45"></a>	}
+<a name="46"></a>
+<a name="47"></a>	function <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt; GetROVoiceClass()
+<a name="48"></a>	{
+<a name="49"></a>	    local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> rop;
+<a name="50"></a>		if(ViewportOwner == None || ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> == None || ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> == None)
+<a name="51"></a>			return None;
+<a name="52"></a>        rop = <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="53"></a>		return <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt;(rop.VoiceType);
+<a name="54"></a>	}
+<a name="55"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="56"></a>    <span class="source_comment">// build voice command array.
+</span><a name="57"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="58"></a>	<span class="source_comment">// Rebuild the array of options based on the state we are now in.
+</span><a name="59"></a>	function RebuildSMArray()
+<a name="60"></a>	{
+<a name="61"></a>        <span class="source_type">switch</span>(ROSMState)
+<a name="62"></a>        {
+<a name="63"></a>          case ROSMS_Main           : buildSMMainArray(); break;
+<a name="64"></a>          case ROSMS_Support        : buildSMSupportArray(); break;
+<a name="65"></a>          case ROSMS_Ack            : buildAckArray(); break;
+<a name="66"></a>          case ROSMS_Enemy          : buildSMEnemyArray(); break;
+<a name="67"></a>          case ROSMS_Alert          : buildSMAlertArray(); break;
+<a name="68"></a>          case ROSMS_Vehicle_Orders : buildSMVehicleDirectionArray(); break;
+<a name="69"></a>          case ROSMS_Vehicle_Alerts : buildSMVehicleAlertArray(); break;
+<a name="70"></a>          case ROSMS_Commanders     : buildSMOrderArray(); break;
+<a name="71"></a>          case ROSMS_Extras         : buildSMExtraArray(); break;
+<a name="72"></a>
+<a name="73"></a>          <span class="source_comment">// Submenus
+</span><a name="74"></a>          case ROSMS_Attack         : buildSMAttackArray(); break;
+<a name="75"></a>          case ROSMS_Defend         : buildSMDefendArray(); break;
+<a name="76"></a>          case ROSMS_Vehicle_Goto   : buildSMGotoArray(); break;
+<a name="77"></a>          case ROSMS_HelpAt         : buildSMHelpAtArray(); break;
+<a name="78"></a>          case ROSMS_UnderAttackAt  : buildSMUnderAttackAtArray(); break;
+<a name="79"></a>          case ROSMS_SelectSquad    : buildSMSelectSquadArray(); break;
+<a name="80"></a>        }
+<a name="81"></a>	}
+<a name="82"></a>
+<a name="83"></a>	function buildSMSupportArray()
+<a name="84"></a>    {
+<a name="85"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="86"></a>		local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt; ROvp ;
+<a name="87"></a>        local <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span> ROGameRep;
+<a name="88"></a>        local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> ROPlayerRep;
+<a name="89"></a>
+<a name="90"></a>        ROGameRep = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>);
+<a name="91"></a>        ROPlayerRep =  <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="92"></a>
+<a name="93"></a>		SMArraySize = <span class="source_int">0</span>;
+<a name="94"></a>		PreviousStateName = ROSMS_Main;
+<a name="95"></a>
+<a name="96"></a>		ROvp = GetROVoiceClass();
+<a name="97"></a>		if(ROvp == None)
+<a name="98"></a>			return;
+<a name="99"></a>
+<a name="100"></a>        for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; ROvp.Default.numSupports; <span class="source_type">i</span>++)
+<a name="101"></a>        {
+<a name="102"></a>            <span class="source_type">switch</span>(ROPlayerRep.RoleInfo.Side)
+<a name="103"></a>            {
+<a name="104"></a>                case SIDE_Allies:
+<a name="105"></a>                    if (ROvp.Default.SupportAbbrev[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="106"></a>                        SMNameArray[SMArraySize] = ROvp.Default.SupportAbbrev[<span class="source_type">i</span>];
+<a name="107"></a>                    else
+<a name="108"></a>        	            SMNameArray[SMArraySize] = ROvp.Default.SupportString[<span class="source_type">i</span>];
+<a name="109"></a>       	            break;
+<a name="110"></a>
+<a name="111"></a>   	            case SIDE_Axis:
+<a name="112"></a>                    if (ROvp.Default.SupportAbbrevAxis[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="113"></a>                        SMNameArray[SMArraySize] = ROvp.Default.SupportAbbrevAxis[<span class="source_type">i</span>];
+<a name="114"></a>                    else if (ROvp.Default.SupportAbbrev[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="115"></a>                        SMNameArray[SMArraySize] = ROvp.Default.SupportAbbrev[<span class="source_type">i</span>];
+<a name="116"></a>                    else if (ROvp.Default.SupportStringAxis[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="117"></a>                        SMNameArray[SMArraySize] = ROvp.Default.SupportStringAxis[<span class="source_type">i</span>];
+<a name="118"></a>                    else
+<a name="119"></a>                        SMNameArray[SMArraySize] = ROvp.Default.SupportString[<span class="source_type">i</span>];
+<a name="120"></a>       	            break;
+<a name="121"></a>            }
+<a name="122"></a>
+<a name="123"></a>           SMIndexArray[SMArraySize] = <span class="source_type">i</span>;
+<a name="124"></a>           SMArraySize++;
+<a name="125"></a>        }
+<a name="126"></a>    }
+<a name="127"></a>
+<a name="128"></a>    function buildSMEnemyArray()
+<a name="129"></a>    {
+<a name="130"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="131"></a>		local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt; ROvp ;
+<a name="132"></a>        local <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span> ROGameRep;
+<a name="133"></a>        local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> ROPlayerRep;
+<a name="134"></a>
+<a name="135"></a>        ROGameRep = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>);
+<a name="136"></a>        ROPlayerRep =  <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="137"></a>
+<a name="138"></a>		SMArraySize = <span class="source_int">0</span>;
+<a name="139"></a>		PreviousStateName = ROSMS_Main;
+<a name="140"></a>
+<a name="141"></a>		ROvp = GetROVoiceClass();
+<a name="142"></a>		if(ROvp == None)
+<a name="143"></a>			return;
+<a name="144"></a>
+<a name="145"></a>        for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; ROvp.Default.numEnemies; <span class="source_type">i</span>++)
+<a name="146"></a>        {
+<a name="147"></a>            <span class="source_type">switch</span>(ROPlayerRep.RoleInfo.Side)
+<a name="148"></a>            {
+<a name="149"></a>                case SIDE_Allies:
+<a name="150"></a>                    if (ROvp.Default.EnemyAbbrev[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="151"></a>                        SMNameArray[SMArraySize] = ROvp.Default.EnemyAbbrev[<span class="source_type">i</span>];
+<a name="152"></a>                    else
+<a name="153"></a>        	            SMNameArray[SMArraySize] = ROvp.Default.EnemyString[<span class="source_type">i</span>];
+<a name="154"></a>       	            break;
+<a name="155"></a>
+<a name="156"></a>   	            case SIDE_Axis:
+<a name="157"></a>                    if (ROvp.Default.EnemyAbbrevAxis[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="158"></a>                        SMNameArray[SMArraySize] = ROvp.Default.EnemyAbbrevAxis[<span class="source_type">i</span>];
+<a name="159"></a>                    else if (ROvp.Default.EnemyAbbrev[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="160"></a>                        SMNameArray[SMArraySize] = ROvp.Default.EnemyAbbrev[<span class="source_type">i</span>];
+<a name="161"></a>                    else if (ROvp.Default.EnemyStringAxis[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="162"></a>                        SMNameArray[SMArraySize] = ROvp.Default.EnemyStringAxis[<span class="source_type">i</span>];
+<a name="163"></a>                    else
+<a name="164"></a>                        SMNameArray[SMArraySize] = ROvp.Default.EnemyString[<span class="source_type">i</span>];
+<a name="165"></a>       	            break;
+<a name="166"></a>            }
+<a name="167"></a>
+<a name="168"></a>           SMIndexArray[SMArraySize] = <span class="source_type">i</span>;
+<a name="169"></a>           SMArraySize++;
+<a name="170"></a>        }
+<a name="171"></a>    }
+<a name="172"></a>
+<a name="173"></a>
+<a name="174"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="175"></a>    <span class="source_comment">// build voice command array for attack voices
+</span><a name="176"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="177"></a>    function buildSMAttackArray()
+<a name="178"></a>    { <span class="source_comment">//query all objectives that can be attacked
+</span><a name="179"></a>       local <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span> ROGameRep;
+<a name="180"></a>       local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> ROPlayerRep;
+<a name="181"></a>       local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="182"></a>
+<a name="183"></a>       ROGameRep = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>);
+<a name="184"></a>       ROPlayerRep =  <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="185"></a>       SMArraySize = <span class="source_int">0</span>;
+<a name="186"></a>	   PreviousStateName = ROSMS_Commanders;
+<a name="187"></a>
+<a name="188"></a>       <span class="source_comment">//TODO: find out if the number of objectives can be hardcoded (16)
+</span><a name="189"></a>       for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; <span class="source_int">16</span>; <span class="source_type">i</span>++)
+<a name="190"></a>		{
+<a name="191"></a>		    if(ROGameRep.Objectives[<span class="source_type">i</span>] != none)
+<a name="192"></a>		    {
+<a name="193"></a>                <span class="source_type">switch</span>(ROPlayerRep.RoleInfo.Side)
+<a name="194"></a>                {
+<a name="195"></a>                   case SIDE_Axis:
+<a name="196"></a>                       if((ROGameRep.Objectives[<span class="source_type">i</span>].ObjState == OBJ_Allies ||
+<a name="197"></a>                           ROGameRep.Objectives[<span class="source_type">i</span>].ObjState == OBJ_Neutral) &&
+<a name="198"></a>                           ROGameRep.Objectives[<span class="source_type">i</span>].bActive)
+<a name="199"></a>                       {
+<a name="200"></a>                          SMNameArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjName;
+<a name="201"></a>                          SMIndexArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjNum;
+<a name="202"></a>                          SMArraySize++;
+<a name="203"></a>                       }
+<a name="204"></a>                       break;
+<a name="205"></a>
+<a name="206"></a>                   case SIDE_Allies:
+<a name="207"></a>                       if((ROGameRep.Objectives[<span class="source_type">i</span>].ObjState == OBJ_Axis ||
+<a name="208"></a>                           ROGameRep.Objectives[<span class="source_type">i</span>].ObjState == OBJ_Neutral) &&
+<a name="209"></a>                           ROGameRep.Objectives[<span class="source_type">i</span>].bActive)
+<a name="210"></a>                       {
+<a name="211"></a>                          SMNameArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjName;
+<a name="212"></a>                          SMIndexArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjNum;
+<a name="213"></a>                          SMArraySize++;
+<a name="214"></a>                       }
+<a name="215"></a>
+<a name="216"></a>                       break;
+<a name="217"></a>                }
+<a name="218"></a>			}
+<a name="219"></a>		}
+<a name="220"></a>    }
+<a name="221"></a>
+<a name="222"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="223"></a>    <span class="source_comment">// build voice command array for defend voices
+</span><a name="224"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="225"></a>    function buildSMDefendArray()
+<a name="226"></a>    {
+<a name="227"></a>       local <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span> ROGameRep;
+<a name="228"></a>       local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> ROPlayerRep;
+<a name="229"></a>       local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="230"></a>       ROGameRep = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>);
+<a name="231"></a>       ROPlayerRep =  <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="232"></a>       SMArraySize = <span class="source_int">0</span>;
+<a name="233"></a>	   PreviousStateName = ROSMS_Commanders;
+<a name="234"></a>
+<a name="235"></a>       <span class="source_comment">//TODO: find out if the number of objectives can be hardcoded (16)
+</span><a name="236"></a>       for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; <span class="source_int">16</span>; <span class="source_type">i</span>++)
+<a name="237"></a>       {
+<a name="238"></a>		    if(ROGameRep.Objectives[<span class="source_type">i</span>] != none)
+<a name="239"></a>		    {
+<a name="240"></a>                <span class="source_type">switch</span>(ROPlayerRep.RoleInfo.Side)
+<a name="241"></a>                {
+<a name="242"></a>                   case SIDE_Axis:
+<a name="243"></a>                       if(ROGameRep.Objectives[<span class="source_type">i</span>].ObjState == OBJ_Axis )
+<a name="244"></a>                       {
+<a name="245"></a>                          SMNameArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjName;
+<a name="246"></a>                          SMIndexArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjNum;
+<a name="247"></a>                          SMArraySize++;
+<a name="248"></a>                       }
+<a name="249"></a>                       break;
+<a name="250"></a>
+<a name="251"></a>                   case SIDE_Allies:
+<a name="252"></a>                       if(ROGameRep.Objectives[<span class="source_type">i</span>].ObjState == OBJ_Allies )
+<a name="253"></a>                       {
+<a name="254"></a>                          SMNameArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjName;
+<a name="255"></a>                          SMIndexArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjNum;
+<a name="256"></a>                          SMArraySize++;
+<a name="257"></a>                       }
+<a name="258"></a>
+<a name="259"></a>                       break;
+<a name="260"></a>                }
+<a name="261"></a>			}
+<a name="262"></a>		}
+<a name="263"></a>
+<a name="264"></a>    }
+<a name="265"></a>
+<a name="266"></a>    function buildSMGotoArray()
+<a name="267"></a>    {
+<a name="268"></a>       local <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span> ROGameRep;
+<a name="269"></a>       local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="270"></a>       ROGameRep = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>);
+<a name="271"></a>       SMArraySize = <span class="source_int">0</span>;
+<a name="272"></a>       PreviousStateName = ROSMS_Vehicle_Orders;
+<a name="273"></a>
+<a name="274"></a>       <span class="source_comment">//TODO: find out if the number of objectives can be hardcoded (16)
+</span><a name="275"></a>       for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; <span class="source_int">16</span>; <span class="source_type">i</span>++)
+<a name="276"></a>       {
+<a name="277"></a>		    if(ROGameRep.Objectives[<span class="source_type">i</span>] != none)
+<a name="278"></a>		    {
+<a name="279"></a>                SMNameArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjName;
+<a name="280"></a>                SMIndexArray[SMArraySize] = ROGameRep.Objectives[<span class="source_type">i</span>].ObjNum;
+<a name="281"></a>                SMArraySize++;
+<a name="282"></a>			}
+<a name="283"></a>		}
+<a name="284"></a>    }
+<a name="285"></a>
+<a name="286"></a>    function buildSMHelpAtArray()
+<a name="287"></a>    {
+<a name="288"></a>       buildSMGotoArray();
+<a name="289"></a>       PreviousStateName = ROSMS_Support;
+<a name="290"></a>    }
+<a name="291"></a>
+<a name="292"></a>    function buildSMUnderAttackAtArray()
+<a name="293"></a>    {
+<a name="294"></a>       buildSMGotoArray();
+<a name="295"></a>       PreviousStateName = ROSMS_Alert;
+<a name="296"></a>    }
+<a name="297"></a>
+<a name="298"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="299"></a>    <span class="source_comment">// build voice command array for main voices
+</span><a name="300"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="301"></a>    function buildSMMainArray()
+<a name="302"></a>    {
+<a name="303"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="304"></a>        local <span class="source_type">bool</span> bSkipCurrent;
+<a name="305"></a>		local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> RORepInfo;
+<a name="306"></a>
+<a name="307"></a>		SMOffset=<span class="source_int">0</span>;
+<a name="308"></a>        SMArraySize = <span class="source_int">0</span>;
+<a name="309"></a>
+<a name="310"></a>        RORepInfo = <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="311"></a>
+<a name="312"></a>        for (<span class="source_type">i</span> = <span class="source_int">1</span>; <span class="source_type">i</span> &lt; <span class="source_int">9</span>; <span class="source_type">i</span>++)
+<a name="313"></a>        {
+<a name="314"></a>            bSkipCurrent = false;
+<a name="315"></a>
+<a name="316"></a>            <span class="source_comment">// Only show vehicle commands if we're in a vehicle
+</span><a name="317"></a>            if (<span class="source_type">i</span> == <span class="source_int">5</span> || <span class="source_type">i</span> == <span class="source_int">6</span>)
+<a name="318"></a>            {
+<a name="319"></a>                if ( ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == none || (!(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.IsA(<span class="source_name">'ROVehicle'</span>)) && !(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.IsA(<span class="source_name">'ROVehicleWeaponPawn'</span>))) )
+<a name="320"></a>                    bSkipCurrent = true;
+<a name="321"></a>            }
+<a name="322"></a>
+<a name="323"></a>            <span class="source_comment">// Only show orders menu if we're a commander or if this is a practice session
+</span><a name="324"></a>            if (<span class="source_type">i</span> == <span class="source_int">7</span>)
+<a name="325"></a>            {
+<a name="326"></a>                if ( !((RORepInfo != none && RORepInfo.RoleInfo.bIsLeader) || ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type">Level</span>.NetMode == NM_Standalone) )
+<a name="327"></a>                    bSkipCurrent = true;
+<a name="328"></a>            }
+<a name="329"></a>
+<a name="330"></a>            if (!bSkipCurrent)
+<a name="331"></a>            {
+<a name="332"></a>                SMNameArray[SMArraySize] = SMStateName[<span class="source_type">i</span>];
+<a name="333"></a>			    SMIndexArray[SMArraySize] = <span class="source_type">i</span>;
+<a name="334"></a>			    SMArraySize++;
+<a name="335"></a>            }
+<a name="336"></a>        }
+<a name="337"></a>    }
+<a name="338"></a>
+<a name="339"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="340"></a>    <span class="source_comment">// build voice command array for order voices
+</span><a name="341"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="342"></a>    function buildSMOrderArray()
+<a name="343"></a>    {
+<a name="344"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="345"></a>		local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt; ROvp ;
+<a name="346"></a>
+<a name="347"></a>		local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> RORepInfo;
+<a name="348"></a>
+<a name="349"></a>		SMArraySize = <span class="source_int">0</span>;
+<a name="350"></a>		SMOffset=<span class="source_int">0</span>;
+<a name="351"></a>		PreviousStateName = ROSMS_Main;
+<a name="352"></a>
+<a name="353"></a>		ROvp = GetROVoiceClass();
+<a name="354"></a>		if(ROvp == None)
+<a name="355"></a>			return;
+<a name="356"></a>
+<a name="357"></a>        RORepInfo = <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="358"></a>
+<a name="359"></a>	    if((RORepInfo != none && RORepInfo.RoleInfo.bIsLeader) || ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type">Level</span>.NetMode == NM_Standalone)
+<a name="360"></a>	    {
+<a name="361"></a>			for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; ROvp.Default.numCommands; <span class="source_type">i</span>++)
+<a name="362"></a>			{
+<a name="363"></a>				if(ROvp.Default.OrderAbbrev[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="364"></a>				   SMNameArray[SMArraySize] = ROvp.Default.OrderAbbrev[<span class="source_type">i</span>];
+<a name="365"></a>				else
+<a name="366"></a>				   SMNameArray[SMArraySize] = ROvp.Default.<span class="source_type">OrderString</span>[<span class="source_type">i</span>];
+<a name="367"></a>				SMIndexArray[SMArraySize] = <span class="source_type">i</span>;
+<a name="368"></a>				SMArraySize++;
+<a name="369"></a>			}
+<a name="370"></a>		}
+<a name="371"></a>    }
+<a name="372"></a>
+<a name="373"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="374"></a>    <span class="source_comment">// build voice command array for Acknoledge voices
+</span><a name="375"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="376"></a>    function buildAckArray()
+<a name="377"></a>    {
+<a name="378"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="379"></a>		local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt; ROvp ;
+<a name="380"></a>
+<a name="381"></a>		SMArraySize = <span class="source_int">0</span>;
+<a name="382"></a>		PreviousStateName = ROSMS_Main;
+<a name="383"></a>
+<a name="384"></a>		ROvp = GetROVoiceClass();
+<a name="385"></a>		if(ROvp == None)
+<a name="386"></a>			return;
+<a name="387"></a>
+<a name="388"></a>        for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; ROvp.Default.numAcks; <span class="source_type">i</span>++)
+<a name="389"></a>        {
+<a name="390"></a>           if (ROvp.Default.AckAbbrev[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="391"></a>              SMNameArray[SMArraySize] = ROvp.Default.AckAbbrev[<span class="source_type">i</span>];
+<a name="392"></a>           else
+<a name="393"></a>        	  SMNameArray[SMArraySize] = ROvp.Default.AckString[<span class="source_type">i</span>];
+<a name="394"></a>           SMIndexArray[SMArraySize] = <span class="source_type">i</span>;
+<a name="395"></a>           SMArraySize++;
+<a name="396"></a>        }
+<a name="397"></a>    }
+<a name="398"></a>
+<a name="399"></a>    function buildSMExtraArray()
+<a name="400"></a>    {
+<a name="401"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="402"></a>		local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt; ROvp ;
+<a name="403"></a>
+<a name="404"></a>		SMArraySize = <span class="source_int">0</span>;
+<a name="405"></a>		PreviousStateName = ROSMS_Main;
+<a name="406"></a>
+<a name="407"></a>		ROvp = GetROVoiceClass();
+<a name="408"></a>		if(ROvp == None)
+<a name="409"></a>			return;
+<a name="410"></a>
+<a name="411"></a>        for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; ROvp.Default.numExtras; <span class="source_type">i</span>++)
+<a name="412"></a>        {
+<a name="413"></a>           if (ROvp.Default.ExtraAbbrev[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="414"></a>              SMNameArray[SMArraySize] = ROvp.Default.ExtraAbbrev[<span class="source_type">i</span>];
+<a name="415"></a>           else
+<a name="416"></a>        	  SMNameArray[SMArraySize] = ROvp.Default.ExtraString[<span class="source_type">i</span>];
+<a name="417"></a>           SMIndexArray[SMArraySize] = <span class="source_type">i</span>;
+<a name="418"></a>           SMArraySize++;
+<a name="419"></a>        }
+<a name="420"></a>    }
+<a name="421"></a>
+<a name="422"></a>    function buildSMAlertArray()
+<a name="423"></a>    {
+<a name="424"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="425"></a>		local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt; ROvp ;
+<a name="426"></a>
+<a name="427"></a>		SMArraySize = <span class="source_int">0</span>;
+<a name="428"></a>		PreviousStateName = ROSMS_Main;
+<a name="429"></a>
+<a name="430"></a>		ROvp = GetROVoiceClass();
+<a name="431"></a>		if(ROvp == None)
+<a name="432"></a>			return;
+<a name="433"></a>
+<a name="434"></a>        for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; ROvp.Default.numAlerts; <span class="source_type">i</span>++)
+<a name="435"></a>        {
+<a name="436"></a>           if (ROvp.Default.AlertAbbrev[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="437"></a>              SMNameArray[SMArraySize] = ROvp.Default.AlertAbbrev[<span class="source_type">i</span>];
+<a name="438"></a>           else
+<a name="439"></a>        	  SMNameArray[SMArraySize] = ROvp.Default.AlertString[<span class="source_type">i</span>];
+<a name="440"></a>           SMIndexArray[SMArraySize] = <span class="source_type">i</span>;
+<a name="441"></a>           SMArraySize++;
+<a name="442"></a>        }
+<a name="443"></a>    }
+<a name="444"></a>
+<a name="445"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="446"></a>    <span class="source_comment">// build voice command array for shout voices
+</span><a name="447"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="448"></a>    <span class="source_comment">/*function buildSMShoutArray()
+<a name="449"></a>    {
+<a name="450"></a>        local int i;
+<a name="451"></a>		local class&lt;ROVoicePack&gt; ROvp ;
+<a name="452"></a>
+<a name="453"></a>		SMArraySize = 0;
+<a name="454"></a>
+<a name="455"></a>		ROvp = GetROVoiceClass();
+<a name="456"></a>		if(ROvp == None)
+<a name="457"></a>			return;
+<a name="458"></a>
+<a name="459"></a>		for(i=0; i&lt; ROvp.Default.numShouts; i++)
+<a name="460"></a>		{
+<a name="461"></a>		    SMNameArray[SMArraySize] = ROvp.Default.ShoutString[i];
+<a name="462"></a>			SMIndexArray[SMArraySize] = i;
+<a name="463"></a>			SMArraySize++;
+<a name="464"></a>		}
+<a name="465"></a>    }*/</span>
+<a name="466"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="467"></a>    <span class="source_comment">// build voice command array for whisper voices
+</span><a name="468"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="469"></a>
+<a name="470"></a>    <span class="source_comment">/*function buildSMWhisperArray()
+<a name="471"></a>    {
+<a name="472"></a>        local int i;
+<a name="473"></a>		local class&lt;ROVoicePack&gt; ROvp ;
+<a name="474"></a>
+<a name="475"></a>		SMArraySize = 0;
+<a name="476"></a>
+<a name="477"></a>		ROvp = GetROVoiceClass();
+<a name="478"></a>		if(ROvp == None)
+<a name="479"></a>			return;
+<a name="480"></a>
+<a name="481"></a>        for(i=0; i&lt; ROvp.Default.numWhispers; i++)
+<a name="482"></a>        {
+<a name="483"></a>           SMNameArray[SMArraySize] = ROvp.Default.WhisperString[i];
+<a name="484"></a>           SMIndexArray[SMArraySize] = i;
+<a name="485"></a>           SMArraySize++;
+<a name="486"></a>        }
+<a name="487"></a>    }*/</span>
+<a name="488"></a>
+<a name="489"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="490"></a>    <span class="source_comment">// build voice command array for Vehicle voices -MrMethane new function 01/12/2005
+</span><a name="491"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="492"></a>    function buildSMVehicleDirectionArray()
+<a name="493"></a>    {
+<a name="494"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="495"></a>		local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt; ROvp ;
+<a name="496"></a>
+<a name="497"></a>		SMArraySize = <span class="source_int">0</span>;
+<a name="498"></a>		PreviousStateName = ROSMS_Main;
+<a name="499"></a>
+<a name="500"></a>		ROvp = GetROVoiceClass();
+<a name="501"></a>		if(ROvp == None)
+<a name="502"></a>			return;
+<a name="503"></a>
+<a name="504"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; ROvp.Default.numVehicleDirections; <span class="source_type">i</span>++)
+<a name="505"></a>		{
+<a name="506"></a>		    SMNameArray[SMArraySize] = ROvp.Default.VehicleDirectionString[<span class="source_type">i</span>];
+<a name="507"></a>			SMIndexArray[SMArraySize] = <span class="source_type">i</span>;
+<a name="508"></a>			SMArraySize++;
+<a name="509"></a>		}
+<a name="510"></a>
+<a name="511"></a>    }
+<a name="512"></a>
+<a name="513"></a>    function buildSMVehicleAlertArray()
+<a name="514"></a>    {
+<a name="515"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="516"></a>		local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovoicepack.html" class="source">ROVoicePack</a></span>&gt; ROvp ;
+<a name="517"></a>
+<a name="518"></a>		SMArraySize = <span class="source_int">0</span>;
+<a name="519"></a>		PreviousStateName = ROSMS_Main;
+<a name="520"></a>
+<a name="521"></a>		ROvp = GetROVoiceClass();
+<a name="522"></a>		if(ROvp == None)
+<a name="523"></a>			return;
+<a name="524"></a>
+<a name="525"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt; ROvp.Default.numVehicleAlerts; <span class="source_type">i</span>++)
+<a name="526"></a>		{
+<a name="527"></a>		    SMNameArray[SMArraySize] = ROvp.Default.VehicleAlertString[<span class="source_type">i</span>];
+<a name="528"></a>			SMIndexArray[SMArraySize] = <span class="source_type">i</span>;
+<a name="529"></a>			SMArraySize++;
+<a name="530"></a>		}
+<a name="531"></a>
+<a name="532"></a>    }
+<a name="533"></a>
+<a name="534"></a>    function buildSMSelectSquadArray()
+<a name="535"></a>    {
+<a name="536"></a>        local <span class="source_type">int</span> <span class="source_type">i</span>, j, <span class="source_type">team</span>;
+<a name="537"></a>        local <span class="source_type">bool</span> bAlreadyExists;
+<a name="538"></a>        local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> PRI, B_PRI;
+<a name="539"></a>        local array&lt;<span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span>&gt; squads;
+<a name="540"></a>        local <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span> GRI;
+<a name="541"></a>
+<a name="542"></a>        SMArraySize = <span class="source_int">0</span>;
+<a name="543"></a>        squads.Length = <span class="source_int">0</span>;
+<a name="544"></a>        PRIs.Length = <span class="source_int">0</span>;
+<a name="545"></a>
+<a name="546"></a>        <span class="source_comment">// Add 'everyone' item
+</span><a name="547"></a>        SMNameArray[SMArraySize] = AllPlayersSquad;
+<a name="548"></a>		SMIndexArray[SMArraySize] = -<span class="source_int">1</span>;
+<a name="549"></a>        SMArraySize++;
+<a name="550"></a>
+<a name="551"></a>		<span class="source_comment">// Get player's team #
+</span><a name="552"></a>	    PRI = <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="553"></a>	    GRI = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>);
+<a name="554"></a>	    if (PRI == none || PRI.<span class="source_type">Team</span> == none || GRI == none)
+<a name="555"></a>	        return;
+<a name="556"></a>	    <span class="source_type">team</span> = PRI.<span class="source_type">Team</span>.TeamIndex;
+<a name="557"></a>
+<a name="558"></a>
+<a name="559"></a>		<span class="source_comment">// Iterate through bot list, finding out which squads are from this team and
+</span><a name="560"></a>		<span class="source_comment">// adding the to the menu (if they wern't already)
+</span><a name="561"></a>		for (j = <span class="source_int">0</span>; j &lt; GRI.PRIArray.length; j++)
+<a name="562"></a>		{
+<a name="563"></a>            B_PRI = <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(GRI.PRIArray[j]);
+<a name="564"></a>            if (B_PRI != none && B_PRI.Squad != none)
+<a name="565"></a>            {
+<a name="566"></a>                if (B_PRI.<span class="source_type">Team</span> != none && B_PRI.Squad.LeaderPRI != none)
+<a name="567"></a>                {
+<a name="568"></a>                    if (B_PRI.<span class="source_type">Team</span>.TeamIndex == <span class="source_type">team</span>)
+<a name="569"></a>                    {
+<a name="570"></a>                        <span class="source_comment">// Check if this bot's squad already exists in the list
+</span><a name="571"></a>                        bAlreadyExists = false;
+<a name="572"></a>                        for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; squads.Length; <span class="source_type">i</span>++)
+<a name="573"></a>                           if (B_PRI.Squad == squads[<span class="source_type">i</span>])
+<a name="574"></a>                               bAlreadyExists = true;
+<a name="575"></a>
+<a name="576"></a>                        if (!bAlreadyExists)
+<a name="577"></a>                        {
+<a name="578"></a>                            <span class="source_comment">// Add squad to squad list
+</span><a name="579"></a>                            squads[squads.Length] = B_PRI.Squad;
+<a name="580"></a>
+<a name="581"></a>                            <span class="source_comment">// Save squad leader PRI
+</span><a name="582"></a>                            PRIs[PRIs.Length] = B_PRI.Squad.LeaderPRI;
+<a name="583"></a>
+<a name="584"></a>                            <span class="source_comment">// Add squad to menu
+</span><a name="585"></a>                            if (B_PRI.Squad.LeaderPRI == PRI)
+<a name="586"></a>                            {
+<a name="587"></a>                                <span class="source_comment">// Here we do some switcheroo to place our own squad in position #2
+</span><a name="588"></a>                                SMNameArray[SMArraySize] = SMNameArray[<span class="source_int">1</span>];
+<a name="589"></a>                                SMIndexArray[SMArraySize] = SMIndexArray[<span class="source_int">1</span>];
+<a name="590"></a>
+<a name="591"></a>                                SMNameArray[<span class="source_int">1</span>] = OwnSquad;
+<a name="592"></a>                                SMIndexArray[<span class="source_int">1</span>] = PRIs.Length - <span class="source_int">1</span>;
+<a name="593"></a>	                            SMArraySize++;
+<a name="594"></a>                            }
+<a name="595"></a>                            else
+<a name="596"></a>                            {
+<a name="597"></a>                                SMNameArray[SMArraySize] = B_PRI.Squad.LeaderPRI.<span class="source_type">PlayerName</span> $ SquadSuffix;
+<a name="598"></a>	                            SMIndexArray[SMArraySize] = PRIs.Length - <span class="source_int">1</span>;
+<a name="599"></a>	                            SMArraySize++;
+<a name="600"></a>	                        }
+<a name="601"></a>                        }
+<a name="602"></a>                    }
+<a name="603"></a>                }
+<a name="604"></a>	        }
+<a name="605"></a>		}
+<a name="606"></a>
+<a name="607"></a>		<span class="source_comment">// Clear squads list
+</span><a name="608"></a>		squads.Length = <span class="source_int">0</span>;
+<a name="609"></a>    }
+<a name="610"></a>
+<a name="611"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="612"></a>    <span class="source_comment">//
+</span><a name="613"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="614"></a>	function EnterROState(<span class="source_type"><a href="../rointerface/roconsole.html#EROSpeechMenuState" class="source">EROSpeechMenuState</a></span> <span class="source_type">newState</span>, optional <span class="source_type">bool</span> bNoSound)
+<a name="615"></a>	{
+<a name="616"></a>		ROSMState = <span class="source_type">newState</span>;
+<a name="617"></a>		RebuildSMArray();
+<a name="618"></a>        <span class="source_comment">//log("ROConsole::EnterROState = "$ROSMState);
+</span><a name="619"></a>		if(!bNoSound)
+<a name="620"></a>			PlayConsoleSound(SMAcceptSound);
+<a name="621"></a>	}
+<a name="622"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="623"></a>    <span class="source_comment">//--------------------------------------------------------------------------
+</span><a name="624"></a>	function LeaveState() <span class="source_comment">// Go up a level
+</span><a name="625"></a>	{
+<a name="626"></a>		PlayConsoleSound(SMDenySound);
+<a name="627"></a>
+<a name="628"></a>		if(ROSMState == ROSMS_Main)
+<a name="629"></a>		{
+<a name="630"></a>			GotoState(<span class="source_name">''</span>);
+<a name="631"></a>		}
+<a name="632"></a>		else
+<a name="633"></a>			EnterROState(PreviousStateName, true);
+<a name="634"></a>	}
+<a name="635"></a>
+<a name="636"></a>	function HandleInput(<span class="source_type">int</span> keyIn)
+<a name="637"></a>	{
+<a name="638"></a>		local <span class="source_type">int</span> selectIndex;
+<a name="639"></a>		local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> RORepInfo;
+<a name="640"></a>		local <span class="source_type">bool</span> inVehicle;
+<a name="641"></a>
+<a name="642"></a>		<span class="source_comment">//local UnrealPlayer up;
+</span><a name="643"></a>		<span class="source_comment">// GO BACK - previous state (might back out of menu);
+</span><a name="644"></a>		if(keyIn == -<span class="source_int">1</span>)
+<a name="645"></a>		{
+<a name="646"></a>			LeaveState();
+<a name="647"></a>			HighlightRow = <span class="source_int">0</span>;
+<a name="648"></a>			return;
+<a name="649"></a>		}
+<a name="650"></a>
+<a name="651"></a>		<span class="source_comment">// TOP LEVEL - we just enter a new state
+</span><a name="652"></a>		if(ROSMState == ROSMS_Main)
+<a name="653"></a>		{
+<a name="654"></a>		    RORepInfo = <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="655"></a>
+<a name="656"></a>            if( ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != none && ((ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.IsA(<span class="source_name">'ROVehicle'</span>)) ||(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.IsA(<span class="source_name">'ROVehicleWeaponPawn'</span>))) )
+<a name="657"></a>                inVehicle = true;
+<a name="658"></a>            else
+<a name="659"></a>                inVehicle = false;
+<a name="660"></a>
+<a name="661"></a>            <span class="source_comment">//only leaders are able to issue orders
+</span><a name="662"></a>		    if((RORepInfo != none && RORepInfo.RoleInfo.bIsLeader) || ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type">Level</span>.NetMode == NM_Standalone)
+<a name="663"></a>		    {
+<a name="664"></a>    			 <span class="source_comment">// don't show vehicle commands if not in vehicle
+</span><a name="665"></a>		       if(inVehicle)
+<a name="666"></a>		       {
+<a name="667"></a>                  <span class="source_type">switch</span>(keyIn)
+<a name="668"></a>                  {
+<a name="669"></a>    			      case <span class="source_int">1</span>: SMType = <span class="source_name">'SUPPORT'</span>; EnterROState(ROSMS_Support); break;
+<a name="670"></a>    			      case <span class="source_int">2</span>: SMType = <span class="source_name">'ACK'</span>; EnterROState(ROSMS_Ack); break;
+<a name="671"></a>    			      case <span class="source_int">3</span>: SMType = <span class="source_name">'ENEMY'</span>; EnterROState(ROSMS_Enemy); break;
+<a name="672"></a>    			      case <span class="source_int">4</span>: SMType = <span class="source_name">'ALERT'</span>; EnterROState(ROSMS_Alert); break;
+<a name="673"></a>    			      case <span class="source_int">5</span>: SMType = <span class="source_name">'VEH_ORDERS'</span>; EnterROState(ROSMS_Vehicle_Orders); break;
+<a name="674"></a>    			      case <span class="source_int">6</span>: SMType = <span class="source_name">'VEH_ALERTS'</span>; EnterROState(ROSMS_Vehicle_Alerts); break;
+<a name="675"></a>    			      case <span class="source_int">7</span>: SMType = <span class="source_name">'ORDER'</span>; EnterROState(ROSMS_Commanders); break;
+<a name="676"></a>    			      case <span class="source_int">8</span>: SMType = <span class="source_name">'TAUNT'</span>; EnterROState(ROSMS_Extras); break;
+<a name="677"></a>                  }
+<a name="678"></a>               }
+<a name="679"></a>               else
+<a name="680"></a>		       {
+<a name="681"></a>                  <span class="source_type">switch</span>(keyIn)
+<a name="682"></a>                  {
+<a name="683"></a>    			      case <span class="source_int">1</span>: SMType = <span class="source_name">'SUPPORT'</span>; EnterROState(ROSMS_Support); break;
+<a name="684"></a>    			      case <span class="source_int">2</span>: SMType = <span class="source_name">'ACK'</span>; EnterROState(ROSMS_Ack); break;
+<a name="685"></a>    			      case <span class="source_int">3</span>: SMType = <span class="source_name">'ENEMY'</span>; EnterROState(ROSMS_Enemy); break;
+<a name="686"></a>    			      case <span class="source_int">4</span>: SMType = <span class="source_name">'ALERT'</span>; EnterROState(ROSMS_Alert); break;
+<a name="687"></a>    			      case <span class="source_int">5</span>: SMType = <span class="source_name">'ORDER'</span>; EnterROState(ROSMS_Commanders); break;
+<a name="688"></a>    			      case <span class="source_int">6</span>: SMType = <span class="source_name">'TAUNT'</span>; EnterROState(ROSMS_Extras); break;
+<a name="689"></a>    			  }
+<a name="690"></a>               }
+<a name="691"></a>           	}
+<a name="692"></a>		    else
+<a name="693"></a>		    {
+<a name="694"></a>               <span class="source_comment">//non-leaders, no orders
+</span><a name="695"></a>
+<a name="696"></a>               if(inVehicle)
+<a name="697"></a>               {
+<a name="698"></a>		          <span class="source_type">switch</span>(keyIn)
+<a name="699"></a>			      {
+<a name="700"></a>    			      case <span class="source_int">1</span>: SMType = <span class="source_name">'SUPPORT'</span>; EnterROState(ROSMS_Support); break;
+<a name="701"></a>    			      case <span class="source_int">2</span>: SMType = <span class="source_name">'ACK'</span>; EnterROState(ROSMS_Ack); break;
+<a name="702"></a>    			      case <span class="source_int">3</span>: SMType = <span class="source_name">'ENEMY'</span>; EnterROState(ROSMS_Enemy); break;
+<a name="703"></a>    			      case <span class="source_int">4</span>: SMType = <span class="source_name">'ALERT'</span>; EnterROState(ROSMS_Alert); break;
+<a name="704"></a>      			      case <span class="source_int">5</span>: SMType = <span class="source_name">'VEH_ORDERS'</span>; EnterROState(ROSMS_Vehicle_Orders); break;
+<a name="705"></a>    			      case <span class="source_int">6</span>: SMType = <span class="source_name">'VEH_ALERTS'</span>; EnterROState(ROSMS_Vehicle_Alerts); break;
+<a name="706"></a>    			      case <span class="source_int">7</span>: SMType = <span class="source_name">'TAUNT'</span>; EnterROState(ROSMS_Extras); break;
+<a name="707"></a>                  }
+<a name="708"></a>                }
+<a name="709"></a>    			else
+<a name="710"></a>    			{
+<a name="711"></a>    			   <span class="source_type">switch</span>(keyIn)
+<a name="712"></a>    			   {
+<a name="713"></a>    			       case <span class="source_int">1</span>: SMType = <span class="source_name">'SUPPORT'</span>; EnterROState(ROSMS_Support); break;
+<a name="714"></a>    			       case <span class="source_int">2</span>: SMType = <span class="source_name">'ACK'</span>; EnterROState(ROSMS_Ack); break;
+<a name="715"></a>    			       case <span class="source_int">3</span>: SMType = <span class="source_name">'ENEMY'</span>; EnterROState(ROSMS_Enemy); break;
+<a name="716"></a>    			       case <span class="source_int">4</span>: SMType = <span class="source_name">'ALERT'</span>; EnterROState(ROSMS_Alert); break;
+<a name="717"></a>    			       case <span class="source_int">5</span>: SMType = <span class="source_name">'TAUNT'</span>; EnterROState(ROSMS_Extras); break;
+<a name="718"></a>  			       }
+<a name="719"></a>		       }
+<a name="720"></a>		    }
+<a name="721"></a>
+<a name="722"></a>			return;
+<a name="723"></a>		}
+<a name="724"></a>		else if (ROSMState == ROSMS_Commanders)
+<a name="725"></a>		{
+<a name="726"></a>            <span class="source_type">switch</span>(keyIn)
+<a name="727"></a>			{
+<a name="728"></a>    			case <span class="source_int">1</span>: SMType = <span class="source_name">'ATTACK'</span>; EnterROState(ROSMS_Attack);
+<a name="729"></a>                        <span class="source_comment">//log("going to attack state");
+</span><a name="730"></a>                        return;
+<a name="731"></a>    			case <span class="source_int">2</span>: SMType = <span class="source_name">'DEFEND'</span>; EnterROState(ROSMS_Defend);
+<a name="732"></a>						return;
+<a name="733"></a>		    }
+<a name="734"></a>		    if(keyIn &lt; <span class="source_int">3</span>) <span class="source_comment">//send messages for other orders
+</span><a name="735"></a>		       return;
+<a name="736"></a>		}
+<a name="737"></a>		else if (ROSMState == ROSMS_Vehicle_Orders && keyIn == <span class="source_int">1</span>)
+<a name="738"></a>		{
+<a name="739"></a>		    SMType = <span class="source_name">'VEH_GOTO'</span>; EnterROState(ROSMS_Vehicle_Goto);
+<a name="740"></a>	        return;
+<a name="741"></a>		}
+<a name="742"></a>		else if (ROSMState == ROSMS_Support && keyIn == <span class="source_int">2</span>)
+<a name="743"></a>		{
+<a name="744"></a>		    SMType = <span class="source_name">'HELPAT'</span>; EnterROState(ROSMS_HelpAt);
+<a name="745"></a>	        return;
+<a name="746"></a>		}
+<a name="747"></a>		else if (ROSMState == ROSMS_Alert && keyIn == <span class="source_int">9</span>)
+<a name="748"></a>		{
+<a name="749"></a>		    SMType = <span class="source_name">'UNDERATTACK'</span>; EnterROState(ROSMS_UnderAttackAt);
+<a name="750"></a>	        return;
+<a name="751"></a>		}
+<a name="752"></a>
+<a name="753"></a>		<span class="source_comment">// Next page on the same level
+</span><a name="754"></a>		if(keyIn == <span class="source_int">0</span> )
+<a name="755"></a>		{
+<a name="756"></a>			<span class="source_comment">// Check there is a next page!
+</span><a name="757"></a>			if(SMArraySize - SMOffset &gt; <span class="source_int">9</span> && SMArraySize != <span class="source_int">10</span>)
+<a name="758"></a>			{
+<a name="759"></a>				SMOffset += <span class="source_int">9</span>;
+<a name="760"></a>            	return;
+<a name="761"></a>            }
+<a name="762"></a>            keyIn = <span class="source_int">10</span>;
+<a name="763"></a>		}
+<a name="764"></a>
+<a name="765"></a>		<span class="source_comment">// Previous page on the same level
+</span><a name="766"></a>		if(keyIn == -<span class="source_int">2</span>)
+<a name="767"></a>		{
+<a name="768"></a>			SMOffset = <span class="source_type">Max</span>(SMOffset - <span class="source_int">9</span>, <span class="source_int">0</span>);
+<a name="769"></a>			return;
+<a name="770"></a>		}
+<a name="771"></a>
+<a name="772"></a>		<span class="source_comment">// Otherwise - we have selected something!
+</span><a name="773"></a>		selectIndex = SMOffset + keyIn - <span class="source_int">1</span>;
+<a name="774"></a>		if(selectIndex &lt; <span class="source_int">0</span> || selectIndex &gt;= SMArraySize) <span class="source_comment">// discard - out of range selections.
+</span><a name="775"></a>			return;
+<a name="776"></a>
+<a name="777"></a>		<span class="source_comment">// Check if we need to open a new menu to select order target squad
+</span><a name="778"></a>		if (ROSMState == ROSMS_Attack || ROSMState == ROSMS_Defend ||
+<a name="779"></a>	        <span class="source_comment">//ROSMState == ROSMS_Vehicle_Goto || ROSMState == ROSMS_HelpAt || ROSMState == ROSMS_UnderAttackAt ||
+</span><a name="780"></a>            ROSMState == ROSMS_Commanders)
+<a name="781"></a>		{
+<a name="782"></a>		    if (bCheckIfOwnerTeamHasBots())
+<a name="783"></a>		    {
+<a name="784"></a>    		    <span class="source_comment">// Save selected objective
+</span><a name="785"></a>    		    savedSelectedObjective = SMIndexArray[selectIndex];
+<a name="786"></a>
+<a name="787"></a>    		    <span class="source_comment">// Generate menu with list of bots
+</span><a name="788"></a>    		    EnterROState(ROSMS_SelectSquad);
+<a name="789"></a>    		    return;
+<a name="790"></a>    		}
+<a name="791"></a>		}
+<a name="792"></a>
+<a name="793"></a>        if (ROSMState == ROSMS_SelectSquad)
+<a name="794"></a>		{
+<a name="795"></a>		    <span class="source_comment">// If this were the squad select menu, we want to have special code to
+</span><a name="796"></a>		    <span class="source_comment">// handle speech generation (to select proper objective and target
+</span><a name="797"></a>		    <span class="source_comment">// squad)
+</span><a name="798"></a>            if (SMIndexArray[selectIndex] != -<span class="source_int">1</span>)
+<a name="799"></a>                ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.xSpeech(SMType, savedSelectedObjective, PRIs[SMIndexArray[selectIndex]]);
+<a name="800"></a>            else
+<a name="801"></a>                ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.xSpeech(SMType, savedSelectedObjective, none);
+<a name="802"></a>		}
+<a name="803"></a>		else
+<a name="804"></a>        	ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.Speech(SMType, SMIndexArray[selectIndex], <span class="source_string">""</span>);
+<a name="805"></a>
+<a name="806"></a>        PlayConsoleSound(SMAcceptSound);
+<a name="807"></a>		GotoState(<span class="source_name">''</span>);
+<a name="808"></a>	}
+<a name="809"></a>
+<a name="810"></a>	function <span class="source_type">bool</span> bCheckIfOwnerTeamHasBots()
+<a name="811"></a>	{
+<a name="812"></a>	    local <span class="source_type">int</span> <span class="source_type">team</span>, <span class="source_type">i</span>;
+<a name="813"></a>	    local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> PRI;
+<a name="814"></a>	    local <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span> GRI;
+<a name="815"></a>
+<a name="816"></a>	    PRI = <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="817"></a>	    GRI = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>);
+<a name="818"></a>	    if (PRI == none || PRI.<span class="source_type">Team</span> == none || GRI == none)
+<a name="819"></a>	        return false;
+<a name="820"></a>
+<a name="821"></a>	    <span class="source_type">team</span> = PRI.<span class="source_type">Team</span>.TeamIndex;
+<a name="822"></a>
+<a name="823"></a>	    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GRI.PRIArray.length; <span class="source_type">i</span>++)
+<a name="824"></a>	    {
+<a name="825"></a>	        if (GRI.PRIArray[<span class="source_type">i</span>] != none && GRI.PRIArray[<span class="source_type">i</span>].bBot)
+<a name="826"></a>	            if (GRI.PRIArray[<span class="source_type">i</span>].<span class="source_type">Team</span> != none)
+<a name="827"></a>	               if (GRI.PRIArray[<span class="source_type">i</span>].<span class="source_type">Team</span>.TeamIndex == <span class="source_type">team</span>)
+<a name="828"></a>	                   return true;
+<a name="829"></a>	    }
+<a name="830"></a>
+<a name="831"></a>	    return false;
+<a name="832"></a>	}
+<a name="833"></a>
+<a name="834"></a>	<span class="source_comment">//////////////////////////////////////////////
+</span><a name="835"></a>
+<a name="836"></a>	function <span class="source_type">string</span> NumberToString(<span class="source_type">int</span> <span class="source_type">num</span>)
+<a name="837"></a>	{
+<a name="838"></a>		local <span class="source_type"><a href="../engine/interactions.html#EInputKey" class="source">EInputKey</a></span> key;
+<a name="839"></a>		local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="840"></a>
+<a name="841"></a>		if(<span class="source_type">num</span> &lt; <span class="source_int">0</span> || <span class="source_type">num</span> &gt; <span class="source_int">9</span>)
+<a name="842"></a>			return <span class="source_string">""</span>;
+<a name="843"></a>
+<a name="844"></a>		if(bSpeechMenuUseLetters)
+<a name="845"></a>			key = LetterKeys[<span class="source_type">num</span>];
+<a name="846"></a>		else
+<a name="847"></a>			key = NumberKeys[<span class="source_type">num</span>];
+<a name="848"></a>
+<a name="849"></a>		<span class="source_type">s</span> = ViewportOwner.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.ConsoleCommand( <span class="source_string">"LOCALIZEDKEYNAME"</span>@<span class="source_type">string</span>(<span class="source_type">int</span>(key)) );
+<a name="850"></a>		return <span class="source_type">s</span>;
+<a name="851"></a>	}
+<a name="852"></a>
+<a name="853"></a>	function DrawNumbers( <span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, <span class="source_type">int</span> NumNums, <span class="source_type">bool</span> IncZero, <span class="source_type">bool</span> sizing, out <span class="source_type">float</span> XMax, out <span class="source_type">float</span> <span class="source_type">YMax</span> )
+<a name="854"></a>	{
+<a name="855"></a>		local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="856"></a>		local <span class="source_type">float</span> XPos, YPos;
+<a name="857"></a>		local <span class="source_type">float</span> XL, <span class="source_type">YL</span>;
+<a name="858"></a>
+<a name="859"></a>		XPos = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX * (SMOriginX+SMMargin);
+<a name="860"></a>		YPos = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY * (SMOriginY+SMMargin);
+<a name="861"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">128</span>,<span class="source_int">255</span>,<span class="source_int">128</span>,<span class="source_int">255</span>);
+<a name="862"></a>
+<a name="863"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;NumNums; <span class="source_type">i</span>++)
+<a name="864"></a>		{
+<a name="865"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(XPos, YPos);
+<a name="866"></a>			if(!sizing)
+<a name="867"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(NumberToString(<span class="source_type">i</span>+<span class="source_int">1</span>)$<span class="source_string">"-"</span>, false);
+<a name="868"></a>			else
+<a name="869"></a>			{
+<a name="870"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.TextSize(NumberToString(<span class="source_type">i</span>+<span class="source_int">1</span>)$<span class="source_string">"-"</span>, XL, <span class="source_type">YL</span>);
+<a name="871"></a>				XMax = <span class="source_type">Max</span>(XMax, XPos + XL);
+<a name="872"></a>				<span class="source_type">YMax</span> = <span class="source_type">Max</span>(<span class="source_type">YMax</span>, YPos + <span class="source_type">YL</span>);
+<a name="873"></a>			}
+<a name="874"></a>
+<a name="875"></a>			YPos += SMLineSpace;
+<a name="876"></a>		}
+<a name="877"></a>
+<a name="878"></a>		if(IncZero)
+<a name="879"></a>		{
+<a name="880"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(XPos, YPos);
+<a name="881"></a>
+<a name="882"></a>			if(!sizing)
+<a name="883"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(NumberToString(<span class="source_int">0</span>)$<span class="source_string">"-"</span>, false);
+<a name="884"></a>
+<a name="885"></a>            <span class="source_comment">// Hackish
+</span><a name="886"></a>            if (SMArraySize != <span class="source_int">10</span>)
+<a name="887"></a>            {
+<a name="888"></a>			    XPos += SMTab;
+<a name="889"></a>			    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(XPos, YPos);
+<a name="890"></a>
+<a name="891"></a>			    if(!sizing)
+<a name="892"></a>				    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(SMMoreString, false);
+<a name="893"></a>			    else
+<a name="894"></a>			    {
+<a name="895"></a>				    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.TextSize(SMMoreString, XL, <span class="source_type">YL</span>);
+<a name="896"></a>				    XMax = <span class="source_type">Max</span>(XMax, XPos + XL);
+<a name="897"></a>				    <span class="source_type">YMax</span> = <span class="source_type">Max</span>(<span class="source_type">YMax</span>, YPos + <span class="source_type">YL</span>);
+<a name="898"></a>			    }
+<a name="899"></a>			}
+<a name="900"></a>		}
+<a name="901"></a>	}
+<a name="902"></a>
+<a name="903"></a>	function DrawCurrentArray( <span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, <span class="source_type">bool</span> sizing, out <span class="source_type">float</span> XMax, out <span class="source_type">float</span> <span class="source_type">YMax</span> )
+<a name="904"></a>	{
+<a name="905"></a>		local <span class="source_type">int</span> <span class="source_type">i</span>, stopAt;
+<a name="906"></a>		local <span class="source_type">float</span> XPos, YPos;
+<a name="907"></a>		local <span class="source_type">float</span> XL, <span class="source_type">YL</span>;
+<a name="908"></a>
+<a name="909"></a>		XPos = (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX * (SMOriginX+SMMargin)) + SMTab;
+<a name="910"></a>		YPos = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY * (SMOriginY+SMMargin);
+<a name="911"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">255</span>);
+<a name="912"></a>
+<a name="913"></a>        if (SMArraySize == <span class="source_int">10</span>)
+<a name="914"></a>            stopAt = Min(SMOffset+<span class="source_int">10</span>, SMArraySize);
+<a name="915"></a>        else
+<a name="916"></a>		    stopAt = Min(SMOffset+<span class="source_int">9</span>, SMArraySize);
+<a name="917"></a>		for(<span class="source_type">i</span>=SMOffset; <span class="source_type">i</span>&lt;stopAt; <span class="source_type">i</span>++)
+<a name="918"></a>		{
+<a name="919"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(XPos, YPos);
+<a name="920"></a>			if(!sizing)
+<a name="921"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(SMNameArray[<span class="source_type">i</span>], false);
+<a name="922"></a>			else
+<a name="923"></a>			{
+<a name="924"></a>				<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.TextSize(SMNameArray[<span class="source_type">i</span>], XL, <span class="source_type">YL</span>);
+<a name="925"></a>				XMax = <span class="source_type">Max</span>(XMax, XPos + XL);
+<a name="926"></a>				<span class="source_type">YMax</span> = <span class="source_type">Max</span>(<span class="source_type">YMax</span>, YPos + <span class="source_type">YL</span>);
+<a name="927"></a>			}
+<a name="928"></a>
+<a name="929"></a>			YPos += SMLineSpace;
+<a name="930"></a>		}
+<a name="931"></a>	}
+<a name="932"></a>
+<a name="933"></a>	<span class="source_comment">//////////////////////////////////////////////
+</span><a name="934"></a>
+<a name="935"></a>	function <span class="source_type">int</span> KeyToNumber(<span class="source_type"><a href="../engine/interactions.html#EInputKey" class="source">EInputKey</a></span> <span class="source_type">InKey</span>)
+<a name="936"></a>	{
+<a name="937"></a>		local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="938"></a>
+<a name="939"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">10</span>; <span class="source_type">i</span>++)
+<a name="940"></a>		{
+<a name="941"></a>			if(bSpeechMenuUseLetters)
+<a name="942"></a>			{
+<a name="943"></a>				if(<span class="source_type">InKey</span> == LetterKeys[<span class="source_type">i</span>])
+<a name="944"></a>					return <span class="source_type">i</span>;
+<a name="945"></a>			}
+<a name="946"></a>			else
+<a name="947"></a>			{
+<a name="948"></a>				if(<span class="source_type">InKey</span> == NumberKeys[<span class="source_type">i</span>])
+<a name="949"></a>					return <span class="source_type">i</span>;
+<a name="950"></a>			}
+<a name="951"></a>		}
+<a name="952"></a>
+<a name="953"></a>		return -<span class="source_int">1</span>;
+<a name="954"></a>	}
+<a name="955"></a>
+<a name="956"></a>	function <span class="source_type">bool</span> KeyEvent( <span class="source_type"><a href="../engine/interactions.html#EInputKey" class="source">EInputKey</a></span> Key, <span class="source_type"><a href="../engine/interactions.html#EInputAction" class="source">EInputAction</a></span> Action, <span class="source_type">FLOAT</span> <span class="source_type">Delta</span> )
+<a name="957"></a>	{
+<a name="958"></a>		local <span class="source_type">int</span> input, NumNums;
+<a name="959"></a>
+<a name="960"></a>		NumNums = Min(SMArraySize - SMOffset, <span class="source_int">10</span>);
+<a name="961"></a>
+<a name="962"></a>		<span class="source_comment">// while speech menu is up, dont let user use console. Debateable.
+</span><a name="963"></a>		<span class="source_comment">//if( KeyIsBoundTo( Key, "ConsoleToggle" ) )
+</span><a name="964"></a>		<span class="source_comment">//	return true;
+</span><a name="965"></a>		<span class="source_comment">//if( KeyIsBoundTo( Key, "Type" ) )
+</span><a name="966"></a>		<span class="source_comment">//	return true;
+</span><a name="967"></a>
+<a name="968"></a>		if (Action == IST_Press)
+<a name="969"></a>			bIgnoreKeys=false;
+<a name="970"></a>
+<a name="971"></a>		if( Action != IST_Press )
+<a name="972"></a>			return false;
+<a name="973"></a>
+<a name="974"></a>		if( Key==IK_Escape)
+<a name="975"></a>		{
+<a name="976"></a>			HandleInput(-<span class="source_int">1</span>);
+<a name="977"></a>			return true ;
+<a name="978"></a>		}
+<a name="979"></a>
+<a name="980"></a>		<span class="source_comment">// If 'letters' mode is on, convert input
+</span><a name="981"></a>		input = KeyToNumber(Key);
+<a name="982"></a>		if(input != -<span class="source_int">1</span>)
+<a name="983"></a>		{
+<a name="984"></a>			HandleInput(input);
+<a name="985"></a>			return true;
+<a name="986"></a>		}
+<a name="987"></a>
+<a name="988"></a>		<span class="source_comment">// Keys below are only used if bSpeechMenuUseMouseWheel is true
+</span><a name="989"></a>		if(!bSpeechMenuUseMouseWheel)
+<a name="990"></a>			return false;
+<a name="991"></a>
+<a name="992"></a>		if( Key==IK_MouseWheelUp )
+<a name="993"></a>		{
+<a name="994"></a>			<span class="source_comment">// If moving up on the top row, and there is a previous page
+</span><a name="995"></a>			if(HighlightRow == <span class="source_int">0</span> && SMOffset &gt; <span class="source_int">0</span>)
+<a name="996"></a>			{
+<a name="997"></a>				HandleInput(-<span class="source_int">2</span>);
+<a name="998"></a>				HighlightRow=<span class="source_int">9</span>;
+<a name="999"></a>			}
+<a name="1000"></a>			else
+<a name="1001"></a>			{
+<a name="1002"></a>				HighlightRow = <span class="source_type">Max</span>(HighlightRow - <span class="source_int">1</span>, <span class="source_int">0</span>);
+<a name="1003"></a>			}
+<a name="1004"></a>
+<a name="1005"></a>			return true;
+<a name="1006"></a>		}
+<a name="1007"></a>		else if( Key==IK_MouseWheelDown )
+<a name="1008"></a>		{
+<a name="1009"></a>			<span class="source_comment">// If moving down on the bottom row (the 'MORE' row), act as if we hit it, and move highlight to top.
+</span><a name="1010"></a>			if(HighlightRow == <span class="source_int">9</span> && SMArraySize != <span class="source_int">10</span>)
+<a name="1011"></a>			{
+<a name="1012"></a>				HandleInput(<span class="source_int">0</span>);
+<a name="1013"></a>				HighlightRow=<span class="source_int">0</span>;
+<a name="1014"></a>			}
+<a name="1015"></a>			else
+<a name="1016"></a>			{
+<a name="1017"></a>				HighlightRow = Min(HighlightRow + <span class="source_int">1</span>, NumNums - <span class="source_int">1</span>);
+<a name="1018"></a>			}
+<a name="1019"></a>
+<a name="1020"></a>			return true;
+<a name="1021"></a>		}
+<a name="1022"></a>		else if( Key==IK_MiddleMouse )
+<a name="1023"></a>		{
+<a name="1024"></a>
+<a name="1025"></a>			input = HighlightRow + <span class="source_int">1</span>;
+<a name="1026"></a>			if(input == <span class="source_int">10</span>)
+<a name="1027"></a>				input = <span class="source_int">0</span>;
+<a name="1028"></a>
+<a name="1029"></a>			HandleInput(input);
+<a name="1030"></a>			HighlightRow=<span class="source_int">0</span>;
+<a name="1031"></a>			return true;
+<a name="1032"></a>		}
+<a name="1033"></a>
+<a name="1034"></a>		return false;
+<a name="1035"></a>	}
+<a name="1036"></a>
+<a name="1037"></a>	function <span class="source_type">Font</span> MyGetSmallFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="1038"></a>	{
+<a name="1039"></a>		local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1040"></a>		for(<span class="source_type">i</span>=<span class="source_int">1</span>; <span class="source_type">i</span>&lt;<span class="source_int">8</span>; <span class="source_type">i</span>++)
+<a name="1041"></a>		{
+<a name="1042"></a>			if ( <span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.FontScreenWidthSmall[<span class="source_type">i</span>] &lt;= <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX )
+<a name="1043"></a>				return <span class="source_type">class</span><span class="source_name">'HudBase'</span>.static.LoadFontStatic(<span class="source_type">i</span>-<span class="source_int">1</span>);
+<a name="1044"></a>		}
+<a name="1045"></a>		return <span class="source_type">class</span><span class="source_name">'HudBase'</span>.static.LoadFontStatic(<span class="source_int">7</span>);
+<a name="1046"></a>	}
+<a name="1047"></a>
+<a name="1048"></a>	function PostRender( <span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> )
+<a name="1049"></a>	{
+<a name="1050"></a>		local <span class="source_type">float</span> XL, <span class="source_type">YL</span>;
+<a name="1051"></a>		local <span class="source_type">int</span> SelLeft, <span class="source_type">i</span>;
+<a name="1052"></a>		local <span class="source_type">float</span> XMax, <span class="source_type">YMax</span>;
+<a name="1053"></a>
+<a name="1054"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = <span class="source_type">class</span><span class="source_name">'UT2MidGameFont'</span>.static.GetMidGameFont(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX); <span class="source_comment">// Update which font to use.
+</span><a name="1055"></a>
+<a name="1056"></a>		<span class="source_comment">// Figure out max key name size
+</span><a name="1057"></a>		XMax = <span class="source_int">0</span>;
+<a name="1058"></a>		<span class="source_type">YMax</span> = <span class="source_int">0</span>;
+<a name="1059"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">10</span>; <span class="source_type">i</span>++)
+<a name="1060"></a>		{
+<a name="1061"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.TextSize(NumberToString(<span class="source_type">i</span>)$<span class="source_string">"- "</span>, XL, <span class="source_type">YL</span>);
+<a name="1062"></a>			XMax = <span class="source_type">Max</span>(XMax, XL);
+<a name="1063"></a>			<span class="source_type">YMax</span> = <span class="source_type">Max</span>(<span class="source_type">YMax</span>, <span class="source_type">YL</span>);
+<a name="1064"></a>		}
+<a name="1065"></a>		SMLineSpace = <span class="source_type">YMax</span> * <span class="source_int">1.1</span>;
+<a name="1066"></a>		SMTab = XMax;
+<a name="1067"></a>
+<a name="1068"></a>		SelLeft = SMArraySize - SMOffset;
+<a name="1069"></a>
+<a name="1070"></a>		<span class="source_comment">// First we figure out how big the bounding box needs to be
+</span><a name="1071"></a>		XMax = <span class="source_int">0</span>;
+<a name="1072"></a>		<span class="source_type">YMax</span> = <span class="source_int">0</span>;
+<a name="1073"></a>		DrawNumbers( <span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span>, Min(SelLeft, <span class="source_int">9</span>), SelLeft &gt; <span class="source_int">9</span>, true, XMax, <span class="source_type">YMax</span>);
+<a name="1074"></a>		DrawCurrentArray( <span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span>, true, XMax, <span class="source_type">YMax</span>);
+<a name="1075"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.TextSize(SMStateName[ROSMState], XL, <span class="source_type">YL</span>);
+<a name="1076"></a>		XMax = <span class="source_type">Max</span>(XMax, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX*(SMOriginX+SMMargin) + XL);
+<a name="1077"></a>		<span class="source_type">YMax</span> = <span class="source_type">Max</span>(<span class="source_type">YMax</span>, (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY*SMOriginY) - (<span class="source_int">1.2</span>*SMLineSpace) + <span class="source_type">YL</span>);
+<a name="1078"></a>		<span class="source_comment">// XMax, YMax now contain to maximum bottom-right corner we drew to.
+</span><a name="1079"></a>
+<a name="1080"></a>		<span class="source_comment">// Then draw the box
+</span><a name="1081"></a>		XMax -= <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX * SMOriginX;
+<a name="1082"></a>		<span class="source_type">YMax</span> -= <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY * SMOriginY;
+<a name="1083"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">139</span>,<span class="source_int">28</span>,<span class="source_int">28</span>,<span class="source_int">255</span>);
+<a name="1084"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX * SMOriginX, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY * SMOriginY);
+<a name="1085"></a>		<span class="source_comment">//Canvas.DrawTileStretched(texture 'InterfaceContent.Menu.BorderBoxD', XMax + (SMMargin*Canvas.ClipX), YMax + (SMMargin*Canvas.ClipY));
+</span><a name="1086"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.RODisplay'</span>, XMax + (SMMargin*<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX), <span class="source_type">YMax</span> + (SMMargin*<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY));
+<a name="1087"></a>
+<a name="1088"></a>		<span class="source_comment">// Draw highlight
+</span><a name="1089"></a>		if(bSpeechMenuUseMouseWheel)
+<a name="1090"></a>		{
+<a name="1091"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">255</span>,<span class="source_int">202</span>,<span class="source_int">180</span>,<span class="source_int">128</span>);
+<a name="1092"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX*SMOriginX, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY*(SMOriginY+SMMargin) + ((HighlightRow - <span class="source_int">0.1</span>)*SMLineSpace) );
+<a name="1093"></a>			<span class="source_comment">//Canvas.DrawTileStretched(texture 'InterfaceContent.Menu.BorderBoxD', XMax + (SMMargin*Canvas.ClipX), 1.1*SMLineSpace );
+</span><a name="1094"></a>			<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.RODisplay'</span>, XMax + (SMMargin*<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX), <span class="source_int">1.1</span>*SMLineSpace );
+<a name="1095"></a>		}
+<a name="1096"></a>
+<a name="1097"></a>		<span class="source_comment">// Then actually draw the stuff
+</span><a name="1098"></a>		DrawNumbers( <span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span>, Min(SelLeft, <span class="source_int">9</span>), SelLeft &gt; <span class="source_int">9</span>, false, XMax, <span class="source_type">YMax</span>);
+<a name="1099"></a>		DrawCurrentArray( <span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span>, false, XMax, <span class="source_type">YMax</span>);
+<a name="1100"></a>
+<a name="1101"></a>		<span class="source_comment">// Finally, draw a nice title bar.
+</span><a name="1102"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">139</span>,<span class="source_int">28</span>,<span class="source_int">28</span>,<span class="source_int">255</span>);
+<a name="1103"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX*SMOriginX, (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY*SMOriginY) - (<span class="source_int">1.5</span>*SMLineSpace));
+<a name="1104"></a>		<span class="source_comment">//Canvas.DrawTileStretched(texture 'InterfaceContent.Menu.BorderBoxD', XMax + (SMMargin*Canvas.ClipX), (1.5*SMLineSpace));
+</span><a name="1105"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.RODisplay'</span>, XMax + (SMMargin*<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX), (<span class="source_int">1.5</span>*SMLineSpace));
+<a name="1106"></a>
+<a name="1107"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">128</span>,<span class="source_int">255</span>);
+<a name="1108"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX*(SMOriginX+SMMargin), (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY*SMOriginY) - (<span class="source_int">1.2</span>*SMLineSpace));
+<a name="1109"></a>
+<a name="1110"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(SMStateName[ROSMState]);
+<a name="1111"></a>	}
+<a name="1112"></a>
+<a name="1113"></a>    function BeginState()
+<a name="1114"></a>	{
+<a name="1115"></a>        bVisible = true;
+<a name="1116"></a>		bIgnoreKeys = true;
+<a name="1117"></a>		bCtrl = false;
+<a name="1118"></a>		HighlightRow=<span class="source_int">0</span>;
+<a name="1119"></a>
+<a name="1120"></a>		EnterROState(ROSMS_Main, true);
+<a name="1121"></a>		SMCallsign=<span class="source_string">""</span>;
+<a name="1122"></a>
+<a name="1123"></a>		PlayConsoleSound(SMOpenSound);
+<a name="1124"></a>	}
+<a name="1125"></a>
+<a name="1126"></a>    function EndState()
+<a name="1127"></a>    {
+<a name="1128"></a>        bVisible = false;
+<a name="1129"></a>		bCtrl = false;
+<a name="1130"></a>
+<a name="1131"></a>		PRIs.Length = <span class="source_int">0</span>;
+<a name="1132"></a>    }
+<a name="1133"></a>
+<a name="1134"></a>	<span class="source_comment">// Close speech menu on level change
+</span><a name="1135"></a>	event NotifyLevelChange()
+<a name="1136"></a>	{
+<a name="1137"></a>		Global.NotifyLevelChange();
+<a name="1138"></a>		GotoState(<span class="source_name">''</span>);
+<a name="1139"></a>	}
+<a name="1140"></a>}
+<a name="1141"></a>
+<a name="1142"></a><span class="source_comment">//==================================================
+</span><a name="1143"></a><span class="source_comment">// Extension to open console for Vehicle Say command
+</span><a name="1144"></a><span class="source_comment">//===================================================
+</span><a name="1145"></a>exec function VehicleTalk()
+<a name="1146"></a>{
+<a name="1147"></a>	TypedStr=<span class="source_string">"VehicleSay "</span>;
+<a name="1148"></a>	TypedStrPos=<span class="source_int">11</span>;
+<a name="1149"></a>    TypingOpen();
+<a name="1150"></a>}
+<a name="1151"></a>
+<a name="1152"></a><span class="source_comment">/*
+<a name="1153"></a>// Test0r! used to make a bot from opposite team say something
+<a name="1154"></a>exec function TestVoice()
+<a name="1155"></a>{
+<a name="1156"></a>		local PlayerController PC;
+<a name="1157"></a>		local PlayerReplicationInfo PI, PI2;
+<a name="1158"></a>		local Controller C;
+<a name="1159"></a>
+<a name="1160"></a>		if (ViewportOwner != none)
+<a name="1161"></a>			PC = ViewportOwner.Actor;
+<a name="1162"></a>
+<a name="1163"></a>	    log("Found viewpower owner.");
+<a name="1164"></a>	    PI = PC.PlayerReplicationInfo;
+<a name="1165"></a>
+<a name="1166"></a>	    for (C = PC.Level.ControllerList; C != none; C = C.nextController)
+<a name="1167"></a>	    {
+<a name="1168"></a>	       log("Found controller...");
+<a name="1169"></a>	       if (AIController(C) != none)
+<a name="1170"></a>	       {
+<a name="1171"></a>	           log("found bot!");
+<a name="1172"></a>	           log("Checking replication info...");
+<a name="1173"></a>	           PI2 = C.PlayerReplicationInfo;
+<a name="1174"></a>	           if (PI.Team.TeamIndex != PI2.Team.TeamIndex)
+<a name="1175"></a>	           {
+<a name="1176"></a>	               log("bot is on different team!");
+<a name="1177"></a>	               log("sending message...");
+<a name="1178"></a>	               //SendVoiceMessage(PlayerReplicationInfo Sender, PlayerReplicationInfo Recipient, name messagetype, byte messageID, name broadcasttype)
+<a name="1179"></a>	               C.SendVoiceMessage(PI2, PI, 'ALERT', 3, 'TEAM', C.Pawn, C.Pawn.Location);
+<a name="1180"></a>	               break;
+<a name="1181"></a>	           }
+<a name="1182"></a>	       }
+<a name="1183"></a>	    }
+<a name="1184"></a>}
+<a name="1185"></a>
+<a name="1186"></a>exec function TestVoice2()
+<a name="1187"></a>{
+<a name="1188"></a>		local PlayerController PC;
+<a name="1189"></a>		local PlayerReplicationInfo PI, PI2;
+<a name="1190"></a>		local Controller C;
+<a name="1191"></a>
+<a name="1192"></a>		if (ViewportOwner != none)
+<a name="1193"></a>			PC = ViewportOwner.Actor;
+<a name="1194"></a>
+<a name="1195"></a>	    log("Found viewpower owner.");
+<a name="1196"></a>	    PI = PC.PlayerReplicationInfo;
+<a name="1197"></a>
+<a name="1198"></a>	    for (C = PC.Level.ControllerList; C != none; C = C.nextController)
+<a name="1199"></a>	    {
+<a name="1200"></a>	       log("Found controller...");
+<a name="1201"></a>	       if (AIController(C) != none)
+<a name="1202"></a>	       {
+<a name="1203"></a>	           log("found bot!");
+<a name="1204"></a>	           log("Checking replication info...");
+<a name="1205"></a>	           PI2 = C.PlayerReplicationInfo;
+<a name="1206"></a>	           if (PI.Team.TeamIndex == PI2.Team.TeamIndex)
+<a name="1207"></a>	           {
+<a name="1208"></a>	               log("bot is on same team!");
+<a name="1209"></a>	               log("sending message...");
+<a name="1210"></a>	               //SendVoiceMessage(PlayerReplicationInfo Sender, PlayerReplicationInfo Recipient, name messagetype, byte messageID, name broadcasttype)
+<a name="1211"></a>	               C.SendVoiceMessage(PI2, PI, 'ALERT', 4, 'TEAM', C.Pawn, C.Pawn.Location);
+<a name="1212"></a>	               break;
+<a name="1213"></a>	           }
+<a name="1214"></a>	       }
+<a name="1215"></a>	    }
+<a name="1216"></a>}
+<a name="1217"></a>*/</span>
+<a name="1218"></a>
+<a name="1219"></a>defaultproperties
+<a name="1220"></a>{
+<a name="1221"></a>     AllPlayersSquad=<span class="source_string">"All teammates"</span>
+<a name="1222"></a>     OwnSquad=<span class="source_string">"My Squad"</span>
+<a name="1223"></a>     SquadSuffix=<span class="source_string">"'s Squad"</span>
+<a name="1224"></a>     SMStateName(<span class="source_int">1</span>)=<span class="source_string">"Support"</span>
+<a name="1225"></a>     SMStateName(<span class="source_int">3</span>)=<span class="source_string">"Enemy Spotted"</span>
+<a name="1226"></a>     SMStateName(<span class="source_int">4</span>)=<span class="source_string">"Alert"</span>
+<a name="1227"></a>     SMStateName(<span class="source_int">5</span>)=<span class="source_string">"Vehicle Commands"</span>
+<a name="1228"></a>     SMStateName(<span class="source_int">6</span>)=<span class="source_string">"Vehicle Alerts"</span>
+<a name="1229"></a>     SMStateName(<span class="source_int">7</span>)=<span class="source_string">"Commands"</span>
+<a name="1230"></a>     SMStateName(<span class="source_int">8</span>)=<span class="source_string">"Taunts"</span>
+<a name="1231"></a>     SMStateName(<span class="source_int">9</span>)=<span class="source_string">"Attack..."</span>
+<a name="1232"></a>     SMStateName(<span class="source_int">10</span>)=<span class="source_string">"Defend..."</span>
+<a name="1233"></a>     SMStateName(<span class="source_int">11</span>)=<span class="source_string">"Go to..."</span>
+<a name="1234"></a>     SMStateName(<span class="source_int">12</span>)=<span class="source_string">"Request Help At..."</span>
+<a name="1235"></a>     SMStateName(<span class="source_int">13</span>)=<span class="source_string">"Under Attack At..."</span>
+<a name="1236"></a>     SMStateName(<span class="source_int">14</span>)=<span class="source_string">"Select order recipient..."</span>
+<a name="1237"></a>     SMOpenSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'ROMenuSounds.Generic.msfxEdit'</span>
+<a name="1238"></a>     SMAcceptSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'ROMenuSounds.Generic.msfxMouseClick'</span>
+<a name="1239"></a>     SMDenySound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'ROMenuSounds.MainMenu.CharFade'</span>
+<a name="1240"></a>     ServerInfoMenu=<span class="source_string">"ROInterface.ROGUIServerInfo"</span>
+<a name="1241"></a>}
+<a name="1242"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/roconsole.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROConsole">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/rocommunicationpage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/rocontrolbinder.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:06.850 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

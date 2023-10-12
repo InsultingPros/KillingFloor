@@ -1,0 +1,1151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.UT2K4Tab_MainMP</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4tab_mainmp.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Tab_MainMP">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4tab_mainbase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4tab_mainsp.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/ut2k4tab_mainmp.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/ut2k4tab_mainmp.html">UT2K4Tab_MainMP</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022<br />01023<br />01024<br />01025<br />01026<br />01027<br />01028<br />01029<br />01030<br />01031<br />01032<br />01033<br />01034<br />01035<br />01036<br />01037<br />01038<br />01039<br />01040<br />
+01041</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//  Created on: 12/11/2003
+</span><a name="3"></a><span class="source_comment">//  Host Multiplayer implementation of maplist tab
+</span><a name="4"></a><span class="source_comment">//  This version allows configuration of maplists
+</span><a name="5"></a><span class="source_comment">//
+</span><a name="6"></a><span class="source_comment">//  Written by Ron Prestenback
+</span><a name="7"></a><span class="source_comment">//  © 2003, Epic Games, Inc. All Rights Reserved
+</span><a name="8"></a><span class="source_comment">//==============================================================================
+</span><a name="9"></a>
+<a name="10"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/ut2k4tab_mainmp.html" class="source">UT2K4Tab_MainMP</a></span> extends <span class="source_type"><a href="../gui2k4/ut2k4tab_mainbase.html" class="source">UT2K4Tab_MainBase</a></span>;
+<a name="11"></a><span class="source_comment">/*
+<a name="12"></a>// Maplist controls
+<a name="13"></a>var automated GUIListBox 		lb_ActiveMaps, lb_AllMaps;
+<a name="14"></a>var automated GUIButton			b_Add, b_AddAll, b_Remove, b_RemoveAll, b_MoveUp, b_MoveDown,
+<a name="15"></a>								b_New, b_Delete, b_Load, b_Save, b_Use;
+<a name="16"></a>var automated GUIEditBox        ed_MapName;
+<a name="17"></a>var automated GUIComboBox       co_Maplist;
+<a name="18"></a>var automated GUILabel			LB1,LB2;
+<a name="19"></a>
+<a name="20"></a>var GUIButton SizingButton;
+<a name="21"></a>
+<a name="22"></a>function InitComponent(GUIController MyController, GUIComponent MyOwner)
+<a name="23"></a>{
+<a name="24"></a>    Super.InitComponent(MyController, MyOwner);
+<a name="25"></a>
+<a name="26"></a>	if (lb_AllMaps.List != None)
+<a name="27"></a>	{
+<a name="28"></a>		lb_AllMaps.List.bDropSource = True;
+<a name="29"></a>		lb_AllMaps.List.bDropTarget = True;
+<a name="30"></a>		lb_AllMaps.List.OnDblClick = ModifyMapList;
+<a name="31"></a>		lb_AllMaps.List.OnDragDrop = RemoveDragDrop;
+<a name="32"></a>		lb_AllMaps.List.AddLinkObject( b_Add, True );
+<a name="33"></a>		lb_AllMaps.List.CheckLinkedObjects = InternalCheckLinkedObj;
+<a name="34"></a>	}
+<a name="35"></a>
+<a name="36"></a>	if (lb_ActiveMaps.List != None)
+<a name="37"></a>	{
+<a name="38"></a>		lb_ActiveMaps.List.bDropSource = True;
+<a name="39"></a>		lb_ActiveMaps.List.bDropTarget = True;
+<a name="40"></a>		lb_ActiveMaps.List.OnDblClick = ModifyMapList;
+<a name="41"></a>		lb_ActiveMaps.List.OnDragDrop = AddDragDrop;
+<a name="42"></a>		lb_ActiveMaps.List.AddLinkObject( b_Remove, True );
+<a name="43"></a>		lb_ActiveMaps.List.AddLinkObject( b_MoveUp, True );
+<a name="44"></a>		lb_ActiveMaps.List.AddLinkObject( b_MoveDown, True );
+<a name="45"></a>		lb_ActiveMaps.List.CheckLinkedObjects = InternalCheckLinkedObj;
+<a name="46"></a>	}
+<a name="47"></a>
+<a name="48"></a>    co_Maplist.List.bInitializeList = False;
+<a name="49"></a>    GetSizingButton();
+<a name="50"></a>
+<a name="51"></a>}
+<a name="52"></a>
+<a name="53"></a>function GUIButton GetSizingButton()
+<a name="54"></a>{
+<a name="55"></a>	if ( IsLarger( SizingButton, b_New) )
+<a name="56"></a>		SizingButton = b_New;
+<a name="57"></a>	if ( IsLarger( SizingButton, b_Delete) )
+<a name="58"></a>		SizingButton = b_Delete;
+<a name="59"></a>	if ( IsLarger( SizingButton, b_Load) )
+<a name="60"></a>		SizingButton = b_Load;
+<a name="61"></a>	if ( IsLarger( SizingButton, b_Save) )
+<a name="62"></a>		SizingButton = b_Save;
+<a name="63"></a>	if ( IsLarger( SizingButton, b_Use) )
+<a name="64"></a>		SizingButton = b_Use;
+<a name="65"></a>
+<a name="66"></a>	return SizingButton;
+<a name="67"></a>}
+<a name="68"></a>
+<a name="69"></a>protected function bool IsLarger(GUIButton Current, GUIButton Test)
+<a name="70"></a>{
+<a name="71"></a>	// &lt;hack&gt;
+<a name="72"></a>	Test.bBoundToParent = False;
+<a name="73"></a>	Test.bScaleToParent = False;
+<a name="74"></a>	// &lt;/hack&gt;
+<a name="75"></a>
+<a name="76"></a>	if ( Current == None || Len(Test.Caption) &gt; Len(Current.Caption) )
+<a name="77"></a>		return true;
+<a name="78"></a>
+<a name="79"></a>	return false;
+<a name="80"></a>}
+<a name="81"></a>protected function SetSize(GUIButton But, coerce float L, coerce float T, coerce float W, coerce float H)
+<a name="82"></a>{
+<a name="83"></a>	if ( But == None )
+<a name="84"></a>		return;
+<a name="85"></a>
+<a name="86"></a>	But.WinTop = T;
+<a name="87"></a>	But.WinLeft = L;
+<a name="88"></a>	But.WinWidth = W;
+<a name="89"></a>	But.WinHeight = H;
+<a name="90"></a>}
+<a name="91"></a>
+<a name="92"></a>
+<a name="93"></a>// Called when a new gametype is selected
+<a name="94"></a>function InitGameType()
+<a name="95"></a>{
+<a name="96"></a>    local int i;
+<a name="97"></a>    local array&lt;CacheManager.GameRecord&gt; Games;
+<a name="98"></a>    local bool bReload;
+<a name="99"></a>
+<a name="100"></a>	// Save any maplist that was currently configured before changing the gametype.
+<a name="101"></a>	StoreMapList();
+<a name="102"></a>
+<a name="103"></a>	// Get a list of all gametypes.
+<a name="104"></a>    class'CacheManager'.static.GetGameTypeList(Games);
+<a name="105"></a>	for (i = 0; i &lt; Games.Length; i++)
+<a name="106"></a>    {
+<a name="107"></a>        if (Games[i].ClassName ~= Controller.LastGameType)
+<a name="108"></a>        {
+<a name="109"></a>        	bReload = CurrentGameType.MapPrefix != Games[i].MapPrefix;
+<a name="110"></a>            CurrentGameType = Games[i];
+<a name="111"></a>            GameIndex = MapHandler.GetGameIndex(CurrentGameType.ClassName);
+<a name="112"></a>            break;
+<a name="113"></a>        }
+<a name="114"></a>    }
+<a name="115"></a>
+<a name="116"></a>    if ( i == Games.Length )
+<a name="117"></a>    	return;
+<a name="118"></a>
+<a name="119"></a>    // Refresh the custom maplist combo
+<a name="120"></a>    ReloadCustomMaplists();
+<a name="121"></a>
+<a name="122"></a>    if ( bReload )
+<a name="123"></a>    	InitMaps();
+<a name="124"></a>    else InitMaplist();
+<a name="125"></a>}
+<a name="126"></a>
+<a name="127"></a>// Query the CacheManager for the maps that correspond to this gametype, then fill the main list
+<a name="128"></a>function InitMaps( optional string MapPrefix )
+<a name="129"></a>{
+<a name="130"></a>    local int i, j;
+<a name="131"></a>    local bool bTemp;
+<a name="132"></a>    local string Package, Item;
+<a name="133"></a>    local array&lt;string&gt; LinkSetupNames;
+<a name="134"></a>    local DecoText DT;
+<a name="135"></a>
+<a name="136"></a>	// Make sure we have a map prefix
+<a name="137"></a>	if ( MapPrefix == "" )
+<a name="138"></a>		MapPrefix = GetMapPrefix();
+<a name="139"></a>
+<a name="140"></a>	// Temporarily disable notification in all components
+<a name="141"></a>    bTemp = Controller.bCurMenuInitialized;
+<a name="142"></a>    Controller.bCurMenuInitialized = False;
+<a name="143"></a>
+<a name="144"></a>	// Get the list of maps for the current gametype
+<a name="145"></a>	class'CacheManager'.static.GetMapList( Maps, MapPrefix );
+<a name="146"></a>	lb_AllMaps.List.Clear();
+<a name="147"></a>
+<a name="148"></a>	for ( i = 0; i &lt; Maps.Length; i++ )
+<a name="149"></a>	{
+<a name="150"></a>		DT = None;
+<a name="151"></a>
+<a name="152"></a>		// If this was a UT2003 map, then it will have deco text associated with it - load the deco text
+<a name="153"></a>		if ( class'CacheManager'.static.Is2003Content(Maps[i].MapName) )
+<a name="154"></a>		{
+<a name="155"></a>			if ( Maps[i].TextName != "" )
+<a name="156"></a>			{
+<a name="157"></a>				if ( !Divide(Maps[i].TextName, ".", Package, Item) )
+<a name="158"></a>				{
+<a name="159"></a>					Package = "XMaps";
+<a name="160"></a>					Item = Maps[i].TextName;
+<a name="161"></a>				}
+<a name="162"></a>
+<a name="163"></a>				DT = class'xUtil'.static.LoadDecoText( Package, Item );
+<a name="164"></a>			}
+<a name="165"></a>		}
+<a name="166"></a>
+<a name="167"></a>		// Otherwise, if we only want to display official maps, and this map isn't an official map, skip it
+<a name="168"></a>		else if ( bOnlyShowOfficial && !class'CacheManager'.static.IsBPContent(Maps[i].MapName) && !class'CacheManager'.static.Is2004Content(Maps[i].MapName) )
+<a name="169"></a>			continue;
+<a name="170"></a>
+<a name="171"></a>		Item = "";
+<a name="172"></a>		if ( CurrentGameType.MapPrefix ~= "ONS" && Controller.bExpertMode )
+<a name="173"></a>		{
+<a name="174"></a>			j = InStr(Maps[i].ExtraInfo, "LinkSetups=");
+<a name="175"></a>			if ( j != -1 )
+<a name="176"></a>				Item = Mid(Maps[i].ExtraInfo, j + 11);
+<a name="177"></a>
+<a name="178"></a>			if ( Item == "" )
+<a name="179"></a>				lb_AllMaps.List.Add(Maps[i].MapName);	// Change this line to 'Item = DefaultText;' to list default link setup when there are none in the list
+<a name="180"></a>			else
+<a name="181"></a>			{
+<a name="182"></a>				//Add official setups
+<a name="183"></a>				Split(Item, ";", LinkSetupNames);
+<a name="184"></a>				for ( j = 0; j &lt; LinkSetupNames.Length; j++ )
+<a name="185"></a>					lb_AllMaps.List.Add( Maps[i].MapName @ "(" $ LinkSetupNames[j] @ LinkText $ ")", DT,"?LinkSetup=" $ LinkSetupNames[j] );
+<a name="186"></a>				lb_AllMaps.List.Add(Maps[i].MapName @ "(" $ AutoSelectText @ LinkText $ ")", DT);
+<a name="187"></a>			}
+<a name="188"></a>
+<a name="189"></a>			//Add custom setups
+<a name="190"></a>			LinkSetupNames = GetPerObjectNames(Maps[i].MapName, "ONSPowerLinkCustomSetup");
+<a name="191"></a>			for ( j = 0; j &lt; LinkSetupNames.Length; j++ )
+<a name="192"></a>				lb_AllMaps.List.Add( Maps[i].MapName @ "(" $ LinkSetupNames[j] @ LinkText $ ")", DT,"?LinkSetup=" $ LinkSetupNames[j] );
+<a name="193"></a>
+<a name="194"></a>		}
+<a name="195"></a>		else lb_AllMaps.List.Add( Maps[i].MapName, DT );
+<a name="196"></a>	}
+<a name="197"></a>
+<a name="198"></a>	InitMapList();
+<a name="199"></a>    Controller.bCurMenuInitialized = bTemp;
+<a name="200"></a>}
+<a name="201"></a>
+<a name="202"></a>// Fill the Active & Inactive lists with the appropriate maps
+<a name="203"></a>function InitMapList()
+<a name="204"></a>{
+<a name="205"></a>	local class&lt;MapList&gt; MLClass;
+<a name="206"></a>	local MapList ML;
+<a name="207"></a>	local string MaplistClass;
+<a name="208"></a>	local int i;
+<a name="209"></a>	local array&lt;string&gt; NewActiveMaps;
+<a name="210"></a>
+<a name="211"></a>	// Disable OnChange calls
+<a name="212"></a>	lb_ActiveMaps.List.bNotify = False;
+<a name="213"></a>	lb_AllMaps.List.bNotify = False;
+<a name="214"></a>
+<a name="215"></a>	// Clear the active list
+<a name="216"></a>	lb_AllMaps.List.LoadFrom( lb_ActiveMaps.List );
+<a name="217"></a>	lb_ActiveMaps.List.Clear();
+<a name="218"></a>
+<a name="219"></a>	// Update the current custom maplist index
+<a name="220"></a>	RecordIndex = MapHandler.GetRecordIndex(GameIndex, co_Maplist.GetText());
+<a name="221"></a>
+<a name="222"></a>	// Get the list of active maps from the MaplistManager
+<a name="223"></a>	NewActiveMaps = MapHandler.GetMapList(GameIndex, RecordIndex);
+<a name="224"></a>
+<a name="225"></a>	// This should never actually happen, since MapHandler will always create default lists.
+<a name="226"></a>	if ( NewActiveMaps.Length == 0 )
+<a name="227"></a>	{
+<a name="228"></a>		MaplistClass = GetMaplistClass();
+<a name="229"></a>		if ( MaplistClass != "" )
+<a name="230"></a>			MLClass = class&lt;MapList&gt;(DynamicLoadObject(MaplistClass, class'class'));
+<a name="231"></a>
+<a name="232"></a>		if (MLClass!=None)
+<a name="233"></a>		{
+<a name="234"></a>			ML = PlayerOwner().spawn(MLClass);
+<a name="235"></a>			if (ML!=None)
+<a name="236"></a>				NewActiveMaps = ML.Maps;
+<a name="237"></a>		}
+<a name="238"></a>	}
+<a name="239"></a>
+<a name="240"></a>	for ( i = 0; i &lt; NewActiveMaps.Length; i++ )
+<a name="241"></a>		AddMap(NewActiveMaps[i]);
+<a name="242"></a>
+<a name="243"></a>	CurrentMaplistLoaded();
+<a name="244"></a>	lb_ActiveMaps.List.bNotify = True;
+<a name="245"></a>	lb_AllMaps.List.bNotify = True;
+<a name="246"></a>}
+<a name="247"></a>
+<a name="248"></a>// Fill the custom maplist selection combo with the custom maplists for this gametype
+<a name="249"></a>function ReloadCustomMaplists(optional string CurrentMaplist)
+<a name="250"></a>{
+<a name="251"></a>	local int i, Index, Current;
+<a name="252"></a>	local array&lt;string&gt; Ar;
+<a name="253"></a>
+<a name="254"></a>	// Disable OnChange calls
+<a name="255"></a>	co_Maplist.List.bNotify = False;
+<a name="256"></a>
+<a name="257"></a>	Index = MapHandler.GetGameIndex(CurrentGameType.ClassName);
+<a name="258"></a>	Ar = MapHandler.GetMapListNames(Index);
+<a name="259"></a>
+<a name="260"></a>	Current = MapHandler.GetRecordIndex(Index, CurrentMaplist);
+<a name="261"></a>	if ( Current == -1 )
+<a name="262"></a>		Current = MapHandler.GetActiveList(Index);
+<a name="263"></a>
+<a name="264"></a>	co_Maplist.List.bNotify = False;
+<a name="265"></a>	co_Maplist.List.Clear();
+<a name="266"></a>	for ( i = 0; i &lt; Ar.Length; i++ )
+<a name="267"></a>		co_Maplist.AddItem(Ar[i]);
+<a name="268"></a>	co_Maplist.List.bNotify = True;
+<a name="269"></a>
+<a name="270"></a>	CurrentMaplist = MapHandler.GetMaplistTitle(Index, Current);
+<a name="271"></a>	co_Maplist.SetText(CurrentMaplist, True);
+<a name="272"></a>
+<a name="273"></a>	co_Maplist.List.bNotify = True;
+<a name="274"></a>}
+<a name="275"></a>
+<a name="276"></a>// =====================================================================================================================
+<a name="277"></a>// =====================================================================================================================
+<a name="278"></a>//  Utility functions - handles all special stuff that should happen whenever events are received on the page
+<a name="279"></a>// =====================================================================================================================
+<a name="280"></a>// =====================================================================================================================
+<a name="281"></a>
+<a name="282"></a>// Do not allow two lists to both have valid indexes at the same time - we use whichever map is selected in any
+<a name="283"></a>// of the three lists to determine the starting map for the game.
+<a name="284"></a>/*
+<a name="285"></a>function UpdateIndexes( GUIListBase List )
+<a name="286"></a>{
+<a name="287"></a>	local bool bTemp;
+<a name="288"></a>
+<a name="289"></a>	// Disable notification
+<a name="290"></a>	bTemp = Controller.bCurMenuInitialized;
+<a name="291"></a>	Controller.bCurMenuInitialized = False;
+<a name="292"></a>
+<a name="293"></a>	if ( List == lb_AllMaps.List && lb_AllMaps.List.IsValid() )
+<a name="294"></a>		lb_ActiveMaps.List.SetIndex(-1);
+<a name="295"></a>
+<a name="296"></a>	else if ( List == lb_ActiveMaps.List && lb_ActiveMaps.List.IsValid() )
+<a name="297"></a>		lb_AllMaps.List.SetIndex(-1);
+<a name="298"></a>
+<a name="299"></a>	Controller.bCurMenuInitialized = bTemp;
+<a name="300"></a>}
+<a name="301"></a>*/
+<a name="302"></a>event SetVisibility( bool bIsVisible )
+<a name="303"></a>{
+<a name="304"></a>	Super.SetVisibility(bIsVisible);
+<a name="305"></a>
+<a name="306"></a>	if ( bIsVisible )
+<a name="307"></a>		CheckSaveStatus();
+<a name="308"></a>}
+<a name="309"></a>
+<a name="310"></a>function string Play()
+<a name="311"></a>{
+<a name="312"></a>	local int i;
+<a name="313"></a>
+<a name="314"></a>	StoreMapList();
+<a name="315"></a>
+<a name="316"></a>	i = MapHandler.GetActiveMap(GameIndex,RecordIndex);
+<a name="317"></a>	if ( lb_ActiveMaps.List.IsValidIndex(i) )
+<a name="318"></a>		return GetMapURL(lb_ActiveMaps.List, i);
+<a name="319"></a>	else return GetMapURL(lb_ActiveMaps.List, 0);
+<a name="320"></a>}
+<a name="321"></a>
+<a name="322"></a>// Mapname has value only when initializing list
+<a name="323"></a>function bool AddMap(optional string MapName)
+<a name="324"></a>{
+<a name="325"></a>	local int i;
+<a name="326"></a>	local array&lt;GUIListElem&gt; PendingElements;
+<a name="327"></a>
+<a name="328"></a>
+<a name="329"></a>	if ( MapName != "" )
+<a name="330"></a>	{
+<a name="331"></a>		lb_AllMaps.List.bNotify = False;
+<a name="332"></a>		for ( i = 0; i &lt; lb_AllMaps.List.Elements.Length; i++ )
+<a name="333"></a>			if ( MapName ~= (StripMapName(lb_AllMaps.List.Elements[i].Item) $ lb_AllMaps.List.Elements[i].ExtraStrData) )
+<a name="334"></a>				break;
+<a name="335"></a>
+<a name="336"></a>		if ( i != lb_AllMaps.List.Elements.Length )
+<a name="337"></a>		{
+<a name="338"></a>			PendingElements[0] = lb_AllMaps.List.Elements[i];
+<a name="339"></a>			lb_AllMaps.List.RemoveElement(PendingElements[0],,True);
+<a name="340"></a>			lb_ActiveMaps.List.AddElement(PendingElements[0]);
+<a name="341"></a>
+<a name="342"></a>			// Do not call call MapHandler.AddMap() since MapName only has a value when adding maps FROM maphandler
+<a name="343"></a>			// MapHandler.AddMap(GameIndex, RecordIndex, StripMapName(PendingElements[0].Item) $ PendingElements[0].ExtraStrData);
+<a name="344"></a>		}
+<a name="345"></a>		else log("AddMap() didn't find map named"@MapName);
+<a name="346"></a>	}
+<a name="347"></a>
+<a name="348"></a>	else
+<a name="349"></a>	{
+<a name="350"></a>		if ( !lb_AllMaps.List.IsValid() )
+<a name="351"></a>			return false;
+<a name="352"></a>
+<a name="353"></a>		lb_AllMaps.List.bNotify = False;
+<a name="354"></a>		PendingElements = lb_AllMaps.List.GetPendingElements(True);
+<a name="355"></a>		for ( i = 0; i &lt; PendingElements.Length; i++ )
+<a name="356"></a>		{
+<a name="357"></a>			lb_AllMaps.List.RemoveElement(PendingElements[i],,True);
+<a name="358"></a>			lb_ActiveMaps.List.AddElement(PendingElements[i]);
+<a name="359"></a>			MapHandler.AddMap(GameIndex, RecordIndex, StripMapName(PendingElements[i].Item) $ PendingElements[i].ExtraStrData);
+<a name="360"></a>		}
+<a name="361"></a>	}
+<a name="362"></a>
+<a name="363"></a>	lb_AllMaps.List.bNotify = True;
+<a name="364"></a>	lb_AllMaps.List.ClearPendingElements();
+<a name="365"></a>	lb_AllMaps.List.SetIndex(lb_AllMaps.List.Index);
+<a name="366"></a>
+<a name="367"></a>	return true;
+<a name="368"></a>}
+<a name="369"></a>
+<a name="370"></a>function bool RemoveMap()
+<a name="371"></a>{
+<a name="372"></a>	local int i;
+<a name="373"></a>	local array&lt;GUIListElem&gt; PendingElements;
+<a name="374"></a>
+<a name="375"></a>	if ( !lb_ActiveMaps.List.IsValid() )
+<a name="376"></a>		return false;
+<a name="377"></a>
+<a name="378"></a>	lb_ActiveMaps.List.bNotify = False;
+<a name="379"></a>	PendingElements = lb_ActiveMaps.List.GetPendingElements( True );
+<a name="380"></a>	for ( i = 0; i &lt; PendingElements.Length; i++ )
+<a name="381"></a>	{
+<a name="382"></a>		lb_ActiveMaps.List.RemoveElement( PendingElements[i],,True );
+<a name="383"></a>		lb_AllMaps.List.AddElement( PendingElements[i] );
+<a name="384"></a>		MapHandler.RemoveMap( GameIndex, RecordIndex, StripMapName(PendingElements[i].Item) $ PendingElements[i].ExtraStrData );
+<a name="385"></a>	}
+<a name="386"></a>
+<a name="387"></a>	lb_ActiveMaps.List.bNotify = True;
+<a name="388"></a>	lb_ActiveMaps.List.ClearPendingElements();
+<a name="389"></a>	lb_ActiveMaps.List.SetIndex(lb_ActiveMaps.List.Index);
+<a name="390"></a>
+<a name="391"></a>	return true;
+<a name="392"></a>}
+<a name="393"></a>
+<a name="394"></a>function bool InternalOnPreDraw(Canvas C)
+<a name="395"></a>{
+<a name="396"></a>	local float X, Y;
+<a name="397"></a>	local float XL, YL;
+<a name="398"></a>
+<a name="399"></a>	if ( !bPositioned )
+<a name="400"></a>		return false;
+<a name="401"></a>
+<a name="402"></a>	// Get the largest caption size
+<a name="403"></a>	SizingButton.Style.TextSize(C, SizingButton.MenuState, SizingButton.Caption, XL, YL, SizingButton.FontScale);
+<a name="404"></a>
+<a name="405"></a>	// Add a little space
+<a name="406"></a>	XL += 15;
+<a name="407"></a>	YL += 10;
+<a name="408"></a>
+<a name="409"></a>	// Don't want it to line up exactly on the edge
+<a name="410"></a>	X = (co_Maplist.ActualLeft() + co_Maplist.ActualWidth()) - 18;
+<a name="411"></a>	Y = (co_Maplist.ActualTop() + co_Maplist.ActualHeight()) + 15;
+<a name="412"></a>
+<a name="413"></a>	// Delete and New go on first row
+<a name="414"></a>	X -= XL;
+<a name="415"></a>	SetSize(b_Delete, X, Y, XL, YL);
+<a name="416"></a>	X -= XL + 3;
+<a name="417"></a>	SetSize(b_New, X, Y, XL, YL);
+<a name="418"></a>
+<a name="419"></a>	// Go back to first column - the rest go on the second row
+<a name="420"></a>	X += XL + 3;
+<a name="421"></a>	Y += YL + 3;
+<a name="422"></a>	SetSize(b_Use, X, Y, XL, YL);
+<a name="423"></a>
+<a name="424"></a>	X -= XL + 3;
+<a name="425"></a>	SetSize(b_Save, X, Y, XL, YL);
+<a name="426"></a>
+<a name="427"></a>	X -= XL + 3;
+<a name="428"></a>	SetSize(b_Load, X, Y, XL, YL);
+<a name="429"></a>
+<a name="430"></a>	return false;
+<a name="431"></a>}
+<a name="432"></a>
+<a name="433"></a>// =====================================================================================================================
+<a name="434"></a>// =====================================================================================================================
+<a name="435"></a>//  OnClick's
+<a name="436"></a>// =====================================================================================================================
+<a name="437"></a>// =====================================================================================================================
+<a name="438"></a>
+<a name="439"></a>// Called when one of the buttons between the maplists are clicked on
+<a name="440"></a>function bool ModifyMapList(GUIComponent Sender)
+<a name="441"></a>{
+<a name="442"></a>	local int Index;
+<a name="443"></a>	local string Str;
+<a name="444"></a>
+<a name="445"></a>	if ( Sender == lb_AllMaps )
+<a name="446"></a>	{
+<a name="447"></a>		AddMap();
+<a name="448"></a>		return true;
+<a name="449"></a>	}
+<a name="450"></a>
+<a name="451"></a>	if ( Sender == lb_ActiveMaps )
+<a name="452"></a>	{
+<a name="453"></a>		RemoveMap();
+<a name="454"></a>		return true;
+<a name="455"></a>	}
+<a name="456"></a>
+<a name="457"></a>	if ( GUIButton(Sender) == None )
+<a name="458"></a>		return false;
+<a name="459"></a>
+<a name="460"></a>	switch ( GUIButton(Sender).Caption )
+<a name="461"></a>	{
+<a name="462"></a>	case b_Add.Caption:
+<a name="463"></a>		return AddMap();
+<a name="464"></a>
+<a name="465"></a>	case b_AddAll.Caption:
+<a name="466"></a>		if (lb_AllMaps.ItemCount()==0)
+<a name="467"></a>			return true;
+<a name="468"></a>
+<a name="469"></a>		for ( Index = 0; Index &lt; lb_AllMaps.List.ItemCount; Index++ )
+<a name="470"></a>			MapHandler.AddMap( GameIndex, RecordIndex, lb_AllMaps.List.GetItemAtIndex(Index) );
+<a name="471"></a>
+<a name="472"></a>		lb_ActiveMaps.List.LoadFrom(lb_AllMaps.List,false);
+<a name="473"></a>		lb_AllMaps.List.Clear();
+<a name="474"></a>
+<a name="475"></a>		CheckSaveStatus();
+<a name="476"></a>		return true;
+<a name="477"></a>
+<a name="478"></a>	case b_Remove.Caption:
+<a name="479"></a>		return RemoveMap();
+<a name="480"></a>
+<a name="481"></a>	case b_RemoveAll.Caption:
+<a name="482"></a>		if ( lb_ActiveMaps.ItemCount()==0 )
+<a name="483"></a>			return true;
+<a name="484"></a>
+<a name="485"></a>		for ( Index = 0; Index &lt; lb_ActiveMaps.List.ItemCount; Index++ )
+<a name="486"></a>			MapHandler.RemoveMap( GameIndex, RecordIndex, lb_ActiveMaps.List.GetItemAtIndex(Index) );
+<a name="487"></a>
+<a name="488"></a>		lb_AllMaps.List.LoadFrom(lb_ActiveMaps.List,false);
+<a name="489"></a>		lb_ActiveMaps.List.Clear();
+<a name="490"></a>
+<a name="491"></a>		CheckSaveStatus();
+<a name="492"></a>		return true;
+<a name="493"></a>
+<a name="494"></a>	case b_MoveUp.Caption:
+<a name="495"></a>		if ( !lb_ActiveMaps.List.IsValid() )
+<a name="496"></a>			return true;
+<a name="497"></a>
+<a name="498"></a>		Index = lb_ActiveMaps.List.Index;
+<a name="499"></a>		Str = GetMapURL(lb_ActiveMaps.List, -1);
+<a name="500"></a>		if (index&gt;0)
+<a name="501"></a>		{
+<a name="502"></a>			lb_ActiveMaps.List.Swap(index,index-1);
+<a name="503"></a>			lb_ActiveMaps.List.SetIndex(Index - 1);
+<a name="504"></a>		}
+<a name="505"></a>
+<a name="506"></a>		// We've hit the top, disable the Move Up button
+<a name="507"></a>		if ( lb_ActiveMaps.List.Index &lt;= 0 )
+<a name="508"></a>			DisableComponent(b_MoveUp);
+<a name="509"></a>
+<a name="510"></a>		else if ( lb_ActiveMaps.List.Index &lt; lb_ActiveMaps.List.ItemCount - 1 )
+<a name="511"></a>			EnableComponent(b_MoveDown);
+<a name="512"></a>
+<a name="513"></a>		MapHandler.ShiftMap(GameIndex, RecordIndex, Str, -1);
+<a name="514"></a>		CheckSaveStatus();
+<a name="515"></a>
+<a name="516"></a>		return true;
+<a name="517"></a>
+<a name="518"></a>	case b_MoveDown.Caption:
+<a name="519"></a>		if ( !lb_ActiveMaps.List.IsValid() )
+<a name="520"></a>			return true;
+<a name="521"></a>
+<a name="522"></a>		Index = lb_ActiveMaps.List.Index;
+<a name="523"></a>		Str = GetMapURL(lb_ActiveMaps.List, -1);
+<a name="524"></a>
+<a name="525"></a>		if (index&lt;lb_ActiveMaps.ItemCount()-1)
+<a name="526"></a>		{
+<a name="527"></a>			lb_ActiveMaps.List.Swap(index,index+1);
+<a name="528"></a>			lb_ActiveMaps.List.SetIndex(Index + 1);
+<a name="529"></a>		}
+<a name="530"></a>
+<a name="531"></a>		// We've hit the bottom, disable the Move Down button
+<a name="532"></a>		if ( lb_ActiveMaps.List.Index &gt;= lb_ActiveMaps.List.ItemCount - 1 )
+<a name="533"></a>			DisableComponent(b_MoveDown);
+<a name="534"></a>
+<a name="535"></a>		else if ( lb_ActiveMaps.List.Index &gt; 0 )
+<a name="536"></a>			EnableComponent(b_MoveUp);
+<a name="537"></a>
+<a name="538"></a>		MapHandler.ShiftMap(GameIndex, RecordIndex, Str, 1);
+<a name="539"></a>		CheckSaveStatus();
+<a name="540"></a>
+<a name="541"></a>		return true;
+<a name="542"></a>	}
+<a name="543"></a>
+<a name="544"></a>	return false;
+<a name="545"></a>}
+<a name="546"></a>
+<a name="547"></a>// Called when one of the custom maplist management buttons are clicked
+<a name="548"></a>function bool CustomMaplistClick(GUIComponent Sender)
+<a name="549"></a>{
+<a name="550"></a>	local int i;
+<a name="551"></a>	local array&lt;string&gt; Ar;
+<a name="552"></a>	local string Str;
+<a name="553"></a>
+<a name="554"></a>	switch ( Sender )
+<a name="555"></a>	{
+<a name="556"></a>		case b_New:
+<a name="557"></a>			Str = co_Maplist.GetText();
+<a name="558"></a>
+<a name="559"></a>			// Build an array of strings containing the active maps
+<a name="560"></a>			Ar.Length = lb_ActiveMaps.List.ItemCount;
+<a name="561"></a>			for (i = 0; i &lt; lb_ActiveMaps.List.ItemCount; i++)
+<a name="562"></a>				Ar[i] = StripMapName(lb_ActiveMaps.List.Elements[i].Item) $ lb_ActiveMaps.List.Elements[i].ExtraStrData;
+<a name="563"></a>
+<a name="564"></a>			// Since we are creating a new list, instead of changing this one, reset the old one
+<a name="565"></a>			MapHandler.ResetList(GameIndex, RecordIndex);
+<a name="566"></a>			RecordIndex = MapHandler.AddList(CurrentGameType.ClassName, Str, Ar);
+<a name="567"></a>
+<a name="568"></a>			// Reload maplist names, set the editbox's text to the new maplist's title
+<a name="569"></a>			ReloadCustomMaplists(Str);
+<a name="570"></a>
+<a name="571"></a>			// Reload the maplist
+<a name="572"></a>			InitMaplist();
+<a name="573"></a>			break;
+<a name="574"></a>
+<a name="575"></a>		case b_Delete:
+<a name="576"></a>
+<a name="577"></a>			// Remove the currently loaded maplist
+<a name="578"></a>			RecordIndex = MapHandler.RemoveList(GameIndex, RecordIndex);
+<a name="579"></a>
+<a name="580"></a>			// Get the name of the now-current maplist
+<a name="581"></a>			Str = MapHandler.GetMapListTitle(GameIndex, RecordIndex);
+<a name="582"></a>
+<a name="583"></a>			// Reload maplist names, set the editbox's text to the new maplist's title
+<a name="584"></a>			ReloadCustomMaplists(Str);
+<a name="585"></a>			InitMaplist();
+<a name="586"></a>			break;
+<a name="587"></a>
+<a name="588"></a>		case b_Load:
+<a name="589"></a>			// Load the currently selected list.
+<a name="590"></a>			InitMaplist();
+<a name="591"></a>			break;
+<a name="592"></a>
+<a name="593"></a>		case b_Save:
+<a name="594"></a>			// Might be renaming list, might be saving it...
+<a name="595"></a>			Str = co_Maplist.GetText();
+<a name="596"></a>			UpdateCustomMapList(Str);
+<a name="597"></a>
+<a name="598"></a>			// Reload the maplist names in case we renamed the maplist
+<a name="599"></a>			ReloadCustomMaplists(Str);
+<a name="600"></a>			CheckSaveStatus();
+<a name="601"></a>			break;
+<a name="602"></a>
+<a name="603"></a>		case b_Use:
+<a name="604"></a>			// Copy the currently loaded list to the game's main maplist
+<a name="605"></a>			MapHandler.ApplyMapList(GameIndex, RecordIndex);
+<a name="606"></a>			CurrentMaplistLoaded();
+<a name="607"></a>			break;
+<a name="608"></a>	}
+<a name="609"></a>
+<a name="610"></a>	return true;
+<a name="611"></a>}
+<a name="612"></a>// =====================================================================================================================
+<a name="613"></a>// =====================================================================================================================
+<a name="614"></a>//  OnChange's
+<a name="615"></a>// =====================================================================================================================
+<a name="616"></a>// =====================================================================================================================
+<a name="617"></a>
+<a name="618"></a>// Called when we've selected a new item in the custom maplist combo, or typed in a new name
+<a name="619"></a>function MaplistSelectChange(GUIComponent Sender)
+<a name="620"></a>{
+<a name="621"></a>	local string Str;
+<a name="622"></a>	local int Index;
+<a name="623"></a>
+<a name="624"></a>	if ( Sender != co_Maplist )
+<a name="625"></a>		return;
+<a name="626"></a>
+<a name="627"></a>	Str = co_Maplist.GetText();
+<a name="628"></a>
+<a name="629"></a>	// If the name in the edit box doesn't match the list's selected item
+<a name="630"></a>	if ( Str != co_Maplist.List.Get() )
+<a name="631"></a>		TypingNewName();
+<a name="632"></a>
+<a name="633"></a>	else
+<a name="634"></a>	{
+<a name="635"></a>		// The name shown is the currently selected item of the list
+<a name="636"></a>		Index = MapHandler.GetRecordIndex(GameIndex, Str);
+<a name="637"></a>
+<a name="638"></a>		// We selected the currently loaded maplist
+<a name="639"></a>		if ( RecordIndex == Index )
+<a name="640"></a>			CurrentMaplistLoaded();
+<a name="641"></a>
+<a name="642"></a>		else SelectedItemFromList();
+<a name="643"></a>	}
+<a name="644"></a>}
+<a name="645"></a>
+<a name="646"></a>// =====================================================================================================================
+<a name="647"></a>// =====================================================================================================================
+<a name="648"></a>//  Misc. Events
+<a name="649"></a>// =====================================================================================================================
+<a name="650"></a>// =====================================================================================================================
+<a name="651"></a>
+<a name="652"></a>// Called when a map is dragged from the inactive list to the active list
+<a name="653"></a>function bool AddDragDrop(GUIComponent Sender)
+<a name="654"></a>{
+<a name="655"></a>	local array&lt;GUIListElem&gt; Ar;
+<a name="656"></a>	local int i, idx;
+<a name="657"></a>
+<a name="658"></a>	if ( Sender == lb_ActiveMaps.List )
+<a name="659"></a>	{
+<a name="660"></a>		idx = lb_ActiveMaps.List.DropIndex;
+<a name="661"></a>		if ( !lb_ActiveMaps.List.IsValidIndex(idx) )
+<a name="662"></a>			idx = lb_ActiveMaps.List.ItemCount;
+<a name="663"></a>
+<a name="664"></a>		if ( Controller.DropSource == lb_AllMaps.List )
+<a name="665"></a>			Ar = lb_AllMaps.List.GetPendingElements();
+<a name="666"></a>
+<a name="667"></a>		else if ( Controller.DropSource == lb_ActiveMaps.List )
+<a name="668"></a>		{
+<a name="669"></a>			Ar = lb_ActiveMaps.List.GetPendingElements();
+<a name="670"></a>			for ( i = 0; i &lt; Ar.Length; i++ )
+<a name="671"></a>			{
+<a name="672"></a>				MapHandler.RemoveMap(GameIndex, RecordIndex, StripMapName(Ar[i].Item) $ Ar[i].ExtraStrData);
+<a name="673"></a>				lb_ActiveMaps.List.RemoveElement(Ar[i]);
+<a name="674"></a>			}
+<a name="675"></a>		}
+<a name="676"></a>		// Always insert in reverse order to maintain correct map order
+<a name="677"></a>		for ( i = Ar.Length - 1; i &gt;= 0; i-- )
+<a name="678"></a>			MapHandler.InsertMap(GameIndex, RecordIndex, StripMapName(Ar[i].Item) $ Ar[i].ExtraStrData, idx);
+<a name="679"></a>
+<a name="680"></a>		lb_ActiveMaps.List.InternalOnDragDrop(lb_ActiveMaps.List);
+<a name="681"></a>		return true;
+<a name="682"></a>	}
+<a name="683"></a>
+<a name="684"></a>	return false;
+<a name="685"></a>}
+<a name="686"></a>
+<a name="687"></a>// Called when maps are dragged from the active list to the inactive list.
+<a name="688"></a>function bool RemoveDragDrop(GUIComponent Sender)
+<a name="689"></a>{
+<a name="690"></a>	local array&lt;GUIListElem&gt; Ar;
+<a name="691"></a>	local int i;
+<a name="692"></a>
+<a name="693"></a>	if ( Sender == lb_AllMaps.List )
+<a name="694"></a>	{
+<a name="695"></a>		if ( Controller.DropSource != lb_ActiveMaps.List )
+<a name="696"></a>			return false;
+<a name="697"></a>
+<a name="698"></a>		Ar = lb_ActiveMaps.List.GetPendingElements();
+<a name="699"></a>		for (i = 0; i &lt; Ar.Length; i++)
+<a name="700"></a>			MapHandler.RemoveMap(GameIndex, RecordIndex, StripMapName(Ar[i].Item) $ Ar[i].ExtraStrData);
+<a name="701"></a>
+<a name="702"></a>		return lb_AllMaps.List.InternalOnDragDrop(Sender);
+<a name="703"></a>	}
+<a name="704"></a>
+<a name="705"></a>	return false;
+<a name="706"></a>}
+<a name="707"></a>
+<a name="708"></a>// This function overrides GUIList default behavior because we only want to disable the AddAll and RemoveAll
+<a name="709"></a>// if those lists are empty
+<a name="710"></a>function InternalCheckLinkedObj( GUIListBase List )
+<a name="711"></a>{
+<a name="712"></a>	if ( List.IsValid() )
+<a name="713"></a>		List.EnableLinkedObjects();
+<a name="714"></a>	else List.DisableLinkedObjects();
+<a name="715"></a>
+<a name="716"></a>	if ( lb_AllMaps.List.ItemCount &gt; 0 )
+<a name="717"></a>		EnableComponent(b_AddAll);
+<a name="718"></a>	else DisableComponent(b_AddAll);
+<a name="719"></a>
+<a name="720"></a>	if ( lb_ActiveMaps.List.ItemCount &gt; 0 )
+<a name="721"></a>		EnableComponent(b_RemoveAll);
+<a name="722"></a>	else DisableComponent(b_RemoveAll);
+<a name="723"></a>
+<a name="724"></a>	if ( lb_ActiveMaps.List.Index == 0 )
+<a name="725"></a>		DisableComponent(b_MoveUp);
+<a name="726"></a>	else if ( lb_ActiveMaps.List.Index == lb_ActiveMaps.List.ItemCount - 1 )
+<a name="727"></a>		DisableComponent(b_MoveDown);
+<a name="728"></a>
+<a name="729"></a>	if ( lb_ActiveMaps.List.ItemCount &gt; 0 )
+<a name="730"></a>	{
+<a name="731"></a>		EnableComponent( b_Primary );
+<a name="732"></a>		EnableComponent( b_Secondary );
+<a name="733"></a>	}
+<a name="734"></a>	else
+<a name="735"></a>	{
+<a name="736"></a>		DisableComponent(b_Primary);
+<a name="737"></a>		DisableComponent(b_Secondary);
+<a name="738"></a>	}
+<a name="739"></a>
+<a name="740"></a>}
+<a name="741"></a>
+<a name="742"></a>function InternalOnCreateComponent(GUIComponent NewComp, GUIComponent Sender)
+<a name="743"></a>{
+<a name="744"></a>	if ( moButton(Sender) != None && GUILabel(NewComp) != None )
+<a name="745"></a>	{
+<a name="746"></a>		GUILabel(NewComp).TextColor = WhiteColor;
+<a name="747"></a>		moButton(Sender).InternalOnCreateComponent(NewComp, Sender);
+<a name="748"></a>	}
+<a name="749"></a>}
+<a name="750"></a>
+<a name="751"></a>function bool HandleContextSelect(GUIContextMenu Sender, int Index)
+<a name="752"></a>{
+<a name="753"></a>	if ( Sender != None )
+<a name="754"></a>	{
+<a name="755"></a>		switch ( Index )
+<a name="756"></a>		{
+<a name="757"></a>		case 0:
+<a name="758"></a>			AddMap();
+<a name="759"></a>			break;
+<a name="760"></a>
+<a name="761"></a>		case 1:
+<a name="762"></a>			RemoveMap();
+<a name="763"></a>			break;
+<a name="764"></a>
+<a name="765"></a>		case 3:
+<a name="766"></a>			bOnlyShowOfficial = !bOnlyShowOfficial;
+<a name="767"></a>			InitMaps();
+<a name="768"></a>			ch_OfficialMapsOnly.SetComponentValue(bOnlyShowOfficial, True);
+<a name="769"></a>			break;
+<a name="770"></a>		}
+<a name="771"></a>	}
+<a name="772"></a>
+<a name="773"></a>	return true;
+<a name="774"></a>}
+<a name="775"></a>
+<a name="776"></a>// =====================================================================================================================
+<a name="777"></a>// =====================================================================================================================
+<a name="778"></a>//  Custom Maplist Interface
+<a name="779"></a>// =====================================================================================================================
+<a name="780"></a>// =====================================================================================================================
+<a name="781"></a>
+<a name="782"></a>function StoreMapList()
+<a name="783"></a>{
+<a name="784"></a>	MapHandler.ApplyMaplist(GameIndex, RecordIndex);
+<a name="785"></a>}
+<a name="786"></a>
+<a name="787"></a>// Pass in NewName to rename the list
+<a name="788"></a>function UpdateCustomMaplist(optional string NewName)
+<a name="789"></a>{
+<a name="790"></a>	if ( NewName == "" )
+<a name="791"></a>		NewName = co_Maplist.GetText();
+<a name="792"></a>
+<a name="793"></a>	if ( !(MapHandler.GetMapListTitle(GameIndex, RecordIndex) == NewName) )
+<a name="794"></a>		RecordIndex = MapHandler.RenameList(GameIndex, RecordIndex, NewName);
+<a name="795"></a>
+<a name="796"></a>	// If we're saving this gametype's active list, be sure to apply the changes to the real maplist
+<a name="797"></a>	if ( MapHandler.GetActiveList(GameIndex) == RecordIndex )
+<a name="798"></a>		MapHandler.ApplyMaplist(GameIndex, RecordIndex);
+<a name="799"></a>
+<a name="800"></a>	else MapHandler.SaveMapList(GameIndex, RecordIndex);
+<a name="801"></a>}
+<a name="802"></a>
+<a name="803"></a>// Can save & create new, cannot load, delete, or use
+<a name="804"></a>function TypingNewName()
+<a name="805"></a>{
+<a name="806"></a>	DisableComponent(b_Load);
+<a name="807"></a>	DisableComponent(b_Delete);
+<a name="808"></a>	DisableComponent(b_Use);
+<a name="809"></a>
+<a name="810"></a>	EnableComponent(b_Save);
+<a name="811"></a>	EnableComponent(b_New);
+<a name="812"></a>}
+<a name="813"></a>
+<a name="814"></a>// Called when we've selected an item, but haven't clicked on load yet
+<a name="815"></a>// Can only load
+<a name="816"></a>function SelectedItemFromList()
+<a name="817"></a>{
+<a name="818"></a>	DisableComponent(b_Delete);
+<a name="819"></a>	DisableComponent(b_Save);
+<a name="820"></a>	DisableComponent(b_Use);
+<a name="821"></a>	DisableComponent(b_New);
+<a name="822"></a>
+<a name="823"></a>	EnableComponent(b_Load);
+<a name="824"></a>}
+<a name="825"></a>
+<a name="826"></a>// Called when the loaded maplist matches the combobox
+<a name="827"></a>// Can do everything but load
+<a name="828"></a>// bActive is true if the loaded maplist is the active maplist as well
+<a name="829"></a>function CurrentMaplistLoaded()
+<a name="830"></a>{
+<a name="831"></a>	DisableComponent(b_Load);
+<a name="832"></a>
+<a name="833"></a>	EnableComponent(b_New);
+<a name="834"></a>	EnableComponent(b_Delete);
+<a name="835"></a>
+<a name="836"></a>	if ( RecordIndex == MapHandler.GetActiveList(GameIndex)  )
+<a name="837"></a>		DisableComponent(b_Use);
+<a name="838"></a>	else EnableComponent(b_Use);
+<a name="839"></a>
+<a name="840"></a>	CheckSaveStatus();
+<a name="841"></a>}
+<a name="842"></a>
+<a name="843"></a>function ListChanged(GUIComponent Sender)
+<a name="844"></a>{
+<a name="845"></a>	CheckSaveStatus();
+<a name="846"></a>}
+<a name="847"></a>
+<a name="848"></a>function CheckSaveStatus()
+<a name="849"></a>{
+<a name="850"></a>	if ( MapHandler.MaplistDirty(GameIndex, RecordIndex) )
+<a name="851"></a>		EnableComponent(b_Save);
+<a name="852"></a>	else DisableComponent(b_Save);
+<a name="853"></a>}
+<a name="854"></a>
+<a name="855"></a>DefaultProperties
+<a name="856"></a>{
+<a name="857"></a>	OnPreDraw=InternalOnPreDraw
+<a name="858"></a>// =====================================================================================================================
+<a name="859"></a>// =====================================================================================================================
+<a name="860"></a>//  Maplist Components
+<a name="861"></a>// =====================================================================================================================
+<a name="862"></a>// =====================================================================================================================
+<a name="863"></a>	Begin Object Class=GUIListBox Name=InactiveMaps
+<a name="864"></a>		WinWidth=0.368359
+<a name="865"></a>		WinHeight=0.753669
+<a name="866"></a>		WinLeft=0.025781
+<a name="867"></a>		WinTop=0.108021
+<a name="868"></a>		bVisibleWhenEmpty=true
+<a name="869"></a>		bSorted=True
+<a name="870"></a>		TabOrder=0
+<a name="871"></a>		OnChange=ListChanged
+<a name="872"></a>	End Object
+<a name="873"></a>	lb_AllMaps=InactiveMaps
+<a name="874"></a>
+<a name="875"></a>	Begin Object Class=GUIListBox Name=ActiveMaps
+<a name="876"></a>		WinWidth=0.368359
+<a name="877"></a>		WinHeight=0.662671
+<a name="878"></a>		WinLeft=0.605861
+<a name="879"></a>		WinTop=0.108021
+<a name="880"></a>		bVisibleWhenEmpty=true
+<a name="881"></a>		TabOrder=8
+<a name="882"></a>		OnChange=ListChanged
+<a name="883"></a>	End Object
+<a name="884"></a>	lb_ActiveMaps=ActiveMaps
+<a name="885"></a>
+<a name="886"></a>	Begin Object Class=GUIButton Name=IAMapListUp
+<a name="887"></a>		Caption="Up"
+<a name="888"></a>		Hint="Move this map higher up in the list"
+<a name="889"></a>		WinWidth=0.145000
+<a name="890"></a>		WinHeight=0.050000
+<a name="891"></a>		WinLeft=0.425000
+<a name="892"></a>		WinTop=0.146718
+<a name="893"></a>		OnClick=ModifyMapList
+<a name="894"></a>		OnClickSound=CS_Up
+<a name="895"></a>		TabOrder=1
+<a name="896"></a>	End Object
+<a name="897"></a>	b_MoveUp=IAMapListUp
+<a name="898"></a>
+<a name="899"></a>	Begin Object Class=GUIButton Name=IAMapListAll
+<a name="900"></a>		Caption="Add All"
+<a name="901"></a>		Hint="Add all maps to your map list"
+<a name="902"></a>		WinWidth=0.145
+<a name="903"></a>		WinHeight=0.05
+<a name="904"></a>		WinLeft=0.425
+<a name="905"></a>		WinTop=0.388905
+<a name="906"></a>		OnClick=ModifyMapList
+<a name="907"></a>		OnClickSound=CS_Up
+<a name="908"></a>		TabOrder=2
+<a name="909"></a>	End Object
+<a name="910"></a>	b_AddAll=IAMapListAll
+<a name="911"></a>
+<a name="912"></a>	Begin Object Class=GUIButton Name=IAMapListAdd
+<a name="913"></a>		Caption="Add"
+<a name="914"></a>		Hint="Add the selected maps to your map list"
+<a name="915"></a>		WinWidth=0.145
+<a name="916"></a>		WinHeight=0.05
+<a name="917"></a>		WinLeft=0.425
+<a name="918"></a>		WinTop=0.323801
+<a name="919"></a>		OnClick=ModifyMapList
+<a name="920"></a>		OnClickSound=CS_Up
+<a name="921"></a>		TabOrder=3
+<a name="922"></a>	End Object
+<a name="923"></a>	b_Add=IAMapListAdd
+<a name="924"></a>
+<a name="925"></a>	Begin Object Class=GUIButton Name=IAMapListRemove
+<a name="926"></a>		Caption="Remove"
+<a name="927"></a>		Hint="Remove the selected maps from your map list"
+<a name="928"></a>		WinWidth=0.145
+<a name="929"></a>		WinHeight=0.05
+<a name="930"></a>		WinLeft=0.425
+<a name="931"></a>		WinTop=0.493072
+<a name="932"></a>		OnClick=ModifyMapList
+<a name="933"></a>		OnClickSound=CS_Down
+<a name="934"></a>		TabOrder=4
+<a name="935"></a>	End Object
+<a name="936"></a>	b_Remove=IAMapListRemove
+<a name="937"></a>
+<a name="938"></a>	Begin Object Class=GUIButton Name=IAMapListClear
+<a name="939"></a>		Caption="Remove All"
+<a name="940"></a>		Hint="Remove all maps from your map list"
+<a name="941"></a>		WinWidth=0.145
+<a name="942"></a>		WinHeight=0.05
+<a name="943"></a>		WinLeft=0.425
+<a name="944"></a>		WinTop=0.558176
+<a name="945"></a>		OnClick=ModifyMapList
+<a name="946"></a>		OnClickSound=CS_Down
+<a name="947"></a>		TabOrder=5
+<a name="948"></a>	End Object
+<a name="949"></a>	b_RemoveAll=IAMapListClear
+<a name="950"></a>
+<a name="951"></a>	Begin Object Class=GUIButton Name=IAMapListDown
+<a name="952"></a>		Caption="Down"
+<a name="953"></a>		Hint="Move this map lower down in the list"
+<a name="954"></a>		WinWidth=0.145000
+<a name="955"></a>		WinHeight=0.050000
+<a name="956"></a>		WinLeft=0.425000
+<a name="957"></a>		WinTop=0.727450
+<a name="958"></a>		OnClick=ModifyMapList
+<a name="959"></a>		OnClickSound=CS_Down
+<a name="960"></a>		TabOrder=6
+<a name="961"></a>	End Object
+<a name="962"></a>	b_MoveDown=IAMapListDown
+<a name="963"></a>
+<a name="964"></a>	Begin Object Class=GUIComboBox Name=SelectMaplist
+<a name="965"></a>		Hint="Load another maplist or change the name of the currently loaded maplist."
+<a name="966"></a>		OnChange=MaplistSelectChange
+<a name="967"></a>		WinWidth=0.335802
+<a name="968"></a>		WinHeight=0.040000
+<a name="969"></a>		WinLeft=0.630479
+<a name="970"></a>		WinTop=0.797917
+<a name="971"></a>		TabOrder=7
+<a name="972"></a>	End Object
+<a name="973"></a>
+<a name="974"></a>	Begin Object Class=GUIButton Name=NewMaplist
+<a name="975"></a>		Caption="NEW"
+<a name="976"></a>		Hint="Create new custom maplist, using the configured name and active maps"
+<a name="977"></a>		OnClick=CustomMaplistClick
+<a name="978"></a>		WinWidth=0.096076
+<a name="979"></a>		WinHeight=0.050000
+<a name="980"></a>		WinLeft=0.772357
+<a name="981"></a>		WinTop=0.859114
+<a name="982"></a>		TabOrder=8
+<a name="983"></a>	End Object
+<a name="984"></a>
+<a name="985"></a>	Begin Object Class=GUIButton Name=DeleteMaplist
+<a name="986"></a>		Caption="DELETE"
+<a name="987"></a>		Hint"Delete the currently selected maplist.  If this is the last maplist for this gametype, a new default maplist will be generated."
+<a name="988"></a>		OnClick=CustomMaplistClick
+<a name="989"></a>		WinWidth=0.094120
+<a name="990"></a>		WinHeight=0.050000
+<a name="991"></a>		WinLeft=0.868247
+<a name="992"></a>		WinTop=0.863021
+<a name="993"></a>		TabOrder=9
+<a name="994"></a>	End Object
+<a name="995"></a>
+<a name="996"></a>	Begin Object Class=GUIButton Name=LoadMaplist
+<a name="997"></a>		Caption="LOAD"
+<a name="998"></a>		Hint="Load the currently selected maplist"
+<a name="999"></a>		OnClick=CustomMaplistClick
+<a name="1000"></a>		WinWidth=0.096076
+<a name="1001"></a>		WinHeight=0.050000
+<a name="1002"></a>		WinLeft=0.679403
+<a name="1003"></a>		WinTop=0.915104
+<a name="1004"></a>		TabOrder=10
+<a name="1005"></a>	End Object
+<a name="1006"></a>
+<a name="1007"></a>	Begin Object Class=GUIButton Name=SaveMaplist
+<a name="1008"></a>		Caption="SAVE"
+<a name="1009"></a>		Hint="Save the selected maps to the currently loaded maplist.  If this is the active maplist, it will applied to the game's map rotation."
+<a name="1010"></a>		OnClick=CustomMaplistClick
+<a name="1011"></a>		WinWidth=0.096076
+<a name="1012"></a>		WinHeight=0.050000
+<a name="1013"></a>		WinLeft=0.772357
+<a name="1014"></a>		WinTop=0.915104
+<a name="1015"></a>		TabOrder=11
+<a name="1016"></a>	End Object
+<a name="1017"></a>
+<a name="1018"></a>	Begin Object Class=GUIButton Name=UseMaplist
+<a name="1019"></a>		Caption="USE"
+<a name="1020"></a>		Hint="Save & apply this custom maplist to the game's map rotation"
+<a name="1021"></a>		OnClick=CustomMaplistClick
+<a name="1022"></a>		WinWidth=0.094120
+<a name="1023"></a>		WinHeight=0.050000
+<a name="1024"></a>		WinLeft=0.869226
+<a name="1025"></a>		WinTop=0.915104
+<a name="1026"></a>		TabOrder=12
+<a name="1027"></a>	End Object
+<a name="1028"></a>
+<a name="1029"></a>    b_New=NewMaplist
+<a name="1030"></a>    b_Delete=DeleteMaplist
+<a name="1031"></a>    b_Load=LoadMaplist
+<a name="1032"></a>    b_Save=SaveMaplist
+<a name="1033"></a>    b_Use=UseMaplist
+<a name="1034"></a>    co_Maplist=SelectMaplist
+<a name="1035"></a>}
+<a name="1036"></a>*/</span>
+<a name="1037"></a>
+<a name="1038"></a>defaultproperties
+<a name="1039"></a>{
+<a name="1040"></a>}
+<a name="1041"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4tab_mainmp.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Tab_MainMP">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4tab_mainbase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4tab_mainsp.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.220 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

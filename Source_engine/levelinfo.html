@@ -1,0 +1,674 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.LevelInfo</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/levelinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#LevelInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/laddervolume.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/levelsummary.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/levelinfo.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/levelinfo.html">LevelInfo</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// LevelInfo contains information about the current level. There should
+</span><a name="3"></a><span class="source_comment">// be one per level and it should be actor 0. UnrealEd creates each level's
+</span><a name="4"></a><span class="source_comment">// LevelInfo automatically so you should never have to place one
+</span><a name="5"></a><span class="source_comment">// manually.
+</span><a name="6"></a><span class="source_comment">//
+</span><a name="7"></a><span class="source_comment">// The ZoneInfo properties in the LevelInfo are used to define
+</span><a name="8"></a><span class="source_comment">// the properties of all zones which don't themselves have ZoneInfo.
+</span><a name="9"></a><span class="source_comment">//=============================================================================
+</span><a name="10"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/levelinfo.html" class="source">LevelInfo</a></span> extends <span class="source_type"><a href="../engine/zoneinfo.html" class="source">ZoneInfo</a></span>
+<a name="11"></a>	native
+<a name="12"></a>	nativereplication
+<a name="13"></a>	notplaceable;
+<a name="14"></a>
+<a name="15"></a><span class="source_comment">// Textures.
+</span><a name="16"></a><span class="source_comment">//#exec Texture Import File=Textures\WireframeTexture.tga // use white square instead
+</span><a name="17"></a><span class="source_macro">#exec Texture Import File=Textures\WhiteSquareTexture.pcx
+</span><a name="18"></a><span class="source_macro">#exec Texture Import File=Textures\S_Vertex.tga Name=LargeVertex
+</span><a name="19"></a>
+<a name="20"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="21"></a><span class="source_comment">// Level time.
+</span><a name="22"></a>
+<a name="23"></a><span class="source_comment">// Time passage.
+</span><a name="24"></a>var <span class="source_type">float</span> TimeDilation;          <span class="source_comment">// Normally 1 - scales real time passage.
+</span><a name="25"></a>
+<a name="26"></a><span class="source_comment">// Current time.
+</span><a name="27"></a>var           <span class="source_type">float</span>	TimeSeconds;   <span class="source_comment">// Time in seconds since level began play.
+</span><a name="28"></a>var transient <span class="source_type">int</span>   Year;          <span class="source_comment">// Year.
+</span><a name="29"></a>var transient <span class="source_type">int</span>   Month;         <span class="source_comment">// Month.
+</span><a name="30"></a>var transient <span class="source_type">int</span>   Day;           <span class="source_comment">// Day of month.
+</span><a name="31"></a>var transient <span class="source_type">int</span>   DayOfWeek;     <span class="source_comment">// Day of week.
+</span><a name="32"></a>var transient <span class="source_type">int</span>   Hour;          <span class="source_comment">// Hour.
+</span><a name="33"></a>var transient <span class="source_type">int</span>   Minute;        <span class="source_comment">// Minute.
+</span><a name="34"></a>var transient <span class="source_type">int</span>   Second;        <span class="source_comment">// Second.
+</span><a name="35"></a>var transient <span class="source_type">int</span>   Millisecond;   <span class="source_comment">// Millisecond.
+</span><a name="36"></a>var			  <span class="source_type">float</span>	PauseDelay;		<span class="source_comment">// time at which to start pause
+</span><a name="37"></a>
+<a name="38"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="39"></a><span class="source_comment">// Level Summary Info
+</span><a name="40"></a>
+<a name="41"></a>var(<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span>) localized <span class="source_type">String</span> Title;
+<a name="42"></a>var(<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span>) <span class="source_type">String</span> Author;
+<a name="43"></a>var(<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span>) <span class="source_type">String</span> Description;
+<a name="44"></a>
+<a name="45"></a>var(<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span>) <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> Screenshot;
+<a name="46"></a>var(<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span>) <span class="source_type">String</span> DecoTextName;
+<a name="47"></a>
+<a name="48"></a>var(<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span>) <span class="source_type">int</span> IdealPlayerCountMin;
+<a name="49"></a>var(<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span>) <span class="source_type">int</span> IdealPlayerCountMax;
+<a name="50"></a>
+<a name="51"></a>var(<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span>) <span class="source_type">string</span> <span class="source_type">ExtraInfo</span>;
+<a name="52"></a>
+<a name="53"></a><span class="source_comment">//RO BLOOM
+</span><a name="54"></a><span class="source_comment">// IF _RO_
+</span><a name="55"></a>var(Bloom) <span class="source_type">float</span> BloomContrast;
+<a name="56"></a>var(Bloom) <span class="source_type">float</span> BloomBlurMult;
+<a name="57"></a>var(Bloom) <span class="source_type">float</span> BloomRatio;
+<a name="58"></a>var(Bloom) <span class="source_type">float</span> BloomRatioMinimum;
+<a name="59"></a>var(Bloom) <span class="source_type">float</span> BloomRatioMaximum;
+<a name="60"></a><span class="source_comment">// end _RO_
+</span><a name="61"></a><span class="source_comment">//END RO BLOOM
+</span><a name="62"></a>
+<a name="63"></a><span class="source_comment">/* KFO */</span>
+<a name="64"></a>var(Rules_Objectives)	const	array&lt;<span class="source_type">name</span>&gt;		StoryObjectives;
+<a name="65"></a><span class="source_comment">/* END KFO*/</span>
+<a name="66"></a>
+<a name="67"></a>var(SinglePlayer) <span class="source_type">int</span>   SinglePlayerTeamSize;
+<a name="68"></a>
+<a name="69"></a>var(RadarMap) <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> RadarMapImage;
+<a name="70"></a>var(RadarMap) <span class="source_type">float</span> CustomRadarRange;
+<a name="71"></a>
+<a name="72"></a>var() config enum <span class="source_type"><a href="../engine/levelinfo.html#EPhysicsDetailLevel" class="source">EPhysicsDetailLevel</a></span>
+<a name="73"></a>{
+<a name="74"></a>	PDL_Low,
+<a name="75"></a>	PDL_Medium,
+<a name="76"></a>	PDL_High
+<a name="77"></a>} PhysicsDetailLevel;
+<a name="78"></a>
+<a name="79"></a>var() config enum <span class="source_type"><a href="../engine/levelinfo.html#EMeshLODDetailLevel" class="source">EMeshLODDetailLevel</a></span>
+<a name="80"></a>{
+<a name="81"></a>	MDL_Low,
+<a name="82"></a>	MDL_Medium,
+<a name="83"></a>	MDL_High,
+<a name="84"></a>	MDL_Ultra
+<a name="85"></a>} MeshLODDetailLevel;
+<a name="86"></a>
+<a name="87"></a><span class="source_comment">// if _RO_
+</span><a name="88"></a>var() enum <span class="source_type"><a href="../engine/levelinfo.html#EViewDistanceLevel" class="source">EViewDistanceLevel</a></span>
+<a name="89"></a>{
+<a name="90"></a>	VDL_Default_1000m,
+<a name="91"></a>	VDL_Medium_2000m,
+<a name="92"></a>	VDL_High_3000m,
+<a name="93"></a>	VDL_Extreme_4000m
+<a name="94"></a>} ViewDistanceLevel;
+<a name="95"></a><span class="source_comment">// end _RO_
+</span><a name="96"></a>
+<a name="97"></a><span class="source_comment">// Karma - jag
+</span><a name="98"></a>var(Karma) <span class="source_type">float</span> KarmaTimeScale;		<span class="source_comment">// Karma physics timestep scaling.
+</span><a name="99"></a>var(Karma) <span class="source_type">float</span> RagdollTimeScale;		<span class="source_comment">// Ragdoll physics timestep scaling. This is applied on top of KarmaTimeScale.
+</span><a name="100"></a>var(Karma) <span class="source_type">int</span>   MaxRagdolls;			<span class="source_comment">// Maximum number of simultaneous rag-dolls.
+</span><a name="101"></a>var(Karma) <span class="source_type">float</span> KarmaGravScale;		<span class="source_comment">// Allows you to make ragdolls use lower friction than normal.
+</span><a name="102"></a>var(Karma) <span class="source_type">bool</span>  bKStaticFriction;		<span class="source_comment">// Better rag-doll/ground friction model, but more CPU.
+</span><a name="103"></a>
+<a name="104"></a>var()	   <span class="source_type">bool</span> bKNoInit;				<span class="source_comment">// Start _NO_ Karma for this level. Only really for the Entry level.
+</span><a name="105"></a><span class="source_comment">// jag
+</span><a name="106"></a>
+<a name="107"></a>var			<span class="source_type">int</span>	LastTaunt[<span class="source_int">2</span>];				<span class="source_comment">// 'Global' last taunts used.
+</span><a name="108"></a>
+<a name="109"></a>var config <span class="source_type">float</span>	DecalStayScale;		<span class="source_comment">// affects decal stay time
+</span><a name="110"></a>
+<a name="111"></a>var() localized <span class="source_type">string</span> LevelEnterText;  <span class="source_comment">// Message to tell players when they enter.
+</span><a name="112"></a>var()           <span class="source_type">string</span> LocalizedPkg;    <span class="source_comment">// Package to look in for localizations.
+</span><a name="113"></a>var             <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> Pauser;          <span class="source_comment">// if paused, name of person pausing the game.
+</span><a name="114"></a>var		<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span> Summary;
+<a name="115"></a>var           <span class="source_type">string</span> VisibleGroups;		    <span class="source_comment">// List of the group names which were checked when the level was last saved
+</span><a name="116"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="117"></a><span class="source_comment">// Flags affecting the level.
+</span><a name="118"></a>
+<a name="119"></a>var(<span class="source_type"><a href="../engine/levelsummary.html" class="source">LevelSummary</a></span>) <span class="source_type">bool</span> HideFromMenus;
+<a name="120"></a>var() <span class="source_type">bool</span>           bLonePlayer;     <span class="source_comment">// No multiplayer coordination, i.e. for entranceways.
+</span><a name="121"></a>var <span class="source_type">bool</span>             bBegunPlay;      <span class="source_comment">// Whether gameplay has begun.
+</span><a name="122"></a>var <span class="source_type">bool</span>             bPlayersOnly;    <span class="source_comment">// Only update players.
+</span><a name="123"></a>var <span class="source_type">bool</span>			 bFreezeKarma;    <span class="source_comment">// Stop all Karma physics from being evolved.
+</span><a name="124"></a>var const <span class="source_type"><a href="../core/object.html#EDetailMode" class="source">EDetailMode</a></span>	DetailMode;   <span class="source_comment">// Client detail mode.
+</span><a name="125"></a>var <span class="source_type">bool</span>			 bDropDetail;	  <span class="source_comment">// frame rate is below DesiredFrameRate, so drop high detail actors
+</span><a name="126"></a>var <span class="source_type">bool</span>			 bAggressiveLOD;  <span class="source_comment">// frame rate is well below DesiredFrameRate, so make LOD more aggressive
+</span><a name="127"></a>var <span class="source_type">bool</span>             bStartup;        <span class="source_comment">// Starting gameplay.
+</span><a name="128"></a>var config <span class="source_type">bool</span>		 bLowSoundDetail;
+<a name="129"></a>var	<span class="source_type">bool</span>			 bPathsRebuilt;	  <span class="source_comment">// True if path network is valid
+</span><a name="130"></a>var <span class="source_type">bool</span>			 bHasPathNodes;
+<a name="131"></a>var	<span class="source_type">bool</span>			bLevelChange;
+<a name="132"></a>var globalconfig <span class="source_type">bool</span> bShouldPreload;	<span class="source_comment">// if true, preload all skins (initially set true if &gt; 512 MB of system memory)
+</span><a name="133"></a>var globalconfig <span class="source_type">bool</span> bDesireSkinPreload; <span class="source_comment">// user set property
+</span><a name="134"></a>var globalconfig <span class="source_type">bool</span> bKickLiveIdlers;	<span class="source_comment">// if true, even playercontrollers with pawns can be kicked for idling
+</span><a name="135"></a>var <span class="source_type">bool</span>			bSkinsPreloaded;	<span class="source_comment">// set after skins are preloaded
+</span><a name="136"></a>var <span class="source_type">bool</span> bClassicView;					<span class="source_comment">// FOV at least 90, eyeheight up, small weapons OBSOLETE
+</span><a name="137"></a>var(RadarMap) <span class="source_type">bool</span> bShowRadarMap;
+<a name="138"></a>var(RadarMap) <span class="source_type">bool</span> bUseTerrainForRadarRange;
+<a name="139"></a>var <span class="source_type">bool</span> bIsSaveGame;					<span class="source_comment">// true while save game is being loaded (GameInfo bIsSaveGame stays true through entire game)
+</span><a name="140"></a>var(SaveGames) <span class="source_type">bool</span> bSupportSaveGames;		<span class="source_comment">// needs to be true to support savegames
+</span><a name="141"></a>
+<a name="142"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="143"></a><span class="source_comment">// Renderer Management.
+</span><a name="144"></a>var config <span class="source_type">bool</span> bNeverPrecache;
+<a name="145"></a>
+<a name="146"></a>var() <span class="source_type">int</span>			LevelTextureLODBias;
+<a name="147"></a>var <span class="source_type">float</span> AnimMeshGlobalLOD;   <span class="source_comment">//State of the dDynamic LOD reduction for animating meshes.
+</span><a name="148"></a>
+<a name="149"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="150"></a><span class="source_comment">// Legend - used for saving the viewport camera positions
+</span><a name="151"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>  CameraLocationDynamic;
+<a name="152"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>  CameraLocationTop;
+<a name="153"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>  CameraLocationFront;
+<a name="154"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>  CameraLocationSide;
+<a name="155"></a>var() <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> CameraRotationDynamic;
+<a name="156"></a>
+<a name="157"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="158"></a><span class="source_comment">// Audio properties.
+</span><a name="159"></a>
+<a name="160"></a>var(Audio) <span class="source_type">string</span>	Song;			<span class="source_comment">// Filename of the streaming song.
+</span><a name="161"></a>var(Audio) <span class="source_type">float</span>	PlayerDoppler;	<span class="source_comment">// Player doppler shift, 0=none, 1=full.
+</span><a name="162"></a>var(Audio) <span class="source_type">float</span>	MusicVolumeOverride;
+<a name="163"></a>
+<a name="164"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="165"></a><span class="source_comment">// Miscellaneous information.
+</span><a name="166"></a>
+<a name="167"></a>var() <span class="source_type">float</span> Brightness;
+<a name="168"></a>
+<a name="169"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span> DefaultTexture;
+<a name="170"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span> WireframeTexture;
+<a name="171"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span> WhiteSquareTexture;
+<a name="172"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span> LargeVertex;
+<a name="173"></a>var <span class="source_type">int</span> HubStackLevel;
+<a name="174"></a>var transient enum <span class="source_type"><a href="../engine/levelinfo.html#ELevelAction" class="source">ELevelAction</a></span>
+<a name="175"></a>{
+<a name="176"></a>	LEVACT_None,
+<a name="177"></a>	LEVACT_Loading,
+<a name="178"></a>	LEVACT_Saving,
+<a name="179"></a>	LEVACT_Connecting,
+<a name="180"></a>	LEVACT_Precaching
+<a name="181"></a>} LevelAction;
+<a name="182"></a>
+<a name="183"></a>var transient <span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span> GRI;
+<a name="184"></a>
+<a name="185"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="186"></a><span class="source_comment">// Networking.
+</span><a name="187"></a>
+<a name="188"></a>var enum <span class="source_type"><a href="../engine/levelinfo.html#ENetMode" class="source">ENetMode</a></span>
+<a name="189"></a>{
+<a name="190"></a>	NM_Standalone,        <span class="source_comment">// Standalone game.
+</span><a name="191"></a>	NM_DedicatedServer,   <span class="source_comment">// Dedicated server, no local client.
+</span><a name="192"></a>	NM_ListenServer,      <span class="source_comment">// Listen server.
+</span><a name="193"></a>	NM_Client             <span class="source_comment">// Client only, no local server.
+</span><a name="194"></a>} NetMode;
+<a name="195"></a>var <span class="source_type">string</span> ComputerName;  <span class="source_comment">// Machine's name according to the OS.
+</span><a name="196"></a>var <span class="source_type">string</span> EngineVersion; <span class="source_comment">// Engine version.
+</span><a name="197"></a><span class="source_comment">// if _RO_
+</span><a name="198"></a>var <span class="source_type">string</span> ROVersion; <span class="source_comment">// Engine version.
+</span><a name="199"></a><span class="source_comment">// end _RO_
+</span><a name="200"></a>var <span class="source_type">string</span> MinNetVersion; <span class="source_comment">// Min engine version that is net compatible.
+</span><a name="201"></a>
+<a name="202"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="203"></a><span class="source_comment">// Gameplay rules
+</span><a name="204"></a>
+<a name="205"></a>var() <span class="source_type">string</span> DefaultGameType;
+<a name="206"></a>var() <span class="source_type">string</span> PreCacheGame;
+<a name="207"></a>var <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span> Game;
+<a name="208"></a>var <span class="source_type">float</span> DefaultGravity;
+<a name="209"></a>var <span class="source_type">float</span> LastVehicleCheck;
+<a name="210"></a>var() <span class="source_type">float</span> StallZ;	<span class="source_comment">//vehicles stall if they reach this
+</span><a name="211"></a>
+<a name="212"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="213"></a><span class="source_comment">// Navigation point and Pawn lists (chained using nextNavigationPoint and nextPawn).
+</span><a name="214"></a>
+<a name="215"></a>var const <span class="source_type"><a href="../engine/navigationpoint.html" class="source">NavigationPoint</a></span> NavigationPointList;
+<a name="216"></a>var const <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> ControllerList;
+<a name="217"></a>var private <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> LocalPlayerController;		<span class="source_comment">// player who is client here
+</span><a name="218"></a>
+<a name="219"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="220"></a><span class="source_comment">// Headlights
+</span><a name="221"></a>var(Headlights) <span class="source_type">bool</span>	bUseHeadlights;
+<a name="222"></a>var(Headlights)	<span class="source_type">float</span>	HeadlightScaling;
+<a name="223"></a>
+<a name="224"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="225"></a><span class="source_comment">// Server related.
+</span><a name="226"></a>
+<a name="227"></a>var <span class="source_type">string</span> NextURL;
+<a name="228"></a>var <span class="source_type">bool</span> bNextItems;
+<a name="229"></a>var <span class="source_type">float</span> NextSwitchCountdown;
+<a name="230"></a>
+<a name="231"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="232"></a><span class="source_comment">// Global object recycling pool.
+</span><a name="233"></a>
+<a name="234"></a>var transient <span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>	<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>;
+<a name="235"></a>
+<a name="236"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="237"></a><span class="source_comment">// Additional resources to precache (e.g. Playerskins).
+</span><a name="238"></a>
+<a name="239"></a>var transient array&lt;<span class="source_type"><a href="../engine/material.html" class="source">material</a></span>&gt;	PrecacheMaterials;
+<a name="240"></a>var transient array&lt;<span class="source_type">staticmesh</span>&gt; PrecacheStaticMeshes;
+<a name="241"></a>
+<a name="242"></a><span class="source_comment">// common static mesh (for camouflage combo)
+</span><a name="243"></a>
+<a name="244"></a>var(Camouflage) <span class="source_type">StaticMesh</span> IndoorCamouflageMesh;
+<a name="245"></a>var(Camouflage) <span class="source_type">float</span> IndoorMeshDrawscale;
+<a name="246"></a>var(Camouflage) <span class="source_type">StaticMesh</span> OutdoorCamouflageMesh;
+<a name="247"></a>var(Camouflage) <span class="source_type">float</span> OutdoorMeshDrawscale;
+<a name="248"></a>
+<a name="249"></a><span class="source_comment">// When kicking up dust in this level - what colour to use?
+</span><a name="250"></a>var(DustColor) <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> DustColor;
+<a name="251"></a>var(DustColor) <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> WaterDustColor;
+<a name="252"></a>
+<a name="253"></a>
+<a name="254"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="255"></a><span class="source_comment">// Replication/Networking
+</span><a name="256"></a>var <span class="source_type">float</span> MoveRepSize;
+<a name="257"></a>var globalconfig <span class="source_type">float</span> MaxClientFrameRate;
+<a name="258"></a>
+<a name="259"></a><span class="source_comment">// speed hack detection
+</span><a name="260"></a>var globalconfig <span class="source_type">float</span> MaxTimeMargin;
+<a name="261"></a>var globalconfig <span class="source_type">float</span> TimeMarginSlack;
+<a name="262"></a>var globalconfig <span class="source_type">float</span> MinTimeMargin;
+<a name="263"></a>
+<a name="264"></a>
+<a name="265"></a><span class="source_comment">// these two properties are valid only during replication
+</span><a name="266"></a>var const <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> ReplicationViewer;	<span class="source_comment">// during replication, set to the playercontroller to
+</span><a name="267"></a>												<span class="source_comment">// which actors are currently being replicated
+</span><a name="268"></a>var const <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>  ReplicationViewTarget;				<span class="source_comment">// during replication, set to the viewtarget to
+</span><a name="269"></a>												<span class="source_comment">// which actors are currently being replicated
+</span><a name="270"></a>
+<a name="271"></a><span class="source_comment">// if _KF_
+</span><a name="272"></a>var	<span class="source_type">string</span>	DefaultMalePlayerVoice;
+<a name="273"></a><span class="source_comment">//endif
+</span><a name="274"></a>
+<a name="275"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="276"></a><span class="source_comment">// Functions.
+</span><a name="277"></a>
+<a name="278"></a>native simulated function DetailChange(<span class="source_type"><a href="../core/object.html#EDetailMode" class="source">EDetailMode</a></span> NewDetailMode);
+<a name="279"></a>native simulated function <span class="source_type">bool</span> IsEntry();
+<a name="280"></a>native simulated function UpdateDistanceFogLOD(<span class="source_type">float</span> LOD);
+<a name="281"></a>native simulated function ForceLoadTexture(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span> <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>);
+<a name="282"></a>native simulated function <span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span> GetPhysicsVolume(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Loc);		<span class="source_comment">// returns PhysicsVolume which encompasses Loc
+</span><a name="283"></a>
+<a name="284"></a>simulated function PostBeginPlay()
+<a name="285"></a>{
+<a name="286"></a>	Super.PostBeginPlay();
+<a name="287"></a>	DecalStayScale = <span class="source_type">Max</span>(DecalStayScale,<span class="source_int">0</span>);
+<a name="288"></a>}
+<a name="289"></a>
+<a name="290"></a>simulated function <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt; GetGameClass()
+<a name="291"></a>{
+<a name="292"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt; G;
+<a name="293"></a>
+<a name="294"></a>	if(<span class="source_type">Level</span>.Game != None)
+<a name="295"></a>		return <span class="source_type">Level</span>.Game.<span class="source_type">Class</span>;
+<a name="296"></a>
+<a name="297"></a>	if (GRI != None && GRI.<span class="source_type">GameClass</span> != <span class="source_string">""</span>)
+<a name="298"></a>		G = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(DynamicLoadObject(GRI.<span class="source_type">GameClass</span>,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="299"></a>	if(G != None)
+<a name="300"></a>		return G;
+<a name="301"></a>
+<a name="302"></a>	if ( DefaultGameType != <span class="source_string">""</span> )
+<a name="303"></a>		G = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(DynamicLoadObject(DefaultGameType,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="304"></a>
+<a name="305"></a>	return G;
+<a name="306"></a>}
+<a name="307"></a>
+<a name="308"></a>simulated event FillPrecacheMaterialsArray( <span class="source_type">bool</span> <span class="source_type">FullPrecache</span> )
+<a name="309"></a>{
+<a name="310"></a>	local <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">A</span>;
+<a name="311"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt; G;
+<a name="312"></a>	local <span class="source_type">bool</span> bRealDesire;
+<a name="313"></a>
+<a name="314"></a>	if ( NetMode == NM_DedicatedServer )
+<a name="315"></a>		return;
+<a name="316"></a>	if ( !bSkinsPreloaded || <span class="source_type">FullPrecache</span> )
+<a name="317"></a>	{
+<a name="318"></a>		if ( Game != None )
+<a name="319"></a>			G = Game.<span class="source_type">Class</span>;
+<a name="320"></a>		else if ( (GRI != None) && (GRI.<span class="source_type">GameClass</span> != <span class="source_string">""</span>) )
+<a name="321"></a>			G = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(DynamicLoadObject(GRI.<span class="source_type">GameClass</span>,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="322"></a>		if ( G != None )
+<a name="323"></a>		{
+<a name="324"></a>			G.Static.PreCacheGameTextures(self);
+<a name="325"></a>			bSkinsPreloaded = true;
+<a name="326"></a>		}
+<a name="327"></a>		if ( (G == None) && (DefaultGameType != <span class="source_string">""</span>) )
+<a name="328"></a>			G = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(DynamicLoadObject(DefaultGameType,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="329"></a>		if ( G == None )
+<a name="330"></a>			G = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(DynamicLoadObject(PreCacheGame,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="331"></a>		if ( G != None )
+<a name="332"></a>		{
+<a name="333"></a>			bRealDesire = bDesireSkinPreload;
+<a name="334"></a>			bDesireSkinPreload = false;
+<a name="335"></a>			G.Static.PreCacheGameTextures(self);
+<a name="336"></a>			bDesireSkinPreload = bRealDesire;
+<a name="337"></a>		}
+<a name="338"></a>	}
+<a name="339"></a>	ForEach AllActors(<span class="source_type">class</span><span class="source_name">'Actor'</span>,<span class="source_type">A</span>)
+<a name="340"></a>	{
+<a name="341"></a>		if ( !<span class="source_type">A</span>.bAlreadyPrecachedMaterials || <span class="source_type">FullPrecache</span> )
+<a name="342"></a>		{
+<a name="343"></a>			<span class="source_type">A</span>.UpdatePrecacheMaterials();
+<a name="344"></a>			<span class="source_type">A</span>.bAlreadyPrecachedMaterials = true;
+<a name="345"></a>		}
+<a name="346"></a>	}
+<a name="347"></a>}
+<a name="348"></a>
+<a name="349"></a><span class="source_comment">// OBSOLETE
+</span><a name="350"></a>simulated function PrecacheAnnouncements();
+<a name="351"></a>
+<a name="352"></a>simulated event FillPrecacheStaticMeshesArray( <span class="source_type">bool</span> <span class="source_type">FullPrecache</span> )
+<a name="353"></a>{
+<a name="354"></a>	local <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">A</span>;
+<a name="355"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt; G;
+<a name="356"></a>
+<a name="357"></a>	if ( NetMode == NM_DedicatedServer )
+<a name="358"></a>		return;
+<a name="359"></a>	if ( Game == None )
+<a name="360"></a>	{
+<a name="361"></a>		if ( (GRI != None) && (GRI.<span class="source_type">GameClass</span> != <span class="source_string">""</span>) )
+<a name="362"></a>			G = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(DynamicLoadObject(GRI.<span class="source_type">GameClass</span>,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="363"></a>		if ( (G == None) && (DefaultGameType != <span class="source_string">""</span>) )
+<a name="364"></a>			G = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(DynamicLoadObject(DefaultGameType,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="365"></a>		if ( G == None )
+<a name="366"></a>			G = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(DynamicLoadObject(PreCacheGame,<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="367"></a>		if ( G != None )
+<a name="368"></a>			G.Static.PreCacheGameStaticMeshes(self);
+<a name="369"></a>	}
+<a name="370"></a>
+<a name="371"></a>	ForEach AllActors(<span class="source_type">class</span><span class="source_name">'Actor'</span>,<span class="source_type">A</span>)
+<a name="372"></a>		if ( !<span class="source_type">A</span>.bAlreadyPrecachedMeshes || <span class="source_type">FullPrecache</span> )
+<a name="373"></a>		{
+<a name="374"></a>			<span class="source_type">A</span>.UpdatePrecacheStaticMeshes();
+<a name="375"></a>			<span class="source_type">A</span>.bAlreadyPrecachedMeshes = true;
+<a name="376"></a>		}
+<a name="377"></a>}
+<a name="378"></a>
+<a name="379"></a>simulated function AddPrecacheMaterial(<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> mat)
+<a name="380"></a>{
+<a name="381"></a>    local <span class="source_type">int</span> <span class="source_type">Index</span>;
+<a name="382"></a>
+<a name="383"></a>	if ( NetMode == NM_DedicatedServer )
+<a name="384"></a>		return;
+<a name="385"></a>    if (mat == None)
+<a name="386"></a>        return;
+<a name="387"></a>
+<a name="388"></a>    <span class="source_type">Index</span> = <span class="source_type">Level</span>.PrecacheMaterials.Length;
+<a name="389"></a>    PrecacheMaterials.Insert(<span class="source_type">Index</span>, <span class="source_int">1</span>);
+<a name="390"></a>	PrecacheMaterials[<span class="source_type">Index</span>] = mat;
+<a name="391"></a>}
+<a name="392"></a>
+<a name="393"></a>simulated function AddPrecacheStaticMesh(<span class="source_type">StaticMesh</span> stat)
+<a name="394"></a>{
+<a name="395"></a>    local <span class="source_type">int</span> <span class="source_type">Index</span>;
+<a name="396"></a>
+<a name="397"></a>	if ( NetMode == NM_DedicatedServer )
+<a name="398"></a>		return;
+<a name="399"></a>    if (stat == None)
+<a name="400"></a>        return;
+<a name="401"></a>
+<a name="402"></a>    <span class="source_type">Index</span> = <span class="source_type">Level</span>.PrecacheStaticMeshes.Length;
+<a name="403"></a>    PrecacheStaticMeshes.Insert(<span class="source_type">Index</span>, <span class="source_int">1</span>);
+<a name="404"></a>	PrecacheStaticMeshes[<span class="source_type">Index</span>] = stat;
+<a name="405"></a>}
+<a name="406"></a>
+<a name="407"></a><span class="source_comment">//
+</span><a name="408"></a><span class="source_comment">// Return the URL of this level on the local machine.
+</span><a name="409"></a><span class="source_comment">//
+</span><a name="410"></a>native simulated function <span class="source_type">string</span> GetLocalURL();
+<a name="411"></a>
+<a name="412"></a><span class="source_comment">//
+</span><a name="413"></a><span class="source_comment">// Demo build flag
+</span><a name="414"></a><span class="source_comment">//
+</span><a name="415"></a>native simulated static final function <span class="source_type">bool</span> IsDemoBuild();  <span class="source_comment">// True if this is a demo build.
+</span><a name="416"></a>
+<a name="417"></a><span class="source_comment">// software rendering flag
+</span><a name="418"></a>native simulated static final function <span class="source_type">bool</span> IsSoftwareRendering();
+<a name="419"></a>
+<a name="420"></a><span class="source_comment">//
+</span><a name="421"></a><span class="source_comment">// Return the URL of this level, which may possibly
+</span><a name="422"></a><span class="source_comment">// exist on a remote machine.
+</span><a name="423"></a><span class="source_comment">//
+</span><a name="424"></a>native simulated function <span class="source_type">string</span> GetAddressURL();
+<a name="425"></a>
+<a name="426"></a><span class="source_comment">//
+</span><a name="427"></a><span class="source_comment">// Returns whether we are currently in the process of connecting to a URL
+</span><a name="428"></a><span class="source_comment">//
+</span><a name="429"></a>native simulated function <span class="source_type">bool</span> IsPendingConnection();
+<a name="430"></a>
+<a name="431"></a><span class="source_comment">//
+</span><a name="432"></a><span class="source_comment">// Jump the server to a new level.
+</span><a name="433"></a><span class="source_comment">//
+</span><a name="434"></a>event ServerTravel( <span class="source_type">string</span> <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>, <span class="source_type">bool</span> <span class="source_type">bItems</span> )
+<a name="435"></a>{
+<a name="436"></a>	if ( InStr(<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">url</a></span>,<span class="source_string">"%"</span>)&gt;=<span class="source_int">0</span> )
+<a name="437"></a>	{
+<a name="438"></a>		log(<span class="source_string">"URL Contains illegal character '%'."</span>);
+<a name="439"></a>		return;
+<a name="440"></a>	}
+<a name="441"></a>
+<a name="442"></a>	if (InStr(<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">url</a></span>,<span class="source_string">":"</span>)&gt;=<span class="source_int">0</span> || InStr(<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">url</a></span>,<span class="source_string">"/"</span>)&gt;=<span class="source_int">0</span> || InStr(<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">url</a></span>,<span class="source_string">"\\"</span>)&gt;=<span class="source_int">0</span>)
+<a name="443"></a>	{
+<a name="444"></a>		log(<span class="source_string">"URL blocked"</span>);
+<a name="445"></a>		return;
+<a name="446"></a>	}
+<a name="447"></a>
+<a name="448"></a>	if( NextURL==<span class="source_string">""</span> )
+<a name="449"></a>	{
+<a name="450"></a>		bLevelChange = true;
+<a name="451"></a>		bNextItems          = <span class="source_type">bItems</span>;
+<a name="452"></a>		NextURL             = <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>;
+<a name="453"></a>		if( Game!=None )
+<a name="454"></a>			Game.ProcessServerTravel( <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>, <span class="source_type">bItems</span> );
+<a name="455"></a>		else
+<a name="456"></a>			NextSwitchCountdown = <span class="source_int">0</span>;
+<a name="457"></a>	}
+<a name="458"></a>}
+<a name="459"></a>
+<a name="460"></a><span class="source_comment">//
+</span><a name="461"></a><span class="source_comment">// ensure the DefaultPhysicsVolume class is loaded.
+</span><a name="462"></a><span class="source_comment">//
+</span><a name="463"></a>function ThisIsNeverExecuted()
+<a name="464"></a>{
+<a name="465"></a>	local <span class="source_type"><a href="../engine/defaultphysicsvolume.html" class="source">DefaultPhysicsVolume</a></span> <span class="source_type">P</span>;
+<a name="466"></a>	<span class="source_type">P</span> = None;
+<a name="467"></a>}
+<a name="468"></a>
+<a name="469"></a><span class="source_comment">/* Reset()
+<a name="470"></a>reset actor to initial state - used when restarting level without reloading.
+<a name="471"></a>*/</span>
+<a name="472"></a>function Reset()
+<a name="473"></a>{
+<a name="474"></a>	DefaultGravity =  Default.DefaultGravity;
+<a name="475"></a>
+<a name="476"></a>	<span class="source_comment">// perform garbage collection of objects (not done during gameplay)
+</span><a name="477"></a>	ConsoleCommand(<span class="source_string">"OBJ GARBAGE"</span>);
+<a name="478"></a>	Super.Reset();
+<a name="479"></a>}
+<a name="480"></a>
+<a name="481"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="482"></a><span class="source_comment">// Network replication.
+</span><a name="483"></a>
+<a name="484"></a>replication
+<a name="485"></a>{
+<a name="486"></a>	reliable if( bNetDirty && Role==ROLE_Authority )
+<a name="487"></a>		Pauser, TimeDilation, DefaultGravity;
+<a name="488"></a>
+<a name="489"></a>	reliable if( bNetInitial && Role==ROLE_Authority )
+<a name="490"></a>		RagdollTimeScale, KarmaTimeScale, KarmaGravScale;
+<a name="491"></a>}
+<a name="492"></a>
+<a name="493"></a><span class="source_comment">//
+</span><a name="494"></a><span class="source_comment">//	PreBeginPlay
+</span><a name="495"></a><span class="source_comment">//
+</span><a name="496"></a>
+<a name="497"></a>simulated event PreBeginPlay()
+<a name="498"></a>{
+<a name="499"></a>	<span class="source_comment">// Create the object pool.
+</span><a name="500"></a>	Super.PreBeginPlay();
+<a name="501"></a>
+<a name="502"></a>	<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span> = new(xLevel) <span class="source_type">class</span><span class="source_name">'ObjectPool'</span>;
+<a name="503"></a>
+<a name="504"></a><span class="source_comment">// if _KF_
+</span><a name="505"></a>	<span class="source_type">switch</span> ( rand(<span class="source_int">2</span>) )
+<a name="506"></a>	{
+<a name="507"></a>		case <span class="source_int">0</span>:
+<a name="508"></a>			DefaultMalePlayerVoice = <span class="source_string">"KFMod.KFVoicePack"</span>;
+<a name="509"></a>			break;
+<a name="510"></a>
+<a name="511"></a>		case <span class="source_int">1</span>:
+<a name="512"></a>			DefaultMalePlayerVoice = <span class="source_string">"KFMod.KFVoicePackTwo"</span>;
+<a name="513"></a>			break;
+<a name="514"></a>	}
+<a name="515"></a><span class="source_comment">// endif
+</span><a name="516"></a>}
+<a name="517"></a>
+<a name="518"></a>simulated function <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> GetLocalPlayerController()
+<a name="519"></a>{
+<a name="520"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="521"></a>
+<a name="522"></a>	if ( <span class="source_type">Level</span>.NetMode == NM_DedicatedServer )
+<a name="523"></a>		return None;
+<a name="524"></a>	if ( LocalPlayerController != None )
+<a name="525"></a>		return LocalPlayerController;
+<a name="526"></a>
+<a name="527"></a>	ForEach DynamicActors(<span class="source_type">class</span><span class="source_name">'PlayerController'</span>, <span class="source_type">PC</span>)
+<a name="528"></a>	{
+<a name="529"></a>		if ( <span class="source_type">Viewport</span>(<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>) != None )
+<a name="530"></a>		{
+<a name="531"></a>			LocalPlayerController = <span class="source_type">PC</span>;
+<a name="532"></a>			break;
+<a name="533"></a>		}
+<a name="534"></a>	}
+<a name="535"></a>	return LocalPlayerController;
+<a name="536"></a>}
+<a name="537"></a>
+<a name="538"></a>defaultproperties
+<a name="539"></a>{
+<a name="540"></a>     TimeDilation=<span class="source_int">1.100000</span>
+<a name="541"></a>     Title=<span class="source_string">"Untitled"</span>
+<a name="542"></a>     Author=<span class="source_string">"Anonymous"</span>
+<a name="543"></a>     IdealPlayerCountMin=<span class="source_int">6</span>
+<a name="544"></a>     IdealPlayerCountMax=<span class="source_int">10</span>
+<a name="545"></a>     BloomContrast=<span class="source_int">1.000000</span>
+<a name="546"></a>     BloomBlurMult=<span class="source_int">1.000000</span>
+<a name="547"></a>     BloomRatio=<span class="source_int">0.500000</span>
+<a name="548"></a>     BloomRatioMaximum=<span class="source_int">0.500000</span>
+<a name="549"></a>     CustomRadarRange=<span class="source_int">10000.000000</span>
+<a name="550"></a>     PhysicsDetailLevel=PDL_Medium
+<a name="551"></a>     MeshLODDetailLevel=MDL_Medium
+<a name="552"></a>     KarmaTimeScale=<span class="source_int">0.900000</span>
+<a name="553"></a>     RagdollTimeScale=<span class="source_int">1.000000</span>
+<a name="554"></a>     MaxRagdolls=<span class="source_int">4</span>
+<a name="555"></a>     KarmaGravScale=<span class="source_int">1.000000</span>
+<a name="556"></a>     bKStaticFriction=True
+<a name="557"></a>     DecalStayScale=<span class="source_int">1.000000</span>
+<a name="558"></a>     VisibleGroups=<span class="source_string">"None"</span>
+<a name="559"></a>     DetailMode=DM_SuperHigh
+<a name="560"></a>     bShowRadarMap=True
+<a name="561"></a>     bUseTerrainForRadarRange=True
+<a name="562"></a>     AnimMeshGlobalLOD=<span class="source_int">1.000000</span>
+<a name="563"></a>     MusicVolumeOverride=-<span class="source_int">1.000000</span>
+<a name="564"></a>     Brightness=<span class="source_int">1.000000</span>
+<a name="565"></a>     DefaultTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Engine.DefaultTexture'</span>
+<a name="566"></a>     WireframeTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Engine.WhiteSquareTexture'</span>
+<a name="567"></a>     WhiteSquareTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Engine.WhiteSquareTexture'</span>
+<a name="568"></a>     LargeVertex=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Engine.LargeVertex'</span>
+<a name="569"></a>     PreCacheGame=<span class="source_string">"xGame.xDeathMatch"</span>
+<a name="570"></a>     DefaultGravity=-<span class="source_int">950.000000</span>
+<a name="571"></a>     StallZ=<span class="source_int">10000.000000</span>
+<a name="572"></a>     bUseHeadlights=True
+<a name="573"></a>     HeadlightScaling=<span class="source_int">1.000000</span>
+<a name="574"></a>     IndoorMeshDrawscale=<span class="source_int">1.000000</span>
+<a name="575"></a>     OutdoorMeshDrawscale=<span class="source_int">1.000000</span>
+<a name="576"></a>     WaterDustColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>)
+<a name="577"></a>     MoveRepSize=<span class="source_int">42.000000</span>
+<a name="578"></a>     MaxClientFrameRate=<span class="source_int">90.000000</span>
+<a name="579"></a>     MaxTimeMargin=<span class="source_int">1.000000</span>
+<a name="580"></a>     TimeMarginSlack=<span class="source_int">1.350000</span>
+<a name="581"></a>     MinTimeMargin=-<span class="source_int">1.000000</span>
+<a name="582"></a>     bWorldGeometry=True
+<a name="583"></a>     bAlwaysRelevant=True
+<a name="584"></a>     RemoteRole=ROLE_DumbProxy
+<a name="585"></a>     bHiddenEd=True
+<a name="586"></a>}
+<a name="587"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/levelinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#LevelInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/laddervolume.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/levelsummary.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.929 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

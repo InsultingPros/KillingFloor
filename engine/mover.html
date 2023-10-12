@@ -1,0 +1,1818 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Engine.Mover</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/mover.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#Mover">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/motionblur.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/movie.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#engine/mover.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.Mover</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../engine/actor.html">Actor</a></dd>
+<dt>Modifiers</dt><dd>native nativereplication </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/mover.html">Mover</a>
+</pre>
+
+<h4>Direct Known Subclasses:</h4>
+<blockquote>
+	<a href="../engine/clientmover.html">ClientMover</a>, <a href="../kfmod/kfdoormover.html">KFDoorMover</a>, <a href="../kfmod/kfelevator.html">KFElevator</a>, <a href="../kfmod/kftraderdoor.html">KFTraderDoor</a>, <a href="../kfstorygame/kf_storyelevator.html">KF_StoryElevator</a>, <a href="../kfstorygame/kf_storyelevator_door.html">KF_StoryElevator_Door</a>, <a href="../kfstorygame/kf_useablemover.html">KF_UseableMover</a>
+</blockquote>
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Contants from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#MAINCOLLISIONINDEX">MAINCOLLISIONINDEX</a>, <a href="../engine/actor.html#MAXSTEPHEIGHT">MAXSTEPHEIGHT</a>, <a href="../engine/actor.html#MINFLOORZ">MINFLOORZ</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Contants from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#ALLIES_TEAM_INDEX">ALLIES_TEAM_INDEX</a>, <a href="../core/object.html#AXIS_TEAM_INDEX">AXIS_TEAM_INDEX</a>, <a href="../core/object.html#MaxInt">MaxInt</a>, <a href="../core/object.html#NEUTRAL_TEAM_INDEX">NEUTRAL_TEAM_INDEX</a>, <a href="../core/object.html#Pi">Pi</a>, <a href="../core/object.html#RF_NotForClient">RF_NotForClient</a>, <a href="../core/object.html#RF_NotForEdit">RF_NotForEdit</a>, <a href="../core/object.html#RF_NotForServer">RF_NotForServer</a>, <a href="../core/object.html#RF_Public">RF_Public</a>, <a href="../core/object.html#RF_Standalone">RF_Standalone</a>, <a href="../core/object.html#RF_Transactional">RF_Transactional</a>, <a href="../core/object.html#RF_Transient">RF_Transient</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/antiportalactor.html">AntiPortalActor</a>&gt;</td><td width="66%"><a href="#_AntiPortals" name="AntiPortals" title="go to the details">AntiPortals</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_BACKUP_bHidden" name="BACKUP_bHidden" title="go to the details">BACKUP_bHidden</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_Backup_InitialState" name="Backup_InitialState" title="go to the details">Backup_InitialState</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_BasePos" name="BasePos" title="go to the details">BasePos</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Rotator">rotator</a></td><td width="66%"><a href="#_BaseRot" name="BaseRot" title="go to the details">BaseRot</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bClientPause" name="bClientPause" title="go to the details">bClientPause</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bClosed" name="bClosed" title="go to the details">bClosed</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDelaying" name="bDelaying" title="go to the details">bDelaying</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bJumpLift" name="bJumpLift" title="go to the details">bJumpLift</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bOpening" name="bOpening" title="go to the details">bOpening</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bPlayerOnly" name="bPlayerOnly" title="go to the details">bPlayerOnly</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bResetting" name="bResetting" title="go to the details">bResetting</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_ClientStop" name="ClientStop" title="go to the details">ClientStop</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_ClientUpdate" name="ClientUpdate" title="go to the details">ClientUpdate</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/mover.html">Mover</a></td><td width="66%"><a href="#_Follower" name="Follower" title="go to the details">Follower</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_KeyPos[24]" name="KeyPos[24]" title="go to the details">KeyPos[24]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Rotator">rotator</a></td><td width="66%"><a href="#_KeyRot[24]" name="KeyRot[24]" title="go to the details">KeyRot[24]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/mover.html">Mover</a></td><td width="66%"><a href="#_Leader" name="Leader" title="go to the details">Leader</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/navigationpoint.html">NavigationPoint</a></td><td width="66%"><a href="#_myMarker" name="myMarker" title="go to the details">myMarker</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_numTriggerEvents" name="numTriggerEvents" title="go to the details">numTriggerEvents</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_OldPos" name="OldPos" title="go to the details">OldPos</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_OldPrePivot" name="OldPrePivot" title="go to the details">OldPrePivot</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Rotator">rotator</a></td><td width="66%"><a href="#_OldRot" name="OldRot" title="go to the details">OldRot</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_PhysAlpha" name="PhysAlpha" title="go to the details">PhysAlpha</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_PhysRate" name="PhysRate" title="go to the details">PhysRate</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_PrevKeyNum" name="PrevKeyNum" title="go to the details">PrevKeyNum</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_RealPosition" name="RealPosition" title="go to the details">RealPosition</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Rotator">rotator</a></td><td width="66%"><a href="#_RealRotation" name="RealRotation" title="go to the details">RealRotation</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_SavedPos" name="SavedPos" title="go to the details">SavedPos</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Rotator">rotator</a></td><td width="66%"><a href="#_SavedRot" name="SavedRot" title="go to the details">SavedRot</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/actor.html">actor</a></td><td width="66%"><a href="#_SavedTrigger" name="SavedTrigger" title="go to the details">SavedTrigger</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_SimInterpolate" name="SimInterpolate" title="go to the details">SimInterpolate</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_SimOldPos" name="SimOldPos" title="go to the details">SimOldPos</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_SimOldRotPitch" name="SimOldRotPitch" title="go to the details">SimOldRotPitch</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_SimOldRotRoll" name="SimOldRotRoll" title="go to the details">SimOldRotRoll</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_SimOldRotYaw" name="SimOldRotYaw" title="go to the details">SimOldRotYaw</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_StartKeyNum" name="StartKeyNum" title="go to the details">StartKeyNum</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_StepDirection" name="StepDirection" title="go to the details">StepDirection</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_StoppedPosition" name="StoppedPosition" title="go to the details">StoppedPosition</a></td></tr>
+<tr><th colspan="2" class="small">AI</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bAutoDoor" name="bAutoDoor" title="go to the details">bAutoDoor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bNoAIRelevance" name="bNoAIRelevance" title="go to the details">bNoAIRelevance</a></td></tr>
+<tr><th colspan="2" class="small">Mover</th></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_AntiPortalTag" name="AntiPortalTag" title="go to the details">AntiPortalTag</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDamageTriggered" name="bDamageTriggered" title="go to the details">bDamageTriggered</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bDynamicLightMover" name="bDynamicLightMover" title="go to the details">bDynamicLightMover</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bOscillatingLoop" name="bOscillatingLoop" title="go to the details">bOscillatingLoop</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_BrushRaytraceKey" name="BrushRaytraceKey" title="go to the details">BrushRaytraceKey</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bSlave" name="bSlave" title="go to the details">bSlave</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bToggleDirection" name="bToggleDirection" title="go to the details">bToggleDirection</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bTriggerOnceOnly" name="bTriggerOnceOnly" title="go to the details">bTriggerOnceOnly</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_BumpEvent" name="BumpEvent" title="go to the details">BumpEvent</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/mover.html#EBumpType">EBumpType</a></td><td width="66%"><a href="#_BumpType" name="BumpType" title="go to the details">BumpType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bUseShortestRotation" name="bUseShortestRotation" title="go to the details">bUseShortestRotation</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bUseTriggered" name="bUseTriggered" title="go to the details">bUseTriggered</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_DamageThreshold" name="DamageThreshold" title="go to the details">DamageThreshold</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_DelayTime" name="DelayTime" title="go to the details">DelayTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_EncroachDamage" name="EncroachDamage" title="go to the details">EncroachDamage</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_KeyNum" name="KeyNum" title="go to the details">KeyNum</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/mover.html#EMoverEncroachType">EMoverEncroachType</a></td><td width="66%"><a href="#_MoverEncroachType" name="MoverEncroachType" title="go to the details">MoverEncroachType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/mover.html#EMoverGlideType">EMoverGlideType</a></td><td width="66%"><a href="#_MoverGlideType" name="MoverGlideType" title="go to the details">MoverGlideType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MoveTime" name="MoveTime" title="go to the details">MoveTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_NumKeys" name="NumKeys" title="go to the details">NumKeys</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_OtherTime" name="OtherTime" title="go to the details">OtherTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_PlayerBumpEvent" name="PlayerBumpEvent" title="go to the details">PlayerBumpEvent</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_StayOpenTime" name="StayOpenTime" title="go to the details">StayOpenTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_WorldRaytraceKey" name="WorldRaytraceKey" title="go to the details">WorldRaytraceKey</a></td></tr>
+<tr><th colspan="2" class="small">MoverEvents</th></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_ClosedEvent" name="ClosedEvent" title="go to the details">ClosedEvent</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_ClosingEvent" name="ClosingEvent" title="go to the details">ClosingEvent</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_LoopEvent" name="LoopEvent" title="go to the details">LoopEvent</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_OpenedEvent" name="OpenedEvent" title="go to the details">OpenedEvent</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_OpeningEvent" name="OpeningEvent" title="go to the details">OpeningEvent</a></td></tr>
+<tr><th colspan="2" class="small">MoverSounds</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_ClosedSound" name="ClosedSound" title="go to the details">ClosedSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_ClosingSound" name="ClosingSound" title="go to the details">ClosingSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_LoopSound" name="LoopSound" title="go to the details">LoopSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_MoveAmbientSound" name="MoveAmbientSound" title="go to the details">MoveAmbientSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_OpenedSound" name="OpenedSound" title="go to the details">OpenedSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/sound.html">sound</a></td><td width="66%"><a href="#_OpeningSound" name="OpeningSound" title="go to the details">OpeningSound</a></td></tr>
+<tr><th colspan="2" class="small">ReturnGroup</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bIsLeader" name="bIsLeader" title="go to the details">bIsLeader</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">name</td><td width="66%"><a href="#_ReturnGroup" name="ReturnGroup" title="go to the details">ReturnGroup</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#Acceleration">Acceleration</a>, <a href="../engine/actor.html#AccumKarmaAngleError">AccumKarmaAngleError</a>, <a href="../engine/actor.html#ActorRenderData">ActorRenderData</a>, <a href="../engine/actor.html#AmbientGlow">AmbientGlow</a>, <a href="../engine/actor.html#AmbientSound">AmbientSound</a>, <a href="../engine/actor.html#AntiPortal">AntiPortal</a>, <a href="../engine/actor.html#Attached">Attached</a>, <a href="../engine/actor.html#AttachmentBone">AttachmentBone</a>, <a href="../engine/actor.html#AttachTag">AttachTag</a>, <a href="../engine/actor.html#bAcceptsProjectors">bAcceptsProjectors</a>, <a href="../engine/actor.html#bActorShadows">bActorShadows</a>, <a href="../engine/actor.html#bAlreadyPrecachedMaterials">bAlreadyPrecachedMaterials</a>, <a href="../engine/actor.html#bAlreadyPrecachedMeshes">bAlreadyPrecachedMeshes</a>, <a href="../engine/actor.html#bAlwaysFaceCamera">bAlwaysFaceCamera</a>, <a href="../engine/actor.html#bAlwaysRelevant">bAlwaysRelevant</a>, <a href="../engine/actor.html#bAlwaysTick">bAlwaysTick</a>, <a href="../engine/actor.html#bAlwaysZeroBoneOffset">bAlwaysZeroBoneOffset</a>, <a href="../engine/actor.html#bAnimByOwner">bAnimByOwner</a>, <a href="../engine/actor.html#Base">Base</a>, <a href="../engine/actor.html#bAttenByLife">bAttenByLife</a>, <a href="../engine/actor.html#bAutoAlignToTerrain">bAutoAlignToTerrain</a>, <a href="../engine/actor.html#bAutoTraceNotify">bAutoTraceNotify</a>, <a href="../engine/actor.html#bBadStateCode">bBadStateCode</a>, <a href="../engine/actor.html#bBlockActors">bBlockActors</a>, <a href="../engine/actor.html#bBlockHitPointTraces">bBlockHitPointTraces</a>, <a href="../engine/actor.html#bBlockKarma">bBlockKarma</a>, <a href="../engine/actor.html#bBlockNonZeroExtentTraces">bBlockNonZeroExtentTraces</a>, <a href="../engine/actor.html#bBlockPlayers">bBlockPlayers</a>, <a href="../engine/actor.html#bBlockProjectiles">bBlockProjectiles</a>, <a href="../engine/actor.html#bBlocksTeleport">bBlocksTeleport</a>, <a href="../engine/actor.html#bBlockZeroExtentTraces">bBlockZeroExtentTraces</a>, <a href="../engine/actor.html#bBounce">bBounce</a>, <a href="../engine/actor.html#bCanAutoTraceSelect">bCanAutoTraceSelect</a>, <a href="../engine/actor.html#bCanBeDamaged">bCanBeDamaged</a>, <a href="../engine/actor.html#bCanTeleport">bCanTeleport</a>, <a href="../engine/actor.html#bClientAnim">bClientAnim</a>, <a href="../engine/actor.html#bClientAuthoritative">bClientAuthoritative</a>, <a href="../engine/actor.html#bClientDemoNetFunc">bClientDemoNetFunc</a>, <a href="../engine/actor.html#bClientDemoRecording">bClientDemoRecording</a>, <a href="../engine/actor.html#bClientTrigger">bClientTrigger</a>, <a href="../engine/actor.html#bCollideActors">bCollideActors</a>, <a href="../engine/actor.html#bCollideWhenPlacing">bCollideWhenPlacing</a>, <a href="../engine/actor.html#bCollideWorld">bCollideWorld</a>, <a href="../engine/actor.html#bCompressedPosition">bCompressedPosition</a>, <a href="../engine/actor.html#bCorona">bCorona</a>, <a href="../engine/actor.html#bDeferRendering">bDeferRendering</a>, <a href="../engine/actor.html#bDeleteMe">bDeleteMe</a>, <a href="../engine/actor.html#bDemoOwner">bDemoOwner</a>, <a href="../engine/actor.html#bDemoRecording">bDemoRecording</a>, <a href="../engine/actor.html#bDestroyInPainVolume">bDestroyInPainVolume</a>, <a href="../engine/actor.html#bDetailAttachment">bDetailAttachment</a>, <a href="../engine/actor.html#bDirectional">bDirectional</a>, <a href="../engine/actor.html#bDirectionalCorona">bDirectionalCorona</a>, <a href="../engine/actor.html#bDisableSorting">bDisableSorting</a>, <a href="../engine/actor.html#bDisturbFluidSurface">bDisturbFluidSurface</a>, <a href="../engine/actor.html#bDramaticLighting">bDramaticLighting</a>, <a href="../engine/actor.html#bDynamicLight">bDynamicLight</a>, <a href="../engine/actor.html#bEdShouldSnap">bEdShouldSnap</a>, <a href="../engine/actor.html#bEdSnap">bEdSnap</a>, <a href="../engine/actor.html#bFixedRotationDir">bFixedRotationDir</a>, <a href="../engine/actor.html#bForceSkelUpdate">bForceSkelUpdate</a>, <a href="../engine/actor.html#bFullVolume">bFullVolume</a>, <a href="../engine/actor.html#bGameRelevant">bGameRelevant</a>, <a href="../engine/actor.html#bHardAttach">bHardAttach</a>, <a href="../engine/actor.html#bHidden">bHidden</a>, <a href="../engine/actor.html#bHiddenEd">bHiddenEd</a>, <a href="../engine/actor.html#bHiddenEdGroup">bHiddenEdGroup</a>, <a href="../engine/actor.html#bHighDetail">bHighDetail</a>, <a href="../engine/actor.html#bHurtEntry">bHurtEntry</a>, <a href="../engine/actor.html#bIgnoreEncroachers">bIgnoreEncroachers</a>, <a href="../engine/actor.html#bIgnoreOutOfWorld">bIgnoreOutOfWorld</a>, <a href="../engine/actor.html#bIgnoreTerminalVelocity">bIgnoreTerminalVelocity</a>, <a href="../engine/actor.html#bIgnoreVehicles">bIgnoreVehicles</a>, <a href="../engine/actor.html#bInterpolating">bInterpolating</a>, <a href="../engine/actor.html#bJustTeleported">bJustTeleported</a>, <a href="../engine/actor.html#bLightChanged">bLightChanged</a>, <a href="../engine/actor.html#bLightingVisibility">bLightingVisibility</a>, <a href="../engine/actor.html#bLockLocation">bLockLocation</a>, <a href="../engine/actor.html#bMovable">bMovable</a>, <a href="../engine/actor.html#bNetDirty">bNetDirty</a>, <a href="../engine/actor.html#bNetInitial">bNetInitial</a>, <a href="../engine/actor.html#bNetInitialRotation">bNetInitialRotation</a>, <a href="../engine/actor.html#bNetNotify">bNetNotify</a>, <a href="../engine/actor.html#bNetOwner">bNetOwner</a>, <a href="../engine/actor.html#bNetRelevant">bNetRelevant</a>, <a href="../engine/actor.html#bNetTemporary">bNetTemporary</a>, <a href="../engine/actor.html#bNoDelete">bNoDelete</a>, <a href="../engine/actor.html#bNoRepMesh">bNoRepMesh</a>, <a href="../engine/actor.html#bNotifyLocalPlayerTeamReceived">bNotifyLocalPlayerTeamReceived</a>, <a href="../engine/actor.html#bNotOnDedServer">bNotOnDedServer</a>, <a href="../engine/actor.html#bObsolete">bObsolete</a>, <a href="../engine/actor.html#bOnlyAffectPawns">bOnlyAffectPawns</a>, <a href="../engine/actor.html#bOnlyDirtyReplication">bOnlyDirtyReplication</a>, <a href="../engine/actor.html#bOnlyDrawIfAttached">bOnlyDrawIfAttached</a>, <a href="../engine/actor.html#bOnlyOwnerSee">bOnlyOwnerSee</a>, <a href="../engine/actor.html#bOnlyRelevantToOwner">bOnlyRelevantToOwner</a>, <a href="../engine/actor.html#bOrientOnSlope">bOrientOnSlope</a>, <a href="../engine/actor.html#bOrientToVelocity">bOrientToVelocity</a>, <a href="../engine/actor.html#bOwnerNoSee">bOwnerNoSee</a>, <a href="../engine/actor.html#bPathColliding">bPathColliding</a>, <a href="../engine/actor.html#bPathTemp">bPathTemp</a>, <a href="../engine/actor.html#bPendingDelete">bPendingDelete</a>, <a href="../engine/actor.html#bProjTarget">bProjTarget</a>, <a href="../engine/actor.html#bRepClientDemo">bRepClientDemo</a>, <a href="../engine/actor.html#bReplicateAnimations">bReplicateAnimations</a>, <a href="../engine/actor.html#bReplicateInstigator">bReplicateInstigator</a>, <a href="../engine/actor.html#bReplicateMovement">bReplicateMovement</a>, <a href="../engine/actor.html#bRotateToDesired">bRotateToDesired</a>, <a href="../engine/actor.html#Brush">Brush</a>, <a href="../engine/actor.html#bScriptInitialized">bScriptInitialized</a>, <a href="../engine/actor.html#bSelected">bSelected</a>, <a href="../engine/actor.html#bShadowCast">bShadowCast</a>, <a href="../engine/actor.html#bShouldBaseAtStartup">bShouldBaseAtStartup</a>, <a href="../engine/actor.html#bShouldStopKarma">bShouldStopKarma</a>, <a href="../engine/actor.html#bShowOctreeNodes">bShowOctreeNodes</a>, <a href="../engine/actor.html#bSkipActorPropertyReplication">bSkipActorPropertyReplication</a>, <a href="../engine/actor.html#bSmoothKarmaStateUpdates">bSmoothKarmaStateUpdates</a>, <a href="../engine/actor.html#bSpecialLit">bSpecialLit</a>, <a href="../engine/actor.html#bStasis">bStasis</a>, <a href="../engine/actor.html#bStatic">bStatic</a>, <a href="../engine/actor.html#bStaticLighting">bStaticLighting</a>, <a href="../engine/actor.html#bSuperHighDetail">bSuperHighDetail</a>, <a href="../engine/actor.html#bTearOff">bTearOff</a>, <a href="../engine/actor.html#bTempEditor">bTempEditor</a>, <a href="../engine/actor.html#bTicked">bTicked</a>, <a href="../engine/actor.html#bTimerLoop">bTimerLoop</a>, <a href="../engine/actor.html#bTraceWater">bTraceWater</a>, <a href="../engine/actor.html#bTrailerAllowRotation">bTrailerAllowRotation</a>, <a href="../engine/actor.html#bTrailerPrePivot">bTrailerPrePivot</a>, <a href="../engine/actor.html#bTrailerSameRotation">bTrailerSameRotation</a>, <a href="../engine/actor.html#bTravel">bTravel</a>, <a href="../engine/actor.html#bUnlit">bUnlit</a>, <a href="../engine/actor.html#Buoyancy">Buoyancy</a>, <a href="../engine/actor.html#bUpdateSimulatedPosition">bUpdateSimulatedPosition</a>, <a href="../engine/actor.html#bUseCollisionStaticMesh">bUseCollisionStaticMesh</a>, <a href="../engine/actor.html#bUseCylinderCollision">bUseCylinderCollision</a>, <a href="../engine/actor.html#bUseDynamicLights">bUseDynamicLights</a>, <a href="../engine/actor.html#bUseHighDetailOverlayIndex">bUseHighDetailOverlayIndex</a>, <a href="../engine/actor.html#bUseLightingFromBase">bUseLightingFromBase</a>, <a href="../engine/actor.html#bWasSNFiltered">bWasSNFiltered</a>, <a href="../engine/actor.html#bWorldGeometry">bWorldGeometry</a>, <a href="../engine/actor.html#CachedLocalToWorld">CachedLocalToWorld</a>, <a href="../engine/actor.html#CachedLocation">CachedLocation</a>, <a href="../engine/actor.html#CachedRotation">CachedRotation</a>, <a href="../engine/actor.html#ClientOverlayCounter">ClientOverlayCounter</a>, <a href="../engine/actor.html#ClientOverlayTimer">ClientOverlayTimer</a>, <a href="../engine/actor.html#CollisionHeight">CollisionHeight</a>, <a href="../engine/actor.html#CollisionRadius">CollisionRadius</a>, <a href="../engine/actor.html#CollisionTag">CollisionTag</a>, <a href="../engine/actor.html#ColLocation">ColLocation</a>, <a href="../engine/actor.html#CullDistance">CullDistance</a>, <a href="../engine/actor.html#Deleted">Deleted</a>, <a href="../engine/actor.html#DesiredRotation">DesiredRotation</a>, <a href="../engine/actor.html#DrawScale">DrawScale</a>, <a href="../engine/actor.html#DrawScale3D">DrawScale3D</a>, <a href="../engine/actor.html#DrawType">DrawType</a>, <a href="../engine/actor.html#Event">Event</a>, <a href="../engine/actor.html#ExcludeTag[8]">ExcludeTag[8]</a>, <a href="../engine/actor.html#FluidSurfaceShootStrengthMod">FluidSurfaceShootStrengthMod</a>, <a href="../engine/actor.html#ForcedVisibilityZoneTag">ForcedVisibilityZoneTag</a>, <a href="../engine/actor.html#ForceNoise">ForceNoise</a>, <a href="../engine/actor.html#ForceRadius">ForceRadius</a>, <a href="../engine/actor.html#ForceScale">ForceScale</a>, <a href="../engine/actor.html#ForceType">ForceType</a>, <a href="../engine/actor.html#Group">Group</a>, <a href="../engine/actor.html#HardRelMatrix">HardRelMatrix</a>, <a href="../engine/actor.html#HighDetailOverlay">HighDetailOverlay</a>, <a href="../engine/actor.html#HighDetailOverlayIndex">HighDetailOverlayIndex</a>, <a href="../engine/actor.html#InitialState">InitialState</a>, <a href="../engine/actor.html#Instigator">Instigator</a>, <a href="../engine/actor.html#Inventory">Inventory</a>, <a href="../engine/actor.html#JoinedTag">JoinedTag</a>, <a href="../engine/actor.html#KParams">KParams</a>, <a href="../engine/actor.html#KStepTag">KStepTag</a>, <a href="../engine/actor.html#LastRenderTime">LastRenderTime</a>, <a href="../engine/actor.html#LastReplicateTime">LastReplicateTime</a>, <a href="../engine/actor.html#LatentFloat">LatentFloat</a>, <a href="../engine/actor.html#Leaves">Leaves</a>, <a href="../engine/actor.html#Level">Level</a>, <a href="../engine/actor.html#LifeSpan">LifeSpan</a>, <a href="../engine/actor.html#LightBrightness">LightBrightness</a>, <a href="../engine/actor.html#LightCone">LightCone</a>, <a href="../engine/actor.html#LightEffect">LightEffect</a>, <a href="../engine/actor.html#LightHue">LightHue</a>, <a href="../engine/actor.html#LightPeriod">LightPeriod</a>, <a href="../engine/actor.html#LightPhase">LightPhase</a>, <a href="../engine/actor.html#LightRadius">LightRadius</a>, <a href="../engine/actor.html#LightRenderData">LightRenderData</a>, <a href="../engine/actor.html#LightSaturation">LightSaturation</a>, <a href="../engine/actor.html#LightType">LightType</a>, <a href="../engine/actor.html#Location">Location</a>, <a href="../engine/actor.html#LODBias">LODBias</a>, <a href="../engine/actor.html#Mass">Mass</a>, <a href="../engine/actor.html#MaxLights">MaxLights</a>, <a href="../engine/actor.html#Mesh">Mesh</a>, <a href="../engine/actor.html#MeshInstance">MeshInstance</a>, <a href="../engine/actor.html#MessageClass">MessageClass</a>, <a href="../engine/actor.html#NetPriority">NetPriority</a>, <a href="../engine/actor.html#NetTag">NetTag</a>, <a href="../engine/actor.html#NetUpdateFrequency">NetUpdateFrequency</a>, <a href="../engine/actor.html#NetUpdateTime">NetUpdateTime</a>, <a href="../engine/actor.html#OctreeBox">OctreeBox</a>, <a href="../engine/actor.html#OctreeBoxCenter">OctreeBoxCenter</a>, <a href="../engine/actor.html#OctreeBoxRadii">OctreeBoxRadii</a>, <a href="../engine/actor.html#OctreeNodes">OctreeNodes</a>, <a href="../engine/actor.html#OverlayMaterial">OverlayMaterial</a>, <a href="../engine/actor.html#OverlayTimer">OverlayTimer</a>, <a href="../engine/actor.html#Owner">Owner</a>, <a href="../engine/actor.html#PendingTouch">PendingTouch</a>, <a href="../engine/actor.html#Physics">Physics</a>, <a href="../engine/actor.html#PhysicsVolume">PhysicsVolume</a>, <a href="../engine/actor.html#PrePivot">PrePivot</a>, <a href="../engine/actor.html#Projectors">Projectors</a>, <a href="../engine/actor.html#Region">Region</a>, <a href="../engine/actor.html#RelativeLocation">RelativeLocation</a>, <a href="../engine/actor.html#RelativeRotation">RelativeRotation</a>, <a href="../engine/actor.html#RemoteRole">RemoteRole</a>, <a href="../engine/actor.html#RenderRevision">RenderRevision</a>, <a href="../engine/actor.html#RepSkin">RepSkin</a>, <a href="../engine/actor.html#Role">Role</a>, <a href="../engine/actor.html#Rotation">Rotation</a>, <a href="../engine/actor.html#RotationRate">RotationRate</a>, <a href="../engine/actor.html#ScaleGlow">ScaleGlow</a>, <a href="../engine/actor.html#SimAnim">SimAnim</a>, <a href="../engine/actor.html#Skins">Skins</a>, <a href="../engine/actor.html#SoundOcclusion">SoundOcclusion</a>, <a href="../engine/actor.html#SoundPitch">SoundPitch</a>, <a href="../engine/actor.html#SoundRadius">SoundRadius</a>, <a href="../engine/actor.html#SoundVolume">SoundVolume</a>, <a href="../engine/actor.html#StaticFilterState">StaticFilterState</a>, <a href="../engine/actor.html#StaticMesh">StaticMesh</a>, <a href="../engine/actor.html#StaticMeshInstance">StaticMeshInstance</a>, <a href="../engine/actor.html#StaticMeshProjectors">StaticMeshProjectors</a>, <a href="../engine/actor.html#StaticSectionBatches">StaticSectionBatches</a>, <a href="../engine/actor.html#Style">Style</a>, <a href="../engine/actor.html#SurfaceType">SurfaceType</a>, <a href="../engine/actor.html#Tag">Tag</a>, <a href="../engine/actor.html#Texture">Texture</a>, <a href="../engine/actor.html#TimerCounter">TimerCounter</a>, <a href="../engine/actor.html#TimerRate">TimerRate</a>, <a href="../engine/actor.html#Touching">Touching</a>, <a href="../engine/actor.html#TransientSoundRadius">TransientSoundRadius</a>, <a href="../engine/actor.html#TransientSoundVolume">TransientSoundVolume</a>, <a href="../engine/actor.html#UV2Mode">UV2Mode</a>, <a href="../engine/actor.html#UV2Texture">UV2Texture</a>, <a href="../engine/actor.html#Velocity">Velocity</a>, <a href="../engine/actor.html#XLevel">XLevel</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#Class">Class</a>, <a href="../core/object.html#Name">Name</a>, <a href="../core/object.html#ObjectFlags">ObjectFlags</a>, <a href="../core/object.html#ObjectInternal[7]">ObjectInternal[7]</a>, <a href="../core/object.html#Outer">Outer</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+<tr><td><a href="#_EBumpType" name="EBumpType" title="go to the details">EBumpType</a><br /><span class="small">BT_PlayerBump,
+BT_PawnBump,
+BT_AnyBump,
+</span></td></tr>
+<tr><td><a href="#_EMoverEncroachType" name="EMoverEncroachType" title="go to the details">EMoverEncroachType</a><br /><span class="small">ME_StopWhenEncroach,
+ME_ReturnWhenEncroach,
+ME_CrushWhenEncroach,
+ME_IgnoreWhenEncroach,
+</span></td></tr>
+<tr><td><a href="#_EMoverGlideType" name="EMoverGlideType" title="go to the details">EMoverGlideType</a><br /><span class="small">MV_MoveByTime,
+MV_GlideByTime,
+</span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#EDoubleClickDir">EDoubleClickDir</a>, <a href="../engine/actor.html#EDrawType">EDrawType</a>, <a href="../engine/actor.html#EFilterState">EFilterState</a>, <a href="../engine/actor.html#EFlagState">EFlagState</a>, <a href="../engine/actor.html#EForceType">EForceType</a>, <a href="../engine/actor.html#eKillZType">eKillZType</a>, <a href="../engine/actor.html#ELightEffect">ELightEffect</a>, <a href="../engine/actor.html#ELightType">ELightType</a>, <a href="../engine/actor.html#EMusicTransition">EMusicTransition</a>, <a href="../engine/actor.html#ENetRole">ENetRole</a>, <a href="../engine/actor.html#EPhysics">EPhysics</a>, <a href="../engine/actor.html#ERenderStyle">ERenderStyle</a>, <a href="../engine/actor.html#ESoundOcclusion">ESoundOcclusion</a>, <a href="../engine/actor.html#ESoundSlot">ESoundSlot</a>, <a href="../engine/actor.html#ESurfaceTypes">ESurfaceTypes</a>, <a href="../engine/actor.html#ETravelType">ETravelType</a>, <a href="../engine/actor.html#EUV2Mode">EUV2Mode</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#EAxis">EAxis</a>, <a href="../core/object.html#ECamOrientation">ECamOrientation</a>, <a href="../core/object.html#EDetailMode">EDetailMode</a>, <a href="../core/object.html#EDrawPivot">EDrawPivot</a>, <a href="../core/object.html#ESheerAxis">ESheerAxis</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#ActorRenderDataPtr">ActorRenderDataPtr</a>, <a href="../engine/actor.html#AnimRep">AnimRep</a>, <a href="../engine/actor.html#BatchReference">BatchReference</a>, <a href="../engine/actor.html#FireProperties">FireProperties</a>, <a href="../engine/actor.html#KRBVec">KRBVec</a>, <a href="../engine/actor.html#KRigidBodyState">KRigidBodyState</a>, <a href="../engine/actor.html#KSimParams">KSimParams</a>, <a href="../engine/actor.html#LightRenderDataPtr">LightRenderDataPtr</a>, <a href="../engine/actor.html#PointRegion">PointRegion</a>, <a href="../engine/actor.html#ProjectorRenderInfoPtr">ProjectorRenderInfoPtr</a>, <a href="../engine/actor.html#StaticMeshProjectorRenderInfoPtr">StaticMeshProjectorRenderInfoPtr</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#BoundingVolume">BoundingVolume</a>, <a href="../core/object.html#Box">Box</a>, <a href="../core/object.html#Color">Color</a>, <a href="../core/object.html#CompressedPosition">CompressedPosition</a>, <a href="../core/object.html#Coords">Coords</a>, <a href="../core/object.html#FloatBox">FloatBox</a>, <a href="../core/object.html#Guid">Guid</a>, <a href="../core/object.html#IntBox">IntBox</a>, <a href="../core/object.html#InterpCurve">InterpCurve</a>, <a href="../core/object.html#InterpCurvePoint">InterpCurvePoint</a>, <a href="../core/object.html#Matrix">Matrix</a>, <a href="../core/object.html#Plane">Plane</a>, <a href="../core/object.html#Quat">Quat</a>, <a href="../core/object.html#Range">Range</a>, <a href="../core/object.html#RangeVector">RangeVector</a>, <a href="../core/object.html#Rotator">Rotator</a>, <a href="../core/object.html#Scale">Scale</a>, <a href="../core/object.html#TMultiMap">TMultiMap</a>, <a href="../core/object.html#Vector">Vector</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Attach-StandOpenTimed" name="Attach" title="go to the details">Attach</a> (actor Other ))<br /><span class="function_state">StandOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BaseFinished-" name="BaseFinished" title="go to the details">BaseFinished</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BaseFinished-RotatingMover" name="BaseFinished" title="go to the details">BaseFinished</a> ()))<br /><span class="function_state">RotatingMover</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BaseStarted-" name="BaseStarted" title="go to the details">BaseStarted</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BaseStarted-RotatingMover" name="BaseStarted" title="go to the details">BaseStarted</a> ()))<br /><span class="function_state">RotatingMover</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginEvent-BumpButton" name="BeginEvent" title="go to the details">BeginEvent</a> ()))<br /><span class="function_state">BumpButton</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginPlay-" name="BeginPlay" title="go to the details">BeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-ConstantLoop" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">ConstantLoop</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-LeadInOutLooper" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">LeadInOutLooper</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-LoopMove" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">LoopMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-OpenTimedMover" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">OpenTimedMover</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-RotatingMover" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">RotatingMover</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-TriggerAdvance" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">TriggerAdvance</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-TriggerControl" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">TriggerControl</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-TriggerPound" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">TriggerPound</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Bump-" name="Bump" title="go to the details">Bump</a> (actor Other ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Bump-BumpButton" name="Bump" title="go to the details">Bump</a> (actor Other ))<br /><span class="function_state">BumpButton</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Bump-BumpOpenTimed" name="Bump" title="go to the details">Bump</a> (actor Other ))<br /><span class="function_state">BumpOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_CanTrigger-StandOpenTimed" name="CanTrigger" title="go to the details">CanTrigger</a> (Actor Other ))<br /><span class="function_state">StandOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DisableTrigger-" name="DisableTrigger" title="go to the details">DisableTrigger</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DisableTrigger-BumpOpenTimed" name="DisableTrigger" title="go to the details">DisableTrigger</a> ()))<br /><span class="function_state">BumpOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DisableTrigger-StandOpenTimed" name="DisableTrigger" title="go to the details">DisableTrigger</a> ()))<br /><span class="function_state">StandOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DisableTrigger-TriggerOpenTimed" name="DisableTrigger" title="go to the details">DisableTrigger</a> ()))<br /><span class="function_state">TriggerOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoClose-" name="DoClose" title="go to the details">DoClose</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoOpen-" name="DoOpen" title="go to the details">DoOpen</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EnableTrigger-" name="EnableTrigger" title="go to the details">EnableTrigger</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EnableTrigger-BumpOpenTimed" name="EnableTrigger" title="go to the details">EnableTrigger</a> ()))<br /><span class="function_state">BumpOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EnableTrigger-StandOpenTimed" name="EnableTrigger" title="go to the details">EnableTrigger</a> ()))<br /><span class="function_state">StandOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EnableTrigger-TriggerOpenTimed" name="EnableTrigger" title="go to the details">EnableTrigger</a> ()))<br /><span class="function_state">TriggerOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_EncroachingOn-" name="EncroachingOn" title="go to the details">EncroachingOn</a> (actor Other ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EndEvent-BumpButton" name="EndEvent" title="go to the details">EndEvent</a> ()))<br /><span class="function_state">BumpButton</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EndState-TriggerAdvance" name="EndState" title="go to the details">EndState</a> ()))<br /><span class="function_state">TriggerAdvance</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_FinishedClosing-" name="FinishedClosing" title="go to the details">FinishedClosing</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_FinishedOpening-" name="FinishedOpening" title="go to the details">FinishedOpening</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_FinishNotify-" name="FinishNotify" title="go to the details">FinishNotify</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_InterpolateTo-" name="InterpolateTo" title="go to the details">InterpolateTo</a> (byte NewKeyNum, float Seconds ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_KeyFrameReached-" name="KeyFrameReached" title="go to the details">KeyFrameReached</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_KeyFrameReached-ConstantLoop" name="KeyFrameReached" title="go to the details">KeyFrameReached</a> ()))<br /><span class="function_state">ConstantLoop</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_KeyFrameReached-LeadInOutLooper" name="KeyFrameReached" title="go to the details">KeyFrameReached</a> ()))<br /><span class="function_state">LeadInOutLooper</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_KeyFrameReached-LeadInOutLooping" name="KeyFrameReached" title="go to the details">KeyFrameReached</a> ()))<br /><span class="function_state">LeadInOutLooping</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_KeyFrameReached-LoopMove" name="KeyFrameReached" title="go to the details">KeyFrameReached</a> ()))<br /><span class="function_state">LoopMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_MakeGroupReturn-" name="MakeGroupReturn" title="go to the details">MakeGroupReturn</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_MakeGroupStop-" name="MakeGroupStop" title="go to the details">MakeGroupStop</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_MoverLooped-" name="MoverLooped" title="go to the details">MoverLooped</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PostBeginPlay-" name="PostBeginPlay" title="go to the details">PostBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-OpenTimedMover" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">OpenTimedMover</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-TriggerAdvance" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">TriggerAdvance</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-TriggerControl" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">TriggerControl</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-TriggerPound" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">TriggerPound</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-TriggerToggle" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">TriggerToggle</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-WasBumpButton" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">WasBumpButton</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-WasOpenTimedMover" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">WasOpenTimedMover</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-WasTriggerAdvance" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">WasTriggerAdvance</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-WasTriggerControl" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">WasTriggerControl</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-WasTriggerPound" name="Reset" title="go to the details">Reset</a> ()))<br /><span class="function_state">WasTriggerPound</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SelfTriggered-" name="SelfTriggered" title="go to the details">SelfTriggered</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SelfTriggered-LoopMove" name="SelfTriggered" title="go to the details">SelfTriggered</a> ()))<br /><span class="function_state">LoopMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SelfTriggered-TriggerAdvance" name="SelfTriggered" title="go to the details">SelfTriggered</a> ()))<br /><span class="function_state">TriggerAdvance</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SelfTriggered-TriggerControl" name="SelfTriggered" title="go to the details">SelfTriggered</a> ()))<br /><span class="function_state">TriggerControl</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SelfTriggered-TriggerOpenTimed" name="SelfTriggered" title="go to the details">SelfTriggered</a> ()))<br /><span class="function_state">TriggerOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SelfTriggered-TriggerPound" name="SelfTriggered" title="go to the details">SelfTriggered</a> ()))<br /><span class="function_state">TriggerPound</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SelfTriggered-TriggerToggle" name="SelfTriggered" title="go to the details">SelfTriggered</a> ()))<br /><span class="function_state">TriggerToggle</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SelfTriggered-WasTriggerAdvance" name="SelfTriggered" title="go to the details">SelfTriggered</a> ()))<br /><span class="function_state">WasTriggerAdvance</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SelfTriggered-WasTriggerControl" name="SelfTriggered" title="go to the details">SelfTriggered</a> ()))<br /><span class="function_state">WasTriggerControl</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetKeyframe-" name="SetKeyframe" title="go to the details">SetKeyframe</a> (byte NewKeyNum, <a href="../core/object.html#Vector">vector</a> NewLocation, rotator NewRotation ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetResetStatus-" name="SetResetStatus" title="go to the details">SetResetStatus</a> (bool bNewStatus ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetStoppedPosition-" name="SetStoppedPosition" title="go to the details">SetStoppedPosition</a> (byte NewPos))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ShouldReTrigger-OpenTimedMover" name="ShouldReTrigger" title="go to the details">ShouldReTrigger</a> ()))<br /><span class="function_state">OpenTimedMover</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ShouldReTrigger-StandOpenTimed" name="ShouldReTrigger" title="go to the details">ShouldReTrigger</a> ()))<br /><span class="function_state">StandOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/actor.html">Actor</a>&nbsp;</td><td><a href="#_SpecialHandling-" name="SpecialHandling" title="go to the details">SpecialHandling</a> (<a href="../engine/pawn.html">Pawn</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StartInterpolation-" name="StartInterpolation" title="go to the details">StartInterpolation</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TakeDamage-" name="TakeDamage" title="go to the details">TakeDamage</a> (int Damage, <a href="../engine/pawn.html">Pawn</a> instigatedBy, <a href="../core/object.html#Vector">Vector</a> hitlocation, <a href="../core/object.html#Vector">Vector</a> momentum, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, optional int HitIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-LeadInOutLooper" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">LeadInOutLooper</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-LeadInOutLooping" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, <a href="../engine/pawn.html">pawn</a> EventInstigator))<br /><span class="function_state">LeadInOutLooping</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Trigger-LoopMove" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">LoopMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-TriggerAdvance" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">TriggerAdvance</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-TriggerControl" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">TriggerControl</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-TriggerOpenTimed" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">TriggerOpenTimed</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-TriggerPound" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">TriggerPound</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-TriggerToggle" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">TriggerToggle</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_UnTrigger-LoopMove" name="UnTrigger" title="go to the details">UnTrigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">LoopMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UnTrigger-TriggerAdvance" name="UnTrigger" title="go to the details">UnTrigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">TriggerAdvance</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UnTrigger-TriggerControl" name="UnTrigger" title="go to the details">UnTrigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">TriggerControl</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UnTrigger-TriggerPound" name="UnTrigger" title="go to the details">UnTrigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state">TriggerPound</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UpdatePrecacheStaticMeshes-" name="UpdatePrecacheStaticMeshes" title="go to the details">UpdatePrecacheStaticMeshes</a> ()))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#*">*</a>, <a href="../engine/actor.html#+">+</a>, <a href="../engine/actor.html#-">-</a>, <a href="../engine/actor.html#AddToPackageMap">AddToPackageMap</a>, <a href="../engine/actor.html#AdjustVolume">AdjustVolume</a>, <a href="../engine/actor.html#AllActors">AllActors</a>, <a href="../engine/actor.html#AllowMusicPlayback">AllowMusicPlayback</a>, <a href="../engine/actor.html#AnimBlendParams">AnimBlendParams</a>, <a href="../engine/actor.html#AnimBlendToAlpha">AnimBlendToAlpha</a>, <a href="../engine/actor.html#AnimEnd">AnimEnd</a>, <a href="../engine/actor.html#AnimIsInGroup">AnimIsInGroup</a>, <a href="../engine/actor.html#AnimStopLooping">AnimStopLooping</a>, <a href="../engine/actor.html#Attach">Attach</a>, <a href="../engine/actor.html#AttachToBone">AttachToBone</a>, <a href="../engine/actor.html#AutonomousPhysics">AutonomousPhysics</a>, <a href="../engine/actor.html#BaseChange">BaseChange</a>, <a href="../engine/actor.html#BasedActors">BasedActors</a>, <a href="../engine/actor.html#BecomeViewTarget">BecomeViewTarget</a>, <a href="../engine/actor.html#BeginEvent">BeginEvent</a>, <a href="../engine/actor.html#BeginPlay">BeginPlay</a>, <a href="../engine/actor.html#BlocksShotAt">BlocksShotAt</a>, <a href="../engine/actor.html#BoneRefresh">BoneRefresh</a>, <a href="../engine/actor.html#BroadcastLocalizedMessage">BroadcastLocalizedMessage</a>, <a href="../engine/actor.html#Bump">Bump</a>, <a href="../engine/actor.html#CanSplash">CanSplash</a>, <a href="../engine/actor.html#ChangeBaseParamsFeedbackEffect">ChangeBaseParamsFeedbackEffect</a>, <a href="../engine/actor.html#ChangeSpringFeedbackEffect">ChangeSpringFeedbackEffect</a>, <a href="../engine/actor.html#CheckAchievementEvents">CheckAchievementEvents</a>, <a href="../engine/actor.html#CheckForErrors">CheckForErrors</a>, <a href="../engine/actor.html#CheckMaxEffectDistance">CheckMaxEffectDistance</a>, <a href="../engine/actor.html#ChildActors">ChildActors</a>, <a href="../engine/actor.html#ClearStayingDebugLines">ClearStayingDebugLines</a>, <a href="../engine/actor.html#ClientTrigger">ClientTrigger</a>, <a href="../engine/actor.html#Clock">Clock</a>, <a href="../engine/actor.html#CollidingActors">CollidingActors</a>, <a href="../engine/actor.html#ConsoleCommand">ConsoleCommand</a>, <a href="../engine/actor.html#CopyObjectToClipboard">CopyObjectToClipboard</a>, <a href="../engine/actor.html#Crash">Crash</a>, <a href="../engine/actor.html#CurrentLIPSincAnim">CurrentLIPSincAnim</a>, <a href="../engine/actor.html#DebugClock">DebugClock</a>, <a href="../engine/actor.html#DebugUnclock">DebugUnclock</a>, <a href="../engine/actor.html#DemoPlaySound">DemoPlaySound</a>, <a href="../engine/actor.html#Destroy">Destroy</a>, <a href="../engine/actor.html#Destroyed">Destroyed</a>, <a href="../engine/actor.html#Detach">Detach</a>, <a href="../engine/actor.html#DetachFromBone">DetachFromBone</a>, <a href="../engine/actor.html#DisplayDebug">DisplayDebug</a>, <a href="../engine/actor.html#DrawDebugCircle">DrawDebugCircle</a>, <a href="../engine/actor.html#DrawDebugLine">DrawDebugLine</a>, <a href="../engine/actor.html#DrawDebugSphere">DrawDebugSphere</a>, <a href="../engine/actor.html#DrawStayingDebugLine">DrawStayingDebugLine</a>, <a href="../engine/actor.html#DynamicActors">DynamicActors</a>, <a href="../engine/actor.html#EffectIsRelevant">EffectIsRelevant</a>, <a href="../engine/actor.html#EnableChannelNotify">EnableChannelNotify</a>, <a href="../engine/actor.html#EncroachedBy">EncroachedBy</a>, <a href="../engine/actor.html#EncroachingOn">EncroachingOn</a>, <a href="../engine/actor.html#EndedRotation">EndedRotation</a>, <a href="../engine/actor.html#EndEvent">EndEvent</a>, <a href="../engine/actor.html#Error">Error</a>, <a href="../engine/actor.html#Falling">Falling</a>, <a href="../engine/actor.html#FastTrace">FastTrace</a>, <a href="../engine/actor.html#FellOutOfWorld">FellOutOfWorld</a>, <a href="../engine/actor.html#FinishAnim">FinishAnim</a>, <a href="../engine/actor.html#FinishedInterpolation">FinishedInterpolation</a>, <a href="../engine/actor.html#FinishInterpolation">FinishInterpolation</a>, <a href="../engine/actor.html#ForceFeedbackSupported">ForceFeedbackSupported</a>, <a href="../engine/actor.html#FreezeAnimAt">FreezeAnimAt</a>, <a href="../engine/actor.html#GainedChild">GainedChild</a>, <a href="../engine/actor.html#GetAllInt">GetAllInt</a>, <a href="../engine/actor.html#GetAllIntDesc">GetAllIntDesc</a>, <a href="../engine/actor.html#GetAnimDuration">GetAnimDuration</a>, <a href="../engine/actor.html#GetAnimParams">GetAnimParams</a>, <a href="../engine/actor.html#GetBoneCoords">GetBoneCoords</a>, <a href="../engine/actor.html#GetBoneRotation">GetBoneRotation</a>, <a href="../engine/actor.html#GetCacheEntry">GetCacheEntry</a>, <a href="../engine/actor.html#GetClosestBone">GetClosestBone</a>, <a href="../engine/actor.html#GetCollisionExtent">GetCollisionExtent</a>, <a href="../engine/actor.html#GetDebugName">GetDebugName</a>, <a href="../engine/actor.html#GetEventColor">GetEventColor</a>, <a href="../engine/actor.html#GetEvents">GetEvents</a>, <a href="../engine/actor.html#GetHumanReadableName">GetHumanReadableName</a>, <a href="../engine/actor.html#GetLocalString">GetLocalString</a>, <a href="../engine/actor.html#GetMapName">GetMapName</a>, <a href="../engine/actor.html#GetMeshName">GetMeshName</a>, <a href="../engine/actor.html#GetNextInt">GetNextInt</a>, <a href="../engine/actor.html#GetNextIntDesc">GetNextIntDesc</a>, <a href="../engine/actor.html#GetNextSkin">GetNextSkin</a>, <a href="../engine/actor.html#GetNotifyChannel">GetNotifyChannel</a>, <a href="../engine/actor.html#GetRenderBoundingSphere">GetRenderBoundingSphere</a>, <a href="../engine/actor.html#GetRootLocation">GetRootLocation</a>, <a href="../engine/actor.html#GetRootLocationDelta">GetRootLocationDelta</a>, <a href="../engine/actor.html#GetRootRotation">GetRootRotation</a>, <a href="../engine/actor.html#GetRootRotationDelta">GetRootRotationDelta</a>, <a href="../engine/actor.html#GetSoundDuration">GetSoundDuration</a>, <a href="../engine/actor.html#GetURLMap">GetURLMap</a>, <a href="../engine/actor.html#GetUrlOption">GetUrlOption</a>, <a href="../engine/actor.html#HasAnim">HasAnim</a>, <a href="../engine/actor.html#HasLIPSincAnim">HasLIPSincAnim</a>, <a href="../engine/actor.html#HealDamage">HealDamage</a>, <a href="../engine/actor.html#HitPointTrace">HitPointTrace</a>, <a href="../engine/actor.html#HitWall">HitWall</a>, <a href="../engine/actor.html#HurtRadius">HurtRadius</a>, <a href="../engine/actor.html#IsAnimating">IsAnimating</a>, <a href="../engine/actor.html#IsInPain">IsInPain</a>, <a href="../engine/actor.html#IsInVolume">IsInVolume</a>, <a href="../engine/actor.html#IsJoinedTo">IsJoinedTo</a>, <a href="../engine/actor.html#IsPlayingLIPSincAnim">IsPlayingLIPSincAnim</a>, <a href="../engine/actor.html#IsStationary">IsStationary</a>, <a href="../engine/actor.html#IsTweening">IsTweening</a>, <a href="../engine/actor.html#KAddAngularImpulse">KAddAngularImpulse</a>, <a href="../engine/actor.html#KAddBoneLifter">KAddBoneLifter</a>, <a href="../engine/actor.html#KAddImpulse">KAddImpulse</a>, <a href="../engine/actor.html#KApplyForce">KApplyForce</a>, <a href="../engine/actor.html#KDisableCollision">KDisableCollision</a>, <a href="../engine/actor.html#KDrawRigidBodyState">KDrawRigidBodyState</a>, <a href="../engine/actor.html#KEnableCollision">KEnableCollision</a>, <a href="../engine/actor.html#KFreezeRagdoll">KFreezeRagdoll</a>, <a href="../engine/actor.html#KGetActorGravScale">KGetActorGravScale</a>, <a href="../engine/actor.html#KGetCOMOffset">KGetCOMOffset</a>, <a href="../engine/actor.html#KGetCOMPosition">KGetCOMPosition</a>, <a href="../engine/actor.html#KGetDampingProps">KGetDampingProps</a>, <a href="../engine/actor.html#KGetFriction">KGetFriction</a>, <a href="../engine/actor.html#KGetImpactThreshold">KGetImpactThreshold</a>, <a href="../engine/actor.html#KGetInertiaTensor">KGetInertiaTensor</a>, <a href="../engine/actor.html#KGetMass">KGetMass</a>, <a href="../engine/actor.html#KGetRBQuaternion">KGetRBQuaternion</a>, <a href="../engine/actor.html#KGetRestitution">KGetRestitution</a>, <a href="../engine/actor.html#KGetRigidBodyState">KGetRigidBodyState</a>, <a href="../engine/actor.html#KGetSimParams">KGetSimParams</a>, <a href="../engine/actor.html#KGetSkelMass">KGetSkelMass</a>, <a href="../engine/actor.html#KilledBy">KilledBy</a>, <a href="../engine/actor.html#KImpact">KImpact</a>, <a href="../engine/actor.html#KIsAwake">KIsAwake</a>, <a href="../engine/actor.html#KIsRagdollAvailable">KIsRagdollAvailable</a>, <a href="../engine/actor.html#KMakeRagdollAvailable">KMakeRagdollAvailable</a>, <a href="../engine/actor.html#KRBVecFromVector">KRBVecFromVector</a>, <a href="../engine/actor.html#KRBVecToVector">KRBVecToVector</a>, <a href="../engine/actor.html#KRemoveAllBoneLifters">KRemoveAllBoneLifters</a>, <a href="../engine/actor.html#KRemoveLifterFromBone">KRemoveLifterFromBone</a>, <a href="../engine/actor.html#KScaleJointLimits">KScaleJointLimits</a>, <a href="../engine/actor.html#KSetActorGravScale">KSetActorGravScale</a>, <a href="../engine/actor.html#KSetBlockKarma">KSetBlockKarma</a>, <a href="../engine/actor.html#KSetCOMOffset">KSetCOMOffset</a>, <a href="../engine/actor.html#KSetDampingProps">KSetDampingProps</a>, <a href="../engine/actor.html#KSetFriction">KSetFriction</a>, <a href="../engine/actor.html#KSetImpactThreshold">KSetImpactThreshold</a>, <a href="../engine/actor.html#KSetInertiaTensor">KSetInertiaTensor</a>, <a href="../engine/actor.html#KSetMass">KSetMass</a>, <a href="../engine/actor.html#KSetRestitution">KSetRestitution</a>, <a href="../engine/actor.html#KSetSimParams">KSetSimParams</a>, <a href="../engine/actor.html#KSetSkelVel">KSetSkelVel</a>, <a href="../engine/actor.html#KSetStayUpright">KSetStayUpright</a>, <a href="../engine/actor.html#KSetStayUprightParams">KSetStayUprightParams</a>, <a href="../engine/actor.html#KSkelConvulse">KSkelConvulse</a>, <a href="../engine/actor.html#KUpdateState">KUpdateState</a>, <a href="../engine/actor.html#KVelDropBelow">KVelDropBelow</a>, <a href="../engine/actor.html#KWake">KWake</a>, <a href="../engine/actor.html#Landed">Landed</a>, <a href="../engine/actor.html#LinkMesh">LinkMesh</a>, <a href="../engine/actor.html#LinkSkelAnim">LinkSkelAnim</a>, <a href="../engine/actor.html#LIPSincAnimEnd">LIPSincAnimEnd</a>, <a href="../engine/actor.html#LockRootMotion">LockRootMotion</a>, <a href="../engine/actor.html#LoopAnim">LoopAnim</a>, <a href="../engine/actor.html#LostChild">LostChild</a>, <a href="../engine/actor.html#MakeNoise">MakeNoise</a>, <a href="../engine/actor.html#MatchStarting">MatchStarting</a>, <a href="../engine/actor.html#Move">Move</a>, <a href="../engine/actor.html#MoveCacheEntry">MoveCacheEntry</a>, <a href="../engine/actor.html#MoveSmooth">MoveSmooth</a>, <a href="../engine/actor.html#NearSpot">NearSpot</a>, <a href="../engine/actor.html#NotifyLocalPlayerDead">NotifyLocalPlayerDead</a>, <a href="../engine/actor.html#NotifyLocalPlayerTeamReceived">NotifyLocalPlayerTeamReceived</a>, <a href="../engine/actor.html#NotifySelected">NotifySelected</a>, <a href="../engine/actor.html#OnlyAffectPawns">OnlyAffectPawns</a>, <a href="../engine/actor.html#PauseStream">PauseStream</a>, <a href="../engine/actor.html#PawnBaseDied">PawnBaseDied</a>, <a href="../engine/actor.html#PhysicsVolumeChange">PhysicsVolumeChange</a>, <a href="../engine/actor.html#PlayAnim">PlayAnim</a>, <a href="../engine/actor.html#PlayerCanSeeMe">PlayerCanSeeMe</a>, <a href="../engine/actor.html#PlayFeedbackEffect">PlayFeedbackEffect</a>, <a href="../engine/actor.html#PlayLIPSincAnim">PlayLIPSincAnim</a>, <a href="../engine/actor.html#PlayMusic">PlayMusic</a>, <a href="../engine/actor.html#PlayOwnedSound">PlayOwnedSound</a>, <a href="../engine/actor.html#PlaySound">PlaySound</a>, <a href="../engine/actor.html#PlayStream">PlayStream</a>, <a href="../engine/actor.html#PlayTeleportEffect">PlayTeleportEffect</a>, <a href="../engine/actor.html#PostBeginPlay">PostBeginPlay</a>, <a href="../engine/actor.html#PostLoadSavedGame">PostLoadSavedGame</a>, <a href="../engine/actor.html#PostNetBeginPlay">PostNetBeginPlay</a>, <a href="../engine/actor.html#PostNetReceive">PostNetReceive</a>, <a href="../engine/actor.html#PostTeleport">PostTeleport</a>, <a href="../engine/actor.html#PostTouch">PostTouch</a>, <a href="../engine/actor.html#POVChanged">POVChanged</a>, <a href="../engine/actor.html#PreBeginPlay">PreBeginPlay</a>, <a href="../engine/actor.html#PrecacheAnnouncer">PrecacheAnnouncer</a>, <a href="../engine/actor.html#PreSaveGame">PreSaveGame</a>, <a href="../engine/actor.html#PreTeleport">PreTeleport</a>, <a href="../engine/actor.html#RadiusActors">RadiusActors</a>, <a href="../engine/actor.html#RanInto">RanInto</a>, <a href="../engine/actor.html#ReceivedEvent">ReceivedEvent</a>, <a href="../engine/actor.html#RecoverFromBadStateCode">RecoverFromBadStateCode</a>, <a href="../engine/actor.html#RenderOverlays">RenderOverlays</a>, <a href="../engine/actor.html#RenderTexture">RenderTexture</a>, <a href="../engine/actor.html#Reset">Reset</a>, <a href="../engine/actor.html#ResetStaticFilterState">ResetStaticFilterState</a>, <a href="../engine/actor.html#SeekStream">SeekStream</a>, <a href="../engine/actor.html#SelfTriggered">SelfTriggered</a>, <a href="../engine/actor.html#SetAnimFrame">SetAnimFrame</a>, <a href="../engine/actor.html#SetBase">SetBase</a>, <a href="../engine/actor.html#SetBoneDirection">SetBoneDirection</a>, <a href="../engine/actor.html#SetBoneLocation">SetBoneLocation</a>, <a href="../engine/actor.html#SetBoneRotation">SetBoneRotation</a>, <a href="../engine/actor.html#SetBoneScale">SetBoneScale</a>, <a href="../engine/actor.html#SetCollision">SetCollision</a>, <a href="../engine/actor.html#SetCollisionSize">SetCollisionSize</a>, <a href="../engine/actor.html#SetDefaultDisplayProperties">SetDefaultDisplayProperties</a>, <a href="../engine/actor.html#SetDelayedDamageInstigatorController">SetDelayedDamageInstigatorController</a>, <a href="../engine/actor.html#SetDisplayProperties">SetDisplayProperties</a>, <a href="../engine/actor.html#SetDrawScale">SetDrawScale</a>, <a href="../engine/actor.html#SetDrawScale3D">SetDrawScale3D</a>, <a href="../engine/actor.html#SetDrawType">SetDrawType</a>, <a href="../engine/actor.html#SetGRI">SetGRI</a>, <a href="../engine/actor.html#SetInitialState">SetInitialState</a>, <a href="../engine/actor.html#SetLocation">SetLocation</a>, <a href="../engine/actor.html#SetOverlayMaterial">SetOverlayMaterial</a>, <a href="../engine/actor.html#SetOwner">SetOwner</a>, <a href="../engine/actor.html#SetPhysics">SetPhysics</a>, <a href="../engine/actor.html#SetRelativeLocation">SetRelativeLocation</a>, <a href="../engine/actor.html#SetRelativeRotation">SetRelativeRotation</a>, <a href="../engine/actor.html#SetRotation">SetRotation</a>, <a href="../engine/actor.html#SetStaticMesh">SetStaticMesh</a>, <a href="../engine/actor.html#SetTimer">SetTimer</a>, <a href="../engine/actor.html#ShouldBeHidden">ShouldBeHidden</a>, <a href="../engine/actor.html#Sleep">Sleep</a>, <a href="../engine/actor.html#Spawn">Spawn</a>, <a href="../engine/actor.html#SpecialHandling">SpecialHandling</a>, <a href="../engine/actor.html#StartInterpolation">StartInterpolation</a>, <a href="../engine/actor.html#StopAllMusic">StopAllMusic</a>, <a href="../engine/actor.html#StopAnimating">StopAnimating</a>, <a href="../engine/actor.html#StopFeedbackEffect">StopFeedbackEffect</a>, <a href="../engine/actor.html#StopLIPSincAnim">StopLIPSincAnim</a>, <a href="../engine/actor.html#StopMusic">StopMusic</a>, <a href="../engine/actor.html#StopStream">StopStream</a>, <a href="../engine/actor.html#SuggestFallVelocity">SuggestFallVelocity</a>, <a href="../engine/actor.html#TakeDamage">TakeDamage</a>, <a href="../engine/actor.html#TeamLink">TeamLink</a>, <a href="../engine/actor.html#TextToSpeech">TextToSpeech</a>, <a href="../engine/actor.html#Tick">Tick</a>, <a href="../engine/actor.html#Timer">Timer</a>, <a href="../engine/actor.html#TimerPop">TimerPop</a>, <a href="../engine/actor.html#TornOff">TornOff</a>, <a href="../engine/actor.html#Touch">Touch</a>, <a href="../engine/actor.html#TouchingActor">TouchingActor</a>, <a href="../engine/actor.html#TouchingActors">TouchingActors</a>, <a href="../engine/actor.html#Trace">Trace</a>, <a href="../engine/actor.html#TraceActors">TraceActors</a>, <a href="../engine/actor.html#TraceThisActor">TraceThisActor</a>, <a href="../engine/actor.html#TravelPostAccept">TravelPostAccept</a>, <a href="../engine/actor.html#TravelPreAccept">TravelPreAccept</a>, <a href="../engine/actor.html#Trigger">Trigger</a>, <a href="../engine/actor.html#TriggerEvent">TriggerEvent</a>, <a href="../engine/actor.html#TweenAnim">TweenAnim</a>, <a href="../engine/actor.html#UnClock">UnClock</a>, <a href="../engine/actor.html#UnTouch">UnTouch</a>, <a href="../engine/actor.html#UnTrigger">UnTrigger</a>, <a href="../engine/actor.html#UntriggerEvent">UntriggerEvent</a>, <a href="../engine/actor.html#UpdateAnnouncements">UpdateAnnouncements</a>, <a href="../engine/actor.html#UpdateDefaultMesh">UpdateDefaultMesh</a>, <a href="../engine/actor.html#UpdateDefaultStaticMesh">UpdateDefaultStaticMesh</a>, <a href="../engine/actor.html#UpdatePrecacheMaterials">UpdatePrecacheMaterials</a>, <a href="../engine/actor.html#UpdatePrecacheStaticMeshes">UpdatePrecacheStaticMeshes</a>, <a href="../engine/actor.html#UpdateURL">UpdateURL</a>, <a href="../engine/actor.html#UsedBy">UsedBy</a>, <a href="../engine/actor.html#VisibleActors">VisibleActors</a>, <a href="../engine/actor.html#VisibleCollidingActors">VisibleCollidingActors</a>, <a href="../engine/actor.html#ZoneChange">ZoneChange</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#!">!</a>, <a href="../core/object.html#!=">!=</a>, <a href="../core/object.html#$">$</a>, <a href="../core/object.html#$=">$=</a>, <a href="../core/object.html#%">%</a>, <a href="../core/object.html#&">&</a>, <a href="../core/object.html#&&">&&</a>, <a href="../core/object.html#*">*</a>, <a href="../core/object.html#**">**</a>, <a href="../core/object.html#*=">*=</a>, <a href="../core/object.html#+">+</a>, <a href="../core/object.html#++">++</a>, <a href="../core/object.html#+=">+=</a>, <a href="../core/object.html#-">-</a>, <a href="../core/object.html#--">--</a>, <a href="../core/object.html#-=">-=</a>, <a href="../core/object.html#/ ">/ </a>, <a href="../core/object.html#/=">/=</a>, <a href="../core/object.html#&lt;">&lt;</a>, <a href="../core/object.html#&lt;&lt;">&lt;&lt;</a>, <a href="../core/object.html#&lt;=">&lt;=</a>, <a href="../core/object.html#==">==</a>, <a href="../core/object.html#&gt;">&gt;</a>, <a href="../core/object.html#&gt;=">&gt;=</a>, <a href="../core/object.html#&gt;&gt;">&gt;&gt;</a>, <a href="../core/object.html#&gt;&gt;&gt;">&gt;&gt;&gt;</a>, <a href="../core/object.html#@">@</a>, <a href="../core/object.html#@=">@=</a>, <a href="../core/object.html#Abs">Abs</a>, <a href="../core/object.html#Acos">Acos</a>, <a href="../core/object.html#AllObjects">AllObjects</a>, <a href="../core/object.html#Asc">Asc</a>, <a href="../core/object.html#Asin">Asin</a>, <a href="../core/object.html#Atan">Atan</a>, <a href="../core/object.html#BeginState">BeginState</a>, <a href="../core/object.html#Caps">Caps</a>, <a href="../core/object.html#Ceil">Ceil</a>, <a href="../core/object.html#Chr">Chr</a>, <a href="../core/object.html#Clamp">Clamp</a>, <a href="../core/object.html#ClassIsChildOf">ClassIsChildOf</a>, <a href="../core/object.html#ClearConfig">ClearConfig</a>, <a href="../core/object.html#ClockwiseFrom">ClockwiseFrom</a>, <a href="../core/object.html#Cos">Cos</a>, <a href="../core/object.html#Created">Created</a>, <a href="../core/object.html#Cross">Cross</a>, <a href="../core/object.html#Disable">Disable</a>, <a href="../core/object.html#Divide">Divide</a>, <a href="../core/object.html#Dot">Dot</a>, <a href="../core/object.html#DynamicLoadObject">DynamicLoadObject</a>, <a href="../core/object.html#EatStr">EatStr</a>, <a href="../core/object.html#Enable">Enable</a>, <a href="../core/object.html#EndState">EndState</a>, <a href="../core/object.html#Eval">Eval</a>, <a href="../core/object.html#Exp">Exp</a>, <a href="../core/object.html#FClamp">FClamp</a>, <a href="../core/object.html#FindObject">FindObject</a>, <a href="../core/object.html#FMax">FMax</a>, <a href="../core/object.html#FMin">FMin</a>, <a href="../core/object.html#FRand">FRand</a>, <a href="../core/object.html#GetAxes">GetAxes</a>, <a href="../core/object.html#GetEnum">GetEnum</a>, <a href="../core/object.html#GetItemName">GetItemName</a>, <a href="../core/object.html#GetPerObjectNames">GetPerObjectNames</a>, <a href="../core/object.html#GetPropertyText">GetPropertyText</a>, <a href="../core/object.html#GetReferencers">GetReferencers</a>, <a href="../core/object.html#GetStateName">GetStateName</a>, <a href="../core/object.html#GetUnAxes">GetUnAxes</a>, <a href="../core/object.html#GotoState">GotoState</a>, <a href="../core/object.html#InStr">InStr</a>, <a href="../core/object.html#InterpCurveEval">InterpCurveEval</a>, <a href="../core/object.html#InterpCurveGetInputDomain">InterpCurveGetInputDomain</a>, <a href="../core/object.html#InterpCurveGetOutputRange">InterpCurveGetOutputRange</a>, <a href="../core/object.html#Invert">Invert</a>, <a href="../core/object.html#IsA">IsA</a>, <a href="../core/object.html#IsInState">IsInState</a>, <a href="../core/object.html#IsOnConsole">IsOnConsole</a>, <a href="../core/object.html#IsSoaking">IsSoaking</a>, <a href="../core/object.html#Left">Left</a>, <a href="../core/object.html#Len">Len</a>, <a href="../core/object.html#Lerp">Lerp</a>, <a href="../core/object.html#Localize">Localize</a>, <a href="../core/object.html#Locs">Locs</a>, <a href="../core/object.html#Log">Log</a>, <a href="../core/object.html#Loge">Loge</a>, <a href="../core/object.html#Max">Max</a>, <a href="../core/object.html#Mid">Mid</a>, <a href="../core/object.html#Min">Min</a>, <a href="../core/object.html#MirrorVectorByNormal">MirrorVectorByNormal</a>, <a href="../core/object.html#Normal">Normal</a>, <a href="../core/object.html#Normalize">Normalize</a>, <a href="../core/object.html#OrthoRotation">OrthoRotation</a>, <a href="../core/object.html#PlatformIs64Bit">PlatformIs64Bit</a>, <a href="../core/object.html#PlatformIsMacOS">PlatformIsMacOS</a>, <a href="../core/object.html#PlatformIsOpenGL">PlatformIsOpenGL</a>, <a href="../core/object.html#PlatformIsUnix">PlatformIsUnix</a>, <a href="../core/object.html#PlatformIsWindows">PlatformIsWindows</a>, <a href="../core/object.html#QuatFindBetween">QuatFindBetween</a>, <a href="../core/object.html#QuatFromAxisAndAngle">QuatFromAxisAndAngle</a>, <a href="../core/object.html#QuatFromRotator">QuatFromRotator</a>, <a href="../core/object.html#QuatInvert">QuatInvert</a>, <a href="../core/object.html#QuatProduct">QuatProduct</a>, <a href="../core/object.html#QuatRotateVector">QuatRotateVector</a>, <a href="../core/object.html#QuatSlerp">QuatSlerp</a>, <a href="../core/object.html#QuatToRotator">QuatToRotator</a>, <a href="../core/object.html#Rand">Rand</a>, <a href="../core/object.html#RandRange">RandRange</a>, <a href="../core/object.html#Repl">Repl</a>, <a href="../core/object.html#ReplaceText">ReplaceText</a>, <a href="../core/object.html#ResetConfig">ResetConfig</a>, <a href="../core/object.html#Right">Right</a>, <a href="../core/object.html#RotRand">RotRand</a>, <a href="../core/object.html#Round">Round</a>, <a href="../core/object.html#SaveConfig">SaveConfig</a>, <a href="../core/object.html#SetPropertyText">SetPropertyText</a>, <a href="../core/object.html#Sin">Sin</a>, <a href="../core/object.html#Smerp">Smerp</a>, <a href="../core/object.html#Split">Split</a>, <a href="../core/object.html#Sqrt">Sqrt</a>, <a href="../core/object.html#Square">Square</a>, <a href="../core/object.html#StaticClearConfig">StaticClearConfig</a>, <a href="../core/object.html#StaticSaveConfig">StaticSaveConfig</a>, <a href="../core/object.html#StopWatch">StopWatch</a>, <a href="../core/object.html#StrCmp">StrCmp</a>, <a href="../core/object.html#Tan">Tan</a>, <a href="../core/object.html#VRand">VRand</a>, <a href="../core/object.html#VSize">VSize</a>, <a href="../core/object.html#VSizeSquared">VSizeSquared</a>, <a href="../core/object.html#Warn">Warn</a>, <a href="../core/object.html#^">^</a>, <a href="../core/object.html#^^">^^</a>, <a href="../core/object.html#|">|</a>, <a href="../core/object.html#||">||</a>, <a href="../core/object.html#~">~</a>, <a href="../core/object.html#~=">~=</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">States Summary</th>
+</tr>
+</table>
+
+<table>
+<tr>
+	<th>BumpButton <a href="../Source_engine/mover.html#1229" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> BumpButton <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginEvent+BumpButton">BeginEvent</a>, <a href="#_Bump+BumpButton">Bump</a>, <a href="#_EndEvent+BumpButton">EndEvent</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>BumpOpenTimed <a href="../Source_engine/mover.html#769" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> BumpOpenTimed <span class="us_keyw">extends</span> OpenTimedMover</span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Bump+BumpOpenTimed">Bump</a>, <a href="#_DisableTrigger+BumpOpenTimed">DisableTrigger</a>, <a href="#_EnableTrigger+BumpOpenTimed">EnableTrigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>ConstantLoop <a href="../Source_engine/mover.html#1305" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> ConstantLoop <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+ConstantLoop">BeginState</a>, <a href="#_KeyFrameReached+ConstantLoop">KeyFrameReached</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>LeadInOutLooper <a href="../Source_engine/mover.html#1348" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> LeadInOutLooper <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+LeadInOutLooper">BeginState</a>, <a href="#_KeyFrameReached+LeadInOutLooper">KeyFrameReached</a>, <a href="#_Trigger+LeadInOutLooper">Trigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>LeadInOutLooping <a href="../Source_engine/mover.html#1380" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> LeadInOutLooping <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_KeyFrameReached+LeadInOutLooping">KeyFrameReached</a>, <a href="#_Trigger+LeadInOutLooping">Trigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>LoopMove <a href="../Source_engine/mover.html#825" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> LoopMove <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+LoopMove">BeginState</a>, <a href="#_KeyFrameReached+LoopMove">KeyFrameReached</a>, <a href="#_SelfTriggered+LoopMove">SelfTriggered</a>, <a href="#_Trigger+LoopMove">Trigger</a>, <a href="#_UnTrigger+LoopMove">UnTrigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>OpenTimedMover <a href="../Source_engine/mover.html#652" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> OpenTimedMover <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+OpenTimedMover">BeginState</a>, <a href="#_Reset+OpenTimedMover">Reset</a>, <a href="#_ShouldReTrigger+OpenTimedMover">ShouldReTrigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>RotatingMover <a href="../Source_engine/mover.html#1420" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> RotatingMover <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BaseFinished+RotatingMover">BaseFinished</a>, <a href="#_BaseStarted+RotatingMover">BaseStarted</a>, <a href="#_BeginState+RotatingMover">BeginState</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>StandOpenTimed <a href="../Source_engine/mover.html#717" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> StandOpenTimed <span class="us_keyw">extends</span> OpenTimedMover</span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Attach+StandOpenTimed">Attach</a>, <a href="#_CanTrigger+StandOpenTimed">CanTrigger</a>, <a href="#_DisableTrigger+StandOpenTimed">DisableTrigger</a>, <a href="#_EnableTrigger+StandOpenTimed">EnableTrigger</a>, <a href="#_ShouldReTrigger+StandOpenTimed">ShouldReTrigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>TriggerAdvance <a href="../Source_engine/mover.html#1122" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> TriggerAdvance <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+TriggerAdvance">BeginState</a>, <a href="#_EndState+TriggerAdvance">EndState</a>, <a href="#_Reset+TriggerAdvance">Reset</a>, <a href="#_SelfTriggered+TriggerAdvance">SelfTriggered</a>, <a href="#_Trigger+TriggerAdvance">Trigger</a>, <a href="#_UnTrigger+TriggerAdvance">UnTrigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>TriggerControl <a href="../Source_engine/mover.html#947" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> TriggerControl <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+TriggerControl">BeginState</a>, <a href="#_Reset+TriggerControl">Reset</a>, <a href="#_SelfTriggered+TriggerControl">SelfTriggered</a>, <a href="#_Trigger+TriggerControl">Trigger</a>, <a href="#_UnTrigger+TriggerControl">UnTrigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>TriggerOpenTimed <a href="../Source_engine/mover.html#798" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> TriggerOpenTimed <span class="us_keyw">extends</span> OpenTimedMover</span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_DisableTrigger+TriggerOpenTimed">DisableTrigger</a>, <a href="#_EnableTrigger+TriggerOpenTimed">EnableTrigger</a>, <a href="#_SelfTriggered+TriggerOpenTimed">SelfTriggered</a>, <a href="#_Trigger+TriggerOpenTimed">Trigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>TriggerPound <a href="../Source_engine/mover.html#1037" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> TriggerPound <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+TriggerPound">BeginState</a>, <a href="#_Reset+TriggerPound">Reset</a>, <a href="#_SelfTriggered+TriggerPound">SelfTriggered</a>, <a href="#_Trigger+TriggerPound">Trigger</a>, <a href="#_UnTrigger+TriggerPound">UnTrigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>TriggerToggle <a href="../Source_engine/mover.html#886" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> TriggerToggle <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Reset+TriggerToggle">Reset</a>, <a href="#_SelfTriggered+TriggerToggle">SelfTriggered</a>, <a href="#_Trigger+TriggerToggle">Trigger</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>WasBumpButton <a href="../Source_engine/mover.html#1280" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> WasBumpButton <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Reset+WasBumpButton">Reset</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>WasOpenTimedMover <a href="../Source_engine/mover.html#706" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> WasOpenTimedMover <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Reset+WasOpenTimedMover">Reset</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>WasTriggerAdvance <a href="../Source_engine/mover.html#1208" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> WasTriggerAdvance <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Reset+WasTriggerAdvance">Reset</a>, <a href="#_SelfTriggered+WasTriggerAdvance">SelfTriggered</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>WasTriggerControl <a href="../Source_engine/mover.html#1020" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> WasTriggerControl <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Reset+WasTriggerControl">Reset</a>, <a href="#_SelfTriggered+WasTriggerControl">SelfTriggered</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>WasTriggerPound <a href="../Source_engine/mover.html#1103" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> WasTriggerPound <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Reset+WasTriggerPound">Reset</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_AntiPortals" class="hidden"></a>AntiPortals <a href="../Source_engine/mover.html#127" class="small">Source code</a></h4>
+<div class="declaration">var array&lt;<span class="source_type"><a href="../engine/antiportalactor.html" class="source">AntiPortalActor</a></span>&gt; AntiPortals;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BACKUP_bHidden" class="hidden"></a>BACKUP_bHidden <a href="../Source_engine/mover.html#131" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> BACKUP_bHidden;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Backup_InitialState" class="hidden"></a>Backup_InitialState <a href="../Source_engine/mover.html#132" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">name</span> Backup_InitialState;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BasePos" class="hidden"></a>BasePos <a href="../Source_engine/mover.html#96" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> BasePos;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BaseRot" class="hidden"></a>BaseRot <a href="../Source_engine/mover.html#97" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> BaseRot;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bClientPause" class="hidden"></a>bClientPause <a href="../Source_engine/mover.html#103" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bClientPause;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bClosed" class="hidden"></a>bClosed <a href="../Source_engine/mover.html#104" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bClosed;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDelaying" class="hidden"></a>bDelaying <a href="../Source_engine/mover.html#103" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bDelaying;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bJumpLift" class="hidden"></a>bJumpLift <a href="../Source_engine/mover.html#108" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bJumpLift;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bOpening" class="hidden"></a>bOpening <a href="../Source_engine/mover.html#103" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bOpening;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bPlayerOnly" class="hidden"></a>bPlayerOnly <a href="../Source_engine/mover.html#105" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bPlayerOnly;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bResetting" class="hidden"></a>bResetting <a href="../Source_engine/mover.html#131" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bResetting;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClientStop" class="hidden"></a>ClientStop <a href="../Source_engine/mover.html#113" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">byte</span> ClientStop;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClientUpdate" class="hidden"></a>ClientUpdate <a href="../Source_engine/mover.html#119" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> ClientUpdate;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Follower" class="hidden"></a>Follower <a href="../Source_engine/mover.html#68" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span> Follower;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyPos[24]" class="hidden"></a>KeyPos[24] <a href="../Source_engine/mover.html#94" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> KeyPos[<span class="source_int">24</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyRot[24]" class="hidden"></a>KeyRot[24] <a href="../Source_engine/mover.html#95" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> KeyRot[<span class="source_int">24</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Leader" class="hidden"></a>Leader <a href="../Source_engine/mover.html#67" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span> Leader;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_myMarker" class="hidden"></a>myMarker <a href="../Source_engine/mover.html#102" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/navigationpoint.html" class="source">NavigationPoint</a></span> myMarker;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_numTriggerEvents" class="hidden"></a>numTriggerEvents <a href="../Source_engine/mover.html#66" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> numTriggerEvents;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OldPos" class="hidden"></a>OldPos <a href="../Source_engine/mover.html#96" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> OldPos;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OldPrePivot" class="hidden"></a>OldPrePivot <a href="../Source_engine/mover.html#96" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> OldPrePivot;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OldRot" class="hidden"></a>OldRot <a href="../Source_engine/mover.html#97" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> OldRot;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PhysAlpha" class="hidden"></a>PhysAlpha <a href="../Source_engine/mover.html#98" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> PhysAlpha;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PhysRate" class="hidden"></a>PhysRate <a href="../Source_engine/mover.html#99" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> PhysRate;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PrevKeyNum" class="hidden"></a>PrevKeyNum <a href="../Source_engine/mover.html#39" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">byte</span> PrevKeyNum;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RealPosition" class="hidden"></a>RealPosition <a href="../Source_engine/mover.html#117" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RealPosition;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RealRotation" class="hidden"></a>RealRotation <a href="../Source_engine/mover.html#118" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> RealRotation;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SavedPos" class="hidden"></a>SavedPos <a href="../Source_engine/mover.html#96" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> SavedPos;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SavedRot" class="hidden"></a>SavedRot <a href="../Source_engine/mover.html#97" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> SavedRot;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SavedTrigger" class="hidden"></a>SavedTrigger <a href="../Source_engine/mover.html#64" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> SavedTrigger;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SimInterpolate" class="hidden"></a>SimInterpolate <a href="../Source_engine/mover.html#116" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> SimInterpolate;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SimOldPos" class="hidden"></a>SimOldPos <a href="../Source_engine/mover.html#114" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> SimOldPos;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SimOldRotPitch" class="hidden"></a>SimOldRotPitch <a href="../Source_engine/mover.html#115" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> SimOldRotPitch;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SimOldRotRoll" class="hidden"></a>SimOldRotRoll <a href="../Source_engine/mover.html#115" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> SimOldRotRoll;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SimOldRotYaw" class="hidden"></a>SimOldRotYaw <a href="../Source_engine/mover.html#115" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> SimOldRotYaw;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartKeyNum" class="hidden"></a>StartKeyNum <a href="../Source_engine/mover.html#43" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">byte</span> StartKeyNum;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StepDirection" class="hidden"></a>StepDirection <a href="../Source_engine/mover.html#124" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> StepDirection;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StoppedPosition" class="hidden"></a>StoppedPosition <a href="../Source_engine/mover.html#121" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">byte</span> StoppedPosition;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">AI</h3>
+<h4><a name="_bAutoDoor" class="hidden"></a>bAutoDoor <a href="../Source_engine/mover.html#106" class="small">Source code</a></h4>
+<div class="declaration">var(AI) <span class="source_type">bool</span> bAutoDoor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bNoAIRelevance" class="hidden"></a>bNoAIRelevance <a href="../Source_engine/mover.html#107" class="small">Source code</a></h4>
+<div class="declaration">var(AI) <span class="source_type">bool</span> bNoAIRelevance;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Mover</h3>
+<h4><a name="_AntiPortalTag" class="hidden"></a>AntiPortalTag <a href="../Source_engine/mover.html#128" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">name</span> AntiPortalTag;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDamageTriggered" class="hidden"></a>bDamageTriggered <a href="../Source_engine/mover.html#58" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">bool</span> bDamageTriggered;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bDynamicLightMover" class="hidden"></a>bDynamicLightMover <a href="../Source_engine/mover.html#59" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">bool</span> bDynamicLightMover;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bOscillatingLoop" class="hidden"></a>bOscillatingLoop <a href="../Source_engine/mover.html#110" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">bool</span> bOscillatingLoop;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BrushRaytraceKey" class="hidden"></a>BrushRaytraceKey <a href="../Source_engine/mover.html#42" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) const <span class="source_type">byte</span> BrushRaytraceKey;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bSlave" class="hidden"></a>bSlave <a href="../Source_engine/mover.html#56" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">bool</span> bSlave;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bToggleDirection" class="hidden"></a>bToggleDirection <a href="../Source_engine/mover.html#54" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">bool</span> bToggleDirection;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bTriggerOnceOnly" class="hidden"></a>bTriggerOnceOnly <a href="../Source_engine/mover.html#55" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">bool</span> bTriggerOnceOnly;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BumpEvent" class="hidden"></a>BumpEvent <a href="../Source_engine/mover.html#63" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">name</span> BumpEvent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BumpType" class="hidden"></a>BumpType <a href="../Source_engine/mover.html#29" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type"><a href="../engine/mover.html#EBumpType" class="source">EBumpType</a></span> BumpType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bUseShortestRotation" class="hidden"></a>bUseShortestRotation <a href="../Source_engine/mover.html#60" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">bool</span> bUseShortestRotation;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bUseTriggered" class="hidden"></a>bUseTriggered <a href="../Source_engine/mover.html#57" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">bool</span> bUseTriggered;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DamageThreshold" class="hidden"></a>DamageThreshold <a href="../Source_engine/mover.html#65" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">float</span> DamageThreshold;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DelayTime" class="hidden"></a>DelayTime <a href="../Source_engine/mover.html#70" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">float</span> DelayTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EncroachDamage" class="hidden"></a>EncroachDamage <a href="../Source_engine/mover.html#50" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">int</span> EncroachDamage;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyNum" class="hidden"></a>KeyNum <a href="../Source_engine/mover.html#38" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">byte</span> KeyNum;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MoverEncroachType" class="hidden"></a>MoverEncroachType <a href="../Source_engine/mover.html#13" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type"><a href="../engine/mover.html#EMoverEncroachType" class="source">EMoverEncroachType</a></span> MoverEncroachType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MoverGlideType" class="hidden"></a>MoverGlideType <a href="../Source_engine/mover.html#22" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type"><a href="../engine/mover.html#EMoverGlideType" class="source">EMoverGlideType</a></span> MoverGlideType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MoveTime" class="hidden"></a>MoveTime <a href="../Source_engine/mover.html#47" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">float</span> MoveTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NumKeys" class="hidden"></a>NumKeys <a href="../Source_engine/mover.html#40" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) const <span class="source_type">byte</span> NumKeys;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OtherTime" class="hidden"></a>OtherTime <a href="../Source_engine/mover.html#49" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">float</span> OtherTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PlayerBumpEvent" class="hidden"></a>PlayerBumpEvent <a href="../Source_engine/mover.html#62" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">name</span> PlayerBumpEvent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StayOpenTime" class="hidden"></a>StayOpenTime <a href="../Source_engine/mover.html#48" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) <span class="source_type">float</span> StayOpenTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WorldRaytraceKey" class="hidden"></a>WorldRaytraceKey <a href="../Source_engine/mover.html#41" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span>) const <span class="source_type">byte</span> WorldRaytraceKey;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">MoverEvents</h3>
+<h4><a name="_ClosedEvent" class="hidden"></a>ClosedEvent <a href="../Source_engine/mover.html#87" class="small">Source code</a></h4>
+<div class="declaration">var(MoverEvents) <span class="source_type">name</span> ClosedEvent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClosingEvent" class="hidden"></a>ClosingEvent <a href="../Source_engine/mover.html#86" class="small">Source code</a></h4>
+<div class="declaration">var(MoverEvents) <span class="source_type">name</span> ClosingEvent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LoopEvent" class="hidden"></a>LoopEvent <a href="../Source_engine/mover.html#88" class="small">Source code</a></h4>
+<div class="declaration">var(MoverEvents) <span class="source_type">name</span> LoopEvent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OpenedEvent" class="hidden"></a>OpenedEvent <a href="../Source_engine/mover.html#85" class="small">Source code</a></h4>
+<div class="declaration">var(MoverEvents) <span class="source_type">name</span> OpenedEvent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OpeningEvent" class="hidden"></a>OpeningEvent <a href="../Source_engine/mover.html#84" class="small">Source code</a></h4>
+<div class="declaration">var(MoverEvents) <span class="source_type">name</span> OpeningEvent;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">MoverSounds</h3>
+<h4><a name="_ClosedSound" class="hidden"></a>ClosedSound <a href="../Source_engine/mover.html#77" class="small">Source code</a></h4>
+<div class="declaration">var(MoverSounds) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ClosedSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClosingSound" class="hidden"></a>ClosingSound <a href="../Source_engine/mover.html#76" class="small">Source code</a></h4>
+<div class="declaration">var(MoverSounds) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ClosingSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LoopSound" class="hidden"></a>LoopSound <a href="../Source_engine/mover.html#79" class="small">Source code</a></h4>
+<div class="declaration">var(MoverSounds) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> LoopSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MoveAmbientSound" class="hidden"></a>MoveAmbientSound <a href="../Source_engine/mover.html#78" class="small">Source code</a></h4>
+<div class="declaration">var(MoverSounds) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> MoveAmbientSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OpenedSound" class="hidden"></a>OpenedSound <a href="../Source_engine/mover.html#75" class="small">Source code</a></h4>
+<div class="declaration">var(MoverSounds) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> OpenedSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OpeningSound" class="hidden"></a>OpeningSound <a href="../Source_engine/mover.html#74" class="small">Source code</a></h4>
+<div class="declaration">var(MoverSounds) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> OpeningSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">ReturnGroup</h3>
+<h4><a name="_bIsLeader" class="hidden"></a>bIsLeader <a href="../Source_engine/mover.html#61" class="small">Source code</a></h4>
+<div class="declaration">var(ReturnGroup) <span class="source_type">bool</span> bIsLeader;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReturnGroup" class="hidden"></a>ReturnGroup <a href="../Source_engine/mover.html#69" class="small">Source code</a></h4>
+<div class="declaration">var(ReturnGroup) <span class="source_type">name</span> ReturnGroup;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Enumerations Detail</th>
+</tr>
+</table>
+
+<h4><a name="_EBumpType" class="hidden"></a>EBumpType <a href="../Source_engine/mover.html#29" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/mover.html#EBumpType" class="source">EBumpType</a></span><br />
+{<blockquote>BT_PlayerBump,
+BT_PawnBump,
+BT_AnyBump,
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EMoverEncroachType" class="hidden"></a>EMoverEncroachType <a href="../Source_engine/mover.html#13" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/mover.html#EMoverEncroachType" class="source">EMoverEncroachType</a></span><br />
+{<blockquote>ME_StopWhenEncroach,
+ME_ReturnWhenEncroach,
+ME_CrushWhenEncroach,
+ME_IgnoreWhenEncroach,
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EMoverGlideType" class="hidden"></a>EMoverGlideType <a href="../Source_engine/mover.html#22" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/mover.html#EMoverGlideType" class="source">EMoverGlideType</a></span><br />
+{<blockquote>MV_MoveByTime,
+MV_GlideByTime,
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_Attach-StandOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Attach <span class="function_state">StandOpenTimed</span> <a href="../Source_engine/mover.html#747" class="small">Source code</a></h4>
+<div class="declaration"> function  Attach ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BaseFinished-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BaseFinished <span class="function_state"></span> <a href="../Source_engine/mover.html#1417" class="small">Source code</a></h4>
+<div class="declaration"> function  BaseFinished (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BaseFinished-RotatingMover" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BaseFinished <span class="function_state">RotatingMover</span> <a href="../Source_engine/mover.html#1432" class="small">Source code</a></h4>
+<div class="declaration">simulated function  BaseFinished ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BaseStarted-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BaseStarted <span class="function_state"></span> <a href="../Source_engine/mover.html#1416" class="small">Source code</a></h4>
+<div class="declaration"> function  BaseStarted (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BaseStarted-RotatingMover" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BaseStarted <span class="function_state">RotatingMover</span> <a href="../Source_engine/mover.html#1422" class="small">Source code</a></h4>
+<div class="declaration">simulated function  BaseStarted ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginEvent-BumpButton" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginEvent <span class="function_state">BumpButton</span> <a href="../Source_engine/mover.html#1245" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginEvent ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginPlay <span class="function_state"></span> <a href="../Source_engine/mover.html#396" class="small">Source code</a></h4>
+<div class="declaration">simulated function  BeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-ConstantLoop" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">ConstantLoop</span> <a href="../Source_engine/mover.html#1330" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-LeadInOutLooper" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">LeadInOutLooper</span> <a href="../Source_engine/mover.html#1372" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-LoopMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">LoopMove</span> <a href="../Source_engine/mover.html#863" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-OpenTimedMover" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">OpenTimedMover</span> <a href="../Source_engine/mover.html#665" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-RotatingMover" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">RotatingMover</span> <a href="../Source_engine/mover.html#1447" class="small">Source code</a></h4>
+<div class="declaration">simulated function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-TriggerAdvance" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">TriggerAdvance</span> <a href="../Source_engine/mover.html#1169" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-TriggerControl" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">TriggerControl</span> <a href="../Source_engine/mover.html#991" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-TriggerPound" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">TriggerPound</span> <a href="../Source_engine/mover.html#1074" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Bump-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Bump <span class="function_state"></span> <a href="../Source_engine/mover.html#607" class="small">Source code</a></h4>
+<div class="declaration"> function  Bump ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Bump-BumpButton" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Bump <span class="function_state">BumpButton</span> <a href="../Source_engine/mover.html#1231" class="small">Source code</a></h4>
+<div class="declaration"> function  Bump ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Bump-BumpOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Bump <span class="function_state">BumpOpenTimed</span> <a href="../Source_engine/mover.html#771" class="small">Source code</a></h4>
+<div class="declaration"> function  Bump ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CanTrigger-StandOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CanTrigger <span class="function_state">StandOpenTimed</span> <a href="../Source_engine/mover.html#730" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> CanTrigger ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DisableTrigger-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DisableTrigger <span class="function_state"></span> <a href="../Source_engine/mover.html#649" class="small">Source code</a></h4>
+<div class="declaration"> function  DisableTrigger (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DisableTrigger-BumpOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DisableTrigger <span class="function_state">BumpOpenTimed</span> <a href="../Source_engine/mover.html#786" class="small">Source code</a></h4>
+<div class="declaration"> function  DisableTrigger ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DisableTrigger-StandOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DisableTrigger <span class="function_state">StandOpenTimed</span> <a href="../Source_engine/mover.html#757" class="small">Source code</a></h4>
+<div class="declaration"> function  DisableTrigger ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DisableTrigger-TriggerOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DisableTrigger <span class="function_state">TriggerOpenTimed</span> <a href="../Source_engine/mover.html#814" class="small">Source code</a></h4>
+<div class="declaration"> function  DisableTrigger ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoClose-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoClose <span class="function_state"></span> <a href="../Source_engine/mover.html#378" class="small">Source code</a></h4>
+<div class="declaration"> function  DoClose ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoOpen-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoOpen <span class="function_state"></span> <a href="../Source_engine/mover.html#364" class="small">Source code</a></h4>
+<div class="declaration"> function  DoOpen ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnableTrigger-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EnableTrigger <span class="function_state"></span> <a href="../Source_engine/mover.html#650" class="small">Source code</a></h4>
+<div class="declaration"> function  EnableTrigger (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnableTrigger-BumpOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EnableTrigger <span class="function_state">BumpOpenTimed</span> <a href="../Source_engine/mover.html#791" class="small">Source code</a></h4>
+<div class="declaration"> function  EnableTrigger ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnableTrigger-StandOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EnableTrigger <span class="function_state">StandOpenTimed</span> <a href="../Source_engine/mover.html#762" class="small">Source code</a></h4>
+<div class="declaration"> function  EnableTrigger ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnableTrigger-TriggerOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EnableTrigger <span class="function_state">TriggerOpenTimed</span> <a href="../Source_engine/mover.html#819" class="small">Source code</a></h4>
+<div class="declaration"> function  EnableTrigger ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EncroachingOn-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EncroachingOn <span class="function_state"></span> <a href="../Source_engine/mover.html#540" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> EncroachingOn ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EndEvent-BumpButton" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EndEvent <span class="function_state">BumpButton</span> <a href="../Source_engine/mover.html#1249" class="small">Source code</a></h4>
+<div class="declaration"> function  EndEvent ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EndState-TriggerAdvance" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EndState <span class="function_state">TriggerAdvance</span> <a href="../Source_engine/mover.html#1174" class="small">Source code</a></h4>
+<div class="declaration"> function  EndState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FinishedClosing-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FinishedClosing <span class="function_state"></span> <a href="../Source_engine/mover.html#321" class="small">Source code</a></h4>
+<div class="declaration"> function  FinishedClosing ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FinishedOpening-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FinishedOpening <span class="function_state"></span> <a href="../Source_engine/mover.html#349" class="small">Source code</a></h4>
+<div class="declaration"> function  FinishedOpening ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FinishNotify-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FinishNotify <span class="function_state"></span> <a href="../Source_engine/mover.html#311" class="small">Source code</a></h4>
+<div class="declaration"> function  FinishNotify ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_InterpolateTo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> InterpolateTo <span class="function_state"></span> <a href="../Source_engine/mover.html#216" class="small">Source code</a></h4>
+<div class="declaration">simulated final function  InterpolateTo ( <span class="source_type">byte</span> NewKeyNum, <span class="source_type">float</span> <span class="source_type">Seconds</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyFrameReached-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> KeyFrameReached <span class="function_state"></span> <a href="../Source_engine/mover.html#269" class="small">Source code</a></h4>
+<div class="declaration">simulated event  KeyFrameReached ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyFrameReached-ConstantLoop" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> KeyFrameReached <span class="function_state">ConstantLoop</span> <a href="../Source_engine/mover.html#1307" class="small">Source code</a></h4>
+<div class="declaration"> event  KeyFrameReached ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyFrameReached-LeadInOutLooper" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> KeyFrameReached <span class="function_state">LeadInOutLooper</span> <a href="../Source_engine/mover.html#1363" class="small">Source code</a></h4>
+<div class="declaration"> event  KeyFrameReached ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyFrameReached-LeadInOutLooping" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> KeyFrameReached <span class="function_state">LeadInOutLooping</span> <a href="../Source_engine/mover.html#1388" class="small">Source code</a></h4>
+<div class="declaration"> event  KeyFrameReached ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyFrameReached-LoopMove" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> KeyFrameReached <span class="function_state">LoopMove</span> <a href="../Source_engine/mover.html#859" class="small">Source code</a></h4>
+<div class="declaration"> event  KeyFrameReached ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MakeGroupReturn-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> MakeGroupReturn <span class="function_state"></span> <a href="../Source_engine/mover.html#520" class="small">Source code</a></h4>
+<div class="declaration"> function  MakeGroupReturn ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MakeGroupStop-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> MakeGroupStop <span class="function_state"></span> <a href="../Source_engine/mover.html#508" class="small">Source code</a></h4>
+<div class="declaration"> function  MakeGroupStop ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MoverLooped-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> MoverLooped <span class="function_state"></span> <a href="../Source_engine/mover.html#1293" class="small">Source code</a></h4>
+<div class="declaration"> function  MoverLooped ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PostBeginPlay <span class="function_state"></span> <a href="../Source_engine/mover.html#443" class="small">Source code</a></h4>
+<div class="declaration"> function  PostBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state"></span> <a href="../Source_engine/mover.html#499" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-OpenTimedMover" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">OpenTimedMover</span> <a href="../Source_engine/mover.html#659" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-TriggerAdvance" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">TriggerAdvance</span> <a href="../Source_engine/mover.html#1129" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-TriggerControl" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">TriggerControl</span> <a href="../Source_engine/mover.html#953" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-TriggerPound" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">TriggerPound</span> <a href="../Source_engine/mover.html#1043" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-TriggerToggle" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">TriggerToggle</span> <a href="../Source_engine/mover.html#892" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-WasBumpButton" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">WasBumpButton</span> <a href="../Source_engine/mover.html#1282" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-WasOpenTimedMover" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">WasOpenTimedMover</span> <a href="../Source_engine/mover.html#708" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-WasTriggerAdvance" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">WasTriggerAdvance</span> <a href="../Source_engine/mover.html#1215" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-WasTriggerControl" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">WasTriggerControl</span> <a href="../Source_engine/mover.html#1026" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Reset-WasTriggerPound" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state">WasTriggerPound</span> <a href="../Source_engine/mover.html#1105" class="small">Source code</a></h4>
+<div class="declaration"> function  Reset ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SelfTriggered-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SelfTriggered <span class="function_state"></span> <a href="../Source_engine/mover.html#143" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SelfTriggered ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SelfTriggered-LoopMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SelfTriggered <span class="function_state">LoopMove</span> <a href="../Source_engine/mover.html#827" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SelfTriggered ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SelfTriggered-TriggerAdvance" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SelfTriggered <span class="function_state">TriggerAdvance</span> <a href="../Source_engine/mover.html#1124" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SelfTriggered ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SelfTriggered-TriggerControl" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SelfTriggered <span class="function_state">TriggerControl</span> <a href="../Source_engine/mover.html#949" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SelfTriggered ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SelfTriggered-TriggerOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SelfTriggered <span class="function_state">TriggerOpenTimed</span> <a href="../Source_engine/mover.html#800" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SelfTriggered ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SelfTriggered-TriggerPound" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SelfTriggered <span class="function_state">TriggerPound</span> <a href="../Source_engine/mover.html#1039" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SelfTriggered ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SelfTriggered-TriggerToggle" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SelfTriggered <span class="function_state">TriggerToggle</span> <a href="../Source_engine/mover.html#888" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SelfTriggered ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SelfTriggered-WasTriggerAdvance" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SelfTriggered <span class="function_state">WasTriggerAdvance</span> <a href="../Source_engine/mover.html#1210" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SelfTriggered ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SelfTriggered-WasTriggerControl" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SelfTriggered <span class="function_state">WasTriggerControl</span> <a href="../Source_engine/mover.html#1022" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SelfTriggered ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetKeyframe-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetKeyframe <span class="function_state"></span> <a href="../Source_engine/mover.html#261" class="small">Source code</a></h4>
+<div class="declaration">final function  SetKeyframe ( <span class="source_type">byte</span> NewKeyNum, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> NewLocation, <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">NewRotation</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetResetStatus-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetResetStatus <span class="function_state"></span> <a href="../Source_engine/mover.html#490" class="small">Source code</a></h4>
+<div class="declaration"> function  SetResetStatus ( <span class="source_type">bool</span> <span class="source_type">bNewStatus</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetStoppedPosition-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetStoppedPosition <span class="function_state"></span> <a href="../Source_engine/mover.html#1115" class="small">Source code</a></h4>
+<div class="declaration"> function  SetStoppedPosition ( <span class="source_type">byte</span> NewPos) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ShouldReTrigger-OpenTimedMover" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ShouldReTrigger <span class="function_state">OpenTimedMover</span> <a href="../Source_engine/mover.html#654" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ShouldReTrigger ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ShouldReTrigger-StandOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ShouldReTrigger <span class="function_state">StandOpenTimed</span> <a href="../Source_engine/mover.html#719" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ShouldReTrigger ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpecialHandling-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpecialHandling <span class="function_state"></span> <a href="../Source_engine/mover.html#148" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> SpecialHandling ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartInterpolation-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StartInterpolation <span class="function_state"></span> <a href="../Source_engine/mover.html#166" class="small">Source code</a></h4>
+<div class="declaration">simulated function  StartInterpolation ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TakeDamage-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TakeDamage <span class="function_state"></span> <a href="../Source_engine/mover.html#630" class="small">Source code</a></h4>
+<div class="declaration"> function  TakeDamage ( <span class="source_type">int</span> Damage, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> instigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">hitlocation</span>,
+						<span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">momentum</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, optional <span class="source_type">int</span> <span class="source_type">HitIndex</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state"></span> <a href="../Source_engine/mover.html#173" class="small">Source code</a></h4>
+<div class="declaration">simulated function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-LeadInOutLooper" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state">LeadInOutLooper</span> <a href="../Source_engine/mover.html#1350" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-LeadInOutLooping" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state">LeadInOutLooping</span> <a href="../Source_engine/mover.html#1382" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-LoopMove" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Trigger <span class="function_state">LoopMove</span> <a href="../Source_engine/mover.html#831" class="small">Source code</a></h4>
+<div class="declaration"> event  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-TriggerAdvance" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state">TriggerAdvance</span> <a href="../Source_engine/mover.html#1139" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-TriggerControl" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state">TriggerControl</span> <a href="../Source_engine/mover.html#966" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-TriggerOpenTimed" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state">TriggerOpenTimed</span> <a href="../Source_engine/mover.html#805" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-TriggerPound" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state">TriggerPound</span> <a href="../Source_engine/mover.html#1056" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-TriggerToggle" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state">TriggerToggle</span> <a href="../Source_engine/mover.html#904" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UnTrigger-LoopMove" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> UnTrigger <span class="function_state">LoopMove</span> <a href="../Source_engine/mover.html#849" class="small">Source code</a></h4>
+<div class="declaration"> event  UnTrigger ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UnTrigger-TriggerAdvance" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UnTrigger <span class="function_state">TriggerAdvance</span> <a href="../Source_engine/mover.html#1153" class="small">Source code</a></h4>
+<div class="declaration"> function  UnTrigger ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UnTrigger-TriggerControl" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UnTrigger <span class="function_state">TriggerControl</span> <a href="../Source_engine/mover.html#977" class="small">Source code</a></h4>
+<div class="declaration"> function  UnTrigger ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UnTrigger-TriggerPound" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UnTrigger <span class="function_state">TriggerPound</span> <a href="../Source_engine/mover.html#1063" class="small">Source code</a></h4>
+<div class="declaration"> function  UnTrigger ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpdatePrecacheStaticMeshes-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UpdatePrecacheStaticMeshes <span class="function_state"></span> <a href="../Source_engine/mover.html#1453" class="small">Source code</a></h4>
+<div class="declaration">simulated function  UpdatePrecacheStaticMeshes ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     MoverEncroachType=ME_ReturnWhenEncroach
+     MoverGlideType=MV_GlideByTime
+     NumKeys=<span class="source_int">2</span>
+     MoveTime=<span class="source_int">1.000000</span>
+     StayOpenTime=<span class="source_int">4.000000</span>
+     bToggleDirection=True
+     bClosed=True
+     StepDirection=<span class="source_int">1</span>
+     bUseDynamicLights=True
+     bNoDelete=True
+     bAlwaysRelevant=True
+     bOnlyDirtyReplication=True
+     Physics=PHYS_MovingBrush
+     RemoteRole=ROLE_SimulatedProxy
+     NetUpdateFrequency=<span class="source_int">1.000000</span>
+     NetPriority=<span class="source_int">2.700000</span>
+     InitialState=<span class="source_string">"BumpOpenTimed"</span>
+     bShadowCast=True
+     SoundVolume=<span class="source_int">228</span>
+     TransientSoundVolume=<span class="source_int">1.000000</span>
+     CollisionRadius=<span class="source_int">160.000000</span>
+     CollisionHeight=<span class="source_int">160.000000</span>
+     bCollideActors=True
+     bBlockActors=True
+     bEdShouldSnap=True
+     bPathColliding=True
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/mover.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#Mover">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/motionblur.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/movie.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:49.495 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

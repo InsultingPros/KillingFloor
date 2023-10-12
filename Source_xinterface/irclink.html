@@ -1,0 +1,699 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.IRCLink</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/irclink.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#IRCLink">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/hudbase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/irc_channel.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/irclink.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/irclink.html">IRCLink</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/irclink.html" class="source">IRCLink</a></span> extends <span class="source_type"><a href="../ipdrv/bufferedtcplink.html" class="source">BufferedTCPLink</a></span>;
+<a name="2"></a>
+<a name="3"></a>var <span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span>			ServerIpAddr;
+<a name="4"></a>
+<a name="5"></a>var <span class="source_type">string</span>			<span class="source_type">ServerAddress</span>;
+<a name="6"></a>var <span class="source_type">int</span>				ServerPort;
+<a name="7"></a>
+<a name="8"></a>var <span class="source_type">string</span>			<span class="source_type">NickName</span>;
+<a name="9"></a>var <span class="source_type">string</span>			UserIdent;
+<a name="10"></a>var <span class="source_type">string</span>			<span class="source_type">FullName</span>;
+<a name="11"></a>var <span class="source_type">string</span>			DefaultChannel;
+<a name="12"></a>
+<a name="13"></a>var localized <span class="source_type">string</span> InvalidAddressText;
+<a name="14"></a>var localized <span class="source_type">string</span> ErrorBindingText;
+<a name="15"></a>var localized <span class="source_type">string</span> ResolveFailedText;
+<a name="16"></a>var localized <span class="source_type">string</span> ConnectedText;
+<a name="17"></a>var localized <span class="source_type">string</span> ConnectingToText;
+<a name="18"></a>var localized <span class="source_type">string</span> TimeOutError;
+<a name="19"></a>var localized <span class="source_type">string</span> InviteString;
+<a name="20"></a>var localized <span class="source_type">string</span> NickInUseText;
+<a name="21"></a>var localized <span class="source_type">string</span> NickInvalidText;
+<a name="22"></a>
+<a name="23"></a>
+<a name="24"></a>var <span class="source_type"><a href="../xinterface/irc_system.html" class="source">IRC_System</a></span> SystemPage;
+<a name="25"></a>
+<a name="26"></a>var <span class="source_type">string</span> DisconnectReason;
+<a name="27"></a>var <span class="source_type">string</span> VersionString;
+<a name="28"></a>
+<a name="29"></a>var transient <span class="source_type">float</span>		SinceLastLevCheck;
+<a name="30"></a>
+<a name="31"></a>function PostBeginPlay()
+<a name="32"></a>{
+<a name="33"></a>	Super.PostBeginPlay();
+<a name="34"></a>	Disable(<span class="source_name">'Tick'</span>);
+<a name="35"></a>}
+<a name="36"></a>
+<a name="37"></a>function Connect(<span class="source_type"><a href="../xinterface/irc_system.html" class="source">IRC_System</a></span> InSystemPage, <span class="source_type">string</span> InServer, <span class="source_type">string</span> InNickName, <span class="source_type">string</span> InUserIdent, <span class="source_type">string</span> InFullName, <span class="source_type">string</span> InDefaultChannel)
+<a name="38"></a>{
+<a name="39"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="40"></a>
+<a name="41"></a>    log(<span class="source_string">"IRCLink Connect:"</span>$InServer$InNickName$InUserIdent$InFullName$InDefaultChannel,<span class="source_name">'IRC'</span>);
+<a name="42"></a>
+<a name="43"></a>	SystemPage = InSystemPage;
+<a name="44"></a>	<span class="source_type">NickName</span> = InNickName;
+<a name="45"></a>	<span class="source_type">FullName</span> = InFullName;
+<a name="46"></a>	UserIdent = InUserIdent;
+<a name="47"></a>	DefaultChannel = InDefaultChannel;
+<a name="48"></a>
+<a name="49"></a>	<span class="source_type">i</span> = InStr(InServer, <span class="source_string">":"</span>);
+<a name="50"></a>	if(<span class="source_type">i</span> == -<span class="source_int">1</span>)
+<a name="51"></a>	{
+<a name="52"></a>		<span class="source_type">ServerAddress</span> = InServer;
+<a name="53"></a>		ServerPort = <span class="source_int">6667</span>;
+<a name="54"></a>	}
+<a name="55"></a>	else
+<a name="56"></a>	{
+<a name="57"></a>		<span class="source_type">ServerAddress</span> = Left(InServer, <span class="source_type">i</span>);
+<a name="58"></a>		ServerPort = <span class="source_type">Int</span>(Mid(InServer, <span class="source_type">i</span>+<span class="source_int">1</span>));
+<a name="59"></a>	}
+<a name="60"></a>
+<a name="61"></a>	ResetBuffer();
+<a name="62"></a>	ServerIpAddr.<span class="source_type">Port</span> = ServerPort;
+<a name="63"></a>	SetTimer(<span class="source_int">20</span>, False);
+<a name="64"></a>	SystemPage.SystemText( ConnectingToText@<span class="source_type">ServerAddress</span> );
+<a name="65"></a>	Resolve( <span class="source_type">ServerAddress</span> );
+<a name="66"></a>}
+<a name="67"></a>
+<a name="68"></a>function <span class="source_type">string</span> ChopLeft(<span class="source_type">string</span> <span class="source_type">Text</span>)
+<a name="69"></a>{
+<a name="70"></a>	while(<span class="source_type">Text</span> != <span class="source_string">""</span> && InStr(<span class="source_string">": !"</span>, Left(<span class="source_type">Text</span>, <span class="source_int">1</span>)) != -<span class="source_int">1</span>)
+<a name="71"></a>		<span class="source_type">Text</span> = Mid(<span class="source_type">Text</span>, <span class="source_int">1</span>);
+<a name="72"></a>	return <span class="source_type">Text</span>;
+<a name="73"></a>}
+<a name="74"></a>
+<a name="75"></a>function <span class="source_type">string</span> RemoveNickPrefix(<span class="source_type">string</span> <span class="source_type">Nick</span>)
+<a name="76"></a>{
+<a name="77"></a>	while(<span class="source_type">Nick</span> != <span class="source_string">""</span> && InStr(<span class="source_string">":@+%"</span>, Left(<span class="source_type">Nick</span>, <span class="source_int">1</span>)) != -<span class="source_int">1</span>)
+<a name="78"></a>		<span class="source_type">Nick</span> = Mid(<span class="source_type">Nick</span>, <span class="source_int">1</span>);
+<a name="79"></a>	return <span class="source_type">Nick</span>;
+<a name="80"></a>}
+<a name="81"></a>
+<a name="82"></a>function <span class="source_type">string</span> Chop(<span class="source_type">string</span> <span class="source_type">Text</span>)
+<a name="83"></a>{
+<a name="84"></a>	while(<span class="source_type">Text</span> != <span class="source_string">""</span> && InStr(<span class="source_string">": !"</span>, Left(<span class="source_type">Text</span>, <span class="source_int">1</span>)) != -<span class="source_int">1</span>)
+<a name="85"></a>		<span class="source_type">Text</span> = Mid(<span class="source_type">Text</span>, <span class="source_int">1</span>);
+<a name="86"></a>	while(<span class="source_type">Text</span> != <span class="source_string">""</span> && InStr(<span class="source_string">": !"</span>, Right(<span class="source_type">Text</span>, <span class="source_int">1</span>)) != -<span class="source_int">1</span>)
+<a name="87"></a>		<span class="source_type">Text</span> = Left(<span class="source_type">Text</span>, <span class="source_type">Len</span>(<span class="source_type">Text</span>)-<span class="source_int">1</span>);
+<a name="88"></a>
+<a name="89"></a>	return <span class="source_type">Text</span>;
+<a name="90"></a>}
+<a name="91"></a>
+<a name="92"></a>function Resolved( <span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span> <span class="source_type">Addr</span> )
+<a name="93"></a>{
+<a name="94"></a>	<span class="source_comment">// Set the address
+</span><a name="95"></a>	ServerIpAddr.<span class="source_type">Addr</span> = <span class="source_type">Addr</span>.<span class="source_type">Addr</span>;
+<a name="96"></a>
+<a name="97"></a>	<span class="source_comment">// Handle failure.
+</span><a name="98"></a>	if( ServerIpAddr.<span class="source_type">Addr</span> == <span class="source_int">0</span> )
+<a name="99"></a>	{
+<a name="100"></a>		if(SystemPage != None)
+<a name="101"></a>		{
+<a name="102"></a>			SystemPage.SystemText( InvalidAddressText );
+<a name="103"></a>			SystemPage.Disconnect();
+<a name="104"></a>		}
+<a name="105"></a>		return;
+<a name="106"></a>	}
+<a name="107"></a>
+<a name="108"></a>	<span class="source_comment">// Display success message.
+</span><a name="109"></a>	Log( <span class="source_string">"UT2004 IRCLink: Server is "</span>$<span class="source_type">ServerAddress</span>$<span class="source_string">":"</span>$ServerIpAddr.<span class="source_type">Port</span>,<span class="source_name">'IRC'</span> );
+<a name="110"></a>
+<a name="111"></a>	<span class="source_comment">// Bind the local port.
+</span><a name="112"></a>	if( BindPort() == <span class="source_int">0</span> )
+<a name="113"></a>	{
+<a name="114"></a>		if(SystemPage != None)
+<a name="115"></a>		{
+<a name="116"></a>			SystemPage.SystemText( ErrorBindingText );
+<a name="117"></a>			SystemPage.Disconnect();
+<a name="118"></a>		}
+<a name="119"></a>		return;
+<a name="120"></a>	}
+<a name="121"></a>
+<a name="122"></a>	Open( ServerIpAddr );
+<a name="123"></a>}
+<a name="124"></a>
+<a name="125"></a>event Closed()
+<a name="126"></a>{
+<a name="127"></a>	if(SystemPage != None)
+<a name="128"></a>		SystemPage.Disconnect();
+<a name="129"></a>}
+<a name="130"></a>
+<a name="131"></a><span class="source_comment">// Host resolution failue.
+</span><a name="132"></a>function ResolveFailed()
+<a name="133"></a>{
+<a name="134"></a>	if(SystemPage != None)
+<a name="135"></a>	{
+<a name="136"></a>		SystemPage.SystemText(ResolveFailedText);
+<a name="137"></a>		SystemPage.Disconnect();
+<a name="138"></a>	}
+<a name="139"></a>}
+<a name="140"></a>
+<a name="141"></a>event Timer()
+<a name="142"></a>{
+<a name="143"></a>	if(SystemPage != None)
+<a name="144"></a>	{
+<a name="145"></a>		SystemPage.SystemText( TimeOutError );
+<a name="146"></a>		SystemPage.Disconnect();
+<a name="147"></a>        log(<span class="source_string">"Failed to resolve "</span>$<span class="source_type">ServerAddress</span>,<span class="source_name">'IRC'</span>);
+<a name="148"></a>	}
+<a name="149"></a>	return;
+<a name="150"></a>}
+<a name="151"></a>
+<a name="152"></a>event Opened()
+<a name="153"></a>{
+<a name="154"></a>	SetTimer(<span class="source_int">0</span>, False);
+<a name="155"></a>	if(SystemPage != None)
+<a name="156"></a>		SystemPage.SystemText(ConnectedText);
+<a name="157"></a>	Enable(<span class="source_name">'Tick'</span>);
+<a name="158"></a>	GotoState(<span class="source_name">'LoggingIn'</span>);
+<a name="159"></a>}
+<a name="160"></a>
+<a name="161"></a>function Tick(<span class="source_type">float</span> <span class="source_type">DeltaTime</span>)
+<a name="162"></a>{
+<a name="163"></a>	local <span class="source_type">string</span> Line;
+<a name="164"></a>
+<a name="165"></a>	DoBufferQueueIO();
+<a name="166"></a>	if(ReadBufferedLine(Line))
+<a name="167"></a>		ProcessInput(Line);
+<a name="168"></a>
+<a name="169"></a>    Super.Tick(<span class="source_type">DeltaTime</span>);
+<a name="170"></a>
+<a name="171"></a>	if( GetStateName() == <span class="source_name">'LoggedIn'</span> )
+<a name="172"></a>	{
+<a name="173"></a>		<span class="source_comment">// Every 5 seconds, keep the IRC client away string up to date.
+</span><a name="174"></a>		SinceLastLevCheck += <span class="source_type">DeltaTime</span>;
+<a name="175"></a>		if(SinceLastLevCheck &gt; <span class="source_int">5</span>)
+<a name="176"></a>		{
+<a name="177"></a>			if(SystemPage != None)
+<a name="178"></a>				SystemPage.UpdateAway();
+<a name="179"></a>
+<a name="180"></a>			SinceLastLevCheck = <span class="source_int">0</span>;
+<a name="181"></a>		}
+<a name="182"></a>	}
+<a name="183"></a>}
+<a name="184"></a>
+<a name="185"></a>function SendCommandText(<span class="source_type">string</span> <span class="source_type">Text</span>)
+<a name="186"></a>{
+<a name="187"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="188"></a>	local <span class="source_type">string</span> <span class="source_type">Cmd</span>, Temp, Temp2;
+<a name="189"></a>
+<a name="190"></a>	<span class="source_comment">// Process fake commands like /MSG
+</span><a name="191"></a>	if(Left(<span class="source_type">Text</span>, <span class="source_int">4</span>) ~= <span class="source_string">"MSG "</span>)
+<a name="192"></a>		<span class="source_type">Text</span> = <span class="source_string">"PRIVMSG "</span>$Mid(<span class="source_type">Text</span>, <span class="source_int">4</span>);
+<a name="193"></a>	if(Left(<span class="source_type">Text</span>, <span class="source_int">6</span>) ~= <span class="source_string">"LEAVE "</span>)
+<a name="194"></a>		<span class="source_type">Text</span> = <span class="source_string">"PART "</span>$Mid(<span class="source_type">Text</span>, <span class="source_int">6</span>);
+<a name="195"></a>
+<a name="196"></a>	<span class="source_comment">// Add colons for commands: PRIVMSG, QUIT, KILL, KICK, NOTICE
+</span><a name="197"></a>	<span class="source_type">i</span> = InStr(<span class="source_type">Text</span>, <span class="source_string">" "</span>);
+<a name="198"></a>	if(<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="199"></a>	{
+<a name="200"></a>		<span class="source_type">Cmd</span> = Caps(Left(<span class="source_type">Text</span>, <span class="source_type">i</span>));
+<a name="201"></a>		<span class="source_type">Text</span> = <span class="source_type">Cmd</span>$Mid(<span class="source_type">Text</span>, <span class="source_type">i</span>);
+<a name="202"></a>
+<a name="203"></a>		<span class="source_type">switch</span>(<span class="source_type">Cmd</span>)
+<a name="204"></a>		{
+<a name="205"></a>		<span class="source_comment">// CMD nick :message
+</span><a name="206"></a>		case <span class="source_string">"PRIVMSG"</span>:
+<a name="207"></a>		case <span class="source_string">"NOTICE"</span>:
+<a name="208"></a>		case <span class="source_string">"KILL"</span>:
+<a name="209"></a>			Temp = ChopLeft(Mid(<span class="source_type">Text</span>, <span class="source_type">i</span>+<span class="source_int">1</span>));
+<a name="210"></a>			<span class="source_type">i</span> = InStr(Temp, <span class="source_string">" "</span>);
+<a name="211"></a>			if(<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="212"></a>				<span class="source_type">Text</span> = <span class="source_type">Cmd</span>@Left(Temp, <span class="source_type">i</span>)$<span class="source_string">" :"</span>$ChopLeft(Mid(Temp, <span class="source_type">i</span>+<span class="source_int">1</span>));
+<a name="213"></a>			break;
+<a name="214"></a>		<span class="source_comment">// hack for CTCP
+</span><a name="215"></a>		case <span class="source_string">"CTCP"</span>:
+<a name="216"></a>			Temp = ChopLeft(Mid(<span class="source_type">Text</span>, <span class="source_type">i</span>+<span class="source_int">1</span>));
+<a name="217"></a>			<span class="source_type">i</span> = InStr(Temp, <span class="source_string">" "</span>);
+<a name="218"></a>			if(<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="219"></a>				<span class="source_type">Text</span> = <span class="source_string">"PRIVMSG "</span>$Left(Temp, <span class="source_type">i</span>)$<span class="source_string">" :"</span>$Chr(<span class="source_int">1</span>)$ChopLeft(Mid(Temp, <span class="source_type">i</span>+<span class="source_int">1</span>))$Chr(<span class="source_int">1</span>);
+<a name="220"></a>			break;
+<a name="221"></a>		<span class="source_comment">// CMD #channel nick :message
+</span><a name="222"></a>		case <span class="source_string">"KICK"</span>:
+<a name="223"></a>			Temp = ChopLeft(Mid(<span class="source_type">Text</span>, <span class="source_type">i</span>+<span class="source_int">1</span>));
+<a name="224"></a>			<span class="source_type">i</span> = InStr(Temp, <span class="source_string">" "</span>);
+<a name="225"></a>			if(<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="226"></a>			{
+<a name="227"></a>				Temp2 = ChopLeft(Mid(Temp, <span class="source_type">i</span>+<span class="source_int">1</span>));
+<a name="228"></a>				j = InStr(Temp2, <span class="source_string">" "</span>);
+<a name="229"></a>				if(j != -<span class="source_int">1</span>)
+<a name="230"></a>					<span class="source_type">Text</span> = <span class="source_type">Cmd</span>@Left(Temp, <span class="source_type">i</span>)@Left(Temp2, j)$<span class="source_string">" :"</span>$ChopLeft(Mid(Temp2, j+<span class="source_int">1</span>));
+<a name="231"></a>			}
+<a name="232"></a>			break;
+<a name="233"></a>		<span class="source_comment">// CMD :message
+</span><a name="234"></a>		case <span class="source_string">"QUIT"</span>:
+<a name="235"></a>			<span class="source_type">Text</span> = <span class="source_type">Cmd</span>$<span class="source_string">" :"</span>$ChopLeft(Mid(<span class="source_type">Text</span>, <span class="source_type">i</span>+<span class="source_int">1</span>));
+<a name="236"></a>			break;
+<a name="237"></a>		}
+<a name="238"></a>	}
+<a name="239"></a>	else
+<a name="240"></a>		<span class="source_type">Text</span> = Caps(<span class="source_type">Text</span>);
+<a name="241"></a>
+<a name="242"></a>	SendBufferedData(<span class="source_type">Text</span>$CRLF);
+<a name="243"></a>}
+<a name="244"></a>
+<a name="245"></a>function SendChannelText(<span class="source_type">string</span> <span class="source_type">Channel</span>, <span class="source_type">string</span> <span class="source_type">Text</span>)
+<a name="246"></a>{
+<a name="247"></a>	SendBufferedData(<span class="source_string">"PRIVMSG "</span>$<span class="source_type">Channel</span>$<span class="source_string">" :"</span>$<span class="source_type">Text</span>$CRLF);
+<a name="248"></a>}
+<a name="249"></a>
+<a name="250"></a>function SendChannelAction(<span class="source_type">string</span> <span class="source_type">Channel</span>, <span class="source_type">string</span> <span class="source_type">Text</span>)
+<a name="251"></a>{
+<a name="252"></a>	SendBufferedData(<span class="source_string">"PRIVMSG "</span>$<span class="source_type">Channel</span>$<span class="source_string">" :"</span>$Chr(<span class="source_int">1</span>)$<span class="source_string">"ACTION "</span>$<span class="source_type">Text</span>$Chr(<span class="source_int">1</span>)$CRLF);
+<a name="253"></a>}
+<a name="254"></a>
+<a name="255"></a>function ProcessInput(<span class="source_type">string</span> Line)
+<a name="256"></a>{
+<a name="257"></a>	<span class="source_comment">// Respond to PING
+</span><a name="258"></a>	if(Left(Line, <span class="source_int">5</span>) == <span class="source_string">"PING "</span>)
+<a name="259"></a>		SendBufferedData(<span class="source_string">"PONG "</span>$Mid(Line, <span class="source_int">5</span>)$CRLF);
+<a name="260"></a>}
+<a name="261"></a>
+<a name="262"></a><span class="source_type">state</span> LoggingIn
+<a name="263"></a>{
+<a name="264"></a>	function Timer()
+<a name="265"></a>	{
+<a name="266"></a>		SendBufferedData(<span class="source_string">"NICK "</span>$<span class="source_type">NickName</span>$CRLF);
+<a name="267"></a>		SetTimer(<span class="source_int">1</span>, false);
+<a name="268"></a>	}
+<a name="269"></a>
+<a name="270"></a>	function ProcessInput(<span class="source_type">string</span> Line)
+<a name="271"></a>	{
+<a name="272"></a>		local <span class="source_type">string</span> Temp;
+<a name="273"></a>		local <span class="source_type"><a href="../xinterface/irc_newnick.html" class="source">IRC_NewNick</a></span> NewNickDialog;
+<a name="274"></a>
+<a name="275"></a>        log(<span class="source_string">"LoggingIn: "</span>$Line,<span class="source_name">'IRC'</span>);
+<a name="276"></a>
+<a name="277"></a>		Temp = ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">2</span>);
+<a name="278"></a>
+<a name="279"></a>		if(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">1</span>)== <span class="source_string">"ERROR"</span>)
+<a name="280"></a>			SystemPage.SystemText(ChopLeft(ParseDelimited(Line, <span class="source_string">":"</span>, <span class="source_int">2</span>, True)));
+<a name="281"></a>
+<a name="282"></a>		if( Temp == <span class="source_string">"433"</span> )
+<a name="283"></a>		{
+<a name="284"></a>			<span class="source_comment">// Nick in use
+</span><a name="285"></a>			SystemPage.SystemText(ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>, True)));
+<a name="286"></a>			SetTimer(<span class="source_int">0</span>, false);
+<a name="287"></a>
+<a name="288"></a>			<span class="source_comment">// If we dont have it up already..
+</span><a name="289"></a>			if( <span class="source_type"><a href="../xinterface/irc_newnick.html" class="source">IRC_NewNick</a></span>(SystemPage.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage()) == None )
+<a name="290"></a>			{
+<a name="291"></a>				<span class="source_comment">// Pop up 'choose a new nickname' dialog
+</span><a name="292"></a>				if( SystemPage.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"xinterface.IRC_NewNick"</span>) )
+<a name="293"></a>				{
+<a name="294"></a>					NewNickDialog = <span class="source_type"><a href="../xinterface/irc_newnick.html" class="source">IRC_NewNick</a></span>(SystemPage.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage());
+<a name="295"></a>					NewNickDialog.NewNickPrompt.<span class="source_type">Caption</span> = NickInUseText;
+<a name="296"></a>					NewNickDialog.SystemPage = SystemPage;
+<a name="297"></a>				}
+<a name="298"></a>			}
+<a name="299"></a>		}
+<a name="300"></a>		else
+<a name="301"></a>		if( Temp==<span class="source_string">"432"</span> )
+<a name="302"></a>		{
+<a name="303"></a>			<span class="source_comment">// Invalid nick
+</span><a name="304"></a>			SystemPage.SystemText(ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>, True)));
+<a name="305"></a>			SetTimer(<span class="source_int">0</span>, false);
+<a name="306"></a>
+<a name="307"></a>			if( <span class="source_type"><a href="../xinterface/irc_newnick.html" class="source">IRC_NewNick</a></span>(SystemPage.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage()) == None )
+<a name="308"></a>			{
+<a name="309"></a>				if( SystemPage.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"xinterface.IRC_NewNick"</span>) )
+<a name="310"></a>				{
+<a name="311"></a>					NewNickDialog = <span class="source_type"><a href="../xinterface/irc_newnick.html" class="source">IRC_NewNick</a></span>(SystemPage.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage());
+<a name="312"></a>					NewNickDialog.NewNickPrompt.<span class="source_type">Caption</span> = NickInvalidText;
+<a name="313"></a>					NewNickDialog.SystemPage = SystemPage;
+<a name="314"></a>				}
+<a name="315"></a>			}
+<a name="316"></a>		}
+<a name="317"></a>		else
+<a name="318"></a>		if( <span class="source_type">Int</span>(Temp) != <span class="source_int">0</span> )
+<a name="319"></a>		{
+<a name="320"></a>			SystemPage.SystemText(ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>, True)));
+<a name="321"></a>			SetTimer(<span class="source_int">0</span>, False);
+<a name="322"></a>			GotoState(<span class="source_name">'LoggedIn'</span>);
+<a name="323"></a>		}
+<a name="324"></a>
+<a name="325"></a>		Global.ProcessInput(Line);
+<a name="326"></a>	}
+<a name="327"></a>
+<a name="328"></a>	function SendCommandText(<span class="source_type">string</span> <span class="source_type">Text</span>)
+<a name="329"></a>	{
+<a name="330"></a>		Global.SendCommandText(<span class="source_type">Text</span>);
+<a name="331"></a>		if(ParseDelimited(<span class="source_type">Text</span>, <span class="source_string">" "</span>, <span class="source_int">1</span>) ~= <span class="source_string">"NICK"</span>)
+<a name="332"></a>		{
+<a name="333"></a>			SystemPage.ChangedNick(<span class="source_type">NickName</span>, Chop(ParseDelimited(<span class="source_type">Text</span>, <span class="source_string">" "</span>, <span class="source_int">2</span>)));
+<a name="334"></a>		}
+<a name="335"></a>	}
+<a name="336"></a>
+<a name="337"></a>Begin:
+<a name="338"></a>	SendBufferedData(<span class="source_string">"USER "</span>$UserIdent$<span class="source_string">" localhost "</span>$<span class="source_type">ServerAddress</span>$<span class="source_string">" :"</span>$<span class="source_type">FullName</span>$CRLF);
+<a name="339"></a>	SendBufferedData(<span class="source_string">"NICK "</span>$<span class="source_type">NickName</span>$CRLF);
+<a name="340"></a>	SetTimer(<span class="source_int">1</span>, false);
+<a name="341"></a>}
+<a name="342"></a>
+<a name="343"></a><span class="source_type">state</span> LoggedIn
+<a name="344"></a>{
+<a name="345"></a>	function ProcessInput(<span class="source_type">string</span> Line)
+<a name="346"></a>	{
+<a name="347"></a>		local <span class="source_type">string</span> Temp, Temp2, Temp3;
+<a name="348"></a>		local <span class="source_type">bool</span> bAddModifier;
+<a name="349"></a>		local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="350"></a>		local <span class="source_type">string</span> <span class="source_type">Command</span>;
+<a name="351"></a>
+<a name="352"></a>		Global.ProcessInput(Line);
+<a name="353"></a>
+<a name="354"></a>		if( SystemPage == None )
+<a name="355"></a>		    return;
+<a name="356"></a>
+<a name="357"></a>        <span class="source_comment">//log("ProcessInput: "$Line,'IRC');
+</span><a name="358"></a>
+<a name="359"></a>		<span class="source_type">Command</span> = ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">2</span>);
+<a name="360"></a>
+<a name="361"></a>		if(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">1</span>) == <span class="source_string">"ERROR"</span>)
+<a name="362"></a>		{
+<a name="363"></a>			SystemPage.SystemText(ChopLeft(ParseDelimited(Line, <span class="source_string">":"</span>, <span class="source_int">2</span>, True)));
+<a name="364"></a>		}
+<a name="365"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"JOIN"</span>)
+<a name="366"></a>		{
+<a name="367"></a>			Temp = ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>);
+<a name="368"></a>			<span class="source_comment">//Log("JOIN:"$Line$" Temp:"$Temp$" NickName:"$NickName);
+</span><a name="369"></a>			if(Temp ~= <span class="source_type">NickName</span>)
+<a name="370"></a>				Temp = <span class="source_string">""</span>;
+<a name="371"></a>			SystemPage.JoinedChannel(Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>)), Temp);
+<a name="372"></a>		}
+<a name="373"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"PART"</span>)
+<a name="374"></a>		{
+<a name="375"></a>			Temp = ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>);
+<a name="376"></a>			if(Temp ~= <span class="source_type">NickName</span>)
+<a name="377"></a>				Temp = <span class="source_string">""</span>;
+<a name="378"></a>			SystemPage.PartedChannel(Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>)), Temp);
+<a name="379"></a>		}
+<a name="380"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"NICK"</span>)
+<a name="381"></a>		{
+<a name="382"></a>			SystemPage.ChangedNick(ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>)));
+<a name="383"></a>		}
+<a name="384"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"QUIT"</span>)
+<a name="385"></a>		{
+<a name="386"></a>			SystemPage.UserQuit(ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>, True)));
+<a name="387"></a>		}
+<a name="388"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"353"</span>)	<span class="source_comment">// NAMES
+</span><a name="389"></a>		{
+<a name="390"></a>			Temp2 = ParseDelimited(Line, <span class="source_string">"#"</span>, <span class="source_int">2</span>);
+<a name="391"></a>			Temp2 = ParseDelimited(Temp2, <span class="source_string">" :"</span>, <span class="source_int">1</span>);
+<a name="392"></a>
+<a name="393"></a>			Temp = ParseDelimited(Line, <span class="source_string">":"</span>, <span class="source_int">3</span>, True);
+<a name="394"></a>			while(Temp != <span class="source_string">""</span>)
+<a name="395"></a>			{
+<a name="396"></a>				<span class="source_comment">// Nickname
+</span><a name="397"></a>				Temp3 = ParseDelimited(Temp, <span class="source_string">" "</span>, <span class="source_int">1</span>);
+<a name="398"></a>
+<a name="399"></a>				SystemPage.UserInChannel(<span class="source_string">"#"</span>$Temp2, RemoveNickPrefix(Temp3));
+<a name="400"></a>
+<a name="401"></a>				if(Left(Temp3, <span class="source_int">1</span>) == <span class="source_string">"@"</span>)
+<a name="402"></a>					SystemPage.ChangeOp(<span class="source_string">"#"</span>$Temp2, RemoveNickPrefix(Temp3), True);
+<a name="403"></a>				else
+<a name="404"></a>				if(Left(Temp3, <span class="source_int">1</span>) == <span class="source_string">"%"</span>)
+<a name="405"></a>					SystemPage.ChangeHalfOp(<span class="source_string">"#"</span>$Temp2, RemoveNickPrefix(Temp3), True);
+<a name="406"></a>				else
+<a name="407"></a>				if(Left(Temp3, <span class="source_int">1</span>) == <span class="source_string">"+"</span>)
+<a name="408"></a>					SystemPage.ChangeVoice(<span class="source_string">"#"</span>$Temp2, RemoveNickPrefix(Temp3), True);
+<a name="409"></a>
+<a name="410"></a>				Temp = ParseDelimited(Temp, <span class="source_string">" "</span>, <span class="source_int">2</span>, True);
+<a name="411"></a>			}
+<a name="412"></a>		}
+<a name="413"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"333"</span>)	<span class="source_comment">// Channel formed info
+</span><a name="414"></a>		{
+<a name="415"></a>		}
+<a name="416"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"366"</span>)	<span class="source_comment">// End of NAMES
+</span><a name="417"></a>		{
+<a name="418"></a>		}
+<a name="419"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"331"</span>)	<span class="source_comment">// RPL_NOTOPIC
+</span><a name="420"></a>		{
+<a name="421"></a>		}
+<a name="422"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"332"</span>)	<span class="source_comment">// RPL_TOPIC
+</span><a name="423"></a>		{
+<a name="424"></a>			Temp = Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>));
+<a name="425"></a>			Temp2 = Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">5</span>));
+<a name="426"></a>
+<a name="427"></a>			SystemPage.ChangeTopic(Temp, Temp2);
+<a name="428"></a>		}
+<a name="429"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"341"</span>)   <span class="source_comment">// RPL_INVITING
+</span><a name="430"></a>		{
+<a name="431"></a>		}
+<a name="432"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"301"</span>)	<span class="source_comment">// RPL_AWAY
+</span><a name="433"></a>		{
+<a name="434"></a>			SystemPage.IsAway(Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>)), ChopLeft(ParseDelimited(Line, <span class="source_string">":"</span>, <span class="source_int">3</span>, True)));
+<a name="435"></a>		}
+<a name="436"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"NOTICE"</span>)
+<a name="437"></a>		{
+<a name="438"></a>			Temp = ParseDelimited(Line, <span class="source_string">": "</span>, <span class="source_int">2</span>);
+<a name="439"></a>			Temp2 = ParseDelimited(Line, <span class="source_string">":! "</span>, <span class="source_int">2</span>);
+<a name="440"></a>
+<a name="441"></a>			if(InStr(Temp, <span class="source_string">"!"</span>) != -<span class="source_int">1</span> && InStr(Temp2, <span class="source_string">"."</span>) == -<span class="source_int">1</span>)
+<a name="442"></a>			{
+<a name="443"></a>				<span class="source_comment">// it's a Nick.
+</span><a name="444"></a>				Temp = ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>, True));
+<a name="445"></a>				if(Asc(Left(Temp, <span class="source_int">1</span>)) == <span class="source_int">1</span> && Asc(Right(Temp, <span class="source_int">1</span>)) == <span class="source_int">1</span>)
+<a name="446"></a>					SystemPage.CTCP(<span class="source_string">""</span>, Temp2, Mid(Temp, <span class="source_int">1</span>, <span class="source_type">Len</span>(Temp) - <span class="source_int">2</span>));
+<a name="447"></a>				else
+<a name="448"></a>					SystemPage.UserNotice(Temp2, Temp);
+<a name="449"></a>			}
+<a name="450"></a>			else
+<a name="451"></a>				SystemPage.SystemText(ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>, True)));
+<a name="452"></a>		}
+<a name="453"></a>		else if(<span class="source_type">Int</span>(<span class="source_type">Command</span>)!= <span class="source_int">0</span>)
+<a name="454"></a>		{
+<a name="455"></a>			SystemPage.SystemText(ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>, True)));
+<a name="456"></a>		}
+<a name="457"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"MODE"</span>)
+<a name="458"></a>		{
+<a name="459"></a>			<span class="source_comment">// channel mode
+</span><a name="460"></a>			Temp = Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>));
+<a name="461"></a>			<span class="source_comment">// channel
+</span><a name="462"></a>			Temp3 = Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>));
+<a name="463"></a>			<span class="source_type">i</span> = <span class="source_int">5</span>;
+<a name="464"></a>			bAddModifier = True;
+<a name="465"></a>			while(Temp != <span class="source_string">""</span>)
+<a name="466"></a>			{
+<a name="467"></a>				Temp2 = Left(Temp, <span class="source_int">1</span>);
+<a name="468"></a>				if(Temp2 == <span class="source_string">"+"</span>)
+<a name="469"></a>					bAddModifier = True;
+<a name="470"></a>				if(Temp2 == <span class="source_string">"-"</span>)
+<a name="471"></a>					bAddModifier = False;
+<a name="472"></a>
+<a name="473"></a>				if(Temp2 == <span class="source_string">"o"</span>)
+<a name="474"></a>				{
+<a name="475"></a>					SystemPage.ChangeOp(Temp3, Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_type">i</span>)), bAddModifier);
+<a name="476"></a>					<span class="source_type">i</span>++;
+<a name="477"></a>				}
+<a name="478"></a>
+<a name="479"></a>				if(Temp2 == <span class="source_string">"h"</span>)
+<a name="480"></a>				{
+<a name="481"></a>					SystemPage.ChangeHalfOp(Temp3, Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_type">i</span>)), bAddModifier);
+<a name="482"></a>					<span class="source_type">i</span>++;
+<a name="483"></a>				}
+<a name="484"></a>
+<a name="485"></a>				if(Temp2 == <span class="source_string">"v"</span>)
+<a name="486"></a>				{
+<a name="487"></a>					SystemPage.ChangeVoice(Temp3, Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_type">i</span>)), bAddModifier);
+<a name="488"></a>					<span class="source_type">i</span>++;
+<a name="489"></a>				}
+<a name="490"></a>
+<a name="491"></a>				Temp = Mid(Temp, <span class="source_int">1</span>);
+<a name="492"></a>			}
+<a name="493"></a>
+<a name="494"></a>			SystemPage.ChangeMode(Temp3, ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>, True)));
+<a name="495"></a>
+<a name="496"></a>		}
+<a name="497"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"KICK"</span>)
+<a name="498"></a>		{
+<a name="499"></a>			<span class="source_comment">// FIXME: handle multiple kicks in a single message
+</span><a name="500"></a>			SystemPage.KickUser(Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>)), Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>)), ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), ChopLeft(ParseDelimited(Line, <span class="source_string">":"</span>, <span class="source_int">3</span>, True)));
+<a name="501"></a>		}
+<a name="502"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"INVITE"</span>)
+<a name="503"></a>		{
+<a name="504"></a>			SystemPage.SystemText(ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>)@InviteString@ParseDelimited(Line, <span class="source_string">":"</span>, <span class="source_int">3</span>));
+<a name="505"></a>		}
+<a name="506"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"PRIVMSG"</span>)
+<a name="507"></a>		{
+<a name="508"></a>			Temp = Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>));
+<a name="509"></a>			Temp2 = ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>, True));
+<a name="510"></a>
+<a name="511"></a>			if(Mid(Temp2, <span class="source_int">1</span>, <span class="source_int">7</span>) == <span class="source_string">"ACTION "</span> && Asc(Left(Temp2, <span class="source_int">1</span>))==<span class="source_int">1</span> && Asc(Right(Temp2, <span class="source_int">1</span>))==<span class="source_int">1</span>)
+<a name="512"></a>			{
+<a name="513"></a>				Temp2 = Mid(Temp2, <span class="source_int">8</span>);
+<a name="514"></a>				Temp2 = Left(Temp2, <span class="source_type">Len</span>(Temp2) - <span class="source_int">1</span>);
+<a name="515"></a>
+<a name="516"></a>				if(Temp != <span class="source_string">""</span> && InStr(<span class="source_string">"&#@"</span>, Left(Temp, <span class="source_int">1</span>)) != -<span class="source_int">1</span>)
+<a name="517"></a>					SystemPage.ChannelAction(Temp, ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), Temp2);
+<a name="518"></a>				else
+<a name="519"></a>					SystemPage.PrivateAction(ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), Temp2);
+<a name="520"></a>			}
+<a name="521"></a>			else
+<a name="522"></a>			if(Asc(Left(Temp2, <span class="source_int">1</span>))==<span class="source_int">1</span> && Asc(Right(Temp2, <span class="source_int">1</span>))==<span class="source_int">1</span>)
+<a name="523"></a>			{
+<a name="524"></a>				Temp2 = Mid(Temp2, <span class="source_int">1</span>, <span class="source_type">Len</span>(Temp2) - <span class="source_int">2</span>);
+<a name="525"></a>
+<a name="526"></a>				<span class="source_type">switch</span>(Temp2)
+<a name="527"></a>				{
+<a name="528"></a>				case <span class="source_string">"VERSION"</span>:
+<a name="529"></a>					<span class="source_comment">// if _RO_
+</span><a name="530"></a>					SendBufferedData(<span class="source_string">"NOTICE "</span>$ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>)$<span class="source_string">" :"</span>$Chr(<span class="source_int">1</span>)$<span class="source_string">"VERSION "</span>$VersionString$<span class="source_type">Level</span>.ROVersion$Chr(<span class="source_int">1</span>)$CRLF);
+<a name="531"></a>					<span class="source_comment">//else
+</span><a name="532"></a>					<span class="source_comment">//SendBufferedData("NOTICE "$ParseDelimited(Line, ":!", 2)$" :"$Chr(1)$"VERSION "$VersionString$Level.EngineVersion$Chr(1)$CRLF);
+</span><a name="533"></a>					SystemPage.CTCP(Temp, ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), Temp2);
+<a name="534"></a>					break;
+<a name="535"></a>				default:
+<a name="536"></a>					SystemPage.CTCP(Temp, ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), Temp2);
+<a name="537"></a>					break;
+<a name="538"></a>				}
+<a name="539"></a>			}
+<a name="540"></a>			else
+<a name="541"></a>			{
+<a name="542"></a>				if(Temp != <span class="source_string">""</span> && InStr(<span class="source_string">"&#@"</span>, Left(Temp, <span class="source_int">1</span>)) != -<span class="source_int">1</span>)
+<a name="543"></a>					SystemPage.ChannelText(Temp, ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), Temp2);
+<a name="544"></a>				else
+<a name="545"></a>					SystemPage.PrivateText(ParseDelimited(Line, <span class="source_string">":!"</span>, <span class="source_int">2</span>), Temp2);
+<a name="546"></a>			}
+<a name="547"></a>		}
+<a name="548"></a>		else if(<span class="source_type">Command</span> == <span class="source_string">"TOPIC"</span>)
+<a name="549"></a>		{
+<a name="550"></a>			Temp = Chop(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">3</span>));
+<a name="551"></a>			Temp2 = ChopLeft(ParseDelimited(Line, <span class="source_string">" "</span>, <span class="source_int">4</span>, True));
+<a name="552"></a>
+<a name="553"></a>			SystemPage.ChangeTopic(Temp, Temp2);
+<a name="554"></a>		}
+<a name="555"></a>        <span class="source_comment">//SystemPage.RefreshUI();
+</span><a name="556"></a>	}
+<a name="557"></a>Begin:
+<a name="558"></a>	if(DefaultChannel != <span class="source_string">""</span>)
+<a name="559"></a>		JoinChannel(DefaultChannel);
+<a name="560"></a>}
+<a name="561"></a>
+<a name="562"></a>function JoinChannel(<span class="source_type">string</span> <span class="source_type">Channel</span>)
+<a name="563"></a>{
+<a name="564"></a>    log(<span class="source_string">"IRCLink: JoinChannel: "</span>$<span class="source_type">Channel</span>,<span class="source_name">'IRC'</span>);
+<a name="565"></a>	if(Left(<span class="source_type">Channel</span>, <span class="source_int">1</span>) == <span class="source_string">"#"</span>)
+<a name="566"></a>		SendBufferedData(<span class="source_string">"JOIN "</span>$<span class="source_type">Channel</span>$CRLF);
+<a name="567"></a>}
+<a name="568"></a>
+<a name="569"></a>function PartChannel(<span class="source_type">string</span> <span class="source_type">Channel</span>)
+<a name="570"></a>{
+<a name="571"></a>	if(Left(<span class="source_type">Channel</span>, <span class="source_int">1</span>) == <span class="source_string">"#"</span>)
+<a name="572"></a>		SendBufferedData(<span class="source_string">"PART "</span>$<span class="source_type">Channel</span>$CRLF);
+<a name="573"></a>}
+<a name="574"></a>
+<a name="575"></a>function SetNick(<span class="source_type">string</span> NewNick)
+<a name="576"></a>{
+<a name="577"></a>	SendBufferedData(<span class="source_string">"NICK "</span>$NewNick$CRLF);
+<a name="578"></a>}
+<a name="579"></a>
+<a name="580"></a>function SetAway(<span class="source_type">string</span> AwayText)
+<a name="581"></a>{
+<a name="582"></a>	SendBufferedData(<span class="source_string">"AWAY :"</span>$AwayText$CRLF);
+<a name="583"></a>}
+<a name="584"></a>
+<a name="585"></a>function DestroyLink()
+<a name="586"></a>{
+<a name="587"></a>	SystemPage = None;
+<a name="588"></a>	if(IsConnected())
+<a name="589"></a>	{
+<a name="590"></a>		SendText(<span class="source_string">"QUIT :"</span>$DisconnectReason$CRLF);
+<a name="591"></a>		Close();
+<a name="592"></a>	}
+<a name="593"></a>	else
+<a name="594"></a>		Destroy();
+<a name="595"></a>}
+<a name="596"></a>
+<a name="597"></a>defaultproperties
+<a name="598"></a>{
+<a name="599"></a>     InvalidAddressText=<span class="source_string">"Invalid server address, aborting."</span>
+<a name="600"></a>     ErrorBindingText=<span class="source_string">"Error binding local port, aborting."</span>
+<a name="601"></a>     ResolveFailedText=<span class="source_string">"Failed to resolve server address, aborting."</span>
+<a name="602"></a>     ConnectedText=<span class="source_string">"Connected."</span>
+<a name="603"></a>     ConnectingToText=<span class="source_string">"Connecting to"</span>
+<a name="604"></a>     TimeOutError=<span class="source_string">"Timeout connecting to server."</span>
+<a name="605"></a>     InviteString=<span class="source_string">"invites you to join"</span>
+<a name="606"></a>     NickInUseText=<span class="source_string">"Nickname Already In Use"</span>
+<a name="607"></a>     NickInvalidText=<span class="source_string">"Nickname Is Invalid"</span>
+<a name="608"></a>     DisconnectReason=<span class="source_string">"Disconnected"</span>
+<a name="609"></a>     VersionString=<span class="source_string">"Killing Floor IRC Client version "</span>
+<a name="610"></a>}
+<a name="611"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/irclink.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#IRCLink">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/hudbase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/irc_channel.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:02.961 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

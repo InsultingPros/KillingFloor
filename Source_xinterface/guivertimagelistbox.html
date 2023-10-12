@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.GUIVertImageListBox</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guivertimagelistbox.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUIVertImageListBox">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guivertimagelist.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guivertlist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/guivertimagelistbox.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/guivertimagelistbox.html">GUIVertImageListBox</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// ====================================================================
+</span><a name="2"></a><span class="source_comment">// (C) 2002, Epic Games
+</span><a name="3"></a><span class="source_comment">// ====================================================================
+</span><a name="4"></a>
+<a name="5"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/guivertimagelistbox.html" class="source">GUIVertImageListBox</a></span> extends <span class="source_type"><a href="../xinterface/guilistboxbase.html" class="source">GUIListBoxBase</a></span>;
+<a name="6"></a>
+<a name="7"></a>var		<span class="source_type"><a href="../xinterface/guivertimagelist.html" class="source">GUIVertImageList</a></span> <span class="source_type">List</span>;
+<a name="8"></a>
+<a name="9"></a>var() 	<span class="source_type"><a href="../xinterface/gui.html#eCellStyle" class="source">eCellStyle</a></span> CellStyle;
+<a name="10"></a>
+<a name="11"></a>var() 	<span class="source_type">float</span>	ImageScale;					<span class="source_comment">// Scale value for the images
+</span><a name="12"></a>
+<a name="13"></a>var() 	<span class="source_type">int</span>		NoVisibleRows;				<span class="source_comment">// How many rows of visible images are there
+</span><a name="14"></a>var() 	<span class="source_type">int</span> 	NoVisibleCols;				<span class="source_comment">// How many cols of visible images are there
+</span><a name="15"></a>
+<a name="16"></a>var() <span class="source_type">int</span>	HorzBorder, VertBorder;			<span class="source_comment">// How much white space
+</span><a name="17"></a>
+<a name="18"></a>function InitBaseList(<span class="source_type"><a href="../xinterface/guilistbase.html" class="source">GUIListBase</a></span> LocalList)
+<a name="19"></a>{
+<a name="20"></a>
+<a name="21"></a>	<span class="source_type">List</span> = <span class="source_type"><a href="../xinterface/guivertimagelist.html" class="source">GUIVertImageList</a></span>(LocalList);
+<a name="22"></a>    <span class="source_type">List</span>.CellStyle = CellStyle;
+<a name="23"></a>    <span class="source_type">List</span>.ImageScale = ImageScale;
+<a name="24"></a>    <span class="source_type">List</span>.NoVisibleRows = NoVisibleRows;
+<a name="25"></a>    <span class="source_type">List</span>.NoVisibleCols = NoVisibleCols;
+<a name="26"></a>    <span class="source_type">List</span>.HorzBorder = HorzBorder;
+<a name="27"></a>    <span class="source_type">List</span>.VertBorder = VertBorder;
+<a name="28"></a>
+<a name="29"></a>	LocalList.OnClick=InternalOnClick;
+<a name="30"></a>	LocalList.OnClickSound=CS_Click;
+<a name="31"></a>	LocalList.OnChange=InternalOnChange;
+<a name="32"></a>
+<a name="33"></a>    MyScrollBar.SetVisibility(true);
+<a name="34"></a>    MyScrollBar.Step = <span class="source_type">List</span>.NoVisibleCols;
+<a name="35"></a>
+<a name="36"></a>
+<a name="37"></a>	Super.InitBaseList(LocalList);
+<a name="38"></a>}
+<a name="39"></a>
+<a name="40"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="41"></a>{
+<a name="42"></a>	Super.Initcomponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="43"></a>
+<a name="44"></a>	if (DefaultListClass != <span class="source_string">""</span>)
+<a name="45"></a>	{
+<a name="46"></a>		MyList = <span class="source_type"><a href="../xinterface/guilistbase.html" class="source">GUIListBase</a></span>(AddComponent(DefaultListClass));
+<a name="47"></a>		if (MyList == None)
+<a name="48"></a>		{
+<a name="49"></a>        	log(<span class="source_type">Class</span>$<span class="source_string">".InitComponent - Could not create default list ["</span>$DefaultListClass$<span class="source_string">"]"</span>);
+<a name="50"></a>            return;
+<a name="51"></a>        }
+<a name="52"></a>
+<a name="53"></a>	}
+<a name="54"></a>
+<a name="55"></a>	if (MyList == None)
+<a name="56"></a>	{
+<a name="57"></a>		Warn(<span class="source_string">"Could not initialize list!"</span>);
+<a name="58"></a>		return;
+<a name="59"></a>	}
+<a name="60"></a>    InitBaseList(MyList);
+<a name="61"></a>}
+<a name="62"></a>
+<a name="63"></a>function <span class="source_type">bool</span> InternalOnClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="64"></a>{
+<a name="65"></a>	<span class="source_type">List</span>.InternalOnClick(<span class="source_type">Sender</span>);
+<a name="66"></a>    OnClick(<span class="source_type">Sender</span>);
+<a name="67"></a>	return true;
+<a name="68"></a>}
+<a name="69"></a>
+<a name="70"></a>function InternalOnChange(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="71"></a>{
+<a name="72"></a>	if (<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> != None && <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized)
+<a name="73"></a>		OnChange(Self);
+<a name="74"></a>}
+<a name="75"></a>
+<a name="76"></a>function <span class="source_type">int</span> ItemCount()
+<a name="77"></a>{
+<a name="78"></a>	return <span class="source_type">List</span>.ItemCount;
+<a name="79"></a>}
+<a name="80"></a>
+<a name="81"></a>function AddImage(<span class="source_type"><a href="../engine/material.html" class="source">material</a></span> <span class="source_type">Image</span>, optional <span class="source_type">int</span> <span class="source_type">Item</span>)
+<a name="82"></a>{
+<a name="83"></a>	<span class="source_type">List</span>.Add(<span class="source_type">Image</span>, <span class="source_type">Item</span>);
+<a name="84"></a>}
+<a name="85"></a>
+<a name="86"></a>function <span class="source_type">bool</span> MyOpen(<span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span> <span class="source_type">Menu</span>, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> ContextMenuOwner)
+<a name="87"></a>{
+<a name="88"></a>	return HandleContextMenuOpen(self, <span class="source_type">Menu</span>, ContextMenuOwner);
+<a name="89"></a>}
+<a name="90"></a>
+<a name="91"></a>function <span class="source_type">bool</span> MyClose(<span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span> <span class="source_type">Sender</span>)
+<a name="92"></a>{
+<a name="93"></a>	return HandleContextMenuClose(<span class="source_type">Sender</span>);
+<a name="94"></a>}
+<a name="95"></a>
+<a name="96"></a>function Clear()
+<a name="97"></a>{
+<a name="98"></a>	<span class="source_type">List</span>.Clear();
+<a name="99"></a>}
+<a name="100"></a>
+<a name="101"></a>defaultproperties
+<a name="102"></a>{
+<a name="103"></a>     ImageScale=<span class="source_int">1.000000</span>
+<a name="104"></a>     HorzBorder=<span class="source_int">2</span>
+<a name="105"></a>     VertBorder=<span class="source_int">2</span>
+<a name="106"></a>     DefaultListClass=<span class="source_string">"XInterface.GUIVertImageList"</span>
+<a name="107"></a>}
+<a name="108"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guivertimagelistbox.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUIVertImageListBox">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guivertimagelist.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guivertlist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:02.616 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

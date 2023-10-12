@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.UT2K4GamePageBase</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4gamepagebase.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4GamePageBase">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4gamefooter.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4gamepagemp.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/ut2k4gamepagebase.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/ut2k4gamepagebase.html">UT2K4GamePageBase</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//  Created on: 12/11/2003
+</span><a name="3"></a><span class="source_comment">//  Base class for Instant Action & Host Multiplayer pages
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">//  Written by Ron Prestenback
+</span><a name="6"></a><span class="source_comment">//  © 2003, Epic Games, Inc. All Rights Reserved
+</span><a name="7"></a><span class="source_comment">//==============================================================================
+</span><a name="8"></a>
+<a name="9"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/ut2k4gamepagebase.html" class="source">UT2K4GamePageBase</a></span> extends <span class="source_type"><a href="../gui2k4/ut2k4mainpage.html" class="source">UT2k4MainPage</a></span>;
+<a name="10"></a>
+<a name="11"></a><span class="source_comment">// if _RO_
+</span><a name="12"></a><span class="source_comment">// else
+</span><a name="13"></a><span class="source_comment">//#exec OBJ LOAD FILE=InterfaceContent.utx
+</span><a name="14"></a><span class="source_comment">// end if _RO_
+</span><a name="15"></a>
+<a name="16"></a>var() localized <span class="source_type">string</span> PageCaption;
+<a name="17"></a>var() config <span class="source_type">bool</span> bUseTabs;
+<a name="18"></a>
+<a name="19"></a>var() editconst noexport <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> b_Primary, b_Secondary, b_Back;
+<a name="20"></a>
+<a name="21"></a>var() editconst noexport <span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span> RuleInfo;
+<a name="22"></a>var() editconst noexport <span class="source_type"><a href="../engine/cachemanager.html" class="source">CacheManager</a></span>.<span class="source_type"><a href="../engine/cachemanager.html#GameRecord" class="source">GameRecord</a></span>    <span class="source_type">CurrentGame</span>;
+<a name="23"></a>
+<a name="24"></a>var() editconst noexport <span class="source_type"><a href="../gui2k4/ut2k4tab_gametypebase.html" class="source">UT2K4Tab_GameTypeBase</a></span>      p_Game;
+<a name="25"></a>var() editconst noexport <span class="source_type"><a href="../gui2k4/ut2k4tab_mainbase.html" class="source">UT2K4Tab_MainBase</a></span>          p_Main;
+<a name="26"></a>var() editconst noexport <span class="source_type"><a href="../gui2k4/ut2k4tab_rulesbase.html" class="source">UT2K4Tab_RulesBase</a></span>         p_Rules;
+<a name="27"></a>var() editconst noexport <span class="source_type"><a href="../gui2k4/iamulticolumnrulespanel.html" class="source">IAMultiColumnRulesPanel</a></span>    mcRules;
+<a name="28"></a>var() editconst noexport <span class="source_type"><a href="../gui2k4/ut2k4tab_serverrulespanel.html" class="source">UT2K4Tab_ServerRulesPanel</a></span>	mcServerRules;  <span class="source_comment">// added by BDB
+</span><a name="29"></a>var() editconst noexport <span class="source_type"><a href="../gui2k4/ut2k4tab_mutatorbase.html" class="source">UT2K4Tab_MutatorBase</a></span>       p_Mutators;
+<a name="30"></a>var() editconst noexport <span class="source_type"><a href="../gui2k4/ut2k4tab_botconfigbase.html" class="source">UT2K4Tab_BotConfigBase</a></span>     p_BotConfig;
+<a name="31"></a>
+<a name="32"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="33"></a>{
+<a name="34"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="35"></a>
+<a name="36"></a>    Super.Initcomponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="37"></a>
+<a name="38"></a>    RuleInfo = new(None) <span class="source_type">class</span><span class="source_name">'Engine.PlayInfo'</span>;
+<a name="39"></a>
+<a name="40"></a>	p_Game = <span class="source_type"><a href="../gui2k4/ut2k4tab_gametypebase.html" class="source">UT2K4Tab_GameTypeBase</a></span>( c_Tabs.AddTab(PanelCaption[<span class="source_type">i</span>], <span class="source_type">PanelClass</span>[<span class="source_type">i</span>],, PanelHint[<span class="source_type">i</span>++], True) );
+<a name="41"></a>	p_Game.OnChangeGameType = ChangeGameType;
+<a name="42"></a>
+<a name="43"></a>    p_Main        = <span class="source_type"><a href="../gui2k4/ut2k4tab_mainbase.html" class="source">UT2K4Tab_MainBase</a></span>(c_Tabs.AddTab(PanelCaption[<span class="source_type">i</span>],<span class="source_type">PanelClass</span>[<span class="source_type">i</span>],,PanelHint[<span class="source_type">i</span>++]) );
+<a name="44"></a>    p_Game.tp_Main = p_Main;
+<a name="45"></a>
+<a name="46"></a>    <span class="source_comment">// if bUseTabs, we'll use a tabcontrol display for setting groups
+</span><a name="47"></a>    <span class="source_comment">// if not, we'll use a mult-column multioptionlist, with section headers
+</span><a name="48"></a>    if (bUseTabs)
+<a name="49"></a>        p_Rules       = <span class="source_type"><a href="../gui2k4/ut2k4tab_rulesbase.html" class="source">UT2K4Tab_RulesBase</a></span>(c_Tabs.AddTab(PanelCaption[<span class="source_type">i</span>],<span class="source_type">PanelClass</span>[<span class="source_type">i</span>],,PanelHint[<span class="source_type">i</span>++]));
+<a name="50"></a>    else
+<a name="51"></a>		mcRules = <span class="source_type"><a href="../gui2k4/iamulticolumnrulespanel.html" class="source">IAMultiColumnRulesPanel</a></span>(c_Tabs.AddTab(PanelCaption[<span class="source_type">i</span>], <span class="source_string">"GUI2K4.IAMultiColumnRulesPanel"</span>,, PanelHint[<span class="source_type">i</span>++]));
+<a name="52"></a>
+<a name="53"></a>    p_Mutators    = <span class="source_type"><a href="../gui2k4/ut2k4tab_mutatorbase.html" class="source">UT2K4Tab_MutatorBase</a></span>(c_Tabs.AddTab(PanelCaption[<span class="source_type">i</span>],<span class="source_type">PanelClass</span>[<span class="source_type">i</span>],,PanelHint[<span class="source_type">i</span>++]));
+<a name="54"></a>    p_BotConfig   = <span class="source_type"><a href="../gui2k4/ut2k4tab_botconfigbase.html" class="source">UT2K4Tab_BotConfigBase</a></span>(c_Tabs.AddTab(PanelCaption[<span class="source_type">i</span>],<span class="source_type">PanelClass</span>[<span class="source_type">i</span>],,PanelHint[<span class="source_type">i</span>++]));
+<a name="55"></a>
+<a name="56"></a>	b_Back = <span class="source_type"><a href="../gui2k4/ut2k4gamefooter.html" class="source">UT2K4GameFooter</a></span>(t_Footer).b_Back;
+<a name="57"></a>	b_Secondary = <span class="source_type"><a href="../gui2k4/ut2k4gamefooter.html" class="source">UT2K4GameFooter</a></span>(t_Footer).b_Secondary;
+<a name="58"></a>	b_Primary = <span class="source_type"><a href="../gui2k4/ut2k4gamefooter.html" class="source">UT2K4GameFooter</a></span>(t_Footer).b_Primary;
+<a name="59"></a>}
+<a name="60"></a>
+<a name="61"></a>function InternalOnOpen()
+<a name="62"></a>{
+<a name="63"></a>   	ChangeGameType(False);
+<a name="64"></a>}
+<a name="65"></a>
+<a name="66"></a><span class="source_comment">// Forces the player to choose a gametype if none has been chosen - prevents having to load any gametypes until one is chosen, and speeds the page load
+</span><a name="67"></a>function <span class="source_type">bool</span> GameTypeLocked()
+<a name="68"></a>{
+<a name="69"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="70"></a>	local <span class="source_type"><a href="../xinterface/guitabbutton.html" class="source">GUITabButton</a></span> tb;
+<a name="71"></a>
+<a name="72"></a>	<span class="source_comment">// Don't lock if we don't have a gametype tab (for whatever reason)
+</span><a name="73"></a>	if ( p_Game == None )
+<a name="74"></a>		return false;
+<a name="75"></a>
+<a name="76"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.LastGameType == <span class="source_string">""</span> )
+<a name="77"></a>	{
+<a name="78"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; c_Tabs.TabStack.Length; <span class="source_type">i</span>++ )
+<a name="79"></a>		{
+<a name="80"></a>			tb = c_Tabs.TabStack[<span class="source_type">i</span>];
+<a name="81"></a>			if ( tb != None && tb != p_Game.MyButton )
+<a name="82"></a>				DisableComponent(tb);
+<a name="83"></a>		}
+<a name="84"></a>
+<a name="85"></a>		DisableComponent(b_Primary);
+<a name="86"></a>		DisableComponent(b_Secondary);
+<a name="87"></a>
+<a name="88"></a>		return true;
+<a name="89"></a>	}
+<a name="90"></a>
+<a name="91"></a>	else
+<a name="92"></a>	{
+<a name="93"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; c_Tabs.TabStack.Length; <span class="source_type">i</span>++ )
+<a name="94"></a>		{
+<a name="95"></a>			tb = c_Tabs.TabStack[<span class="source_type">i</span>];
+<a name="96"></a>			if ( tb != None )
+<a name="97"></a>			{
+<a name="98"></a>				if ( tb.MyPanel == p_Mutators && <span class="source_type">class</span><span class="source_name">'LevelInfo'</span>.static.IsDemoBuild() )
+<a name="99"></a>					DisableComponent(tb);
+<a name="100"></a>				else EnableComponent(tb);
+<a name="101"></a>			}
+<a name="102"></a>		}
+<a name="103"></a>
+<a name="104"></a>		EnableComponent(b_Primary);
+<a name="105"></a>		EnableComponent(b_Secondary);
+<a name="106"></a>		<span class="source_comment">// Update the botmode stuff (tab button & minplayers property control)
+</span><a name="107"></a>		if ( RuleInfo != None && mcRules != None )
+<a name="108"></a>		{
+<a name="109"></a>			<span class="source_type">i</span> = RuleInfo.FindIndex(<span class="source_string">"BotMode"</span>);
+<a name="110"></a>			if ( <span class="source_type">i</span> != -<span class="source_int">1</span> )
+<a name="111"></a>				mcRules.UpdateBotSetting(<span class="source_type">i</span>);
+<a name="112"></a>		}
+<a name="113"></a>
+<a name="114"></a>	}
+<a name="115"></a>
+<a name="116"></a>	return false;
+<a name="117"></a>}
+<a name="118"></a>
+<a name="119"></a>function <span class="source_type">bool</span> InternalOnClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="120"></a>{
+<a name="121"></a>	local <span class="source_type">string</span> <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>;
+<a name="122"></a>
+<a name="123"></a>    if (<span class="source_type">Sender</span> == b_Back)
+<a name="124"></a>    {
+<a name="125"></a>    	if ( RuleInfo != None )
+<a name="126"></a>    		RuleInfo.SaveSettings();
+<a name="127"></a>
+<a name="128"></a>        <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseMenu(true);
+<a name="129"></a>        return true;
+<a name="130"></a>    }
+<a name="131"></a>
+<a name="132"></a>    if (<span class="source_type">Sender</span> == b_Primary || <span class="source_type">Sender</span> == b_Secondary)
+<a name="133"></a>    {
+<a name="134"></a>    	PrepareToPlay( <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> );
+<a name="135"></a>    	StartGame(<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>, <span class="source_type">Sender</span> == b_Secondary);
+<a name="136"></a>        return true;
+<a name="137"></a>    }
+<a name="138"></a>
+<a name="139"></a>    return false;
+<a name="140"></a>}
+<a name="141"></a>
+<a name="142"></a>function PrepareToPlay(out <span class="source_type">string</span> GameURL, optional <span class="source_type">string</span> OverrideMap)
+<a name="143"></a>{
+<a name="144"></a>	<span class="source_comment">// Determine the starting map
+</span><a name="145"></a>    GameURL = p_Main.Play();
+<a name="146"></a>
+<a name="147"></a>
+<a name="148"></a>    if (OverrideMap != <span class="source_string">""</span>)
+<a name="149"></a>        GameURL = OverrideMap;
+<a name="150"></a>
+<a name="151"></a>	<span class="source_comment">// Append the gametype
+</span><a name="152"></a>    GameURL $= <span class="source_string">"?Game="</span>$p_Main.GetGameClass();
+<a name="153"></a>    <span class="source_comment">// Append the configured mutator options
+</span><a name="154"></a>    GameURL $= p_Mutators.Play();
+<a name="155"></a>
+<a name="156"></a>    if ( mcRules != None )
+<a name="157"></a>    	GameURL $= mcRules.Play();
+<a name="158"></a>
+<a name="159"></a>    RuleInfo.SaveSettings();
+<a name="160"></a>}
+<a name="161"></a>
+<a name="162"></a>function StartGame(<span class="source_type">string</span> GameURL, <span class="source_type">bool</span> bAlt);
+<a name="163"></a>
+<a name="164"></a>function InternalOnChange(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="165"></a>{
+<a name="166"></a>    if (<span class="source_type"><a href="../xinterface/guitabbutton.html" class="source">GUITabButton</a></span>(<span class="source_type">Sender</span>)==none)
+<a name="167"></a>        return;
+<a name="168"></a>
+<a name="169"></a>    t_Header.SetCaption(PageCaption@<span class="source_string">"|"</span>@<span class="source_type"><a href="../xinterface/guitabbutton.html" class="source">GUITabButton</a></span>(<span class="source_type">Sender</span>).<span class="source_type">Caption</span>);
+<a name="170"></a>}
+<a name="171"></a>
+<a name="172"></a>function ChangeGameType(<span class="source_type">bool</span> bIsCustom)
+<a name="173"></a>{
+<a name="174"></a>	if ( GameTypeLocked() )
+<a name="175"></a>		return;
+<a name="176"></a>
+<a name="177"></a>    <span class="source_comment">// We've changed the gametype, so the settings in PlayInfo may no longer be applicable
+</span><a name="178"></a>    <span class="source_comment">// Re-initialize PlayInfo and refresh the applicable pages, then update the maplists
+</span><a name="179"></a>    <span class="source_comment">// and bot configurations
+</span><a name="180"></a>    if (p_Main != None)
+<a name="181"></a>	{
+<a name="182"></a>        p_Main.InitGameType();
+<a name="183"></a>	    if ( p_Mutators != None )
+<a name="184"></a>	    	p_Mutators.SetCurrentGame(p_Main.CurrentGameType);
+<a name="185"></a>	}
+<a name="186"></a>
+<a name="187"></a>    SetRuleInfo();
+<a name="188"></a>    if (!bIsCustom && <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized)
+<a name="189"></a>        c_Tabs.ActivateTabByName(PanelCaption[<span class="source_int">1</span>], True);
+<a name="190"></a>
+<a name="191"></a>    if (p_BotConfig!=None)
+<a name="192"></a>        p_BotConfig.SetupBotLists(p_Main.GetIsTeamGame());
+<a name="193"></a>}
+<a name="194"></a>
+<a name="195"></a>function ChangeMutators( <span class="source_type">string</span> <span class="source_type">ActiveMutatorString</span> )
+<a name="196"></a>{
+<a name="197"></a>    SetRuleInfo();
+<a name="198"></a>}
+<a name="199"></a>
+<a name="200"></a>function SetRuleInfo(optional <span class="source_type">string</span> GameName)
+<a name="201"></a>{
+<a name="202"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="203"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;       <span class="source_type">GameClass</span>;
+<a name="204"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/accesscontrol.html" class="source">AccessControl</a></span>&gt;  ACClass;
+<a name="205"></a>    local array&lt;<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>&gt; &gt;   PIClasses;
+<a name="206"></a>
+<a name="207"></a>	if ( RuleInfo != None && RuleInfo.<span class="source_type">InfoClasses</span>.Length &gt; <span class="source_int">0</span> )
+<a name="208"></a>		RuleInfo.SaveSettings();
+<a name="209"></a>
+<a name="210"></a>    <span class="source_comment">// PlayInfo can now handle calling FillPlayInfo() on the necessary classes itself
+</span><a name="211"></a>    <span class="source_comment">// Let's build an array of classes to pass to PlayInfo
+</span><a name="212"></a>    if (GameName == <span class="source_string">""</span>)
+<a name="213"></a>    {
+<a name="214"></a>    	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.LastGameType == <span class="source_string">""</span> )
+<a name="215"></a>    		GameName = <span class="source_string">"UnrealGame.DeathMatch"</span>;
+<a name="216"></a>		else GameName = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.LastGameType;
+<a name="217"></a>    }
+<a name="218"></a>
+<a name="219"></a>    <span class="source_comment">/* This is the standard way PlayInfo is loaded -
+<a name="220"></a>    1. GameInfo will be first.  Keep in mind that GameInfo will always automatically call
+<a name="221"></a>        FillPlayInfo() on GameReplicationInfo and VotingHandlerClass.  Since these classes
+<a name="222"></a>		are popped off the PlayInfo.ClassStack, we can use this to figure out which classes
+<a name="223"></a>		can be culled from PlayInfo if we need to
+<a name="224"></a>
+<a name="225"></a>    2. Next up is Access Control - this will add administration settings to playinfo
+<a name="226"></a>    */</span>
+<a name="227"></a>    <span class="source_type">GameClass</span> = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(DynamicLoadObject(GameName, <span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="228"></a>    if (<span class="source_type">GameClass</span> != None)
+<a name="229"></a>    {
+<a name="230"></a>        PIClasses[<span class="source_type">i</span>++] = <span class="source_type">GameClass</span>;
+<a name="231"></a>
+<a name="232"></a>		SetupBotText( <span class="source_type">GameClass</span> );
+<a name="233"></a>        ACClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/accesscontrol.html" class="source">AccessControl</a></span>&gt;(DynamicLoadObject(<span class="source_type">GameClass</span>.default.AccessControlClass, <span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="234"></a>        if (ACClass != None)
+<a name="235"></a>            PIClasses[<span class="source_type">i</span>++] = ACClass;
+<a name="236"></a>
+<a name="237"></a><span class="source_comment">/*      Uncomment to allow mutator properties to appear in the main GameRules panel
+<a name="238"></a>
+<a name="239"></a>        MutClass = class&lt;Mutator&gt;(DynamicLoadObject(GameClass.default.MutatorClass,class'Class'));
+<a name="240"></a>        if (MutClass != None)
+<a name="241"></a>            PIClasses[i++] = MutClass;
+<a name="242"></a>
+<a name="243"></a>        if (pMutators != None)
+<a name="244"></a>        {
+<a name="245"></a>            pMutators.Play();
+<a name="246"></a>            MutString = pMutators.LastActiveMutators;
+<a name="247"></a>            if (MutString != "")
+<a name="248"></a>            {
+<a name="249"></a>                Split(MutString, ",", MutClassNames);
+<a name="250"></a>                for (j = 0; j &lt; MutClassNames.Length; j++)
+<a name="251"></a>                {
+<a name="252"></a>                    MutClass = class&lt;Mutator&gt;(DynamicLoadObject(MutClassNames[j], class'Class'));
+<a name="253"></a>                    if (MutClass != None)
+<a name="254"></a>                        PIClasses[i++] = MutClass;
+<a name="255"></a>                }
+<a name="256"></a>            }
+<a name="257"></a>
+<a name="258"></a>        }
+<a name="259"></a>*/</span>
+<a name="260"></a>        InitRuleInfo(PIClasses);
+<a name="261"></a>    }
+<a name="262"></a>}
+<a name="263"></a>
+<a name="264"></a>function InitRuleInfo(array&lt;<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>&gt; &gt; PIClasses)
+<a name="265"></a>{
+<a name="266"></a>    RuleInfo.Init(PIClasses);
+<a name="267"></a>    if (p_Rules != None)
+<a name="268"></a>        p_Rules.Refresh();
+<a name="269"></a>
+<a name="270"></a>    else if (mcRules != None)
+<a name="271"></a>        mcRules.Refresh();
+<a name="272"></a>}
+<a name="273"></a>
+<a name="274"></a>function SetupBotText( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt; <span class="source_type">GameClass</span> );
+<a name="275"></a>
+<a name="276"></a>event Free()
+<a name="277"></a>{
+<a name="278"></a>	if ( !bPersistent )
+<a name="279"></a>		RuleInfo = None;
+<a name="280"></a>
+<a name="281"></a>	Super.Free();
+<a name="282"></a>}
+<a name="283"></a>
+<a name="284"></a>event <span class="source_type">bool</span> NotifyLevelChange()
+<a name="285"></a>{
+<a name="286"></a>	bPersistent = False;
+<a name="287"></a>	LevelChanged();
+<a name="288"></a>	return true;
+<a name="289"></a>}
+<a name="290"></a>
+<a name="291"></a>function <span class="source_type">string</span> GetBotTabName()
+<a name="292"></a>{
+<a name="293"></a>	if ( PanelCaption.Length &gt; <span class="source_int">4</span> )
+<a name="294"></a>		return PanelCaption[<span class="source_int">4</span>];
+<a name="295"></a>
+<a name="296"></a>	return <span class="source_string">""</span>;
+<a name="297"></a>}
+<a name="298"></a>
+<a name="299"></a>function <span class="source_type"><a href="../xinterface/guitabbutton.html" class="source">GUITabButton</a></span> GetBotTab()
+<a name="300"></a>{
+<a name="301"></a>	local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="302"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="303"></a>
+<a name="304"></a>	<span class="source_type">s</span> = GetBotTabName();
+<a name="305"></a>	if ( <span class="source_type">s</span> == <span class="source_string">""</span> )
+<a name="306"></a>		return None;
+<a name="307"></a>
+<a name="308"></a>	if ( c_Tabs == None )
+<a name="309"></a>		return None;
+<a name="310"></a>
+<a name="311"></a>	<span class="source_type">i</span> = c_Tabs.TabIndex(<span class="source_type">s</span>);
+<a name="312"></a>	if ( <span class="source_type">i</span> &gt; <span class="source_int">0</span> && <span class="source_type">i</span> &lt; c_Tabs.TabStack.Length )
+<a name="313"></a>		return c_Tabs.TabStack[<span class="source_type">i</span>];
+<a name="314"></a>
+<a name="315"></a>	return None;
+<a name="316"></a>}
+<a name="317"></a>
+<a name="318"></a>function UpdateBotSetting( <span class="source_type">string</span> <span class="source_type">NewValue</span>, <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span> <span class="source_type">BotControl</span> );
+<a name="319"></a>
+<a name="320"></a>defaultproperties
+<a name="321"></a>{
+<a name="322"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiheader.html" class="source">GUIHeader</a></span> <span class="source_type">Name</span>=GamePageHeader
+<a name="323"></a>         RenderWeight=<span class="source_int">0.300000</span>
+<a name="324"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="325"></a>     t_Header=<span class="source_type"><a href="../xinterface/guiheader.html" class="source">GUIHeader</a></span><span class="source_name">'GUI2K4.UT2K4GamePageBase.GamePageHeader'</span>
+<a name="326"></a>
+<a name="327"></a>     PanelCaption(<span class="source_int">0</span>)=<span class="source_string">"Gametype"</span>
+<a name="328"></a>     PanelCaption(<span class="source_int">1</span>)=<span class="source_string">"Select Map"</span>
+<a name="329"></a>     PanelCaption(<span class="source_int">2</span>)=<span class="source_string">"Game Rules"</span>
+<a name="330"></a>     PanelCaption(<span class="source_int">3</span>)=<span class="source_string">"Mutators"</span>
+<a name="331"></a>     PanelCaption(<span class="source_int">4</span>)=<span class="source_string">"Bot Config"</span>
+<a name="332"></a>     PanelHint(<span class="source_int">0</span>)=<span class="source_string">"Choose the gametype to play..."</span>
+<a name="333"></a>     PanelHint(<span class="source_int">1</span>)=<span class="source_string">"Preview the maps for the currently selected gametype..."</span>
+<a name="334"></a>     PanelHint(<span class="source_int">2</span>)=<span class="source_string">"Configure the current game type..."</span>
+<a name="335"></a>     PanelHint(<span class="source_int">3</span>)=<span class="source_string">"Select and configure any mutators to use..."</span>
+<a name="336"></a>     PanelHint(<span class="source_int">4</span>)=<span class="source_string">"Configure any bots that will be in the session..."</span>
+<a name="337"></a>     OnOpen=<span class="source_type"><a href="../gui2k4/ut2k4gamepagebase.html" class="source">UT2K4GamePageBase</a></span>.InternalOnOpen
+<a name="338"></a>}
+<a name="339"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4gamepagebase.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4GamePageBase">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4gamefooter.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4gamepagemp.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:09.920 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

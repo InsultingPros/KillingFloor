@@ -1,0 +1,1131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.GUITreeList</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guitreelist.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUITreeList">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guitooltip.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guitreelistbox.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/guitreelist.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/guitreelist.html">GUITreeList</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// ====================================================================
+</span><a name="2"></a><span class="source_comment">//  Class:  GUITreeList
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">//  The GUITree is a part of a tree control.
+</span><a name="5"></a><span class="source_comment">//
+</span><a name="6"></a><span class="source_comment">//  Written by Bruce Bickar
+</span><a name="7"></a><span class="source_comment">//  (Cloned from GUIList)
+</span><a name="8"></a><span class="source_comment">//  (c) 2002, 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="9"></a><span class="source_comment">// ====================================================================
+</span><a name="10"></a>
+<a name="11"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/guitreelist.html" class="source">GUITreeList</a></span> extends <span class="source_type"><a href="../xinterface/guivertlist.html" class="source">GUIVertList</a></span> Native;
+<a name="12"></a>
+<a name="13"></a><span class="source_macro">#exec OBJ LOAD FILE=// if _RO_
+</span><a name="14"></a><span class="source_comment">// else
+</span><a name="15"></a><span class="source_comment">//#exec OBJ LOAD FILE=InterfaceContent.utx
+</span><a name="16"></a><span class="source_comment">// end if _RO_InterfaceContent.utx
+</span><a name="17"></a>
+<a name="18"></a><span class="source_comment">// (cpptext)
+</span><a name="19"></a><span class="source_comment">// (cpptext)
+</span><a name="20"></a><span class="source_comment">// (cpptext)
+</span><a name="21"></a><span class="source_comment">// (cpptext)
+</span><a name="22"></a><span class="source_comment">// (cpptext)
+</span><a name="23"></a><span class="source_comment">// (cpptext)
+</span><a name="24"></a><span class="source_comment">// (cpptext)
+</span><a name="25"></a><span class="source_comment">// (cpptext)
+</span><a name="26"></a><span class="source_comment">// (cpptext)
+</span><a name="27"></a><span class="source_comment">// (cpptext)
+</span><a name="28"></a>
+<a name="29"></a>var() <span class="source_type"><a href="../xinterface/gui.html#eTextAlign" class="source">eTextAlign</a></span> TextAlign;
+<a name="30"></a>var() editconstarray editconst noexport array&lt;<span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span>&gt; Elements;
+<a name="31"></a>var() editconstarray editconst noexport array&lt;<span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span>&gt; SelectedElements;
+<a name="32"></a>var() editconst const noexport <span class="source_type">int</span> VisibleCount;	<span class="source_comment">// How many elements are currently visible
+</span><a name="33"></a>var() const editconst <span class="source_type">float</span> PrefixWidth, SelectedPrefixWidth;
+<a name="34"></a>var() <span class="source_type">bool</span> bAllowParentSelection, bAllowDuplicateCaption;
+<a name="35"></a>var() <span class="source_type">bool</span> bGroupItems; <span class="source_comment">// really bad hack to get onslaught link setups working
+</span><a name="36"></a>
+<a name="37"></a>native final function UpdateVisibleCount();
+<a name="38"></a>native final function SortList();
+<a name="39"></a>
+<a name="40"></a><span class="source_comment">// Used by SortList.
+</span><a name="41"></a>delegate <span class="source_type">int</span> CompareItem(<span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span> ElemA, <span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span> ElemB)
+<a name="42"></a>{
+<a name="43"></a>	return StrCmp(ElemA.<span class="source_type">Caption</span>, ElemB.<span class="source_type">Caption</span>);
+<a name="44"></a>}
+<a name="45"></a>
+<a name="46"></a>function <span class="source_type">int</span> AddItem(<span class="source_type">string</span> <span class="source_type">Caption</span>, <span class="source_type">string</span> <span class="source_type">Value</span>, optional <span class="source_type">string</span> <span class="source_type">ParentCaption</span>, optional <span class="source_type">bool</span> bEnabled, optional <span class="source_type">string</span> <span class="source_type">ExtraInfo</span>)
+<a name="47"></a>{
+<a name="48"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="49"></a>	local <span class="source_type">int</span> <span class="source_type">idx</span>;
+<a name="50"></a>
+<a name="51"></a>	if ( !bAllowEmptyItems && <span class="source_type">Caption</span> == <span class="source_string">""</span> && <span class="source_type">ParentCaption</span> == <span class="source_string">""</span> )
+<a name="52"></a>		return -<span class="source_int">1</span>;
+<a name="53"></a>
+<a name="54"></a>	if ( !bAllowDuplicateCaption && FindIndex(<span class="source_type">Caption</span>) != -<span class="source_int">1</span> )
+<a name="55"></a>		return -<span class="source_int">1</span>;
+<a name="56"></a>
+<a name="57"></a>	if ( <span class="source_type">ParentCaption</span> == <span class="source_string">""</span> )
+<a name="58"></a>		<span class="source_type">idx</span> = HardInsert( Elements.Length, <span class="source_type">Caption</span>, <span class="source_type">Value</span>, <span class="source_string">""</span>, <span class="source_int">0</span>, True, <span class="source_type">ExtraInfo</span> );
+<a name="59"></a>	else
+<a name="60"></a>	{
+<a name="61"></a>		<span class="source_comment">// find parent
+</span><a name="62"></a>		if ( bGroupItems )
+<a name="63"></a>		{
+<a name="64"></a>			<span class="source_type">i</span> = FindIndex(<span class="source_type">ParentCaption</span>,true);
+<a name="65"></a>			if ( <span class="source_type">i</span> == -<span class="source_int">1</span> )
+<a name="66"></a>				<span class="source_type">i</span> = FindIndex(<span class="source_type">ParentCaption</span>);
+<a name="67"></a>
+<a name="68"></a>			<span class="source_comment">// Implicitly create the entry for the parent, if it wasn't found
+</span><a name="69"></a>			if ( <span class="source_type">i</span> == -<span class="source_int">1</span> )
+<a name="70"></a>				<span class="source_type">i</span> = HardInsert( Elements.Length, <span class="source_type">ParentCaption</span>, <span class="source_string">""</span>, <span class="source_string">""</span>, <span class="source_int">0</span>, True );
+<a name="71"></a>		}
+<a name="72"></a>		else if ( <span class="source_type">ParentCaption</span> != <span class="source_string">""</span> )
+<a name="73"></a>			<span class="source_type">i</span> = HardInsert(Elements.Length, <span class="source_type">ParentCaption</span>, <span class="source_type">Value</span>, <span class="source_string">""</span>, <span class="source_int">0</span>, True, <span class="source_type">ExtraInfo</span>);
+<a name="74"></a>
+<a name="75"></a>		<span class="source_type">idx</span> = HardInsert( <span class="source_type">i</span>+<span class="source_int">1</span>, <span class="source_type">Caption</span>, <span class="source_type">Value</span>, <span class="source_type">ParentCaption</span>, Elements[<span class="source_type">i</span>].<span class="source_type">Level</span> + <span class="source_int">1</span>, bEnabled, <span class="source_type">ExtraInfo</span> );
+<a name="76"></a>	}
+<a name="77"></a>
+<a name="78"></a>	if (Elements.Length == <span class="source_int">1</span> && bInitializeList)
+<a name="79"></a>		SetIndex(<span class="source_int">0</span>);
+<a name="80"></a>	else if ( bNotify )
+<a name="81"></a>		CheckLinkedObjects(Self);
+<a name="82"></a>
+<a name="83"></a>	UpdateVisibleCount();
+<a name="84"></a>	if (MyScrollBar != None)
+<a name="85"></a>		MyScrollBar.AlignThumb();
+<a name="86"></a>
+<a name="87"></a>	return <span class="source_type">idx</span>;
+<a name="88"></a>}
+<a name="89"></a>
+<a name="90"></a>function <span class="source_type">int</span> AddElement( <span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span> <span class="source_type">Node</span> )
+<a name="91"></a>{
+<a name="92"></a>	return AddItem(<span class="source_type">Node</span>.<span class="source_type">Caption</span>, <span class="source_type">Node</span>.<span class="source_type">Value</span>, <span class="source_type">Node</span>.<span class="source_type">ParentCaption</span>, <span class="source_type">Node</span>.bEnabled, <span class="source_type">Node</span>.<span class="source_type">ExtraInfo</span>);
+<a name="93"></a>}
+<a name="94"></a>
+<a name="95"></a>function Replace(<span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">string</span> <span class="source_type">NewItem</span>, <span class="source_type">string</span> <span class="source_type">NewValue</span>, optional <span class="source_type">string</span> <span class="source_type">ParentCaption</span>, optional <span class="source_type">bool</span> <span class="source_type">bNoSort</span>, optional <span class="source_type">string</span> <span class="source_type">ExtraInfo</span>)
+<a name="96"></a>{
+<a name="97"></a>	if ( !IsValidIndex(<span class="source_type">i</span>) )
+<a name="98"></a>		AddItem(<span class="source_type">NewItem</span>,<span class="source_type">NewValue</span>,<span class="source_type">ParentCaption</span>);
+<a name="99"></a>	else
+<a name="100"></a>	{
+<a name="101"></a>		if ( !bAllowEmptyItems && <span class="source_type">NewItem</span> == <span class="source_string">""</span> && <span class="source_type">NewValue</span> == <span class="source_string">""</span> && <span class="source_type">ParentCaption</span> == <span class="source_string">""</span> )
+<a name="102"></a>			return;
+<a name="103"></a>
+<a name="104"></a>		Elements[<span class="source_type">i</span>].<span class="source_type">Caption</span> = <span class="source_type">NewItem</span>;
+<a name="105"></a>		Elements[<span class="source_type">i</span>].<span class="source_type">Value</span> = <span class="source_type">NewValue</span>;
+<a name="106"></a>		Elements[<span class="source_type">i</span>].<span class="source_type">ExtraInfo</span> = <span class="source_type">ExtraInfo</span>;
+<a name="107"></a>		if ( bSorted && !<span class="source_type">bNoSort</span> )
+<a name="108"></a>			Sort();
+<a name="109"></a>
+<a name="110"></a>		SetIndex(<span class="source_type">Index</span>);
+<a name="111"></a>	}
+<a name="112"></a>}
+<a name="113"></a>
+<a name="114"></a>function <span class="source_type">int</span> InsertItem( <span class="source_type">int</span> <span class="source_type">idx</span>, <span class="source_type">string</span> <span class="source_type">Caption</span>, <span class="source_type">string</span> <span class="source_type">Value</span>, <span class="source_type">string</span> <span class="source_type">ParentCaption</span>, <span class="source_type">int</span> <span class="source_type">Level</span>, <span class="source_type">bool</span> bEnabled, optional <span class="source_type">string</span> <span class="source_type">ExtraInfo</span> )
+<a name="115"></a>{
+<a name="116"></a>	local <span class="source_type">int</span> <span class="source_type">ParentIndex</span>, <span class="source_type">ChildIndex</span>;
+<a name="117"></a>
+<a name="118"></a>	if ( !IsValidIndex(<span class="source_type">idx</span>) )
+<a name="119"></a>		return AddItem(<span class="source_type">Caption</span>, <span class="source_type">Value</span>, <span class="source_type">ParentCaption</span>, bEnabled, <span class="source_type">ExtraInfo</span>);
+<a name="120"></a>
+<a name="121"></a>	if ( bGroupItems )
+<a name="122"></a>	{
+<a name="123"></a>		<span class="source_type">ParentIndex</span> = FindParentIndex(<span class="source_type">idx</span>);
+<a name="124"></a>		if ( IsValidIndex(<span class="source_type">ParentIndex</span>) && Elements[<span class="source_type">ParentIndex</span>].<span class="source_type">Caption</span> == <span class="source_type">ParentCaption</span> )
+<a name="125"></a>		{
+<a name="126"></a>			<span class="source_type">ChildIndex</span> = FindAvailableChildIndex(<span class="source_type">ParentIndex</span>);
+<a name="127"></a>			if ( <span class="source_type">idx</span> &gt; <span class="source_type">ParentIndex</span> && <span class="source_type">idx</span> &lt;= <span class="source_type">ChildIndex</span> )
+<a name="128"></a>				return HardInsert(<span class="source_type">idx</span>, <span class="source_type">Caption</span>, <span class="source_type">Value</span>, <span class="source_type">ParentCaption</span>, Elements[<span class="source_type">ParentIndex</span>].<span class="source_type">Level</span> + <span class="source_int">1</span>, bEnabled, <span class="source_type">ExtraInfo</span>);
+<a name="129"></a>			else return HardInsert(<span class="source_type">ChildIndex</span>, <span class="source_type">Caption</span>, <span class="source_type">Value</span>, <span class="source_type">ParentCaption</span>, Elements[<span class="source_type">ParentIndex</span>].<span class="source_type">Level</span> + <span class="source_int">1</span>, bEnabled, <span class="source_type">ExtraInfo</span>);
+<a name="130"></a>		}
+<a name="131"></a>		else if ( <span class="source_type">ParentCaption</span> == <span class="source_string">""</span> )
+<a name="132"></a>		{
+<a name="133"></a>			<span class="source_type">idx</span> = FindNextAvailableRootIndex(<span class="source_type">idx</span>);
+<a name="134"></a>			return HardInsert(<span class="source_type">idx</span>,<span class="source_type">Caption</span>,<span class="source_type">Value</span>,<span class="source_type">ParentCaption</span>,<span class="source_type">Level</span>,True,<span class="source_type">ExtraInfo</span>);
+<a name="135"></a>		}
+<a name="136"></a>	}
+<a name="137"></a>	else
+<a name="138"></a>	{
+<a name="139"></a>		<span class="source_type">ParentIndex</span> = FindNextAvailableRootIndex(<span class="source_type">idx</span>);
+<a name="140"></a>		if ( <span class="source_type">ParentCaption</span> != <span class="source_string">""</span> )
+<a name="141"></a>			<span class="source_type">idx</span> = HardInsert(<span class="source_type">idx</span>,<span class="source_type">ParentCaption</span>,<span class="source_type">Value</span>,<span class="source_string">""</span>,<span class="source_type">Level</span>++,True,<span class="source_type">ExtraInfo</span>);
+<a name="142"></a>
+<a name="143"></a>		return HardInsert(<span class="source_type">idx</span>+<span class="source_int">1</span>, <span class="source_type">Caption</span>, <span class="source_type">Value</span>, <span class="source_type">ParentCaption</span>, <span class="source_type">Level</span>, True, <span class="source_type">ExtraInfo</span>);
+<a name="144"></a>	}
+<a name="145"></a>
+<a name="146"></a>	return AddItem(<span class="source_type">Caption</span>, <span class="source_type">Value</span>, <span class="source_type">ParentCaption</span>, bEnabled);
+<a name="147"></a>}
+<a name="148"></a>
+<a name="149"></a>protected function <span class="source_type">int</span> HardInsert( <span class="source_type">int</span> <span class="source_type">idx</span>, <span class="source_type">string</span> <span class="source_type">Caption</span>, <span class="source_type">string</span> <span class="source_type">Value</span>, <span class="source_type">string</span> <span class="source_type">ParentCaption</span>, <span class="source_type">int</span> <span class="source_type">Level</span>, <span class="source_type">bool</span> bEnabled, optional <span class="source_type">string</span> <span class="source_type">ExtraInfo</span> )
+<a name="150"></a>{
+<a name="151"></a>	Elements.Insert(<span class="source_type">idx</span>,<span class="source_int">1</span>);
+<a name="152"></a>
+<a name="153"></a>	Elements[<span class="source_type">idx</span>].<span class="source_type">Caption</span> = <span class="source_type">Caption</span>;
+<a name="154"></a>	Elements[<span class="source_type">idx</span>].<span class="source_type">Value</span> = <span class="source_type">Value</span>;
+<a name="155"></a>	Elements[<span class="source_type">idx</span>].<span class="source_type">ParentCaption</span> = <span class="source_type">ParentCaption</span>;
+<a name="156"></a>	Elements[<span class="source_type">idx</span>].<span class="source_type">ExtraInfo</span> = <span class="source_type">ExtraInfo</span>;
+<a name="157"></a>	Elements[<span class="source_type">idx</span>].<span class="source_type">Level</span> = <span class="source_type">Level</span>;
+<a name="158"></a>	Elements[<span class="source_type">idx</span>].bEnabled = bEnabled;
+<a name="159"></a>
+<a name="160"></a>	ItemCount = Elements.Length;
+<a name="161"></a>
+<a name="162"></a>	return <span class="source_type">idx</span>;
+<a name="163"></a>}
+<a name="164"></a>
+<a name="165"></a>function LoadFrom(<span class="source_type"><a href="../xinterface/guitreelist.html" class="source">GUITreeList</a></span> <span class="source_type">Source</span>, optional <span class="source_type">bool</span> <span class="source_type">bClearFirst</span>)
+<a name="166"></a>{
+<a name="167"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">Level</span>;
+<a name="168"></a>	local <span class="source_type">byte</span> bEnabled;
+<a name="169"></a>	local <span class="source_type">string</span> <span class="source_type">Caption</span>, <span class="source_type">Value</span>, <span class="source_type">ParentCaption</span>, <span class="source_type">ExtraInfo</span>;
+<a name="170"></a>
+<a name="171"></a>	if (<span class="source_type">bClearfirst</span>)
+<a name="172"></a>		Clear();
+<a name="173"></a>
+<a name="174"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">Source</span>.ItemCount; <span class="source_type">i</span>++ )
+<a name="175"></a>	{
+<a name="176"></a>		if ( <span class="source_type">Source</span>.ValidSelectionAt(<span class="source_type">i</span>) )
+<a name="177"></a>		{
+<a name="178"></a>			<span class="source_type">Source</span>.GetAtIndex(<span class="source_type">i</span>,<span class="source_type">Caption</span>,<span class="source_type">Value</span>,<span class="source_type">ParentCaption</span>,<span class="source_type">Level</span>,bEnabled, <span class="source_type">ExtraInfo</span>);
+<a name="179"></a>			AddItem(<span class="source_type">Caption</span>, <span class="source_type">Value</span>, <span class="source_type">ParentCaption</span>, <span class="source_type">bool</span>(bEnabled), <span class="source_type">ExtraInfo</span>);
+<a name="180"></a>		}
+<a name="181"></a>	}
+<a name="182"></a>}
+<a name="183"></a>
+<a name="184"></a>function <span class="source_type">int</span> RemoveSilent( <span class="source_type">string</span> <span class="source_type">Caption</span> )
+<a name="185"></a>{
+<a name="186"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="187"></a>
+<a name="188"></a>	bNotify = False;
+<a name="189"></a>	<span class="source_type">i</span> = RemoveItem(<span class="source_type">Caption</span>);
+<a name="190"></a>	bNotify = True;
+<a name="191"></a>
+<a name="192"></a>	return <span class="source_type">i</span>;
+<a name="193"></a>}
+<a name="194"></a>
+<a name="195"></a>function <span class="source_type">int</span> RemoveItem(<span class="source_type">string</span> <span class="source_type">Caption</span>)
+<a name="196"></a>{
+<a name="197"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="198"></a>
+<a name="199"></a>	<span class="source_type">i</span> = FindIndex(<span class="source_type">Caption</span>, True);
+<a name="200"></a>	if ( <span class="source_type">i</span> == -<span class="source_int">1</span> )
+<a name="201"></a>		<span class="source_type">i</span> = FindIndex(<span class="source_type">Caption</span>);
+<a name="202"></a>
+<a name="203"></a>	return RemoveItemAt(<span class="source_type">i</span>);
+<a name="204"></a>}
+<a name="205"></a>
+<a name="206"></a>function <span class="source_type">int</span> RemoveItemAt( <span class="source_type">int</span> <span class="source_type">idx</span>, optional <span class="source_type">bool</span> <span class="source_type">bNoSort</span>, optional <span class="source_type">bool</span> <span class="source_type">bSkipCleanup</span> )
+<a name="207"></a>{
+<a name="208"></a>	local <span class="source_type">int</span> <span class="source_type">Level</span>, <span class="source_type">ParentIndex</span>;
+<a name="209"></a>
+<a name="210"></a>	if ( IsValidIndex(<span class="source_type">idx</span>) )
+<a name="211"></a>	{
+<a name="212"></a>		<span class="source_type">Level</span> = Elements[<span class="source_type">idx</span>].<span class="source_type">Level</span> + <span class="source_int">1</span>;
+<a name="213"></a>		<span class="source_type">ParentIndex</span> = FindParentIndex(<span class="source_type">idx</span>);
+<a name="214"></a>
+<a name="215"></a>		<span class="source_comment">// Remove all children of this element
+</span><a name="216"></a>		Elements.Remove(<span class="source_type">idx</span>,<span class="source_int">1</span>);
+<a name="217"></a>		ItemCount--;
+<a name="218"></a>
+<a name="219"></a>		while ( <span class="source_type">idx</span> &lt; ItemCount && Elements[<span class="source_type">idx</span>].<span class="source_type">Level</span> == <span class="source_type">Level</span> )
+<a name="220"></a>		{
+<a name="221"></a>			if ( RemoveItemAt(<span class="source_type">idx</span>,True,True) == -<span class="source_int">2</span> )
+<a name="222"></a>				break;
+<a name="223"></a>		}
+<a name="224"></a>
+<a name="225"></a>		<span class="source_comment">// If parent selection isn't allowed, we should remove the entry for the parent if we're the last child
+</span><a name="226"></a>		<span class="source_comment">// bSkipCleanup should probably only be used when recursing within this function
+</span><a name="227"></a>		if ( !bAllowParentSelection && !<span class="source_type">bSkipCleanup</span> && IsValidIndex(<span class="source_type">ParentIndex</span>) && !HasChildren(<span class="source_type">ParentIndex</span>) )
+<a name="228"></a>			RemoveItemAt(<span class="source_type">ParentIndex</span>,True);
+<a name="229"></a>
+<a name="230"></a>		UpdateVisibleCount();
+<a name="231"></a>		if ( bSorted && !<span class="source_type">bNoSort</span> )
+<a name="232"></a>			Sort();
+<a name="233"></a>
+<a name="234"></a>		<span class="source_comment">// In case we now have an invalid index
+</span><a name="235"></a>		SetIndex(<span class="source_type">Index</span>);
+<a name="236"></a>		if ( MyScrollBar != None )
+<a name="237"></a>			MyScrollBar.AlignThumb();
+<a name="238"></a>
+<a name="239"></a>		return <span class="source_type">Index</span>;
+<a name="240"></a>	}
+<a name="241"></a>
+<a name="242"></a>	return -<span class="source_int">2</span>;
+<a name="243"></a>}
+<a name="244"></a>
+<a name="245"></a>function <span class="source_type">int</span> RemoveElement( <span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span> <span class="source_type">Node</span>, optional <span class="source_type">int</span> Count, optional <span class="source_type">bool</span> <span class="source_type">bNoSort</span> )
+<a name="246"></a>{
+<a name="247"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="248"></a>
+<a name="249"></a>	<span class="source_comment">// TODO Hook up count
+</span><a name="250"></a>	Count = <span class="source_type">Max</span>(Count, <span class="source_int">1</span>);
+<a name="251"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Elements.Length; <span class="source_type">i</span>++ )
+<a name="252"></a>		if ( Elements[<span class="source_type">i</span>] == <span class="source_type">Node</span> )
+<a name="253"></a>			return RemoveItemAt(<span class="source_type">i</span>, <span class="source_type">bNoSort</span>);
+<a name="254"></a>
+<a name="255"></a>	return -<span class="source_int">1</span>;
+<a name="256"></a>}
+<a name="257"></a>
+<a name="258"></a>function Clear()
+<a name="259"></a>{
+<a name="260"></a>	if (Elements.Length == <span class="source_int">0</span>)
+<a name="261"></a>		return;
+<a name="262"></a>
+<a name="263"></a>	Elements.Remove(<span class="source_int">0</span>,Elements.Length);
+<a name="264"></a>	ItemCount = <span class="source_int">0</span>;
+<a name="265"></a>
+<a name="266"></a>	UpdateVisibleCount();
+<a name="267"></a>	Super.Clear();
+<a name="268"></a>}
+<a name="269"></a>
+<a name="270"></a>event <span class="source_type">bool</span> Swap(<span class="source_type">int</span> IndexA, <span class="source_type">int</span> <span class="source_type">IndexB</span>)
+<a name="271"></a>{
+<a name="272"></a>	local <span class="source_type">int</span> ParentIndexA, ParentIndexB;
+<a name="273"></a>
+<a name="274"></a>	ParentIndexA = FindParentIndex(IndexA);
+<a name="275"></a>	ParentIndexB = FindParentIndex(<span class="source_type">IndexB</span>);
+<a name="276"></a>
+<a name="277"></a>	<span class="source_comment">// TODO handle cases of attempting to swap elements at different levels
+</span><a name="278"></a>	if ( bGroupItems )
+<a name="279"></a>	{
+<a name="280"></a>		if ( IsValidIndex(ParentIndexA) )
+<a name="281"></a>		{
+<a name="282"></a>			if ( IsValidIndex(ParentIndexB) )
+<a name="283"></a>			{
+<a name="284"></a>				if ( ParentIndexA != ParentIndexB )
+<a name="285"></a>					return false;
+<a name="286"></a>			}
+<a name="287"></a>
+<a name="288"></a>			else return false;
+<a name="289"></a>		}
+<a name="290"></a>		else if ( IsValidIndex(ParentIndexB) )
+<a name="291"></a>			return false;
+<a name="292"></a>	}
+<a name="293"></a>
+<a name="294"></a>	<span class="source_comment">// TODO Support swapping elements that contain children
+</span><a name="295"></a>	if ( IsValidIndex(IndexA) && IsValidIndex(<span class="source_type">IndexB</span>) )
+<a name="296"></a>	{
+<a name="297"></a>		if ( !bGroupItems )
+<a name="298"></a>		{
+<a name="299"></a>			if ( IndexA &gt; <span class="source_type">IndexB</span> )
+<a name="300"></a>			{
+<a name="301"></a>				if ( Elements[IndexA].<span class="source_type">Level</span> &gt; <span class="source_int">0</span> )
+<a name="302"></a>					IndexA = ParentIndexA;
+<a name="303"></a>
+<a name="304"></a>				if ( Elements[<span class="source_type">IndexB</span>].<span class="source_type">Level</span> &gt; <span class="source_int">0</span> )
+<a name="305"></a>					<span class="source_type">IndexB</span> = ParentIndexB;
+<a name="306"></a>
+<a name="307"></a>				if ( IndexA == <span class="source_type">IndexB</span> )
+<a name="308"></a>				{
+<a name="309"></a>					IndexA = FindNextAvailableRootIndex(<span class="source_type">IndexB</span>-<span class="source_int">1</span>);
+<a name="310"></a>					if ( !IsValidIndex(IndexA) )
+<a name="311"></a>						return False;
+<a name="312"></a>				}
+<a name="313"></a>
+<a name="314"></a>			}
+<a name="315"></a>			else
+<a name="316"></a>			{
+<a name="317"></a>				if ( Elements[IndexA].<span class="source_type">Level</span> &gt; <span class="source_int">0</span> )
+<a name="318"></a>					IndexA = ParentIndexA;
+<a name="319"></a>
+<a name="320"></a>				if ( Elements[<span class="source_type">IndexB</span>].<span class="source_type">Level</span> &gt; <span class="source_int">0</span> )
+<a name="321"></a>					<span class="source_type">IndexB</span> = ParentIndexB;
+<a name="322"></a>
+<a name="323"></a>				if ( IndexA == <span class="source_type">IndexB</span> )
+<a name="324"></a>					<span class="source_type">IndexB</span> = FindAvailableChildIndex(IndexA);
+<a name="325"></a>
+<a name="326"></a>				if ( !IsValidIndex(<span class="source_type">IndexB</span>) )
+<a name="327"></a>					return False;
+<a name="328"></a>			}
+<a name="329"></a>		}
+<a name="330"></a>
+<a name="331"></a>		HardSwap(IndexA,<span class="source_type">IndexB</span>);
+<a name="332"></a>		return True;
+<a name="333"></a>	}
+<a name="334"></a>
+<a name="335"></a>	return False;
+<a name="336"></a>}
+<a name="337"></a>
+<a name="338"></a>protected function HardSwap( <span class="source_type">int</span> IndexA, <span class="source_type">int</span> <span class="source_type">IndexB</span> )
+<a name="339"></a>{
+<a name="340"></a>	local array&lt;<span class="source_type">int</span>&gt; chIdxA, chIdxB;
+<a name="341"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="342"></a>	local array&lt;<span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span>&gt; NodesA, NodesB;
+<a name="343"></a>
+<a name="344"></a>	NodesA[NodesA.Length] = Elements[IndexA];
+<a name="345"></a>	NodesB[NodesB.Length] = Elements[<span class="source_type">IndexB</span>];
+<a name="346"></a>
+<a name="347"></a>	if ( HasChildren(IndexA) )
+<a name="348"></a>	{
+<a name="349"></a>		chIdxA = GetChildIndexList(IndexA);
+<a name="350"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; chIdxA.Length; <span class="source_type">i</span>++ )
+<a name="351"></a>			NodesA[NodesA.Length] = Elements[chIdxA[<span class="source_type">i</span>]];
+<a name="352"></a>	}
+<a name="353"></a>
+<a name="354"></a>	if ( HasChildren(<span class="source_type">IndexB</span>) )
+<a name="355"></a>	{
+<a name="356"></a>		chIdxB = GetChildIndexList(<span class="source_type">IndexB</span>);
+<a name="357"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; chIdxB.Length; <span class="source_type">i</span>++ )
+<a name="358"></a>			NodesB[NodesB.Length] = Elements[chIdxB[<span class="source_type">i</span>]];
+<a name="359"></a>	}
+<a name="360"></a>
+<a name="361"></a>	if ( IndexA &gt; <span class="source_type">IndexB</span> )
+<a name="362"></a>	{
+<a name="363"></a>		Elements.Remove( IndexA, NodesA.Length );
+<a name="364"></a>		Elements.Insert( IndexA, NodesB.Length );
+<a name="365"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; NodesB.Length; <span class="source_type">i</span>++ )
+<a name="366"></a>			Elements[IndexA + <span class="source_type">i</span>] = NodesB[<span class="source_type">i</span>];
+<a name="367"></a>
+<a name="368"></a>		Elements.Remove( <span class="source_type">IndexB</span>, NodesB.Length );
+<a name="369"></a>		Elements.Insert( <span class="source_type">IndexB</span>, NodesA.Length );
+<a name="370"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; NodesB.Length; <span class="source_type">i</span>++ )
+<a name="371"></a>			Elements[<span class="source_type">IndexB</span> + <span class="source_type">i</span>] = NodesA[<span class="source_type">i</span>];
+<a name="372"></a>
+<a name="373"></a>	}
+<a name="374"></a>	else
+<a name="375"></a>	{
+<a name="376"></a>		Elements.Remove( <span class="source_type">IndexB</span>, NodesB.Length );
+<a name="377"></a>		Elements.Insert( <span class="source_type">IndexB</span>, NodesA.Length );
+<a name="378"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; NodesA.Length; <span class="source_type">i</span>++ )
+<a name="379"></a>			Elements[<span class="source_type">IndexB</span> + <span class="source_type">i</span>] = NodesA[<span class="source_type">i</span>];
+<a name="380"></a>
+<a name="381"></a>		Elements.Remove( IndexA, NodesA.Length );
+<a name="382"></a>		Elements.Insert( IndexA, NodesB.Length );
+<a name="383"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; NodesB.Length; <span class="source_type">i</span>++ )
+<a name="384"></a>			Elements[IndexA + <span class="source_type">i</span>] = NodesB[<span class="source_type">i</span>];
+<a name="385"></a>	}
+<a name="386"></a>
+<a name="387"></a>	if ( bNotify )
+<a name="388"></a>		CheckLinkedObjects(Self);
+<a name="389"></a>
+<a name="390"></a>	if ( bSorted )
+<a name="391"></a>		Sort();
+<a name="392"></a>}
+<a name="393"></a>
+<a name="394"></a>
+<a name="395"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="396"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="397"></a><span class="source_comment">//  Query Functions
+</span><a name="398"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="399"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="400"></a>
+<a name="401"></a>function <span class="source_type">string</span> GetCaption()
+<a name="402"></a>{
+<a name="403"></a>	return GetCaptionAtIndex(<span class="source_type">Index</span>);
+<a name="404"></a>}
+<a name="405"></a>
+<a name="406"></a>function <span class="source_type">string</span> GetParentCaption()
+<a name="407"></a>{
+<a name="408"></a>	return GetParentCaptionAtIndex(<span class="source_type">Index</span>);
+<a name="409"></a>}
+<a name="410"></a>
+<a name="411"></a>function <span class="source_type">string</span> GetValue()
+<a name="412"></a>{
+<a name="413"></a>	return GetValueAtIndex(<span class="source_type">Index</span>);
+<a name="414"></a>}
+<a name="415"></a>
+<a name="416"></a>function <span class="source_type">int</span> GetLevel()
+<a name="417"></a>{
+<a name="418"></a>	return GetLevelAtIndex(<span class="source_type">Index</span>);
+<a name="419"></a>}
+<a name="420"></a>
+<a name="421"></a>function <span class="source_type">string</span> GetExtra()
+<a name="422"></a>{
+<a name="423"></a>	return GetExtraAtIndex(<span class="source_type">Index</span>);
+<a name="424"></a>}
+<a name="425"></a>
+<a name="426"></a>function <span class="source_type">string</span> GetCaptionAtIndex(<span class="source_type">int</span> <span class="source_type">i</span>)
+<a name="427"></a>{
+<a name="428"></a>	if (!IsValidIndex(<span class="source_type">i</span>))
+<a name="429"></a>		return <span class="source_string">""</span>;
+<a name="430"></a>
+<a name="431"></a>	return Elements[<span class="source_type">i</span>].<span class="source_type">Caption</span>;
+<a name="432"></a>}
+<a name="433"></a>
+<a name="434"></a>function <span class="source_type">string</span> GetParentCaptionAtIndex(<span class="source_type">int</span> <span class="source_type">idx</span>)
+<a name="435"></a>{
+<a name="436"></a>	if ( !IsValidIndex(<span class="source_type">idx</span>) )
+<a name="437"></a>		return <span class="source_string">""</span>;
+<a name="438"></a>
+<a name="439"></a>	<span class="source_comment">// TODO this is not a good way to do this...gah
+</span><a name="440"></a>	if ( Elements[<span class="source_type">idx</span>].<span class="source_type">ParentCaption</span> == <span class="source_string">""</span> )
+<a name="441"></a>		return Elements[<span class="source_type">idx</span>].<span class="source_type">Caption</span>;
+<a name="442"></a>
+<a name="443"></a>	return Elements[<span class="source_type">idx</span>].<span class="source_type">ParentCaption</span>;
+<a name="444"></a>}
+<a name="445"></a>
+<a name="446"></a>function <span class="source_type">string</span> GetValueAtIndex(<span class="source_type">int</span> <span class="source_type">i</span>)
+<a name="447"></a>{
+<a name="448"></a>	if (!IsValidIndex(<span class="source_type">i</span>))
+<a name="449"></a>		return <span class="source_string">""</span>;
+<a name="450"></a>
+<a name="451"></a>	return Elements[<span class="source_type">i</span>].<span class="source_type">Value</span>;
+<a name="452"></a>}
+<a name="453"></a>
+<a name="454"></a>function <span class="source_type">int</span> GetLevelAtIndex(<span class="source_type">int</span> <span class="source_type">i</span>)
+<a name="455"></a>{
+<a name="456"></a>	if (!IsValidIndex(<span class="source_type">i</span>))
+<a name="457"></a>		return -<span class="source_int">1</span>;
+<a name="458"></a>
+<a name="459"></a>	return Elements[<span class="source_type">i</span>].<span class="source_type">Level</span>;
+<a name="460"></a>}
+<a name="461"></a>
+<a name="462"></a>function <span class="source_type">string</span> GetExtraAtIndex( <span class="source_type">int</span> <span class="source_type">idx</span> )
+<a name="463"></a>{
+<a name="464"></a>	if ( !IsValidIndex(<span class="source_type">idx</span>) )
+<a name="465"></a>		return <span class="source_string">""</span>;
+<a name="466"></a>
+<a name="467"></a>	return Elements[<span class="source_type">idx</span>].<span class="source_type">ExtraInfo</span>;
+<a name="468"></a>}
+<a name="469"></a>
+<a name="470"></a>function <span class="source_type">bool</span> GetElementAtIndex( <span class="source_type">int</span> <span class="source_type">i</span>, out <span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span> <span class="source_type">Node</span> )
+<a name="471"></a>{
+<a name="472"></a>	if ( !IsValidIndex(<span class="source_type">i</span>) )
+<a name="473"></a>		return False;
+<a name="474"></a>
+<a name="475"></a>	<span class="source_type">Node</span> = Elements[<span class="source_type">i</span>];
+<a name="476"></a>	return True;
+<a name="477"></a>}
+<a name="478"></a>
+<a name="479"></a>function <span class="source_type">bool</span> GetAtIndex(<span class="source_type">int</span> <span class="source_type">i</span>, out <span class="source_type">string</span> <span class="source_type">Caption</span>, out <span class="source_type">string</span> <span class="source_type">Value</span>, out <span class="source_type">string</span> <span class="source_type">ParentCaption</span>, out <span class="source_type">int</span> <span class="source_type">Level</span>, out <span class="source_type">byte</span> bEnabled, out <span class="source_type">string</span> <span class="source_type">ExtraInfo</span>)
+<a name="480"></a>{
+<a name="481"></a>	if (!IsValidIndex(<span class="source_type">i</span>))
+<a name="482"></a>		return false;
+<a name="483"></a>
+<a name="484"></a>	<span class="source_type">Caption</span> = Elements[<span class="source_type">i</span>].<span class="source_type">Caption</span>;
+<a name="485"></a>	<span class="source_type">Value</span> = Elements[<span class="source_type">i</span>].<span class="source_type">Value</span>;
+<a name="486"></a>	<span class="source_type">Level</span> = Elements[<span class="source_type">i</span>].<span class="source_type">Level</span>;
+<a name="487"></a>	<span class="source_type">ParentCaption</span> = Elements[<span class="source_type">i</span>].<span class="source_type">ParentCaption</span>;
+<a name="488"></a>	bEnabled = <span class="source_type">byte</span>(Elements[<span class="source_type">i</span>].bEnabled);
+<a name="489"></a>	<span class="source_type">ExtraInfo</span> = Elements[<span class="source_type">i</span>].<span class="source_type">ExtraInfo</span>;
+<a name="490"></a>	return True;
+<a name="491"></a>}
+<a name="492"></a>
+<a name="493"></a>
+<a name="494"></a>function array&lt;<span class="source_type">int</span>&gt; GetIndexList()
+<a name="495"></a>{
+<a name="496"></a>	local array&lt;<span class="source_type">int</span>&gt; Indexes;
+<a name="497"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="498"></a>
+<a name="499"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ItemCount; <span class="source_type">i</span>++ )
+<a name="500"></a>		if ( ValidSelectionAt(<span class="source_type">i</span>) )
+<a name="501"></a>			Indexes[Indexes.Length] = <span class="source_type">i</span>;
+<a name="502"></a>
+<a name="503"></a>	return Indexes;
+<a name="504"></a>}
+<a name="505"></a>
+<a name="506"></a>function array&lt;<span class="source_type">int</span>&gt; GetChildIndexList( <span class="source_type">int</span> <span class="source_type">idx</span>, optional <span class="source_type">bool</span> <span class="source_type">bNoRecurse</span> )
+<a name="507"></a>{
+<a name="508"></a>	local array&lt;<span class="source_type">int</span>&gt; Indexes;
+<a name="509"></a>	local <span class="source_type">int</span> <span class="source_type">Level</span>;
+<a name="510"></a>
+<a name="511"></a>	if ( IsValidIndex(<span class="source_type">idx</span>) )
+<a name="512"></a>	{
+<a name="513"></a>		<span class="source_type">Level</span> = Elements[<span class="source_type">idx</span>].<span class="source_type">Level</span> + <span class="source_int">1</span>;
+<a name="514"></a>		while ( ++<span class="source_type">idx</span> &lt; ItemCount )
+<a name="515"></a>		{
+<a name="516"></a>			if ( Elements[<span class="source_type">idx</span>].<span class="source_type">Level</span> &lt; <span class="source_type">Level</span> )
+<a name="517"></a>				break;
+<a name="518"></a>
+<a name="519"></a>			if ( <span class="source_type">bNoRecurse</span> && Elements[<span class="source_type">idx</span>].<span class="source_type">Level</span> &gt; <span class="source_type">Level</span> )
+<a name="520"></a>				break;
+<a name="521"></a>
+<a name="522"></a>			Indexes[Indexes.Length] = <span class="source_type">idx</span>;
+<a name="523"></a>		}
+<a name="524"></a>	}
+<a name="525"></a>
+<a name="526"></a>	return Indexes;
+<a name="527"></a>}
+<a name="528"></a>
+<a name="529"></a>event <span class="source_type">bool</span> ValidSelection()
+<a name="530"></a>{
+<a name="531"></a>	return ValidSelectionAt(<span class="source_type">Index</span>);
+<a name="532"></a>}
+<a name="533"></a>
+<a name="534"></a>event <span class="source_type">bool</span> ValidSelectionAt( <span class="source_type">int</span> <span class="source_type">idx</span> )
+<a name="535"></a>{
+<a name="536"></a>	if ( !IsValidIndex(<span class="source_type">idx</span>) )
+<a name="537"></a>		return False;
+<a name="538"></a>
+<a name="539"></a>	return bAllowParentSelection || !HasChildren(<span class="source_type">idx</span>);
+<a name="540"></a>}
+<a name="541"></a>
+<a name="542"></a>event <span class="source_type">bool</span> HasChildren( <span class="source_type">int</span> <span class="source_type">ParentIndex</span> )
+<a name="543"></a>{
+<a name="544"></a>	if ( !IsValidIndex(<span class="source_type">ParentIndex</span>) )
+<a name="545"></a>		return False;
+<a name="546"></a>
+<a name="547"></a>	if ( <span class="source_type">ParentIndex</span> &lt; ItemCount - <span class="source_int">1</span> )
+<a name="548"></a>		return Elements[<span class="source_type">ParentIndex</span>+<span class="source_int">1</span>].<span class="source_type">Level</span> &gt; Elements[<span class="source_type">ParentIndex</span>].<span class="source_type">Level</span>;
+<a name="549"></a>
+<a name="550"></a>	return False;
+<a name="551"></a>}
+<a name="552"></a>
+<a name="553"></a>event <span class="source_type">bool</span> IsExpanded( <span class="source_type">int</span> <span class="source_type">ParentIndex</span> )
+<a name="554"></a>{
+<a name="555"></a>	if ( !HasChildren(<span class="source_type">ParentIndex</span>) )
+<a name="556"></a>		return True;
+<a name="557"></a>
+<a name="558"></a>	return Elements[<span class="source_type">ParentIndex</span>+<span class="source_int">1</span>].bEnabled;
+<a name="559"></a>}
+<a name="560"></a>
+<a name="561"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="562"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="563"></a><span class="source_comment">//  Assignment functions
+</span><a name="564"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="565"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="566"></a>
+<a name="567"></a>function SetCaptionAtIndex(<span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">string</span> <span class="source_type">NewCaption</span>)
+<a name="568"></a>{
+<a name="569"></a>	if (!IsValidIndex(<span class="source_type">i</span>))
+<a name="570"></a>		return;
+<a name="571"></a>
+<a name="572"></a>	Elements[<span class="source_type">i</span>].<span class="source_type">Caption</span> = <span class="source_type">NewCaption</span>;
+<a name="573"></a>}
+<a name="574"></a>
+<a name="575"></a>function SetValueAtIndex(<span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">string</span> <span class="source_type">NewValue</span>)
+<a name="576"></a>{
+<a name="577"></a>	if (!IsValidIndex(<span class="source_type">i</span>))
+<a name="578"></a>		return;
+<a name="579"></a>
+<a name="580"></a>	Elements[<span class="source_type">i</span>].<span class="source_type">Value</span> = <span class="source_type">NewValue</span>;
+<a name="581"></a>}
+<a name="582"></a>
+<a name="583"></a>function SetLevelAtIndex(<span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">int</span> NewLevel)
+<a name="584"></a>{
+<a name="585"></a>	if (!IsValidIndex(<span class="source_type">i</span>))
+<a name="586"></a>		return;
+<a name="587"></a>
+<a name="588"></a>	Elements[<span class="source_type">i</span>].<span class="source_type">Level</span> = NewLevel;
+<a name="589"></a>}
+<a name="590"></a>
+<a name="591"></a>function <span class="source_type">bool</span> Expand(<span class="source_type">int</span> <span class="source_type">idx</span>, optional <span class="source_type">bool</span> bRecursive)
+<a name="592"></a>{
+<a name="593"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="594"></a>	local array&lt;<span class="source_type">int</span>&gt; Indexes;
+<a name="595"></a>
+<a name="596"></a>	if (!IsValidIndex(<span class="source_type">idx</span>))
+<a name="597"></a>		return false;
+<a name="598"></a>
+<a name="599"></a>	<span class="source_comment">// Make sure all other elements on this level, as well as all parent items, are also visible
+</span><a name="600"></a>	Expand(FindParentIndex(<span class="source_type">idx</span>));
+<a name="601"></a>
+<a name="602"></a>	<span class="source_comment">// Then enable all children, perhaps with recursion
+</span><a name="603"></a>	Indexes = GetChildIndexList(<span class="source_type">idx</span>, !bRecursive);
+<a name="604"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Indexes.Length; <span class="source_type">i</span>++ )
+<a name="605"></a>		Elements[Indexes[<span class="source_type">i</span>]].bEnabled = True;
+<a name="606"></a>
+<a name="607"></a>	return True;
+<a name="608"></a>}
+<a name="609"></a>
+<a name="610"></a>function <span class="source_type">bool</span> Collapse(<span class="source_type">int</span> <span class="source_type">idx</span>)
+<a name="611"></a>{
+<a name="612"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="613"></a>	local array&lt;<span class="source_type">int</span>&gt; Indexes;
+<a name="614"></a>
+<a name="615"></a>	if (!IsValidIndex(<span class="source_type">idx</span>))
+<a name="616"></a>		return false;
+<a name="617"></a>
+<a name="618"></a>	Indexes = GetChildIndexList(<span class="source_type">idx</span>);
+<a name="619"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Indexes.Length; <span class="source_type">i</span>++ )
+<a name="620"></a>		Elements[Indexes[<span class="source_type">i</span>]].bEnabled = False;
+<a name="621"></a>
+<a name="622"></a>	return True;
+<a name="623"></a>}
+<a name="624"></a>
+<a name="625"></a>function ToggleExpand(<span class="source_type">int</span> <span class="source_type">idx</span>, optional <span class="source_type">bool</span> bRecursive)
+<a name="626"></a>{
+<a name="627"></a>	if (!IsValidIndex(<span class="source_type">idx</span>))
+<a name="628"></a>		return;
+<a name="629"></a>
+<a name="630"></a>	if ( IsExpanded(<span class="source_type">idx</span>) )
+<a name="631"></a>		Collapse(<span class="source_type">idx</span>);
+<a name="632"></a>	else Expand(<span class="source_type">idx</span>, bRecursive);
+<a name="633"></a>}
+<a name="634"></a>
+<a name="635"></a>function <span class="source_type">bool</span> IsToggleClick(<span class="source_type">int</span> <span class="source_type">idx</span>)
+<a name="636"></a>{
+<a name="637"></a>	local <span class="source_type">float</span> PrefixOffset, CaptionOffset;
+<a name="638"></a>
+<a name="639"></a>	if ( !IsValidIndex(<span class="source_type">idx</span>) )
+<a name="640"></a>		return false;
+<a name="641"></a>
+<a name="642"></a>	if ( !HasChildren(<span class="source_type">idx</span>) )
+<a name="643"></a>		return false;
+<a name="644"></a>
+<a name="645"></a>	<span class="source_comment">// Calculate the position of the plus/minus
+</span><a name="646"></a>	PrefixOffset = ClientBounds[<span class="source_int">0</span>] + (SelectedPrefixWidth * GetLevelAtIndex(<span class="source_type">idx</span>));
+<a name="647"></a>	CaptionOffset = PrefixOffset + SelectedPrefixWidth;
+<a name="648"></a>
+<a name="649"></a>	<span class="source_comment">// if we were clicking on the plus/minus, toggle the item
+</span><a name="650"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.MouseX &gt;= PrefixOffset && <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.MouseX &lt;= CaptionOffset )
+<a name="651"></a>		return true;
+<a name="652"></a>
+<a name="653"></a>	return false;
+<a name="654"></a>}
+<a name="655"></a>
+<a name="656"></a>function <span class="source_type">bool</span> InternalOnClick( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span> )
+<a name="657"></a>{
+<a name="658"></a>	local <span class="source_type">bool</span> bResult;
+<a name="659"></a>
+<a name="660"></a>	bResult = Super.InternalOnClick(<span class="source_type">Sender</span>);
+<a name="661"></a>	if ( bResult && IsToggleClick(<span class="source_type">Index</span>) )
+<a name="662"></a>		ToggleExpand(<span class="source_type">Index</span>);
+<a name="663"></a>
+<a name="664"></a>	return bResult;
+<a name="665"></a>}
+<a name="666"></a>
+<a name="667"></a>function <span class="source_type">bool</span> InternalDblClick( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span> )
+<a name="668"></a>{
+<a name="669"></a>	ToggleExpand(<span class="source_type">Index</span>);
+<a name="670"></a>	return True;
+<a name="671"></a>}
+<a name="672"></a>
+<a name="673"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="674"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="675"></a><span class="source_comment">//  Search functions
+</span><a name="676"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="677"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="678"></a>function <span class="source_type">int</span> FindIndex(<span class="source_type">string</span> <span class="source_type">Caption</span>, optional <span class="source_type">bool</span> bExact)
+<a name="679"></a>{
+<a name="680"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="681"></a>
+<a name="682"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Elements.Length; <span class="source_type">i</span>++)
+<a name="683"></a>		if ( (bExact && Elements[<span class="source_type">i</span>].<span class="source_type">Caption</span> == <span class="source_type">Caption</span>) || (!bExact && Elements[<span class="source_type">i</span>].<span class="source_type">Caption</span> ~= <span class="source_type">Caption</span>) )
+<a name="684"></a>			return <span class="source_type">i</span>;
+<a name="685"></a>
+<a name="686"></a>	return -<span class="source_int">1</span>;
+<a name="687"></a>}
+<a name="688"></a>
+<a name="689"></a>function <span class="source_type">int</span> FindFullIndex( <span class="source_type">string</span> <span class="source_type">Caption</span>, <span class="source_type">string</span> <span class="source_type">Value</span>, <span class="source_type">string</span> <span class="source_type">ParentCaption</span> )
+<a name="690"></a>{
+<a name="691"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="692"></a>
+<a name="693"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Elements.Length; <span class="source_type">i</span>++ )
+<a name="694"></a>		if ( Elements[<span class="source_type">i</span>].<span class="source_type">Caption</span> == <span class="source_type">Caption</span> && Elements[<span class="source_type">i</span>].<span class="source_type">Value</span> == <span class="source_type">Value</span> && Elements[<span class="source_type">i</span>].<span class="source_type">ParentCaption</span> == <span class="source_type">ParentCaption</span> )
+<a name="695"></a>			return <span class="source_type">i</span>;
+<a name="696"></a>
+<a name="697"></a>	return -<span class="source_int">1</span>;
+<a name="698"></a>}
+<a name="699"></a>
+<a name="700"></a>function <span class="source_type">int</span> FindParentIndex( <span class="source_type">int</span> <span class="source_type">ChildIndex</span> )
+<a name="701"></a>{
+<a name="702"></a>	local <span class="source_type">int</span> <span class="source_type">Level</span>;
+<a name="703"></a>
+<a name="704"></a>	if ( !IsValidIndex(<span class="source_type">ChildIndex</span>) )
+<a name="705"></a>		return -<span class="source_int">1</span>;
+<a name="706"></a>
+<a name="707"></a>	if ( Elements[<span class="source_type">ChildIndex</span>].<span class="source_type">Level</span> == <span class="source_int">0</span> )
+<a name="708"></a>		return -<span class="source_int">1</span>;
+<a name="709"></a>
+<a name="710"></a>	<span class="source_type">Level</span> = Elements[<span class="source_type">ChildIndex</span>].<span class="source_type">Level</span> - <span class="source_int">1</span>;
+<a name="711"></a>	while ( --<span class="source_type">ChildIndex</span> &gt;= <span class="source_int">0</span> && Elements[<span class="source_type">ChildIndex</span>].<span class="source_type">Level</span> &gt; <span class="source_type">Level</span> );
+<a name="712"></a>	return <span class="source_type">ChildIndex</span>;
+<a name="713"></a>}
+<a name="714"></a>
+<a name="715"></a>function <span class="source_type">int</span> FindNextAvailableRootIndex( <span class="source_type">int</span> <span class="source_type">Target</span> )
+<a name="716"></a>{
+<a name="717"></a>	if ( !IsValidIndex(<span class="source_type">Target</span>) )
+<a name="718"></a>		return Elements.Length;
+<a name="719"></a>
+<a name="720"></a>	if ( Elements[<span class="source_type">Target</span>].<span class="source_type">Level</span> == <span class="source_int">0</span> )
+<a name="721"></a>		return <span class="source_type">Target</span>;
+<a name="722"></a>
+<a name="723"></a>	while ( --<span class="source_type">Target</span> &gt; <span class="source_int">0</span> && Elements[<span class="source_type">Target</span>].<span class="source_type">Level</span> &gt; <span class="source_int">0</span> );
+<a name="724"></a>	return <span class="source_type">Target</span>;
+<a name="725"></a>}
+<a name="726"></a>
+<a name="727"></a><span class="source_comment">// This function calculates the appropriate index to use for adding a child node
+</span><a name="728"></a>function <span class="source_type">int</span> FindAvailableChildIndex( <span class="source_type">int</span> <span class="source_type">ParentIndex</span> )
+<a name="729"></a>{
+<a name="730"></a>	local <span class="source_type">int</span> ParentLevel;
+<a name="731"></a>
+<a name="732"></a>	if ( IsValidIndex(<span class="source_type">ParentIndex</span>) )
+<a name="733"></a>	{
+<a name="734"></a>		ParentLevel = Elements[<span class="source_type">ParentIndex</span>].<span class="source_type">Level</span> + <span class="source_int">1</span>;
+<a name="735"></a>		while ( ++<span class="source_type">ParentIndex</span> &lt; ItemCount && Elements[<span class="source_type">ParentIndex</span>].<span class="source_type">Level</span> &gt;= ParentLevel );
+<a name="736"></a>		return <span class="source_type">ParentIndex</span>;
+<a name="737"></a>	}
+<a name="738"></a>
+<a name="739"></a>	return -<span class="source_int">1</span>;
+<a name="740"></a>}
+<a name="741"></a>
+<a name="742"></a>function <span class="source_type">int</span> FindIndexByValue(<span class="source_type">string</span> <span class="source_type">Value</span>, optional <span class="source_type">bool</span> bExact)
+<a name="743"></a>{
+<a name="744"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="745"></a>
+<a name="746"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Elements.Length; <span class="source_type">i</span>++)
+<a name="747"></a>		if ( (bExact && Elements[<span class="source_type">i</span>].<span class="source_type">Value</span> == <span class="source_type">Value</span>) || (!bExact && Elements[<span class="source_type">i</span>].<span class="source_type">Value</span> ~= <span class="source_type">Value</span>) )
+<a name="748"></a>			return <span class="source_type">i</span>;
+<a name="749"></a>
+<a name="750"></a>	return -<span class="source_int">1</span>;
+<a name="751"></a>}
+<a name="752"></a>
+<a name="753"></a>function <span class="source_type">int</span> FindElement( <span class="source_type">string</span> <span class="source_type">Caption</span>, <span class="source_type">string</span> <span class="source_type">Value</span>, <span class="source_type">int</span> <span class="source_type">Level</span>, optional <span class="source_type">bool</span> <span class="source_type">bCaseSensitive</span> )
+<a name="754"></a>{
+<a name="755"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="756"></a>
+<a name="757"></a>	if ( <span class="source_type">bCaseSensitive</span> )
+<a name="758"></a>		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Elements.Length; <span class="source_type">i</span>++ )
+<a name="759"></a>			if ( Elements[<span class="source_type">i</span>].<span class="source_type">Caption</span> == <span class="source_type">Caption</span> && Elements[<span class="source_type">i</span>].<span class="source_type">Value</span> == <span class="source_type">Value</span> && Elements[<span class="source_type">i</span>].<span class="source_type">Level</span> == <span class="source_type">Level</span> )
+<a name="760"></a>				return <span class="source_type">i</span>;
+<a name="761"></a>
+<a name="762"></a>	else for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Elements.Length; <span class="source_type">i</span>++ )
+<a name="763"></a>		if ( Elements[<span class="source_type">i</span>].<span class="source_type">Caption</span> ~= <span class="source_type">Caption</span> && Elements[<span class="source_type">i</span>].<span class="source_type">Value</span> ~= <span class="source_type">Value</span> && Elements[<span class="source_type">i</span>].<span class="source_type">Level</span> == <span class="source_type">Level</span> )
+<a name="764"></a>			return <span class="source_type">i</span>;
+<a name="765"></a>
+<a name="766"></a>	return -<span class="source_int">1</span>;
+<a name="767"></a>}
+<a name="768"></a>
+<a name="769"></a><span class="source_comment">// Find the node index that is distance away from node specified by idx, considering only visible nodes
+</span><a name="770"></a>function <span class="source_type">int</span> FindVisibleIndex( <span class="source_type">int</span> <span class="source_type">Idx</span>, <span class="source_type">int</span> <span class="source_type">Distance</span> )
+<a name="771"></a>{
+<a name="772"></a>	local <span class="source_type">int</span> Count, <span class="source_type">i</span>, increment;
+<a name="773"></a>
+<a name="774"></a>	if ( <span class="source_type">Distance</span> == <span class="source_int">0</span> )
+<a name="775"></a>		return <span class="source_type">Idx</span>;
+<a name="776"></a>	else if ( <span class="source_type">Distance</span> &lt; <span class="source_int">0</span> )
+<a name="777"></a>		increment = -<span class="source_int">1</span>;
+<a name="778"></a>	else increment = <span class="source_int">1</span>;
+<a name="779"></a>
+<a name="780"></a>	for ( <span class="source_type">i</span> = <span class="source_type">Idx</span>; IsValidIndex(<span class="source_type">i</span>); <span class="source_type">i</span> += increment )
+<a name="781"></a>	{
+<a name="782"></a>		if ( Elements[<span class="source_type">i</span>].bEnabled )
+<a name="783"></a>			Count++;
+<a name="784"></a>
+<a name="785"></a>		if ( Count &gt;= Abs(<span class="source_type">Distance</span>) )
+<a name="786"></a>			break;
+<a name="787"></a>	}
+<a name="788"></a>
+<a name="789"></a>	return <span class="source_type">i</span>;
+<a name="790"></a>}
+<a name="791"></a>
+<a name="792"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="793"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="794"></a><span class="source_comment">//  GUIListBase Interface
+</span><a name="795"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="796"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="797"></a>event <span class="source_type">int</span> CalculateIndex( optional <span class="source_type">bool</span> <span class="source_type">bRequireValidIndex</span> )
+<a name="798"></a>{
+<a name="799"></a>	local <span class="source_type">int</span> Row, <span class="source_type">NewIndex</span>;
+<a name="800"></a>
+<a name="801"></a>	<span class="source_comment">//  Figure out which Item we're clicking on
+</span><a name="802"></a>	Row = Ceil( (<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.MouseY - ClientBounds[<span class="source_int">1</span>]) / ItemHeight );
+<a name="803"></a>
+<a name="804"></a>	<span class="source_type">NewIndex</span> = FindVisibleIndex(Top, Row);
+<a name="805"></a>	return Min( <span class="source_type">NewIndex</span>, ItemCount - <span class="source_int">1</span> );
+<a name="806"></a>}
+<a name="807"></a>
+<a name="808"></a>function Sort()
+<a name="809"></a>{
+<a name="810"></a>	SortList();
+<a name="811"></a>}
+<a name="812"></a>
+<a name="813"></a>function <span class="source_type">int</span> SetIndex(<span class="source_type">int</span> <span class="source_type">NewIndex</span>)
+<a name="814"></a>{
+<a name="815"></a>	if ( IsValidIndex(<span class="source_type">NewIndex</span>) && !Elements[<span class="source_type">NewIndex</span>].bEnabled )
+<a name="816"></a>	{
+<a name="817"></a>		Expand(<span class="source_type">NewIndex</span>);
+<a name="818"></a>		UpdateVisibleCount();
+<a name="819"></a>	}
+<a name="820"></a>
+<a name="821"></a>	return Super.SetIndex(<span class="source_type">NewIndex</span>);
+<a name="822"></a>}
+<a name="823"></a>
+<a name="824"></a>function SetTopItem(<span class="source_type">int</span> <span class="source_type">Item</span>)
+<a name="825"></a>{
+<a name="826"></a>    Top = <span class="source_type">Item</span>;
+<a name="827"></a>
+<a name="828"></a>	if ( Top &lt; <span class="source_int">0</span> )
+<a name="829"></a>		Top = <span class="source_int">0</span>;
+<a name="830"></a>	else if ( FindVisibleIndex(Top,ItemsPerPage) &gt;= ItemCount )
+<a name="831"></a>    	Top = FindVisibleIndex(ItemCount - <span class="source_int">1</span>, -ItemsPerPage);
+<a name="832"></a>
+<a name="833"></a>	if ( ItemCount &lt;= <span class="source_int">0</span> )
+<a name="834"></a>		Top = <span class="source_int">0</span>;
+<a name="835"></a>	else Top = Clamp(Top, <span class="source_int">0</span>, ItemCount - <span class="source_int">1</span>);
+<a name="836"></a>
+<a name="837"></a>	if ( bNotify )
+<a name="838"></a>	    CheckLinkedObjects(Self);
+<a name="839"></a>
+<a name="840"></a>    OnAdjustTop(Self);
+<a name="841"></a>
+<a name="842"></a>	if ( MyScrollBar != None )
+<a name="843"></a>    	MyScrollBar.AlignThumb();
+<a name="844"></a>}
+<a name="845"></a>
+<a name="846"></a>function <span class="source_type">bool</span> Up()
+<a name="847"></a>{
+<a name="848"></a>	local <span class="source_type">int</span> <span class="source_type">NewIndex</span>;
+<a name="849"></a>
+<a name="850"></a>	if ( ItemCount &lt; <span class="source_int">2</span> || <span class="source_type">Index</span> == <span class="source_int">0</span> )
+<a name="851"></a>		return True;
+<a name="852"></a>
+<a name="853"></a>	<span class="source_type">NewIndex</span> = <span class="source_type">Index</span>;
+<a name="854"></a>	while ( --<span class="source_type">NewIndex</span> &gt;= <span class="source_int">0</span> && !Elements[<span class="source_type">NewIndex</span>].bEnabled );
+<a name="855"></a>
+<a name="856"></a>	SetIndex( <span class="source_type">Max</span>(<span class="source_int">0</span>, <span class="source_type">NewIndex</span>) );
+<a name="857"></a>	if ( MyScrollBar != None )
+<a name="858"></a>		MyScrollBar.AlignThumb();
+<a name="859"></a>
+<a name="860"></a>	return true;
+<a name="861"></a>}
+<a name="862"></a>
+<a name="863"></a>function <span class="source_type">bool</span> Down()
+<a name="864"></a>{
+<a name="865"></a>	local <span class="source_type">int</span> <span class="source_type">NewIndex</span>;
+<a name="866"></a>
+<a name="867"></a>	if ( ItemCount &lt; <span class="source_int">2</span> || <span class="source_type">Index</span> == ItemCount - <span class="source_int">1</span> )
+<a name="868"></a>		return true;
+<a name="869"></a>
+<a name="870"></a>	<span class="source_comment">// Scan down until an enabled element is found
+</span><a name="871"></a>	<span class="source_type">NewIndex</span> = <span class="source_type">Index</span>;
+<a name="872"></a>	while ( ++<span class="source_type">NewIndex</span> &lt; ItemCount && !Elements[<span class="source_type">NewIndex</span>].bEnabled );
+<a name="873"></a>
+<a name="874"></a>	SetIndex(Min(<span class="source_type">NewIndex</span>, ItemCount - <span class="source_int">1</span>));
+<a name="875"></a>	if ( MyScrollBar != None )
+<a name="876"></a>		MyScrollBar.AlignThumb();
+<a name="877"></a>
+<a name="878"></a>	return true;
+<a name="879"></a>}
+<a name="880"></a>
+<a name="881"></a>function End()
+<a name="882"></a>{
+<a name="883"></a>	local <span class="source_type">int</span> <span class="source_type">NewIndex</span>;
+<a name="884"></a>
+<a name="885"></a>	if ( ItemCount &lt; <span class="source_int">2</span> )
+<a name="886"></a>		return;
+<a name="887"></a>
+<a name="888"></a>	<span class="source_comment">// Scan up from bottom until enabled element found
+</span><a name="889"></a>	<span class="source_type">NewIndex</span> = FindVisibleIndex(ItemCount - <span class="source_int">1</span>, <span class="source_int">1</span>);
+<a name="890"></a>	if ( IsValidIndex(<span class="source_type">NewIndex</span>) )
+<a name="891"></a>	{
+<a name="892"></a>		SetIndex(<span class="source_type">NewIndex</span>);
+<a name="893"></a>		if ( MyScrollBar != None )
+<a name="894"></a>			MyScrollBar.AlignThumb();
+<a name="895"></a>	}
+<a name="896"></a>}
+<a name="897"></a>
+<a name="898"></a>function PgUp()
+<a name="899"></a>{
+<a name="900"></a>	if ( ItemCount &lt; <span class="source_int">2</span> )
+<a name="901"></a>		return;
+<a name="902"></a>
+<a name="903"></a>	UpdateVisibleCount();
+<a name="904"></a>	Super.PgUp();
+<a name="905"></a>}
+<a name="906"></a>
+<a name="907"></a>function PgDn()
+<a name="908"></a>{
+<a name="909"></a>	if ( ItemCount &lt; <span class="source_int">2</span> )
+<a name="910"></a>		return;
+<a name="911"></a>
+<a name="912"></a>	UpdateVisibleCount();
+<a name="913"></a>	Super.PgDn();
+<a name="914"></a>}
+<a name="915"></a>
+<a name="916"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="917"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="918"></a><span class="source_comment">//  Drag-n-drop interface
+</span><a name="919"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="920"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="921"></a>
+<a name="922"></a><span class="source_comment">// Called on the drop source when when an Item has been dropped.  bAccepted tells it whether
+</span><a name="923"></a><span class="source_comment">// the operation was successful or not.
+</span><a name="924"></a>function InternalOnEndDrag(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> Accepting, <span class="source_type">bool</span> bAccepted)
+<a name="925"></a>{
+<a name="926"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="927"></a>
+<a name="928"></a><span class="source_comment">//	log(Name@"InternalOnEndDrag Accepting:"$Accepting@"bAccepted:"$bAccepted);
+</span><a name="929"></a>	if (bAccepted && Accepting != None)
+<a name="930"></a>	{
+<a name="931"></a>		GetPendingElements();
+<a name="932"></a>		if ( Accepting != Self )
+<a name="933"></a>		{
+<a name="934"></a>			for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; SelectedElements.Length; <span class="source_type">i</span>++ )
+<a name="935"></a>				RemoveElement(SelectedElements[<span class="source_type">i</span>]);
+<a name="936"></a>		}
+<a name="937"></a>
+<a name="938"></a>		bRepeatClick = False;
+<a name="939"></a>	}
+<a name="940"></a>
+<a name="941"></a>	<span class="source_comment">// Simulate repeat click if the operation was a failure to prevent InternalOnMouseRelease from clearing
+</span><a name="942"></a>	<span class="source_comment">// the SelectedItems array
+</span><a name="943"></a>	<span class="source_comment">// This way we don't lose the items we clicked on
+</span><a name="944"></a>	if (Accepting == None)
+<a name="945"></a>		bRepeatClick = True;
+<a name="946"></a>
+<a name="947"></a>	SetOutlineAlpha(<span class="source_int">255</span>);
+<a name="948"></a>	if ( bNotify )
+<a name="949"></a>		CheckLinkedObjects(Self);
+<a name="950"></a>}
+<a name="951"></a>
+<a name="952"></a><span class="source_comment">// Called on the drop target when the mouse is released - Sender is always DropTarget
+</span><a name="953"></a>function <span class="source_type">bool</span> InternalOnDragDrop(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="954"></a>{
+<a name="955"></a>	local array&lt;<span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span>&gt; <span class="source_type">NewItem</span>;
+<a name="956"></a>	local <span class="source_type"><a href="../xinterface/guitreelist.html" class="source">GUITreeList</a></span> SourceTree;
+<a name="957"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="958"></a><span class="source_comment">//	log(Name@"InternalOnDragDrop Sender:"$ Sender);
+</span><a name="959"></a>
+<a name="960"></a>	if (<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropTarget == Self)
+<a name="961"></a>	{
+<a name="962"></a>		if (<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource != None && <span class="source_type"><a href="../xinterface/guitreelist.html" class="source">GUITreeList</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource) != None)
+<a name="963"></a>		{
+<a name="964"></a>			SourceTree = <span class="source_type"><a href="../xinterface/guitreelist.html" class="source">GUITreeList</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource);
+<a name="965"></a>			<span class="source_type">NewItem</span> = SourceTree.GetPendingElements();
+<a name="966"></a>
+<a name="967"></a>			<span class="source_comment">// Special case for drag-n-drop between the same list.
+</span><a name="968"></a>			if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource == Self )
+<a name="969"></a>			{
+<a name="970"></a>				for ( <span class="source_type">i</span> = <span class="source_type">NewItem</span>.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="971"></a>					RemoveElement(<span class="source_type">NewItem</span>[<span class="source_type">i</span>],,True);
+<a name="972"></a>			}
+<a name="973"></a>
+<a name="974"></a>			if ( !IsValidIndex(DropIndex) )
+<a name="975"></a>				DropIndex = ItemCount;
+<a name="976"></a>
+<a name="977"></a>			for ( <span class="source_type">i</span> = <span class="source_type">NewItem</span>.Length-<span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="978"></a>				InsertItem(DropIndex, <span class="source_type">NewItem</span>[<span class="source_type">i</span>].<span class="source_type">Caption</span>, <span class="source_type">NewItem</span>[<span class="source_type">i</span>].<span class="source_type">Value</span>, <span class="source_type">NewItem</span>[<span class="source_type">i</span>].<span class="source_type">ParentCaption</span>, <span class="source_type">NewItem</span>[<span class="source_type">i</span>].<span class="source_type">Level</span>, <span class="source_type">NewItem</span>[<span class="source_type">i</span>].bEnabled, <span class="source_type">NewItem</span>[<span class="source_type">i</span>].<span class="source_type">ExtraInfo</span>);
+<a name="979"></a>
+<a name="980"></a>			SetIndex(DropIndex);
+<a name="981"></a>			return true;
+<a name="982"></a>		}
+<a name="983"></a>	}
+<a name="984"></a>	return false;
+<a name="985"></a>}
+<a name="986"></a>
+<a name="987"></a>function ClearPendingElements()
+<a name="988"></a>{
+<a name="989"></a>	Super.ClearPendingElements();
+<a name="990"></a>	if ( SelectedItems.Length == <span class="source_int">0</span> )
+<a name="991"></a>		SelectedElements.Remove(<span class="source_int">0</span>, SelectedElements.Length);
+<a name="992"></a>}
+<a name="993"></a>
+<a name="994"></a>function array&lt;<span class="source_type"><a href="../xinterface/gui.html#GUITreeNode" class="source">GUITreeNode</a></span>&gt; GetPendingElements(optional <span class="source_type">bool</span> <span class="source_type">bGuarantee</span>)
+<a name="995"></a>{
+<a name="996"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="997"></a>
+<a name="998"></a>	if ( (DropState == DRP_Source && <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource == Self) || <span class="source_type">bGuarantee</span> )
+<a name="999"></a>	{
+<a name="1000"></a>		if ( SelectedElements.Length == <span class="source_int">0</span> )
+<a name="1001"></a>		{
+<a name="1002"></a>			for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; SelectedItems.Length; <span class="source_type">i</span>++)
+<a name="1003"></a>				if (IsValidIndex(SelectedItems[<span class="source_type">i</span>]) && ValidSelectionAt(SelectedItems[<span class="source_type">i</span>]))
+<a name="1004"></a>					SelectedElements[SelectedElements.Length] = Elements[SelectedItems[<span class="source_type">i</span>]];
+<a name="1005"></a>
+<a name="1006"></a>			if ( SelectedElements.Length == <span class="source_int">0</span> && IsValid() && ValidSelection() )
+<a name="1007"></a>			{
+<a name="1008"></a>				SelectedElements.Length = SelectedElements.Length + <span class="source_int">1</span>;
+<a name="1009"></a>				GetElementAtIndex(<span class="source_type">Index</span>,SelectedElements[<span class="source_int">0</span>]);
+<a name="1010"></a>			}
+<a name="1011"></a>		}
+<a name="1012"></a>
+<a name="1013"></a>		return SelectedElements;
+<a name="1014"></a>	}
+<a name="1015"></a>}
+<a name="1016"></a>
+<a name="1017"></a>defaultproperties
+<a name="1018"></a>{
+<a name="1019"></a>     bAllowDuplicateCaption=True
+<a name="1020"></a>     bGroupItems=True
+<a name="1021"></a>}
+<a name="1022"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guitreelist.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUITreeList">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guitooltip.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guitreelistbox.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:02.594 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

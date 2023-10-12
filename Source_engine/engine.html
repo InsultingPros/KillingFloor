@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.Engine</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/engine.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Engine">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/emitter.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/fadecolor.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/engine.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/engine.html">Engine</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120
+</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// Engine: The base class of the global application object classes.
+</span><a name="3"></a><span class="source_comment">// This is a built-in Unreal class and it shouldn't be modified.
+</span><a name="4"></a><span class="source_comment">//=============================================================================
+</span><a name="5"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/engine.html" class="source">Engine</a></span> extends <span class="source_type"><a href="../core/subsystem.html" class="source">Subsystem</a></span>
+<a name="6"></a>	native
+<a name="7"></a>	noexport
+<a name="8"></a>	transient;
+<a name="9"></a>
+<a name="10"></a><span class="source_comment">// Variables.
+</span><a name="11"></a>var <span class="source_type">primitive</span> Cylinder;
+<a name="12"></a>var const <span class="source_type">client</span> <span class="source_type">Client</span>;
+<a name="13"></a>var const <span class="source_type">audiosubsystem</span> Audio;
+<a name="14"></a>var const <span class="source_type">renderdevice</span> GRenDev;
+<a name="15"></a>var const <span class="source_type">advertisingsubsystem</span> AdClient;
+<a name="16"></a>
+<a name="17"></a><span class="source_comment">// Stats.
+</span><a name="18"></a>var <span class="source_type">int</span> bShowFrameRate;
+<a name="19"></a>var <span class="source_type">int</span> bShowRenderStats;
+<a name="20"></a>var <span class="source_type">int</span> bShowHardwareStats;
+<a name="21"></a>var <span class="source_type">int</span> bShowGameStats;
+<a name="22"></a>var <span class="source_type">int</span> bShowNetStats;
+<a name="23"></a>var <span class="source_type">int</span> bShowAnimStats;		 <span class="source_comment">// Show animation statistics.
+</span><a name="24"></a>
+<a name="25"></a><span class="source_comment">// ifdef WITH_LIPSINC
+</span><a name="26"></a>var <span class="source_type">int</span> bShowLIPSincStats;   <span class="source_comment">// Show LIPSinc statistics.
+</span><a name="27"></a><span class="source_comment">// endif
+</span><a name="28"></a>
+<a name="29"></a>var <span class="source_type">int</span> bShowHistograph;
+<a name="30"></a>var <span class="source_type">int</span> bShowXboxMemStats;
+<a name="31"></a>var <span class="source_type">int</span> bShowMatineeStats;	<span class="source_comment">// Show Matinee specific information
+</span><a name="32"></a>var <span class="source_type">int</span> bShowAudioStats;
+<a name="33"></a>var <span class="source_type">int</span> bShowLightStats;    <span class="source_comment">// Show dynamic lighting statistics.
+</span><a name="34"></a>
+<a name="35"></a>var <span class="source_type">int</span> TickCycles, GameCycles, ClientCycles;
+<a name="36"></a>var(Settings) config <span class="source_type">int</span> CacheSizeMegs;
+<a name="37"></a>var(Settings) config <span class="source_type">bool</span> UseSound;
+<a name="38"></a>var(Settings) config <span class="source_type">bool</span> UseStaticMeshBatching;
+<a name="39"></a>var(Settings) config <span class="source_type">bool</span> ServerReadsStdin;
+<a name="40"></a>var(Settings) config <span class="source_type">bool</span> bSlowRefChecking; <span class="source_comment">// toggle object ref checking on cleanupdestroyed
+</span><a name="41"></a>
+<a name="42"></a>var(Settings) <span class="source_type">float</span> CurrentTickRate;
+<a name="43"></a>var config <span class="source_type">int</span> DetectedVideoMemory;
+<a name="44"></a>
+<a name="45"></a><span class="source_comment">// Color preferences.
+</span><a name="46"></a>var(Colors) config <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>
+<a name="47"></a>	C_WorldBox,
+<a name="48"></a>	C_GroundPlane,
+<a name="49"></a>	C_GroundHighlight,
+<a name="50"></a>	C_BrushWire,
+<a name="51"></a>	C_Pivot,
+<a name="52"></a>	C_Select,
+<a name="53"></a>	C_Current,
+<a name="54"></a>	C_AddWire,
+<a name="55"></a>	C_SubtractWire,
+<a name="56"></a>	C_GreyWire,
+<a name="57"></a>	C_BrushVertex,
+<a name="58"></a>	C_BrushSnap,
+<a name="59"></a>	C_Invalid,
+<a name="60"></a>	C_ActorWire,
+<a name="61"></a>	C_ActorHiWire,
+<a name="62"></a>	C_Black,
+<a name="63"></a>	C_White,
+<a name="64"></a>	C_Mask,
+<a name="65"></a>	C_SemiSolidWire,
+<a name="66"></a>	C_NonSolidWire,
+<a name="67"></a>	C_WireBackground,
+<a name="68"></a>	C_WireGridAxis,
+<a name="69"></a>	C_ActorArrow,
+<a name="70"></a>	C_ScaleBox,
+<a name="71"></a>	C_ScaleBoxHi,
+<a name="72"></a>	C_ZoneWire,
+<a name="73"></a>	C_Mover,
+<a name="74"></a>	C_OrthoBackground,
+<a name="75"></a>	C_StaticMesh,
+<a name="76"></a>	C_VolumeBrush,
+<a name="77"></a>	C_ConstraintLine,
+<a name="78"></a>	C_AnimMesh,
+<a name="79"></a>	C_TerrainWire;
+<a name="80"></a>
+<a name="81"></a>defaultproperties
+<a name="82"></a>{
+<a name="83"></a>     CacheSizeMegs=<span class="source_int">2</span>
+<a name="84"></a>     UseSound=True
+<a name="85"></a>     UseStaticMeshBatching=True
+<a name="86"></a>     C_WorldBox=(<span class="source_type">B</span>=<span class="source_int">107</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="87"></a>     C_GroundPlane=(<span class="source_type">B</span>=<span class="source_int">63</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="88"></a>     C_GroundHighlight=(<span class="source_type">B</span>=<span class="source_int">127</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="89"></a>     C_BrushWire=(<span class="source_type">B</span>=<span class="source_int">63</span>,G=<span class="source_int">63</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="90"></a>     C_Pivot=(G=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="91"></a>     C_Select=(<span class="source_type">B</span>=<span class="source_int">127</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="92"></a>     C_Current=(<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="93"></a>     C_AddWire=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">127</span>,<span class="source_type">R</span>=<span class="source_int">127</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="94"></a>     C_SubtractWire=(<span class="source_type">B</span>=<span class="source_int">63</span>,G=<span class="source_int">192</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="95"></a>     C_GreyWire=(<span class="source_type">B</span>=<span class="source_int">163</span>,G=<span class="source_int">163</span>,<span class="source_type">R</span>=<span class="source_int">163</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="96"></a>     C_BrushVertex=(<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="97"></a>     C_BrushSnap=(<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="98"></a>     C_Invalid=(<span class="source_type">B</span>=<span class="source_int">163</span>,G=<span class="source_int">163</span>,<span class="source_type">R</span>=<span class="source_int">163</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="99"></a>     C_ActorWire=(G=<span class="source_int">63</span>,<span class="source_type">R</span>=<span class="source_int">127</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="100"></a>     C_ActorHiWire=(G=<span class="source_int">127</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="101"></a>     C_Black=(<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="102"></a>     C_White=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="103"></a>     C_Mask=(<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="104"></a>     C_SemiSolidWire=(G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">127</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="105"></a>     C_NonSolidWire=(<span class="source_type">B</span>=<span class="source_int">32</span>,G=<span class="source_int">192</span>,<span class="source_type">R</span>=<span class="source_int">63</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="106"></a>     C_WireBackground=(<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="107"></a>     C_WireGridAxis=(<span class="source_type">B</span>=<span class="source_int">119</span>,G=<span class="source_int">119</span>,<span class="source_type">R</span>=<span class="source_int">119</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="108"></a>     C_ActorArrow=(<span class="source_type">R</span>=<span class="source_int">163</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="109"></a>     C_ScaleBox=(<span class="source_type">B</span>=<span class="source_int">11</span>,G=<span class="source_int">67</span>,<span class="source_type">R</span>=<span class="source_int">151</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="110"></a>     C_ScaleBoxHi=(<span class="source_type">B</span>=<span class="source_int">157</span>,G=<span class="source_int">149</span>,<span class="source_type">R</span>=<span class="source_int">223</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="111"></a>     C_ZoneWire=(<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="112"></a>     C_Mover=(<span class="source_type">B</span>=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="113"></a>     C_OrthoBackground=(<span class="source_type">B</span>=<span class="source_int">163</span>,G=<span class="source_int">163</span>,<span class="source_type">R</span>=<span class="source_int">163</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="114"></a>     C_StaticMesh=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="115"></a>     C_VolumeBrush=(<span class="source_type">B</span>=<span class="source_int">225</span>,G=<span class="source_int">196</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="116"></a>     C_ConstraintLine=(G=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="117"></a>     C_AnimMesh=(<span class="source_type">B</span>=<span class="source_int">28</span>,G=<span class="source_int">221</span>,<span class="source_type">R</span>=<span class="source_int">221</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="118"></a>     C_TerrainWire=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="119"></a>}
+<a name="120"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/engine.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Engine">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/emitter.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/fadecolor.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:01.712 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

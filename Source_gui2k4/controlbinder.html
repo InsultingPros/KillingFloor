@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.ControlBinder</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/controlbinder.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ControlBinder">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/componentgroup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/customfilter.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/controlbinder.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/controlbinder.html">ControlBinder</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//  Created on: 11/23/2003
+</span><a name="3"></a><span class="source_comment">//  Description
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">//  Written by Ron Prestenback
+</span><a name="6"></a><span class="source_comment">//  © 2003, Epic Games, Inc. All Rights Reserved
+</span><a name="7"></a><span class="source_comment">//==============================================================================
+</span><a name="8"></a>
+<a name="9"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/controlbinder.html" class="source">ControlBinder</a></span> extends <span class="source_type"><a href="../gui2k4/keybindmenu.html" class="source">KeyBindMenu</a></span>;
+<a name="10"></a>
+<a name="11"></a>var localized <span class="source_type">string</span> BindingLabel[<span class="source_int">150</span>];
+<a name="12"></a>
+<a name="13"></a>function LoadCommands()
+<a name="14"></a>{
+<a name="15"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="16"></a>
+<a name="17"></a>	Super.LoadCommands();
+<a name="18"></a>
+<a name="19"></a>	<span class="source_comment">// Update the MultiColumnList's sortdata array to reflect the indexes of our Bindings array
+</span><a name="20"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Bindings.Length; <span class="source_type">i</span>++)
+<a name="21"></a>    	li_Binds.AddedItem();
+<a name="22"></a>}
+<a name="23"></a>
+<a name="24"></a>function MapBindings()
+<a name="25"></a>{
+<a name="26"></a>	LoadCustomBindings();
+<a name="27"></a>	Super.MapBindings();
+<a name="28"></a>}
+<a name="29"></a>
+<a name="30"></a>protected function LoadCustomBindings()
+<a name="31"></a>{
+<a name="32"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="33"></a>	local array&lt;<span class="source_type">string</span>&gt; KeyBindClasses;
+<a name="34"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guiuserkeybinding.html" class="source">GUIUserKeyBinding</a></span>&gt; CustomKeyBindClass;
+<a name="35"></a>
+<a name="36"></a>    <span class="source_comment">// Load custom keybinds from .int files
+</span><a name="37"></a>    PlayerOwner().GetAllInt(<span class="source_string">"XInterface.GUIUserKeyBinding"</span>,KeyBindClasses);
+<a name="38"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; KeyBindClasses.Length; <span class="source_type">i</span>++)
+<a name="39"></a>	{
+<a name="40"></a>		CustomKeyBindClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xinterface/guiuserkeybinding.html" class="source">GUIUserKeyBinding</a></span>&gt;(DynamicLoadObject(KeyBindClasses[<span class="source_type">i</span>],<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="41"></a>		if (CustomKeyBindClass != None)
+<a name="42"></a>			AddCustomBindings( CustomKeyBindClass.default.<span class="source_type">KeyData</span> );
+<a name="43"></a>    }
+<a name="44"></a>}
+<a name="45"></a>
+<a name="46"></a>function AddCustomBindings( array&lt;<span class="source_type"><a href="../xinterface/guiuserkeybinding.html" class="source">GUIUserKeyBinding</a></span>.<span class="source_type"><a href="../xinterface/guiuserkeybinding.html#KeyInfo" class="source">KeyInfo</a></span>&gt; <span class="source_type">KeyData</span> )
+<a name="47"></a>{
+<a name="48"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="49"></a>
+<a name="50"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">KeyData</span>.Length; <span class="source_type">i</span>++ )
+<a name="51"></a>		CreateAliasMapping( <span class="source_type">KeyData</span>[<span class="source_type">i</span>].<span class="source_type">Alias</span>, <span class="source_type">KeyData</span>[<span class="source_type">i</span>].KeyLabel, <span class="source_type">KeyData</span>[<span class="source_type">i</span>].bIsSection );
+<a name="52"></a>}
+<a name="53"></a>
+<a name="54"></a>function ClearBindings()
+<a name="55"></a>{
+<a name="56"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">max</span>;
+<a name="57"></a>
+<a name="58"></a>	Super.ClearBindings();
+<a name="59"></a>	Bindings = default.Bindings;
+<a name="60"></a>	<span class="source_type">max</span> = Min(Bindings.Length, ArrayCount(BindingLabel));
+<a name="61"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">max</span>; <span class="source_type">i</span>++ )
+<a name="62"></a>	{
+<a name="63"></a>		if ( BindingLabel[<span class="source_type">i</span>] != <span class="source_string">""</span> )
+<a name="64"></a>			Bindings[<span class="source_type">i</span>].KeyLabel = BindingLabel[<span class="source_type">i</span>];
+<a name="65"></a>	}
+<a name="66"></a>}
+<a name="67"></a>
+<a name="68"></a>defaultproperties
+<a name="69"></a>{
+<a name="70"></a>     BindingLabel(<span class="source_int">0</span>)=<span class="source_string">"Movement"</span>
+<a name="71"></a>     BindingLabel(<span class="source_int">1</span>)=<span class="source_string">"Forward"</span>
+<a name="72"></a>     BindingLabel(<span class="source_int">2</span>)=<span class="source_string">"Backward"</span>
+<a name="73"></a>     BindingLabel(<span class="source_int">3</span>)=<span class="source_string">"Strafe Left"</span>
+<a name="74"></a>     BindingLabel(<span class="source_int">4</span>)=<span class="source_string">"Strafe Right"</span>
+<a name="75"></a>     BindingLabel(<span class="source_int">5</span>)=<span class="source_string">"Jump"</span>
+<a name="76"></a>     BindingLabel(<span class="source_int">6</span>)=<span class="source_string">"Walk"</span>
+<a name="77"></a>     BindingLabel(<span class="source_int">7</span>)=<span class="source_string">"Crouch"</span>
+<a name="78"></a>     BindingLabel(<span class="source_int">8</span>)=<span class="source_string">"Strafe Toggle"</span>
+<a name="79"></a>     BindingLabel(<span class="source_int">9</span>)=<span class="source_string">"Looking"</span>
+<a name="80"></a>     BindingLabel(<span class="source_int">10</span>)=<span class="source_string">"Turn Left"</span>
+<a name="81"></a>     BindingLabel(<span class="source_int">11</span>)=<span class="source_string">"Turn Right"</span>
+<a name="82"></a>     BindingLabel(<span class="source_int">12</span>)=<span class="source_string">"Look Up"</span>
+<a name="83"></a>     BindingLabel(<span class="source_int">13</span>)=<span class="source_string">"Look Down"</span>
+<a name="84"></a>     BindingLabel(<span class="source_int">14</span>)=<span class="source_string">"Center View"</span>
+<a name="85"></a>     BindingLabel(<span class="source_int">15</span>)=<span class="source_string">"Toggle "</span>BehindView<span class="source_string">""</span>
+<a name="86"></a>     BindingLabel(<span class="source_int">16</span>)=<span class="source_string">"Toggle Camera Mode"</span>
+<a name="87"></a>     BindingLabel(<span class="source_int">17</span>)=<span class="source_string">"Weapons"</span>
+<a name="88"></a>     BindingLabel(<span class="source_int">18</span>)=<span class="source_string">"Fire"</span>
+<a name="89"></a>     BindingLabel(<span class="source_int">19</span>)=<span class="source_string">"Alt-Fire"</span>
+<a name="90"></a>     BindingLabel(<span class="source_int">20</span>)=<span class="source_string">"Throw Weapon"</span>
+<a name="91"></a>     BindingLabel(<span class="source_int">21</span>)=<span class="source_string">"Best Weapon"</span>
+<a name="92"></a>     BindingLabel(<span class="source_int">22</span>)=<span class="source_string">"Next Weapon"</span>
+<a name="93"></a>     BindingLabel(<span class="source_int">23</span>)=<span class="source_string">"Prev Weapon"</span>
+<a name="94"></a>     BindingLabel(<span class="source_int">24</span>)=<span class="source_string">"Last Weapon"</span>
+<a name="95"></a>     BindingLabel(<span class="source_int">25</span>)=<span class="source_string">"Weapon Selection"</span>
+<a name="96"></a>     BindingLabel(<span class="source_int">26</span>)=<span class="source_string">"Super Weapon"</span>
+<a name="97"></a>     BindingLabel(<span class="source_int">27</span>)=<span class="source_string">"Shield Gun"</span>
+<a name="98"></a>     BindingLabel(<span class="source_int">28</span>)=<span class="source_string">"Assault Rifle"</span>
+<a name="99"></a>     BindingLabel(<span class="source_int">29</span>)=<span class="source_string">"Bio-Rifle"</span>
+<a name="100"></a>     BindingLabel(<span class="source_int">30</span>)=<span class="source_string">"Shock Rifle"</span>
+<a name="101"></a>     BindingLabel(<span class="source_int">31</span>)=<span class="source_string">"Link Gun"</span>
+<a name="102"></a>     BindingLabel(<span class="source_int">32</span>)=<span class="source_string">"Minigun"</span>
+<a name="103"></a>     BindingLabel(<span class="source_int">33</span>)=<span class="source_string">"Flak Cannon"</span>
+<a name="104"></a>     BindingLabel(<span class="source_int">34</span>)=<span class="source_string">"Rocket Launcher"</span>
+<a name="105"></a>     BindingLabel(<span class="source_int">35</span>)=<span class="source_string">"Lightning Rifle"</span>
+<a name="106"></a>     BindingLabel(<span class="source_int">36</span>)=<span class="source_string">"Translocator"</span>
+<a name="107"></a>     BindingLabel(<span class="source_int">37</span>)=<span class="source_string">"Communication"</span>
+<a name="108"></a>     BindingLabel(<span class="source_int">38</span>)=<span class="source_string">"Say"</span>
+<a name="109"></a>     BindingLabel(<span class="source_int">39</span>)=<span class="source_string">"Team Say"</span>
+<a name="110"></a>     BindingLabel(<span class="source_int">40</span>)=<span class="source_string">"In Game Chat"</span>
+<a name="111"></a>     BindingLabel(<span class="source_int">41</span>)=<span class="source_string">"Speech Menu"</span>
+<a name="112"></a>     BindingLabel(<span class="source_int">42</span>)=<span class="source_string">"Activate Microphone"</span>
+<a name="113"></a>     BindingLabel(<span class="source_int">43</span>)=<span class="source_string">"Speak in Public Channel"</span>
+<a name="114"></a>     BindingLabel(<span class="source_int">44</span>)=<span class="source_string">"Speak in local Channel"</span>
+<a name="115"></a>     BindingLabel(<span class="source_int">45</span>)=<span class="source_string">"Speak in Team Channel"</span>
+<a name="116"></a>     BindingLabel(<span class="source_int">46</span>)=<span class="source_string">"Toggle Public Channel"</span>
+<a name="117"></a>     BindingLabel(<span class="source_int">47</span>)=<span class="source_string">"Toggle Local Channel"</span>
+<a name="118"></a>     BindingLabel(<span class="source_int">48</span>)=<span class="source_string">"Toggle Team Channel"</span>
+<a name="119"></a>     BindingLabel(<span class="source_int">49</span>)=<span class="source_string">"Taunts"</span>
+<a name="120"></a>     BindingLabel(<span class="source_int">50</span>)=<span class="source_string">"Pelvic Thrust"</span>
+<a name="121"></a>     BindingLabel(<span class="source_int">51</span>)=<span class="source_string">"Ass Smack"</span>
+<a name="122"></a>     BindingLabel(<span class="source_int">52</span>)=<span class="source_string">"Throat Cut"</span>
+<a name="123"></a>     BindingLabel(<span class="source_int">53</span>)=<span class="source_string">"Brag"</span>
+<a name="124"></a>     BindingLabel(<span class="source_int">54</span>)=<span class="source_string">"Hud"</span>
+<a name="125"></a>     BindingLabel(<span class="source_int">55</span>)=<span class="source_string">"Grow Hud"</span>
+<a name="126"></a>     BindingLabel(<span class="source_int">56</span>)=<span class="source_string">"Shrink Hud"</span>
+<a name="127"></a>     BindingLabel(<span class="source_int">57</span>)=<span class="source_string">"Show Radar Map"</span>
+<a name="128"></a>     BindingLabel(<span class="source_int">58</span>)=<span class="source_string">"ScoreBoard Toggle"</span>
+<a name="129"></a>     BindingLabel(<span class="source_int">59</span>)=<span class="source_string">"ScoreBoard"</span>
+<a name="130"></a>     BindingLabel(<span class="source_int">60</span>)=<span class="source_string">"Game"</span>
+<a name="131"></a>     BindingLabel(<span class="source_int">61</span>)=<span class="source_string">"Use"</span>
+<a name="132"></a>     BindingLabel(<span class="source_int">62</span>)=<span class="source_string">"Pause"</span>
+<a name="133"></a>     BindingLabel(<span class="source_int">63</span>)=<span class="source_string">"Screenshot"</span>
+<a name="134"></a>     BindingLabel(<span class="source_int">64</span>)=<span class="source_string">"Find Red Base"</span>
+<a name="135"></a>     BindingLabel(<span class="source_int">65</span>)=<span class="source_string">"Find Blue Base"</span>
+<a name="136"></a>     BindingLabel(<span class="source_int">66</span>)=<span class="source_string">"Next Inventory Item"</span>
+<a name="137"></a>     BindingLabel(<span class="source_int">67</span>)=<span class="source_string">"Previous Inventory Item"</span>
+<a name="138"></a>     BindingLabel(<span class="source_int">68</span>)=<span class="source_string">"Activate Current Inventory Item"</span>
+<a name="139"></a>     BindingLabel(<span class="source_int">69</span>)=<span class="source_string">"Show Personal Stats"</span>
+<a name="140"></a>     BindingLabel(<span class="source_int">70</span>)=<span class="source_string">"View Next Player's Stats"</span>
+<a name="141"></a>     BindingLabel(<span class="source_int">71</span>)=<span class="source_string">"Server Info"</span>
+<a name="142"></a>     BindingLabel(<span class="source_int">72</span>)=<span class="source_string">"Vehicle Horn"</span>
+<a name="143"></a>     BindingLabel(<span class="source_int">73</span>)=<span class="source_string">"Miscellaneous"</span>
+<a name="144"></a>     BindingLabel(<span class="source_int">74</span>)=<span class="source_string">"Menu"</span>
+<a name="145"></a>     BindingLabel(<span class="source_int">75</span>)=<span class="source_string">"Music Player"</span>
+<a name="146"></a>     BindingLabel(<span class="source_int">76</span>)=<span class="source_string">"Voting Menu"</span>
+<a name="147"></a>     BindingLabel(<span class="source_int">77</span>)=<span class="source_string">"Toggle Console"</span>
+<a name="148"></a>     BindingLabel(<span class="source_int">78</span>)=<span class="source_string">"View Connection Status"</span>
+<a name="149"></a>     BindingLabel(<span class="source_int">79</span>)=<span class="source_string">"Cancel Pending Connection"</span>
+<a name="150"></a>     Bindings(<span class="source_int">0</span>)=(bIsSectionLabel=True,KeyLabel=<span class="source_string">"Movement"</span>)
+<a name="151"></a>     Bindings(<span class="source_int">1</span>)=(KeyLabel=<span class="source_string">"Forward"</span>,<span class="source_type">Alias</span>=<span class="source_string">"MoveForward"</span>)
+<a name="152"></a>     Bindings(<span class="source_int">2</span>)=(KeyLabel=<span class="source_string">"Backward"</span>,<span class="source_type">Alias</span>=<span class="source_string">"MoveBackward"</span>)
+<a name="153"></a>     Bindings(<span class="source_int">3</span>)=(KeyLabel=<span class="source_string">"Strafe Left"</span>,<span class="source_type">Alias</span>=<span class="source_string">"StrafeLeft"</span>)
+<a name="154"></a>     Bindings(<span class="source_int">4</span>)=(KeyLabel=<span class="source_string">"Strafe Right"</span>,<span class="source_type">Alias</span>=<span class="source_string">"StrafeRight"</span>)
+<a name="155"></a>     Bindings(<span class="source_int">5</span>)=(KeyLabel=<span class="source_string">"Jump"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Jump"</span>)
+<a name="156"></a>     Bindings(<span class="source_int">6</span>)=(KeyLabel=<span class="source_string">"Walk"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Walking"</span>)
+<a name="157"></a>     Bindings(<span class="source_int">7</span>)=(KeyLabel=<span class="source_string">"Crouch"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Duck"</span>)
+<a name="158"></a>     Bindings(<span class="source_int">8</span>)=(KeyLabel=<span class="source_string">"Strafe Toggle"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Strafe"</span>)
+<a name="159"></a>     Bindings(<span class="source_int">9</span>)=(bIsSectionLabel=True,KeyLabel=<span class="source_string">"Looking"</span>)
+<a name="160"></a>     Bindings(<span class="source_int">10</span>)=(KeyLabel=<span class="source_string">"Turn Left"</span>,<span class="source_type">Alias</span>=<span class="source_string">"TurnLeft"</span>)
+<a name="161"></a>     Bindings(<span class="source_int">11</span>)=(KeyLabel=<span class="source_string">"Turn Right"</span>,<span class="source_type">Alias</span>=<span class="source_string">"TurnRight"</span>)
+<a name="162"></a>     Bindings(<span class="source_int">12</span>)=(KeyLabel=<span class="source_string">"Look Up"</span>,<span class="source_type">Alias</span>=<span class="source_string">"LookUp"</span>)
+<a name="163"></a>     Bindings(<span class="source_int">13</span>)=(KeyLabel=<span class="source_string">"Look Down"</span>,<span class="source_type">Alias</span>=<span class="source_string">"LookDown"</span>)
+<a name="164"></a>     Bindings(<span class="source_int">14</span>)=(KeyLabel=<span class="source_string">"Center View"</span>,<span class="source_type">Alias</span>=<span class="source_string">"CenterView"</span>)
+<a name="165"></a>     Bindings(<span class="source_int">15</span>)=(KeyLabel=<span class="source_string">"Toggle "</span>BehindView<span class="source_string">""</span>,<span class="source_type">Alias</span>=<span class="source_string">"ToggleBehindView"</span>)
+<a name="166"></a>     Bindings(<span class="source_int">16</span>)=(KeyLabel=<span class="source_string">"Toggle Camera Mode"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ToggleFreeCam"</span>)
+<a name="167"></a>     Bindings(<span class="source_int">17</span>)=(bIsSectionLabel=True,KeyLabel=<span class="source_string">"Weapons"</span>)
+<a name="168"></a>     Bindings(<span class="source_int">18</span>)=(KeyLabel=<span class="source_string">"Fire"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Fire"</span>)
+<a name="169"></a>     Bindings(<span class="source_int">19</span>)=(KeyLabel=<span class="source_string">"Alt-Fire"</span>,<span class="source_type">Alias</span>=<span class="source_string">"AltFire"</span>)
+<a name="170"></a>     Bindings(<span class="source_int">20</span>)=(KeyLabel=<span class="source_string">"Throw Weapon"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ThrowWeapon"</span>)
+<a name="171"></a>     Bindings(<span class="source_int">21</span>)=(KeyLabel=<span class="source_string">"Best Weapon"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchToBestWeapon"</span>)
+<a name="172"></a>     Bindings(<span class="source_int">22</span>)=(KeyLabel=<span class="source_string">"Next Weapon"</span>,<span class="source_type">Alias</span>=<span class="source_string">"NextWeapon"</span>)
+<a name="173"></a>     Bindings(<span class="source_int">23</span>)=(KeyLabel=<span class="source_string">"Prev Weapon"</span>,<span class="source_type">Alias</span>=<span class="source_string">"PrevWeapon"</span>)
+<a name="174"></a>     Bindings(<span class="source_int">24</span>)=(KeyLabel=<span class="source_string">"Last Weapon"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchToLastWeapon"</span>)
+<a name="175"></a>     Bindings(<span class="source_int">25</span>)=(KeyLabel=<span class="source_string">"Weapon Selection"</span>)
+<a name="176"></a>     Bindings(<span class="source_int">26</span>)=(KeyLabel=<span class="source_string">"Super Weapon"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 0"</span>)
+<a name="177"></a>     Bindings(<span class="source_int">27</span>)=(KeyLabel=<span class="source_string">"Shield Gun"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 1"</span>)
+<a name="178"></a>     Bindings(<span class="source_int">28</span>)=(KeyLabel=<span class="source_string">"Assault Rifle"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 2"</span>)
+<a name="179"></a>     Bindings(<span class="source_int">29</span>)=(KeyLabel=<span class="source_string">"Bio-Rifle"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 3"</span>)
+<a name="180"></a>     Bindings(<span class="source_int">30</span>)=(KeyLabel=<span class="source_string">"Shock Rifle"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 4"</span>)
+<a name="181"></a>     Bindings(<span class="source_int">31</span>)=(KeyLabel=<span class="source_string">"Link Gun"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 5"</span>)
+<a name="182"></a>     Bindings(<span class="source_int">32</span>)=(KeyLabel=<span class="source_string">"Minigun"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 6"</span>)
+<a name="183"></a>     Bindings(<span class="source_int">33</span>)=(KeyLabel=<span class="source_string">"Flak Cannon"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 7"</span>)
+<a name="184"></a>     Bindings(<span class="source_int">34</span>)=(KeyLabel=<span class="source_string">"Rocket Launcher"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 8"</span>)
+<a name="185"></a>     Bindings(<span class="source_int">35</span>)=(KeyLabel=<span class="source_string">"Lightning Rifle"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 9"</span>)
+<a name="186"></a>     Bindings(<span class="source_int">36</span>)=(KeyLabel=<span class="source_string">"Translocator"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SwitchWeapon 10"</span>)
+<a name="187"></a>     Bindings(<span class="source_int">37</span>)=(bIsSectionLabel=True,KeyLabel=<span class="source_string">"Communication"</span>)
+<a name="188"></a>     Bindings(<span class="source_int">38</span>)=(KeyLabel=<span class="source_string">"Say"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Talk"</span>)
+<a name="189"></a>     Bindings(<span class="source_int">39</span>)=(KeyLabel=<span class="source_string">"Team Say"</span>,<span class="source_type">Alias</span>=<span class="source_string">"TeamTalk"</span>)
+<a name="190"></a>     Bindings(<span class="source_int">40</span>)=(KeyLabel=<span class="source_string">"In Game Chat"</span>,<span class="source_type">Alias</span>=<span class="source_string">"InGameChat"</span>)
+<a name="191"></a>     Bindings(<span class="source_int">41</span>)=(KeyLabel=<span class="source_string">"Speech Menu"</span>,<span class="source_type">Alias</span>=<span class="source_string">"SpeechMenuToggle"</span>)
+<a name="192"></a>     Bindings(<span class="source_int">42</span>)=(KeyLabel=<span class="source_string">"Activate Microphone"</span>,<span class="source_type">Alias</span>=<span class="source_string">"VoiceTalk"</span>)
+<a name="193"></a>     Bindings(<span class="source_int">43</span>)=(KeyLabel=<span class="source_string">"Speak in Public Channel"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Speak Public"</span>)
+<a name="194"></a>     Bindings(<span class="source_int">44</span>)=(KeyLabel=<span class="source_string">"Speak in local Channel"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Speak Local"</span>)
+<a name="195"></a>     Bindings(<span class="source_int">45</span>)=(KeyLabel=<span class="source_string">"Speak in Team Channel"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Speak Team"</span>)
+<a name="196"></a>     Bindings(<span class="source_int">46</span>)=(KeyLabel=<span class="source_string">"Toggle Public Chatroom"</span>,<span class="source_type">Alias</span>=<span class="source_string">"TogglePublicChat"</span>)
+<a name="197"></a>     Bindings(<span class="source_int">47</span>)=(KeyLabel=<span class="source_string">"Toggle Local Chatroom"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ToggleLocalChat"</span>)
+<a name="198"></a>     Bindings(<span class="source_int">48</span>)=(KeyLabel=<span class="source_string">"Toggle Team Chatroom"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ToggleTeamChat"</span>)
+<a name="199"></a>     Bindings(<span class="source_int">49</span>)=(bIsSectionLabel=True,KeyLabel=<span class="source_string">"Taunts"</span>)
+<a name="200"></a>     Bindings(<span class="source_int">50</span>)=(KeyLabel=<span class="source_string">"Pelvic Thrust"</span>,<span class="source_type">Alias</span>=<span class="source_string">"taunt pthrust"</span>)
+<a name="201"></a>     Bindings(<span class="source_int">51</span>)=(KeyLabel=<span class="source_string">"Ass Smack"</span>,<span class="source_type">Alias</span>=<span class="source_string">"taunt asssmack"</span>)
+<a name="202"></a>     Bindings(<span class="source_int">52</span>)=(KeyLabel=<span class="source_string">"Throat Cut"</span>,<span class="source_type">Alias</span>=<span class="source_string">"taunt throatcut"</span>)
+<a name="203"></a>     Bindings(<span class="source_int">53</span>)=(KeyLabel=<span class="source_string">"Brag"</span>,<span class="source_type">Alias</span>=<span class="source_string">"taunt gesture_point"</span>)
+<a name="204"></a>     Bindings(<span class="source_int">54</span>)=(bIsSectionLabel=True,KeyLabel=<span class="source_string">"Hud"</span>)
+<a name="205"></a>     Bindings(<span class="source_int">55</span>)=(KeyLabel=<span class="source_string">"Grow Hud"</span>,<span class="source_type">Alias</span>=<span class="source_string">"GrowHud"</span>)
+<a name="206"></a>     Bindings(<span class="source_int">56</span>)=(KeyLabel=<span class="source_string">"Shrink Hud"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ShrinkHud"</span>)
+<a name="207"></a>     Bindings(<span class="source_int">57</span>)=(KeyLabel=<span class="source_string">"Show Radar Map"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ToggleRadarMap"</span>)
+<a name="208"></a>     Bindings(<span class="source_int">58</span>)=(KeyLabel=<span class="source_string">"ScoreBoard"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ShowScores"</span>)
+<a name="209"></a>     Bindings(<span class="source_int">59</span>)=(KeyLabel=<span class="source_string">"ScoreBoard (QuickView)"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ScoreToggle"</span>)
+<a name="210"></a>     Bindings(<span class="source_int">60</span>)=(bIsSectionLabel=True,KeyLabel=<span class="source_string">"Game"</span>)
+<a name="211"></a>     Bindings(<span class="source_int">61</span>)=(KeyLabel=<span class="source_string">"Use"</span>,<span class="source_type">Alias</span>=<span class="source_string">"use"</span>)
+<a name="212"></a>     Bindings(<span class="source_int">62</span>)=(KeyLabel=<span class="source_string">"Pause"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Pause"</span>)
+<a name="213"></a>     Bindings(<span class="source_int">63</span>)=(KeyLabel=<span class="source_string">"Screenshot"</span>,<span class="source_type">Alias</span>=<span class="source_string">"shot"</span>)
+<a name="214"></a>     Bindings(<span class="source_int">64</span>)=(KeyLabel=<span class="source_string">"Find Red Base"</span>,<span class="source_type">Alias</span>=<span class="source_string">"basepath 0"</span>)
+<a name="215"></a>     Bindings(<span class="source_int">65</span>)=(KeyLabel=<span class="source_string">"Find Blue Base"</span>,<span class="source_type">Alias</span>=<span class="source_string">"basepath 1"</span>)
+<a name="216"></a>     Bindings(<span class="source_int">66</span>)=(KeyLabel=<span class="source_string">"Next Inventory Item"</span>,<span class="source_type">Alias</span>=<span class="source_string">"InventoryNext"</span>)
+<a name="217"></a>     Bindings(<span class="source_int">67</span>)=(KeyLabel=<span class="source_string">"Previous Inventory Item"</span>,<span class="source_type">Alias</span>=<span class="source_string">"InventoryPrevious"</span>)
+<a name="218"></a>     Bindings(<span class="source_int">68</span>)=(KeyLabel=<span class="source_string">"Activate Current Inventory Item"</span>,<span class="source_type">Alias</span>=<span class="source_string">"InventoryActivate"</span>)
+<a name="219"></a>     Bindings(<span class="source_int">69</span>)=(KeyLabel=<span class="source_string">"Show Personal Stats"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ShowStats"</span>)
+<a name="220"></a>     Bindings(<span class="source_int">70</span>)=(KeyLabel=<span class="source_string">"View Next Player's Stats"</span>,<span class="source_type">Alias</span>=<span class="source_string">"NextStats"</span>)
+<a name="221"></a>     Bindings(<span class="source_int">71</span>)=(KeyLabel=<span class="source_string">"Server Info"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ServerInfo"</span>)
+<a name="222"></a>     Bindings(<span class="source_int">72</span>)=(KeyLabel=<span class="source_string">"Vehicle Horn"</span>,<span class="source_type">Alias</span>=<span class="source_string">"playvehiclehorn 0"</span>)
+<a name="223"></a>     Bindings(<span class="source_int">73</span>)=(bIsSectionLabel=True,KeyLabel=<span class="source_string">"Miscellaneous"</span>)
+<a name="224"></a>     Bindings(<span class="source_int">74</span>)=(KeyLabel=<span class="source_string">"Menu"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ShowMenu"</span>)
+<a name="225"></a>     Bindings(<span class="source_int">75</span>)=(KeyLabel=<span class="source_string">"Music Player"</span>,<span class="source_type">Alias</span>=<span class="source_string">"MusicMenu"</span>)
+<a name="226"></a>     Bindings(<span class="source_int">76</span>)=(KeyLabel=<span class="source_string">"Voting Menu"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ShowVoteMenu"</span>)
+<a name="227"></a>     Bindings(<span class="source_int">77</span>)=(KeyLabel=<span class="source_string">"Toggle Console"</span>,<span class="source_type">Alias</span>=<span class="source_string">"ConsoleToggle"</span>)
+<a name="228"></a>     Bindings(<span class="source_int">78</span>)=(KeyLabel=<span class="source_string">"View Connection Status"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Stat Net"</span>)
+<a name="229"></a>     Bindings(<span class="source_int">79</span>)=(KeyLabel=<span class="source_string">"Cancel Pending Connection"</span>,<span class="source_type">Alias</span>=<span class="source_string">"Cancel"</span>)
+<a name="230"></a>     Headings(<span class="source_int">0</span>)=<span class="source_string">"Action"</span>
+<a name="231"></a>     PageCaption=<span class="source_string">"Configure Keys"</span>
+<a name="232"></a>}
+<a name="233"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/controlbinder.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ControlBinder">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/componentgroup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/customfilter.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:00.823 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

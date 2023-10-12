@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFGui.KFWeightBar</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kfweightbar.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFWeightBar">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kfwaveconfigmenu.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kfwiki.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfgui/kfweightbar.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfgui/kfgui-overview.html">KFGui</a>.<a href="../kfgui/kfweightbar.html">KFWeightBar</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// The weight bar from the trader menu
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_comment">// Killing Floor Source
+</span><a name="5"></a><span class="source_comment">// Copyright (C) 2009 Tripwire Interactive LLC
+</span><a name="6"></a><span class="source_comment">// Christian "schneidzekk" Schneider
+</span><a name="7"></a><span class="source_comment">//=============================================================================
+</span><a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfgui/kfweightbar.html" class="source">KFWeightBar</a></span> extends <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>;
+<a name="9"></a>
+<a name="10"></a>var 			<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>	BarBack;
+<a name="11"></a>var 			<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>	BarTop;
+<a name="12"></a>
+<a name="13"></a>var				<span class="source_type">int</span>			MaxBoxes;
+<a name="14"></a>var				<span class="source_type">int</span>			CurBoxes;
+<a name="15"></a>var				<span class="source_type">int</span> 		NewBoxes;
+<a name="16"></a>
+<a name="17"></a>var				<span class="source_type">string</span>		EncString;
+<a name="18"></a>
+<a name="19"></a>var 			<span class="source_type">float</span> 		CurX;
+<a name="20"></a>var				<span class="source_type">float</span>		CurY;
+<a name="21"></a>var 			<span class="source_type">float</span>		BoxSizeX;
+<a name="22"></a>var 			<span class="source_type">float</span>		BoxSizeY;
+<a name="23"></a>var 			<span class="source_type">float</span>		Spacer;
+<a name="24"></a>
+<a name="25"></a>var 			<span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>		CurrentColor;
+<a name="26"></a>var 			<span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>		NewColor;
+<a name="27"></a>var 			<span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>		WarnColor;
+<a name="28"></a>
+<a name="29"></a>var	localized	<span class="source_type">string</span>		EncumbranceString;
+<a name="30"></a>
+<a name="31"></a>function <span class="source_type">bool</span> MyOnDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>)
+<a name="32"></a>{
+<a name="33"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="34"></a>	local <span class="source_type">float</span> TextSizeX, TextSizeY;
+<a name="35"></a>
+<a name="36"></a>	CurX = WinLeft;
+<a name="37"></a>	CurY = WinTop + WinHeight / <span class="source_int">2.5</span>;
+<a name="38"></a>
+<a name="39"></a>	<span class="source_comment">// Background boxes
+</span><a name="40"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MaxBoxes; <span class="source_type">i</span>++ )
+<a name="41"></a>	{
+<a name="42"></a>		<span class="source_type">C</span>.SetPos(CurX * <span class="source_type">C</span>.ClipX , CurY * <span class="source_type">C</span>.ClipY);
+<a name="43"></a>		<span class="source_type">C</span>.DrawTileStretched(BarBack, BoxSizeX * <span class="source_type">C</span>.ClipX, BoxSizeY * <span class="source_type">C</span>.ClipX);
+<a name="44"></a>		CurX += BoxSizeX;
+<a name="45"></a>	}
+<a name="46"></a>
+<a name="47"></a>	<span class="source_comment">// Encumbrance String
+</span><a name="48"></a>	EncString = EncumbranceString$<span class="source_string">":"</span> @ CurBoxes $ <span class="source_string">"/"</span> $ MaxBoxes;
+<a name="49"></a>
+<a name="50"></a>	<span class="source_type">C</span>.TextSize(EncString, TextSizeX, TextSizeY);
+<a name="51"></a>	<span class="source_type">C</span>.SetPos(WinLeft * <span class="source_type">C</span>.ClipX, ((CurY - (TextSizeY / <span class="source_type">C</span>.ClipY)) - (((CurY - (TextSizeY / <span class="source_type">C</span>.ClipY)) - WinTop) / <span class="source_int">2</span>)) * <span class="source_type">C</span>.ClipY);
+<a name="52"></a>	<span class="source_type">C</span>.DrawColor = CurrentColor;
+<a name="53"></a>	<span class="source_type">C</span>.DrawText(EncString);
+<a name="54"></a>
+<a name="55"></a>	CurX = WinLeft + Spacer;
+<a name="56"></a>	CurY = (WinTop + WinHeight / <span class="source_int">2.5</span>) + (Spacer * <span class="source_int">1.5</span>);
+<a name="57"></a>
+<a name="58"></a>	<span class="source_comment">// Our current weight
+</span><a name="59"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; CurBoxes && <span class="source_type">i</span> &lt; MaxBoxes; <span class="source_type">i</span>++ )
+<a name="60"></a>	{
+<a name="61"></a>		<span class="source_type">C</span>.SetPos(CurX * <span class="source_type">C</span>.ClipX , CurY * <span class="source_type">C</span>.ClipY);
+<a name="62"></a>		<span class="source_type">C</span>.DrawTilePartialStretched(BarTop, (BoxSizeX - (Spacer * <span class="source_int">2</span>)) * <span class="source_type">C</span>.ClipX, (BoxSizeY - (Spacer * <span class="source_int">2</span>)) * <span class="source_type">C</span>.ClipX);
+<a name="63"></a>		CurX += BoxSizeX;
+<a name="64"></a>	}
+<a name="65"></a>
+<a name="66"></a>	<span class="source_comment">// Draw weight of selected weapon
+</span><a name="67"></a>	if ( NewBoxes != <span class="source_int">0</span> )
+<a name="68"></a>	{
+<a name="69"></a>		<span class="source_comment">// Selected weapon is not to heavy to carry
+</span><a name="70"></a>		if ( CurBoxes + NewBoxes &lt;= MaxBoxes )
+<a name="71"></a>		{
+<a name="72"></a>			for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; NewBoxes; <span class="source_type">i</span>++ )
+<a name="73"></a>			{
+<a name="74"></a>				<span class="source_type">C</span>.SetPos(CurX * <span class="source_type">C</span>.ClipX , CurY * <span class="source_type">C</span>.ClipY);
+<a name="75"></a>				<span class="source_type">C</span>.DrawColor = NewColor;
+<a name="76"></a>				<span class="source_type">C</span>.DrawTilePartialStretched(BarTop, (BoxSizeX - (Spacer * <span class="source_int">2</span>)) * <span class="source_type">C</span>.ClipX, (BoxSizeY - (Spacer * <span class="source_int">2</span>)) * <span class="source_type">C</span>.ClipX);
+<a name="77"></a>				CurX += BoxSizeX;
+<a name="78"></a>			}
+<a name="79"></a>		}
+<a name="80"></a>		<span class="source_comment">// Selected weapon is too heavy
+</span><a name="81"></a>		else
+<a name="82"></a>		{
+<a name="83"></a>			for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; NewBoxes && <span class="source_type">i</span> &lt; (MaxBoxes - CurBoxes); <span class="source_type">i</span>++ )
+<a name="84"></a>			{
+<a name="85"></a>				<span class="source_type">C</span>.SetPos(CurX * <span class="source_type">C</span>.ClipX , CurY * <span class="source_type">C</span>.ClipY);
+<a name="86"></a>				<span class="source_type">C</span>.DrawColor = WarnColor;
+<a name="87"></a>				<span class="source_type">C</span>.DrawTilePartialStretched(BarTop, (BoxSizeX - (Spacer * <span class="source_int">2</span>)) * <span class="source_type">C</span>.ClipX, (BoxSizeY - (Spacer * <span class="source_int">2</span>)) * <span class="source_type">C</span>.ClipX);
+<a name="88"></a>				CurX += BoxSizeX;
+<a name="89"></a>			}
+<a name="90"></a>		}
+<a name="91"></a>	}
+<a name="92"></a>
+<a name="93"></a>	return false;
+<a name="94"></a>}
+<a name="95"></a>
+<a name="96"></a>defaultproperties
+<a name="97"></a>{
+<a name="98"></a>     BarBack=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Perk_box_unselected'</span>
+<a name="99"></a>     BarTop=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Progress'</span>
+<a name="100"></a>     MaxBoxes=<span class="source_int">15</span>
+<a name="101"></a>     BoxSizeX=<span class="source_int">0.015000</span>
+<a name="102"></a>     BoxSizeY=<span class="source_int">0.015000</span>
+<a name="103"></a>     Spacer=<span class="source_int">0.001200</span>
+<a name="104"></a>     CurrentColor=(<span class="source_type">B</span>=<span class="source_int">158</span>,G=<span class="source_int">176</span>,<span class="source_type">R</span>=<span class="source_int">175</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="105"></a>     NewColor=(G=<span class="source_int">128</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="106"></a>     WarnColor=(<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="107"></a>     EncumbranceString=<span class="source_string">"Encumbrance Level"</span>
+<a name="108"></a>     OnDraw=<span class="source_type"><a href="../kfgui/kfweightbar.html" class="source">KFWeightBar</a></span>.MyOnDraw
+<a name="109"></a>}
+<a name="110"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kfweightbar.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFWeightBar">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kfwaveconfigmenu.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kfwiki.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.493 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

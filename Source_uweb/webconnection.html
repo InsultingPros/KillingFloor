@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: UWeb.WebConnection</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../uweb/uweb-overview.html">Package</a></td>
+	<td class="header"><a href="../uweb/webconnection.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#WebConnection">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_uweb/webapplication.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_uweb/webrequest.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_uweb/webconnection.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../uweb/uweb-overview.html">UWeb</a>.<a href="../uweb/webconnection.html">WebConnection</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_comment">/*=============================================================================
+<a name="2"></a>	WebConnection is the bridge that will handle all communication between
+<a name="3"></a>	the web server and the client's browser.
+<a name="4"></a>=============================================================================*/</span>
+<a name="5"></a>
+<a name="6"></a><span class="source_type">class</span> <span class="source_type"><a href="../uweb/webconnection.html" class="source">WebConnection</a></span> extends <span class="source_type"><a href="../ipdrv/tcplink.html" class="source">TcpLink</a></span>;
+<a name="7"></a>
+<a name="8"></a>var <span class="source_type"><a href="../uweb/webserver.html" class="source">WebServer</a></span> <span class="source_type"><a href="../uweb/webserver.html" class="source">WebServer</a></span>;
+<a name="9"></a>var <span class="source_type">string</span> ReceivedData;
+<a name="10"></a>
+<a name="11"></a>var <span class="source_type"><a href="../uweb/webrequest.html" class="source">WebRequest</a></span> Request;
+<a name="12"></a>var <span class="source_type"><a href="../uweb/webresponse.html" class="source">WebResponse</a></span> <span class="source_type">Response</span>;
+<a name="13"></a>var <span class="source_type"><a href="../uweb/webapplication.html" class="source">WebApplication</a></span> Application;
+<a name="14"></a>
+<a name="15"></a>var <span class="source_type">bool</span> bDelayCleanup;
+<a name="16"></a>
+<a name="17"></a>var <span class="source_type">int</span> RawBytesExpecting;
+<a name="18"></a>
+<a name="19"></a>var config <span class="source_type">int</span> MaxValueLength;
+<a name="20"></a>var config <span class="source_type">int</span> MaxLineLength;
+<a name="21"></a>
+<a name="22"></a><span class="source_comment">// MC: Debug
+</span><a name="23"></a><span class="source_comment">// var int ConnId;
+</span><a name="24"></a>
+<a name="25"></a>event Accepted()
+<a name="26"></a>{
+<a name="27"></a>	<span class="source_type"><a href="../uweb/webserver.html" class="source">WebServer</a></span> = <span class="source_type"><a href="../uweb/webserver.html" class="source">WebServer</a></span>(<span class="source_type">Owner</span>);
+<a name="28"></a>	SetTimer(<span class="source_int">30</span>, False);
+<a name="29"></a><span class="source_comment">//	ConnId = WebServer.ConnId++;
+</span><a name="30"></a><span class="source_comment">//	Log("Connection"@ConnId@"Accepted");
+</span><a name="31"></a>}
+<a name="32"></a>
+<a name="33"></a>event Closed()
+<a name="34"></a>{
+<a name="35"></a><span class="source_comment">//	Log("Connection"@ConnId@"Closed");
+</span><a name="36"></a>	Destroy();
+<a name="37"></a>}
+<a name="38"></a>
+<a name="39"></a>event Timer()
+<a name="40"></a>{
+<a name="41"></a>	bDelayCleanup = False;
+<a name="42"></a>	Cleanup();
+<a name="43"></a>}
+<a name="44"></a>
+<a name="45"></a>event ReceivedText( <span class="source_type">string</span> <span class="source_type">Text</span> )
+<a name="46"></a>{
+<a name="47"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="48"></a>	local <span class="source_type">string</span> <span class="source_type">S</span>;
+<a name="49"></a>
+<a name="50"></a>	ReceivedData $= <span class="source_type">Text</span>;
+<a name="51"></a>	if(RawBytesExpecting &gt; <span class="source_int">0</span>)
+<a name="52"></a>	{
+<a name="53"></a>		RawBytesExpecting -= <span class="source_type">Len</span>(<span class="source_type">Text</span>);
+<a name="54"></a>		CheckRawBytes();
+<a name="55"></a>
+<a name="56"></a>		return;
+<a name="57"></a>	}
+<a name="58"></a>
+<a name="59"></a>	<span class="source_comment">// remove a LF which arrived in a new packet
+</span><a name="60"></a>	<span class="source_comment">// and thus didn't get cleaned up by the code below
+</span><a name="61"></a>	if(Left(ReceivedData, <span class="source_int">1</span>) == Chr(<span class="source_int">10</span>))
+<a name="62"></a>		ReceivedData = Mid(ReceivedData, <span class="source_int">1</span>);
+<a name="63"></a>	<span class="source_type">i</span> = InStr(ReceivedData, Chr(<span class="source_int">13</span>));
+<a name="64"></a>	while(<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="65"></a>	{
+<a name="66"></a>		<span class="source_type">S</span> = Left(ReceivedData, <span class="source_type">i</span>);
+<a name="67"></a>		<span class="source_type">i</span>++;
+<a name="68"></a>		<span class="source_comment">// check for any LF following the CR.
+</span><a name="69"></a>		if(Mid(ReceivedData, <span class="source_type">i</span>, <span class="source_int">1</span>) == Chr(<span class="source_int">10</span>))
+<a name="70"></a>			<span class="source_type">i</span>++;
+<a name="71"></a>
+<a name="72"></a>		ReceivedData = Mid(ReceivedData, <span class="source_type">i</span>);
+<a name="73"></a>
+<a name="74"></a>		ReceivedLine(<span class="source_type">S</span>);
+<a name="75"></a>
+<a name="76"></a>		if(LinkState != STATE_Connected)
+<a name="77"></a>			return;
+<a name="78"></a>		if(RawBytesExpecting &gt; <span class="source_int">0</span>)
+<a name="79"></a>		{
+<a name="80"></a>			CheckRawBytes();
+<a name="81"></a>			return;
+<a name="82"></a>		}
+<a name="83"></a>
+<a name="84"></a>		<span class="source_type">i</span> = InStr(ReceivedData, Chr(<span class="source_int">13</span>));
+<a name="85"></a>	}
+<a name="86"></a>}
+<a name="87"></a>
+<a name="88"></a>function ReceivedLine(<span class="source_type">string</span> <span class="source_type">S</span>)
+<a name="89"></a>{
+<a name="90"></a>	if (<span class="source_type">S</span> == <span class="source_string">""</span>) EndOfHeaders();
+<a name="91"></a>	else
+<a name="92"></a>	{
+<a name="93"></a><span class="source_comment">//		Log(S,'WebServer');
+</span><a name="94"></a>		if(Left(<span class="source_type">S</span>, <span class="source_int">4</span>) ~= <span class="source_string">"GET "</span>)		ProcessGet(<span class="source_type">S</span>);
+<a name="95"></a>		else if(Left(<span class="source_type">S</span>, <span class="source_int">5</span>) ~= <span class="source_string">"POST "</span>)	ProcessPost(<span class="source_type">S</span>);
+<a name="96"></a>		else if(Left(<span class="source_type">S</span>, <span class="source_int">5</span>) ~= <span class="source_string">"HEAD "</span>)  ProcessHead(<span class="source_type">S</span>);
+<a name="97"></a>		else if(Request != None)
+<a name="98"></a>		{
+<a name="99"></a>			Request.ProcessHeaderString(<span class="source_type">S</span>);
+<a name="100"></a>		}
+<a name="101"></a>	}
+<a name="102"></a>}
+<a name="103"></a>
+<a name="104"></a>function ProcessHead(<span class="source_type">string</span> <span class="source_type">S</span>)
+<a name="105"></a>{
+<a name="106"></a>	Log(<span class="source_string">"Received Header: "</span>$<span class="source_type">S</span>,<span class="source_name">'Header'</span>);
+<a name="107"></a>}
+<a name="108"></a>
+<a name="109"></a>function ProcessGet(<span class="source_type">string</span> <span class="source_type">S</span>)
+<a name="110"></a>{
+<a name="111"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="112"></a>
+<a name="113"></a>	if(Request == None)
+<a name="114"></a>		CreateResponseObject();
+<a name="115"></a>
+<a name="116"></a>	Request.RequestType = Request_GET;
+<a name="117"></a>	<span class="source_type">S</span> = Mid(<span class="source_type">S</span>, <span class="source_int">4</span>);
+<a name="118"></a>	while(Left(<span class="source_type">S</span>, <span class="source_int">1</span>) == <span class="source_string">" "</span>)
+<a name="119"></a>		<span class="source_type">S</span> = Mid(<span class="source_type">S</span>, <span class="source_int">1</span>);
+<a name="120"></a>
+<a name="121"></a>	<span class="source_type">i</span> = InStr(<span class="source_type">S</span>, <span class="source_string">" "</span>);
+<a name="122"></a>
+<a name="123"></a>	if(<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="124"></a>		<span class="source_type">S</span> = Left(<span class="source_type">S</span>, <span class="source_type">i</span>);
+<a name="125"></a>
+<a name="126"></a>	<span class="source_type">i</span> = InStr(<span class="source_type">S</span>, <span class="source_string">"?"</span>);
+<a name="127"></a>	if(<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="128"></a>	{
+<a name="129"></a>		Request.DecodeFormData(Mid(<span class="source_type">S</span>, <span class="source_type">i</span>+<span class="source_int">1</span>));
+<a name="130"></a>		<span class="source_type">S</span> = Left(<span class="source_type">S</span>, <span class="source_type">i</span>);
+<a name="131"></a>	}
+<a name="132"></a>
+<a name="133"></a>	Application = <span class="source_type"><a href="../uweb/webserver.html" class="source">WebServer</a></span>.GetApplication(<span class="source_type">S</span>, Request.URI);
+<a name="134"></a>	if(Application != None && Request.URI == <span class="source_string">""</span>)
+<a name="135"></a>	{
+<a name="136"></a>		<span class="source_type">Response</span>.Redirect(<span class="source_type">S</span>$<span class="source_string">"/"</span>);
+<a name="137"></a>		Cleanup();
+<a name="138"></a>	}
+<a name="139"></a>	else
+<a name="140"></a>	if(Application == None && <span class="source_type"><a href="../uweb/webserver.html" class="source">Webserver</a></span>.DefaultApplication != -<span class="source_int">1</span>)
+<a name="141"></a>	{
+<a name="142"></a>		<span class="source_type">Response</span>.Redirect(<span class="source_type"><a href="../uweb/webserver.html" class="source">Webserver</a></span>.ApplicationPaths[<span class="source_type"><a href="../uweb/webserver.html" class="source">Webserver</a></span>.DefaultApplication]$<span class="source_string">"/"</span>);
+<a name="143"></a>		Cleanup();
+<a name="144"></a>	}
+<a name="145"></a>}
+<a name="146"></a>
+<a name="147"></a>function ProcessPost(<span class="source_type">string</span> <span class="source_type">S</span>)
+<a name="148"></a>{
+<a name="149"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="150"></a>
+<a name="151"></a>	if(Request == None)
+<a name="152"></a>		CreateResponseObject();
+<a name="153"></a>
+<a name="154"></a>	Request.RequestType = Request_POST;
+<a name="155"></a>
+<a name="156"></a>	<span class="source_type">S</span> = Mid(<span class="source_type">S</span>, <span class="source_int">5</span>);
+<a name="157"></a>	while(Left(<span class="source_type">S</span>, <span class="source_int">1</span>) == <span class="source_string">" "</span>)
+<a name="158"></a>		<span class="source_type">S</span> = Mid(<span class="source_type">S</span>, <span class="source_int">1</span>);
+<a name="159"></a>
+<a name="160"></a>	<span class="source_type">i</span> = InStr(<span class="source_type">S</span>, <span class="source_string">" "</span>);
+<a name="161"></a>
+<a name="162"></a>	if(<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="163"></a>		<span class="source_type">S</span> = Left(<span class="source_type">S</span>, <span class="source_type">i</span>);
+<a name="164"></a>
+<a name="165"></a>	<span class="source_type">i</span> = InStr(<span class="source_type">S</span>, <span class="source_string">"?"</span>);
+<a name="166"></a>	if(<span class="source_type">i</span> != -<span class="source_int">1</span>)
+<a name="167"></a>	{
+<a name="168"></a>		Request.DecodeFormData(Mid(<span class="source_type">S</span>, <span class="source_type">i</span>+<span class="source_int">1</span>));
+<a name="169"></a>		<span class="source_type">S</span> = Left(<span class="source_type">S</span>, <span class="source_type">i</span>);
+<a name="170"></a>	}
+<a name="171"></a>	Application = <span class="source_type"><a href="../uweb/webserver.html" class="source">WebServer</a></span>.GetApplication(<span class="source_type">S</span>, Request.URI);
+<a name="172"></a>	if(Application != None && Request.URI == <span class="source_string">""</span>)
+<a name="173"></a>	{
+<a name="174"></a><span class="source_comment">//		Response.Redirect(WebServer.ServerURL$S$"/");
+</span><a name="175"></a>		<span class="source_type">Response</span>.Redirect(<span class="source_type">S</span>$<span class="source_string">"/"</span>);
+<a name="176"></a>		Cleanup();
+<a name="177"></a>	}
+<a name="178"></a>}
+<a name="179"></a>
+<a name="180"></a>function CreateResponseObject()
+<a name="181"></a>{
+<a name="182"></a>	Request = new(None) <span class="source_type">class</span><span class="source_name">'WebRequest'</span>;
+<a name="183"></a>
+<a name="184"></a>	<span class="source_type">Response</span> = new(None) <span class="source_type">class</span><span class="source_name">'WebResponse'</span>;
+<a name="185"></a>	<span class="source_type">Response</span>.Connection = Self;
+<a name="186"></a>}
+<a name="187"></a>
+<a name="188"></a>function EndOfHeaders()
+<a name="189"></a>{
+<a name="190"></a>	if(<span class="source_type">Response</span> == None)
+<a name="191"></a>	{
+<a name="192"></a>		CreateResponseObject();
+<a name="193"></a>		<span class="source_type">Response</span>.HTTPError(<span class="source_int">400</span>); <span class="source_comment">// Bad Request
+</span><a name="194"></a>		Cleanup();
+<a name="195"></a>		return;
+<a name="196"></a>	}
+<a name="197"></a>
+<a name="198"></a>	if(Application == None)
+<a name="199"></a>	{
+<a name="200"></a>		<span class="source_type">Response</span>.HTTPError(<span class="source_int">404</span>); <span class="source_comment">// FNF
+</span><a name="201"></a>		Cleanup();
+<a name="202"></a>		return;
+<a name="203"></a>	}
+<a name="204"></a>
+<a name="205"></a>	if(Request.ContentLength != <span class="source_int">0</span> && Request.RequestType == Request_POST)
+<a name="206"></a>	{
+<a name="207"></a>		RawBytesExpecting = Request.ContentLength;
+<a name="208"></a>		RawBytesExpecting -= <span class="source_type">Len</span>(ReceivedData);
+<a name="209"></a>		CheckRawBytes();
+<a name="210"></a>	}
+<a name="211"></a>	else
+<a name="212"></a>	{
+<a name="213"></a>		if (Application.PreQuery(Request, <span class="source_type">Response</span>))
+<a name="214"></a>		{
+<a name="215"></a>			Application.Query(Request, <span class="source_type">Response</span>);
+<a name="216"></a>			Application.PostQuery(Request, <span class="source_type">Response</span>);
+<a name="217"></a>		}
+<a name="218"></a>		Cleanup();
+<a name="219"></a>	}
+<a name="220"></a>}
+<a name="221"></a>
+<a name="222"></a>function CheckRawBytes()
+<a name="223"></a>{
+<a name="224"></a>	if(RawBytesExpecting &lt;= <span class="source_int">0</span>)
+<a name="225"></a>	{
+<a name="226"></a>		if(!(Request.ContentType ~= <span class="source_string">"application/x-www-form-urlencoded"</span>))
+<a name="227"></a>		{
+<a name="228"></a>			Log(<span class="source_string">"WebConnection: Unknown form data content-type: "</span>$Request.ContentType);
+<a name="229"></a>			<span class="source_type">Response</span>.HTTPError(<span class="source_int">400</span>); <span class="source_comment">// Can't deal with this type of form data
+</span><a name="230"></a>		}
+<a name="231"></a>		else
+<a name="232"></a>		{
+<a name="233"></a>			Request.DecodeFormData(ReceivedData);
+<a name="234"></a>			if (Application.PreQuery(Request, <span class="source_type">Response</span>))
+<a name="235"></a>			{
+<a name="236"></a>			  Application.Query(Request, <span class="source_type">Response</span>);
+<a name="237"></a>			  Application.PostQuery(Request, <span class="source_type">Response</span>);
+<a name="238"></a>			}
+<a name="239"></a>			ReceivedData = <span class="source_string">""</span>;
+<a name="240"></a>		}
+<a name="241"></a>		Cleanup();
+<a name="242"></a>	}
+<a name="243"></a>}
+<a name="244"></a>
+<a name="245"></a>function Cleanup()
+<a name="246"></a>{
+<a name="247"></a>	if (bDelayCleanup)
+<a name="248"></a>		return;
+<a name="249"></a>
+<a name="250"></a>	if(Request != None)
+<a name="251"></a>		Request = None;
+<a name="252"></a>
+<a name="253"></a>	if(<span class="source_type">Response</span> != None)
+<a name="254"></a>	{
+<a name="255"></a>		<span class="source_type">Response</span>.Connection = None;
+<a name="256"></a>		<span class="source_type">Response</span> = None;
+<a name="257"></a>	}
+<a name="258"></a>
+<a name="259"></a>	if (Application != None)
+<a name="260"></a>		Application = None;
+<a name="261"></a>
+<a name="262"></a>	Close();
+<a name="263"></a>}
+<a name="264"></a>
+<a name="265"></a>final function <span class="source_type">bool</span> IsHanging()
+<a name="266"></a>{
+<a name="267"></a>	return bDelayCleanup;
+<a name="268"></a>}
+<a name="269"></a>
+<a name="270"></a>defaultproperties
+<a name="271"></a>{
+<a name="272"></a>     MaxValueLength=<span class="source_int">512</span>
+<a name="273"></a>     MaxLineLength=<span class="source_int">4096</span>
+<a name="274"></a>}
+<a name="275"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../uweb/uweb-overview.html">Package</a></td>
+	<td class="header"><a href="../uweb/webconnection.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#WebConnection">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_uweb/webapplication.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_uweb/webrequest.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:10.668 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

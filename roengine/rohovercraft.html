@@ -1,0 +1,551 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - ROEngine.ROHoverCraft</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roengine/roengine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_roengine/rohovercraft.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#ROHoverCraft">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../roengine/rohintmanager.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../roengine/rohovertreadcraft.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#roengine/rohovercraft.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../roengine/roengine-overview.html">ROEngine</a>.ROHoverCraft</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../roengine/rovehicle.html">ROVehicle</a></dd>
+<dt>Modifiers</dt><dd>abstract native nativereplication </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/pawn.html">Pawn</a>
+      |   
+      +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/vehicle.html">Vehicle</a>
+         |   
+         +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/svehicle.html">SVehicle</a>
+            |   
+            +-- <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rovehicle.html">ROVehicle</a>
+               |   
+               +-- <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rohovercraft.html">ROHoverCraft</a>
+</pre>
+
+
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bHeadingInitialized" name="bHeadingInitialized" title="go to the details">bHeadingInitialized</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bNewHoverState" name="bNewHoverState" title="go to the details">bNewHoverState</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/actor.html#KRigidBodyState">KRigidBodyState</a></td><td width="66%"><a href="#_ChassisState" name="ChassisState" title="go to the details">ChassisState</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_HoverMPH" name="HoverMPH" title="go to the details">HoverMPH</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../roengine/rohovercraft.html#HoverCraftState">HoverCraftState</a></td><td width="66%"><a href="#_HoverState" name="HoverState" title="go to the details">HoverState</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/pawn.html">Pawn</a></td><td width="66%"><a href="#_OldDriver" name="OldDriver" title="go to the details">OldDriver</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../roengine/rohovercraft.html#HoverCraftState">HoverCraftState</a></td><td width="66%"><a href="#_OldHoverState" name="OldHoverState" title="go to the details">OldHoverState</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_OutputStrafe" name="OutputStrafe" title="go to the details">OutputStrafe</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_OutputThrust" name="OutputThrust" title="go to the details">OutputThrust</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TargetHeading" name="TargetHeading" title="go to the details">TargetHeading</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TargetPitch" name="TargetPitch" title="go to the details">TargetPitch</a></td></tr>
+<tr><th colspan="2" class="small">ROHoverCraft</th></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_HoverCheckDist" name="HoverCheckDist" title="go to the details">HoverCheckDist</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_HoverPenScale" name="HoverPenScale" title="go to the details">HoverPenScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_HoverSoftness" name="HoverSoftness" title="go to the details">HoverSoftness</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LatDamping" name="LatDamping" title="go to the details">LatDamping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LongDamping" name="LongDamping" title="go to the details">LongDamping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MaxRandForce" name="MaxRandForce" title="go to the details">MaxRandForce</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MaxRiseForce" name="MaxRiseForce" title="go to the details">MaxRiseForce</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MaxStrafeForce" name="MaxStrafeForce" title="go to the details">MaxStrafeForce</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MaxThrustForce" name="MaxThrustForce" title="go to the details">MaxThrustForce</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MaxYawRate" name="MaxYawRate" title="go to the details">MaxYawRate</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_PitchDamping" name="PitchDamping" title="go to the details">PitchDamping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_PitchTorqueFactor" name="PitchTorqueFactor" title="go to the details">PitchTorqueFactor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_PitchTorqueMax" name="PitchTorqueMax" title="go to the details">PitchTorqueMax</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_RandForceInterval" name="RandForceInterval" title="go to the details">RandForceInterval</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_RollDamping" name="RollDamping" title="go to the details">RollDamping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_RollTorqueMax" name="RollTorqueMax" title="go to the details">RollTorqueMax</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_RollTorqueStrafeFactor" name="RollTorqueStrafeFactor" title="go to the details">RollTorqueStrafeFactor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_RollTorqueTurnFactor" name="RollTorqueTurnFactor" title="go to the details">RollTorqueTurnFactor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_StopThreshold" name="StopThreshold" title="go to the details">StopThreshold</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../core/object.html#Vector">vector</a>&gt;</td><td width="66%"><a href="#_ThrusterOffsets" name="ThrusterOffsets" title="go to the details">ThrusterOffsets</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TurnDamping" name="TurnDamping" title="go to the details">TurnDamping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TurnTorqueFactor" name="TurnTorqueFactor" title="go to the details">TurnTorqueFactor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TurnTorqueMax" name="TurnTorqueMax" title="go to the details">TurnTorqueMax</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_UpDamping" name="UpDamping" title="go to the details">UpDamping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_UprightDamping" name="UprightDamping" title="go to the details">UprightDamping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_UprightStiffness" name="UprightStiffness" title="go to the details">UprightStiffness</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rovehicle.html">ROVehicle</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/rovehicle.html#ActiveWeapon">ActiveWeapon</a>, <a href="../roengine/rovehicle.html#AltFireImpulse">AltFireImpulse</a>, <a href="../roengine/rovehicle.html#AltFocalPoint">AltFocalPoint</a>, <a href="../roengine/rovehicle.html#AvoidArea">AvoidArea</a>, <a href="../roengine/rovehicle.html#bAltFocalPoint">bAltFocalPoint</a>, <a href="../roengine/rovehicle.html#bCannotBeBased">bCannotBeBased</a>, <a href="../roengine/rovehicle.html#bCustomAiming">bCustomAiming</a>, <a href="../roengine/rovehicle.html#bDestroyAppearance">bDestroyAppearance</a>, <a href="../roengine/rovehicle.html#bDisableThrottle">bDisableThrottle</a>, <a href="../roengine/rovehicle.html#bDisintegrateVehicle">bDisintegrateVehicle</a>, <a href="../roengine/rovehicle.html#bDontUsePositionMesh">bDontUsePositionMesh</a>, <a href="../roengine/rovehicle.html#bDrawSpeedDebug">bDrawSpeedDebug</a>, <a href="../roengine/rovehicle.html#bDriverAlreadyEntered">bDriverAlreadyEntered</a>, <a href="../roengine/rovehicle.html#bDriverCannotLeaveVehicle">bDriverCannotLeaveVehicle</a>, <a href="../roengine/rovehicle.html#BeginningIdleAnim">BeginningIdleAnim</a>, <a href="../roengine/rovehicle.html#bEjectPassengersWhenFlipped">bEjectPassengersWhenFlipped</a>, <a href="../roengine/rovehicle.html#bEnableProximityViewShake">bEnableProximityViewShake</a>, <a href="../roengine/rovehicle.html#bHadFire">bHadFire</a>, <a href="../roengine/rovehicle.html#bHadHeavySmoke">bHadHeavySmoke</a>, <a href="../roengine/rovehicle.html#bHadMedSmoke">bHadMedSmoke</a>, <a href="../roengine/rovehicle.html#bHasAltFire">bHasAltFire</a>, <a href="../roengine/rovehicle.html#bHasAltFireImpulse">bHasAltFireImpulse</a>, <a href="../roengine/rovehicle.html#bHasBeenAwake">bHasBeenAwake</a>, <a href="../roengine/rovehicle.html#bHasFireImpulse">bHasFireImpulse</a>, <a href="../roengine/rovehicle.html#bIsApc">bIsApc</a>, <a href="../roengine/rovehicle.html#bIsAwake">bIsAwake</a>, <a href="../roengine/rovehicle.html#bLimitPitch">bLimitPitch</a>, <a href="../roengine/rovehicle.html#bLimitYaw">bLimitYaw</a>, <a href="../roengine/rovehicle.html#bMultiPosition">bMultiPosition</a>, <a href="../roengine/rovehicle.html#bMustBeTankCommander">bMustBeTankCommander</a>, <a href="../roengine/rovehicle.html#bNeverReset">bNeverReset</a>, <a href="../roengine/rovehicle.html#bOnlyViewShakeIfDriven">bOnlyViewShakeIfDriven</a>, <a href="../roengine/rovehicle.html#bSoundsPrecached">bSoundsPrecached</a>, <a href="../roengine/rovehicle.html#bSpikedVehicle">bSpikedVehicle</a>, <a href="../roengine/rovehicle.html#bVehicleHudUsesLargeTexture">bVehicleHudUsesLargeTexture</a>, <a href="../roengine/rovehicle.html#CrosshairColor">CrosshairColor</a>, <a href="../roengine/rovehicle.html#CrosshairTexture">CrosshairTexture</a>, <a href="../roengine/rovehicle.html#CrosshairX">CrosshairX</a>, <a href="../roengine/rovehicle.html#CrosshairY">CrosshairY</a>, <a href="../roengine/rovehicle.html#CurrentCapAlliesCappers">CurrentCapAlliesCappers</a>, <a href="../roengine/rovehicle.html#CurrentCapArea">CurrentCapArea</a>, <a href="../roengine/rovehicle.html#CurrentCapAxisCappers">CurrentCapAxisCappers</a>, <a href="../roengine/rovehicle.html#CurrentCapProgress">CurrentCapProgress</a>, <a href="../roengine/rovehicle.html#CustomAim">CustomAim</a>, <a href="../roengine/rovehicle.html#DamagedEffect">DamagedEffect</a>, <a href="../roengine/rovehicle.html#DamagedEffectAccruedDamage">DamagedEffectAccruedDamage</a>, <a href="../roengine/rovehicle.html#DamagedEffectAccScale">DamagedEffectAccScale</a>, <a href="../roengine/rovehicle.html#DamagedEffectClass">DamagedEffectClass</a>, <a href="../roengine/rovehicle.html#DamagedEffectFireDamagePerSec">DamagedEffectFireDamagePerSec</a>, <a href="../roengine/rovehicle.html#DamagedEffectHealthFireFactor">DamagedEffectHealthFireFactor</a>, <a href="../roengine/rovehicle.html#DamagedEffectHealthHeavySmokeFactor">DamagedEffectHealthHeavySmokeFactor</a>, <a href="../roengine/rovehicle.html#DamagedEffectHealthMediumSmokeFactor">DamagedEffectHealthMediumSmokeFactor</a>, <a href="../roengine/rovehicle.html#DamagedEffectHealthSmokeFactor">DamagedEffectHealthSmokeFactor</a>, <a href="../roengine/rovehicle.html#DamagedEffectOffset">DamagedEffectOffset</a>, <a href="../roengine/rovehicle.html#DamagedEffectScale">DamagedEffectScale</a>, <a href="../roengine/rovehicle.html#DebugInfo">DebugInfo</a>, <a href="../roengine/rovehicle.html#DestroyedRoadKillDamageType">DestroyedRoadKillDamageType</a>, <a href="../roengine/rovehicle.html#DestroyedVehicleMesh">DestroyedVehicleMesh</a>, <a href="../roengine/rovehicle.html#DestructionAngularMomentum">DestructionAngularMomentum</a>, <a href="../roengine/rovehicle.html#DestructionEffect">DestructionEffect</a>, <a href="../roengine/rovehicle.html#DestructionEffectClass">DestructionEffectClass</a>, <a href="../roengine/rovehicle.html#DestructionEffectLowClass">DestructionEffectLowClass</a>, <a href="../roengine/rovehicle.html#DestructionLinearMomentum">DestructionLinearMomentum</a>, <a href="../roengine/rovehicle.html#DisintegrationEffectClass">DisintegrationEffectClass</a>, <a href="../roengine/rovehicle.html#DisintegrationEffectLowClass">DisintegrationEffectLowClass</a>, <a href="../roengine/rovehicle.html#DisintegrationHealth">DisintegrationHealth</a>, <a href="../roengine/rovehicle.html#DriverAttachmentBone">DriverAttachmentBone</a>, <a href="../roengine/rovehicle.html#DriverEnterTime">DriverEnterTime</a>, <a href="../roengine/rovehicle.html#DriverHitCheckDist">DriverHitCheckDist</a>, <a href="../roengine/rovehicle.html#DriverPositionIndex">DriverPositionIndex</a>, <a href="../roengine/rovehicle.html#DriverPositions">DriverPositions</a>, <a href="../roengine/rovehicle.html#DriverWeapons">DriverWeapons</a>, <a href="../roengine/rovehicle.html#EngineHealth">EngineHealth</a>, <a href="../roengine/rovehicle.html#ExplosionCount">ExplosionCount</a>, <a href="../roengine/rovehicle.html#ExplosionDamage">ExplosionDamage</a>, <a href="../roengine/rovehicle.html#ExplosionDamageType">ExplosionDamageType</a>, <a href="../roengine/rovehicle.html#ExplosionMomentum">ExplosionMomentum</a>, <a href="../roengine/rovehicle.html#ExplosionRadius">ExplosionRadius</a>, <a href="../roengine/rovehicle.html#ExplosionSoundRadius">ExplosionSoundRadius</a>, <a href="../roengine/rovehicle.html#ExplosionSounds">ExplosionSounds</a>, <a href="../roengine/rovehicle.html#ExplosionSoundVolume">ExplosionSoundVolume</a>, <a href="../roengine/rovehicle.html#FireImpulse">FireImpulse</a>, <a href="../roengine/rovehicle.html#HeadlightCorona">HeadlightCorona</a>, <a href="../roengine/rovehicle.html#HeadlightCoronaMaterial">HeadlightCoronaMaterial</a>, <a href="../roengine/rovehicle.html#HeadlightCoronaMaxSize">HeadlightCoronaMaxSize</a>, <a href="../roengine/rovehicle.html#HeadlightCoronaOffset">HeadlightCoronaOffset</a>, <a href="../roengine/rovehicle.html#HeadlightProjector">HeadlightProjector</a>, <a href="../roengine/rovehicle.html#HeadlightProjectorMaterial">HeadlightProjectorMaterial</a>, <a href="../roengine/rovehicle.html#HeadlightProjectorOffset">HeadlightProjectorOffset</a>, <a href="../roengine/rovehicle.html#HeadlightProjectorRotation">HeadlightProjectorRotation</a>, <a href="../roengine/rovehicle.html#HeadlightProjectorScale">HeadlightProjectorScale</a>, <a href="../roengine/rovehicle.html#HeadRotationOffset">HeadRotationOffset</a>, <a href="../roengine/rovehicle.html#HeadRotationSnapRates">HeadRotationSnapRates</a>, <a href="../roengine/rovehicle.html#HitPointType">HitPointType</a>, <a href="../roengine/rovehicle.html#IdleSound">IdleSound</a>, <a href="../roengine/rovehicle.html#IdleTimeBeforeReset">IdleTimeBeforeReset</a>, <a href="../roengine/rovehicle.html#ImpactDamageMult">ImpactDamageMult</a>, <a href="../roengine/rovehicle.html#ImpactDamageSounds">ImpactDamageSounds</a>, <a href="../roengine/rovehicle.html#ImpactDamageThreshold">ImpactDamageThreshold</a>, <a href="../roengine/rovehicle.html#ImpactDamageTicks">ImpactDamageTicks</a>, <a href="../roengine/rovehicle.html#ImpactInfo">ImpactInfo</a>, <a href="../roengine/rovehicle.html#ImpactTicksLeft">ImpactTicksLeft</a>, <a href="../roengine/rovehicle.html#InitialPositionIndex">InitialPositionIndex</a>, <a href="../roengine/rovehicle.html#InteriorMesh">InteriorMesh</a>, <a href="../roengine/rovehicle.html#LastCheckUpsideDownTime">LastCheckUpsideDownTime</a>, <a href="../roengine/rovehicle.html#LastImpactExplosionTime">LastImpactExplosionTime</a>, <a href="../roengine/rovehicle.html#LastNotifyTime">LastNotifyTime</a>, <a href="../roengine/rovehicle.html#LastRunOverWarningTime">LastRunOverWarningTime</a>, <a href="../roengine/rovehicle.html#LastVelocitySize">LastVelocitySize</a>, <a href="../roengine/rovehicle.html#LockedOnSound">LockedOnSound</a>, <a href="../roengine/rovehicle.html#MinRunOverWarningAim">MinRunOverWarningAim</a>, <a href="../roengine/rovehicle.html#MPHMeterMaterial">MPHMeterMaterial</a>, <a href="../roengine/rovehicle.html#MPHMeterPosX">MPHMeterPosX</a>, <a href="../roengine/rovehicle.html#MPHMeterPosY">MPHMeterPosY</a>, <a href="../roengine/rovehicle.html#MPHMeterScale">MPHMeterScale</a>, <a href="../roengine/rovehicle.html#MPHMeterSizeY">MPHMeterSizeY</a>, <a href="../roengine/rovehicle.html#OldExplosionCount">OldExplosionCount</a>, <a href="../roengine/rovehicle.html#OldYaw">OldYaw</a>, <a href="../roengine/rovehicle.html#PassengerWeapons">PassengerWeapons</a>, <a href="../roengine/rovehicle.html#PreviousPositionIndex">PreviousPositionIndex</a>, <a href="../roengine/rovehicle.html#Reservation">Reservation</a>, <a href="../roengine/rovehicle.html#ResetTime">ResetTime</a>, <a href="../roengine/rovehicle.html#SavedPositionIndex">SavedPositionIndex</a>, <a href="../roengine/rovehicle.html#ShakeOffsetMag">ShakeOffsetMag</a>, <a href="../roengine/rovehicle.html#ShakeOffsetRate">ShakeOffsetRate</a>, <a href="../roengine/rovehicle.html#ShakeOffsetTime">ShakeOffsetTime</a>, <a href="../roengine/rovehicle.html#ShakeRotMag">ShakeRotMag</a>, <a href="../roengine/rovehicle.html#ShakeRotRate">ShakeRotRate</a>, <a href="../roengine/rovehicle.html#ShakeRotTime">ShakeRotTime</a>, <a href="../roengine/rovehicle.html#ShiftHalf">ShiftHalf</a>, <a href="../roengine/rovehicle.html#ShutDownForce">ShutDownForce</a>, <a href="../roengine/rovehicle.html#ShutDownSound">ShutDownSound</a>, <a href="../roengine/rovehicle.html#SparkAdvanceFactor">SparkAdvanceFactor</a>, <a href="../roengine/rovehicle.html#SparkEffect">SparkEffect</a>, <a href="../roengine/rovehicle.html#SparkEffectClass">SparkEffectClass</a>, <a href="../roengine/rovehicle.html#StartUpForce">StartUpForce</a>, <a href="../roengine/rovehicle.html#StartUpSound">StartUpSound</a>, <a href="../roengine/rovehicle.html#SteeringScaleFactor">SteeringScaleFactor</a>, <a href="../roengine/rovehicle.html#StoredVehicleRotation">StoredVehicleRotation</a>, <a href="../roengine/rovehicle.html#TimeBetweenImpactExplosions">TimeBetweenImpactExplosions</a>, <a href="../roengine/rovehicle.html#TimeTilDissapear">TimeTilDissapear</a>, <a href="../roengine/rovehicle.html#TouchMessage">TouchMessage</a>, <a href="../roengine/rovehicle.html#TouchMessageClass">TouchMessageClass</a>, <a href="../roengine/rovehicle.html#UpsideDownDamage">UpsideDownDamage</a>, <a href="../roengine/rovehicle.html#VehHitpoints">VehHitpoints</a>, <a href="../roengine/rovehicle.html#VehicleHudEngine">VehicleHudEngine</a>, <a href="../roengine/rovehicle.html#VehicleHudEngineX">VehicleHudEngineX</a>, <a href="../roengine/rovehicle.html#VehicleHudEngineY">VehicleHudEngineY</a>, <a href="../roengine/rovehicle.html#VehicleHudImage">VehicleHudImage</a>, <a href="../roengine/rovehicle.html#VehicleHudOccupantsX">VehicleHudOccupantsX</a>, <a href="../roengine/rovehicle.html#VehicleHudOccupantsY">VehicleHudOccupantsY</a>, <a href="../roengine/rovehicle.html#VehicleSpikeTime">VehicleSpikeTime</a>, <a href="../roengine/rovehicle.html#VehicleTeam">VehicleTeam</a>, <a href="../roengine/rovehicle.html#ViewShakeLastCheck">ViewShakeLastCheck</a>, <a href="../roengine/rovehicle.html#ViewShakeOffsetFreq">ViewShakeOffsetFreq</a>, <a href="../roengine/rovehicle.html#ViewShakeOffsetMag">ViewShakeOffsetMag</a>, <a href="../roengine/rovehicle.html#ViewShakeRadius">ViewShakeRadius</a>, <a href="../roengine/rovehicle.html#ViewShakeRotFreq">ViewShakeRotFreq</a>, <a href="../roengine/rovehicle.html#ViewShakeRotMag">ViewShakeRotMag</a>, <a href="../roengine/rovehicle.html#WeaponPawns">WeaponPawns</a>, <a href="../roengine/rovehicle.html#Weapons">Weapons</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/svehicle.html">SVehicle</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/svehicle.html#bVehicleOnGround">bVehicleOnGround</a>, <a href="../engine/svehicle.html#DestroyEffectClass">DestroyEffectClass</a>, <a href="../engine/svehicle.html#FlipAxis">FlipAxis</a>, <a href="../engine/svehicle.html#FlipScale">FlipScale</a>, <a href="../engine/svehicle.html#FlipTime">FlipTime</a>, <a href="../engine/svehicle.html#FlipTimeLeft">FlipTimeLeft</a>, <a href="../engine/svehicle.html#FlipTorque">FlipTorque</a>, <a href="../engine/svehicle.html#VehicleMass">VehicleMass</a>, <a href="../engine/svehicle.html#Wheels">Wheels</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rovehicle.html">ROVehicle</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/rovehicle.html#EHitPointType">EHitPointType</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+<tr><td><a href="#_HoverCraftState" name="HoverCraftState" title="go to the details">HoverCraftState</a><br /><span class="small">ChassisPosition, ChassisQuaternion, ChassisLinVel, ChassisAngVel, ServerThrust, ServerStrafe, ServerViewPitch, ServerViewYaw</span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rovehicle.html">ROVehicle</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/rovehicle.html#DriverWeaponStruct">DriverWeaponStruct</a>, <a href="../roengine/rovehicle.html#Hitpoint">Hitpoint</a>, <a href="../roengine/rovehicle.html#ImpactInfoStruct">ImpactInfoStruct</a>, <a href="../roengine/rovehicle.html#PassengerWeaponStruct">PassengerWeaponStruct</a>, <a href="../roengine/rovehicle.html#PositionInfo">PositionInfo</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Died-" name="Died" title="go to the details">Died</a> (<a href="../engine/controller.html">Controller</a> Killer, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, <a href="../core/object.html#Vector">vector</a> HitLocation))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>bool&nbsp;</td><td><a href="#_KUpdateState-" name="KUpdateState" title="go to the details">KUpdateState</a> (out <a href="../engine/actor.html#KRigidBodyState">KRigidBodyState</a> newState))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PostNetBeginPlay-" name="PostNetBeginPlay" title="go to the details">PostNetBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpecialCalcFirstPersonView-" name="SpecialCalcFirstPersonView" title="go to the details">SpecialCalcFirstPersonView</a> (<a href="../engine/playercontroller.html">PlayerController</a> PC, out <a href="../engine/actor.html">actor</a> ViewActor, out <a href="../core/object.html#Vector">vector</a> CameraLocation, out rotator CameraRotation ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_SVehicleUpdateParams-" name="SVehicleUpdateParams" title="go to the details">SVehicleUpdateParams</a> ()))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rovehicle.html">ROVehicle</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../roengine/rovehicle.html#AltFire">AltFire</a>, <a href="../roengine/rovehicle.html#ApplyFireImpulse">ApplyFireImpulse</a>, <a href="../roengine/rovehicle.html#AttachDriver">AttachDriver</a>, <a href="../roengine/rovehicle.html#CallDestroy">CallDestroy</a>, <a href="../roengine/rovehicle.html#CanAttack">CanAttack</a>, <a href="../roengine/rovehicle.html#ChangedReservation">ChangedReservation</a>, <a href="../roengine/rovehicle.html#ChargeBar">ChargeBar</a>, <a href="../roengine/rovehicle.html#CheckForNearbyPlayers">CheckForNearbyPlayers</a>, <a href="../roengine/rovehicle.html#CheckReset">CheckReset</a>, <a href="../roengine/rovehicle.html#ChooseFireAt">ChooseFireAt</a>, <a href="../roengine/rovehicle.html#ClampHeadbob">ClampHeadbob</a>, <a href="../roengine/rovehicle.html#ClientKDriverEnter">ClientKDriverEnter</a>, <a href="../roengine/rovehicle.html#ClientKDriverLeave">ClientKDriverLeave</a>, <a href="../roengine/rovehicle.html#ClientRegisterVehicleWeapon">ClientRegisterVehicleWeapon</a>, <a href="../roengine/rovehicle.html#ClientVehicleCeaseFire">ClientVehicleCeaseFire</a>, <a href="../roengine/rovehicle.html#ClientVehicleExplosion">ClientVehicleExplosion</a>, <a href="../roengine/rovehicle.html#Deploy">Deploy</a>, <a href="../roengine/rovehicle.html#DestroyAppearance">DestroyAppearance</a>, <a href="../roengine/rovehicle.html#Destroyed">Destroyed</a>, <a href="../roengine/rovehicle.html#DetachDriver">DetachDriver</a>, <a href="../roengine/rovehicle.html#Died">Died</a>, <a href="../roengine/rovehicle.html#DisplayDebug">DisplayDebug</a>, <a href="../roengine/rovehicle.html#DrawHUD">DrawHUD</a>, <a href="../roengine/rovehicle.html#DriverDied">DriverDied</a>, <a href="../roengine/rovehicle.html#DriverLeft">DriverLeft</a>, <a href="../roengine/rovehicle.html#DriverRadiusDamage">DriverRadiusDamage</a>, <a href="../roengine/rovehicle.html#EnteredResupply">EnteredResupply</a>, <a href="../roengine/rovehicle.html#FastVehicle">FastVehicle</a>, <a href="../roengine/rovehicle.html#FindEntryVehicle">FindEntryVehicle</a>, <a href="../roengine/rovehicle.html#Fire">Fire</a>, <a href="../roengine/rovehicle.html#FireOnRelease">FireOnRelease</a>, <a href="../roengine/rovehicle.html#GetBotPassenger">GetBotPassenger</a>, <a href="../roengine/rovehicle.html#GetInstigator">GetInstigator</a>, <a href="../roengine/rovehicle.html#GetLocalString">GetLocalString</a>, <a href="../roengine/rovehicle.html#GetTurrets">GetTurrets</a>, <a href="../roengine/rovehicle.html#HasOccupiedTurret">HasOccupiedTurret</a>, <a href="../roengine/rovehicle.html#HasWeapon">HasWeapon</a>, <a href="../roengine/rovehicle.html#HealDamage">HealDamage</a>, <a href="../roengine/rovehicle.html#ImpactDamageModifier">ImpactDamageModifier</a>, <a href="../roengine/rovehicle.html#IsDeployed">IsDeployed</a>, <a href="../roengine/rovehicle.html#IsDisabled">IsDisabled</a>, <a href="../roengine/rovehicle.html#IsFiring">IsFiring</a>, <a href="../roengine/rovehicle.html#IsVehicleEmpty">IsVehicleEmpty</a>, <a href="../roengine/rovehicle.html#KDriverEnter">KDriverEnter</a>, <a href="../roengine/rovehicle.html#KDriverLeave">KDriverLeave</a>, <a href="../roengine/rovehicle.html#KImpact">KImpact</a>, <a href="../roengine/rovehicle.html#LeftResupply">LeftResupply</a>, <a href="../roengine/rovehicle.html#LimitPawnPitch">LimitPawnPitch</a>, <a href="../roengine/rovehicle.html#LimitPitch">LimitPitch</a>, <a href="../roengine/rovehicle.html#LimitYaw">LimitYaw</a>, <a href="../roengine/rovehicle.html#MaybeDestroyVehicle">MaybeDestroyVehicle</a>, <a href="../roengine/rovehicle.html#MayUndeploy">MayUndeploy</a>, <a href="../roengine/rovehicle.html#ModifyThreat">ModifyThreat</a>, <a href="../roengine/rovehicle.html#NeedToTurn">NeedToTurn</a>, <a href="../roengine/rovehicle.html#NewReservationCostMultiplier">NewReservationCostMultiplier</a>, <a href="../roengine/rovehicle.html#NotifyEnemyLockedOn">NotifyEnemyLockedOn</a>, <a href="../roengine/rovehicle.html#NotifyEnemyLostLock">NotifyEnemyLostLock</a>, <a href="../roengine/rovehicle.html#NotifySelected">NotifySelected</a>, <a href="../roengine/rovehicle.html#NumPassengers">NumPassengers</a>, <a href="../roengine/rovehicle.html#OpenPositionFor">OpenPositionFor</a>, <a href="../roengine/rovehicle.html#PlayHit">PlayHit</a>, <a href="../roengine/rovehicle.html#PostNetBeginPlay">PostNetBeginPlay</a>, <a href="../roengine/rovehicle.html#RecommendLongRangedAttack">RecommendLongRangedAttack</a>, <a href="../roengine/rovehicle.html#RefireRate">RefireRate</a>, <a href="../roengine/rovehicle.html#ResupplyAmmo">ResupplyAmmo</a>, <a href="../roengine/rovehicle.html#ServerChangeDriverPosition">ServerChangeDriverPosition</a>, <a href="../roengine/rovehicle.html#ServerChangeViewPoint">ServerChangeViewPoint</a>, <a href="../roengine/rovehicle.html#ServerPlayHorn">ServerPlayHorn</a>, <a href="../roengine/rovehicle.html#ServerVerifyVehicleWeapon">ServerVerifyVehicleWeapon</a>, <a href="../roengine/rovehicle.html#SetActiveWeapon">SetActiveWeapon</a>, <a href="../roengine/rovehicle.html#SetReservation">SetReservation</a>, <a href="../roengine/rovehicle.html#SetTeamNum">SetTeamNum</a>, <a href="../roengine/rovehicle.html#SpecialCalcFirstPersonView">SpecialCalcFirstPersonView</a>, <a href="../roengine/rovehicle.html#SpokenFor">SpokenFor</a>, <a href="../roengine/rovehicle.html#StaticPrecache">StaticPrecache</a>, <a href="../roengine/rovehicle.html#SVehicleUpdateParams">SVehicleUpdateParams</a>, <a href="../roengine/rovehicle.html#SwitchToExteriorMesh">SwitchToExteriorMesh</a>, <a href="../roengine/rovehicle.html#SwitchWeapon">SwitchWeapon</a>, <a href="../roengine/rovehicle.html#TakeDamage">TakeDamage</a>, <a href="../roengine/rovehicle.html#TakeImpactDamage">TakeImpactDamage</a>, <a href="../roengine/rovehicle.html#TeamChanged">TeamChanged</a>, <a href="../roengine/rovehicle.html#Tick">Tick</a>, <a href="../roengine/rovehicle.html#TooCloseToAttack">TooCloseToAttack</a>, <a href="../roengine/rovehicle.html#TryToDrive">TryToDrive</a>, <a href="../roengine/rovehicle.html#UpdateHeadbob">UpdateHeadbob</a>, <a href="../roengine/rovehicle.html#UpdatePrecacheMaterials">UpdatePrecacheMaterials</a>, <a href="../roengine/rovehicle.html#UpdatePrecacheStaticMeshes">UpdatePrecacheStaticMeshes</a>, <a href="../roengine/rovehicle.html#VehicleCeaseFire">VehicleCeaseFire</a>, <a href="../roengine/rovehicle.html#VehicleExplosion">VehicleExplosion</a>, <a href="../roengine/rovehicle.html#VehicleLocked">VehicleLocked</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/svehicle.html">SVehicle</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/svehicle.html#Destroyed">Destroyed</a>, <a href="../engine/svehicle.html#Flip">Flip</a>, <a href="../engine/svehicle.html#GraphData">GraphData</a>, <a href="../engine/svehicle.html#JumpOffPawn">JumpOffPawn</a>, <a href="../engine/svehicle.html#KApplyForce">KApplyForce</a>, <a href="../engine/svehicle.html#PostNetBeginPlay">PostNetBeginPlay</a>, <a href="../engine/svehicle.html#SVehicleUpdateParams">SVehicleUpdateParams</a>, <a href="../engine/svehicle.html#Tick">Tick</a>, <a href="../engine/svehicle.html#UpdateVehicle">UpdateVehicle</a>, <a href="../engine/svehicle.html#VehicleStateReceived">VehicleStateReceived</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_bHeadingInitialized" class="hidden"></a>bHeadingInitialized <a href="../Source_roengine/rohovercraft.html#73" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bHeadingInitialized;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bNewHoverState" class="hidden"></a>bNewHoverState <a href="../Source_roengine/rohovercraft.html#96" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bNewHoverState;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ChassisState" class="hidden"></a>ChassisState <a href="../Source_roengine/rohovercraft.html#95" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/actor.html#KRigidBodyState" class="source">KRigidBodyState</a></span> ChassisState;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HoverMPH" class="hidden"></a>HoverMPH <a href="../Source_roengine/rohovercraft.html#69" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> HoverMPH;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HoverState" class="hidden"></a>HoverState <a href="../Source_roengine/rohovercraft.html#94" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../roengine/rohovercraft.html#HoverCraftState" class="source">HoverCraftState</a></span> HoverState;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OldDriver" class="hidden"></a>OldDriver <a href="../Source_roengine/rohovercraft.html#78" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> OldDriver;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OldHoverState" class="hidden"></a>OldHoverState <a href="../Source_roengine/rohovercraft.html#94" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../roengine/rohovercraft.html#HoverCraftState" class="source">HoverCraftState</a></span> OldHoverState;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OutputStrafe" class="hidden"></a>OutputStrafe <a href="../Source_roengine/rohovercraft.html#76" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> OutputStrafe;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OutputThrust" class="hidden"></a>OutputThrust <a href="../Source_roengine/rohovercraft.html#75" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> OutputThrust;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TargetHeading" class="hidden"></a>TargetHeading <a href="../Source_roengine/rohovercraft.html#71" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> TargetHeading;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TargetPitch" class="hidden"></a>TargetPitch <a href="../Source_roengine/rohovercraft.html#72" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> TargetPitch;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">ROHoverCraft</h3>
+<h4><a name="_HoverCheckDist" class="hidden"></a>HoverCheckDist <a href="../Source_roengine/rohovercraft.html#35" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> HoverCheckDist;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HoverPenScale" class="hidden"></a>HoverPenScale <a href="../Source_roengine/rohovercraft.html#34" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> HoverPenScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HoverSoftness" class="hidden"></a>HoverSoftness <a href="../Source_roengine/rohovercraft.html#33" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> HoverSoftness;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LatDamping" class="hidden"></a>LatDamping <a href="../Source_roengine/rohovercraft.html#44" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> LatDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LongDamping" class="hidden"></a>LongDamping <a href="../Source_roengine/rohovercraft.html#41" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> LongDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxRandForce" class="hidden"></a>MaxRandForce <a href="../Source_roengine/rohovercraft.html#65" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> MaxRandForce;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxRiseForce" class="hidden"></a>MaxRiseForce <a href="../Source_roengine/rohovercraft.html#46" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> MaxRiseForce;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxStrafeForce" class="hidden"></a>MaxStrafeForce <a href="../Source_roengine/rohovercraft.html#43" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> MaxStrafeForce;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxThrustForce" class="hidden"></a>MaxThrustForce <a href="../Source_roengine/rohovercraft.html#40" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> MaxThrustForce;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxYawRate" class="hidden"></a>MaxYawRate <a href="../Source_roengine/rohovercraft.html#52" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> MaxYawRate;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PitchDamping" class="hidden"></a>PitchDamping <a href="../Source_roengine/rohovercraft.html#56" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> PitchDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PitchTorqueFactor" class="hidden"></a>PitchTorqueFactor <a href="../Source_roengine/rohovercraft.html#54" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> PitchTorqueFactor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PitchTorqueMax" class="hidden"></a>PitchTorqueMax <a href="../Source_roengine/rohovercraft.html#55" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> PitchTorqueMax;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RandForceInterval" class="hidden"></a>RandForceInterval <a href="../Source_roengine/rohovercraft.html#66" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> RandForceInterval;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RollDamping" class="hidden"></a>RollDamping <a href="../Source_roengine/rohovercraft.html#61" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> RollDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RollTorqueMax" class="hidden"></a>RollTorqueMax <a href="../Source_roengine/rohovercraft.html#60" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> RollTorqueMax;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RollTorqueStrafeFactor" class="hidden"></a>RollTorqueStrafeFactor <a href="../Source_roengine/rohovercraft.html#59" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> RollTorqueStrafeFactor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RollTorqueTurnFactor" class="hidden"></a>RollTorqueTurnFactor <a href="../Source_roengine/rohovercraft.html#58" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> RollTorqueTurnFactor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StopThreshold" class="hidden"></a>StopThreshold <a href="../Source_roengine/rohovercraft.html#63" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> StopThreshold;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ThrusterOffsets" class="hidden"></a>ThrusterOffsets <a href="../Source_roengine/rohovercraft.html#32" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) array&lt;<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>&gt; ThrusterOffsets;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TurnDamping" class="hidden"></a>TurnDamping <a href="../Source_roengine/rohovercraft.html#51" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> TurnDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TurnTorqueFactor" class="hidden"></a>TurnTorqueFactor <a href="../Source_roengine/rohovercraft.html#49" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> TurnTorqueFactor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TurnTorqueMax" class="hidden"></a>TurnTorqueMax <a href="../Source_roengine/rohovercraft.html#50" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> TurnTorqueMax;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpDamping" class="hidden"></a>UpDamping <a href="../Source_roengine/rohovercraft.html#47" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> UpDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UprightDamping" class="hidden"></a>UprightDamping <a href="../Source_roengine/rohovercraft.html#38" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> UprightDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UprightStiffness" class="hidden"></a>UprightStiffness <a href="../Source_roengine/rohovercraft.html#37" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../roengine/rohovercraft.html" class="source">ROHoverCraft</a></span>) <span class="source_type">float</span> UprightStiffness;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Structures Detail</th>
+</tr>
+</table>
+
+<h4><a name="_HoverCraftState" class="hidden"></a>HoverCraftState <a href="../Source_roengine/rohovercraft.html#81" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../roengine/rohovercraft.html#HoverCraftState" class="source">HoverCraftState</a></span><br />
+{<blockquote>var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ChassisAngVel;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ChassisLinVel;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ChassisPosition;<br />
+var <span class="source_type"><a href="../core/object.html#Quat" class="source">Quat</a></span> ChassisQuaternion;<br />
+var <span class="source_type">byte</span> ServerStrafe;<br />
+var <span class="source_type">byte</span> ServerThrust;<br />
+var <span class="source_type">int</span> ServerViewPitch;<br />
+var <span class="source_type">int</span> ServerViewYaw;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_Died-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Died <span class="function_state"></span> <a href="../Source_roengine/rohovercraft.html#142" class="small">Source code</a></h4>
+<div class="declaration"> function  Died ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> Killer, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KUpdateState-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> KUpdateState <span class="function_state"></span> <a href="../Source_roengine/rohovercraft.html#104" class="small">Source code</a></h4>
+<div class="declaration">simulated event <span class="source_type">bool</span> KUpdateState ( out <span class="source_type"><a href="../engine/actor.html#KRigidBodyState" class="source">KRigidBodyState</a></span> newState) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostNetBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PostNetBeginPlay <span class="function_state"></span> <a href="../Source_roengine/rohovercraft.html#117" class="small">Source code</a></h4>
+<div class="declaration">simulated function  PostNetBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpecialCalcFirstPersonView-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpecialCalcFirstPersonView <span class="function_state"></span> <a href="../Source_roengine/rohovercraft.html#176" class="small">Source code</a></h4>
+<div class="declaration">simulated function  SpecialCalcFirstPersonView ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>, out <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> ViewActor, out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> CameraLocation, out <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">CameraRotation</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SVehicleUpdateParams-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> SVehicleUpdateParams <span class="function_state"></span> <a href="../Source_roengine/rohovercraft.html#157" class="small">Source code</a></h4>
+<div class="declaration">simulated event  SVehicleUpdateParams ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     bFollowLookDir=True
+     bCanHover=True
+     bPCRelativeFPRotation=False
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roengine/roengine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_roengine/rohovercraft.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#ROHoverCraft">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../roengine/rohintmanager.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../roengine/rohovertreadcraft.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:51.721 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

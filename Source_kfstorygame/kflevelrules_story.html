@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFStoryGame.KFLevelRules_Story</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfstorygame/kfstorygame-overview.html">Package</a></td>
+	<td class="header"><a href="../kfstorygame/kflevelrules_story.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFLevelRules_Story">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfstorygame/kfhumanpawn_story.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfstorygame/kfomaplist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfstorygame/kflevelrules_story.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfstorygame/kfstorygame-overview.html">KFStoryGame</a>.<a href="../kfstorygame/kflevelrules_story.html">KFLevelRules_Story</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_comment">/*
+<a name="2"></a>	--------------------------------------------------------------
+<a name="3"></a>	KFLevelRules_Story
+<a name="4"></a>	--------------------------------------------------------------
+<a name="5"></a>
+<a name="6"></a>	Extended LevelRules info for use in 'Story' style missions .
+<a name="7"></a>	Can modify player starting equipment, health, cash , etc.
+<a name="8"></a>	Also stores a list of Objectives the player must complete to
+<a name="9"></a>	be victorious.
+<a name="10"></a>
+<a name="11"></a>	Author :  Alex Quick
+<a name="12"></a>
+<a name="13"></a>	--------------------------------------------------------------
+<a name="14"></a>*/</span>
+<a name="15"></a>
+<a name="16"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfstorygame/kflevelrules_story.html" class="source">KFLevelRules_Story</a></span> extends <span class="source_type"><a href="../kfmod/kflevelrules.html" class="source">KFLevelRules</a></span>
+<a name="17"></a>hidecategories(<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>,Events)
+<a name="18"></a>dependson(<span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>) ;
+<a name="19"></a>
+<a name="20"></a><span class="source_macro">#exec OBJ LOAD FILE=KFStoryGame_Tex.utx
+</span><a name="21"></a>
+<a name="22"></a><span class="source_comment">/* should the first objective in the StoryObjectives array activate as soon as the match begins ? */</span>
+<a name="23"></a>var(Rules_Objectives)       <span class="source_type">bool</span>                         bAutoStartObjectives;
+<a name="24"></a>
+<a name="25"></a><span class="source_comment">/* Amount of dosh to start players out with in story mode */</span>
+<a name="26"></a>var(Rules_Cash)			    <span class="source_type">int</span>							 StartingCashSum;
+<a name="27"></a>
+<a name="28"></a><span class="source_comment">/* A modifier for the amount of cash players receive from killing zombies.  ie. at 0.f they will not receive anything */</span>
+<a name="29"></a>var(Rules_Cash)			    <span class="source_type">float</span>						 CashReward_ZEDKills_Modifier;
+<a name="30"></a>
+<a name="31"></a><span class="source_comment">/* A modifier for the amount of cash players lose when they die */</span>
+<a name="32"></a>var(Rules_Cash)			    <span class="source_type">float</span>						 CashPenalty_Death_Modifier;
+<a name="33"></a>
+<a name="34"></a><span class="source_comment">/* absolute maximum number of zombies we can have in this story map at one time */</span>
+<a name="35"></a>var(Rules_Monsters)			<span class="source_type">int</span>						     MaxEnemiesAtOnce;
+<a name="36"></a>
+<a name="37"></a><span class="source_comment">/* should the game kill off ZEDs which haven't been seen by players for a while?  */</span>
+<a name="38"></a>var(Rules_Monsters)         <span class="source_type">bool</span>                         bAutoKillStragglers;
+<a name="39"></a>
+<a name="40"></a><span class="source_comment">/* Auto Kill threshold if bAutoKilLStragglers is true */</span>
+<a name="41"></a>var(Rules_Monsters)         <span class="source_type">int</span>                          MaxStragglers;
+<a name="42"></a>
+<a name="43"></a><span class="source_comment">/* Struct for controlling attributes which affect enemy spawning base on game difficulty and player count */</span>
+<a name="44"></a>struct <span class="source_type"><a href="../kfstorygame/kflevelrules_story.html#SMonsterSpawnScaling" class="source">SMonsterSpawnScaling</a></span>
+<a name="45"></a>{
+<a name="46"></a>    var () <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>.<span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#SDifficultyWrapper" class="source">SDifficultyWrapper</a></span>            EnemySpawnRate;
+<a name="47"></a>
+<a name="48"></a>    var () <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>.<span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#SDifficultyWrapper" class="source">SDifficultyWrapper</a></span>            NumberOfEnemies;
+<a name="49"></a>};
+<a name="50"></a>
+<a name="51"></a>var(Rules_Monsters)         <span class="source_type"><a href="../kfstorygame/kflevelrules_story.html#SMonsterSpawnScaling" class="source">SMonsterSpawnScaling</a></span>         Spawn_Difficulty_Scaling;
+<a name="52"></a>
+<a name="53"></a><span class="source_comment">/* should bots be allowed to spawn ? */</span>
+<a name="54"></a>var(Rules_Bots)				<span class="source_type">bool</span>						 bAllowBots;
+<a name="55"></a>
+<a name="56"></a><span class="source_comment">/* Textures to display on the HUD when the match is over */</span>
+<a name="57"></a>var(Rules_HUD) 				<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> 					 VictoryMaterial,DefeatMaterial;
+<a name="58"></a>
+<a name="59"></a><span class="source_comment">/* If a team is restarted after dying during a story mission these are the actor types we need to reset*/</span>
+<a name="60"></a>var(Rules_CheckPoints)	    array&lt;<span class="source_type">class</span>&gt;		         CheckpointResetClasses ;
+<a name="61"></a>
+<a name="62"></a><span class="source_comment">/* If true the weapon / item pickups in the map will be randomly spawned based on difficulty - like in a normal KF match */</span>
+<a name="63"></a>var(Rules_Equipment)        <span class="source_type">bool</span>                         bRandomizeWeaponPickups;
+<a name="64"></a>
+<a name="65"></a><span class="source_comment">// Amount of starting HP for all players
+</span><a name="66"></a>var(Rules_Equipment)        <span class="source_type">int</span>                          PlayerStartHealth;
+<a name="67"></a>
+<a name="68"></a><span class="source_comment">// Amount of starting armor for all players.
+</span><a name="69"></a>var(Rules_Equipment)        <span class="source_type">int</span>                          PlayerStartArmor;
+<a name="70"></a>
+<a name="71"></a><span class="source_comment">// Defines starting equipment for players
+</span><a name="72"></a>var(Rules_Equipment)        array&lt; <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>&gt; &gt;    RequiredPlayerEquipment;
+<a name="73"></a>
+<a name="74"></a><span class="source_comment">/* if true, allow high level players to spawn with their 'default' gear */</span>
+<a name="75"></a>var(Rules_Equipment)		<span class="source_type">bool</span>						 bAllowPerkStartingWeaps;
+<a name="76"></a>
+<a name="77"></a><span class="source_comment">// Enable / Disable Cash display on HUD .
+</span><a name="78"></a>var(Rules_HUD)              <span class="source_type">bool</span>                         bShowCash;
+<a name="79"></a>
+<a name="80"></a>var(Rules_HUD)              <span class="source_type">name</span>                         HUDStyle;
+<a name="81"></a>
+<a name="82"></a>
+<a name="83"></a>function ModifyPlayer( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span> )
+<a name="84"></a>{
+<a name="85"></a>	if( PlayerStartHealth&gt;<span class="source_int">0</span> )
+<a name="86"></a>		<span class="source_type">Other</span>.Health = PlayerStartHealth;
+<a name="87"></a>	if( PlayerStartArmor&gt;<span class="source_int">0</span> )
+<a name="88"></a>		<span class="source_type">Other</span>.ShieldStrength = PlayerStartArmor;
+<a name="89"></a>}
+<a name="90"></a>
+<a name="91"></a>function AddGameInv( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span> )
+<a name="92"></a>{
+<a name="93"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="94"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="95"></a>
+<a name="96"></a>	For( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;RequiredPlayerEquipment.Length; <span class="source_type">i</span>++ )
+<a name="97"></a>	{
+<a name="98"></a>		if( RequiredPlayerEquipment[<span class="source_type">i</span>]==None )
+<a name="99"></a>			Continue;
+<a name="100"></a>		if( <span class="source_type">Other</span>.FindInventoryType(RequiredPlayerEquipment[<span class="source_type">i</span>])==None )
+<a name="101"></a>		{
+<a name="102"></a>			Inv = Spawn(RequiredPlayerEquipment[<span class="source_type">i</span>]);
+<a name="103"></a>			if( Inv != None )
+<a name="104"></a>			{
+<a name="105"></a>				Inv.GiveTo(<span class="source_type">Other</span>);
+<a name="106"></a>				if ( Inv != None )
+<a name="107"></a>					Inv.PickupFunction(<span class="source_type">Other</span>);
+<a name="108"></a>			}
+<a name="109"></a>		}
+<a name="110"></a>	}
+<a name="111"></a>}
+<a name="112"></a>
+<a name="113"></a>defaultproperties
+<a name="114"></a>{
+<a name="115"></a>     bAutoStartObjectives=True
+<a name="116"></a>     StartingCashSum=<span class="source_int">250</span>
+<a name="117"></a>     CashReward_ZEDKills_Modifier=<span class="source_int">1.000000</span>
+<a name="118"></a>     CashPenalty_Death_Modifier=<span class="source_int">1.000000</span>
+<a name="119"></a>     MaxEnemiesAtOnce=<span class="source_int">32</span>
+<a name="120"></a>     bAutoKillStragglers=True
+<a name="121"></a>     MaxStragglers=<span class="source_int">5</span>
+<a name="122"></a>     Spawn_Difficulty_Scaling=(EnemySpawnRate=(Scale_GameDifficulty=(Scale_Beginner=<span class="source_int">1.000000</span>,Scale_Hard=<span class="source_int">1.170000</span>,Scale_Suicidal=<span class="source_int">1.170000</span>,Scale_HellOnEarth=<span class="source_int">1.170000</span>),Scale_PlayerCount=(Scale_1P=<span class="source_int">1.000000</span>,Scale_2P=<span class="source_int">1.000000</span>,Scale_3P=<span class="source_int">1.000000</span>,Scale_4P=<span class="source_int">1.170000</span>,Scale_5P=<span class="source_int">1.530000</span>,Scale_6P=<span class="source_int">3.300000</span>)),NumberOfEnemies=(Scale_GameDifficulty=(Scale_Beginner=<span class="source_int">0.700000</span>,Scale_Hard=<span class="source_int">1.300000</span>,Scale_Suicidal=<span class="source_int">1.500000</span>,Scale_HellOnEarth=<span class="source_int">1.700000</span>),Scale_PlayerCount=(Scale_1P=<span class="source_int">1.000000</span>,Scale_2P=<span class="source_int">2.000000</span>,Scale_3P=<span class="source_int">2.750000</span>,Scale_4P=<span class="source_int">3.500000</span>,Scale_5P=<span class="source_int">4.000000</span>,Scale_6P=<span class="source_int">4.500000</span>)))
+<a name="123"></a>     VictoryMaterial=<span class="source_type"><a href="../engine/combiner.html" class="source">Combiner</a></span><span class="source_name">'KFMapEndTextures.VictoryCombiner'</span>
+<a name="124"></a>     DefeatMaterial=<span class="source_type"><a href="../engine/combiner.html" class="source">Combiner</a></span><span class="source_name">'KFMapEndTextures.DefeatCombiner'</span>
+<a name="125"></a>     CheckpointResetClasses(<span class="source_int">0</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.ZombieVolume'</span>
+<a name="126"></a>     CheckpointResetClasses(<span class="source_int">1</span>)=<span class="source_type">Class</span><span class="source_name">'Gameplay.ScriptedSequence'</span>
+<a name="127"></a>     CheckpointResetClasses(<span class="source_int">2</span>)=<span class="source_type">Class</span><span class="source_name">'Engine.Pickup'</span>
+<a name="128"></a>     CheckpointResetClasses(<span class="source_int">3</span>)=<span class="source_type">Class</span><span class="source_name">'Engine.Pawn'</span>
+<a name="129"></a>     CheckpointResetClasses(<span class="source_int">4</span>)=<span class="source_type">Class</span><span class="source_name">'Engine.Triggers'</span>
+<a name="130"></a>     CheckpointResetClasses(<span class="source_int">5</span>)=<span class="source_type">Class</span><span class="source_name">'Gameplay.TriggerLight'</span>
+<a name="131"></a>     CheckpointResetClasses(<span class="source_int">6</span>)=<span class="source_type">Class</span><span class="source_name">'Engine.BlockingVolume'</span>
+<a name="132"></a>     CheckpointResetClasses(<span class="source_int">7</span>)=<span class="source_type">Class</span><span class="source_name">'Engine.Decoration'</span>
+<a name="133"></a>     CheckpointResetClasses(<span class="source_int">8</span>)=<span class="source_type">Class</span><span class="source_name">'KFStoryGame.KF_StoryWaveDesigner'</span>
+<a name="134"></a>     CheckpointResetClasses(<span class="source_int">9</span>)=<span class="source_type">Class</span><span class="source_name">'KFStoryGame.StaticMeshActor_Hideable'</span>
+<a name="135"></a>     CheckpointResetClasses(<span class="source_int">10</span>)=<span class="source_type">Class</span><span class="source_name">'KFStoryGame.KF_StoryWaveDesigner'</span>
+<a name="136"></a>     bRandomizeWeaponPickups=True
+<a name="137"></a>     RequiredPlayerEquipment(<span class="source_int">0</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.Single'</span>
+<a name="138"></a>     RequiredPlayerEquipment(<span class="source_int">1</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.Syringe'</span>
+<a name="139"></a>     RequiredPlayerEquipment(<span class="source_int">2</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.Welder'</span>
+<a name="140"></a>     RequiredPlayerEquipment(<span class="source_int">3</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.Frag'</span>
+<a name="141"></a>     RequiredPlayerEquipment(<span class="source_int">4</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.knife'</span>
+<a name="142"></a>     bAllowPerkStartingWeaps=True
+<a name="143"></a>     bShowCash=True
+<a name="144"></a>     <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KFStoryGame_Tex.Editor.KFRules_Ico'</span>
+<a name="145"></a>}
+<a name="146"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfstorygame/kfstorygame-overview.html">Package</a></td>
+	<td class="header"><a href="../kfstorygame/kflevelrules_story.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFLevelRules_Story">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfstorygame/kfhumanpawn_story.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfstorygame/kfomaplist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:03.615 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

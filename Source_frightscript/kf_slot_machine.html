@@ -1,0 +1,753 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: FrightScript.KF_Slot_Machine</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../frightscript/frightscript-overview.html">Package</a></td>
+	<td class="header"><a href="../frightscript/kf_slot_machine.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KF_Slot_Machine">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_frightscript/kf_slot_cashpickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_frightscript/kf_slot_reel.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_frightscript/kf_slot_machine.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../frightscript/frightscript-overview.html">FrightScript</a>.<a href="../frightscript/kf_slot_machine.html">KF_Slot_Machine</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_comment">/*
+<a name="2"></a>	--------------------------------------------------------------
+<a name="3"></a>	KF_Slot_Machine
+<a name="4"></a>	--------------------------------------------------------------
+<a name="5"></a>
+<a name="6"></a>	Interactive prop for the 2013 Summer Sideshow map.   Can be used
+<a name="7"></a>	by players to randomly dole out prizes.
+<a name="8"></a>
+<a name="9"></a>	Author :  Alex Quick
+<a name="10"></a>
+<a name="11"></a>	--------------------------------------------------------------
+<a name="12"></a>*/</span>
+<a name="13"></a>
+<a name="14"></a><span class="source_macro">#exec OBJ LOAD FILE=Pier_anim.ukx
+</span><a name="15"></a>
+<a name="16"></a><span class="source_type">class</span> <span class="source_type"><a href="../frightscript/kf_slot_machine.html" class="source">KF_Slot_Machine</a></span> extends <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>
+<a name="17"></a>placeable;
+<a name="18"></a>
+<a name="19"></a>const       NUMREELS            =  <span class="source_int">3</span>;
+<a name="20"></a>const       NUMSYMBOLS          =  <span class="source_int">6</span>;
+<a name="21"></a>const       NUMAMBIENTSNDS      =  <span class="source_int">3</span>;
+<a name="22"></a>
+<a name="23"></a>var()    edfindable   <span class="source_type"><a href="../frightscript/kf_slot_reel.html" class="source">KF_Slot_Reel</a></span>        Reels[NUMREELS] ;
+<a name="24"></a>
+<a name="25"></a>var         <span class="source_type">float</span>               DesiredRolls[NUMREELS];
+<a name="26"></a>
+<a name="27"></a>var         <span class="source_type">int</span>                 NumSpinning;
+<a name="28"></a>
+<a name="29"></a>var()       <span class="source_type">float</span>               SpinDuration;
+<a name="30"></a>
+<a name="31"></a>var         <span class="source_type">float</span>               LastSpinTime;
+<a name="32"></a>
+<a name="33"></a>var         <span class="source_type">float</span>               LastReelStopTime;
+<a name="34"></a>
+<a name="35"></a>var         <span class="source_type">string</span>              Snd_ReelStoppedRef,Snd_ReelSpinningRef,Snd_MonsterPrizeRef,Snd_CashPrizeRef,Snd_JackpotRef, Snd_LeverPullRef;
+<a name="36"></a>
+<a name="37"></a>var         <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>               Snd_ReelStopped,Snd_ReelSpinning,Snd_MonsterPrize,Snd_CashPrize,Snd_Jackpot,Snd_LeverPull;
+<a name="38"></a>
+<a name="39"></a><span class="source_comment">// The volume to play these slot machine sounds at
+</span><a name="40"></a>var       <span class="source_type">float</span>               ReelStoppedVolume, CashPrizeVolume, MonsterPrizeVolume, JackpotVolume, LeverPullVolume;
+<a name="41"></a><span class="source_comment">// The sound radius to use for these slot machine sounds
+</span><a name="42"></a>var       <span class="source_type">float</span>               ReelSpinningRadius, ReelStoppedRadius, CashPrizeRadius, MonsterPrizeRadius, JackpotRadius, LeverPullRadius;
+<a name="43"></a>
+<a name="44"></a><span class="source_comment">// The volume of the ambient sound when the real spinning is playing
+</span><a name="45"></a>var <span class="source_type">byte</span> ReelSpinningVolume;
+<a name="46"></a>
+<a name="47"></a>var         <span class="source_type">string</span>              Snd_AmbientActiveRef[NUMAMBIENTSNDS];
+<a name="48"></a>
+<a name="49"></a>var         <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>               Snd_AmbientActive[NUMAMBIENTSNDS];
+<a name="50"></a>
+<a name="51"></a>var         <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>                CurrentPlayer;
+<a name="52"></a>
+<a name="53"></a>var() const <span class="source_type">name</span>                YouLostEvent;
+<a name="54"></a>
+<a name="55"></a>var() const <span class="source_type">name</span>                YouWonEvent;
+<a name="56"></a>
+<a name="57"></a>var         <span class="source_type">int</span>                 RemainingPayOut;
+<a name="58"></a>
+<a name="59"></a><span class="source_comment">// rate at which you accrue 'good karma' if you keep pulling and not hitting.
+</span><a name="60"></a>var() const <span class="source_type">float</span>               JackPotChanceIncreaseRate;
+<a name="61"></a>
+<a name="62"></a>var()       <span class="source_type">int</span>                 MaxBet;
+<a name="63"></a>
+<a name="64"></a>var         <span class="source_type">int</span>                 RemainingBonusSpins;
+<a name="65"></a>
+<a name="66"></a>var()       const edfindable    <span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html" class="source">KF_StoryWaveDesigner</a></span>    AssociatedDesigner;
+<a name="67"></a>
+<a name="68"></a>var         <span class="source_type">float</span>               JackPotChance;
+<a name="69"></a>
+<a name="70"></a>var         <span class="source_type">bool</span>                bFirstSpin;
+<a name="71"></a>
+<a name="72"></a><span class="source_comment">/* ==== Animation Stuff =================================*/</span>
+<a name="73"></a>
+<a name="74"></a><span class="source_comment">/* Animation the slot machine plays when it is used */</span>
+<a name="75"></a>var         <span class="source_type">name</span>                SlotPullAnim;
+<a name="76"></a>
+<a name="77"></a>var         <span class="source_type">byte</span>                RepAnimByte,LastRepAnimByte;
+<a name="78"></a>
+<a name="79"></a>
+<a name="80"></a>struct <span class="source_type"><a href="../frightscript/kf_slot_machine.html#SReelSymbol" class="source">SReelSymbol</a></span>
+<a name="81"></a>{
+<a name="82"></a>	var	<span class="source_type">float</span>       ReelPosition;    <span class="source_comment">// The Rotation (Roll) that this symbol inhabits on the reel.
+</span><a name="83"></a>	var	<span class="source_type">string</span>      SymbolName;      <span class="source_comment">// Name of the Symbol.
+</span><a name="84"></a>    var <span class="source_type">int</span>         NumReqHits;      <span class="source_comment">// The number of hits this symbol requires to pay out.
+</span><a name="85"></a>	var <span class="source_type">int</span>         NumHits;         <span class="source_comment">// The number of times this symbol was on the payline during the current spin.   Cleared each new spin.
+</span><a name="86"></a>};
+<a name="87"></a>
+<a name="88"></a>var         <span class="source_type"><a href="../frightscript/kf_slot_machine.html#SReelSymbol" class="source">SReelSymbol</a></span>         ReelSymbols[NUMSYMBOLS];
+<a name="89"></a>
+<a name="90"></a>var         <span class="source_type">bool</span>                bActive;
+<a name="91"></a>
+<a name="92"></a>var() const <span class="source_type">bool</span>                bStartActive;
+<a name="93"></a>
+<a name="94"></a>
+<a name="95"></a>replication
+<a name="96"></a>{
+<a name="97"></a>    reliable if(Role == Role_Authority && bNetDirty)
+<a name="98"></a>       RepAnimByte;
+<a name="99"></a>}
+<a name="100"></a>
+<a name="101"></a>function PreBeginPlay()
+<a name="102"></a>{
+<a name="103"></a>    PreLoadSounds();
+<a name="104"></a>}
+<a name="105"></a>
+<a name="106"></a>function PostBeginPlay()
+<a name="107"></a>{
+<a name="108"></a>    SetActive(bStartActive);
+<a name="109"></a>}
+<a name="110"></a>
+<a name="111"></a>function PreLoadSounds()
+<a name="112"></a>{
+<a name="113"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="114"></a>
+<a name="115"></a>	if ( default.Snd_ReelStoppedRef != <span class="source_string">""</span> )
+<a name="116"></a>	{
+<a name="117"></a>		Snd_ReelStopped = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Snd_ReelStoppedRef, <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="118"></a>	}
+<a name="119"></a>	if( default.Snd_ReelSpinningRef != <span class="source_string">""</span>)
+<a name="120"></a>	{
+<a name="121"></a>		Snd_ReelSpinning = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Snd_ReelSpinningRef, <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="122"></a>	}
+<a name="123"></a>	if( default.Snd_MonsterPrizeRef != <span class="source_string">""</span>)
+<a name="124"></a>	{
+<a name="125"></a>		Snd_MonsterPrize = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Snd_MonsterPrizeRef, <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="126"></a>	}
+<a name="127"></a>	if( default.Snd_CashPrizeRef != <span class="source_string">""</span>)
+<a name="128"></a>	{
+<a name="129"></a>		Snd_CashPrize = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Snd_CashPrizeRef, <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="130"></a>	}
+<a name="131"></a>
+<a name="132"></a>	if( default.Snd_JackpotRef != <span class="source_string">""</span>)
+<a name="133"></a>	{
+<a name="134"></a>		Snd_Jackpot = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Snd_JackpotRef, <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="135"></a>	}
+<a name="136"></a>
+<a name="137"></a>	if( default.Snd_LeverPullRef != <span class="source_string">""</span>)
+<a name="138"></a>	{
+<a name="139"></a>		Snd_LeverPull = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Snd_LeverPullRef, <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="140"></a>	}
+<a name="141"></a>
+<a name="142"></a>	for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; NUMAMBIENTSNDS ; <span class="source_type">i</span> ++)
+<a name="143"></a>	{
+<a name="144"></a>        if( default.Snd_AmbientActiveRef[<span class="source_type">i</span>] != <span class="source_string">""</span>)
+<a name="145"></a>        {
+<a name="146"></a>            Snd_AmbientActive[<span class="source_type">i</span>] = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Snd_AmbientActiveRef[<span class="source_type">i</span>], <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="147"></a>        }
+<a name="148"></a>	}
+<a name="149"></a>}
+<a name="150"></a>
+<a name="151"></a><span class="source_comment">/* A player threw some cash at a slot machine . */</span>
+<a name="152"></a>simulated event Touch( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span> )
+<a name="153"></a>{
+<a name="154"></a>    local <span class="source_type"><a href="../kfmod/cashpickup.html" class="source">Cashpickup</a></span> DroppedCash;
+<a name="155"></a>
+<a name="156"></a>    DroppedCash = <span class="source_type"><a href="../kfmod/cashpickup.html" class="source">CashPickup</a></span>(<span class="source_type">Other</span>);
+<a name="157"></a>    if(DroppedCash != none)
+<a name="158"></a>    {
+<a name="159"></a>        if(DroppedCash.bDroppedCash &&
+<a name="160"></a>        DroppedCash.CashAmount &gt;= MaxBet &&
+<a name="161"></a>        DroppedCash.DroppedBy != none &&
+<a name="162"></a>        DroppedCash.DroppedBy.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != none &&
+<a name="163"></a>        AttemptSpin(DroppedCash.DroppedBy.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>))
+<a name="164"></a>        {
+<a name="165"></a>            DroppedCash.SetRespawn();
+<a name="166"></a>        }
+<a name="167"></a>        else
+<a name="168"></a>        {
+<a name="169"></a>            <span class="source_comment">/* Flings the dropped cash back at the guy who threw it.  */</span>
+<a name="170"></a>           DroppedCash.Velocity  = vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>);
+<a name="171"></a>        }
+<a name="172"></a>    }
+<a name="173"></a>}
+<a name="174"></a>
+<a name="175"></a><span class="source_comment">/* Attempts to spin the slot reels. Returns true if successfull */</span>
+<a name="176"></a>function <span class="source_type">bool</span>   AttemptSpin(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> SlotPlayer)
+<a name="177"></a>{
+<a name="178"></a>    <span class="source_comment">/* Dont' allow a new spin if the reels are already spinning or the machine is still paying out a prize */</span>
+<a name="179"></a>    if(bActive &&
+<a name="180"></a>    !ReelsAreSpinning() &&
+<a name="181"></a>    RemainingPayOut == <span class="source_int">0</span> &&
+<a name="182"></a>    !IsAnimating())
+<a name="183"></a>    {
+<a name="184"></a>        if(Snd_LeverPull != none)
+<a name="185"></a>        {
+<a name="186"></a>            PlaySound(Snd_LeverPull,SLOT_None,LeverPullVolume,false,LeverPullRadius,SoundPitch / <span class="source_int">64.0</span>);
+<a name="187"></a>        }
+<a name="188"></a>
+<a name="189"></a>        <span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = Snd_ReelSpinning;
+<a name="190"></a>        SoundVolume = ReelSpinningVolume;
+<a name="191"></a>        SoundRadius = ReelSpinningRadius;
+<a name="192"></a>
+<a name="193"></a>        bNetNotify = true;
+<a name="194"></a>        NetUpdateTime = <span class="source_type">Level</span>.TimeSeconds - <span class="source_int">1</span>;
+<a name="195"></a>
+<a name="196"></a>        CurrentPlayer = SlotPlayer;
+<a name="197"></a>        if(RemainingBonusSpins &gt; <span class="source_int">0</span>)
+<a name="198"></a>        {
+<a name="199"></a>            RemainingBonusSpins = <span class="source_type">Max</span>(RemainingBonusSpins -<span class="source_int">1</span>, <span class="source_int">0</span>) ;
+<a name="200"></a>        }
+<a name="201"></a>
+<a name="202"></a>        CalculateReelPositions();
+<a name="203"></a>
+<a name="204"></a>        if(SlotPullAnim != <span class="source_name">''</span>)
+<a name="205"></a>        {
+<a name="206"></a>            RepAnimByte ++ ;
+<a name="207"></a>            PlayPullAnim();
+<a name="208"></a>        }
+<a name="209"></a>
+<a name="210"></a>        return true;
+<a name="211"></a>    }
+<a name="212"></a>
+<a name="213"></a>    return false;
+<a name="214"></a>}
+<a name="215"></a>
+<a name="216"></a>event <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">EventInstigator</span> )
+<a name="217"></a>{
+<a name="218"></a>    SetActive(!bActive);
+<a name="219"></a>}
+<a name="220"></a>
+<a name="221"></a>function <span class="source_type">bool</span> ReelsAreSpinning()
+<a name="222"></a>{
+<a name="223"></a>    return NumSpinning &gt; <span class="source_int">0</span>;
+<a name="224"></a>}
+<a name="225"></a>
+<a name="226"></a><span class="source_comment">/* The final positions for each reel are calculated before they actually start spinning */</span>
+<a name="227"></a>function CalculateReelPositions()
+<a name="228"></a>{
+<a name="229"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>,<span class="source_type">idx</span>;
+<a name="230"></a>    local <span class="source_type">string</span> SymbolName;
+<a name="231"></a>
+<a name="232"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; ArrayCount(ReelSymbols) ; <span class="source_type">i</span> ++)
+<a name="233"></a>    {
+<a name="234"></a>        ReelSymbols[<span class="source_type">i</span>].NumHits = <span class="source_int">0</span>;
+<a name="235"></a>    }
+<a name="236"></a>
+<a name="237"></a><span class="source_comment">//    log("CHANCE TO HIT JACKPOINT : "@JackPotChance*100$"%");
+</span><a name="238"></a>
+<a name="239"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; ArrayCount(Reels) ; <span class="source_type">i</span> ++)
+<a name="240"></a>    {
+<a name="241"></a>        if(FRand() &lt; JackPotChance)
+<a name="242"></a>        {
+<a name="243"></a>            DesiredRolls[<span class="source_type">i</span>] = <span class="source_int">0.f</span>;
+<a name="244"></a>        }
+<a name="245"></a>        else
+<a name="246"></a>        {
+<a name="247"></a>            DesiredRolls[<span class="source_type">i</span>] = <span class="source_int">11000.f</span> * Round(RandRange(<span class="source_int">0</span>,arraycount(ReelSymbols)-<span class="source_int">1</span>)) ;
+<a name="248"></a>        }
+<a name="249"></a>
+<a name="250"></a>        SymbolName = GetSymbolAtPosition(DesiredRolls[<span class="source_type">i</span>]);
+<a name="251"></a><span class="source_comment">//        log("["$i$"] : "$SymbolName);
+</span><a name="252"></a>
+<a name="253"></a>        for(<span class="source_type">idx</span> = <span class="source_int">0</span> ; <span class="source_type">idx</span> &lt; arraycount(ReelSymbols) ; <span class="source_type">idx</span> ++)
+<a name="254"></a>        {
+<a name="255"></a>            if(ReelSymbols[<span class="source_type">idx</span>].SymbolName == SymbolName)
+<a name="256"></a>            {
+<a name="257"></a>                ReelSymbols[<span class="source_type">idx</span>].NumHits ++;
+<a name="258"></a>            }
+<a name="259"></a>        }
+<a name="260"></a>    }
+<a name="261"></a>}
+<a name="262"></a>
+<a name="263"></a>function <span class="source_type">string</span> GetSymbolAtPosition(<span class="source_type">float</span> <span class="source_type">Position</span>, optional out <span class="source_type">int</span> <span class="source_type">Index</span>)
+<a name="264"></a>{
+<a name="265"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="266"></a>
+<a name="267"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; arrayCount(ReelSymbols); <span class="source_type">i</span> ++ )
+<a name="268"></a>    {
+<a name="269"></a>        if(<span class="source_type">Position</span> == ReelSymbols[<span class="source_type">i</span>].ReelPosition)
+<a name="270"></a>        {
+<a name="271"></a>            <span class="source_type">Index</span> = <span class="source_type">i</span>;
+<a name="272"></a>            return ReelSymbols[<span class="source_type">i</span>].SymbolName;
+<a name="273"></a>        }
+<a name="274"></a>    }
+<a name="275"></a>
+<a name="276"></a>    return <span class="source_string">"COULD NOT FIND A REEL SYMBOL AT POSITION :"</span>$<span class="source_type">Position</span>;
+<a name="277"></a>}
+<a name="278"></a>
+<a name="279"></a>function SpinReels()
+<a name="280"></a>{
+<a name="281"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="282"></a>
+<a name="283"></a>    if(<span class="source_type">Level</span>.NetMode == NM_Client)
+<a name="284"></a>    {
+<a name="285"></a>        return;
+<a name="286"></a>    }
+<a name="287"></a>
+<a name="288"></a>    LastSpinTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="289"></a>
+<a name="290"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; ArrayCount(Reels) ; <span class="source_type">i</span> ++)
+<a name="291"></a>    {
+<a name="292"></a>        Reels[<span class="source_type">i</span>].bFixedRotationDir = true;
+<a name="293"></a>        Reels[<span class="source_type">i</span>].bRotateToDesired = false;
+<a name="294"></a>        Reels[<span class="source_type">i</span>].NetUpdateFrequency = <span class="source_int">5</span>;
+<a name="295"></a>        Reels[<span class="source_type">i</span>].NetUpdateTime = <span class="source_type">Level</span>.TimeSeconds - <span class="source_int">1</span>;
+<a name="296"></a>
+<a name="297"></a>        NumSpinning ++ ;
+<a name="298"></a>    }
+<a name="299"></a>}
+<a name="300"></a>
+<a name="301"></a><span class="source_comment">/* Is this Machine open for business ? */</span>
+<a name="302"></a>function SetActive(<span class="source_type">bool</span> On)
+<a name="303"></a>{
+<a name="304"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="305"></a>
+<a name="306"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; NUMREELS ; <span class="source_type">i</span> ++)
+<a name="307"></a>    {
+<a name="308"></a>        if(Reels[<span class="source_type">i</span>] != none)
+<a name="309"></a>        {
+<a name="310"></a>            Reels[<span class="source_type">i</span>].bHidden = !On;
+<a name="311"></a>            Reels[<span class="source_type">i</span>].NetUpdateTime = <span class="source_type">Level</span>.TimeSeconds - <span class="source_int">1</span>;
+<a name="312"></a>        }
+<a name="313"></a>    }
+<a name="314"></a>
+<a name="315"></a><span class="source_comment">//   bHidden = !On;
+</span><a name="316"></a>
+<a name="317"></a>    bActive = On;
+<a name="318"></a>
+<a name="319"></a>    if(bActive)
+<a name="320"></a>    {
+<a name="321"></a>        <span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = Snd_AmbientActive[Rand(NUMAMBIENTSNDS)] ;
+<a name="322"></a>        SoundVolume = default.SoundVolume;
+<a name="323"></a>        SoundRadius = default.SoundRadius;
+<a name="324"></a>    }
+<a name="325"></a>    else
+<a name="326"></a>    {
+<a name="327"></a>        <span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = none;
+<a name="328"></a>    }
+<a name="329"></a>
+<a name="330"></a>}
+<a name="331"></a>
+<a name="332"></a>function Tick(<span class="source_type">Float</span> <span class="source_type">DeltaTime</span>)
+<a name="333"></a>{
+<a name="334"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="335"></a>
+<a name="336"></a>    if(RemainingBonusSpins &gt; <span class="source_int">0</span>)
+<a name="337"></a>    {
+<a name="338"></a>        AttemptSpin(CurrentPlayer);
+<a name="339"></a>    }
+<a name="340"></a>
+<a name="341"></a>    if(!ReelsAreSpinning())
+<a name="342"></a>    {
+<a name="343"></a>        return;
+<a name="344"></a>    }
+<a name="345"></a>
+<a name="346"></a>    if(<span class="source_type">Level</span>.TimeSeconds - LastSpinTime &gt;= SpinDuration)
+<a name="347"></a>    {
+<a name="348"></a>        for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; ArrayCount(Reels) ; <span class="source_type">i</span> ++)
+<a name="349"></a>        {
+<a name="350"></a>            if(Reels[<span class="source_type">i</span>].bFixedRotationDir &&
+<a name="351"></a>            <span class="source_type">Level</span>.TimeSeconds - LastReelStopTime &gt;= <span class="source_int">1.f</span>)
+<a name="352"></a>            {
+<a name="353"></a>                LastReelStopTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="354"></a>
+<a name="355"></a>                Reels[<span class="source_type">i</span>].bFixedRotationDir = false;
+<a name="356"></a>                Reels[<span class="source_type">i</span>].bRotateToDesired = true;
+<a name="357"></a>                Reels[<span class="source_type">i</span>].DesiredRotation.Roll = DesiredRolls[<span class="source_type">i</span>];
+<a name="358"></a>                Reels[<span class="source_type">i</span>].NetUpdateFrequency = Reels[<span class="source_type">i</span>].default.NetUpdateFrequency ;
+<a name="359"></a>
+<a name="360"></a>                NumSpinning -- ;
+<a name="361"></a>
+<a name="362"></a>                if(Snd_ReelStopped != none)
+<a name="363"></a>                {
+<a name="364"></a>                    PlaySound(Snd_ReelStopped,,ReelStoppedVolume,false,ReelStoppedRadius,SoundPitch / <span class="source_int">64.0</span>);
+<a name="365"></a>                }
+<a name="366"></a>            }
+<a name="367"></a>        }
+<a name="368"></a>    }
+<a name="369"></a>
+<a name="370"></a>    if(NumSpinning == <span class="source_int">0</span>)
+<a name="371"></a>    {
+<a name="372"></a>        PayOut();
+<a name="373"></a>    }
+<a name="374"></a>}
+<a name="375"></a>
+<a name="376"></a><span class="source_comment">/* Spits out a reward based on the symbols on the reels */</span>
+<a name="377"></a>function PayOut()
+<a name="378"></a>{
+<a name="379"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>,<span class="source_type">idx</span>;
+<a name="380"></a>    local <span class="source_type">bool</span> bWon;
+<a name="381"></a>    local array&lt;<span class="source_type">String</span>&gt; WinningSymbols;
+<a name="382"></a>    local <span class="source_type">bool</span> bAlreadyWonOnThisSymbol;
+<a name="383"></a>
+<a name="384"></a>    <span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = Snd_AmbientActive[Rand(NUMAMBIENTSNDS)];
+<a name="385"></a>    SoundVolume = default.SoundVolume;
+<a name="386"></a>    SoundRadius = default.SoundRadius;
+<a name="387"></a>
+<a name="388"></a>    for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt; ArrayCount(ReelSymbols) ; <span class="source_type">i</span> ++)
+<a name="389"></a>    {
+<a name="390"></a>        bAlreadyWonOnThisSymbol = false;
+<a name="391"></a>
+<a name="392"></a>        for(<span class="source_type">idx</span> = <span class="source_int">0</span> ; <span class="source_type">idx</span> &lt; WinningSymbols.length ; <span class="source_type">idx</span> ++)
+<a name="393"></a>        {
+<a name="394"></a>            if(ReelSymbols[<span class="source_type">i</span>].SymbolName == WinningSymbols[<span class="source_type">idx</span>])
+<a name="395"></a>            {
+<a name="396"></a>                bAlreadyWonOnThisSymbol = true;
+<a name="397"></a>                break;
+<a name="398"></a>            }
+<a name="399"></a>        }
+<a name="400"></a>
+<a name="401"></a>        if(!bAlreadyWonOnThisSymbol && ReelSymbols[<span class="source_type">i</span>].NumHits &gt;= ReelSymbols[<span class="source_type">i</span>].NumReqHits)
+<a name="402"></a>        {
+<a name="403"></a>            WinningSymbols[WinningSymbols.length] = ReelSymbols[<span class="source_type">i</span>].SymbolName;
+<a name="404"></a>
+<a name="405"></a>            if(!bWon && ReelSymbols[<span class="source_type">i</span>].SymbolName == <span class="source_string">"Fuel"</span>)
+<a name="406"></a>            {
+<a name="407"></a>                bWon = true;
+<a name="408"></a>            }
+<a name="409"></a>
+<a name="410"></a>            <span class="source_type">switch</span>(ReelSymbols[<span class="source_type">i</span>].SymbolName)
+<a name="411"></a>            {
+<a name="412"></a>                Case <span class="source_string">"Fuel"</span>         :   SpawnFuel() ;                                                       break;
+<a name="413"></a>                Case <span class="source_string">"Ammo"</span>         :   SpawnAmmo(ReelSymbols[<span class="source_type">i</span>].NumHits - <span class="source_int">1</span>);                              break;
+<a name="414"></a>                Case <span class="source_string">"Monster"</span>      :   SpawnEnemy(ReelSymbols[<span class="source_type">i</span>].NumHits);                                 break;
+<a name="415"></a>            }
+<a name="416"></a>        }
+<a name="417"></a>    }
+<a name="418"></a>
+<a name="419"></a>    if(!bWon)  <span class="source_comment">// didnt win anything, or won something bad.
+</span><a name="420"></a>    {
+<a name="421"></a>        if(YouLostEvent != <span class="source_name">''</span>)
+<a name="422"></a>        {
+<a name="423"></a>            TriggerEvent(YouLostEvent,self,CurrentPlayer);
+<a name="424"></a>        }
+<a name="425"></a>
+<a name="426"></a>        <span class="source_comment">// give the player a helping hand if he fails enough times.
+</span><a name="427"></a>        JackPotChance = FMin(JackPotChance + JackPotChanceIncreaseRate,<span class="source_int">1.f</span>);
+<a name="428"></a>    }
+<a name="429"></a>    else
+<a name="430"></a>    {
+<a name="431"></a>        if(YouWonEvent != <span class="source_name">''</span>)
+<a name="432"></a>        {
+<a name="433"></a>            TriggerEvent(YouWonEvent,self,CurrentPlayer);
+<a name="434"></a>        }
+<a name="435"></a>
+<a name="436"></a>        JackPotChance = <span class="source_int">0.f</span>;  <span class="source_comment">// reset.
+</span><a name="437"></a>    }
+<a name="438"></a>
+<a name="439"></a>    if(bFirstSpin)
+<a name="440"></a>    {
+<a name="441"></a>        bFirstSpin = false;
+<a name="442"></a>    }
+<a name="443"></a>}
+<a name="444"></a>
+<a name="445"></a>function SpawnAmmo(<span class="source_type">int</span> NumToSpawn)
+<a name="446"></a>{
+<a name="447"></a>    local <span class="source_type"><a href="../frightscript/kf_slot_ammopickup.html" class="source">KF_Slot_AmmoPickup</a></span>   AmmoPickup;
+<a name="448"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="449"></a>
+<a name="450"></a>    if(Snd_CashPrize != none)
+<a name="451"></a>    {
+<a name="452"></a>        PlaySound(Snd_CashPrize,SLOT_None,CashPrizeVolume,false,CashPrizeRadius,SoundPitch / <span class="source_int">64.0</span>);
+<a name="453"></a>    }
+<a name="454"></a>
+<a name="455"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; NumToSpawn ; <span class="source_type">i</span> ++)
+<a name="456"></a>    {
+<a name="457"></a>        AmmoPickup = Spawn(<span class="source_type">class</span> <span class="source_name">'KF_Slot_AmmoPickup'</span>,self,,GetPayoutLocation(),<span class="source_type">Rotation</span>);
+<a name="458"></a>        if(AmmoPickup != none)
+<a name="459"></a>        {
+<a name="460"></a>            AmmoPickup.Velocity = GetPayoutVelocity() +  (<span class="source_type">i</span> * GetPayoutVelocity()/<span class="source_int">2</span>) ;
+<a name="461"></a>        }
+<a name="462"></a>    }
+<a name="463"></a>}
+<a name="464"></a>
+<a name="465"></a>function SpawnFuel()
+<a name="466"></a>{
+<a name="467"></a>    local <span class="source_type"><a href="../frightscript/pickup_gascan.html" class="source">Pickup_GasCan</a></span>   FuelPickup;
+<a name="468"></a>
+<a name="469"></a>    FuelPickup = Spawn(<span class="source_type">class</span> <span class="source_name">'Pickup_GasCan'</span>,self,,GetPayoutLocation(),<span class="source_type">Rotation</span>);
+<a name="470"></a>    if(FuelPickup != none)
+<a name="471"></a>    {
+<a name="472"></a>        FuelPickup.Velocity = GetPayoutVelocity();
+<a name="473"></a>    }
+<a name="474"></a>
+<a name="475"></a>    if(Snd_Jackpot != none)
+<a name="476"></a>    {
+<a name="477"></a>        PlaySound(Snd_Jackpot,SLOT_None,JackpotVolume,,JackpotRadius,SoundPitch / <span class="source_int">64.0</span>);
+<a name="478"></a>    }
+<a name="479"></a>
+<a name="480"></a>    if(bFirstSpin)
+<a name="481"></a>    {
+<a name="482"></a>        UnlockAchievement();
+<a name="483"></a>    }
+<a name="484"></a>}
+<a name="485"></a>
+<a name="486"></a><span class="source_comment">// The player got the fuel on his first spin!
+</span><a name="487"></a>function UnlockAchievement()
+<a name="488"></a>{
+<a name="489"></a>    local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="490"></a>	local <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span> <span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span>;
+<a name="491"></a>	local <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span> KFAchievements;
+<a name="492"></a>
+<a name="493"></a>	for (<span class="source_type">C</span> = <span class="source_type">Level</span>.ControllerList; <span class="source_type">C</span> != None; <span class="source_type">C</span> = <span class="source_type">C</span>.NextController)
+<a name="494"></a>	{
+<a name="495"></a>        <span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span> = <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(<span class="source_type">C</span>);
+<a name="496"></a>        if(<span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span> != none)
+<a name="497"></a>        {
+<a name="498"></a>            KFAchievements = <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>( <span class="source_type"><a href="../roengine/kfpc.html" class="source">KFPC</a></span>.SteamStatsAndAchievements );
+<a name="499"></a>            if(KFAchievements != none)
+<a name="500"></a>            {
+<a name="501"></a>                KFAchievements.CheckAndSetAchievementComplete( KFAchievements.KFACHIEVEMENT_777 );
+<a name="502"></a>            }
+<a name="503"></a>        }
+<a name="504"></a>	}
+<a name="505"></a>}
+<a name="506"></a>
+<a name="507"></a>function SpawnEnemy(<span class="source_type">int</span> NumHits)
+<a name="508"></a>{
+<a name="509"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="510"></a>    local <span class="source_type">string</span> <span class="source_type">Type</span>;
+<a name="511"></a>
+<a name="512"></a>    if(AssociatedDesigner == none)
+<a name="513"></a>    {
+<a name="514"></a>        log(<span class="source_string">"Warning - No wave Designer associated with : "</span>@self@<span class="source_string">" it will not be able to spawn ZEDs."</span>);
+<a name="515"></a>        return;
+<a name="516"></a>    }
+<a name="517"></a>
+<a name="518"></a>    <span class="source_type">Switch</span>(NumHits)
+<a name="519"></a>    {
+<a name="520"></a>        case <span class="source_int">1</span> :  <span class="source_type">Type</span> = <span class="source_string">"Siren"</span>;       break;
+<a name="521"></a>        case <span class="source_int">2</span> :  <span class="source_type">Type</span> = <span class="source_string">"Scrake"</span>;      break;
+<a name="522"></a>        case <span class="source_int">3</span> :  <span class="source_type">Type</span> = <span class="source_string">"FleshPound"</span>;  break;
+<a name="523"></a>    }
+<a name="524"></a>
+<a name="525"></a>    if(<span class="source_type">Type</span> == <span class="source_string">"FleshPound"</span> && Snd_MonsterPrize != none)
+<a name="526"></a>    {
+<a name="527"></a>        if(Snd_MonsterPrize != none)
+<a name="528"></a>        {
+<a name="529"></a>            PlaySound(Snd_MonsterPrize,SLOT_None,MonsterPrizeVolume,false,MonsterPrizeRadius,SoundPitch / <span class="source_int">64.0</span>);
+<a name="530"></a>        }
+<a name="531"></a>    }
+<a name="532"></a>
+<a name="533"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; AssociatedDesigner.Waves.Length ; <span class="source_type">i</span> ++)
+<a name="534"></a>    {
+<a name="535"></a>        if(AssociatedDesigner.Waves[<span class="source_type">i</span>].Wave_Spawns[<span class="source_int">0</span>].SquadList[<span class="source_int">0</span>] ~= <span class="source_type">Type</span>)
+<a name="536"></a>        {
+<a name="537"></a>            if(AssociatedDesigner.Waves[<span class="source_type">i</span>].WaveController != none)
+<a name="538"></a>            {
+<a name="539"></a>                AssociatedDesigner.Waves[<span class="source_type">i</span>].WaveController.<span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>(self,none);
+<a name="540"></a>            }
+<a name="541"></a>        }
+<a name="542"></a>    }
+<a name="543"></a>}
+<a name="544"></a>
+<a name="545"></a><span class="source_comment">/* The machine was just used by a player.  Make the lever animate*/</span>
+<a name="546"></a>simulated function PlayPullAnim()
+<a name="547"></a>{
+<a name="548"></a>    PlayAnim(SlotPullAnim,<span class="source_int">1.f</span>,<span class="source_int">0.1</span>);
+<a name="549"></a>}
+<a name="550"></a>
+<a name="551"></a><span class="source_comment">/* A variable was replicated.
+<a name="552"></a>Check if we need to play a new animation on the client
+<a name="553"></a>
+<a name="554"></a>Network : Clients
+<a name="555"></a>*/</span>
+<a name="556"></a>
+<a name="557"></a>simulated event PostNetReceive()
+<a name="558"></a>{
+<a name="559"></a>    if(RepAnimByte != LastRepAnimByte)
+<a name="560"></a>    {
+<a name="561"></a>        LastRepAnimByte = RepAnimByte;
+<a name="562"></a>        PlayPullAnim();
+<a name="563"></a>    }
+<a name="564"></a>}
+<a name="565"></a>
+<a name="566"></a><span class="source_comment">/* Give the player some dosh */</span>
+<a name="567"></a>function SpawnCash(<span class="source_type">int</span> <span class="source_type">Amount</span>)
+<a name="568"></a>{
+<a name="569"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="570"></a>
+<a name="571"></a>    if(Snd_CashPrize != none)
+<a name="572"></a>    {
+<a name="573"></a>        PlaySound(Snd_CashPrize,SLOT_None,CashPrizeVolume,false,CashPrizeRadius);
+<a name="574"></a>    }
+<a name="575"></a>
+<a name="576"></a>    if(CurrentPlayer != none && CurrentPlayer.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> != none)
+<a name="577"></a>    {
+<a name="578"></a>        <span class="source_type">PC</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(Currentplayer.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="579"></a>        if(<span class="source_type">PC</span> != none)
+<a name="580"></a>        {
+<a name="581"></a>			<span class="source_type">PC</span>.ClientPlaySound(<span class="source_type">class</span> <span class="source_name">'CashPickup'</span>.default.PickupSound);
+<a name="582"></a>            <span class="source_type">PC</span>.ReceiveLocalizedMessage(<span class="source_type">class</span> <span class="source_name">'Msg_CashReward'</span>,<span class="source_type">Amount</span>);
+<a name="583"></a>
+<a name="584"></a>            <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Score</span> += <span class="source_type">Amount</span>;
+<a name="585"></a>            <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.NetUpdateTime = <span class="source_type">Level</span>.TimeSeconds - <span class="source_int">1</span>;
+<a name="586"></a>		}
+<a name="587"></a>	}
+<a name="588"></a>}
+<a name="589"></a>
+<a name="590"></a>
+<a name="591"></a>function AddBonusSpins(<span class="source_type">int</span> NumToAdd)
+<a name="592"></a>{
+<a name="593"></a>    RemainingBonusSpins += NumToAdd;
+<a name="594"></a>    AttemptSpin(CurrentPlayer);
+<a name="595"></a>}
+<a name="596"></a>
+<a name="597"></a><span class="source_comment">/* Fling prizes in the direction of the player who played the machine*/</span>
+<a name="598"></a>simulated function <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> GetPayoutVelocity()
+<a name="599"></a>{
+<a name="600"></a>    return Normal(<span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type">Rotation</span>)) * <span class="source_int">50.f</span> + (Vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">1</span>) * <span class="source_int">25.f</span>)  ;
+<a name="601"></a>}
+<a name="602"></a>
+<a name="603"></a>function Timer()
+<a name="604"></a>{
+<a name="605"></a>    SpawnCash(RemainingPayOut);
+<a name="606"></a>}
+<a name="607"></a>
+<a name="608"></a>function <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> GetPayoutLocation(optional <span class="source_type">float</span> SpawnOffset)
+<a name="609"></a>{
+<a name="610"></a>    return Location + Normal(<span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type">Rotation</span>)) * ((CollisionRadius/<span class="source_int">2</span>) + (SpawnOffset/<span class="source_int">2</span>)) ;
+<a name="611"></a>}
+<a name="612"></a>
+<a name="613"></a>defaultproperties
+<a name="614"></a>{
+<a name="615"></a>     SpinDuration=<span class="source_int">6.000000</span>
+<a name="616"></a>     Snd_ReelStoppedRef=<span class="source_string">"SteamLand_SND.SlotMachine_ReelStop"</span>
+<a name="617"></a>     Snd_ReelSpinningRef=<span class="source_string">"FreakCircus_Snd_two.Test.arcade6"</span>
+<a name="618"></a>     Snd_MonsterPrizeRef=<span class="source_string">"Hellride_Snd.General.KF_HellRide_EvilLaugh_02"</span>
+<a name="619"></a>     Snd_CashPrizeRef=<span class="source_string">"SteamLand_SND.SlotMachine_Dosh"</span>
+<a name="620"></a>     Snd_JackpotRef=<span class="source_string">"SteamLand_SND.SlotMachine_JackPot"</span>
+<a name="621"></a>     Snd_LeverPullRef=<span class="source_string">"SteamLand_SND.SlotMachine_LeverPull"</span>
+<a name="622"></a>     Snd_ReelSpinning=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'FreakCircus_Snd_two.Test.arcade6'</span>
+<a name="623"></a>     ReelStoppedVolume=<span class="source_int">2.000000</span>
+<a name="624"></a>     CashPrizeVolume=<span class="source_int">2.000000</span>
+<a name="625"></a>     MonsterPrizeVolume=<span class="source_int">2.000000</span>
+<a name="626"></a>     JackpotVolume=<span class="source_int">2.000000</span>
+<a name="627"></a>     LeverPullVolume=<span class="source_int">2.000000</span>
+<a name="628"></a>     ReelSpinningRadius=<span class="source_int">750.000000</span>
+<a name="629"></a>     ReelStoppedRadius=<span class="source_int">500.000000</span>
+<a name="630"></a>     CashPrizeRadius=<span class="source_int">500.000000</span>
+<a name="631"></a>     MonsterPrizeRadius=<span class="source_int">500.000000</span>
+<a name="632"></a>     JackpotRadius=<span class="source_int">750.000000</span>
+<a name="633"></a>     LeverPullRadius=<span class="source_int">500.000000</span>
+<a name="634"></a>     ReelSpinningVolume=<span class="source_int">255</span>
+<a name="635"></a>     Snd_AmbientActiveRef(<span class="source_int">0</span>)=<span class="source_string">"SteamLand_SND.Ambient_SlotMachine_1"</span>
+<a name="636"></a>     Snd_AmbientActiveRef(<span class="source_int">1</span>)=<span class="source_string">"SteamLand_SND.Ambient_SlotMachine_2"</span>
+<a name="637"></a>     Snd_AmbientActiveRef(<span class="source_int">2</span>)=<span class="source_string">"SteamLand_SND.Ambient_SlotMachine_3"</span>
+<a name="638"></a>     JackPotChanceIncreaseRate=<span class="source_int">0.020000</span>
+<a name="639"></a>     MaxBet=<span class="source_int">50</span>
+<a name="640"></a>     bFirstSpin=True
+<a name="641"></a>     SlotPullAnim=<span class="source_string">"Pull"</span>
+<a name="642"></a>     ReelSymbols(<span class="source_int">0</span>)=(SymbolName=<span class="source_string">"Fuel"</span>,NumReqHits=<span class="source_int">3</span>)
+<a name="643"></a>     ReelSymbols(<span class="source_int">1</span>)=(ReelPosition=<span class="source_int">11000.000000</span>,SymbolName=<span class="source_string">"Ammo"</span>,NumReqHits=<span class="source_int">2</span>)
+<a name="644"></a>     ReelSymbols(<span class="source_int">2</span>)=(ReelPosition=<span class="source_int">22000.000000</span>,SymbolName=<span class="source_string">"Monster"</span>,NumReqHits=<span class="source_int">1</span>)
+<a name="645"></a>     ReelSymbols(<span class="source_int">3</span>)=(ReelPosition=<span class="source_int">33000.000000</span>,SymbolName=<span class="source_string">"Fuel"</span>,NumReqHits=<span class="source_int">3</span>)
+<a name="646"></a>     ReelSymbols(<span class="source_int">4</span>)=(ReelPosition=<span class="source_int">44000.000000</span>,SymbolName=<span class="source_string">"Ammo"</span>,NumReqHits=<span class="source_int">2</span>)
+<a name="647"></a>     ReelSymbols(<span class="source_int">5</span>)=(ReelPosition=<span class="source_int">55000.000000</span>,SymbolName=<span class="source_string">"Monster"</span>,NumReqHits=<span class="source_int">1</span>)
+<a name="648"></a>     DrawType=DT_Mesh
+<a name="649"></a>     bUseDynamicLights=True
+<a name="650"></a>     RemoteRole=ROLE_SimulatedProxy
+<a name="651"></a>     NetUpdateFrequency=<span class="source_int">1.000000</span>
+<a name="652"></a>     <span class="source_type">Mesh</span>=SkeletalMesh<span class="source_name">'FrightYard_SKM.GasPump_Slots'</span>
+<a name="653"></a>     bFullVolume=True
+<a name="654"></a>     SoundRadius=<span class="source_int">250.000000</span>
+<a name="655"></a>     CollisionRadius=<span class="source_int">35.000000</span>
+<a name="656"></a>     CollisionHeight=<span class="source_int">60.000000</span>
+<a name="657"></a>     bCollideActors=True
+<a name="658"></a>     bUseCylinderCollision=True
+<a name="659"></a>     bNetNotify=True
+<a name="660"></a>     bDirectional=True
+<a name="661"></a>}
+<a name="662"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../frightscript/frightscript-overview.html">Package</a></td>
+	<td class="header"><a href="../frightscript/kf_slot_machine.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KF_Slot_Machine">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_frightscript/kf_slot_cashpickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_frightscript/kf_slot_reel.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.606 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

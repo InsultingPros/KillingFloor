@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.xMaterialTrigger</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/xmaterialtrigger.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#xMaterialTrigger">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/xmaterialcontroller.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/xpickupbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/xmaterialtrigger.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/xmaterialtrigger.html">xMaterialTrigger</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/xmaterialtrigger.html" class="source">xMaterialTrigger</a></span> extends <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>;
+<a name="2"></a>
+<a name="3"></a><span class="source_comment">// deprecated
+</span><a name="4"></a>
+<a name="5"></a><span class="source_comment">/*
+<a name="6"></a>var() editinline Material	Target;
+<a name="7"></a>var() Material	MaterialA;
+<a name="8"></a>var() Material	MaterialB;
+<a name="9"></a>
+<a name="10"></a>var() enum EMatAction
+<a name="11"></a>{
+<a name="12"></a>	MTA_SwapShaderDiffuse,
+<a name="13"></a>	MTA_SwapShaderSelfIllum,
+<a name="14"></a>	MTA_SwapShaderSpecular,
+<a name="15"></a>	MTA_SwapCombinerMat1,
+<a name="16"></a>	MTA_SwapCombinerMat2,
+<a name="17"></a>	MTA_TickShaderSpecMaskColor,
+<a name="18"></a>	MTA_NoAction,
+<a name="19"></a>} MatTrigAction;
+<a name="20"></a>
+<a name="21"></a>var() enum EMatTick
+<a name="22"></a>{
+<a name="23"></a>	MTT_FadeSpecularConst,
+<a name="24"></a>	MTT_PulseSpecularConst,
+<a name="25"></a>	MTT_NoAction,
+<a name="26"></a>} MatTrigTick;
+<a name="27"></a>
+<a name="28"></a>var() float	MatTickValue;
+<a name="29"></a>
+<a name="30"></a>var transient float tickAccum;
+<a name="31"></a>var transient float tickPtA;
+<a name="32"></a>var transient float tickPtB;
+<a name="33"></a>var transient bool triggerOn;
+<a name="34"></a>
+<a name="35"></a>simulated function float Pulse( float x )
+<a name="36"></a>{
+<a name="37"></a>	if ( x &lt; 0.5 )
+<a name="38"></a>	{
+<a name="39"></a>		return 2.0 * ( x * x * (3.0 - 2.0 * x) );
+<a name="40"></a>	}
+<a name="41"></a>	else
+<a name="42"></a>	{
+<a name="43"></a>		return 2.0 * (1.0 - ( x * x * (3.0 - 2.0 * x) ));
+<a name="44"></a>	}
+<a name="45"></a>}
+<a name="46"></a>
+<a name="47"></a>simulated function TickConstantColor( ConstantColor cc, float t )
+<a name="48"></a>{
+<a name="49"></a>	local float f;
+<a name="50"></a>    local float alpha;
+<a name="51"></a>
+<a name="52"></a>    tickAccum += t;
+<a name="53"></a>    if ( tickAccum &gt;= 1.0 )
+<a name="54"></a>	{
+<a name="55"></a>        tickAccum = 1.0;
+<a name="56"></a>    }
+<a name="57"></a>
+<a name="58"></a>	if ( MatTrigTick == MTT_FadeSpecularConst )
+<a name="59"></a>	{
+<a name="60"></a>		if ( tickAccum &gt;= 1.0 )
+<a name="61"></a>		{
+<a name="62"></a>			Disable('Tick');
+<a name="63"></a>		}
+<a name="64"></a>		alpha = tickPtA + tickAccum * ( tickPtB-tickPtA );
+<a name="65"></a>	}
+<a name="66"></a>	else if ( MatTrigTick == MTT_PulseSpecularConst )
+<a name="67"></a>	{
+<a name="68"></a>        alpha = tickPtA + tickAccum * ( tickPtB-tickPtA );
+<a name="69"></a>		f = Level.TimeSeconds * MatTickValue;
+<a name="70"></a>		f = f - int(f);
+<a name="71"></a>		cc.Color.A = Pulse(f) * alpha;
+<a name="72"></a>	}
+<a name="73"></a>
+<a name="74"></a>    cc.Color.A = alpha;
+<a name="75"></a>	//log("TickConst");
+<a name="76"></a>}
+<a name="77"></a>
+<a name="78"></a>simulated function Tick( float t )
+<a name="79"></a>{
+<a name="80"></a>	Super.Tick(t);
+<a name="81"></a>
+<a name="82"></a>	if( Target.IsA('Shader') && Shader(Target).SpecularityMask.IsA('ConstantColor') )
+<a name="83"></a>		TickConstantColor( ConstantColor(Shader(Target).SpecularityMask), t );
+<a name="84"></a>}
+<a name="85"></a>
+<a name="86"></a>simulated function ShaderAction( Shader sh )
+<a name="87"></a>{
+<a name="88"></a>	//log("ShaderAction " $ sh );
+<a name="89"></a>
+<a name="90"></a>	switch( MatTrigAction )
+<a name="91"></a>	{
+<a name="92"></a>		case MTA_SwapShaderSpecular:
+<a name="93"></a>			sh.Specular = MaterialA;
+<a name="94"></a>			break;
+<a name="95"></a>	}
+<a name="96"></a>
+<a name="97"></a>}
+<a name="98"></a>
+<a name="99"></a>simulated function CombinerAction( Combiner cb )
+<a name="100"></a>{
+<a name="101"></a>	//log("CombinerAction " $ cb );
+<a name="102"></a>
+<a name="103"></a>}
+<a name="104"></a>
+<a name="105"></a>simulated event Trigger( Actor Other, Pawn EventInstigator )
+<a name="106"></a>{
+<a name="107"></a>	local Material	tmp;
+<a name="108"></a>
+<a name="109"></a>	tmp = MaterialA;
+<a name="110"></a>	MaterialA = MaterialB;
+<a name="111"></a>	MaterialB = tmp;
+<a name="112"></a>
+<a name="113"></a>    triggerOn = !triggerOn;
+<a name="114"></a>
+<a name="115"></a>
+<a name="116"></a>	if(Target.IsA('Shader'))
+<a name="117"></a>	{
+<a name="118"></a>		ShaderAction(Shader(Target));
+<a name="119"></a>	}
+<a name="120"></a>	else if (Target.IsA('Combiner'))
+<a name="121"></a>	{
+<a name="122"></a>		CombinerAction(Combiner(Target));
+<a name="123"></a>	}
+<a name="124"></a>	else
+<a name="125"></a>	{
+<a name="126"></a>		log("Incompatible material in xMaterialTrigger",'Warning');
+<a name="127"></a>	}
+<a name="128"></a>
+<a name="129"></a>	if( Target.IsA('Shader') && Shader(Target).SpecularityMask.IsA('ConstantColor') )
+<a name="130"></a>	{
+<a name="131"></a>        if( triggerOn )
+<a name="132"></a>        {
+<a name="133"></a>            // fade up
+<a name="134"></a>            tickPtA = ConstantColor(Shader(Target).SpecularityMask).Color.A;
+<a name="135"></a>			tickPtB = 255.0;
+<a name="136"></a>        }
+<a name="137"></a>        else
+<a name="138"></a>        {
+<a name="139"></a>            // fade down
+<a name="140"></a>            tickPtA = ConstantColor(Shader(Target).SpecularityMask).Color.A;
+<a name="141"></a>			tickPtB = 0.0;
+<a name="142"></a>        }
+<a name="143"></a>		tickAccum = 0.0;
+<a name="144"></a>		switch( MatTrigTick )
+<a name="145"></a>		{
+<a name="146"></a>			case MTT_FadeSpecularConst:
+<a name="147"></a>			case MTT_PulseSpecularConst:
+<a name="148"></a>				Enable('Tick');
+<a name="149"></a>				break;
+<a name="150"></a>		}
+<a name="151"></a>	}
+<a name="152"></a>}
+<a name="153"></a>*/</span>
+<a name="154"></a>
+<a name="155"></a>defaultproperties
+<a name="156"></a>{
+<a name="157"></a>}
+<a name="158"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/xmaterialtrigger.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#xMaterialTrigger">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/xmaterialcontroller.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/xpickupbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.804 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

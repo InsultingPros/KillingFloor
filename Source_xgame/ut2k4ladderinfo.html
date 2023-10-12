@@ -1,0 +1,524 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XGame.UT2K4LadderInfo</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xgame/xgame-overview.html">Package</a></td>
+	<td class="header"><a href="../xgame/ut2k4ladderinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4LadderInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xgame/ut2k4gameprofile.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xgame/ut2k4matchinfo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xgame/ut2k4ladderinfo.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xgame/xgame-overview.html">XGame</a>.<a href="../xgame/ut2k4ladderinfo.html">UT2K4LadderInfo</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">// Single Player Ladder Info
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">// Written by Michiel Hendriks
+</span><a name="5"></a><span class="source_comment">// (c) 2003, 2004, Epic Games, Inc. All Rights Reserved
+</span><a name="6"></a><span class="source_comment">//==============================================================================
+</span><a name="7"></a>
+<a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../xgame/ut2k4ladderinfo.html" class="source">UT2K4LadderInfo</a></span> extends <span class="source_type"><a href="../engine/ladderinfo.html" class="source">LadderInfo</a></span> config;
+<a name="9"></a>
+<a name="10"></a>var() editinline array&lt;<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>&gt; ASMatches;
+<a name="11"></a>
+<a name="12"></a><span class="source_comment">/**
+<a name="13"></a>	New constants for ladder ids
+<a name="14"></a>	defined as vars for static outside access
+<a name="15"></a>*/</span>
+<a name="16"></a>var <span class="source_type">int</span> LID_DM, LID_TDM, LID_CTF, LID_BR, LID_DOM, LID_AS, LID_CHAMP;
+<a name="17"></a>
+<a name="18"></a><span class="source_comment">/** custom ladders you can add to the game */</span>
+<a name="19"></a>var config array&lt; <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/customladderinfo.html" class="source">CustomLadderInfo</a></span>&gt; &gt; AdditionalLadders;
+<a name="20"></a>
+<a name="21"></a><span class="source_comment">/** challenge games */</span>
+<a name="22"></a>var config array&lt; <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/challengegame.html" class="source">ChallengeGame</a></span>&gt; &gt; ChallengeGames;
+<a name="23"></a><span class="source_comment">// config breaks the array
+</span><a name="24"></a>
+<a name="25"></a><span class="source_comment">/** for backward compatibility */</span>
+<a name="26"></a>static function <span class="source_type"><a href="../engine/matchinfo.html" class="source">MatchInfo</a></span> GetMatchInfo(<span class="source_type">int</span> <span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>, <span class="source_type">int</span> rung)
+<a name="27"></a>{
+<a name="28"></a>	return GetUT2K4MatchInfo(<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>, rung, <span class="source_int">0</span>, true);
+<a name="29"></a>}
+<a name="30"></a>
+<a name="31"></a><span class="source_comment">/**
+<a name="32"></a>	Retreives the match info and fills in the alternative map
+<a name="33"></a>	path is used as a constant random to define the path, should be a very large number
+<a name="34"></a>	if bSelect then path is the position in the AltLevels array to use
+<a name="35"></a>*/</span>
+<a name="36"></a>static function <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span> GetUT2K4MatchInfo(<span class="source_type">int</span> <span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>, <span class="source_type">int</span> rung, optional <span class="source_type">int</span> <span class="source_type">path</span>, optional <span class="source_type">bool</span> bSelect)
+<a name="37"></a>{
+<a name="38"></a>	local array&lt;<span class="source_type"><a href="../engine/matchinfo.html" class="source">MatchInfo</a></span>&gt; matcharray;
+<a name="39"></a>	local <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span> selmatch;
+<a name="40"></a>	local <span class="source_type">string</span> tmp;
+<a name="41"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="42"></a>
+<a name="43"></a>	<span class="source_comment">//log("GetUT2K4MatchInfo"@ladder@rung@path);
+</span><a name="44"></a>
+<a name="45"></a>	if (rung &lt; <span class="source_int">0</span>)
+<a name="46"></a>	{
+<a name="47"></a>		Warn(<span class="source_string">"rung &lt; 0"</span>);
+<a name="48"></a>		return none;
+<a name="49"></a>	}
+<a name="50"></a>
+<a name="51"></a>	<span class="source_type">switch</span> (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>)
+<a name="52"></a>	{
+<a name="53"></a>		case default.LID_DM:		matcharray = Default.DMMatches;	break;
+<a name="54"></a>		case default.LID_TDM:		matcharray = Default.TDMMatches; break;
+<a name="55"></a>		case default.LID_CTF:		matcharray = Default.CTFMatches; break;
+<a name="56"></a>		case default.LID_BR:		matcharray = Default.BRMatches; break;
+<a name="57"></a>		case default.LID_DOM:		matcharray = Default.DOMMatches; break;
+<a name="58"></a>		case default.LID_AS:		matcharray = Default.ASMatches;	break;
+<a name="59"></a>		case default.LID_CHAMP:		matcharray = Default.ChampionshipMatches; break;
+<a name="60"></a>		default:	if ((<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span> &gt;= <span class="source_int">10</span>) && (default.AdditionalLadders.length &gt; (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>-<span class="source_int">10</span>)))
+<a name="61"></a>					{
+<a name="62"></a>						matcharray = default.AdditionalLadders[<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>-<span class="source_int">10</span>].default.Matches;
+<a name="63"></a>					}
+<a name="64"></a>	}
+<a name="65"></a>
+<a name="66"></a>	if ( matcharray.Length &lt;= <span class="source_int">0</span> )
+<a name="67"></a>	{
+<a name="68"></a>		Warn(<span class="source_string">"matcharray.Length &lt;= 0"</span>);
+<a name="69"></a>		return none;
+<a name="70"></a>	}
+<a name="71"></a>
+<a name="72"></a>	if ( rung &gt;= matcharray.Length ) selmatch = <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(matcharray[matcharray.Length-<span class="source_int">1</span>]);
+<a name="73"></a>		else selmatch = <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(matcharray[rung]);
+<a name="74"></a>
+<a name="75"></a>	if ((selmatch != none) && bSelect && (selmatch.AltLevels.length &gt; <span class="source_int">0</span>))
+<a name="76"></a>	{
+<a name="77"></a>		tmp = selmatch.AltLevels[<span class="source_type">path</span> % selmatch.AltLevels.length];
+<a name="78"></a>		if (tmp != <span class="source_string">""</span>) selmatch.LevelName = tmp;
+<a name="79"></a>	}
+<a name="80"></a>	else if ((selmatch != none) && (selmatch.AltLevels.length &gt; <span class="source_int">0</span>)) <span class="source_comment">// select one from the list
+</span><a name="81"></a>	{
+<a name="82"></a>		<span class="source_type">path</span> = abs(<span class="source_type">path</span> + ((rung+<span class="source_int">1</span>) * (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>+<span class="source_int">1</span>)));
+<a name="83"></a>		if (selmatch.Priority &gt; <span class="source_int">0</span>) <span class="source_type">i</span> = selmatch.Priority;
+<a name="84"></a>			else <span class="source_type">i</span> = selmatch.AltLevels.length;
+<a name="85"></a>		tmp = selmatch.AltLevels[<span class="source_type">path</span> % <span class="source_type">i</span>];
+<a name="86"></a>		if (tmp != <span class="source_string">""</span>) selmatch.LevelName = tmp;
+<a name="87"></a>		<span class="source_comment">//Log("Set level name to:"@selmatch.LevelName);
+</span><a name="88"></a>	}
+<a name="89"></a>	if ( selmatch == none ) Warn(<span class="source_string">"selmatch == none"</span>);
+<a name="90"></a>	return selmatch;
+<a name="91"></a>}
+<a name="92"></a>
+<a name="93"></a><span class="source_comment">/**
+<a name="94"></a>	get the ID of the alternative level
+<a name="95"></a>	match priority has no relevance here
+<a name="96"></a>*/</span>
+<a name="97"></a>static function <span class="source_type">byte</span> GetAltLevel(<span class="source_type">int</span> <span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>, <span class="source_type">int</span> rung, <span class="source_type">int</span> <span class="source_type">path</span>, <span class="source_type">int</span> selected)
+<a name="98"></a>{
+<a name="99"></a>	local array&lt;<span class="source_type"><a href="../engine/matchinfo.html" class="source">MatchInfo</a></span>&gt; matcharray;
+<a name="100"></a>	local <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span> selmatch;
+<a name="101"></a>	local <span class="source_type">int</span> origpath;
+<a name="102"></a>
+<a name="103"></a>	if (rung &lt; <span class="source_int">0</span>) return -<span class="source_int">1</span>;
+<a name="104"></a>
+<a name="105"></a>	<span class="source_type">switch</span> (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>)
+<a name="106"></a>	{
+<a name="107"></a>		case default.LID_DM:		matcharray = Default.DMMatches;	break;
+<a name="108"></a>		case default.LID_TDM:		matcharray = Default.TDMMatches; break;
+<a name="109"></a>		case default.LID_CTF:		matcharray = Default.CTFMatches; break;
+<a name="110"></a>		case default.LID_BR:		matcharray = Default.BRMatches; break;
+<a name="111"></a>		case default.LID_DOM:		matcharray = Default.DOMMatches; break;
+<a name="112"></a>		case default.LID_AS:		matcharray = Default.ASMatches;	break;
+<a name="113"></a>		case default.LID_CHAMP:		matcharray = Default.ChampionshipMatches; break;
+<a name="114"></a>		default:	if ((<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span> &gt;= <span class="source_int">10</span>) && (default.AdditionalLadders.length &gt; (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>-<span class="source_int">10</span>)))
+<a name="115"></a>					{
+<a name="116"></a>						matcharray = default.AdditionalLadders[<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>-<span class="source_int">10</span>].default.Matches;
+<a name="117"></a>					}
+<a name="118"></a>	}
+<a name="119"></a>
+<a name="120"></a>	if ( matcharray.Length &lt;= <span class="source_int">0</span> ) return -<span class="source_int">1</span>;
+<a name="121"></a>
+<a name="122"></a>	if ( rung &gt;= matcharray.Length ) selmatch = <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(matcharray[matcharray.Length-<span class="source_int">1</span>]);
+<a name="123"></a>		else selmatch = <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(matcharray[rung]);
+<a name="124"></a>
+<a name="125"></a>	if ((selmatch != none) && (selmatch.AltLevels.length &gt; <span class="source_int">0</span>))
+<a name="126"></a>	{
+<a name="127"></a>		origpath = abs(<span class="source_type">path</span> + ((rung+<span class="source_int">1</span>) * (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>+<span class="source_int">1</span>)));
+<a name="128"></a>		if (selmatch.Priority &gt; <span class="source_int">0</span>) origpath = origpath % selmatch.Priority;
+<a name="129"></a>			else origpath = origpath % selmatch.AltLevels.length;
+<a name="130"></a>
+<a name="131"></a>		if (selected == origpath || selected == -<span class="source_int">1</span>)
+<a name="132"></a>		{
+<a name="133"></a>			<span class="source_type">path</span> = (abs(<span class="source_type">path</span> + ((rung+<span class="source_int">1</span>) * (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>+<span class="source_int">1</span>)))+<span class="source_int">1</span>) % selmatch.AltLevels.length;
+<a name="134"></a>			if (<span class="source_type">path</span> == origpath) <span class="source_type">path</span> = (<span class="source_type">path</span> + <span class="source_int">1</span>) % selmatch.AltLevels.length;
+<a name="135"></a>			<span class="source_comment">//Log("GetAltLevel (path)"@path@origpath);
+</span><a name="136"></a>			return <span class="source_type">path</span>;
+<a name="137"></a>		}
+<a name="138"></a>		<span class="source_comment">//Log("GetAltLevel (orig)"@origpath@selected);
+</span><a name="139"></a>		return origpath;
+<a name="140"></a>	}
+<a name="141"></a>	return -<span class="source_int">1</span>;
+<a name="142"></a>}
+<a name="143"></a>
+<a name="144"></a><span class="source_comment">/** check if there is an alternative level */</span>
+<a name="145"></a>static function <span class="source_type">bool</span> HasAltLevel(<span class="source_type">int</span> <span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>, <span class="source_type">int</span> rung)
+<a name="146"></a>{
+<a name="147"></a>	local array&lt;<span class="source_type"><a href="../engine/matchinfo.html" class="source">MatchInfo</a></span>&gt; matcharray;
+<a name="148"></a>	local <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span> selmatch;
+<a name="149"></a>
+<a name="150"></a>	if (rung &lt; <span class="source_int">0</span>) return false;
+<a name="151"></a>
+<a name="152"></a>	<span class="source_type">switch</span> (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>)
+<a name="153"></a>	{
+<a name="154"></a>		case default.LID_DM:		matcharray = Default.DMMatches;	break;
+<a name="155"></a>		case default.LID_TDM:		matcharray = Default.TDMMatches; break;
+<a name="156"></a>		case default.LID_CTF:		matcharray = Default.CTFMatches; break;
+<a name="157"></a>		case default.LID_BR:		matcharray = Default.BRMatches; break;
+<a name="158"></a>		case default.LID_DOM:		matcharray = Default.DOMMatches; break;
+<a name="159"></a>		case default.LID_AS:		matcharray = Default.ASMatches;	break;
+<a name="160"></a>		case default.LID_CHAMP:		matcharray = Default.ChampionshipMatches; break;
+<a name="161"></a>		default:	if ((<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span> &gt;= <span class="source_int">10</span>) && (default.AdditionalLadders.length &gt; (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>-<span class="source_int">10</span>)))
+<a name="162"></a>					{
+<a name="163"></a>						matcharray = default.AdditionalLadders[<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>-<span class="source_int">10</span>].default.Matches;
+<a name="164"></a>					}
+<a name="165"></a>	}
+<a name="166"></a>
+<a name="167"></a>	if ( matcharray.Length &lt;= <span class="source_int">0</span> ) return false;
+<a name="168"></a>
+<a name="169"></a>	if ( rung &gt;= matcharray.Length ) selmatch = <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(matcharray[matcharray.Length-<span class="source_int">1</span>]);
+<a name="170"></a>		else selmatch = <span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(matcharray[rung]);
+<a name="171"></a>	if (selmatch == none) return false;
+<a name="172"></a>	return (selmatch.AltLevels.length &gt; <span class="source_int">1</span>);
+<a name="173"></a>}
+<a name="174"></a>
+<a name="175"></a>static function <span class="source_type"><a href="../engine/matchinfo.html" class="source">MatchInfo</a></span> GetCurrentMatchInfo(<span class="source_type"><a href="../engine/gameprofile.html" class="source">GameProfile</a></span> G)
+<a name="176"></a>{
+<a name="177"></a>	if (<span class="source_type"><a href="../xgame/ut2k4gameprofile.html" class="source">UT2K4GameProfile</a></span>(G) != none ) return G.GetMatchInfo(G.CurrentLadder, G.CurrentMenuRung);
+<a name="178"></a>	return GetUT2K4MatchInfo(G.CurrentLadder, G.CurrentMenuRung);
+<a name="179"></a>}
+<a name="180"></a>
+<a name="181"></a><span class="source_comment">/**
+<a name="182"></a>	Get the number of matches in a ladder
+<a name="183"></a>*/</span>
+<a name="184"></a>static function <span class="source_type">int</span> LengthOfLadder(<span class="source_type">int</span> <span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>)
+<a name="185"></a>{
+<a name="186"></a>	<span class="source_type">switch</span> (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>)
+<a name="187"></a>	{
+<a name="188"></a>		case default.LID_DM:	return Default.DMMatches.Length;
+<a name="189"></a>		case default.LID_TDM:	return Default.TDMMatches.Length;
+<a name="190"></a>		case default.LID_CTF:	return Default.CTFMatches.Length;
+<a name="191"></a>		case default.LID_BR:	return Default.BRMatches.Length;
+<a name="192"></a>		case default.LID_DOM:	return Default.DOMMatches.Length;
+<a name="193"></a>		case default.LID_AS:	return Default.ASMatches.Length;
+<a name="194"></a>		case default.LID_CHAMP:	return Default.ChampionshipMatches.Length;
+<a name="195"></a>		default:	if ((<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span> &gt;= <span class="source_int">10</span>) && (default.AdditionalLadders.length &gt; (<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>-<span class="source_int">10</span>)))
+<a name="196"></a>					{
+<a name="197"></a>						return default.AdditionalLadders[<span class="source_type"><a href="../engine/ladder.html" class="source">ladder</a></span>-<span class="source_int">10</span>].default.Matches.Length;
+<a name="198"></a>					}
+<a name="199"></a>					return -<span class="source_int">1</span>;
+<a name="200"></a>	}
+<a name="201"></a>}
+<a name="202"></a>
+<a name="203"></a><span class="source_comment">/**
+<a name="204"></a>	Update the ladder
+<a name="205"></a>*/</span>
+<a name="206"></a>static function <span class="source_type">string</span> UpdateLadders(<span class="source_type"><a href="../engine/gameprofile.html" class="source">GameProfile</a></span> G, <span class="source_type">int</span> CurrentLadder)
+<a name="207"></a>{
+<a name="208"></a>	local <span class="source_type">string</span> SpecialEvent;
+<a name="209"></a>	local <span class="source_type"><a href="../xgame/ut2k4gameprofile.html" class="source">UT2K4GameProfile</a></span> GP;
+<a name="210"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>,j;
+<a name="211"></a>
+<a name="212"></a>	GP = <span class="source_type"><a href="../xgame/ut2k4gameprofile.html" class="source">UT2K4GameProfile</a></span>(G);
+<a name="213"></a>	if (GP == none)
+<a name="214"></a>	{
+<a name="215"></a>		Warn(<span class="source_string">"PC Load Letter"</span>); <span class="source_comment">// wtf does that mean?
+</span><a name="216"></a>		return <span class="source_string">""</span>;
+<a name="217"></a>	}
+<a name="218"></a>
+<a name="219"></a>	if (GP.bIsChallenge) return GP.ChallengeInfo.SpecialEvent;
+<a name="220"></a>
+<a name="221"></a>	if (CurrentLadder &lt; <span class="source_int">10</span>)
+<a name="222"></a>	{
+<a name="223"></a>		if ( GP.LadderProgress[CurrentLadder] &gt; G.CurrentMenuRung )
+<a name="224"></a>		{
+<a name="225"></a>			<span class="source_comment">// they've chosen to play a match they've completed previously
+</span><a name="226"></a>			return <span class="source_string">""</span>;
+<a name="227"></a>		}
+<a name="228"></a>	}
+<a name="229"></a>
+<a name="230"></a>	<span class="source_comment">// updates ladder rungs appropriately
+</span><a name="231"></a>	<span class="source_type">switch</span>( CurrentLadder )
+<a name="232"></a>	{
+<a name="233"></a>		case default.LID_DM:
+<a name="234"></a>			SpecialEvent = Default.DMMatches[GP.LadderProgress[CurrentLadder]].SpecialEvent;
+<a name="235"></a>			break;
+<a name="236"></a>		case default.LID_TDM:
+<a name="237"></a>			SpecialEvent = Default.TDMMatches[GP.LadderProgress[CurrentLadder]].SpecialEvent;
+<a name="238"></a>			break;
+<a name="239"></a>		case default.LID_CTF:
+<a name="240"></a>			SpecialEvent = Default.CTFMatches[GP.LadderProgress[CurrentLadder]].SpecialEvent;
+<a name="241"></a>			break;
+<a name="242"></a>		case default.LID_BR:
+<a name="243"></a>			SpecialEvent = Default.BRMatches[GP.LadderProgress[CurrentLadder]].SpecialEvent;
+<a name="244"></a>			break;
+<a name="245"></a>		case default.LID_DOM:
+<a name="246"></a>			SpecialEvent = Default.DOMMatches[GP.LadderProgress[CurrentLadder]].SpecialEvent;
+<a name="247"></a>			break;
+<a name="248"></a>		case default.LID_AS:
+<a name="249"></a>			SpecialEvent = Default.ASMatches[GP.LadderProgress[CurrentLadder]].SpecialEvent;
+<a name="250"></a>			break;
+<a name="251"></a>		case default.LID_CHAMP:
+<a name="252"></a>			SpecialEvent = Default.ChampionshipMatches[GP.LadderProgress[CurrentLadder]].SpecialEvent;
+<a name="253"></a>			break;
+<a name="254"></a>		default:	<span class="source_type">i</span> = CurrentLadder-<span class="source_int">10</span>;
+<a name="255"></a>					if ((<span class="source_type">i</span> &gt;= <span class="source_int">0</span>) && (default.AdditionalLadders.length &gt; <span class="source_type">i</span>))
+<a name="256"></a>					{
+<a name="257"></a>						j = GP.GetCustomLadderProgress(<span class="source_type">string</span>(default.AdditionalLadders[<span class="source_type">i</span>]));
+<a name="258"></a>						if ( j &gt; G.CurrentMenuRung ) return <span class="source_string">""</span>;
+<a name="259"></a>						SpecialEvent = default.AdditionalLadders[<span class="source_type">i</span>].default.Matches[j].SpecialEvent;
+<a name="260"></a>						GP.SetCustomLadderProgress(<span class="source_type">string</span>(default.AdditionalLadders[<span class="source_type">i</span>]), <span class="source_int">1</span>);
+<a name="261"></a>						return SpecialEvent;
+<a name="262"></a>					}
+<a name="263"></a>					return <span class="source_string">""</span>;
+<a name="264"></a>	}
+<a name="265"></a>
+<a name="266"></a>	GP.LadderProgress[CurrentLadder] += <span class="source_int">1</span>;
+<a name="267"></a>	return SpecialEvent;
+<a name="268"></a>}
+<a name="269"></a>
+<a name="270"></a><span class="source_comment">/**
+<a name="271"></a>	Return the friendly name of the current match's gametype
+<a name="272"></a>*/</span>
+<a name="273"></a>static function <span class="source_type">string</span> GetMatchDescription (<span class="source_type"><a href="../engine/gameprofile.html" class="source">GameProfile</a></span> G)
+<a name="274"></a>{
+<a name="275"></a>	return GetLadderDescription(G.CurrentLadder, G.CurrentMenuRung);
+<a name="276"></a>}
+<a name="277"></a>
+<a name="278"></a>static function <span class="source_type">string</span> GetLadderDescription(<span class="source_type">int</span> LadderId, optional <span class="source_type">int</span> MatchId)
+<a name="279"></a>{
+<a name="280"></a>	local <span class="source_type">string</span> retval;
+<a name="281"></a>	local <span class="source_type"><a href="../engine/cachemanager.html" class="source">CacheManager</a></span>.<span class="source_type"><a href="../engine/cachemanager.html#GameRecord" class="source">GameRecord</a></span> gr;
+<a name="282"></a>
+<a name="283"></a>	<span class="source_type">switch</span> (LadderId)
+<a name="284"></a>	{
+<a name="285"></a>		case default.LID_DM:
+<a name="286"></a>			retval = default.DMMatches[MatchId].<span class="source_type">GameType</span>;
+<a name="287"></a>			break;
+<a name="288"></a>		case default.LID_TDM:
+<a name="289"></a>			retval = default.TDMMatches[MatchId].<span class="source_type">GameType</span>;
+<a name="290"></a>			break;
+<a name="291"></a>		case default.LID_CTF:
+<a name="292"></a>			retval = default.CTFMatches[MatchId].<span class="source_type">GameType</span>;
+<a name="293"></a>			break;
+<a name="294"></a>		case default.LID_BR:
+<a name="295"></a>			retval = default.BRMatches[MatchId].<span class="source_type">GameType</span>;
+<a name="296"></a>			break;
+<a name="297"></a>		case default.LID_DOM:
+<a name="298"></a>			retval = default.DOMMatches[MatchId].<span class="source_type">GameType</span>;
+<a name="299"></a>			break;
+<a name="300"></a>		case default.LID_AS:
+<a name="301"></a>			retval = default.ASMatches[MatchId].<span class="source_type">GameType</span>;
+<a name="302"></a>			break;
+<a name="303"></a>		case default.LID_CHAMP:
+<a name="304"></a>			retval = default.ChampionshipMatches[MatchId].<span class="source_type">GameType</span>;
+<a name="305"></a>			break;
+<a name="306"></a>		default:	if ((LadderId &gt;= <span class="source_int">10</span>) && (default.AdditionalLadders.length &gt; (LadderId-<span class="source_int">10</span>)))
+<a name="307"></a>					{
+<a name="308"></a>						retval = default.AdditionalLadders[LadderId-<span class="source_int">10</span>].default.Matches[MatchId].<span class="source_type">GameType</span>;
+<a name="309"></a>					}
+<a name="310"></a>					else return <span class="source_string">""</span>;
+<a name="311"></a>	}
+<a name="312"></a>	gr = <span class="source_type">class</span><span class="source_name">'CacheManager'</span>.static.GetGameRecord(retval);
+<a name="313"></a>	return gr.GameName;
+<a name="314"></a>}
+<a name="315"></a>
+<a name="316"></a><span class="source_comment">/** return the id of a random ladder */</span>
+<a name="317"></a>static function <span class="source_type">int</span> GetRandomLadder(optional <span class="source_type">bool</span> bIncludeChamp)
+<a name="318"></a>{
+<a name="319"></a>	<span class="source_comment">// +1 because DM will never be returned
+</span><a name="320"></a>	if (bIncludeChamp) return rand(default.LID_CHAMP)+<span class="source_int">1</span>;
+<a name="321"></a>		else return rand(default.LID_AS)+<span class="source_int">1</span>;
+<a name="322"></a>}
+<a name="323"></a>
+<a name="324"></a><span class="source_comment">/** create a URL for a selected profile */</span>
+<a name="325"></a>static function <span class="source_type">string</span> MakeURLFor(<span class="source_type"><a href="../engine/gameprofile.html" class="source">GameProfile</a></span> G)
+<a name="326"></a>{
+<a name="327"></a>	if ((<span class="source_type"><a href="../xgame/ut2k4gameprofile.html" class="source">UT2K4GameProfile</a></span>(G) != none) && (<span class="source_type"><a href="../xgame/ut2k4gameprofile.html" class="source">UT2K4GameProfile</a></span>(G).bIsChallenge))
+<a name="328"></a>		return MakeURLFoMatchInfo(<span class="source_type"><a href="../xgame/ut2k4gameprofile.html" class="source">UT2K4GameProfile</a></span>(G).ChallengeInfo, G);
+<a name="329"></a>	return MakeURLFoMatchInfo(GetCurrentMatchInfo(G), G);
+<a name="330"></a>}
+<a name="331"></a>
+<a name="332"></a><span class="source_comment">/** create a URL for the selected MatchInfo */</span>
+<a name="333"></a>static function <span class="source_type">string</span> MakeURLFoMatchInfo(<span class="source_type"><a href="../engine/matchinfo.html" class="source">MatchInfo</a></span> <span class="source_type">M</span>, <span class="source_type"><a href="../engine/gameprofile.html" class="source">GameProfile</a></span> G)
+<a name="334"></a>{
+<a name="335"></a>	local <span class="source_type">string</span> <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>;
+<a name="336"></a>
+<a name="337"></a>	if ( <span class="source_type">M</span> == none ) {
+<a name="338"></a>		Warn(<span class="source_string">"MatchInfo == none"</span>);
+<a name="339"></a>		return <span class="source_string">""</span>;
+<a name="340"></a>	}
+<a name="341"></a>
+<a name="342"></a>	G.EnemyTeam = <span class="source_type">M</span>.EnemyTeamName;
+<a name="343"></a>	G.Difficulty = G.BaseDifficulty + <span class="source_type">M</span>.DifficultyModifier;
+<a name="344"></a>
+<a name="345"></a>	<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> = <span class="source_type">M</span>.LevelName$<span class="source_string">"?Name="</span>$G.<span class="source_type">PlayerName</span>$<span class="source_string">"?Character="</span>$G.PlayerCharacter$<span class="source_string">"?SaveGame="</span>$G.PackageName$<span class="source_type">M</span>.URLString;
+<a name="346"></a>	if ( <span class="source_type">M</span>.GoalScore != <span class="source_int">0</span> )
+<a name="347"></a>		<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> $= <span class="source_string">"?GoalScore="</span>$<span class="source_type">M</span>.GoalScore;
+<a name="348"></a>	if ( <span class="source_type">M</span>.NumBots &gt; <span class="source_int">0</span> )
+<a name="349"></a>		<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> $= <span class="source_string">"?NumBots="</span>$<span class="source_type">M</span>.NumBots;
+<a name="350"></a>	if ( <span class="source_type">M</span>.<span class="source_type">GameType</span> != <span class="source_string">""</span> )
+<a name="351"></a>		<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> $= <span class="source_string">"?Game="</span>$<span class="source_type">M</span>.<span class="source_type">GameType</span>;
+<a name="352"></a>	<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> $= <span class="source_string">"?Team=1?NoSaveDefPlayer?ResetDefPlayer"</span>;
+<a name="353"></a>	<span class="source_comment">// with ?NoSaveDefPlayer the DefaultPlayer properties won't be saved to the user.ini
+</span><a name="354"></a>	<span class="source_comment">// with ?ResetDefPlayer the DefaultPlayer properties will be restored from the saved settings
+</span><a name="355"></a>	if (<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(<span class="source_type">M</span>) != none)
+<a name="356"></a>	{
+<a name="357"></a>		if (<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(<span class="source_type">M</span>).TimeLimit &gt; <span class="source_int">0</span>)
+<a name="358"></a>		{
+<a name="359"></a>			<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> $= <span class="source_string">"?TimeLimit="</span>$<span class="source_type">string</span>(<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span>(<span class="source_type">M</span>).TimeLimit);
+<a name="360"></a>		}
+<a name="361"></a>	}
+<a name="362"></a>	return <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>;
+<a name="363"></a>}
+<a name="364"></a>
+<a name="365"></a><span class="source_comment">/** return a random or selected challenge game */</span>
+<a name="366"></a>static function <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/challengegame.html" class="source">ChallengeGame</a></span>&gt; GetChallengeGame(optional <span class="source_type">string</span> <span class="source_type">ClassName</span>, optional <span class="source_type"><a href="../xgame/ut2k4gameprofile.html" class="source">UT2K4GameProfile</a></span> GP)
+<a name="367"></a>{
+<a name="368"></a>	local array&lt; <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/challengegame.html" class="source">ChallengeGame</a></span>&gt; &gt; chalgames;
+<a name="369"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="370"></a>	<span class="source_comment">//log("GetChallengeGame"@ClassName);
+</span><a name="371"></a>	if (<span class="source_type">ClassName</span> == <span class="source_string">""</span>)
+<a name="372"></a>	{
+<a name="373"></a>		chalgames = default.ChallengeGames;
+<a name="374"></a>		while (chalgames.length &gt; <span class="source_int">0</span>)
+<a name="375"></a>		{
+<a name="376"></a>			<span class="source_type">i</span> = rand(chalgames.length);
+<a name="377"></a>			if (chalgames[<span class="source_type">i</span>].static.canChallenge(GP)) return chalgames[<span class="source_type">i</span>];
+<a name="378"></a>			chalgames.Remove(<span class="source_type">i</span>, <span class="source_int">1</span>);
+<a name="379"></a>		}
+<a name="380"></a>		return none;
+<a name="381"></a>	}
+<a name="382"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; default.ChallengeGames.length; <span class="source_type">i</span>++)
+<a name="383"></a>	{
+<a name="384"></a>		if (<span class="source_type">string</span>(default.ChallengeGames[<span class="source_type">i</span>]) ~= <span class="source_type">ClassName</span>)
+<a name="385"></a>		{
+<a name="386"></a>			if (default.ChallengeGames[<span class="source_type">i</span>].static.canChallenge(GP)) return default.ChallengeGames[<span class="source_type">i</span>];
+<a name="387"></a>			return none;
+<a name="388"></a>		}
+<a name="389"></a>	}
+<a name="390"></a>	return none;
+<a name="391"></a>}
+<a name="392"></a>
+<a name="393"></a>defaultproperties
+<a name="394"></a>{
+<a name="395"></a>     ASMatches(<span class="source_int">0</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.AS1'</span>
+<a name="396"></a>     ASMatches(<span class="source_int">1</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.AS2'</span>
+<a name="397"></a>     ASMatches(<span class="source_int">2</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.AS3'</span>
+<a name="398"></a>     ASMatches(<span class="source_int">3</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.AS4'</span>
+<a name="399"></a>     ASMatches(<span class="source_int">4</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.AS5'</span>
+<a name="400"></a>     ASMatches(<span class="source_int">5</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.AS6'</span>
+<a name="401"></a>     LID_TDM=<span class="source_int">1</span>
+<a name="402"></a>     LID_CTF=<span class="source_int">2</span>
+<a name="403"></a>     LID_BR=<span class="source_int">3</span>
+<a name="404"></a>     LID_DOM=<span class="source_int">4</span>
+<a name="405"></a>     LID_AS=<span class="source_int">5</span>
+<a name="406"></a>     LID_CHAMP=<span class="source_int">6</span>
+<a name="407"></a>     ChallengeGames(<span class="source_int">0</span>)=<span class="source_type">Class</span><span class="source_name">'XGame.BloodRites'</span>
+<a name="408"></a>     ChallengeGames(<span class="source_int">1</span>)=<span class="source_type">Class</span><span class="source_name">'XGame.ManoEMano'</span>
+<a name="409"></a>     DMMatches(<span class="source_int">0</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DM0'</span>
+<a name="410"></a>     DMMatches(<span class="source_int">1</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DM1'</span>
+<a name="411"></a>     DMMatches(<span class="source_int">2</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DM2'</span>
+<a name="412"></a>     DMMatches(<span class="source_int">3</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DM3'</span>
+<a name="413"></a>     DMMatches(<span class="source_int">4</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DM4'</span>
+<a name="414"></a>     DMMatches(<span class="source_int">5</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DM5'</span>
+<a name="415"></a>     TDMMatches(<span class="source_int">0</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.TDM1'</span>
+<a name="416"></a>     TDMMatches(<span class="source_int">1</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.TDM2'</span>
+<a name="417"></a>     TDMMatches(<span class="source_int">2</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.TDM3'</span>
+<a name="418"></a>     TDMMatches(<span class="source_int">3</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.TDM4'</span>
+<a name="419"></a>     DOMMatches(<span class="source_int">0</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DOM1'</span>
+<a name="420"></a>     DOMMatches(<span class="source_int">1</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DOM2'</span>
+<a name="421"></a>     DOMMatches(<span class="source_int">2</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DOM3'</span>
+<a name="422"></a>     DOMMatches(<span class="source_int">3</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DOM4'</span>
+<a name="423"></a>     DOMMatches(<span class="source_int">4</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DOM5'</span>
+<a name="424"></a>     DOMMatches(<span class="source_int">5</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.DOM6'</span>
+<a name="425"></a>     CTFMatches(<span class="source_int">0</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CTF1'</span>
+<a name="426"></a>     CTFMatches(<span class="source_int">1</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CTF2'</span>
+<a name="427"></a>     CTFMatches(<span class="source_int">2</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CTF3'</span>
+<a name="428"></a>     CTFMatches(<span class="source_int">3</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CTF4'</span>
+<a name="429"></a>     CTFMatches(<span class="source_int">4</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CTF5'</span>
+<a name="430"></a>     CTFMatches(<span class="source_int">5</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CTF6'</span>
+<a name="431"></a>     CTFMatches(<span class="source_int">6</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CTF7'</span>
+<a name="432"></a>     CTFMatches(<span class="source_int">7</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CTF8'</span>
+<a name="433"></a>     BRMatches(<span class="source_int">0</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.BR1'</span>
+<a name="434"></a>     BRMatches(<span class="source_int">1</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.BR2'</span>
+<a name="435"></a>     BRMatches(<span class="source_int">2</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.BR3'</span>
+<a name="436"></a>     BRMatches(<span class="source_int">3</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.BR4'</span>
+<a name="437"></a>     BRMatches(<span class="source_int">4</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.BR5'</span>
+<a name="438"></a>     BRMatches(<span class="source_int">5</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.BR6'</span>
+<a name="439"></a>     BRMatches(<span class="source_int">6</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.BR7'</span>
+<a name="440"></a>     BRMatches(<span class="source_int">7</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.BR8'</span>
+<a name="441"></a>     ChampionshipMatches(<span class="source_int">0</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CHAMP1'</span>
+<a name="442"></a>     ChampionshipMatches(<span class="source_int">1</span>)=<span class="source_type"><a href="../xgame/ut2k4matchinfo.html" class="source">UT2K4MatchInfo</a></span><span class="source_name">'XGame.UT2K4LadderInfo.CHAMP2'</span>
+<a name="443"></a>}
+<a name="444"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xgame/xgame-overview.html">Package</a></td>
+	<td class="header"><a href="../xgame/ut2k4ladderinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4LadderInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xgame/ut2k4gameprofile.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xgame/ut2k4matchinfo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:10.018 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

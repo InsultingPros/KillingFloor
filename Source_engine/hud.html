@@ -1,0 +1,1069 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.Hud</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/hud.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Hud">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/hoverpathnode.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/hudoverlay.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/hud.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/hud.html">Hud</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/hud.html" class="source">Hud</a></span> extends <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>
+<a name="2"></a>    native
+<a name="3"></a>    config(<span class="source_type">user</span>)
+<a name="4"></a>    transient
+<a name="5"></a>    exportstructs;
+<a name="6"></a>
+<a name="7"></a>var() <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> PlayerOwner;
+<a name="8"></a>var() <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> PawnOwner;
+<a name="9"></a>var() <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PawnOwnerPRI;
+<a name="10"></a>var() <span class="source_type"><a href="../engine/console.html" class="source">Console</a></span> PlayerConsole;
+<a name="11"></a>
+<a name="12"></a>var() <span class="source_type"><a href="../engine/scoreboard.html" class="source">Scoreboard</a></span> <span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span>;
+<a name="13"></a>var() <span class="source_type"><a href="../engine/scoreboard.html" class="source">Scoreboard</a></span> LocalStatsScreen;
+<a name="14"></a>
+<a name="15"></a><span class="source_comment">// mini hud-menus
+</span><a name="16"></a>var() <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> VoteMenu;		<span class="source_comment">// hook for mod authors
+</span><a name="17"></a>
+<a name="18"></a>var <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> WhiteColor, RedColor, GreenColor, CyanColor, BlueColor, GoldColor, PurpleColor, TurqColor, GrayColor, BlackColor;
+<a name="19"></a>
+<a name="20"></a>var() <span class="source_type">bool</span> bShowVoteMenu;
+<a name="21"></a>var() globalconfig <span class="source_type">bool</span> bHideHUD;
+<a name="22"></a>var() <span class="source_type">bool</span> bShowScoreBoard;             <span class="source_comment">// Display current score-board instead of Hud elements
+</span><a name="23"></a>var() <span class="source_type">bool</span> bShowDebugInfo;              <span class="source_comment">// if true, show properties of current ViewTarget
+</span><a name="24"></a>var() <span class="source_type">bool</span> bShowBadConnectionAlert;     <span class="source_comment">// Display indication of bad connection
+</span><a name="25"></a>var() globalconfig <span class="source_type">bool</span> bMessageBeep;
+<a name="26"></a>var() globalconfig <span class="source_type">bool</span> bShowWeaponInfo;
+<a name="27"></a>var() globalconfig <span class="source_type">bool</span> bShowPersonalInfo;
+<a name="28"></a>var() globalconfig <span class="source_type">bool</span> bShowPoints;
+<a name="29"></a>var() globalconfig <span class="source_type">bool</span> bShowWeaponBar;
+<a name="30"></a>var() globalconfig <span class="source_type">bool</span> bCrosshairShow;
+<a name="31"></a><span class="source_comment">// if _RO_
+</span><a name="32"></a><span class="source_comment">// those arn't config variables in RO
+</span><a name="33"></a>var() <span class="source_type">bool</span> bShowPortrait;
+<a name="34"></a>var() <span class="source_type">bool</span> bShowPortraitVC; <span class="source_comment">// show portrait for voice chat
+</span><a name="35"></a><span class="source_comment">// else
+</span><a name="36"></a><span class="source_comment">//var() globalconfig bool bShowPortrait;
+</span><a name="37"></a><span class="source_comment">//var() globalconfig bool bShowPortraitVC; // show portrait for voice chat
+</span><a name="38"></a><span class="source_comment">// end if _RO_
+</span><a name="39"></a>var globalconfig <span class="source_type">bool</span> bNoEnemyNames;
+<a name="40"></a>var globalconfig <span class="source_type">bool</span> bSmallWeaponBar;
+<a name="41"></a>
+<a name="42"></a>var <span class="source_type">bool</span> bBuiltMOTD;	<span class="source_comment">// Set to true when the MOTD has been set
+</span><a name="43"></a>var <span class="source_type">bool</span> bShowLocalStats;
+<a name="44"></a>
+<a name="45"></a>var() <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span> ConsoleColor;
+<a name="46"></a>var <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PortraitPRI;
+<a name="47"></a>
+<a name="48"></a>var() localized <span class="source_type">string</span> ProgressFontName;
+<a name="49"></a>var() <span class="source_type">Font</span> ProgressFontFont;
+<a name="50"></a>var() localized <span class="source_type">string</span> OverrideConsoleFontName;
+<a name="51"></a>var() <span class="source_type">Font</span> OverrideConsoleFont;
+<a name="52"></a>var() <span class="source_type">float</span> ProgressFadeTime;
+<a name="53"></a>var() <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span> MOTDColor;
+<a name="54"></a>
+<a name="55"></a>var() globalconfig <span class="source_type">float</span> HudScale;          <span class="source_comment">// Global Scale for all widgets
+</span><a name="56"></a>var() globalconfig <span class="source_type">float</span> HudOpacity;		<span class="source_comment">// make everything transparent
+</span><a name="57"></a>var() globalconfig <span class="source_type">float</span> HudCanvasScale;    <span class="source_comment">// Specifies amount of screen-space to use (for TV's).
+</span><a name="58"></a>var() globalconfig <span class="source_type">int</span> CrosshairStyle;
+<a name="59"></a>var() globalconfig <span class="source_type">float</span> CrosshairScale;
+<a name="60"></a>var() globalconfig <span class="source_type">float</span> CrosshairOpacity;
+<a name="61"></a>var() globalconfig <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> CrossHairColor;
+<a name="62"></a>
+<a name="63"></a>var transient <span class="source_type">float</span> ResScaleX, ResScaleY;
+<a name="64"></a>var globalconfig <span class="source_type">int</span> ConsoleMessageCount;
+<a name="65"></a>var globalconfig <span class="source_type">int</span> ConsoleFontSize;
+<a name="66"></a>var globalconfig <span class="source_type">int</span> MessageFontOffset;
+<a name="67"></a>
+<a name="68"></a>struct <span class="source_type"><a href="../engine/hud.html#ConsoleMessage" class="source">ConsoleMessage</a></span>
+<a name="69"></a>{
+<a name="70"></a>	var <span class="source_type">string</span> <span class="source_type">Text</span>;
+<a name="71"></a>	var <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> TextColor;
+<a name="72"></a>	var <span class="source_type">float</span> MessageLife;
+<a name="73"></a>	var <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI;
+<a name="74"></a>};
+<a name="75"></a>var <span class="source_type"><a href="../engine/hud.html#ConsoleMessage" class="source">ConsoleMessage</a></span> TextMessages[<span class="source_int">8</span>];
+<a name="76"></a>
+<a name="77"></a>var() <span class="source_type">float</span> ConsoleMessagePosX, ConsoleMessagePosY; <span class="source_comment">// DP_LowerLeft
+</span><a name="78"></a>
+<a name="79"></a>var localized <span class="source_type">string</span> FontArrayNames[<span class="source_int">9</span>];
+<a name="80"></a>var <span class="source_type">Font</span> FontArrayFonts[<span class="source_int">9</span>];
+<a name="81"></a>var <span class="source_type">int</span> FontScreenWidthMedium[<span class="source_int">9</span>];
+<a name="82"></a>var <span class="source_type">int</span> FontScreenWidthSmall[<span class="source_int">9</span>];
+<a name="83"></a>
+<a name="84"></a>var <span class="source_type">string</span> MOTD[<span class="source_int">4</span>];		<span class="source_comment">// Holds the expanded MOTD Lines
+</span><a name="85"></a>var <span class="source_type">int</span> MOTDState;
+<a name="86"></a>var <span class="source_type">float</span> LastPickupTime, LastAmmoPickupTime, LastWeaponPickupTime, LastHealthPickupTime, LastArmorPickupTime;
+<a name="87"></a>
+<a name="88"></a><span class="source_comment">/*  Voice Chat - all are set natively
+<a name="89"></a>*/</span>
+<a name="90"></a>var const <span class="source_type">float</span> LastVoiceGain;
+<a name="91"></a>var const <span class="source_type">float</span> LastVoiceGainTime;
+<a name="92"></a>var       <span class="source_type">int</span>	LastPlayerIDTalking;
+<a name="93"></a>var const <span class="source_type">float</span> LastPlayerIDTalkingTime;
+<a name="94"></a>
+<a name="95"></a>var <span class="source_type"><a href="../engine/scenesubtitles.html" class="source">SceneSubtitles</a></span> SubTitles;
+<a name="96"></a>
+<a name="97"></a>var array&lt;<span class="source_type"><a href="../engine/hudoverlay.html" class="source">HudOverlay</a></span>&gt; Overlays;
+<a name="98"></a>
+<a name="99"></a><span class="source_comment">/* Draw3DLine()
+<a name="100"></a>draw line in world space. Should be used when engine calls RenderWorldOverlays() event.
+<a name="101"></a>*/</span>
+<a name="102"></a>native final function Draw3DLine(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Start, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> End, <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> LineColor);
+<a name="103"></a>native final function DrawCanvasLine(<span class="source_type">float</span> X1, <span class="source_type">float</span> Y1, <span class="source_type">float</span> X2, <span class="source_type">float</span> Y2, <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> LineColor);
+<a name="104"></a>native static final function StaticDrawCanvasLine( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>, <span class="source_type">float</span> X1, <span class="source_type">float</span> Y1, <span class="source_type">float</span> X2, <span class="source_type">float</span> Y2, <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> LineColor );
+<a name="105"></a>
+<a name="106"></a>delegate OnPostRender(<span class="source_type"><a href="../engine/hud.html" class="source">HUD</a></span> <span class="source_type">Sender</span>, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>);	<span class="source_comment">// Called when PostRender is finished
+</span><a name="107"></a>delegate OnBuildMOTD(<span class="source_type"><a href="../engine/hud.html" class="source">HUD</a></span> <span class="source_type">Sender</span>);				<span class="source_comment">// Called when building the message of the day
+</span><a name="108"></a>
+<a name="109"></a>function DrawCustomBeacon(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">P</span>, <span class="source_type">float</span> ScreenLocX, <span class="source_type">float</span> ScreenLocY)
+<a name="110"></a>{
+<a name="111"></a>	local <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span> BeaconTex;
+<a name="112"></a>	local <span class="source_type">float</span> XL,<span class="source_type">YL</span>;
+<a name="113"></a>
+<a name="114"></a>	BeaconTex = PlayerOwner.TeamBeaconTexture;
+<a name="115"></a>	if ( (BeaconTex == None) || (<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> == None) )
+<a name="116"></a>		return;
+<a name="117"></a>
+<a name="118"></a>	if ( <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> != None )
+<a name="119"></a>		<span class="source_type">C</span>.DrawColor = <span class="source_type">class</span><span class="source_name">'PlayerController'</span>.Default.TeamBeaconTeamColors[<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex];
+<a name="120"></a>	else
+<a name="121"></a>		<span class="source_type">C</span>.DrawColor = <span class="source_type">class</span><span class="source_name">'PlayerController'</span>.Default.TeamBeaconTeamColors[<span class="source_int">0</span>];
+<a name="122"></a>
+<a name="123"></a>	<span class="source_type">C</span>.StrLen(<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>, XL, <span class="source_type">YL</span>);
+<a name="124"></a>	<span class="source_type">C</span>.SetPos(ScreenLocX - <span class="source_int">0.5</span>*XL , ScreenLocY - <span class="source_int">0.125</span> * BeaconTex.VSize - <span class="source_type">YL</span>);
+<a name="125"></a>	<span class="source_type">C</span>.DrawText(<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>,true);
+<a name="126"></a>
+<a name="127"></a>	<span class="source_type">C</span>.SetPos(ScreenLocX - <span class="source_int">0.125</span> * BeaconTex.USize, ScreenLocY - <span class="source_int">0.125</span> * BeaconTex.VSize);
+<a name="128"></a>	<span class="source_type">C</span>.DrawTile(BeaconTex,
+<a name="129"></a>		<span class="source_int">0.25</span> * BeaconTex.USize,
+<a name="130"></a>		<span class="source_int">0.25</span> * BeaconTex.VSize,
+<a name="131"></a>		<span class="source_int">0.0</span>,
+<a name="132"></a>		<span class="source_int">0.0</span>,
+<a name="133"></a>		BeaconTex.USize,
+<a name="134"></a>		BeaconTex.VSize);
+<a name="135"></a>}
+<a name="136"></a>
+<a name="137"></a>simulated function BuildMOTD()
+<a name="138"></a>{
+<a name="139"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="140"></a>	local array&lt;<span class="source_type">string</span>&gt; InMOTD;
+<a name="141"></a>
+<a name="142"></a>	if (!bBuiltMOTD)
+<a name="143"></a>		OnBuildMOTD(self);
+<a name="144"></a>
+<a name="145"></a>    if (bBuiltMOTD || PlayerOwner==None || PlayerOwner.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>==None)
+<a name="146"></a>    	return;
+<a name="147"></a>
+<a name="148"></a>	bBuiltMOTD = true;
+<a name="149"></a>	PlayerOwner.SetProgressTime(<span class="source_int">6</span>);
+<a name="150"></a>
+<a name="151"></a>	Split(PlayerOwner.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>.MessageOfTheDay, <span class="source_string">"|"</span>, InMOTD);
+<a name="152"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; InMOTD.Length && <span class="source_type">i</span> &lt; ArrayCount(MOTD); <span class="source_type">i</span>++ )
+<a name="153"></a>		MOTD[<span class="source_type">i</span>] = InMOTD[<span class="source_type">i</span>];
+<a name="154"></a>}
+<a name="155"></a>
+<a name="156"></a>
+<a name="157"></a>simulated event PostBeginPlay()
+<a name="158"></a>{
+<a name="159"></a>    Super.PostBeginPlay();
+<a name="160"></a>    LinkActors ();
+<a name="161"></a>    CreateKeyMenus();
+<a name="162"></a>
+<a name="163"></a>	ForEach AllActors(<span class="source_type">class</span><span class="source_name">'SceneSubTitles'</span>, SubTitles)
+<a name="164"></a>		break;
+<a name="165"></a>}
+<a name="166"></a>
+<a name="167"></a><span class="source_comment">/* Reset()
+<a name="168"></a>reset actor to initial state - used when restarting level without reloading.
+<a name="169"></a>*/</span>
+<a name="170"></a>function Reset()
+<a name="171"></a>{
+<a name="172"></a>	bShowVoteMenu = false;
+<a name="173"></a>	bShowScoreboard = false;
+<a name="174"></a>	Super.Reset();
+<a name="175"></a>}
+<a name="176"></a>
+<a name="177"></a>simulated function CreateKeyMenus();
+<a name="178"></a>
+<a name="179"></a>simulated event Destroyed()
+<a name="180"></a>{
+<a name="181"></a>    if( <span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span> != None )
+<a name="182"></a>    {
+<a name="183"></a>        <span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span>.Destroy();
+<a name="184"></a>        <span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span> = None;
+<a name="185"></a>    }
+<a name="186"></a>
+<a name="187"></a>    if( VoteMenu != None )
+<a name="188"></a>    {
+<a name="189"></a>        VoteMenu.Destroy();
+<a name="190"></a>        VoteMenu = None;
+<a name="191"></a>    }
+<a name="192"></a>
+<a name="193"></a>    Super.Destroyed();
+<a name="194"></a>}
+<a name="195"></a>
+<a name="196"></a>
+<a name="197"></a><span class="source_comment">//=============================================================================
+</span><a name="198"></a><span class="source_comment">// Execs
+</span><a name="199"></a>
+<a name="200"></a><span class="source_comment">/* toggles displaying scoreboard
+<a name="201"></a>*/</span>
+<a name="202"></a>exec function ShowScores()
+<a name="203"></a>{
+<a name="204"></a>    bShowScoreboard = !bShowScoreboard;
+<a name="205"></a>}
+<a name="206"></a>
+<a name="207"></a>exec function ShowStats()
+<a name="208"></a>{
+<a name="209"></a>	bShowLocalStats = !bShowLocalStats;
+<a name="210"></a>}
+<a name="211"></a>
+<a name="212"></a>exec function NextStats()
+<a name="213"></a>{
+<a name="214"></a>	if ( LocalStatsScreen != None )
+<a name="215"></a>		LocalStatsScreen.NextStats();
+<a name="216"></a>}
+<a name="217"></a>
+<a name="218"></a><span class="source_comment">/* toggles displaying properties of player's current viewtarget
+<a name="219"></a>*/</span>
+<a name="220"></a>exec function ShowDebug()
+<a name="221"></a>{
+<a name="222"></a>	if( <span class="source_type">Level</span>.NetMode != NM_Standalone  )
+<a name="223"></a>		return;
+<a name="224"></a>
+<a name="225"></a>    bShowDebugInfo = !bShowDebugInfo;
+<a name="226"></a>}
+<a name="227"></a>
+<a name="228"></a>simulated event WorldSpaceOverlays()
+<a name="229"></a>{
+<a name="230"></a>    if ( bShowDebugInfo && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(PlayerOwner.<span class="source_type">ViewTarget</span>) != None )
+<a name="231"></a>        DrawRoute();
+<a name="232"></a>}
+<a name="233"></a>
+<a name="234"></a>function CheckCountdown(<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span> GRI);
+<a name="235"></a>
+<a name="236"></a>event ConnectFailure(<span class="source_type">string</span> <span class="source_type">FailCode</span>, <span class="source_type">string</span> <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>)
+<a name="237"></a>{
+<a name="238"></a>	PlayerOwner.ReceiveLocalizedMessage(<span class="source_type">class</span><span class="source_name">'FailedConnect'</span>, <span class="source_type">class</span><span class="source_name">'FailedConnect'</span>.Static.GetFailSwitch(<span class="source_type">FailCode</span>));
+<a name="239"></a>}
+<a name="240"></a>
+<a name="241"></a>function GetLocalStatsScreen();
+<a name="242"></a>
+<a name="243"></a>simulated event PostRenderActors(<span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="244"></a>{
+<a name="245"></a>    if ( PawnOwner != None )
+<a name="246"></a>    {
+<a name="247"></a>		if ( !PlayerOwner.bBehindView )
+<a name="248"></a>		{
+<a name="249"></a>			if ( PlayerOwner.bDemoOwner || ((<span class="source_type">Level</span>.NetMode == NM_Client) && (PlayerOwner.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != PawnOwner)) )
+<a name="250"></a>				PawnOwner.GetDemoRecordingWeapon();
+<a name="251"></a>			else
+<a name="252"></a>				CanvasDrawActors( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, false );
+<a name="253"></a>		}
+<a name="254"></a>		else
+<a name="255"></a>			CanvasDrawActors( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, false );
+<a name="256"></a>	}
+<a name="257"></a>}
+<a name="258"></a>
+<a name="259"></a>simulated event PostRender( <span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> )
+<a name="260"></a>{
+<a name="261"></a>    local <span class="source_type">float</span> XPos, YPos;
+<a name="262"></a>    local <span class="source_type"><a href="../core/object.html#Plane" class="source">plane</a></span> OldModulate,OM;
+<a name="263"></a>    local <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> OldColor;
+<a name="264"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="265"></a>
+<a name="266"></a>    BuildMOTD();
+<a name="267"></a>
+<a name="268"></a>    OldModulate = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate;
+<a name="269"></a>    OldColor = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor;
+<a name="270"></a>
+<a name="271"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate.<span class="source_type">X</span> = <span class="source_int">1</span>;
+<a name="272"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate.<span class="source_type">Y</span> = <span class="source_int">1</span>;
+<a name="273"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate.<span class="source_type">Z</span> = <span class="source_int">1</span>;
+<a name="274"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate.W = HudOpacity/<span class="source_int">255</span>;
+<a name="275"></a>
+<a name="276"></a>    LinkActors();
+<a name="277"></a>
+<a name="278"></a>    ResScaleX = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeX / <span class="source_int">640.0</span>;
+<a name="279"></a>    ResScaleY = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SizeY / <span class="source_int">480.0</span>;
+<a name="280"></a>
+<a name="281"></a>	CheckCountDown(PlayerOwner.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>);
+<a name="282"></a>
+<a name="283"></a>	if ( PawnOwner != None && PawnOwner.bSpecialHUD )
+<a name="284"></a>		PawnOwner.DrawHud(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="285"></a>    if ( bShowDebugInfo )
+<a name="286"></a>    {
+<a name="287"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.<span class="source_type">Font</span> = GetConsoleFont(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="288"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Alpha;
+<a name="289"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = ConsoleColor;
+<a name="290"></a>
+<a name="291"></a>        PlayerOwner.<span class="source_type">ViewTarget</span>.DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, XPos, YPos);
+<a name="292"></a>        if (PlayerOwner.<span class="source_type">ViewTarget</span> != PlayerOwner && (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(PlayerOwner.<span class="source_type">ViewTarget</span>) == None || <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(PlayerOwner.<span class="source_type">ViewTarget</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None))
+<a name="293"></a>        {
+<a name="294"></a>        	YPos += XPos * <span class="source_int">2</span>;
+<a name="295"></a>        	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>, YPos);
+<a name="296"></a>        	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"----- VIEWER INFO -----"</span>);
+<a name="297"></a>        	YPos += XPos;
+<a name="298"></a>        	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>, YPos);
+<a name="299"></a>        	PlayerOwner.DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, XPos, YPos);
+<a name="300"></a>        }
+<a name="301"></a>    }
+<a name="302"></a>	else if( !bHideHud )
+<a name="303"></a>    {
+<a name="304"></a>        if ( bShowLocalStats )
+<a name="305"></a>        {
+<a name="306"></a>			if ( LocalStatsScreen == None )
+<a name="307"></a>				GetLocalStatsScreen();
+<a name="308"></a>            if ( LocalStatsScreen != None )
+<a name="309"></a>            {
+<a name="310"></a>            	OM = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate;
+<a name="311"></a>                <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate = OldModulate;
+<a name="312"></a>                LocalStatsScreen.DrawScoreboard(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="313"></a>				DisplayMessages(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="314"></a>                <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate = OM;
+<a name="315"></a>			}
+<a name="316"></a>		}
+<a name="317"></a>        else if (bShowScoreBoard)
+<a name="318"></a>        {
+<a name="319"></a>            if (<span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span> != None)
+<a name="320"></a>            {
+<a name="321"></a>            	OM = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate;
+<a name="322"></a>                <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate = OldModulate;
+<a name="323"></a>                <span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span>.DrawScoreboard(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="324"></a>				if ( <span class="source_type"><a href="../engine/scoreboard.html" class="source">Scoreboard</a></span>.bDisplayMessages )
+<a name="325"></a>					DisplayMessages(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="326"></a>                <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate = OM;
+<a name="327"></a>			}
+<a name="328"></a>        }
+<a name="329"></a>        else
+<a name="330"></a>        {
+<a name="331"></a>			if ( (PlayerOwner == None) || (PawnOwner == None) || (PawnOwnerPRI == None) || (PlayerOwner.IsSpectating() && PlayerOwner.bBehindView) )
+<a name="332"></a>            	DrawSpectatingHud(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="333"></a>			else if( !PawnOwner.bHideRegularHUD )
+<a name="334"></a>				DrawHud(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="335"></a>
+<a name="336"></a>			for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Overlays.length; <span class="source_type">i</span>++)
+<a name="337"></a>				Overlays[<span class="source_type">i</span>].Render(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="338"></a>
+<a name="339"></a>            if (!DrawLevelAction (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>))
+<a name="340"></a>            {
+<a name="341"></a>            	if (PlayerOwner!=None)
+<a name="342"></a>                {
+<a name="343"></a>                	if (PlayerOwner.ProgressTimeOut &gt; <span class="source_type">Level</span>.TimeSeconds)
+<a name="344"></a>                    {
+<a name="345"></a>	                    DisplayProgressMessages (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="346"></a>                    }
+<a name="347"></a>                    else if (MOTDState==<span class="source_int">1</span>)
+<a name="348"></a>                    	MOTDState=<span class="source_int">2</span>;
+<a name="349"></a>                }
+<a name="350"></a>           }
+<a name="351"></a>
+<a name="352"></a>            if (bShowBadConnectionAlert)
+<a name="353"></a>                DisplayBadConnectionAlert (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="354"></a>            DisplayMessages(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="355"></a>
+<a name="356"></a>        }
+<a name="357"></a>
+<a name="358"></a>        if( bShowVoteMenu && VoteMenu!=None )
+<a name="359"></a>            VoteMenu.RenderOverlays(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="360"></a>    }
+<a name="361"></a>    else if ( PawnOwner != None )
+<a name="362"></a>        DrawInstructionGfx(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="363"></a>
+<a name="364"></a>
+<a name="365"></a>    PlayerOwner.RenderOverlays(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="366"></a>
+<a name="367"></a>    if (PlayerOwner.bViewingMatineeCinematic)
+<a name="368"></a>	DrawCinematicHUD(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="369"></a>
+<a name="370"></a>    if ((PlayerConsole != None) && PlayerConsole.<span class="source_type">bTyping</span>)
+<a name="371"></a>        DrawTypingPrompt(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, PlayerConsole.TypedStr, PlayerConsole.TypedStrPos);
+<a name="372"></a>
+<a name="373"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ColorModulate=OldModulate;
+<a name="374"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawColor = OldColor;
+<a name="375"></a>
+<a name="376"></a>    OnPostRender(Self, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="377"></a>}
+<a name="378"></a>
+<a name="379"></a><span class="source_comment">// called when viewing a Matinee cinematic
+</span><a name="380"></a>simulated function DrawCinematicHUD( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span> )
+<a name="381"></a>{
+<a name="382"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="383"></a>
+<a name="384"></a>	if (!bHideHUD && !bShowLocalStats && !bShowScoreBoard)
+<a name="385"></a>		return; <span class="source_comment">//already rendered any overlays
+</span><a name="386"></a>
+<a name="387"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Overlays.length; <span class="source_type">i</span>++)
+<a name="388"></a>		Overlays[<span class="source_type">i</span>].Render(<span class="source_type">C</span>);
+<a name="389"></a>}
+<a name="390"></a>
+<a name="391"></a>simulated function DrawInstructionGfx( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span> );
+<a name="392"></a>simulated function SetInstructionText( <span class="source_type">string</span> <span class="source_type">text</span> );
+<a name="393"></a>simulated function SetInstructionKeyText( <span class="source_type">string</span> <span class="source_type">text</span> );
+<a name="394"></a>
+<a name="395"></a><span class="source_comment">/* Specific function to use Canvas.DrawActor()
+<a name="396"></a> Clear Z-Buffer once, prior to rendering all actors */</span>
+<a name="397"></a>function CanvasDrawActors( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>, <span class="source_type">bool</span> <span class="source_type">bClearedZBuffer</span> )
+<a name="398"></a>{
+<a name="399"></a>	if ( !PlayerOwner.bBehindView && PawnOwner.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> != None )
+<a name="400"></a>	{
+<a name="401"></a>		if ( !<span class="source_type">bClearedZBuffer</span>)
+<a name="402"></a>			<span class="source_type">C</span>.DrawActor(None, false, true); <span class="source_comment">// Clear the z-buffer here
+</span><a name="403"></a>
+<a name="404"></a>		PawnOwner.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.RenderOverlays( <span class="source_type">C</span> );
+<a name="405"></a>	}
+<a name="406"></a>}
+<a name="407"></a>
+<a name="408"></a>simulated function DrawRoute()
+<a name="409"></a>{
+<a name="410"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="411"></a>    local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="412"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Start, End, RealStart;;
+<a name="413"></a>    local <span class="source_type">bool</span> bPath;
+<a name="414"></a>
+<a name="415"></a>    <span class="source_type">C</span> = <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(PlayerOwner.<span class="source_type">ViewTarget</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>;
+<a name="416"></a>    if ( <span class="source_type">C</span> == None )
+<a name="417"></a>        return;
+<a name="418"></a>    if ( <span class="source_type">C</span>.CurrentPath != None )
+<a name="419"></a>        Start = <span class="source_type">C</span>.CurrentPath.Start.Location;
+<a name="420"></a>    else
+<a name="421"></a>        Start = PlayerOwner.<span class="source_type">ViewTarget</span>.Location;
+<a name="422"></a>    RealStart = Start;
+<a name="423"></a>
+<a name="424"></a>    if ( <span class="source_type">C</span>.bAdjusting )
+<a name="425"></a>    {
+<a name="426"></a>        Draw3DLine(<span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location, <span class="source_type">C</span>.AdjustLoc, <span class="source_type">class</span><span class="source_name">'Canvas'</span>.Static.MakeColor(<span class="source_int">255</span>,<span class="source_int">0</span>,<span class="source_int">255</span>));
+<a name="427"></a>        Start = <span class="source_type">C</span>.AdjustLoc;
+<a name="428"></a>    }
+<a name="429"></a>
+<a name="430"></a>    <span class="source_comment">// show where pawn is going
+</span><a name="431"></a>    if ( (<span class="source_type">C</span> == PlayerOwner)
+<a name="432"></a>        || (<span class="source_type">C</span>.MoveTarget == <span class="source_type">C</span>.RouteCache[<span class="source_int">0</span>]) && (<span class="source_type">C</span>.MoveTarget != None) )
+<a name="433"></a>    {
+<a name="434"></a>        if ( (<span class="source_type">C</span> == PlayerOwner) && (<span class="source_type">C</span>.Destination != vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>)) )
+<a name="435"></a>        {
+<a name="436"></a>            if ( <span class="source_type">C</span>.PointReachable(<span class="source_type">C</span>.Destination) )
+<a name="437"></a>            {
+<a name="438"></a>                Draw3DLine(<span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location, <span class="source_type">C</span>.Destination, <span class="source_type">class</span><span class="source_name">'Canvas'</span>.Static.MakeColor(<span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">255</span>));
+<a name="439"></a>                return;
+<a name="440"></a>            }
+<a name="441"></a>            <span class="source_type">C</span>.FindPathTo(<span class="source_type">C</span>.Destination);
+<a name="442"></a>        }
+<a name="443"></a>        for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">16</span>; <span class="source_type">i</span>++ )
+<a name="444"></a>        {
+<a name="445"></a>            if ( <span class="source_type">C</span>.RouteCache[<span class="source_type">i</span>] == None )
+<a name="446"></a>                break;
+<a name="447"></a>            bPath = true;
+<a name="448"></a>            Draw3DLine(Start,<span class="source_type">C</span>.RouteCache[<span class="source_type">i</span>].Location,<span class="source_type">class</span><span class="source_name">'Canvas'</span>.Static.MakeColor(<span class="source_int">0</span>,<span class="source_int">255</span>,<span class="source_int">0</span>));
+<a name="449"></a>            Start = <span class="source_type">C</span>.RouteCache[<span class="source_type">i</span>].Location;
+<a name="450"></a>        }
+<a name="451"></a>        if ( bPath )
+<a name="452"></a>            Draw3DLine(RealStart,<span class="source_type">C</span>.Destination,<span class="source_type">class</span><span class="source_name">'Canvas'</span>.Static.MakeColor(<span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">255</span>));
+<a name="453"></a>    }
+<a name="454"></a>    else if ( PlayerOwner.<span class="source_type">ViewTarget</span>.Velocity != vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>) )
+<a name="455"></a>        Draw3DLine(RealStart,<span class="source_type">C</span>.Destination,<span class="source_type">class</span><span class="source_name">'Canvas'</span>.Static.MakeColor(<span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">255</span>));
+<a name="456"></a>
+<a name="457"></a>    if ( <span class="source_type">C</span> == PlayerOwner )
+<a name="458"></a>        return;
+<a name="459"></a>
+<a name="460"></a>    <span class="source_comment">// show where pawn is looking
+</span><a name="461"></a>    if ( <span class="source_type">C</span>.Focus != None )
+<a name="462"></a>        End = <span class="source_type">C</span>.Focus.Location;
+<a name="463"></a>    else
+<a name="464"></a>        End = <span class="source_type">C</span>.FocalPoint;
+<a name="465"></a>    Draw3DLine(PlayerOwner.<span class="source_type">ViewTarget</span>.Location + <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(PlayerOwner.<span class="source_type">ViewTarget</span>).BaseEyeHeight * vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">1</span>),End,<span class="source_type">class</span><span class="source_name">'Canvas'</span>.Static.MakeColor(<span class="source_int">255</span>,<span class="source_int">0</span>,<span class="source_int">0</span>));
+<a name="466"></a>}
+<a name="467"></a>
+<a name="468"></a>simulated function DisplayProgressMessages (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>)
+<a name="469"></a>{
+<a name="470"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>, LineCount;
+<a name="471"></a>    local <span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span> GRI;
+<a name="472"></a>    local <span class="source_type">float</span> FontDX, FontDY;
+<a name="473"></a>    local <span class="source_type">float</span> <span class="source_type">X</span>, <span class="source_type">Y</span>;
+<a name="474"></a>    local <span class="source_type">int</span> Alpha;
+<a name="475"></a>    local <span class="source_type">float</span> TimeLeft;
+<a name="476"></a>
+<a name="477"></a>    TimeLeft = PlayerOwner.ProgressTimeOut - <span class="source_type">Level</span>.TimeSeconds;
+<a name="478"></a>
+<a name="479"></a>    if( TimeLeft &gt;= ProgressFadeTime )
+<a name="480"></a>        Alpha = <span class="source_int">255</span>;
+<a name="481"></a>    else
+<a name="482"></a>        Alpha = (<span class="source_int">255</span> * TimeLeft) / ProgressFadeTime;
+<a name="483"></a>
+<a name="484"></a>    GRI = PlayerOwner.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>;
+<a name="485"></a>
+<a name="486"></a>    LineCount = <span class="source_int">0</span>;
+<a name="487"></a>
+<a name="488"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ArrayCount (PlayerOwner.ProgressMessage); <span class="source_type">i</span>++)
+<a name="489"></a>    {
+<a name="490"></a>        if (PlayerOwner.ProgressMessage[<span class="source_type">i</span>] == <span class="source_string">""</span>)
+<a name="491"></a>            continue;
+<a name="492"></a>
+<a name="493"></a>        LineCount++;
+<a name="494"></a>    }
+<a name="495"></a>
+<a name="496"></a>	if (bBuiltMOTD && MOTDState&lt;<span class="source_int">2</span>)
+<a name="497"></a>    {
+<a name="498"></a>    	if (MOTD[<span class="source_int">0</span>] != <span class="source_string">""</span>) LineCount++;
+<a name="499"></a>    	if (MOTD[<span class="source_int">1</span>] != <span class="source_string">""</span>) LineCount++;
+<a name="500"></a>    	if (MOTD[<span class="source_int">2</span>] != <span class="source_string">""</span>) LineCount++;
+<a name="501"></a>    	if (MOTD[<span class="source_int">3</span>] != <span class="source_string">""</span>) LineCount++;
+<a name="502"></a>    }
+<a name="503"></a>
+<a name="504"></a>
+<a name="505"></a>    <span class="source_type">C</span>.<span class="source_type">Font</span> = LoadProgressFont();
+<a name="506"></a>
+<a name="507"></a>    <span class="source_type">C</span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Alpha;
+<a name="508"></a>
+<a name="509"></a>    <span class="source_type">C</span>.TextSize (<span class="source_string">"A"</span>, FontDX, FontDY);
+<a name="510"></a>
+<a name="511"></a>    <span class="source_type">X</span> = (<span class="source_int">0.5</span> * HudCanvasScale * <span class="source_type">C</span>.SizeX) + (((<span class="source_int">1.0</span> - HudCanvasScale) / <span class="source_int">2.0</span>) * <span class="source_type">C</span>.SizeX);
+<a name="512"></a>    <span class="source_type">Y</span> = (<span class="source_int">0.5</span> * HudCanvasScale * <span class="source_type">C</span>.SizeY) + (((<span class="source_int">1.0</span> - HudCanvasScale) / <span class="source_int">2.0</span>) * <span class="source_type">C</span>.SizeY);
+<a name="513"></a>
+<a name="514"></a>    <span class="source_type">Y</span> -= FontDY * (<span class="source_type">float</span> (LineCount) / <span class="source_int">2.0</span>);
+<a name="515"></a>
+<a name="516"></a>    for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ArrayCount (PlayerOwner.ProgressMessage); <span class="source_type">i</span>++)
+<a name="517"></a>    {
+<a name="518"></a>        if (PlayerOwner.ProgressMessage[<span class="source_type">i</span>] == <span class="source_string">""</span>)
+<a name="519"></a>            continue;
+<a name="520"></a>
+<a name="521"></a>        <span class="source_type">C</span>.DrawColor = PlayerOwner.ProgressColor[<span class="source_type">i</span>];
+<a name="522"></a>        <span class="source_type">C</span>.DrawColor.<span class="source_type">A</span> = Alpha;
+<a name="523"></a>
+<a name="524"></a>        <span class="source_type">C</span>.TextSize (PlayerOwner.ProgressMessage[<span class="source_type">i</span>], FontDX, FontDY);
+<a name="525"></a>        <span class="source_type">C</span>.SetPos (<span class="source_type">X</span> - (FontDX / <span class="source_int">2.0</span>), <span class="source_type">Y</span>);
+<a name="526"></a>        <span class="source_type">C</span>.DrawText (PlayerOwner.ProgressMessage[<span class="source_type">i</span>]);
+<a name="527"></a>
+<a name="528"></a>        <span class="source_type">Y</span> += FontDY;
+<a name="529"></a>    }
+<a name="530"></a>
+<a name="531"></a>    if( (GRI != None) && (<span class="source_type">Level</span>.NetMode != NM_StandAlone) && (MOTDState&lt;<span class="source_int">2</span>) )
+<a name="532"></a>    {
+<a name="533"></a>    	MOTDState=<span class="source_int">1</span>;
+<a name="534"></a>        <span class="source_type">C</span>.DrawColor = MOTDColor;
+<a name="535"></a>        <span class="source_type">C</span>.DrawColor.<span class="source_type">A</span> = Alpha;
+<a name="536"></a>
+<a name="537"></a>        for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;<span class="source_int">4</span>;<span class="source_type">i</span>++)
+<a name="538"></a>        {
+<a name="539"></a>            <span class="source_type">C</span>.TextSize (MOTD[<span class="source_type">i</span>], FontDX, FontDY);
+<a name="540"></a>            <span class="source_type">C</span>.SetPos (<span class="source_type">X</span> - (FontDX / <span class="source_int">2.0</span>), <span class="source_type">Y</span>);
+<a name="541"></a>            <span class="source_type">C</span>.DrawText (MOTD[<span class="source_type">i</span>]);
+<a name="542"></a>            <span class="source_type">Y</span> += FontDY;
+<a name="543"></a>		}
+<a name="544"></a>
+<a name="545"></a>    }
+<a name="546"></a>}
+<a name="547"></a>
+<a name="548"></a>function DrawHud (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>);
+<a name="549"></a>function DrawSpectatingHud (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>);
+<a name="550"></a>function <span class="source_type">bool</span> DrawLevelAction (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>);
+<a name="551"></a>
+<a name="552"></a><span class="source_comment">/* DisplayBadConnectionAlert()
+<a name="553"></a>Warn user that net connection is bad
+<a name="554"></a>*/</span>
+<a name="555"></a>function DisplayBadConnectionAlert (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>);
+<a name="556"></a>
+<a name="557"></a>function <span class="source_type">bool</span> IsInCinematic();
+<a name="558"></a>
+<a name="559"></a>simulated function LocalizedMessage( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/localmessage.html" class="source">LocalMessage</a></span>&gt; Message, optional <span class="source_type">int</span> <span class="source_type">Switch</span>, optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_1</span>, optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_2</span>, optional <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">OptionalObject</span>, optional <span class="source_type">string</span> <span class="source_type">CriticalString</span> );
+<a name="560"></a>
+<a name="561"></a>simulated function DrawTypingPrompt (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>, <span class="source_type">String</span> <span class="source_type">Text</span>, optional <span class="source_type">int</span> <span class="source_type">Pos</span>)
+<a name="562"></a>{
+<a name="563"></a>    local <span class="source_type">float</span> XPos, YPos;
+<a name="564"></a>    local <span class="source_type">float</span> XL, <span class="source_type">YL</span>;
+<a name="565"></a>
+<a name="566"></a>    <span class="source_type">C</span>.<span class="source_type">Font</span> = GetConsoleFont(<span class="source_type">C</span>);
+<a name="567"></a>    <span class="source_type">C</span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Alpha;
+<a name="568"></a>    <span class="source_type">C</span>.DrawColor = ConsoleColor;
+<a name="569"></a>
+<a name="570"></a>    <span class="source_type">C</span>.TextSize (<span class="source_string">"A"</span>, XL, <span class="source_type">YL</span>);
+<a name="571"></a>
+<a name="572"></a>    XPos = (ConsoleMessagePosX * HudCanvasScale * <span class="source_type">C</span>.SizeX) + (((<span class="source_int">1.0</span> - HudCanvasScale) * <span class="source_int">0.5</span>) * <span class="source_type">C</span>.SizeX);
+<a name="573"></a>    YPos = (ConsoleMessagePosY * HudCanvasScale * <span class="source_type">C</span>.SizeY) + (((<span class="source_int">1.0</span> - HudCanvasScale) * <span class="source_int">0.5</span>) * <span class="source_type">C</span>.SizeY) - <span class="source_type">YL</span>;
+<a name="574"></a>
+<a name="575"></a>    <span class="source_type">C</span>.SetPos (XPos, YPos);
+<a name="576"></a>    <span class="source_comment">//C.DrawTextClipped ("(&gt;"@Left(Text, Pos)$"_"$Right(Text, Len(Text) - Pos), false);
+</span><a name="577"></a>    <span class="source_type">C</span>.DrawTextClipped(<span class="source_string">"(&gt;"</span>@Left(<span class="source_type">Text</span>, <span class="source_type">Pos</span>)$chr(<span class="source_int">4</span>)$Eval(<span class="source_type">Pos</span> &lt; <span class="source_type">Len</span>(<span class="source_type">Text</span>), Mid(<span class="source_type">Text</span>, <span class="source_type">Pos</span>), <span class="source_string">"_"</span>), true);
+<a name="578"></a>}
+<a name="579"></a>
+<a name="580"></a>simulated function SetScoreBoardClass (<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/scoreboard.html" class="source">Scoreboard</a></span>&gt; ScoreBoardClass)
+<a name="581"></a>{
+<a name="582"></a>    if (<span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span> != None )
+<a name="583"></a>        <span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span>.Destroy();
+<a name="584"></a>
+<a name="585"></a>    if (ScoreBoardClass == None)
+<a name="586"></a>        <span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span> = None;
+<a name="587"></a>    else
+<a name="588"></a>    {
+<a name="589"></a>        <span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span> = Spawn (ScoreBoardClass, <span class="source_type">Owner</span>);
+<a name="590"></a>
+<a name="591"></a>        if (<span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span> == None)
+<a name="592"></a>            log (<span class="source_string">"Hud::SetScoreBoard(): Could not spawn a scoreboard of class "</span>$ScoreBoardClass, <span class="source_name">'Error'</span>);
+<a name="593"></a>    }
+<a name="594"></a>}
+<a name="595"></a>
+<a name="596"></a>exec function ShowHud()
+<a name="597"></a>{
+<a name="598"></a>    bHideHud = !bHideHud;
+<a name="599"></a>	SaveConfig();
+<a name="600"></a>}
+<a name="601"></a>
+<a name="602"></a>simulated function LinkActors()
+<a name="603"></a>{
+<a name="604"></a>    PlayerOwner = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> (<span class="source_type">Owner</span>);
+<a name="605"></a>
+<a name="606"></a>    if (PlayerOwner == None)
+<a name="607"></a>    {
+<a name="608"></a>        PlayerConsole = None;
+<a name="609"></a>        PawnOwner = None;
+<a name="610"></a>        PawnOwnerPRI = None;
+<a name="611"></a>        return;
+<a name="612"></a>    }
+<a name="613"></a>
+<a name="614"></a>    if (PlayerOwner.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span> != None)
+<a name="615"></a>        PlayerConsole = PlayerOwner.<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>;
+<a name="616"></a>    else
+<a name="617"></a>        PlayerConsole = None;
+<a name="618"></a>
+<a name="619"></a>    if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(PlayerOwner.<span class="source_type">ViewTarget</span>) != None) &&
+<a name="620"></a>        (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(PlayerOwner.<span class="source_type">ViewTarget</span>).Health &gt; <span class="source_int">0</span>) )
+<a name="621"></a>        PawnOwner = <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(PlayerOwner.<span class="source_type">ViewTarget</span>);
+<a name="622"></a>    else if (PlayerOwner.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None )
+<a name="623"></a>        PawnOwner = PlayerOwner.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>;
+<a name="624"></a>    else
+<a name="625"></a>        PawnOwner = None;
+<a name="626"></a>
+<a name="627"></a>    if ( (PawnOwner != None) && (PawnOwner.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None) )
+<a name="628"></a>        PawnOwnerPRI = PawnOwner.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>;
+<a name="629"></a>    else
+<a name="630"></a>        PawnOwnerPRI = PlayerOwner.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>;
+<a name="631"></a>}
+<a name="632"></a>
+<a name="633"></a>simulated function Message( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI, coerce <span class="source_type">string</span> <span class="source_type">Msg</span>, <span class="source_type">name</span> <span class="source_type">MsgType</span> )
+<a name="634"></a>{
+<a name="635"></a>    if ( bMessageBeep )
+<a name="636"></a>        PlayerOwner.PlayBeepSound();
+<a name="637"></a>    if ( (<span class="source_type">MsgType</span> == <span class="source_name">'Say'</span>) || (<span class="source_type">MsgType</span> == <span class="source_name">'TeamSay'</span>) )
+<a name="638"></a>        <span class="source_type">Msg</span> = PRI.<span class="source_type">PlayerName</span>$<span class="source_string">": "</span>$<span class="source_type">Msg</span>;
+<a name="639"></a>    AddTextMessage(<span class="source_type">Msg</span>,<span class="source_type">class</span><span class="source_name">'LocalMessage'</span>,PRI);
+<a name="640"></a>}
+<a name="641"></a>
+<a name="642"></a>function DisplayPortrait(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI);
+<a name="643"></a>
+<a name="644"></a>function DisplayMessages(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>)
+<a name="645"></a>{
+<a name="646"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>, j, XPos, YPos,MessageCount;
+<a name="647"></a>    local <span class="source_type">float</span> XL, <span class="source_type">YL</span>;
+<a name="648"></a>
+<a name="649"></a>    for( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ConsoleMessageCount; <span class="source_type">i</span>++ )
+<a name="650"></a>    {
+<a name="651"></a>        if ( TextMessages[<span class="source_type">i</span>].<span class="source_type">Text</span> == <span class="source_string">""</span> )
+<a name="652"></a>            break;
+<a name="653"></a>        else if( TextMessages[<span class="source_type">i</span>].MessageLife &lt; <span class="source_type">Level</span>.TimeSeconds )
+<a name="654"></a>        {
+<a name="655"></a>            TextMessages[<span class="source_type">i</span>].<span class="source_type">Text</span> = <span class="source_string">""</span>;
+<a name="656"></a>
+<a name="657"></a>            if( <span class="source_type">i</span> &lt; ConsoleMessageCount - <span class="source_int">1</span> )
+<a name="658"></a>            {
+<a name="659"></a>                for( j=<span class="source_type">i</span>; j&lt;ConsoleMessageCount-<span class="source_int">1</span>; j++ )
+<a name="660"></a>                    TextMessages[j] = TextMessages[j+<span class="source_int">1</span>];
+<a name="661"></a>            }
+<a name="662"></a>            TextMessages[j].<span class="source_type">Text</span> = <span class="source_string">""</span>;
+<a name="663"></a>            break;
+<a name="664"></a>        }
+<a name="665"></a>        else
+<a name="666"></a>			MessageCount++;
+<a name="667"></a>    }
+<a name="668"></a>
+<a name="669"></a>    XPos = (ConsoleMessagePosX * HudCanvasScale * <span class="source_type">C</span>.SizeX) + (((<span class="source_int">1.0</span> - HudCanvasScale) / <span class="source_int">2.0</span>) * <span class="source_type">C</span>.SizeX);
+<a name="670"></a>    YPos = (ConsoleMessagePosY * HudCanvasScale * <span class="source_type">C</span>.SizeY) + (((<span class="source_int">1.0</span> - HudCanvasScale) / <span class="source_int">2.0</span>) * <span class="source_type">C</span>.SizeY);
+<a name="671"></a>
+<a name="672"></a>    <span class="source_type">C</span>.<span class="source_type">Font</span> = GetConsoleFont(<span class="source_type">C</span>);
+<a name="673"></a>    <span class="source_type">C</span>.DrawColor = ConsoleColor;
+<a name="674"></a>
+<a name="675"></a>    <span class="source_type">C</span>.TextSize (<span class="source_string">"A"</span>, XL, <span class="source_type">YL</span>);
+<a name="676"></a>
+<a name="677"></a>    YPos -= <span class="source_type">YL</span> * MessageCount+<span class="source_int">1</span>; <span class="source_comment">// DP_LowerLeft
+</span><a name="678"></a>    YPos -= <span class="source_type">YL</span>; <span class="source_comment">// Room for typing prompt
+</span><a name="679"></a>
+<a name="680"></a>    for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;MessageCount; <span class="source_type">i</span>++ )
+<a name="681"></a>    {
+<a name="682"></a>        if ( TextMessages[<span class="source_type">i</span>].<span class="source_type">Text</span> == <span class="source_string">""</span> )
+<a name="683"></a>            break;
+<a name="684"></a>
+<a name="685"></a>        <span class="source_type">C</span>.StrLen( TextMessages[<span class="source_type">i</span>].<span class="source_type">Text</span>, XL, <span class="source_type">YL</span> );
+<a name="686"></a>        <span class="source_type">C</span>.SetPos( XPos, YPos );
+<a name="687"></a>        <span class="source_type">C</span>.DrawColor = TextMessages[<span class="source_type">i</span>].TextColor;
+<a name="688"></a>        <span class="source_type">C</span>.DrawText( TextMessages[<span class="source_type">i</span>].<span class="source_type">Text</span>, false );
+<a name="689"></a>        YPos += <span class="source_type">YL</span>;
+<a name="690"></a>    }
+<a name="691"></a>}
+<a name="692"></a>
+<a name="693"></a>function AddTextMessage(<span class="source_type">string</span> <span class="source_type">M</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/localmessage.html" class="source">LocalMessage</a></span>&gt; MessageClass, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI)
+<a name="694"></a>{
+<a name="695"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="696"></a>
+<a name="697"></a>
+<a name="698"></a>	if( bMessageBeep && MessageClass.Default.bBeep )
+<a name="699"></a>		PlayerOwner.PlayBeepSound();
+<a name="700"></a>
+<a name="701"></a>    for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;ConsoleMessageCount; <span class="source_type">i</span>++ )
+<a name="702"></a>    {
+<a name="703"></a>        if ( TextMessages[<span class="source_type">i</span>].<span class="source_type">Text</span> == <span class="source_string">""</span> )
+<a name="704"></a>            break;
+<a name="705"></a>    }
+<a name="706"></a>
+<a name="707"></a>    if( <span class="source_type">i</span> == ConsoleMessageCount )
+<a name="708"></a>    {
+<a name="709"></a>        for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;ConsoleMessageCount-<span class="source_int">1</span>; <span class="source_type">i</span>++ )
+<a name="710"></a>            TextMessages[<span class="source_type">i</span>] = TextMessages[<span class="source_type">i</span>+<span class="source_int">1</span>];
+<a name="711"></a>    }
+<a name="712"></a>
+<a name="713"></a>    TextMessages[<span class="source_type">i</span>].<span class="source_type">Text</span> = <span class="source_type">M</span>;
+<a name="714"></a>    TextMessages[<span class="source_type">i</span>].MessageLife = <span class="source_type">Level</span>.TimeSeconds + MessageClass.Default.LifeTime;
+<a name="715"></a>    TextMessages[<span class="source_type">i</span>].TextColor = MessageClass.static.GetConsoleColor(PRI);
+<a name="716"></a>    TextMessages[<span class="source_type">i</span>].PRI = PRI;
+<a name="717"></a>}
+<a name="718"></a>
+<a name="719"></a>exec function GrowHUD()
+<a name="720"></a>{
+<a name="721"></a>	if( !bShowWeaponInfo )
+<a name="722"></a>        bShowWeaponInfo = true;
+<a name="723"></a>    else if( !bShowPersonalInfo )
+<a name="724"></a>        bShowPersonalInfo = true;
+<a name="725"></a>    else if( !bShowPoints )
+<a name="726"></a>        bShowPoints = true;
+<a name="727"></a>    else if ( !bShowWeaponBar )
+<a name="728"></a>		bShowWeaponBar = true;
+<a name="729"></a>	else if ( bSmallWeaponBar )
+<a name="730"></a>		bSmallWeaponBar = false;
+<a name="731"></a>	SaveConfig();
+<a name="732"></a>}
+<a name="733"></a>
+<a name="734"></a>exec function ShrinkHUD()
+<a name="735"></a>{
+<a name="736"></a>	if ( !bSmallWeaponBar )
+<a name="737"></a>		bSmallWeaponBar = true;
+<a name="738"></a>	else if ( bShowWeaponBar )
+<a name="739"></a>		bShowWeaponBar = false;
+<a name="740"></a>    else if( bShowPoints )
+<a name="741"></a>        bShowPoints = false;
+<a name="742"></a>    else if( bShowPersonalInfo )
+<a name="743"></a>        bShowPersonalInfo = false;
+<a name="744"></a>    else if( bShowWeaponInfo )
+<a name="745"></a>        bShowWeaponInfo = false;
+<a name="746"></a>	SaveConfig();
+<a name="747"></a>}
+<a name="748"></a>
+<a name="749"></a>function FadeZoom();
+<a name="750"></a>
+<a name="751"></a>simulated function SetTargeting( <span class="source_type">bool</span> <span class="source_type">bShow</span>, optional <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> TargetLocation, optional <span class="source_type">float</span> <span class="source_type">Size</span> );
+<a name="752"></a>simulated function DrawCrosshair(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>);
+<a name="753"></a>simulated function SetCropping( <span class="source_type">bool</span> <span class="source_type">Active</span> );
+<a name="754"></a>
+<a name="755"></a>
+<a name="756"></a>static function <span class="source_type">Font</span> LoadFontStatic(<span class="source_type">int</span> <span class="source_type">i</span>)
+<a name="757"></a>{
+<a name="758"></a>	if( default.FontArrayFonts[<span class="source_type">i</span>] == None )
+<a name="759"></a>	{
+<a name="760"></a>		default.FontArrayFonts[<span class="source_type">i</span>] = <span class="source_type">Font</span>(DynamicLoadObject(default.FontArrayNames[<span class="source_type">i</span>], <span class="source_type">class</span><span class="source_name">'Font'</span>));
+<a name="761"></a>		if( default.FontArrayFonts[<span class="source_type">i</span>] == None )
+<a name="762"></a>			Log(<span class="source_string">"Warning: "</span>$default.<span class="source_type">Class</span>$<span class="source_string">" Couldn't dynamically load font "</span>$default.FontArrayNames[<span class="source_type">i</span>]);
+<a name="763"></a>	}
+<a name="764"></a>
+<a name="765"></a>	return default.FontArrayFonts[<span class="source_type">i</span>];
+<a name="766"></a>}
+<a name="767"></a>
+<a name="768"></a>simulated function <span class="source_type">Font</span> LoadFont(<span class="source_type">int</span> <span class="source_type">i</span>)
+<a name="769"></a>{
+<a name="770"></a>	if( FontArrayFonts[<span class="source_type">i</span>] == None )
+<a name="771"></a>	{
+<a name="772"></a>		FontArrayFonts[<span class="source_type">i</span>] = <span class="source_type">Font</span>(DynamicLoadObject(FontArrayNames[<span class="source_type">i</span>], <span class="source_type">class</span><span class="source_name">'Font'</span>));
+<a name="773"></a>		if( FontArrayFonts[<span class="source_type">i</span>] == None )
+<a name="774"></a>			Log(<span class="source_string">"Warning: "</span>$Self$<span class="source_string">" Couldn't dynamically load font "</span>$FontArrayNames[<span class="source_type">i</span>]);
+<a name="775"></a>	}
+<a name="776"></a>	return FontArrayFonts[<span class="source_type">i</span>];
+<a name="777"></a>}
+<a name="778"></a>
+<a name="779"></a>
+<a name="780"></a>static function <span class="source_type">font</span> GetConsoleFont(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>)
+<a name="781"></a>{
+<a name="782"></a>	local <span class="source_type">int</span> FontSize;
+<a name="783"></a>
+<a name="784"></a>	if( default.OverrideConsoleFontName != <span class="source_string">""</span> )
+<a name="785"></a>	{
+<a name="786"></a>		if( default.OverrideConsoleFont != None )
+<a name="787"></a>			return default.OverrideConsoleFont;
+<a name="788"></a>		default.OverrideConsoleFont = <span class="source_type">Font</span>(DynamicLoadObject(default.OverrideConsoleFontName, <span class="source_type">class</span><span class="source_name">'Font'</span>));
+<a name="789"></a>		if( default.OverrideConsoleFont != None )
+<a name="790"></a>			return default.OverrideConsoleFont;
+<a name="791"></a>		Log(<span class="source_string">"Warning: HUD couldn't dynamically load font "</span>$default.OverrideConsoleFontName);
+<a name="792"></a>		default.OverrideConsoleFontName = <span class="source_string">""</span>;
+<a name="793"></a>	}
+<a name="794"></a>
+<a name="795"></a>	FontSize = Default.ConsoleFontSize;
+<a name="796"></a>	if ( <span class="source_type">C</span>.ClipX &lt; <span class="source_int">640</span> )
+<a name="797"></a>		FontSize++;
+<a name="798"></a>	if ( <span class="source_type">C</span>.ClipX &lt; <span class="source_int">800</span> )
+<a name="799"></a>		FontSize++;
+<a name="800"></a>	if ( <span class="source_type">C</span>.ClipX &lt; <span class="source_int">1024</span> )
+<a name="801"></a>		FontSize++;
+<a name="802"></a>	if ( <span class="source_type">C</span>.ClipX &lt; <span class="source_int">1280</span> )
+<a name="803"></a>		FontSize++;
+<a name="804"></a>	if ( <span class="source_type">C</span>.ClipX &lt; <span class="source_int">1600</span> )
+<a name="805"></a>		FontSize++;
+<a name="806"></a>	return LoadFontStatic(Min(<span class="source_int">8</span>,FontSize));
+<a name="807"></a>}
+<a name="808"></a>
+<a name="809"></a>function <span class="source_type">Font</span> GetFontSizeIndex(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>, <span class="source_type">int</span> FontSize)
+<a name="810"></a>{
+<a name="811"></a>    if ( <span class="source_type">C</span>.ClipX &gt;= <span class="source_int">512</span> )
+<a name="812"></a>		FontSize++;
+<a name="813"></a>	if ( <span class="source_type">C</span>.ClipX &gt;= <span class="source_int">640</span> )
+<a name="814"></a>		FontSize++;
+<a name="815"></a>	if ( <span class="source_type">C</span>.ClipX &gt;= <span class="source_int">800</span> )
+<a name="816"></a>		FontSize++;
+<a name="817"></a>	if ( <span class="source_type">C</span>.ClipX &gt;= <span class="source_int">1024</span> )
+<a name="818"></a>		FontSize++;
+<a name="819"></a>	if ( <span class="source_type">C</span>.ClipX &gt;= <span class="source_int">1280</span> )
+<a name="820"></a>		FontSize++;
+<a name="821"></a>	if ( <span class="source_type">C</span>.ClipX &gt;= <span class="source_int">1600</span> )
+<a name="822"></a>		FontSize++;
+<a name="823"></a>
+<a name="824"></a>	return LoadFont(Clamp( <span class="source_int">8</span>-FontSize, <span class="source_int">0</span>, <span class="source_int">8</span>));
+<a name="825"></a>}
+<a name="826"></a>
+<a name="827"></a>static function <span class="source_type">Font</span> GetMediumFontFor(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="828"></a>{
+<a name="829"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="830"></a>
+<a name="831"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">8</span>; <span class="source_type">i</span>++ )
+<a name="832"></a>	{
+<a name="833"></a>		if ( Default.FontScreenWidthMedium[<span class="source_type">i</span>] &lt;= <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX )
+<a name="834"></a>			return LoadFontStatic(<span class="source_type">i</span>);
+<a name="835"></a>	}
+<a name="836"></a>	return LoadFontStatic(<span class="source_int">8</span>);
+<a name="837"></a>}
+<a name="838"></a>
+<a name="839"></a>function <span class="source_type">Font</span> GetMediumFont( <span class="source_type">float</span> <span class="source_type">Size</span> )
+<a name="840"></a>{
+<a name="841"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="842"></a>
+<a name="843"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">8</span>; <span class="source_type">i</span>++ )
+<a name="844"></a>	{
+<a name="845"></a>		if ( Default.FontScreenWidthMedium[<span class="source_type">i</span>] &lt;= <span class="source_type">Size</span> )
+<a name="846"></a>			return LoadFontStatic(<span class="source_type">i</span>);
+<a name="847"></a>	}
+<a name="848"></a>	return LoadFontStatic(<span class="source_int">8</span>);
+<a name="849"></a>}
+<a name="850"></a>
+<a name="851"></a>static function <span class="source_type">Font</span> LargerFontThan(<span class="source_type">Font</span> aFont)
+<a name="852"></a>{
+<a name="853"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="854"></a>
+<a name="855"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">7</span>; <span class="source_type">i</span>++ )
+<a name="856"></a>		if ( LoadFontStatic(<span class="source_type">i</span>) == aFont )
+<a name="857"></a>			return LoadFontStatic(<span class="source_type">Max</span>(<span class="source_int">0</span>,<span class="source_type">i</span>-<span class="source_int">4</span>));
+<a name="858"></a>	return LoadFontStatic(<span class="source_int">5</span>);
+<a name="859"></a>}
+<a name="860"></a>
+<a name="861"></a>simulated function <span class="source_type">font</span> LoadProgressFont()
+<a name="862"></a>{
+<a name="863"></a>	if( ProgressFontFont == None )
+<a name="864"></a>	{
+<a name="865"></a>		ProgressFontFont = <span class="source_type">Font</span>(DynamicLoadObject(ProgressFontName, <span class="source_type">class</span><span class="source_name">'Font'</span>));
+<a name="866"></a>		if( ProgressFontFont == None )
+<a name="867"></a>		{
+<a name="868"></a>			Log(<span class="source_string">"Warning: "</span>$Self$<span class="source_string">" Couldn't dynamically load font "</span>$ProgressFontName);
+<a name="869"></a>			ProgressFontFont = <span class="source_type">Font</span><span class="source_name">'DefaultFont'</span>;
+<a name="870"></a>		}
+<a name="871"></a>	}
+<a name="872"></a>	return ProgressFontFont;
+<a name="873"></a>}
+<a name="874"></a>
+<a name="875"></a>event AnnouncementPlayed( <span class="source_type">Name</span> AnnouncerSound, <span class="source_type">byte</span> <span class="source_type">Switch</span> );
+<a name="876"></a>
+<a name="877"></a>simulated function DrawTargeting( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span> );
+<a name="878"></a>
+<a name="879"></a>function DisplayHit(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> HitDir, <span class="source_type">int</span> <span class="source_type">Damage</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>)
+<a name="880"></a>{
+<a name="881"></a>	if ( (PawnOwner != None) && (PawnOwner.ShieldStrength &gt; <span class="source_int">0</span>) )
+<a name="882"></a>		PlayerOwner.ClientFlash(<span class="source_int">0.5</span>,vect(<span class="source_int">700</span>,<span class="source_int">700</span>,<span class="source_int">0</span>));
+<a name="883"></a>	else if ( <span class="source_type">Damage</span> &gt; <span class="source_int">1</span> )
+<a name="884"></a>		PlayerOwner.ClientFlash(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>.Default.FlashScale,<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>.Default.FlashFog);
+<a name="885"></a>}
+<a name="886"></a>
+<a name="887"></a>simulated function AddHudOverlay(<span class="source_type"><a href="../engine/hudoverlay.html" class="source">HudOverlay</a></span> Overlay)
+<a name="888"></a>{
+<a name="889"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="890"></a>
+<a name="891"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Overlays.Length; <span class="source_type">i</span>++)
+<a name="892"></a>		if (Overlays[<span class="source_type">i</span>] == Overlay)
+<a name="893"></a>			return;
+<a name="894"></a>
+<a name="895"></a>	Overlays[Overlays.length] = Overlay;
+<a name="896"></a>	Overlay.SetOwner(self);
+<a name="897"></a>}
+<a name="898"></a>
+<a name="899"></a>simulated function RemoveHudOverlay(<span class="source_type"><a href="../engine/hudoverlay.html" class="source">HudOverlay</a></span> Overlay)
+<a name="900"></a>{
+<a name="901"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="902"></a>
+<a name="903"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Overlays.length; <span class="source_type">i</span>++)
+<a name="904"></a>		if (Overlays[<span class="source_type">i</span>] == Overlay)
+<a name="905"></a>		{
+<a name="906"></a>			Overlays.Remove(<span class="source_type">i</span>, <span class="source_int">1</span>);
+<a name="907"></a>			Overlay.SetOwner(None);
+<a name="908"></a>			return;
+<a name="909"></a>		}
+<a name="910"></a>}
+<a name="911"></a>
+<a name="912"></a><span class="source_comment">// if _RO_
+</span><a name="913"></a><span class="source_comment">// G15 Support - implemented in subclasses
+</span><a name="914"></a>simulated event HandleG15SoftButtonPress( <span class="source_type">int</span> <span class="source_type">PressedButton</span> ){}
+<a name="915"></a>
+<a name="916"></a>function ShowPopupNotification(<span class="source_type">float</span> DisplayTime, <span class="source_type">int</span> FontSize, <span class="source_type">string</span> <span class="source_type">Text</span>, optional <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span> Icon);
+<a name="917"></a>
+<a name="918"></a>defaultproperties
+<a name="919"></a>{
+<a name="920"></a>     WhiteColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="921"></a>     RedColor=(<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="922"></a>     GreenColor=(G=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="923"></a>     CyanColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="924"></a>     BlueColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="925"></a>     GoldColor=(G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="926"></a>     PurpleColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="927"></a>     TurqColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">128</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="928"></a>     GrayColor=(<span class="source_type">B</span>=<span class="source_int">200</span>,G=<span class="source_int">200</span>,<span class="source_type">R</span>=<span class="source_int">200</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="929"></a>     BlackColor=(<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="930"></a>     bMessageBeep=True
+<a name="931"></a>     bShowWeaponInfo=True
+<a name="932"></a>     bShowPersonalInfo=True
+<a name="933"></a>     bShowPoints=True
+<a name="934"></a>     bShowWeaponBar=True
+<a name="935"></a>     bCrosshairShow=True
+<a name="936"></a>     bShowPortrait=True
+<a name="937"></a>     bShowPortraitVC=True
+<a name="938"></a>     ConsoleColor=(<span class="source_type">B</span>=<span class="source_int">253</span>,G=<span class="source_int">216</span>,<span class="source_type">R</span>=<span class="source_int">153</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="939"></a>     ProgressFontName=<span class="source_string">"ROFonts.ROBtsrmVr12"</span>
+<a name="940"></a>     ProgressFadeTime=<span class="source_int">1.000000</span>
+<a name="941"></a>     MOTDColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="942"></a>     HudScale=<span class="source_int">1.000000</span>
+<a name="943"></a>     HudOpacity=<span class="source_int">255.000000</span>
+<a name="944"></a>     HudCanvasScale=<span class="source_int">0.950000</span>
+<a name="945"></a>     CrosshairScale=<span class="source_int">1.000000</span>
+<a name="946"></a>     CrosshairOpacity=<span class="source_int">1.000000</span>
+<a name="947"></a>     CrossHairColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="948"></a>     ConsoleMessageCount=<span class="source_int">4</span>
+<a name="949"></a>     ConsoleFontSize=<span class="source_int">5</span>
+<a name="950"></a>     ConsoleMessagePosY=<span class="source_int">1.000000</span>
+<a name="951"></a>     FontArrayNames(<span class="source_int">0</span>)=<span class="source_string">"Engine.DefaultFont"</span>
+<a name="952"></a>     FontArrayNames(<span class="source_int">1</span>)=<span class="source_string">"Engine.DefaultFont"</span>
+<a name="953"></a>     FontArrayNames(<span class="source_int">2</span>)=<span class="source_string">"Engine.DefaultFont"</span>
+<a name="954"></a>     FontArrayNames(<span class="source_int">3</span>)=<span class="source_string">"Engine.DefaultFont"</span>
+<a name="955"></a>     FontArrayNames(<span class="source_int">4</span>)=<span class="source_string">"Engine.DefaultFont"</span>
+<a name="956"></a>     FontArrayNames(<span class="source_int">5</span>)=<span class="source_string">"Engine.DefaultFont"</span>
+<a name="957"></a>     FontArrayNames(<span class="source_int">6</span>)=<span class="source_string">"Engine.DefaultFont"</span>
+<a name="958"></a>     FontArrayNames(<span class="source_int">7</span>)=<span class="source_string">"Engine.DefaultFont"</span>
+<a name="959"></a>     FontArrayNames(<span class="source_int">8</span>)=<span class="source_string">"Engine.DefaultFont"</span>
+<a name="960"></a>     bHidden=True
+<a name="961"></a>     RemoteRole=ROLE_None
+<a name="962"></a>}
+<a name="963"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/hud.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Hud">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/hoverpathnode.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/hudoverlay.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:02.699 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

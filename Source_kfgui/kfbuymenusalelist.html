@@ -1,0 +1,768 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFGui.KFBuyMenuSaleList</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kfbuymenusalelist.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFBuyMenuSaleList">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kfbuymenuoptionslistbox.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kfbuymenusalelistbox.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfgui/kfbuymenusalelist.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfgui/kfgui-overview.html">KFGui</a>.<a href="../kfgui/kfbuymenusalelist.html">KFBuyMenuSaleList</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// The trader menu's list with items for sale
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_comment">// Killing Floor Source
+</span><a name="5"></a><span class="source_comment">// Copyright (C) 2009 Tripwire Interactive LLC
+</span><a name="6"></a><span class="source_comment">// Christian "schneidzekk" Schneider
+</span><a name="7"></a><span class="source_comment">//=============================================================================
+</span><a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfgui/kfbuymenusalelist.html" class="source">KFBuyMenuSaleList</a></span> extends <span class="source_type"><a href="../xinterface/guivertlist.html" class="source">GUIVertList</a></span>;
+<a name="9"></a>
+<a name="10"></a><span class="source_macro">#exec OBJ LOAD FILE=Potato_T.utx
+</span><a name="11"></a>
+<a name="12"></a><span class="source_comment">// Settings
+</span><a name="13"></a>var <span class="source_type">float</span>                   ItemBorder;         <span class="source_comment">// Percent of Height to leave blank inside Item Background
+</span><a name="14"></a>var <span class="source_type">float</span>                   TextTopOffset;      <span class="source_comment">// Percent of Height to offset top of Text
+</span><a name="15"></a>var <span class="source_type">float</span>                   ItemSpacing;        <span class="source_comment">// Number of Pixels between Items
+</span><a name="16"></a>
+<a name="17"></a><span class="source_comment">// Display
+</span><a name="18"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>                 ItemBackgroundLeft;
+<a name="19"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>                 ItemBackgroundRight;
+<a name="20"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>                 SelectedItemBackgroundLeft;
+<a name="21"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>                 SelectedItemBackgroundRight;
+<a name="22"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>                 DisabledItemBackgroundLeft;
+<a name="23"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>                 DisabledItemBackgroundRight;
+<a name="24"></a>
+<a name="25"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span>                 NoPerkIcon;
+<a name="26"></a>
+<a name="27"></a>var array&lt;<span class="source_type">string</span>&gt;           PrimaryStrings;
+<a name="28"></a>var array&lt;<span class="source_type">string</span>&gt;           SecondaryStrings;
+<a name="29"></a>var array&lt;<span class="source_type">byte</span>&gt;             CanBuys;
+<a name="30"></a>var array&lt;<span class="source_type">byte</span>&gt;             ItemPerkIndexes;
+<a name="31"></a>
+<a name="32"></a>var <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>                   DarkRedColor;
+<a name="33"></a>
+<a name="34"></a><span class="source_comment">// Sounds
+</span><a name="35"></a>var <span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span>              TraderSoundTooExpensive;
+<a name="36"></a>var <span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span>              TraderSoundTooHeavy;
+<a name="37"></a>
+<a name="38"></a><span class="source_comment">// state
+</span><a name="39"></a>var array&lt;<span class="source_type"><a href="../kfgui/guibuyable.html" class="source">GUIBuyable</a></span>&gt;       ForSaleBuyables;
+<a name="40"></a>var <span class="source_type">int</span>                     MouseOverIndex;
+<a name="41"></a>
+<a name="42"></a>var <span class="source_type">bool</span>                    bNeedsUpdate;
+<a name="43"></a>var <span class="source_type">int</span>                     UpdateCounter;
+<a name="44"></a>
+<a name="45"></a>var localized <span class="source_type">string</span>        WeaponDLCMessage;
+<a name="46"></a>
+<a name="47"></a>var <span class="source_type">int</span>                     CurrFilterIndex;
+<a name="48"></a>var <span class="source_type">int</span>                     CurrFilterItemCount;
+<a name="49"></a>
+<a name="50"></a>var <span class="source_type"><a href="../kfgui/guibuyable.html" class="source">GUIBuyable</a></span>              BuyableToDisplay;
+<a name="51"></a>
+<a name="52"></a>var <span class="source_type"><a href="../kfmod/kflevelrules.html" class="source">KFLevelRules</a></span>            KFLR;
+<a name="53"></a>
+<a name="54"></a>event InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="55"></a>{
+<a name="56"></a>    Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="57"></a>    OnDrawItem = DrawInvItem;
+<a name="58"></a>    SetTimer(<span class="source_int">0.05</span>, true);
+<a name="59"></a>}
+<a name="60"></a>
+<a name="61"></a>function Timer()
+<a name="62"></a>{
+<a name="63"></a>    UpdateForSaleBuyables();
+<a name="64"></a>}
+<a name="65"></a>
+<a name="66"></a>event Opened(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="67"></a>{
+<a name="68"></a>    super.Opened(<span class="source_type">Sender</span>);
+<a name="69"></a>
+<a name="70"></a>    SetIndex( -<span class="source_int">1</span> );
+<a name="71"></a>
+<a name="72"></a>    <span class="source_comment">// Grab the items for sale
+</span><a name="73"></a>    foreach PlayerOwner().DynamicActors(<span class="source_type">class</span><span class="source_name">'KFLevelRules'</span>, KFLR)
+<a name="74"></a>    {
+<a name="75"></a>        break;
+<a name="76"></a>    }
+<a name="77"></a>
+<a name="78"></a>    FilterBuyablesList();
+<a name="79"></a>    UpdateForSaleBuyables();
+<a name="80"></a>}
+<a name="81"></a>
+<a name="82"></a>event Closed(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">bool</span> <span class="source_type">bCancelled</span>)
+<a name="83"></a>{
+<a name="84"></a>    PrimaryStrings.Remove(<span class="source_int">0</span>, PrimaryStrings.Length);
+<a name="85"></a>    SecondaryStrings.Remove(<span class="source_int">0</span>, SecondaryStrings.Length);
+<a name="86"></a>    CanBuys.Remove(<span class="source_int">0</span>, CanBuys.Length);
+<a name="87"></a>    ItemPerkIndexes.Remove(<span class="source_int">0</span>, ItemPerkIndexes.Length);
+<a name="88"></a>    ForSaleBuyables.Remove(<span class="source_int">0</span>, ForSaleBuyables.Length);
+<a name="89"></a>
+<a name="90"></a>    SetIndex( -<span class="source_int">1</span> );
+<a name="91"></a>    BuyableToDisplay = none;
+<a name="92"></a>
+<a name="93"></a>    super.Closed(<span class="source_type">Sender</span>, <span class="source_type">bCancelled</span>);
+<a name="94"></a>}
+<a name="95"></a>
+<a name="96"></a>function <span class="source_type">int</span> PopulateBuyables()
+<a name="97"></a>{
+<a name="98"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfveterancytypes.html" class="source">KFVeterancyTypes</a></span>&gt; PlayerVeterancy;
+<a name="99"></a>    local <span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI;
+<a name="100"></a>    local <span class="source_type"><a href="../kfgui/guibuyable.html" class="source">GUIBuyable</a></span> ForSaleBuyable;
+<a name="101"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfweaponpickup.html" class="source">KFWeaponPickup</a></span>&gt; ForSalePickup;
+<a name="102"></a>    local <span class="source_type">int</span> currentIndex, <span class="source_type">i</span>, j, DualDivider;
+<a name="103"></a>    local <span class="source_type">bool</span> bZeroWeight;
+<a name="104"></a>
+<a name="105"></a>    DualDivider = <span class="source_int">1</span>;
+<a name="106"></a>
+<a name="107"></a>    <span class="source_comment">// Grab Players Veterancy for quick reference
+</span><a name="108"></a>    if ( <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(PlayerOwner()) != none && <span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>).ClientVeteranSkill != none )
+<a name="109"></a>    {
+<a name="110"></a>        PlayerVeterancy = <span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>).ClientVeteranSkill;
+<a name="111"></a>    }
+<a name="112"></a>    else
+<a name="113"></a>    {
+<a name="114"></a>        PlayerVeterancy = <span class="source_type">class</span><span class="source_name">'KFVeterancyTypes'</span>;
+<a name="115"></a>    }
+<a name="116"></a>
+<a name="117"></a>    KFPRI = <span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="118"></a>
+<a name="119"></a>    <span class="source_comment">//Grab the perk's weapons first
+</span><a name="120"></a>    for ( j = <span class="source_int">0</span>; j &lt; KFLR.ItemForSale.Length; j++ )
+<a name="121"></a>    {
+<a name="122"></a>        if ( KFLR.ItemForSale[j] != none )
+<a name="123"></a>        {
+<a name="124"></a>            ForSalePickup = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfweaponpickup.html" class="source">KFWeaponPickup</a></span>&gt;(KFLR.ItemForSale[j]);
+<a name="125"></a>
+<a name="126"></a>            if( ForSalePickup != <span class="source_type">class</span><span class="source_name">'KFMod.Potato'</span> )
+<a name="127"></a>            {
+<a name="128"></a>                <span class="source_comment">//Let's see if this is a vest, first aid kit, ammo or stuff we already have
+</span><a name="129"></a>                if ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/vest.html" class="source">Vest</a></span>&gt;(KFLR.ItemForSale[j]) != none || <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/firstaidkit.html" class="source">FirstAidKit</a></span>&gt;(KFLR.ItemForSale[j]) != none ||
+<a name="130"></a>                     <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span>&gt;(KFLR.ItemForSale[j].default.InventoryType) == none || KFLR.ItemForSale[j].IsA(<span class="source_name">'Ammunition'</span>) ||
+<a name="131"></a>                     <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span>&gt;(KFLR.ItemForSale[j].default.InventoryType).default.bKFNeverThrow ||
+<a name="132"></a>                     IsVariantInInventory(ForSalePickup) )
+<a name="133"></a>                {
+<a name="134"></a>                    continue;
+<a name="135"></a>                }
+<a name="136"></a>            }
+<a name="137"></a>
+<a name="138"></a>            if ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/deagle.html" class="source">Deagle</a></span>&gt;(ForSalePickup.default.InventoryType) != none )
+<a name="139"></a>            {
+<a name="140"></a>                if ( IsVariantInInventory(<span class="source_type">class</span><span class="source_name">'DualDeaglePickup'</span>) )
+<a name="141"></a>                {
+<a name="142"></a>                    continue;
+<a name="143"></a>                }
+<a name="144"></a>            }
+<a name="145"></a>
+<a name="146"></a>            if ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/magnum44pistol.html" class="source">Magnum44Pistol</a></span>&gt;(ForSalePickup.default.InventoryType) != none )
+<a name="147"></a>            {
+<a name="148"></a>                if ( IsInInventory(<span class="source_type">class</span><span class="source_name">'Dual44MagnumPickup'</span>) )
+<a name="149"></a>                {
+<a name="150"></a>                    continue;
+<a name="151"></a>                }
+<a name="152"></a>            }
+<a name="153"></a>
+<a name="154"></a>            if ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/mk23pistol.html" class="source">MK23Pistol</a></span>&gt;(ForSalePickup.default.InventoryType) != none )
+<a name="155"></a>            {
+<a name="156"></a>                if ( IsInInventory(<span class="source_type">class</span><span class="source_name">'DualMK23Pickup'</span>) )
+<a name="157"></a>                {
+<a name="158"></a>                    continue;
+<a name="159"></a>                }
+<a name="160"></a>            }
+<a name="161"></a>
+<a name="162"></a>            if ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/flarerevolver.html" class="source">FlareRevolver</a></span>&gt;(ForSalePickup.default.InventoryType) != none )
+<a name="163"></a>            {
+<a name="164"></a>                if ( IsInInventory(<span class="source_type">class</span><span class="source_name">'DualFlareRevolverPickup'</span>) )
+<a name="165"></a>                {
+<a name="166"></a>                    continue;
+<a name="167"></a>                }
+<a name="168"></a>            }
+<a name="169"></a>
+<a name="170"></a>            <span class="source_comment">// reduce displayed price of dualies if player owns single
+</span><a name="171"></a>            if ( ForSalePickup.default.InventoryType == <span class="source_type">class</span><span class="source_name">'DualDeagle'</span> &&
+<a name="172"></a>                 IsInInventory(<span class="source_type">class</span><span class="source_name">'DeaglePickup'</span>) )
+<a name="173"></a>            {
+<a name="174"></a>                DualDivider = <span class="source_int">2</span>;
+<a name="175"></a>            }
+<a name="176"></a>            else if(  ForSalePickup.default.InventoryType == <span class="source_type">class</span><span class="source_name">'GoldenDualDeagle'</span> &&
+<a name="177"></a>                      IsInInventory(<span class="source_type">class</span><span class="source_name">'GoldenDeaglePickup'</span>) )
+<a name="178"></a>            {
+<a name="179"></a>                DualDivider = <span class="source_int">2</span>;
+<a name="180"></a>            }
+<a name="181"></a>            else if(  <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/dual44magnum.html" class="source">Dual44Magnum</a></span>&gt;(ForSalePickup.default.InventoryType) != none &&
+<a name="182"></a>                      IsInInventory(<span class="source_type">class</span><span class="source_name">'Magnum44Pickup'</span>) )
+<a name="183"></a>            {
+<a name="184"></a>                DualDivider = <span class="source_int">2</span>;
+<a name="185"></a>            }
+<a name="186"></a>            else if(  <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/dualmk23pistol.html" class="source">DualMK23Pistol</a></span>&gt;(ForSalePickup.default.InventoryType) != none &&
+<a name="187"></a>                      IsInInventory(<span class="source_type">class</span><span class="source_name">'MK23Pickup'</span>) )
+<a name="188"></a>            {
+<a name="189"></a>                DualDivider = <span class="source_int">2</span>;
+<a name="190"></a>            }
+<a name="191"></a>            else if(  <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/dualflarerevolver.html" class="source">DualFlareRevolver</a></span>&gt;(ForSalePickup.default.InventoryType) != none &&
+<a name="192"></a>                      IsInInventory(<span class="source_type">class</span><span class="source_name">'FlareRevolverPickup'</span>) )
+<a name="193"></a>            {
+<a name="194"></a>                DualDivider = <span class="source_int">2</span>;
+<a name="195"></a>            }
+<a name="196"></a>            else
+<a name="197"></a>            {
+<a name="198"></a>                DualDivider = <span class="source_int">1</span>;
+<a name="199"></a>                bZeroWeight = false;
+<a name="200"></a>            }
+<a name="201"></a>
+<a name="202"></a>            if ( currentIndex &gt;= ForSaleBuyables.Length )
+<a name="203"></a>            {
+<a name="204"></a>                ForSaleBuyable = new <span class="source_type">class</span><span class="source_name">'GUIBuyable'</span>;
+<a name="205"></a>                ForSaleBuyables[ForSaleBuyables.Length] = ForSaleBuyable;
+<a name="206"></a>            }
+<a name="207"></a>            else
+<a name="208"></a>            {
+<a name="209"></a>                ForSaleBuyable = ForSaleBuyables[currentIndex];
+<a name="210"></a>            }
+<a name="211"></a>
+<a name="212"></a>            currentIndex++;
+<a name="213"></a>
+<a name="214"></a>            ForSaleBuyable.ItemName         = ForSalePickup.default.ItemName;
+<a name="215"></a>            ForSaleBuyable.ItemDescription  = ForSalePickup.default.Description;
+<a name="216"></a>            ForSaleBuyable.ItemCategorie    = KFLR.EquipmentCategories[<span class="source_type">i</span>].EquipmentCategoryName;
+<a name="217"></a>            if( ForSalePickup == <span class="source_type">class</span><span class="source_name">'KFMod.Potato'</span> )
+<a name="218"></a>            {
+<a name="219"></a>                ForSaleBuyable.ItemImage        = <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Potato_T.ui_potato'</span>;
+<a name="220"></a>                ForSaleBuyable.ItemAmmoClass    = none;
+<a name="221"></a>            }
+<a name="222"></a>            else
+<a name="223"></a>            {
+<a name="224"></a>                ForSaleBuyable.ItemImage        = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span>&gt;(ForSalePickup.default.InventoryType).default.TraderInfoTexture;
+<a name="225"></a>                ForSaleBuyable.ItemAmmoClass    = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span>&gt;(ForSalePickup.default.InventoryType).default.FireModeClass[<span class="source_int">0</span>].default.AmmoClass;
+<a name="226"></a>            }
+<a name="227"></a>            ForSaleBuyable.ItemWeaponClass  = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span>&gt;(ForSalePickup.default.InventoryType);
+<a name="228"></a>            ForSaleBuyable.ItemPickupClass  = ForSalePickup;
+<a name="229"></a>            ForSaleBuyable.ItemCost         = <span class="source_type">int</span>((<span class="source_type">float</span>(ForSalePickup.default.Cost)
+<a name="230"></a>                                              * PlayerVeterancy.static.GetCostScaling(KFPRI, ForSalePickup)) / DualDivider);
+<a name="231"></a>            ForSaleBuyable.ItemAmmoCost     = <span class="source_int">0</span>;
+<a name="232"></a>            ForSaleBuyable.ItemFillAmmoCost = <span class="source_int">0</span>;
+<a name="233"></a>
+<a name="234"></a>            if ( bZeroWeight)
+<a name="235"></a>            {
+<a name="236"></a>                ForSaleBuyable.<span class="source_type">ItemWeight</span>   = <span class="source_int">1.f</span>;
+<a name="237"></a>            }
+<a name="238"></a>            else if ( (ForSalePickup == <span class="source_type">class</span><span class="source_name">'DualDeaglePickup'</span> || ForSalePickup == <span class="source_type">class</span><span class="source_name">'GoldenDualDeaglePickup'</span>)
+<a name="239"></a>                      && (IsInInventory(<span class="source_type">class</span><span class="source_name">'DeaglePickup'</span>) || IsInInventory(<span class="source_type">class</span><span class="source_name">'GoldenDeaglePickup'</span>)) )
+<a name="240"></a>            {
+<a name="241"></a>                ForSaleBuyable.<span class="source_type">ItemWeight</span>= ForSalePickup.default.<span class="source_type">Weight</span> / <span class="source_int">2</span>;
+<a name="242"></a>            }
+<a name="243"></a>            else if ( ForSalePickup == <span class="source_type">class</span><span class="source_name">'Dual44MagnumPickup'</span> && IsInInventory(<span class="source_type">class</span><span class="source_name">'Magnum44Pickup'</span>) )
+<a name="244"></a>            {
+<a name="245"></a>                ForSaleBuyable.<span class="source_type">ItemWeight</span>= ForSalePickup.default.<span class="source_type">Weight</span> / <span class="source_int">2</span>;
+<a name="246"></a>            }
+<a name="247"></a>            else if ( ForSalePickup == <span class="source_type">class</span><span class="source_name">'DualMK23Pickup'</span> && IsInInventory(<span class="source_type">class</span><span class="source_name">'MK23Pickup'</span>) )
+<a name="248"></a>            {
+<a name="249"></a>                ForSaleBuyable.<span class="source_type">ItemWeight</span>= ForSalePickup.default.<span class="source_type">Weight</span> / <span class="source_int">2</span>;
+<a name="250"></a>            }
+<a name="251"></a>            else if ( ForSalePickup == <span class="source_type">class</span><span class="source_name">'DualFlareRevolverPickup'</span> && IsInInventory(<span class="source_type">class</span><span class="source_name">'FlareRevolverPickup'</span>) )
+<a name="252"></a>            {
+<a name="253"></a>                ForSaleBuyable.<span class="source_type">ItemWeight</span>= ForSalePickup.default.<span class="source_type">Weight</span> / <span class="source_int">2</span>;
+<a name="254"></a>            }
+<a name="255"></a>            else
+<a name="256"></a>            {
+<a name="257"></a>                ForSaleBuyable.<span class="source_type">ItemWeight</span>   = ForSalePickup.default.<span class="source_type">Weight</span>;
+<a name="258"></a>            }
+<a name="259"></a>
+<a name="260"></a>            ForSaleBuyable.ItemPower        = ForSalePickup.default.PowerValue;
+<a name="261"></a>            ForSaleBuyable.ItemRange        = ForSalePickup.default.RangeValue;
+<a name="262"></a>            ForSaleBuyable.ItemSpeed        = ForSalePickup.default.SpeedValue;
+<a name="263"></a>            ForSaleBuyable.ItemAmmoCurrent  = <span class="source_int">0</span>;
+<a name="264"></a>            ForSaleBuyable.ItemAmmoMax      = <span class="source_int">0</span>;
+<a name="265"></a>            ForSaleBuyable.ItemPerkIndex    = ForSalePickup.default.CorrespondingPerkIndex;
+<a name="266"></a>
+<a name="267"></a>            <span class="source_comment">// Make sure we mark the list as a sale list
+</span><a name="268"></a>            ForSaleBuyable.bSaleList = true;
+<a name="269"></a>
+<a name="270"></a>            bZeroWeight = false;
+<a name="271"></a>        }
+<a name="272"></a>    }
+<a name="273"></a>    return currentIndex;
+<a name="274"></a>}
+<a name="275"></a>
+<a name="276"></a>function FilterBuyablesList()
+<a name="277"></a>{
+<a name="278"></a>    CurrFilterIndex = <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>( PlayerOwner() ).BuyMenuFilterIndex;
+<a name="279"></a>
+<a name="280"></a>    <span class="source_type">switch</span>( CurrFilterIndex )
+<a name="281"></a>    {
+<a name="282"></a>    case <span class="source_int">0</span>:
+<a name="283"></a>        KFLR.ItemForSale = KFLR.MediItemForSale;
+<a name="284"></a>        break;
+<a name="285"></a>
+<a name="286"></a>    case <span class="source_int">1</span>:
+<a name="287"></a>        KFLR.ItemForSale = KFLR.SuppItemForSale;
+<a name="288"></a>        break;
+<a name="289"></a>
+<a name="290"></a>    case <span class="source_int">2</span>:
+<a name="291"></a>        KFLR.ItemForSale = KFLR.ShrpItemForSale;
+<a name="292"></a>        break;
+<a name="293"></a>
+<a name="294"></a>    case <span class="source_int">3</span>:
+<a name="295"></a>        KFLR.ItemForSale = KFLR.CommItemForSale;
+<a name="296"></a>        break;
+<a name="297"></a>
+<a name="298"></a>    case <span class="source_int">4</span>:
+<a name="299"></a>        KFLR.ItemForSale = KFLR.BersItemForSale;
+<a name="300"></a>        break;
+<a name="301"></a>
+<a name="302"></a>    case <span class="source_int">5</span>:
+<a name="303"></a>        KFLR.ItemForSale = KFLR.FireItemForSale;
+<a name="304"></a>        break;
+<a name="305"></a>
+<a name="306"></a>    case <span class="source_int">6</span>:
+<a name="307"></a>        KFLR.ItemForSale = KFLR.DemoItemForSale;
+<a name="308"></a>        break;
+<a name="309"></a>
+<a name="310"></a>    case <span class="source_int">7</span>:
+<a name="311"></a>        KFLR.ItemForSale = KFLR.NeutItemForSale;
+<a name="312"></a>        break;
+<a name="313"></a>
+<a name="314"></a>    case <span class="source_int">8</span>:
+<a name="315"></a>        KFLR.ItemForSale = KFLR.FaveItemForSale;
+<a name="316"></a>        break;
+<a name="317"></a>    };
+<a name="318"></a>
+<a name="319"></a>    CurrFilterItemCount = KFLR.ItemForSale.Length;
+<a name="320"></a>}
+<a name="321"></a>
+<a name="322"></a>function UpdateForSaleBuyables()
+<a name="323"></a>{
+<a name="324"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfveterancytypes.html" class="source">KFVeterancyTypes</a></span>&gt; PlayerVeterancy;
+<a name="325"></a>    local <span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI;
+<a name="326"></a>    local <span class="source_type">int</span> ForSaleArrayIndex;
+<a name="327"></a>    local <span class="source_type">bool</span> bFiltered;
+<a name="328"></a>
+<a name="329"></a>    <span class="source_comment">// Grab Players Veterancy for quick reference
+</span><a name="330"></a>    if ( <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(PlayerOwner()) != none && <span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>).ClientVeteranSkill != none )
+<a name="331"></a>    {
+<a name="332"></a>        PlayerVeterancy = <span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>).ClientVeteranSkill;
+<a name="333"></a>    }
+<a name="334"></a>    else
+<a name="335"></a>    {
+<a name="336"></a>        PlayerVeterancy = <span class="source_type">class</span><span class="source_name">'KFVeterancyTypes'</span>;
+<a name="337"></a>    }
+<a name="338"></a>
+<a name="339"></a>    KFPRI = <span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>);
+<a name="340"></a>
+<a name="341"></a>    if( <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(PlayerOwner()) != none && CurrFilterIndex != <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>(PlayerOwner()).BuyMenuFilterIndex )
+<a name="342"></a>    {
+<a name="343"></a>       FilterBuyablesList();
+<a name="344"></a>       bFiltered = true;
+<a name="345"></a>    }
+<a name="346"></a>
+<a name="347"></a>    ForSaleArrayIndex = PopulateBuyables();
+<a name="348"></a>
+<a name="349"></a>    if ( ForSaleArrayIndex &lt; ForSaleBuyables.Length )
+<a name="350"></a>    {
+<a name="351"></a>        ForSaleBuyables.Remove(ForSaleArrayIndex, ForSaleBuyables.Length - ForSaleArrayIndex);
+<a name="352"></a>    }
+<a name="353"></a>
+<a name="354"></a>    <span class="source_comment">//Now Update the list
+</span><a name="355"></a>    UpdateList();
+<a name="356"></a>
+<a name="357"></a>    if( bFiltered )
+<a name="358"></a>    {
+<a name="359"></a>        SetIndex( GetDisplayedBuyableIndex() );
+<a name="360"></a>        if( self.<span class="source_type">Index</span> &lt; <span class="source_int">0</span> )
+<a name="361"></a>        {
+<a name="362"></a>            SetTopItem( <span class="source_int">0</span> );
+<a name="363"></a>        }
+<a name="364"></a>    }
+<a name="365"></a>}
+<a name="366"></a>
+<a name="367"></a>function <span class="source_type">int</span> GetDisplayedBuyableIndex()
+<a name="368"></a>{
+<a name="369"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="370"></a>
+<a name="371"></a>    if( BuyableToDisplay != none && BuyableToDisplay.bSaleList )
+<a name="372"></a>    {
+<a name="373"></a>        for( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ForSaleBuyables.Length; ++<span class="source_type">i</span> )
+<a name="374"></a>        {
+<a name="375"></a>            if( BuyableToDisplay.ItemName == ForSaleBuyables[<span class="source_type">i</span>].ItemName )
+<a name="376"></a>            {
+<a name="377"></a>                return <span class="source_type">i</span>;
+<a name="378"></a>            }
+<a name="379"></a>        }
+<a name="380"></a>    }
+<a name="381"></a>
+<a name="382"></a>    return -<span class="source_int">1</span>;
+<a name="383"></a>}
+<a name="384"></a>
+<a name="385"></a>function UpdateList()
+<a name="386"></a>{
+<a name="387"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="388"></a>    local <span class="source_type">bool</span> unlockedByAchievement, unlockedByApp;
+<a name="389"></a>
+<a name="390"></a>    <span class="source_comment">// Clear the arrays
+</span><a name="391"></a>    if ( ForSaleBuyables.Length &lt; ItemPerkIndexes.Length )
+<a name="392"></a>    {
+<a name="393"></a>        ItemPerkIndexes.Remove(ForSaleBuyables.Length, ItemPerkIndexes.Length - ForSaleBuyables.Length);
+<a name="394"></a>        PrimaryStrings.Remove(ForSaleBuyables.Length, PrimaryStrings.Length - ForSaleBuyables.Length);
+<a name="395"></a>        SecondaryStrings.Remove(ForSaleBuyables.Length, SecondaryStrings.Length - ForSaleBuyables.Length);
+<a name="396"></a>        CanBuys.Remove(ForSaleBuyables.Length, CanBuys.Length - ForSaleBuyables.Length);
+<a name="397"></a>    }
+<a name="398"></a>
+<a name="399"></a>    <span class="source_comment">// Update the ItemCount and select the first item
+</span><a name="400"></a>    ItemCount = ForSaleBuyables.Length;
+<a name="401"></a>
+<a name="402"></a>    <span class="source_comment">// Update the players inventory list
+</span><a name="403"></a>    for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ItemCount; <span class="source_type">i</span>++ )
+<a name="404"></a>    {
+<a name="405"></a>        PrimaryStrings[<span class="source_type">i</span>] = ForSaleBuyables[<span class="source_type">i</span>].ItemName;
+<a name="406"></a>        SecondaryStrings[<span class="source_type">i</span>] = <span class="source_string">"£"</span> @ <span class="source_type">int</span>(ForSaleBuyables[<span class="source_type">i</span>].ItemCost);
+<a name="407"></a>
+<a name="408"></a>        <span class="source_comment">//controls which icon to put up
+</span><a name="409"></a>        ItemPerkIndexes[<span class="source_type">i</span>] = ForSaleBuyables[<span class="source_type">i</span>].ItemPerkIndex;
+<a name="410"></a>
+<a name="411"></a>
+<a name="412"></a>        if ( ForSaleBuyables[<span class="source_type">i</span>].ItemCost &gt; PlayerOwner().<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Score</span> ||
+<a name="413"></a>             ForSaleBuyables[<span class="source_type">i</span>].<span class="source_type">ItemWeight</span> + <span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).CurrentWeight &gt; <span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).MaxCarryWeight )
+<a name="414"></a>        {
+<a name="415"></a>            CanBuys[<span class="source_type">i</span>] = <span class="source_int">0</span>;
+<a name="416"></a>        }
+<a name="417"></a>        else
+<a name="418"></a>        {
+<a name="419"></a>            CanBuys[<span class="source_type">i</span>] = <span class="source_int">1</span>;
+<a name="420"></a>        }
+<a name="421"></a>
+<a name="422"></a>        if( ForSaleBuyables[<span class="source_type">i</span>].ItemPickupClass == <span class="source_type">class</span><span class="source_name">'KFMod.Potato'</span> )
+<a name="423"></a>        {
+<a name="424"></a>            continue;
+<a name="425"></a>        }
+<a name="426"></a>
+<a name="427"></a>        unlockedByAchievement = false;
+<a name="428"></a>        unlockedByApp = false;
+<a name="429"></a>
+<a name="430"></a>        if( <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(PlayerOwner().SteamStatsAndAchievements) != none )
+<a name="431"></a>        {
+<a name="432"></a>            if( ForSaleBuyables[<span class="source_type">i</span>].ItemWeaponClass.Default.UnlockedByAchievement != -<span class="source_int">1</span> )
+<a name="433"></a>            {
+<a name="434"></a>
+<a name="435"></a>                unlockedByAchievement = <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(PlayerOwner().SteamStatsAndAchievements).Achievements[ForSaleBuyables[<span class="source_type">i</span>].ItemWeaponClass.Default.UnlockedByAchievement].bCompleted == <span class="source_int">1</span>;
+<a name="436"></a>            }
+<a name="437"></a>            if( ForSaleBuyables[<span class="source_type">i</span>].ItemWeaponClass.Default.AppID &gt; <span class="source_int">0</span> )
+<a name="438"></a>            {
+<a name="439"></a>
+<a name="440"></a>                unlockedByApp = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(ForSaleBuyables[<span class="source_type">i</span>].ItemWeaponClass.Default.AppID);
+<a name="441"></a>            }
+<a name="442"></a>        }
+<a name="443"></a>        <span class="source_comment">//lock the weapon if it requires an achievement that they don't have.
+</span><a name="444"></a>        if ( ForSaleBuyables[<span class="source_type">i</span>].ItemWeaponClass.Default.UnlockedByAchievement != -<span class="source_int">1</span> )
+<a name="445"></a>        {
+<a name="446"></a>            if( !unlockedByAchievement && !unlockedByApp)
+<a name="447"></a>            {
+<a name="448"></a>                CanBuys[<span class="source_type">i</span>] = <span class="source_int">0</span>;
+<a name="449"></a>                SecondaryStrings[<span class="source_type">i</span>] = <span class="source_string">"LOCKED"</span>;
+<a name="450"></a>            }
+<a name="451"></a>        }
+<a name="452"></a>        else if ( ForSaleBuyables[<span class="source_type">i</span>].ItemWeaponClass.Default.AppID &gt; <span class="source_int">0</span> && !unlockedByApp )
+<a name="453"></a>        {
+<a name="454"></a>            if( !unlockedByAchievement )
+<a name="455"></a>            {
+<a name="456"></a>                CanBuys[<span class="source_type">i</span>] = <span class="source_int">0</span>;
+<a name="457"></a>                SecondaryStrings[<span class="source_type">i</span>] = <span class="source_string">"DLC"</span>;
+<a name="458"></a>            }
+<a name="459"></a>        }
+<a name="460"></a>
+<a name="461"></a>    }
+<a name="462"></a>
+<a name="463"></a>    if ( bNotify )
+<a name="464"></a>    {
+<a name="465"></a>        CheckLinkedObjects(Self);
+<a name="466"></a>    }
+<a name="467"></a>
+<a name="468"></a>    if ( MyScrollBar != none )
+<a name="469"></a>    {
+<a name="470"></a>        MyScrollBar.AlignThumb();
+<a name="471"></a>    }
+<a name="472"></a>
+<a name="473"></a>    bNeedsUpdate = false;
+<a name="474"></a>}
+<a name="475"></a>
+<a name="476"></a>function <span class="source_type">bool</span> IsInInventory(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>&gt; <span class="source_type">Item</span>)
+<a name="477"></a>{
+<a name="478"></a>    return <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>( PlayerOwner() ).IsInInventory( <span class="source_type">Item</span>, true, false );
+<a name="479"></a>}
+<a name="480"></a>
+<a name="481"></a>function <span class="source_type">bool</span> IsVariantInInventory(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>&gt; PickupForSale)
+<a name="482"></a>{
+<a name="483"></a>    return <span class="source_type"><a href="../kfmod/kfplayercontroller.html" class="source">KFPlayerController</a></span>( PlayerOwner() ).IsInInventory( PickupForSale, true, true );
+<a name="484"></a>}
+<a name="485"></a>
+<a name="486"></a>function <span class="source_type">bool</span> PreDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="487"></a>{
+<a name="488"></a>    if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.MouseX &gt;= ClientBounds[<span class="source_int">0</span>] && <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.MouseX &lt;= ClientBounds[<span class="source_int">2</span>] && <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.MouseY &gt;= ClientBounds[<span class="source_int">1</span>] )
+<a name="489"></a>    {
+<a name="490"></a>        <span class="source_comment">//  Figure out which Item we're clicking on
+</span><a name="491"></a>        MouseOverIndex = Top + ((<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.MouseY - ClientBounds[<span class="source_int">1</span>]) / ItemHeight);
+<a name="492"></a>
+<a name="493"></a>        if ( MouseOverIndex &gt;= ItemCount )
+<a name="494"></a>        {
+<a name="495"></a>            MouseOverIndex = -<span class="source_int">1</span>;
+<a name="496"></a>        }
+<a name="497"></a>    }
+<a name="498"></a>    else
+<a name="499"></a>    {
+<a name="500"></a>        MouseOverIndex = -<span class="source_int">1</span>;
+<a name="501"></a>    }
+<a name="502"></a>
+<a name="503"></a>    return false;
+<a name="504"></a>}
+<a name="505"></a>
+<a name="506"></a>function DrawInvItem(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, <span class="source_type">int</span> CurIndex, <span class="source_type">float</span> <span class="source_type">X</span>, <span class="source_type">float</span> <span class="source_type">Y</span>, <span class="source_type">float</span> <span class="source_type">Width</span>, <span class="source_type">float</span> Height, <span class="source_type">bool</span> bSelected, <span class="source_type">bool</span> bPending)
+<a name="507"></a>{
+<a name="508"></a>    local <span class="source_type">float</span> TempX, TempY, TempHeight;
+<a name="509"></a>    local <span class="source_type">float</span> StringHeight, StringWidth;
+<a name="510"></a>
+<a name="511"></a>    OnClickSound=CS_Click;
+<a name="512"></a>
+<a name="513"></a>    <span class="source_comment">// Offset for the Background
+</span><a name="514"></a>    TempX = <span class="source_type">X</span>;
+<a name="515"></a>    TempY = <span class="source_type">Y</span> + ItemSpacing / <span class="source_int">2.0</span>;
+<a name="516"></a>
+<a name="517"></a>    <span class="source_comment">// Initialize the Canvas
+</span><a name="518"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_int">1</span>;
+<a name="519"></a>    <span class="source_comment">//Canvas.Font = class'ROHUD'.Static.GetSmallMenuFont(Canvas);
+</span><a name="520"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">255</span>);
+<a name="521"></a>
+<a name="522"></a>    <span class="source_comment">// Draw Item Background
+</span><a name="523"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(TempX, TempY);
+<a name="524"></a>
+<a name="525"></a>    if ( CanBuys[CurIndex] &lt; <span class="source_int">1</span> )
+<a name="526"></a>    {
+<a name="527"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched(DisabledItemBackgroundLeft, Height - ItemSpacing, Height - ItemSpacing);
+<a name="528"></a>
+<a name="529"></a>        TempX += ((Height - ItemSpacing) - <span class="source_int">1</span>);
+<a name="530"></a>        TempHeight = Height - <span class="source_int">12</span>;
+<a name="531"></a>        TempY += <span class="source_int">6</span>;<span class="source_comment">//(Height - TempHeight) / 2;
+</span><a name="532"></a>
+<a name="533"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(TempX, TempY);
+<a name="534"></a>
+<a name="535"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched(DisabledItemBackgroundRight, <span class="source_type">Width</span> - (Height - ItemSpacing), Height - <span class="source_int">12</span>);
+<a name="536"></a>    }
+<a name="537"></a>    else if ( bSelected )
+<a name="538"></a>    {
+<a name="539"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched(SelectedItemBackgroundLeft, Height - ItemSpacing, Height - ItemSpacing);
+<a name="540"></a>
+<a name="541"></a>        TempX += ((Height - ItemSpacing) - <span class="source_int">1</span>);
+<a name="542"></a>        TempHeight = Height - <span class="source_int">12</span>;
+<a name="543"></a>        TempY += <span class="source_int">6</span>;<span class="source_comment">//(Height - TempHeight) / 2;
+</span><a name="544"></a>
+<a name="545"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(TempX, TempY);
+<a name="546"></a>
+<a name="547"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched(SelectedItemBackgroundRight, <span class="source_type">Width</span> - (Height - ItemSpacing), Height - <span class="source_int">12</span>);
+<a name="548"></a>    }
+<a name="549"></a>    else
+<a name="550"></a>    {
+<a name="551"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched(ItemBackgroundLeft, Height - ItemSpacing, Height - ItemSpacing);
+<a name="552"></a>
+<a name="553"></a>        TempX += ((Height - ItemSpacing) - <span class="source_int">1</span>);
+<a name="554"></a>        TempHeight = Height - <span class="source_int">12</span>;
+<a name="555"></a>        TempY += <span class="source_int">6</span>;<span class="source_comment">//(Height - TempHeight) / 2;
+</span><a name="556"></a>
+<a name="557"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(TempX, TempY);
+<a name="558"></a>
+<a name="559"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTileStretched(ItemBackgroundRight, <span class="source_type">Width</span> - (Height - ItemSpacing), Height - <span class="source_int">12</span>);
+<a name="560"></a>    }
+<a name="561"></a>
+<a name="562"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_type">X</span> + <span class="source_int">4</span>, <span class="source_type">Y</span> + <span class="source_int">4</span>);
+<a name="563"></a>    <span class="source_comment">//controls the icon
+</span><a name="564"></a>    if(ItemPerkIndexes[CurIndex] != <span class="source_int">7</span> )
+<a name="565"></a>    {
+<a name="566"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTile(<span class="source_type">class</span><span class="source_name">'KFGameType'</span>.default.LoadedSkills[ItemPerkIndexes[CurIndex]].default.OnHUDIcon, Height - <span class="source_int">8</span>, Height - <span class="source_int">8</span>, <span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">256</span>, <span class="source_int">256</span>);
+<a name="567"></a>    }
+<a name="568"></a>    else if( ForSaleBuyables.Length &gt; CurIndex && ForSaleBuyables[CurIndex].ItemPickupClass == <span class="source_type">class</span><span class="source_name">'KFMod.Potato'</span> )
+<a name="569"></a>    {
+<a name="570"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTile(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Potato_T.ui_potato'</span>, Height - <span class="source_int">8</span>, Height - <span class="source_int">8</span>, <span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">256</span>, <span class="source_int">256</span>);
+<a name="571"></a>    }
+<a name="572"></a>    else
+<a name="573"></a>    {
+<a name="574"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTile(NoPerkIcon, Height - <span class="source_int">8</span>, Height - <span class="source_int">8</span>, <span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">256</span>, <span class="source_int">256</span>);
+<a name="575"></a>    }
+<a name="576"></a>
+<a name="577"></a>    <span class="source_comment">// Select Text color
+</span><a name="578"></a>    if ( CurIndex == MouseOverIndex )
+<a name="579"></a>    {
+<a name="580"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">255</span>);
+<a name="581"></a>    }
+<a name="582"></a>    else
+<a name="583"></a>    {
+<a name="584"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">255</span>);
+<a name="585"></a>    }
+<a name="586"></a>
+<a name="587"></a>    <span class="source_comment">// Draw the item's name and categorie
+</span><a name="588"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(PrimaryStrings[CurIndex], StringWidth, StringHeight);
+<a name="589"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(TempX + (<span class="source_int">0.2</span> * Height), TempY + ((TempHeight - StringHeight) / <span class="source_int">2</span>));
+<a name="590"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(PrimaryStrings[CurIndex]);
+<a name="591"></a>
+<a name="592"></a>    <span class="source_comment">// Draw the item's price
+</span><a name="593"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(SecondaryStrings[CurIndex], StringWidth, StringHeight);
+<a name="594"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos((TempX - Height) + <span class="source_type">Width</span> - (StringWidth + (<span class="source_int">0.2</span> * Height)), TempY + ((TempHeight - StringHeight) / <span class="source_int">2</span>));
+<a name="595"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(SecondaryStrings[CurIndex]);
+<a name="596"></a>
+<a name="597"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">255</span>);
+<a name="598"></a>}
+<a name="599"></a>
+<a name="600"></a>function <span class="source_type">float</span> SaleItemHeight(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">c</span>)
+<a name="601"></a>{
+<a name="602"></a>    return (MenuOwner.ActualHeight() / <span class="source_int">10</span> - <span class="source_int">1</span>);
+<a name="603"></a>}
+<a name="604"></a>
+<a name="605"></a>function IndexChanged(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="606"></a>{
+<a name="607"></a>    if( <span class="source_type">Index</span> &gt;= <span class="source_int">0</span> )
+<a name="608"></a>    {
+<a name="609"></a>        <span class="source_comment">// used to cache the current selection so it can be displayed in the center
+</span><a name="610"></a>        <span class="source_comment">// even when it isn't in the list (like when another perk filter is set)
+</span><a name="611"></a>        BuyableToDisplay = new <span class="source_type">class</span><span class="source_name">'GUIBuyable'</span>;
+<a name="612"></a>        BuyableToDisplay.ItemName           = ForSaleBuyables[<span class="source_type">Index</span>].ItemName;
+<a name="613"></a>        BuyableToDisplay.ItemDescription    = ForSaleBuyables[<span class="source_type">Index</span>].ItemDescription;
+<a name="614"></a>        BuyableToDisplay.ItemCategorie      = ForSaleBuyables[<span class="source_type">Index</span>].ItemCategorie;
+<a name="615"></a>        BuyableToDisplay.ItemImage          = ForSaleBuyables[<span class="source_type">Index</span>].ItemImage;
+<a name="616"></a>        BuyableToDisplay.ItemWeaponClass    = ForSaleBuyables[<span class="source_type">Index</span>].ItemWeaponClass;
+<a name="617"></a>        BuyableToDisplay.ItemAmmoClass      = ForSaleBuyables[<span class="source_type">Index</span>].ItemAmmoClass;
+<a name="618"></a>        BuyableToDisplay.ItemPickupClass    = ForSaleBuyables[<span class="source_type">Index</span>].ItemPickupClass;
+<a name="619"></a>        BuyableToDisplay.ItemCost           = ForSaleBuyables[<span class="source_type">Index</span>].ItemCost;
+<a name="620"></a>        BuyableToDisplay.ItemAmmoCost       = <span class="source_int">0</span>;
+<a name="621"></a>        BuyableToDisplay.ItemFillAmmoCost   = <span class="source_int">0</span>;
+<a name="622"></a>        BuyableToDisplay.<span class="source_type">ItemWeight</span>         = ForSaleBuyables[<span class="source_type">Index</span>].<span class="source_type">ItemWeight</span>;
+<a name="623"></a>        BuyableToDisplay.ItemPower          = ForSaleBuyables[<span class="source_type">Index</span>].ItemPower;
+<a name="624"></a>        BuyableToDisplay.ItemRange          = ForSaleBuyables[<span class="source_type">Index</span>].ItemRange;
+<a name="625"></a>        BuyableToDisplay.ItemSpeed          = ForSaleBuyables[<span class="source_type">Index</span>].ItemSpeed;
+<a name="626"></a>        BuyableToDisplay.ItemAmmoCurrent    = <span class="source_int">0</span>;
+<a name="627"></a>        BuyableToDisplay.ItemAmmoMax        = <span class="source_int">0</span>;
+<a name="628"></a>        BuyableToDisplay.ItemPerkIndex      = ForSaleBuyables[<span class="source_type">Index</span>].ItemPerkIndex;
+<a name="629"></a>        BuyableToDisplay.bSaleList = true;
+<a name="630"></a>
+<a name="631"></a>        if ( CanBuys[<span class="source_type">Index</span>] == <span class="source_int">0</span> )
+<a name="632"></a>        {
+<a name="633"></a>            if ( ForSaleBuyables[<span class="source_type">Index</span>].ItemWeaponClass.Default.AppID &gt; <span class="source_int">0</span> &&
+<a name="634"></a>                 <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(PlayerOwner().SteamStatsAndAchievements) != none &&
+<a name="635"></a>                !PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(ForSaleBuyables[<span class="source_type">Index</span>].ItemWeaponClass.Default.AppID) )
+<a name="636"></a>            {
+<a name="637"></a>                <span class="source_comment">// TODO: Play "Purchase DLC" voice clip?
+</span><a name="638"></a>            }
+<a name="639"></a>            else if ( ForSaleBuyables[<span class="source_type">Index</span>].ItemWeaponClass.Default.UnlockedByAchievement != -<span class="source_int">1</span> &&
+<a name="640"></a>                      <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(PlayerOwner().SteamStatsAndAchievements) != none &&
+<a name="641"></a>                      <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(PlayerOwner().SteamStatsAndAchievements).Achievements[ForSaleBuyables[<span class="source_type">index</span>].ItemWeaponClass.Default.UnlockedByAchievement].bCompleted == <span class="source_int">1</span>)
+<a name="642"></a>            {
+<a name="643"></a>
+<a name="644"></a>            }
+<a name="645"></a>            else if ( ForSaleBuyables[<span class="source_type">Index</span>].ItemCost &gt; PlayerOwner().<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Score</span> )
+<a name="646"></a>            {
+<a name="647"></a>                PlayerOwner().<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.DemoPlaySound(TraderSoundTooExpensive, SLOT_Interface, <span class="source_int">2.0</span>);
+<a name="648"></a>            }
+<a name="649"></a>            else if ( ForSaleBuyables[<span class="source_type">Index</span>].<span class="source_type">ItemWeight</span> + <span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).CurrentWeight &gt; <span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(PlayerOwner().<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).MaxCarryWeight )
+<a name="650"></a>            {
+<a name="651"></a>                PlayerOwner().<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.DemoPlaySound(TraderSoundTooHeavy, SLOT_Interface, <span class="source_int">2.0</span>);
+<a name="652"></a>            }
+<a name="653"></a>        }
+<a name="654"></a>    }
+<a name="655"></a>
+<a name="656"></a>    super.IndexChanged(<span class="source_type">Sender</span>);
+<a name="657"></a>}
+<a name="658"></a>
+<a name="659"></a>defaultproperties
+<a name="660"></a>{
+<a name="661"></a>     TextTopOffset=<span class="source_int">0.050000</span>
+<a name="662"></a>     ItemBackgroundLeft=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Item_box_box'</span>
+<a name="663"></a>     ItemBackgroundRight=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Item_box_bar'</span>
+<a name="664"></a>     SelectedItemBackgroundLeft=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Item_box_box_Highlighted'</span>
+<a name="665"></a>     SelectedItemBackgroundRight=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Item_box_bar_Highlighted'</span>
+<a name="666"></a>     DisabledItemBackgroundLeft=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Item_box_box_Disabled'</span>
+<a name="667"></a>     DisabledItemBackgroundRight=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Item_box_bar_Disabled'</span>
+<a name="668"></a>     NoPerkIcon=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KillingFloor2HUD.Perk_Icons.No_Perk_Icon'</span>
+<a name="669"></a>     DarkRedColor=(<span class="source_type">B</span>=<span class="source_int">96</span>,G=<span class="source_int">96</span>,<span class="source_type">R</span>=<span class="source_int">96</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="670"></a>     TraderSoundTooExpensive=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_Trader.TooExpensive'</span>
+<a name="671"></a>     TraderSoundTooHeavy=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'KF_Trader.TooHeavy'</span>
+<a name="672"></a>     GetItemHeight=<span class="source_type"><a href="../kfgui/kfbuymenusalelist.html" class="source">KFBuyMenuSaleList</a></span>.SaleItemHeight
+<a name="673"></a>     FontScale=FNS_Medium
+<a name="674"></a>     WhiteColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>)
+<a name="675"></a>     OnPreDraw=<span class="source_type"><a href="../kfgui/kfbuymenusalelist.html" class="source">KFBuyMenuSaleList</a></span>.PreDraw
+<a name="676"></a>}
+<a name="677"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kfbuymenusalelist.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFBuyMenuSaleList">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kfbuymenuoptionslistbox.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kfbuymenusalelistbox.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:03.171 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: UnrealGame.UnrealPawn</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/unrealpawn.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UnrealPawn">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/unrealmpgameinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/unrealplayer.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_unrealgame/unrealpawn.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../unrealgame/unrealgame-overview.html">UnrealGame</a>.<a href="../unrealgame/unrealpawn.html">UnrealPawn</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span> extends <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>
+<a name="2"></a>	abstract
+<a name="3"></a>	config(<span class="source_type">User</span>);
+<a name="4"></a>
+<a name="5"></a>var	() <span class="source_type">bool</span>		bNoDefaultInventory;	<span class="source_comment">// don't spawn default inventory for this guy
+</span><a name="6"></a>var <span class="source_type">bool</span>		bAcceptAllInventory;	<span class="source_comment">// can pick up anything
+</span><a name="7"></a>var(AI) <span class="source_type">bool</span>	bIsSquadLeader;			<span class="source_comment">// only used as startup property
+</span><a name="8"></a>var <span class="source_type">bool</span>		bSoakDebug;				<span class="source_comment">// use less verbose version of debug display
+</span><a name="9"></a>var <span class="source_type">bool</span>		bKeepTaunting;
+<a name="10"></a>var config <span class="source_type">bool</span> bPlayOwnFootsteps;
+<a name="11"></a>var <span class="source_type">byte</span>		LoadOut;
+<a name="12"></a>
+<a name="13"></a>var config <span class="source_type">byte</span> SelectedEquipment[<span class="source_int">16</span>];	<span class="source_comment">// what player has selected (replicate using function)
+</span><a name="14"></a>var()	<span class="source_type">string</span>	RequiredEquipment[<span class="source_int">16</span>];	<span class="source_comment">// allow L.D. to modify for single player
+</span><a name="15"></a>var		<span class="source_type">string</span>	OptionalEquipment[<span class="source_int">16</span>];	<span class="source_comment">// player can optionally incorporate into loadout
+</span><a name="16"></a>
+<a name="17"></a>var		<span class="source_type">float</span>	AttackSuitability;		<span class="source_comment">// range 0 to 1, 0 = pure defender, 1 = pure attacker
+</span><a name="18"></a>var		<span class="source_type">float</span>	LastFootStepTime;
+<a name="19"></a>
+<a name="20"></a>var <span class="source_type"><a href="../engine/actor.html#EDoubleClickDir" class="source">eDoubleClickDir</a></span> CurrentDir;
+<a name="21"></a>var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>			GameObjOffset;
+<a name="22"></a>var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>			GameObjRot;
+<a name="23"></a>var(AI) <span class="source_type">name</span>		SquadName;			<span class="source_comment">// only used as startup property
+</span><a name="24"></a>
+<a name="25"></a><span class="source_comment">// allowed voices
+</span><a name="26"></a>var <span class="source_type">string</span> VoiceType;
+<a name="27"></a>
+<a name="28"></a>var globalconfig <span class="source_type">bool</span> bPlayerShadows;
+<a name="29"></a>var globalconfig <span class="source_type">bool</span> bBlobShadow;
+<a name="30"></a>
+<a name="31"></a>var <span class="source_type">int</span> spree;
+<a name="32"></a>
+<a name="33"></a>function DropFlag()
+<a name="34"></a>{
+<a name="35"></a>	if (<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>==None || <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.HasFlag==None)
+<a name="36"></a>    	return;
+<a name="37"></a>
+<a name="38"></a>    <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.HasFlag.Drop(Velocity * <span class="source_int">0.5</span>);
+<a name="39"></a>}
+<a name="40"></a>
+<a name="41"></a>simulated function <span class="source_type">bool</span> FindValidTaunt( out <span class="source_type">name</span> <span class="source_type">Sequence</span> )
+<a name="42"></a>{
+<a name="43"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="44"></a>
+<a name="45"></a>	for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;TauntAnims.Length; <span class="source_type">i</span>++ )
+<a name="46"></a>	{
+<a name="47"></a>		if( <span class="source_type">Sequence</span> == TauntAnims[<span class="source_type">i</span>] )
+<a name="48"></a>			return true;
+<a name="49"></a>	}
+<a name="50"></a>
+<a name="51"></a>	return false;
+<a name="52"></a>}
+<a name="53"></a>
+<a name="54"></a>function gibbedBy(<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>)
+<a name="55"></a>{
+<a name="56"></a>	if ( Role &lt; ROLE_Authority )
+<a name="57"></a>		return;
+<a name="58"></a>	if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>) != None )
+<a name="59"></a>	{
+<a name="60"></a>		if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> != None) && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.IsA(<span class="source_name">'Translauncher'</span>) )
+<a name="61"></a>			Died(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.GetDamageType(), Location);
+<a name="62"></a>		else
+<a name="63"></a>			Died(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>, <span class="source_type">class</span><span class="source_name">'DamTypeTelefragged'</span>, Location);
+<a name="64"></a>	}
+<a name="65"></a>	else
+<a name="66"></a>		Died(None, <span class="source_type">class</span><span class="source_name">'Gibbed'</span>, Location);
+<a name="67"></a>}
+<a name="68"></a>
+<a name="69"></a><span class="source_comment">/* DisplayDebug()
+<a name="70"></a>list important actor variable on canvas.  Also show the pawn's controller and weapon info
+<a name="71"></a>*/</span>
+<a name="72"></a>simulated function DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, out <span class="source_type">float</span> <span class="source_type">YL</span>, out <span class="source_type">float</span> YPos)
+<a name="73"></a>{
+<a name="74"></a>	local <span class="source_type">string</span> <span class="source_type">T</span>;
+<a name="75"></a>	local <span class="source_type">float</span> XL;
+<a name="76"></a>
+<a name="77"></a>	if ( !bSoakDebug )
+<a name="78"></a>	{
+<a name="79"></a>		Super.DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, <span class="source_type">YL</span>, YPos);
+<a name="80"></a>		return;
+<a name="81"></a>	}
+<a name="82"></a>
+<a name="83"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_type"><a href="../engine/actor.html#ERenderStyle" class="source">ERenderStyle</a></span>.STY_Normal;
+<a name="84"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.StrLen(<span class="source_string">"TEST"</span>, XL, <span class="source_type">YL</span>);
+<a name="85"></a>	YPos = YPos + <span class="source_int">8</span>*<span class="source_type">YL</span>;
+<a name="86"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="87"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">0</span>);
+<a name="88"></a>	<span class="source_type">T</span> = GetDebugName();
+<a name="89"></a>	if ( bDeleteMe )
+<a name="90"></a>		<span class="source_type">T</span> = <span class="source_type">T</span>$<span class="source_string">" DELETED (bDeleteMe == true)"</span>;
+<a name="91"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">T</span>, false);
+<a name="92"></a>	YPos += <span class="source_int">3</span> * <span class="source_type">YL</span>;
+<a name="93"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="94"></a>
+<a name="95"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None )
+<a name="96"></a>	{
+<a name="97"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">255</span>,<span class="source_int">0</span>,<span class="source_int">0</span>);
+<a name="98"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"NO CONTROLLER"</span>);
+<a name="99"></a>		YPos += <span class="source_type">YL</span>;
+<a name="100"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="101"></a>	}
+<a name="102"></a>	else
+<a name="103"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,<span class="source_type">YL</span>,YPos);
+<a name="104"></a>
+<a name="105"></a>	YPos += <span class="source_int">2</span>*<span class="source_type">YL</span>;
+<a name="106"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="107"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">0</span>,<span class="source_int">255</span>,<span class="source_int">255</span>);
+<a name="108"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"Anchor "</span>$Anchor$<span class="source_string">" Serpentine Dist "</span>$SerpentineDist$<span class="source_string">" Time "</span>$SerpentineTime);
+<a name="109"></a>	YPos += <span class="source_type">YL</span>;
+<a name="110"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="111"></a>
+<a name="112"></a>	<span class="source_type">T</span> = <span class="source_string">"Floor "</span>$Floor$<span class="source_string">" DesiredSpeed "</span>$DesiredSpeed$<span class="source_string">" Crouched "</span>$bIsCrouched$<span class="source_string">" Try to uncrouch "</span>$UncrouchTime;
+<a name="113"></a>	if ( (OnLadder != None) || (Physics == PHYS_Ladder) )
+<a name="114"></a>		<span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">" on ladder "</span>$OnLadder;
+<a name="115"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">T</span>);
+<a name="116"></a>	YPos += <span class="source_type">YL</span>;
+<a name="117"></a>	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="118"></a>}
+<a name="119"></a>
+<a name="120"></a><span class="source_comment">/* BotDodge()
+<a name="121"></a>returns appropriate vector for dodge in direction Dir (which should be normalized)
+<a name="122"></a>*/</span>
+<a name="123"></a>function <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> BotDodge(<span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">Dir</span>)
+<a name="124"></a>{
+<a name="125"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Vel;
+<a name="126"></a>
+<a name="127"></a>	Vel = GroundSpeed*<span class="source_type">Dir</span>;
+<a name="128"></a>	Vel.<span class="source_type">Z</span> = JumpZ;
+<a name="129"></a>	return Vel;
+<a name="130"></a>}
+<a name="131"></a>
+<a name="132"></a>function HoldFlag(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> FlagActor)
+<a name="133"></a>{
+<a name="134"></a>	if ( <span class="source_type"><a href="../unrealgame/gameobject.html" class="source">GameObject</a></span>(FlagActor) != None )
+<a name="135"></a>		HoldGameObject(<span class="source_type"><a href="../unrealgame/gameobject.html" class="source">GameObject</a></span>(FlagActor),<span class="source_type"><a href="../unrealgame/gameobject.html" class="source">GameObject</a></span>(FlagActor).GameObjBone);
+<a name="136"></a>}
+<a name="137"></a>
+<a name="138"></a>function HoldGameObject(<span class="source_type"><a href="../unrealgame/gameobject.html" class="source">GameObject</a></span> gameObj, <span class="source_type">name</span> GameObjBone)
+<a name="139"></a>{
+<a name="140"></a>	if ( GameObjBone == <span class="source_name">'None'</span> )
+<a name="141"></a>	{
+<a name="142"></a>		GameObj.SetPhysics(PHYS_Rotating);
+<a name="143"></a>		GameObj.SetLocation(Location);
+<a name="144"></a>		GameObj.SetBase(self);
+<a name="145"></a>		GameObj.SetRelativeLocation(vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>));
+<a name="146"></a>	}
+<a name="147"></a>	else
+<a name="148"></a>	{
+<a name="149"></a>		AttachToBone(gameObj,GameObjBone);
+<a name="150"></a>		gameObj.SetRelativeRotation(GameObjRot + gameObj.GameObjRot);
+<a name="151"></a>		gameObj.SetRelativeLocation(GameObjOffset + gameObj.GameObjOffset );
+<a name="152"></a>	}
+<a name="153"></a>}
+<a name="154"></a>
+<a name="155"></a>function EndJump();	<span class="source_comment">// Called when stop jumping
+</span><a name="156"></a>
+<a name="157"></a>simulated function ShouldUnCrouch();
+<a name="158"></a>
+<a name="159"></a>simulated event SetAnimAction(<span class="source_type">name</span> NewAction)
+<a name="160"></a>{
+<a name="161"></a>	AnimAction = NewAction;
+<a name="162"></a>	PlayAnim(AnimAction);
+<a name="163"></a>}
+<a name="164"></a>
+<a name="165"></a>function <span class="source_type">String</span> GetDebugName()
+<a name="166"></a>{
+<a name="167"></a>	if ( (<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None) && <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).bSoaking && (<span class="source_type">Level</span>.Pauser != None) )
+<a name="168"></a>		return GetHumanReadableName()@<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).SoakString;
+<a name="169"></a>	if ( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None )
+<a name="170"></a>		return <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>;
+<a name="171"></a>	return GetItemName(<span class="source_type">string</span>(self));
+<a name="172"></a>}
+<a name="173"></a>
+<a name="174"></a>function FootStepping(<span class="source_type">int</span> side);
+<a name="175"></a>
+<a name="176"></a>function <span class="source_type">name</span> GetWeaponBoneFor(<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> <span class="source_type">I</span>)
+<a name="177"></a>{
+<a name="178"></a>	return <span class="source_name">'weapon_bone'</span>;
+<a name="179"></a>}
+<a name="180"></a>
+<a name="181"></a>function CheckBob(<span class="source_type">float</span> <span class="source_type">DeltaTime</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Y</span>)
+<a name="182"></a>{
+<a name="183"></a>	local <span class="source_type">float</span> OldBobTime;
+<a name="184"></a>	local <span class="source_type">int</span> <span class="source_type">m</span>,<span class="source_type">n</span>;
+<a name="185"></a>
+<a name="186"></a>	OldBobTime = BobTime;
+<a name="187"></a>	Super.CheckBob(<span class="source_type">DeltaTime</span>,<span class="source_type">Y</span>);
+<a name="188"></a>
+<a name="189"></a>	if ( (Physics != PHYS_Walking) || (VSize(Velocity) &lt; <span class="source_int">10</span>)
+<a name="190"></a>		|| ((<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None) && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).bBehindView) )
+<a name="191"></a>		return;
+<a name="192"></a>
+<a name="193"></a>	<span class="source_type">m</span> = <span class="source_type">int</span>(<span class="source_int">0.5</span> * Pi + <span class="source_int">9.0</span> * OldBobTime/Pi);
+<a name="194"></a>	<span class="source_type">n</span> = <span class="source_type">int</span>(<span class="source_int">0.5</span> * Pi + <span class="source_int">9.0</span> * BobTime/Pi);
+<a name="195"></a>
+<a name="196"></a>	if ( (<span class="source_type">m</span> != <span class="source_type">n</span>) && !bIsWalking && !bIsCrouched )
+<a name="197"></a>		FootStepping(<span class="source_int">0</span>);
+<a name="198"></a>	else if ( !bWeaponBob && bPlayOwnFootSteps && !bIsWalking && !bIsCrouched && (<span class="source_type">Level</span>.TimeSeconds - LastFootStepTime &gt; <span class="source_int">0.35</span>) )
+<a name="199"></a>	{
+<a name="200"></a>		LastFootStepTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="201"></a>		FootStepping(<span class="source_int">0</span>);
+<a name="202"></a>	}
+<a name="203"></a>}
+<a name="204"></a>
+<a name="205"></a><span class="source_comment">/* IsInLoadout()
+<a name="206"></a>return true if InventoryClass is part of required or optional equipment
+<a name="207"></a>*/</span>
+<a name="208"></a>function <span class="source_type">bool</span> IsInLoadout(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>&gt; InventoryClass)
+<a name="209"></a>{
+<a name="210"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="211"></a>	local <span class="source_type">string</span> invstring;
+<a name="212"></a>
+<a name="213"></a>	if ( bAcceptAllInventory )
+<a name="214"></a>		return true;
+<a name="215"></a>
+<a name="216"></a>	invstring = <span class="source_type">string</span>(InventoryClass);
+<a name="217"></a>
+<a name="218"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">16</span>; <span class="source_type">i</span>++ )
+<a name="219"></a>	{
+<a name="220"></a>		if ( RequiredEquipment[<span class="source_type">i</span>] ~= invstring )
+<a name="221"></a>			return true;
+<a name="222"></a>		else if ( RequiredEquipment[<span class="source_type">i</span>] == <span class="source_string">""</span> )
+<a name="223"></a>			break;
+<a name="224"></a>	}
+<a name="225"></a>
+<a name="226"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">16</span>; <span class="source_type">i</span>++ )
+<a name="227"></a>	{
+<a name="228"></a>		if ( OptionalEquipment[<span class="source_type">i</span>] ~= invstring )
+<a name="229"></a>			return true;
+<a name="230"></a>		else if ( OptionalEquipment[<span class="source_type">i</span>] == <span class="source_string">""</span> )
+<a name="231"></a>			break;
+<a name="232"></a>	}
+<a name="233"></a>	return false;
+<a name="234"></a>}
+<a name="235"></a>
+<a name="236"></a>function AddDefaultInventory()
+<a name="237"></a>{
+<a name="238"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="239"></a>
+<a name="240"></a>	if ( IsLocallyControlled() )
+<a name="241"></a>	{
+<a name="242"></a>		for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">16</span>; <span class="source_type">i</span>++ )
+<a name="243"></a>			if ( RequiredEquipment[<span class="source_type">i</span>] != <span class="source_string">""</span> )
+<a name="244"></a>				CreateInventory(RequiredEquipment[<span class="source_type">i</span>]);
+<a name="245"></a>
+<a name="246"></a>		for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">16</span>; <span class="source_type">i</span>++ )
+<a name="247"></a>			if ( (SelectedEquipment[<span class="source_type">i</span>] == <span class="source_int">1</span>) && (OptionalEquipment[<span class="source_type">i</span>] != <span class="source_string">""</span>) )
+<a name="248"></a>				CreateInventory(OptionalEquipment[<span class="source_type">i</span>]);
+<a name="249"></a>
+<a name="250"></a>	    <span class="source_type">Level</span>.Game.AddGameSpecificInventory(self);
+<a name="251"></a>	}
+<a name="252"></a>	else
+<a name="253"></a>	{
+<a name="254"></a>	    <span class="source_type">Level</span>.Game.AddGameSpecificInventory(self);
+<a name="255"></a>
+<a name="256"></a>		for ( <span class="source_type">i</span>=<span class="source_int">15</span>; <span class="source_type">i</span>&gt;=<span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="257"></a>			if ( (SelectedEquipment[<span class="source_type">i</span>] == <span class="source_int">1</span>) && (OptionalEquipment[<span class="source_type">i</span>] != <span class="source_string">""</span>) )
+<a name="258"></a>				CreateInventory(OptionalEquipment[<span class="source_type">i</span>]);
+<a name="259"></a>
+<a name="260"></a>		for ( <span class="source_type">i</span>=<span class="source_int">15</span>; <span class="source_type">i</span>&gt;=<span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="261"></a>			if ( RequiredEquipment[<span class="source_type">i</span>] != <span class="source_string">""</span> )
+<a name="262"></a>				CreateInventory(RequiredEquipment[<span class="source_type">i</span>]);
+<a name="263"></a>	}
+<a name="264"></a>
+<a name="265"></a>	<span class="source_comment">// HACK FIXME
+</span><a name="266"></a>	if ( <span class="source_type"><a href="../engine/inventory.html" class="source">inventory</a></span> != None )
+<a name="267"></a>		<span class="source_type"><a href="../engine/inventory.html" class="source">inventory</a></span>.OwnerEvent(<span class="source_name">'LoadOut'</span>);
+<a name="268"></a>
+<a name="269"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ClientSwitchToBestWeapon();
+<a name="270"></a>}
+<a name="271"></a>
+<a name="272"></a>function CreateInventory(<span class="source_type">string</span> InventoryClassName)
+<a name="273"></a>{
+<a name="274"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="275"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>&gt; InventoryClass;
+<a name="276"></a>
+<a name="277"></a>	InventoryClass = <span class="source_type">Level</span>.Game.BaseMutator.GetInventoryClass(InventoryClassName);
+<a name="278"></a>	if( (InventoryClass!=None) && (FindInventoryType(InventoryClass)==None) )
+<a name="279"></a>	{
+<a name="280"></a>		Inv = Spawn(InventoryClass);
+<a name="281"></a>		if( Inv != None )
+<a name="282"></a>		{
+<a name="283"></a>			Inv.GiveTo(self);
+<a name="284"></a>			if ( Inv != None )
+<a name="285"></a>				Inv.PickupFunction(self);
+<a name="286"></a>		}
+<a name="287"></a>	}
+<a name="288"></a>}
+<a name="289"></a>
+<a name="290"></a>function <span class="source_type">bool</span> PerformDodge(<span class="source_type"><a href="../engine/actor.html#EDoubleClickDir" class="source">eDoubleClickDir</a></span> DoubleClickMove, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Dir</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Cross);
+<a name="291"></a>
+<a name="292"></a>function <span class="source_type">bool</span> Dodge(<span class="source_type"><a href="../engine/actor.html#EDoubleClickDir" class="source">eDoubleClickDir</a></span> DoubleClickMove)
+<a name="293"></a>{
+<a name="294"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>;
+<a name="295"></a>
+<a name="296"></a>	if ( bIsCrouched || bWantsToCrouch || (Physics != PHYS_Walking) )
+<a name="297"></a>		return false;
+<a name="298"></a>
+<a name="299"></a>    GetAxes(<span class="source_type">Rotation</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>);
+<a name="300"></a>	if (DoubleClickMove == DCLICK_Forward)
+<a name="301"></a>		Velocity = <span class="source_int">1.5</span>*GroundSpeed*<span class="source_type">X</span> + (Velocity Dot <span class="source_type">Y</span>)*<span class="source_type">Y</span>;
+<a name="302"></a>	else if (DoubleClickMove == DCLICK_Back)
+<a name="303"></a>		Velocity = -<span class="source_int">1.5</span>*GroundSpeed*<span class="source_type">X</span> + (Velocity Dot <span class="source_type">Y</span>)*<span class="source_type">Y</span>;
+<a name="304"></a>	else if (DoubleClickMove == DCLICK_Left)
+<a name="305"></a>		Velocity = <span class="source_int">1.5</span>*GroundSpeed*<span class="source_type">Y</span> + (Velocity Dot <span class="source_type">X</span>)*<span class="source_type">X</span>;
+<a name="306"></a>	else if (DoubleClickMove == DCLICK_Right)
+<a name="307"></a>		Velocity = -<span class="source_int">1.5</span>*GroundSpeed*<span class="source_type">Y</span> + (Velocity Dot <span class="source_type">X</span>)*<span class="source_type">X</span>;
+<a name="308"></a>
+<a name="309"></a>	Velocity.<span class="source_type">Z</span> = <span class="source_int">210</span>;
+<a name="310"></a>	CurrentDir = DoubleClickMove;
+<a name="311"></a>	SetPhysics(PHYS_Falling);
+<a name="312"></a>	return true;
+<a name="313"></a>}
+<a name="314"></a>
+<a name="315"></a>simulated function PostBeginPlay()
+<a name="316"></a>{
+<a name="317"></a>	Super.PostBeginPlay();
+<a name="318"></a>
+<a name="319"></a>	if ( <span class="source_type">Level</span>.bStartup && !bNoDefaultInventory )
+<a name="320"></a>		AddDefaultInventory();
+<a name="321"></a>}
+<a name="322"></a>
+<a name="323"></a>simulated function PostNetBeginPlay()
+<a name="324"></a>{
+<a name="325"></a>	local <span class="source_type"><a href="../unrealgame/squadai.html" class="source">SquadAI</a></span> <span class="source_type">S</span>;
+<a name="326"></a>	local <span class="source_type"><a href="../unrealgame/rosterentry.html" class="source">RosterEntry</a></span> <span class="source_type">R</span>;
+<a name="327"></a>
+<a name="328"></a>	Super.PostNetBeginPlay();
+<a name="329"></a>	if ( (Role == ROLE_Authority) && <span class="source_type">Level</span>.bStartup )
+<a name="330"></a>	{
+<a name="331"></a>		if ( <span class="source_type"><a href="../unrealgame/unrealmpgameinfo.html" class="source">UnrealMPGameInfo</a></span>(<span class="source_type">Level</span>.Game) == None )
+<a name="332"></a>		{
+<a name="333"></a>			if ( <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None )
+<a name="334"></a>			{
+<a name="335"></a>				ForEach DynamicActors(<span class="source_type">class</span><span class="source_name">'SquadAI'</span>,<span class="source_type">S</span>,SquadName)
+<a name="336"></a>					break;
+<a name="337"></a>				if ( <span class="source_type">S</span> == None )
+<a name="338"></a>					<span class="source_type">S</span> = spawn(<span class="source_type">class</span><span class="source_name">'SquadAI'</span>);
+<a name="339"></a>				<span class="source_type">S</span>.Tag = SquadName;
+<a name="340"></a>				if ( bIsSquadLeader || (<span class="source_type">S</span>.SquadLeader == None) )
+<a name="341"></a>					<span class="source_type">S</span>.SetLeader(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="342"></a>				<span class="source_type">S</span>.AddBot(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>));
+<a name="343"></a>			}
+<a name="344"></a>		}
+<a name="345"></a>		else
+<a name="346"></a>		{
+<a name="347"></a>			<span class="source_type">R</span> = GetPlacedRoster();
+<a name="348"></a>			<span class="source_type"><a href="../unrealgame/unrealmpgameinfo.html" class="source">UnrealMPGameInfo</a></span>(<span class="source_type">Level</span>.Game).InitPlacedBot(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>,<span class="source_type">R</span>);
+<a name="349"></a>		}
+<a name="350"></a>	}
+<a name="351"></a>}
+<a name="352"></a>
+<a name="353"></a>function <span class="source_type"><a href="../unrealgame/rosterentry.html" class="source">RosterEntry</a></span> GetPlacedRoster()
+<a name="354"></a>{
+<a name="355"></a>	return None;
+<a name="356"></a>}
+<a name="357"></a>
+<a name="358"></a>function SetMovementPhysics()
+<a name="359"></a>{
+<a name="360"></a>	if (Physics == PHYS_Falling)
+<a name="361"></a>		return;
+<a name="362"></a>	if ( <span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>.bWaterVolume )
+<a name="363"></a>		SetPhysics(PHYS_Swimming);
+<a name="364"></a>	else
+<a name="365"></a>		SetPhysics(PHYS_Walking);
+<a name="366"></a>}
+<a name="367"></a>
+<a name="368"></a>function TakeDrowningDamage()
+<a name="369"></a>{
+<a name="370"></a>	TakeDamage(<span class="source_int">5</span>, None, Location + CollisionHeight * vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0.5</span>)+ <span class="source_int">0.7</span> * CollisionRadius * <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.<span class="source_type">Rotation</span>), vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>), <span class="source_type">class</span><span class="source_name">'Drowned'</span>);
+<a name="371"></a>}
+<a name="372"></a>
+<a name="373"></a>function <span class="source_type">int</span> GetSpree()
+<a name="374"></a>{
+<a name="375"></a>	return spree;
+<a name="376"></a>}
+<a name="377"></a>
+<a name="378"></a>function IncrementSpree()
+<a name="379"></a>{
+<a name="380"></a>	spree++;
+<a name="381"></a>}
+<a name="382"></a>
+<a name="383"></a>simulated function PlayFootStep(<span class="source_type">int</span> Side)
+<a name="384"></a>{
+<a name="385"></a>	if ( (Role==ROLE_SimulatedProxy) || (<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) == None) || <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).bBehindView )
+<a name="386"></a>	{
+<a name="387"></a>		FootStepping(Side);
+<a name="388"></a>		return;
+<a name="389"></a>	}
+<a name="390"></a>}
+<a name="391"></a>
+<a name="392"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="393"></a>
+<a name="394"></a><span class="source_comment">/*
+<a name="395"></a>Pawn was killed - detach any controller, and die
+<a name="396"></a>*/</span>
+<a name="397"></a>simulated function ChunkUp( <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> HitRotation, <span class="source_type">float</span> <span class="source_type">ChunkPerterbation</span> )
+<a name="398"></a>{
+<a name="399"></a>	if ( (<span class="source_type">Level</span>.NetMode != NM_Client) && (<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> != None) )
+<a name="400"></a>	{
+<a name="401"></a>		if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bIsPlayer )
+<a name="402"></a>			<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.PawnDied(self);
+<a name="403"></a>		else
+<a name="404"></a>			<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.Destroy();
+<a name="405"></a>	}
+<a name="406"></a>
+<a name="407"></a>	bTearOff = true;
+<a name="408"></a>	HitDamageType = <span class="source_type">class</span><span class="source_name">'Gibbed'</span>; <span class="source_comment">// make sure clients gib also
+</span><a name="409"></a>	if ( (<span class="source_type">Level</span>.NetMode == NM_DedicatedServer) || (<span class="source_type">Level</span>.NetMode == NM_ListenServer) )
+<a name="410"></a>		GotoState(<span class="source_name">'TimingOut'</span>);
+<a name="411"></a>	if ( <span class="source_type">Level</span>.NetMode == NM_DedicatedServer )
+<a name="412"></a>		return;
+<a name="413"></a>	if ( <span class="source_type">class</span><span class="source_name">'GameInfo'</span>.static.UseLowGore() )
+<a name="414"></a>	{
+<a name="415"></a>		Destroy();
+<a name="416"></a>		return;
+<a name="417"></a>	}
+<a name="418"></a>	SpawnGibs(HitRotation,<span class="source_type">ChunkPerterbation</span>);
+<a name="419"></a>
+<a name="420"></a>	if ( <span class="source_type">Level</span>.NetMode != NM_ListenServer )
+<a name="421"></a>		Destroy();
+<a name="422"></a>}
+<a name="423"></a>
+<a name="424"></a><span class="source_comment">// spawn gibs (local, not replicated)
+</span><a name="425"></a>simulated function SpawnGibs(<span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> HitRotation, <span class="source_type">float</span> <span class="source_type">ChunkPerterbation</span>);
+<a name="426"></a>
+<a name="427"></a><span class="source_comment">/* TimingOut - where gibbed pawns go to die (delay so they can get replicated)
+<a name="428"></a>*/</span>
+<a name="429"></a><span class="source_type">State</span> TimingOut
+<a name="430"></a>{
+<a name="431"></a>ignores BaseChange, Landed, AnimEnd, <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>, Bump, <span class="source_type">HitWall</span>, HeadVolumeChange, PhysicsVolumeChange, Falling, BreathTimer;
+<a name="432"></a>
+<a name="433"></a>	function TakeDamage( <span class="source_type">int</span> <span class="source_type">Damage</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> instigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">hitlocation</span>,
+<a name="434"></a>							<span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">momentum</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, optional <span class="source_type">int</span> <span class="source_type">HitIndex</span>)
+<a name="435"></a>	{
+<a name="436"></a>	}
+<a name="437"></a>
+<a name="438"></a>	function BeginState()
+<a name="439"></a>	{
+<a name="440"></a>		SetPhysics(PHYS_None);
+<a name="441"></a>		SetCollision(false,false,false);
+<a name="442"></a>		LifeSpan = <span class="source_int">1.0</span>;
+<a name="443"></a>		if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> != None )
+<a name="444"></a>		{
+<a name="445"></a>			if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bIsPlayer )
+<a name="446"></a>				<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.PawnDied(self);
+<a name="447"></a>			else
+<a name="448"></a>				<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.Destroy();
+<a name="449"></a>		}
+<a name="450"></a>	}
+<a name="451"></a>}
+<a name="452"></a>
+<a name="453"></a><span class="source_type">State</span> Dying
+<a name="454"></a>{
+<a name="455"></a>ignores AnimEnd, <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>, Bump, <span class="source_type">HitWall</span>, HeadVolumeChange, PhysicsVolumeChange, Falling, BreathTimer;
+<a name="456"></a>
+<a name="457"></a>	function Landed(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>)
+<a name="458"></a>	{
+<a name="459"></a>		if ( <span class="source_type">Level</span>.NetMode == NM_DedicatedServer )
+<a name="460"></a>			return;
+<a name="461"></a>		if ( Shadow != None )
+<a name="462"></a>			Shadow.Destroy();
+<a name="463"></a>	}
+<a name="464"></a>
+<a name="465"></a>	singular function BaseChange()
+<a name="466"></a>	{
+<a name="467"></a>		Super.BaseChange();
+<a name="468"></a>		<span class="source_comment">// fixme - wake up karma
+</span><a name="469"></a>	}
+<a name="470"></a>
+<a name="471"></a>	function BeginState()
+<a name="472"></a>	{
+<a name="473"></a>		local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="474"></a>
+<a name="475"></a>		SetCollision(true,false,false);
+<a name="476"></a>        if ( bTearOff && (<span class="source_type">Level</span>.NetMode == NM_DedicatedServer) )
+<a name="477"></a>			LifeSpan = <span class="source_int">1.0</span>;
+<a name="478"></a>		else
+<a name="479"></a>			SetTimer(<span class="source_int">2.0</span>, false);
+<a name="480"></a>        SetPhysics(PHYS_Falling);
+<a name="481"></a>		bInvulnerableBody = true;
+<a name="482"></a>		if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> != None )
+<a name="483"></a>		{
+<a name="484"></a>			if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bIsPlayer )
+<a name="485"></a>				<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.PawnDied(self);
+<a name="486"></a>			else
+<a name="487"></a>				<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.Destroy();
+<a name="488"></a>		}
+<a name="489"></a>
+<a name="490"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Attached.length; <span class="source_type">i</span>++)
+<a name="491"></a>			if (Attached[<span class="source_type">i</span>] != None)
+<a name="492"></a>				Attached[<span class="source_type">i</span>].PawnBaseDied();
+<a name="493"></a>	}
+<a name="494"></a>}
+<a name="495"></a>
+<a name="496"></a>defaultproperties
+<a name="497"></a>{
+<a name="498"></a>     bAcceptAllInventory=True
+<a name="499"></a>     bPlayOwnFootsteps=True
+<a name="500"></a>     LoadOut=<span class="source_int">255</span>
+<a name="501"></a>     AttackSuitability=<span class="source_int">0.500000</span>
+<a name="502"></a>     SquadName=<span class="source_string">"Squad"</span>
+<a name="503"></a>     bPlayerShadows=True
+<a name="504"></a>     bCanCrouch=True
+<a name="505"></a>     bCanSwim=True
+<a name="506"></a>     bCanClimbLadders=True
+<a name="507"></a>     bCanStrafe=True
+<a name="508"></a>     bCanPickupInventory=True
+<a name="509"></a>     bMuffledHearing=True
+<a name="510"></a>     SightRadius=<span class="source_int">12000.000000</span>
+<a name="511"></a>     MeleeRange=<span class="source_int">20.000000</span>
+<a name="512"></a>     GroundSpeed=<span class="source_int">600.000000</span>
+<a name="513"></a>     AirSpeed=<span class="source_int">600.000000</span>
+<a name="514"></a>     AirControl=<span class="source_int">0.350000</span>
+<a name="515"></a>     WalkingPct=<span class="source_int">0.300000</span>
+<a name="516"></a>     CrouchedPct=<span class="source_int">0.300000</span>
+<a name="517"></a>     BaseEyeHeight=<span class="source_int">60.000000</span>
+<a name="518"></a>     EyeHeight=<span class="source_int">60.000000</span>
+<a name="519"></a>     CrouchHeight=<span class="source_int">39.000000</span>
+<a name="520"></a>     UnderWaterTime=<span class="source_int">20.000000</span>
+<a name="521"></a>     ControllerClass=<span class="source_type">Class</span><span class="source_name">'UnrealGame.Bot'</span>
+<a name="522"></a>     LightHue=<span class="source_int">40</span>
+<a name="523"></a>     LightSaturation=<span class="source_int">128</span>
+<a name="524"></a>     LightBrightness=<span class="source_int">70.000000</span>
+<a name="525"></a>     LightRadius=<span class="source_int">6.000000</span>
+<a name="526"></a>     bStasis=False
+<a name="527"></a>     AmbientGlow=<span class="source_int">40</span>
+<a name="528"></a>     bUseCylinderCollision=True
+<a name="529"></a>     Buoyancy=<span class="source_int">99.000000</span>
+<a name="530"></a>     RotationRate=(Pitch=<span class="source_int">0</span>,Roll=<span class="source_int">2048</span>)
+<a name="531"></a>     ForceType=FT_DragAlong
+<a name="532"></a>     ForceRadius=<span class="source_int">100.000000</span>
+<a name="533"></a>     ForceScale=<span class="source_int">2.500000</span>
+<a name="534"></a>}
+<a name="535"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/unrealpawn.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UnrealPawn">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/unrealmpgameinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/unrealplayer.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:09.729 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

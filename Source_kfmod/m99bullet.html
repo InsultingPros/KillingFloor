@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.M99Bullet</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/m99bullet.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#M99Bullet">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/m99attachment.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/m99fire.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/m99bullet.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/m99bullet.html">M99Bullet</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// M99Bullet
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_comment">// M99 Sniper Rifle bullet class
+</span><a name="5"></a><span class="source_comment">//=============================================================================
+</span><a name="6"></a><span class="source_comment">// Killing Floor Source
+</span><a name="7"></a><span class="source_comment">// Copyright (C) 2012 Tripwire Interactive LLC
+</span><a name="8"></a><span class="source_comment">// - John "Ramm-Jaeger" Gibson, and IJC Development
+</span><a name="9"></a><span class="source_comment">//=============================================================================
+</span><a name="10"></a>
+<a name="11"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/m99bullet.html" class="source">M99Bullet</a></span> extends <span class="source_type"><a href="../engine/projectile.html" class="source">Projectile</a></span>;
+<a name="12"></a>
+<a name="13"></a>var <span class="source_type"><a href="../engine/xemitter.html" class="source">xEmitter</a></span> Trail;
+<a name="14"></a>var() <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; DamageTypeHeadShot;
+<a name="15"></a>var <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> Arrow_hitwall[<span class="source_int">3</span>];
+<a name="16"></a>var <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> Arrow_rico[<span class="source_int">2</span>];
+<a name="17"></a>var <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> Arrow_hitarmor;
+<a name="18"></a>var <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> Arrow_hitflesh;
+<a name="19"></a>
+<a name="20"></a>var() <span class="source_type">float</span> HeadShotDamageMult;
+<a name="21"></a>
+<a name="22"></a>var <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> ImpactActor;
+<a name="23"></a>var <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> IgnoreImpactPawn;
+<a name="24"></a>
+<a name="25"></a>var()	<span class="source_type">string</span>	AmbientSoundRef;
+<a name="26"></a><span class="source_comment">//var		string	MeshRef;
+</span><a name="27"></a>var		<span class="source_type">string</span>	Arrow_hitwallRef[<span class="source_int">3</span>];
+<a name="28"></a>var		<span class="source_type">string</span>	Arrow_ricoRef[<span class="source_int">2</span>];
+<a name="29"></a>var		<span class="source_type">string</span>	Arrow_hitarmorRef;
+<a name="30"></a>var		<span class="source_type">string</span>	Arrow_hitfleshRef;
+<a name="31"></a>
+<a name="32"></a>replication
+<a name="33"></a>{
+<a name="34"></a>	reliable if ( Role==ROLE_Authority && bNetInitial )
+<a name="35"></a>		ImpactActor;
+<a name="36"></a>}
+<a name="37"></a>
+<a name="38"></a>static function PreloadAssets()
+<a name="39"></a>{
+<a name="40"></a>	default.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.AmbientSoundRef, <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="41"></a>
+<a name="42"></a>	default.Arrow_hitwall[<span class="source_int">0</span>] = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Arrow_hitwallRef[<span class="source_int">0</span>], <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="43"></a>	default.Arrow_hitwall[<span class="source_int">1</span>] = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Arrow_hitwallRef[<span class="source_int">1</span>], <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="44"></a>	default.Arrow_hitwall[<span class="source_int">2</span>] = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Arrow_hitwallRef[<span class="source_int">2</span>], <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="45"></a>
+<a name="46"></a>	default.Arrow_rico[<span class="source_int">0</span>] = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Arrow_ricoRef[<span class="source_int">0</span>], <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="47"></a>	default.Arrow_rico[<span class="source_int">1</span>] = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Arrow_ricoRef[<span class="source_int">1</span>], <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="48"></a>
+<a name="49"></a>	default.Arrow_hitarmor = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Arrow_hitarmorRef, <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="50"></a>	default.Arrow_hitflesh = <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>(DynamicLoadObject(default.Arrow_hitfleshRef, <span class="source_type">class</span><span class="source_name">'Sound'</span>, true));
+<a name="51"></a>
+<a name="52"></a>	<span class="source_comment">//UpdateDefaultMesh(Mesh(DynamicLoadObject(default.MeshRef, class'Mesh', true)));
+</span><a name="53"></a>}
+<a name="54"></a>
+<a name="55"></a>static function <span class="source_type">bool</span> UnloadAssets()
+<a name="56"></a>{
+<a name="57"></a>	default.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = none;
+<a name="58"></a>	default.Arrow_hitwall[<span class="source_int">0</span>] = none;
+<a name="59"></a>	default.Arrow_hitwall[<span class="source_int">1</span>] = none;
+<a name="60"></a>	default.Arrow_hitwall[<span class="source_int">2</span>] = none;
+<a name="61"></a>	default.Arrow_rico[<span class="source_int">0</span>] = none;
+<a name="62"></a>	default.Arrow_rico[<span class="source_int">1</span>] = none;
+<a name="63"></a>	default.Arrow_hitarmor = none;
+<a name="64"></a>	default.Arrow_hitflesh = none;
+<a name="65"></a>
+<a name="66"></a>	<span class="source_comment">//UpdateDefaultMesh(none);
+</span><a name="67"></a>
+<a name="68"></a>	return true;
+<a name="69"></a>}
+<a name="70"></a>
+<a name="71"></a>simulated function PostNetBeginPlay()
+<a name="72"></a>{
+<a name="73"></a>	if( <span class="source_type">Level</span>.NetMode!=NM_DedicatedServer && (<span class="source_type">Level</span>.NetMode!=NM_Client || Physics==PHYS_Projectile) )
+<a name="74"></a>	{
+<a name="75"></a>		if ( !<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>.bWaterVolume )
+<a name="76"></a>		{
+<a name="77"></a>			Trail = Spawn(<span class="source_type">class</span><span class="source_name">'KFArrowTracer'</span>,self);
+<a name="78"></a>			Trail.Lifespan = Lifespan;
+<a name="79"></a>		}
+<a name="80"></a>	}
+<a name="81"></a>	else if( <span class="source_type">Level</span>.NetMode==NM_Client )
+<a name="82"></a>	{
+<a name="83"></a>		if( ImpactActor!=None )
+<a name="84"></a>			SetBase(ImpactActor);
+<a name="85"></a>		GoToState(<span class="source_name">'OnWall'</span>);
+<a name="86"></a>	}
+<a name="87"></a>}
+<a name="88"></a>simulated function PostBeginPlay()
+<a name="89"></a>{
+<a name="90"></a>	Super.PostBeginPlay();
+<a name="91"></a>	Velocity = Speed * <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type">Rotation</span>);
+<a name="92"></a>	if( <span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>.bWaterVolume )
+<a name="93"></a>		Velocity*=<span class="source_int">0.65</span>;
+<a name="94"></a>}
+<a name="95"></a>
+<a name="96"></a>simulated <span class="source_type">state</span> OnWall
+<a name="97"></a>{
+<a name="98"></a>Ignores <span class="source_type">HitWall</span>;
+<a name="99"></a>
+<a name="100"></a>	simulated function Tick( <span class="source_type">float</span> <span class="source_type">Delta</span> )
+<a name="101"></a>	{
+<a name="102"></a>		if( Base==None )
+<a name="103"></a>		{
+<a name="104"></a>			if( <span class="source_type">Level</span>.NetMode==NM_Client )
+<a name="105"></a>				bHidden = True;
+<a name="106"></a>			else Destroy();
+<a name="107"></a>		}
+<a name="108"></a>	}
+<a name="109"></a>
+<a name="110"></a>	simulated function BeginState()
+<a name="111"></a>	{
+<a name="112"></a>		bCollideWorld = False;
+<a name="113"></a>		if( <span class="source_type">Level</span>.NetMode!=NM_DedicatedServer )
+<a name="114"></a>			<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = None;
+<a name="115"></a>		if( Trail!=None )
+<a name="116"></a>			Trail.mRegen = False;
+<a name="117"></a>		SetCollisionSize(<span class="source_int">25</span>,<span class="source_int">25</span>);
+<a name="118"></a>	}
+<a name="119"></a>}
+<a name="120"></a>
+<a name="121"></a>simulated function Explode(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>);
+<a name="122"></a>
+<a name="123"></a>simulated function ProcessTouch (<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>)
+<a name="124"></a>{
+<a name="125"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">X</span>,End,HL,HN;
+<a name="126"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> TempHitLocation, <span class="source_type">HitNormal</span>;
+<a name="127"></a>	local array&lt;<span class="source_type">int</span>&gt;	HitPoints;
+<a name="128"></a>    local <span class="source_type"><a href="../kfmod/kfpawn.html" class="source">KFPawn</a></span> HitPawn;
+<a name="129"></a>	local <span class="source_type">bool</span>	bHitWhipAttachment;
+<a name="130"></a>
+<a name="131"></a>	if ( <span class="source_type">Other</span> == none || <span class="source_type">Other</span> == <span class="source_type">Instigator</span> || <span class="source_type">Other</span>.Base == <span class="source_type">Instigator</span> || !<span class="source_type">Other</span>.bBlockHitPointTraces || <span class="source_type">Other</span>==IgnoreImpactPawn ||
+<a name="132"></a>        (IgnoreImpactPawn != none && <span class="source_type">Other</span>.Base == IgnoreImpactPawn) )
+<a name="133"></a>		return;
+<a name="134"></a>
+<a name="135"></a>	<span class="source_type">X</span> =  <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type">Rotation</span>);
+<a name="136"></a>
+<a name="137"></a> 	if( <span class="source_type"><a href="../roengine/robulletwhipattachment.html" class="source">ROBulletWhipAttachment</a></span>(<span class="source_type">Other</span>) != none )
+<a name="138"></a>	{
+<a name="139"></a>
+<a name="140"></a>    	bHitWhipAttachment=true;
+<a name="141"></a>
+<a name="142"></a>        if(!<span class="source_type">Other</span>.Base.bDeleteMe)
+<a name="143"></a>        {
+<a name="144"></a>	        <span class="source_type">Other</span> = <span class="source_type">Instigator</span>.HitPointTrace(TempHitLocation, <span class="source_type">HitNormal</span>, <span class="source_type">HitLocation</span> + (<span class="source_int">65535</span> * <span class="source_type">X</span>), HitPoints, <span class="source_type">HitLocation</span>,, <span class="source_int">1</span>);
+<a name="145"></a>
+<a name="146"></a>			if( <span class="source_type">Other</span> == none || HitPoints.Length == <span class="source_int">0</span> )
+<a name="147"></a>				return;
+<a name="148"></a>
+<a name="149"></a>			HitPawn = <span class="source_type"><a href="../kfmod/kfpawn.html" class="source">KFPawn</a></span>(<span class="source_type">Other</span>);
+<a name="150"></a>
+<a name="151"></a>            if (Role == ROLE_Authority)
+<a name="152"></a>            {
+<a name="153"></a>    	    	if ( HitPawn != none )
+<a name="154"></a>    	    	{
+<a name="155"></a>     				<span class="source_comment">// Hit detection debugging
+</span><a name="156"></a>    				<span class="source_comment">/*log("Bullet hit "$HitPawn.PlayerReplicationInfo.PlayerName);
+<a name="157"></a>    				HitPawn.HitStart = HitLocation;
+<a name="158"></a>    				HitPawn.HitEnd = HitLocation + (65535 * X);*/</span>
+<a name="159"></a>
+<a name="160"></a>                    if( !HitPawn.bDeleteMe )
+<a name="161"></a>                    	HitPawn.ProcessLocationalDamage(<span class="source_type">Damage</span>, <span class="source_type">Instigator</span>, TempHitLocation, MomentumTransfer * <span class="source_type">X</span>, MyDamageType,HitPoints);
+<a name="162"></a>
+<a name="163"></a>        			<span class="source_type">Damage</span>/=<span class="source_int">1.25</span>;
+<a name="164"></a>        			Velocity*=<span class="source_int">0.85</span>;
+<a name="165"></a>
+<a name="166"></a>                    IgnoreImpactPawn = HitPawn;
+<a name="167"></a>
+<a name="168"></a>            		if( <span class="source_type">Level</span>.NetMode!=NM_Client )
+<a name="169"></a>            			PlayhitNoise(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>)!=none && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).ShieldStrength&gt;<span class="source_int">0</span>);
+<a name="170"></a>
+<a name="171"></a>                    <span class="source_comment">// Hit detection debugging
+</span><a name="172"></a>    				<span class="source_comment">/*if( Level.NetMode == NM_Standalone)
+<a name="173"></a>    					HitPawn.DrawBoneLocation();*/</span>
+<a name="174"></a>
+<a name="175"></a>    				 return;
+<a name="176"></a>    	    	}
+<a name="177"></a>    		}
+<a name="178"></a>		}
+<a name="179"></a>		else
+<a name="180"></a>		{
+<a name="181"></a>			return;
+<a name="182"></a>		}
+<a name="183"></a>	}
+<a name="184"></a>
+<a name="185"></a>	if( <span class="source_type">Level</span>.NetMode!=NM_Client )
+<a name="186"></a>		PlayhitNoise(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>)!=none && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).ShieldStrength&gt;<span class="source_int">0</span>);
+<a name="187"></a>
+<a name="188"></a>	if( Physics==PHYS_Projectile && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>)!=None && <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type">Other</span>)==None )
+<a name="189"></a>	{
+<a name="190"></a>		IgnoreImpactPawn = <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>);
+<a name="191"></a>		if( IgnoreImpactPawn.IsHeadShot(<span class="source_type">HitLocation</span>, <span class="source_type">X</span>, <span class="source_int">1.0</span>) )
+<a name="192"></a>			<span class="source_type">Other</span>.TakeDamage(<span class="source_type">Damage</span> * HeadShotDamageMult, <span class="source_type">Instigator</span>, <span class="source_type">HitLocation</span>, MomentumTransfer * <span class="source_type">X</span>, DamageTypeHeadShot);
+<a name="193"></a>		else <span class="source_type">Other</span>.TakeDamage(<span class="source_type">Damage</span>, <span class="source_type">Instigator</span>, <span class="source_type">HitLocation</span>, MomentumTransfer * <span class="source_type">X</span>, MyDamageType);
+<a name="194"></a>		<span class="source_type">Damage</span>/=<span class="source_int">1.25</span>;
+<a name="195"></a>		Velocity*=<span class="source_int">0.85</span>;
+<a name="196"></a>		Return;
+<a name="197"></a>	}
+<a name="198"></a>	else if( <span class="source_type"><a href="../kfmod/extendedzcollision.html" class="source">ExtendedZCollision</a></span>(<span class="source_type">Other</span>)!=None && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>.<span class="source_type">Owner</span>)!=None )
+<a name="199"></a>	{
+<a name="200"></a>		if( <span class="source_type">Other</span>.<span class="source_type">Owner</span>==IgnoreImpactPawn )
+<a name="201"></a>			Return;
+<a name="202"></a>		IgnoreImpactPawn = <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>.<span class="source_type">Owner</span>);
+<a name="203"></a>		if ( IgnoreImpactPawn.IsHeadShot(<span class="source_type">HitLocation</span>, <span class="source_type">X</span>, <span class="source_int">1.0</span>))
+<a name="204"></a>			<span class="source_type">Other</span>.TakeDamage(<span class="source_type">Damage</span> * HeadShotDamageMult, <span class="source_type">Instigator</span>, <span class="source_type">HitLocation</span>, MomentumTransfer * <span class="source_type">X</span>, DamageTypeHeadShot);
+<a name="205"></a>		else <span class="source_type">Other</span>.TakeDamage(<span class="source_type">Damage</span>, <span class="source_type">Instigator</span>, <span class="source_type">HitLocation</span>, MomentumTransfer * <span class="source_type">X</span>, MyDamageType);
+<a name="206"></a>		<span class="source_type">Damage</span>/=<span class="source_int">1.25</span>;
+<a name="207"></a>		Velocity*=<span class="source_int">0.85</span>;
+<a name="208"></a>		Return;
+<a name="209"></a>	}
+<a name="210"></a>	if( <span class="source_type">Level</span>.NetMode!=NM_DedicatedServer && SkeletalMesh(<span class="source_type">Other</span>.<span class="source_type">Mesh</span>)!=None && <span class="source_type">Other</span>.DrawType==DT_Mesh && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>)!=None )
+<a name="211"></a>	{ <span class="source_comment">// Attach victim to the wall behind if it dies.
+</span><a name="212"></a>		End = <span class="source_type">Other</span>.Location+<span class="source_type">X</span>*<span class="source_int">600</span>;
+<a name="213"></a>		if( <span class="source_type">Other</span>.Trace(HL,HN,End,<span class="source_type">Other</span>.Location,False)!=None )
+<a name="214"></a>			Spawn(<span class="source_type">Class</span><span class="source_name">'BodyAttacher'</span>,<span class="source_type">Other</span>,,<span class="source_type">HitLocation</span>).AttachEndPoint = HL-HN;
+<a name="215"></a>	}
+<a name="216"></a>	<span class="source_comment">//Stick(Other,HitLocation);
+</span><a name="217"></a>	if( <span class="source_type">Level</span>.NetMode!=NM_Client )
+<a name="218"></a>	{
+<a name="219"></a>		if (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>) != none && <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).IsHeadShot(<span class="source_type">HitLocation</span>, <span class="source_type">X</span>, <span class="source_int">1.0</span>))
+<a name="220"></a>			<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).TakeDamage(<span class="source_type">Damage</span> * HeadShotDamageMult, <span class="source_type">Instigator</span>, <span class="source_type">HitLocation</span>, MomentumTransfer * <span class="source_type">X</span>, DamageTypeHeadShot);
+<a name="221"></a>		else <span class="source_type">Other</span>.TakeDamage(<span class="source_type">Damage</span>, <span class="source_type">Instigator</span>, <span class="source_type">HitLocation</span>, MomentumTransfer * <span class="source_type">X</span>, MyDamageType);
+<a name="222"></a>	}
+<a name="223"></a>}
+<a name="224"></a>
+<a name="225"></a>function PlayhitNoise( <span class="source_type">bool</span> <span class="source_type">bArmored</span> )
+<a name="226"></a>{
+<a name="227"></a>	if( <span class="source_type">bArmored</span> )
+<a name="228"></a>		PlaySound(Arrow_hitarmor);   <span class="source_comment">// implies hit a target with shield/armor
+</span><a name="229"></a>	else PlaySound(Arrow_hitflesh);
+<a name="230"></a>}
+<a name="231"></a>
+<a name="232"></a>simulated function <span class="source_type">HitWall</span>( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>, <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Wall</span> )
+<a name="233"></a>{
+<a name="234"></a>	speed = VSize(Velocity);
+<a name="235"></a>
+<a name="236"></a>	if ( Role==ROLE_Authority && <span class="source_type">Wall</span>!=none )
+<a name="237"></a>	{
+<a name="238"></a>		if ( !<span class="source_type">Wall</span>.bStatic && !<span class="source_type">Wall</span>.bWorldGeometry )
+<a name="239"></a>		{
+<a name="240"></a>			if ( <span class="source_type">Instigator</span> == None || <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None )
+<a name="241"></a>			{
+<a name="242"></a>				<span class="source_type">Wall</span>.SetDelayedDamageInstigatorController(InstigatorController);
+<a name="243"></a>			}
+<a name="244"></a>
+<a name="245"></a>			<span class="source_type">Wall</span>.TakeDamage( <span class="source_type">Damage</span>, <span class="source_type">instigator</span>, Location, MomentumTransfer * Normal(Velocity), MyDamageType);
+<a name="246"></a>			HurtWall = <span class="source_type">Wall</span>;
+<a name="247"></a>		}
+<a name="248"></a>		else
+<a name="249"></a>		{
+<a name="250"></a>			Destroy();
+<a name="251"></a>		}
+<a name="252"></a>
+<a name="253"></a>		MakeNoise(<span class="source_int">1.0</span>);
+<a name="254"></a>	}
+<a name="255"></a>
+<a name="256"></a>	PlaySound(Arrow_hitwall[Rand(<span class="source_int">3</span>)],,<span class="source_int">2.5</span>*TransientSoundVolume);
+<a name="257"></a>
+<a name="258"></a>	if ( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer )
+<a name="259"></a>	{
+<a name="260"></a>		Spawn(<span class="source_type">class</span><span class="source_name">'ROBulletHitEffect'</span>,,, Location, <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>(-<span class="source_type">HitNormal</span>));
+<a name="261"></a>	}
+<a name="262"></a>
+<a name="263"></a>	if( <span class="source_type">Instigator</span>!=None && <span class="source_type">Level</span>.NetMode!=NM_Client )
+<a name="264"></a>	{
+<a name="265"></a>		MakeNoise(<span class="source_int">0.3</span>);
+<a name="266"></a>	}
+<a name="267"></a>
+<a name="268"></a>	<span class="source_comment">//Stick(Wall, Location+HitNormal);
+</span><a name="269"></a>}
+<a name="270"></a>
+<a name="271"></a>simulated function Landed(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>)
+<a name="272"></a>{
+<a name="273"></a>	<span class="source_type">HitWall</span>(<span class="source_type">HitNormal</span>, None);
+<a name="274"></a>}
+<a name="275"></a>
+<a name="276"></a>simulated function Stick(<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">HitActor</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>)
+<a name="277"></a>{
+<a name="278"></a>	local <span class="source_type">name</span> NearestBone;
+<a name="279"></a>	local <span class="source_type">float</span> <span class="source_type">dist</span>;
+<a name="280"></a>
+<a name="281"></a>	SetPhysics(PHYS_None);
+<a name="282"></a>
+<a name="283"></a>	if (<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>(<span class="source_type">HitActor</span>) != none)
+<a name="284"></a>	{
+<a name="285"></a>		NearestBone = GetClosestBone(<span class="source_type">HitLocation</span>, <span class="source_type">HitLocation</span>, <span class="source_type">dist</span> , <span class="source_name">'CHR_Spine2'</span> , <span class="source_int">15</span> );
+<a name="286"></a>		<span class="source_type">HitActor</span>.AttachToBone(self,NearestBone);
+<a name="287"></a>	}
+<a name="288"></a>	else SetBase(<span class="source_type">HitActor</span>);
+<a name="289"></a>
+<a name="290"></a>	ImpactActor = <span class="source_type">HitActor</span>;
+<a name="291"></a>
+<a name="292"></a>	if (Base==None)
+<a name="293"></a>		Destroy();
+<a name="294"></a>	else GoToState(<span class="source_name">'OnWall'</span>);
+<a name="295"></a>}
+<a name="296"></a>
+<a name="297"></a>simulated function PhysicsVolumeChange( <span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span> <span class="source_type"><a href="../engine/volume.html" class="source">Volume</a></span> )
+<a name="298"></a>{
+<a name="299"></a>	if( <span class="source_type"><a href="../engine/volume.html" class="source">Volume</a></span>.bWaterVolume && !<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>.bWaterVolume )
+<a name="300"></a>	{
+<a name="301"></a>		if ( Trail != None )
+<a name="302"></a>			Trail.mRegen=False;
+<a name="303"></a>		Velocity*=<span class="source_int">0.65</span>;
+<a name="304"></a>	}
+<a name="305"></a>}
+<a name="306"></a>
+<a name="307"></a>simulated function Destroyed()
+<a name="308"></a>{
+<a name="309"></a>	if (Trail !=None)
+<a name="310"></a>		Trail.mRegen = False;
+<a name="311"></a>	Super.Destroyed();
+<a name="312"></a>}
+<a name="313"></a>
+<a name="314"></a>defaultproperties
+<a name="315"></a>{
+<a name="316"></a>     DamageTypeHeadShot=<span class="source_type">Class</span><span class="source_name">'KFMod.DamTypeM99HeadShot'</span>
+<a name="317"></a>     HeadShotDamageMult=<span class="source_int">2.250000</span>
+<a name="318"></a>     AmbientSoundRef=<span class="source_string">"PatchSounds.ArrowZip"</span>
+<a name="319"></a>     Arrow_hitwallRef(<span class="source_int">0</span>)=<span class="source_string">"KFWeaponSound.bullethitflesh2"</span>
+<a name="320"></a>     Arrow_hitwallRef(<span class="source_int">1</span>)=<span class="source_string">"KFWeaponSound.bullethitflesh3"</span>
+<a name="321"></a>     Arrow_hitwallRef(<span class="source_int">2</span>)=<span class="source_string">"KFWeaponSound.bullethitflesh4"</span>
+<a name="322"></a>     Arrow_ricoRef(<span class="source_int">0</span>)=<span class="source_string">"KFWeaponSound.bullethitmetal"</span>
+<a name="323"></a>     Arrow_ricoRef(<span class="source_int">1</span>)=<span class="source_string">"KFWeaponSound.bullethitmetal3"</span>
+<a name="324"></a>     Arrow_hitarmorRef=<span class="source_string">"KFWeaponSound.bullethitflesh4"</span>
+<a name="325"></a>     Arrow_hitfleshRef=<span class="source_string">"KFWeaponSound.bullethitflesh4"</span>
+<a name="326"></a>     Speed=<span class="source_int">28000.000000</span>
+<a name="327"></a>     MaxSpeed=<span class="source_int">200000.000000</span>
+<a name="328"></a>     <span class="source_type">Damage</span>=<span class="source_int">675.000000</span>
+<a name="329"></a>     MomentumTransfer=<span class="source_int">150000.000000</span>
+<a name="330"></a>     MyDamageType=<span class="source_type">Class</span><span class="source_name">'KFMod.DamTypeM99SniperRifle'</span>
+<a name="331"></a>     ExplosionDecal=<span class="source_type">Class</span><span class="source_name">'KFMod.ShotgunDecal'</span>
+<a name="332"></a>     CullDistance=<span class="source_int">3000.000000</span>
+<a name="333"></a>     bNetTemporary=False
+<a name="334"></a>     LifeSpan=<span class="source_int">2.000000</span>
+<a name="335"></a>     DrawScale=<span class="source_int">15.000000</span>
+<a name="336"></a>     AmbientGlow=<span class="source_int">30</span>
+<a name="337"></a>     Style=STY_Alpha
+<a name="338"></a>     bUnlit=False
+<a name="339"></a>     bFullVolume=True
+<a name="340"></a>}
+<a name="341"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/m99bullet.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#M99Bullet">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/m99attachment.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/m99fire.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:05.108 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFGui.KFServerBrowser</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kfserverbrowser.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFServerBrowser">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kfrules.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kfserverlistpagefriends.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfgui/kfserverbrowser.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfgui/kfgui-overview.html">KFGui</a>.<a href="../kfgui/kfserverbrowser.html">KFServerBrowser</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfgui/kfserverbrowser.html" class="source">KFServerBrowser</a></span> extends <span class="source_type"><a href="../gui2k4/ut2k4serverbrowser.html" class="source">UT2K4ServerBrowser</a></span>;
+<a name="2"></a>
+<a name="3"></a>var private <span class="source_type"><a href="../ipdrv/romasterserverclient.html" class="source">ROMasterServerClient</a></span>  ROMSC;
+<a name="4"></a>var localized <span class="source_type">string</span> AllTypesString;
+<a name="5"></a>var <span class="source_type">string</span> AllTypesClassName;
+<a name="6"></a>
+<a name="7"></a>var localized <span class="source_type">string</span> ServerPerkGatedHeading;
+<a name="8"></a>
+<a name="9"></a>function InitializeGameTypeCombo(optional <span class="source_type">bool</span> ClearFirst)
+<a name="10"></a>{
+<a name="11"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="12"></a>	local <span class="source_type"><a href="../gui2k4/ut2k4browser_serverslist.html" class="source">UT2K4Browser_ServersList</a></span>  ListObj;
+<a name="13"></a>	local array&lt;<span class="source_type"><a href="../engine/cachemanager.html" class="source">CacheManager</a></span>.<span class="source_type"><a href="../engine/cachemanager.html#MapRecord" class="source">MapRecord</a></span>&gt; <span class="source_type">Maps</span>;
+<a name="14"></a>
+<a name="15"></a>	co_GameType.MyComboBox.MaxVisibleItems = <span class="source_int">10</span>;
+<a name="16"></a>	PopulateGameTypes();
+<a name="17"></a>	if (ClearFirst)
+<a name="18"></a>		co_GameType.MyComboBox.<span class="source_type">List</span>.Clear();
+<a name="19"></a>
+<a name="20"></a>	j = -<span class="source_int">1</span>;
+<a name="21"></a>
+<a name="22"></a>    <span class="source_comment">// Adds the option to search all game types
+</span><a name="23"></a>	co_GameType.AddItem(AllTypesString, none, AllTypesClassName);
+<a name="24"></a>	CurrentGameType = AllTypesClassName;
+<a name="25"></a>
+<a name="26"></a>	<span class="source_comment">// Create a seperate list for each gametype, and store the lists in the combo box
+</span><a name="27"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Records.Length; <span class="source_type">i</span>++)
+<a name="28"></a>	{
+<a name="29"></a>		<span class="source_type">class</span><span class="source_name">'CacheManager'</span>.static.GetMapList( <span class="source_type">Maps</span>, Records[<span class="source_type">i</span>].<span class="source_type">MapPrefix</span> );
+<a name="30"></a>		if ( <span class="source_type">Maps</span>.Length == <span class="source_int">0</span> )
+<a name="31"></a>			continue;
+<a name="32"></a>
+<a name="33"></a>		ListObj = new(None) <span class="source_type">class</span><span class="source_name">'GUI2K4.UT2K4Browser_ServersList'</span>;
+<a name="34"></a>		co_GameType.AddItem(Records[<span class="source_type">i</span>].GameName, ListObj, Records[<span class="source_type">i</span>].<span class="source_type">ClassName</span>);
+<a name="35"></a>	}
+<a name="36"></a>
+<a name="37"></a>
+<a name="38"></a>
+<a name="39"></a>	j = co_GameType.FindIndex(CurrentGameType,true,true);
+<a name="40"></a>	if (j != -<span class="source_int">1</span>)
+<a name="41"></a>	{
+<a name="42"></a>		co_GameType.SetIndex(j);
+<a name="43"></a>		SetFilterInfo();
+<a name="44"></a>	}
+<a name="45"></a>}
+<a name="46"></a>
+<a name="47"></a>function <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span> Uplink()
+<a name="48"></a>{
+<a name="49"></a>	if ( ROMSC == None && PlayerOwner() != None )
+<a name="50"></a>		ROMSC = PlayerOwner().Spawn(<span class="source_type">class</span><span class="source_name">'ROMasterServerClient'</span>);
+<a name="51"></a>
+<a name="52"></a>	return ROMSC;
+<a name="53"></a>}
+<a name="54"></a>
+<a name="55"></a><span class="source_comment">// Server browser must remain persistent across level changes, in order for the IRC client to function properly
+</span><a name="56"></a>event <span class="source_type">bool</span> NotifyLevelChange()
+<a name="57"></a>{
+<a name="58"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="59"></a>
+<a name="60"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; c_Tabs.TabStack.Length; <span class="source_type">i</span>++ )
+<a name="61"></a>	{
+<a name="62"></a>		if ( <span class="source_type"><a href="../kfgui/kfserverlistpageinternet.html" class="source">KFServerListPageInternet</a></span>(c_Tabs.TabStack[<span class="source_type">i</span>].MyPanel) != none )
+<a name="63"></a>		{
+<a name="64"></a>			<span class="source_type"><a href="../kfgui/kfserverlistpageinternet.html" class="source">KFServerListPageInternet</a></span>(c_Tabs.TabStack[<span class="source_type">i</span>].MyPanel).NotifyLevelChange();
+<a name="65"></a>		}
+<a name="66"></a>	}
+<a name="67"></a>
+<a name="68"></a>	if ( ROMSC != None )
+<a name="69"></a>	{
+<a name="70"></a>		ROMSC.Stop();
+<a name="71"></a>		ROMSC.Destroy();
+<a name="72"></a>		ROMSC = None;
+<a name="73"></a>	}
+<a name="74"></a>
+<a name="75"></a>	LevelChanged();
+<a name="76"></a>	return false;
+<a name="77"></a>}
+<a name="78"></a>
+<a name="79"></a>function EnableMSTabs()
+<a name="80"></a>{
+<a name="81"></a>}
+<a name="82"></a>
+<a name="83"></a>function DisableMSTabs()
+<a name="84"></a>{
+<a name="85"></a>	Verified = False;
+<a name="86"></a>}
+<a name="87"></a>
+<a name="88"></a>function AddToServerCache(<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> Entry)
+<a name="89"></a>{
+<a name="90"></a>}
+<a name="91"></a>
+<a name="92"></a>function <span class="source_type">bool</span> ComboOnPreDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="93"></a>{
+<a name="94"></a>	co_GameType.WinTop = co_GameType.RelativeTop(t_Header.ActualTop() + t_Header.ActualHeight() + <span class="source_type">float</span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.<span class="source_type">ResY</span>) / <span class="source_int">100.0</span>);
+<a name="95"></a>	co_GameType.WinLeft = co_GameType.RelativeLeft((c_Tabs.ActualLeft() + c_Tabs.ActualWidth()) - (co_GameType.ActualWidth() + <span class="source_int">12</span>));
+<a name="96"></a>	return false;
+<a name="97"></a>}
+<a name="98"></a>
+<a name="99"></a>function JoinClicked()
+<a name="100"></a>{
+<a name="101"></a>    local <span class="source_type">int</span> InternetPageIndex, CurrentServerDifficulty, PlayerHighestPerkLevel;
+<a name="102"></a>    local <span class="source_type"><a href="../kfgui/kfserverlistpageinternet.html" class="source">KFServerListPageInternet</a></span> InternetPage;
+<a name="103"></a>    local <span class="source_type">string</span> PerkLevels;
+<a name="104"></a>
+<a name="105"></a>    InternetPageIndex = c_Tabs.TabIndex( PanelCaption[<span class="source_int">4</span>] );
+<a name="106"></a>    InternetPage = <span class="source_type"><a href="../kfgui/kfserverlistpageinternet.html" class="source">KFServerListPageInternet</a></span>( c_Tabs.TabStack[InternetPageIndex].MyPanel );
+<a name="107"></a>    CurrentServerDifficulty = InternetPage.GetCurrentServerDifficulty();
+<a name="108"></a>    PlayerHighestPerkLevel = CalcPlayerHighestPerkLevel( PlayerOwner() );
+<a name="109"></a>
+<a name="110"></a>    if( PlayerHighestPerkLevel &lt; <span class="source_int">2</span> && CurrentServerDifficulty &gt; <span class="source_int">1</span> ) <span class="source_comment">// 0 - beginner, 1 - normal
+</span><a name="111"></a>    {
+<a name="112"></a>        <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"GUI2K4.UT2K4GenericMessageBox"</span>,ServerPerkGatedHeading,<span class="source_string">""</span>);
+<a name="113"></a>    }
+<a name="114"></a>    else
+<a name="115"></a>    {
+<a name="116"></a>        super.JoinClicked();
+<a name="117"></a>    }
+<a name="118"></a>}
+<a name="119"></a>
+<a name="120"></a>static function <span class="source_type">int</span> CalcPlayerHighestPerkLevel( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">P</span> )
+<a name="121"></a>{
+<a name="122"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>, HPL, NumPerks;
+<a name="123"></a>    local array&lt; <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfveterancytypes.html" class="source">KFVeterancyTypes</a></span>&gt; &gt; PerkClasses;
+<a name="124"></a>    local <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span> KFSS;
+<a name="125"></a>
+<a name="126"></a>    HPL = -<span class="source_int">1</span>;
+<a name="127"></a>
+<a name="128"></a>    if( <span class="source_type">P</span> != none )
+<a name="129"></a>	{
+<a name="130"></a>	    KFSS = <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(<span class="source_type">P</span>.SteamStatsAndAchievements);
+<a name="131"></a>	    if ( KFSS != none )
+<a name="132"></a>    	{
+<a name="133"></a>    	    PerkClasses = <span class="source_type">class</span><span class="source_name">'KFGameType'</span>.default.LoadedSkills;
+<a name="134"></a>            NumPerks = <span class="source_type">class</span><span class="source_name">'KFGameType'</span>.default.LoadedSkills.Length;
+<a name="135"></a>            for( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">class</span><span class="source_name">'KFGameType'</span>.default.LoadedSkills.Length; ++<span class="source_type">i</span> )
+<a name="136"></a>            {
+<a name="137"></a>                HPL = <span class="source_type">Max</span>(HPL, KFSS.PerkHighestLevelAvailable(<span class="source_type">class</span><span class="source_name">'KFGameType'</span>.default.LoadedSkills[<span class="source_type">i</span>].default.PerkIndex) );
+<a name="138"></a>            }
+<a name="139"></a>        }
+<a name="140"></a>	}
+<a name="141"></a>
+<a name="142"></a>	return HPL;
+<a name="143"></a>}
+<a name="144"></a>
+<a name="145"></a>defaultproperties
+<a name="146"></a>{
+<a name="147"></a>     AllTypesClassName=<span class="source_string">"All Types"</span>
+<a name="148"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=GameTypeCombo
+<a name="149"></a>         bReadOnly=True
+<a name="150"></a>         CaptionWidth=<span class="source_int">0.100000</span>
+<a name="151"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Game Type"</span>
+<a name="152"></a>         OnCreateComponent=GameTypeCombo.InternalOnCreateComponent
+<a name="153"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="154"></a>         Hint=<span class="source_string">"Choose the gametype to query"</span>
+<a name="155"></a>         WinTop=<span class="source_int">0.050160</span>
+<a name="156"></a>         WinLeft=<span class="source_int">0.638878</span>
+<a name="157"></a>         WinWidth=<span class="source_int">0.358680</span>
+<a name="158"></a>         WinHeight=<span class="source_int">0.035000</span>
+<a name="159"></a>         RenderWeight=<span class="source_int">1.000000</span>
+<a name="160"></a>         TabOrder=<span class="source_int">0</span>
+<a name="161"></a>         OnPreDraw=<span class="source_type"><a href="../kfgui/kfserverbrowser.html" class="source">KFServerBrowser</a></span>.ComboOnPreDraw
+<a name="162"></a>         OnLoadINI=<span class="source_type"><a href="../kfgui/kfserverbrowser.html" class="source">KFServerBrowser</a></span>.InternalOnLoadINI
+<a name="163"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="164"></a>     co_GameType=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'KFGui.KFServerBrowser.GameTypeCombo'</span>
+<a name="165"></a>
+<a name="166"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiheader.html" class="source">GUIHeader</a></span> <span class="source_type">Name</span>=ServerBrowserHeader
+<a name="167"></a>         bUseTextHeight=True
+<a name="168"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Server Browser"</span>
+<a name="169"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="170"></a>     t_Header=<span class="source_type"><a href="../xinterface/guiheader.html" class="source">GUIHeader</a></span><span class="source_name">'KFGui.KFServerBrowser.ServerBrowserHeader'</span>
+<a name="171"></a>
+<a name="172"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../kfgui/kfbrowser_footer.html" class="source">KFBrowser_Footer</a></span> <span class="source_type">Name</span>=FooterPanel
+<a name="173"></a>         <span class="source_type">Justification</span>=TXTA_Center
+<a name="174"></a>         WinTop=<span class="source_int">0.917943</span>
+<a name="175"></a>         TabOrder=<span class="source_int">4</span>
+<a name="176"></a>         OnPreDraw=FooterPanel.InternalOnPreDraw
+<a name="177"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="178"></a>     t_Footer=<span class="source_type"><a href="../kfgui/kfbrowser_footer.html" class="source">KFBrowser_Footer</a></span><span class="source_name">'KFGui.KFServerBrowser.FooterPanel'</span>
+<a name="179"></a>
+<a name="180"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/backgroundimage.html" class="source">BackgroundImage</a></span> <span class="source_type">Name</span>=PageBackground
+<a name="181"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KillingFloor2HUD.Menu.menuBackground'</span>
+<a name="182"></a>         ImageStyle=ISTY_Justified
+<a name="183"></a>         ImageAlign=IMGA_Center
+<a name="184"></a>         RenderWeight=<span class="source_int">0.010000</span>
+<a name="185"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="186"></a>     i_Background=<span class="source_type"><a href="../xinterface/backgroundimage.html" class="source">BackgroundImage</a></span><span class="source_name">'KFGui.KFServerBrowser.PageBackground'</span>
+<a name="187"></a>
+<a name="188"></a>     <span class="source_type">PanelClass</span>(<span class="source_int">0</span>)=<span class="source_string">"KFGUI.KFMOTD"</span>
+<a name="189"></a>     <span class="source_type">PanelClass</span>(<span class="source_int">1</span>)=<span class="source_string">"GUI2K4.UT2k4Browser_ServerListPageFavorites"</span>
+<a name="190"></a>     <span class="source_type">PanelClass</span>(<span class="source_int">2</span>)=<span class="source_string">"KFGUI.KFServerListPageFriends"</span>
+<a name="191"></a>     <span class="source_type">PanelClass</span>(<span class="source_int">4</span>)=<span class="source_string">"KFGUI.KFServerListPageInternet"</span>
+<a name="192"></a>     <span class="source_type">PanelClass</span>(<span class="source_int">5</span>)=<span class="source_string">"none"</span>
+<a name="193"></a>     PanelCaption(<span class="source_int">1</span>)=<span class="source_string">"Favorites"</span>
+<a name="194"></a>     PanelCaption(<span class="source_int">2</span>)=<span class="source_string">"Friends"</span>
+<a name="195"></a>     PanelCaption(<span class="source_int">4</span>)=<span class="source_string">"Internet Games"</span>
+<a name="196"></a>     PanelHint(<span class="source_int">0</span>)=<span class="source_string">"The latest on KF"</span>
+<a name="197"></a>     PanelHint(<span class="source_int">1</span>)=<span class="source_string">"View Killing Floor servers your Steam Friends are currently playing on"</span>
+<a name="198"></a>     PanelHint(<span class="source_int">2</span>)=<span class="source_string">"View Killing Floor servers currently added to your Favorites"</span>
+<a name="199"></a>     PanelHint(<span class="source_int">4</span>)=<span class="source_string">"Choose from hundreds of Killing Floor servers around the world"</span>
+<a name="200"></a>     bRenderWorld=True
+<a name="201"></a>     BackgroundColor=(<span class="source_type">B</span>=<span class="source_int">0</span>,G=<span class="source_int">0</span>,<span class="source_type">R</span>=<span class="source_int">0</span>)
+<a name="202"></a>     OnOpen=<span class="source_type"><a href="../kfgui/kfserverbrowser.html" class="source">KFServerBrowser</a></span>.BrowserOpened
+<a name="203"></a>}
+<a name="204"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kfserverbrowser.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFServerBrowser">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kfrules.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kfserverlistpagefriends.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.018 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.WarpZoneInfo</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/warpzoneinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#WarpZoneInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/votingreplicationinfobase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/warpzonemarker.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/warpzoneinfo.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/warpzoneinfo.html">WarpZoneInfo</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// WarpZoneInfo. For making disjoint spaces appear as if they were connected;
+</span><a name="3"></a><span class="source_comment">// supports both in-level warp zones and cross-level warp zones.
+</span><a name="4"></a><span class="source_comment">//=============================================================================
+</span><a name="5"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/warpzoneinfo.html" class="source">WarpZoneInfo</a></span> extends <span class="source_type"><a href="../engine/zoneinfo.html" class="source">ZoneInfo</a></span>
+<a name="6"></a>	native;
+<a name="7"></a>
+<a name="8"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="9"></a><span class="source_comment">// Information set by the level designer.
+</span><a name="10"></a>
+<a name="11"></a>var() <span class="source_type">string</span>     OtherSideURL;
+<a name="12"></a>var() <span class="source_type">name</span>       ThisTag;
+<a name="13"></a>var() <span class="source_type">bool</span>		 bNoTeleFrag;
+<a name="14"></a>
+<a name="15"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="16"></a><span class="source_comment">// Internal.
+</span><a name="17"></a>
+<a name="18"></a>var const <span class="source_type">int</span>              iWarpZone;
+<a name="19"></a>var const <span class="source_type"><a href="../core/object.html#Coords" class="source">coords</a></span>           WarpCoords;
+<a name="20"></a>var transient <span class="source_type"><a href="../engine/warpzoneinfo.html" class="source">WarpZoneInfo</a></span> OtherSideActor;
+<a name="21"></a>var transient <span class="source_type"><a href="../core/object.html" class="source">object</a></span>       OtherSideLevel;
+<a name="22"></a>var() <span class="source_type">string</span>		       Destinations[<span class="source_int">8</span>];
+<a name="23"></a>var <span class="source_type">int</span>					   numDestinations;
+<a name="24"></a>
+<a name="25"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="26"></a><span class="source_comment">// Network replication.
+</span><a name="27"></a>
+<a name="28"></a>replication
+<a name="29"></a>{
+<a name="30"></a>	reliable if( Role==ROLE_Authority )
+<a name="31"></a>		OtherSideURL, ThisTag, OtherSideActor;
+<a name="32"></a>}
+<a name="33"></a>
+<a name="34"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="35"></a><span class="source_comment">// Functions.
+</span><a name="36"></a>
+<a name="37"></a><span class="source_comment">// Warp coordinate system transformations.
+</span><a name="38"></a>native(<span class="source_int">314</span>) final function Warp  ( out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Loc, out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Vel, out <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">R</span> );
+<a name="39"></a>native(<span class="source_int">315</span>) final function UnWarp( out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Loc, out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Vel, out <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">R</span> );
+<a name="40"></a>
+<a name="41"></a>function PreBeginPlay()
+<a name="42"></a>{
+<a name="43"></a>	Super.PreBeginPlay();
+<a name="44"></a>
+<a name="45"></a>	<span class="source_comment">// Generate the local connection.
+</span><a name="46"></a>	Generate();
+<a name="47"></a>
+<a name="48"></a>	<span class="source_comment">// Setup destination list.
+</span><a name="49"></a>	numDestinations = <span class="source_int">0</span>;
+<a name="50"></a>	While( numDestinations &lt; <span class="source_int">8</span> )
+<a name="51"></a>		if (Destinations[numDestinations] != <span class="source_string">""</span>)
+<a name="52"></a>			numDestinations++;
+<a name="53"></a>		else
+<a name="54"></a>			numDestinations = <span class="source_int">8</span>;
+<a name="55"></a>
+<a name="56"></a>	<span class="source_comment">// Generate URL if necessary.
+</span><a name="57"></a>	if( numDestinations&gt;<span class="source_int">0</span> && (OtherSideURL == <span class="source_string">""</span>) )
+<a name="58"></a>		OtherSideURL = Destinations[<span class="source_int">0</span>];
+<a name="59"></a>}
+<a name="60"></a>
+<a name="61"></a>function <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> )
+<a name="62"></a>{
+<a name="63"></a>	local <span class="source_type">int</span> nextPick;
+<a name="64"></a>	if (numDestinations == <span class="source_int">0</span>)
+<a name="65"></a>		return;
+<a name="66"></a>	
+<a name="67"></a>	nextPick = <span class="source_int">0</span>;
+<a name="68"></a>	While( (nextPick &lt; <span class="source_int">8</span>) && (Destinations[nextPick] != OtherSideURL )  )
+<a name="69"></a>		nextPick++;
+<a name="70"></a>
+<a name="71"></a>	nextPick++;
+<a name="72"></a>	if ( (nextPick &gt; <span class="source_int">7</span>) || (Destinations[nextPick] == <span class="source_string">""</span>) )
+<a name="73"></a>		nextPick = <span class="source_int">0</span>;
+<a name="74"></a>	
+<a name="75"></a>	OtherSideURL = Destinations[nextPick];
+<a name="76"></a>	ForceGenerate();
+<a name="77"></a>}
+<a name="78"></a>
+<a name="79"></a><span class="source_comment">// Set up this warp zone's destination.
+</span><a name="80"></a>simulated event Generate()
+<a name="81"></a>{
+<a name="82"></a>	if( OtherSideLevel != None )
+<a name="83"></a>		return;
+<a name="84"></a>	ForceGenerate();
+<a name="85"></a>}
+<a name="86"></a>
+<a name="87"></a><span class="source_comment">// Set up this warp zone's destination.
+</span><a name="88"></a>simulated event ForceGenerate()
+<a name="89"></a>{
+<a name="90"></a>	if( InStr(OtherSideURL,<span class="source_string">"/"</span>) &gt;= <span class="source_int">0</span> )
+<a name="91"></a>	{
+<a name="92"></a>		<span class="source_comment">// Remote level.
+</span><a name="93"></a>		<span class="source_comment">//log( "Warpzone " $ Self $ " remote" );
+</span><a name="94"></a>		OtherSideLevel = None;
+<a name="95"></a>		OtherSideActor = None;
+<a name="96"></a>	}
+<a name="97"></a>	else
+<a name="98"></a>	{
+<a name="99"></a>		<span class="source_comment">// Local level.
+</span><a name="100"></a>		OtherSideLevel = XLevel;
+<a name="101"></a>		foreach AllActors( <span class="source_type">class</span> <span class="source_name">'WarpZoneInfo'</span>, OtherSideActor )
+<a name="102"></a>			if( <span class="source_type">string</span>(OtherSideActor.ThisTag)~=OtherSideURL && OtherSideActor!=Self )
+<a name="103"></a>				break;
+<a name="104"></a>		<span class="source_comment">//log( "Warpzone " $ Self $ " local, connected to " $ OtherSideActor );
+</span><a name="105"></a>	}
+<a name="106"></a>}
+<a name="107"></a>
+<a name="108"></a><span class="source_comment">// When an actor enters this warp zone.
+</span><a name="109"></a>simulated function ActorEntered( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span> )
+<a name="110"></a>{
+<a name="111"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> L;
+<a name="112"></a>	local <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">R</span>;
+<a name="113"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">P</span>;
+<a name="114"></a>
+<a name="115"></a>	<span class="source_comment">//if ( Other.Role == ROLE_AutonomousProxy )
+</span><a name="116"></a>	<span class="source_comment">//	return; // don't simulate for client players
+</span><a name="117"></a>	if( !<span class="source_type">Other</span>.bJustTeleported )
+<a name="118"></a>	{
+<a name="119"></a>		Generate();
+<a name="120"></a>		if( OtherSideActor != None )
+<a name="121"></a>		{
+<a name="122"></a>			<span class="source_comment">// This needs to also perform a coordinate system transformation,
+</span><a name="123"></a>			<span class="source_comment">// in case the portals aren't directionally aligned. This is easy to
+</span><a name="124"></a>			<span class="source_comment">// do but UnrealScript doesn't provide coordinate system operators yet.
+</span><a name="125"></a>			<span class="source_type">Other</span>.Disable(<span class="source_name">'Touch'</span>);
+<a name="126"></a>			<span class="source_type">Other</span>.Disable(<span class="source_name">'UnTouch'</span>);
+<a name="127"></a>
+<a name="128"></a>			L = <span class="source_type">Other</span>.Location;
+<a name="129"></a>			if( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>) != None )
+<a name="130"></a>				<span class="source_type">R</span> = <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).GetViewRotation();
+<a name="131"></a>
+<a name="132"></a>			UnWarp( L, <span class="source_type">Other</span>.Velocity, <span class="source_type">R</span> );
+<a name="133"></a>			OtherSideActor.Warp( L, <span class="source_type">Other</span>.Velocity, <span class="source_type">R</span> );
+<a name="134"></a>
+<a name="135"></a>			if( <span class="source_type">Other</span>.IsA(<span class="source_name">'Pawn'</span>) )
+<a name="136"></a>			{
+<a name="137"></a>				<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).bWarping = bNoTelefrag;
+<a name="138"></a>				if ( <span class="source_type">Other</span>.SetLocation(L) )
+<a name="139"></a>				{
+<a name="140"></a>					<span class="source_comment">//tell enemies about teleport
+</span><a name="141"></a>					if ( Role == ROLE_Authority )
+<a name="142"></a>						For ( <span class="source_type">P</span>=<span class="source_type">Level</span>.ControllerList; <span class="source_type">P</span>!=None; <span class="source_type">P</span>=<span class="source_type">P</span>.NextController )
+<a name="143"></a>							if (<span class="source_type">P</span>.Enemy == <span class="source_type">Other</span>)
+<a name="144"></a>								<span class="source_type">P</span>.LineOfSightTo(<span class="source_type">Other</span>); 
+<a name="145"></a>					<span class="source_type">R</span>.Roll = <span class="source_int">0</span>;
+<a name="146"></a>					<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).SetViewRotation(<span class="source_type">R</span>);
+<a name="147"></a>					<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).ClientSetLocation(L, <span class="source_type">R</span> );
+<a name="148"></a>					if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> != None )
+<a name="149"></a>						<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.<span class="source_type">MoveTimer</span> = -<span class="source_int">1.0</span>;
+<a name="150"></a>				}
+<a name="151"></a>				else
+<a name="152"></a>				{
+<a name="153"></a>					<span class="source_comment">// set up to keep trying to teleport
+</span><a name="154"></a>					GotoState(<span class="source_name">'DelayedWarp'</span>);
+<a name="155"></a>				}
+<a name="156"></a>			}
+<a name="157"></a>			else
+<a name="158"></a>			{
+<a name="159"></a>				<span class="source_type">Other</span>.SetLocation(L);
+<a name="160"></a>				<span class="source_type">Other</span>.SetRotation( <span class="source_type">R</span> );
+<a name="161"></a>			}
+<a name="162"></a>			<span class="source_type">Other</span>.Enable(<span class="source_name">'Touch'</span>);
+<a name="163"></a>			<span class="source_type">Other</span>.Enable(<span class="source_name">'UnTouch'</span>);
+<a name="164"></a>			<span class="source_comment">// Change rotation according to portal's rotational change.
+</span><a name="165"></a>		}
+<a name="166"></a>	}
+<a name="167"></a>}
+<a name="168"></a>
+<a name="169"></a>event ActorLeaving( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span> )
+<a name="170"></a>{
+<a name="171"></a>	If ( <span class="source_type">Other</span>.IsA(<span class="source_name">'Pawn'</span>) )
+<a name="172"></a>		<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>).bWarping = false;
+<a name="173"></a>}
+<a name="174"></a>
+<a name="175"></a><span class="source_type">State</span> DelayedWarp
+<a name="176"></a>{
+<a name="177"></a>	function Tick(<span class="source_type">float</span> <span class="source_type">DeltaTime</span>)
+<a name="178"></a>	{
+<a name="179"></a>		local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">P</span>;
+<a name="180"></a>		local <span class="source_type">bool</span> bFound;
+<a name="181"></a>
+<a name="182"></a>		For ( <span class="source_type">P</span>=<span class="source_type">Level</span>.ControllerList; <span class="source_type">P</span>!=None; <span class="source_type">P</span>=<span class="source_type">P</span>.NextController )
+<a name="183"></a>			if ( <span class="source_type">P</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.bWarping && (<span class="source_type">P</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Region.Zone == Self) )
+<a name="184"></a>			{
+<a name="185"></a>				bFound = true;
+<a name="186"></a>				ActorEntered(<span class="source_type">P</span>);
+<a name="187"></a>			}
+<a name="188"></a>
+<a name="189"></a>		If ( !bFound )
+<a name="190"></a>			GotoState(<span class="source_name">''</span>);
+<a name="191"></a>	}
+<a name="192"></a>}
+<a name="193"></a>
+<a name="194"></a>defaultproperties
+<a name="195"></a>{
+<a name="196"></a>}
+<a name="197"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/warpzoneinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#WarpZoneInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/votingreplicationinfobase.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/warpzonemarker.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.601 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

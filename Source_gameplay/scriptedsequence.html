@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GamePlay.ScriptedSequence</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gameplay/gameplay-overview.html">Package</a></td>
+	<td class="header"><a href="../gameplay/scriptedsequence.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ScriptedSequence">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gameplay/scriptedhudoverlay.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gameplay/scriptedtrigger.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gameplay/scriptedsequence.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gameplay/gameplay-overview.html">GamePlay</a>.<a href="../gameplay/scriptedsequence.html">ScriptedSequence</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// ScriptedSequence
+</span><a name="3"></a><span class="source_comment">// used for setting up scripted sequences for pawns.
+</span><a name="4"></a><span class="source_comment">// A ScriptedController is spawned to carry out the scripted sequence.
+</span><a name="5"></a><span class="source_comment">//=============================================================================
+</span><a name="6"></a><span class="source_type">class</span> <span class="source_type"><a href="../gameplay/scriptedsequence.html" class="source">ScriptedSequence</a></span> extends <span class="source_type"><a href="../engine/aiscript.html" class="source">AIScript</a></span>;
+<a name="7"></a>
+<a name="8"></a>var(<span class="source_type"><a href="../engine/aiscript.html" class="source">AIScript</a></span>) export editinline Array&lt;<span class="source_type"><a href="../gameplay/scriptedaction.html" class="source">ScriptedAction</a></span>&gt; Actions;
+<a name="9"></a>var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span>&gt;  ScriptControllerClass;
+<a name="10"></a>
+<a name="11"></a>function PostBeginPlay()
+<a name="12"></a>{
+<a name="13"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="14"></a>
+<a name="15"></a>	super.PostBeginPlay();
+<a name="16"></a>
+<a name="17"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;Actions.Length; <span class="source_type">i</span>++ )
+<a name="18"></a>		if ( Actions[<span class="source_type">i</span>] != None )
+<a name="19"></a>			Actions[<span class="source_type">i</span>].PostBeginPlay( Self );
+<a name="20"></a>}
+<a name="21"></a>
+<a name="22"></a>
+<a name="23"></a>event Reset()
+<a name="24"></a>{
+<a name="25"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="26"></a>
+<a name="27"></a>	super.Reset();
+<a name="28"></a>	
+<a name="29"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;Actions.Length; <span class="source_type">i</span>++ )
+<a name="30"></a>		if ( Actions[<span class="source_type">i</span>] != None )
+<a name="31"></a>			Actions[<span class="source_type">i</span>].Reset();
+<a name="32"></a>}
+<a name="33"></a>
+<a name="34"></a><span class="source_comment">/* SpawnController()
+<a name="35"></a>Spawn and initialize an AI Controller (called by a non-player controlled Pawn at level startup)
+<a name="36"></a>*/</span>
+<a name="37"></a>function SpawnControllerFor(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">P</span>)
+<a name="38"></a>{
+<a name="39"></a>	Super.SpawnControllerFor(<span class="source_type">P</span>);
+<a name="40"></a>	TakeOver(<span class="source_type">P</span>);
+<a name="41"></a>}
+<a name="42"></a>
+<a name="43"></a>function <span class="source_type">bool</span> CheckForErrors()
+<a name="44"></a>{
+<a name="45"></a>	if ( Actions.Length &gt; <span class="source_int">0</span> )
+<a name="46"></a>	{
+<a name="47"></a>		log(self$<span class="source_string">" has no Actions!"</span>);
+<a name="48"></a>		return true;
+<a name="49"></a>	}
+<a name="50"></a>	return Super.CheckForErrors();
+<a name="51"></a>}
+<a name="52"></a>
+<a name="53"></a><span class="source_comment">/* TakeOver()
+<a name="54"></a>Spawn a scripted controller, which temporarily takes over the actions of the pawn,
+<a name="55"></a>unless pawn is currently controlled by a scripted controller - then just change its script
+<a name="56"></a>*/</span>
+<a name="57"></a>function TakeOver(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">P</span>)
+<a name="58"></a>{
+<a name="59"></a>	local <span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span> <span class="source_type">S</span>;
+<a name="60"></a>
+<a name="61"></a>	if ( <span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span>(<span class="source_type">P</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None )
+<a name="62"></a>		<span class="source_type">S</span> = <span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span>(<span class="source_type">P</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="63"></a>	else
+<a name="64"></a>	{
+<a name="65"></a>		<span class="source_type">S</span> = spawn(ScriptControllerClass);
+<a name="66"></a>		<span class="source_type">S</span>.PendingController = <span class="source_type">P</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>;
+<a name="67"></a>		if ( <span class="source_type">S</span>.PendingController != None )
+<a name="68"></a>			<span class="source_type">S</span>.PendingController.PendingStasis();
+<a name="69"></a>	}
+<a name="70"></a>	<span class="source_type">S</span>.MyScript = self;
+<a name="71"></a>	<span class="source_type">S</span>.TakeControlOf(<span class="source_type">P</span>);
+<a name="72"></a>	<span class="source_type">S</span>.SetNewScript(self);
+<a name="73"></a>}
+<a name="74"></a>		
+<a name="75"></a><span class="source_comment">//*****************************************************************************************
+</span><a name="76"></a><span class="source_comment">// Script Changes
+</span><a name="77"></a>
+<a name="78"></a>function <span class="source_type">bool</span> ValidAction(<span class="source_type">Int</span> <span class="source_type">N</span>)
+<a name="79"></a>{
+<a name="80"></a>	return true;
+<a name="81"></a>}
+<a name="82"></a>
+<a name="83"></a>function SetActions(<span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span> <span class="source_type">C</span>)
+<a name="84"></a>{
+<a name="85"></a>	local <span class="source_type"><a href="../gameplay/scriptedsequence.html" class="source">ScriptedSequence</a></span> NewScript;
+<a name="86"></a>	local <span class="source_type">bool</span> bDone;
+<a name="87"></a>
+<a name="88"></a>	if ( <span class="source_type">C</span>.CurrentAnimation != None )
+<a name="89"></a>		<span class="source_type">C</span>.CurrentAnimation.SetCurrentAnimationFor(<span class="source_type">C</span>);
+<a name="90"></a>	while ( !bDone )
+<a name="91"></a>	{
+<a name="92"></a>		if ( <span class="source_type">C</span>.ActionNum &lt; Actions.Length )
+<a name="93"></a>		{
+<a name="94"></a>			if ( ValidAction(<span class="source_type">C</span>.ActionNum) )
+<a name="95"></a>				NewScript = Actions[<span class="source_type">C</span>.ActionNum].GetScript(self);
+<a name="96"></a>			else
+<a name="97"></a>			{
+<a name="98"></a>				NewScript = None;
+<a name="99"></a>				warn(GetItemName(<span class="source_type">string</span>(self))$<span class="source_string">" action "</span>$<span class="source_type">C</span>.ActionNum@Actions[<span class="source_type">C</span>.ActionNum].GetActionString()$<span class="source_string">" NOT VALID!!!"</span>);
+<a name="100"></a>			}
+<a name="101"></a>		}
+<a name="102"></a>		else 
+<a name="103"></a>			NewScript = None;
+<a name="104"></a>		if ( NewScript == None )
+<a name="105"></a>		{
+<a name="106"></a>			<span class="source_type">C</span>.CurrentAction = None;
+<a name="107"></a>			return;
+<a name="108"></a>		}
+<a name="109"></a>		if ( NewScript != self )
+<a name="110"></a>		{
+<a name="111"></a>			<span class="source_type">C</span>.SetNewScript(NewScript);
+<a name="112"></a>			return;
+<a name="113"></a>		}
+<a name="114"></a>		if ( Actions[<span class="source_type">C</span>.ActionNum] == None )
+<a name="115"></a>		{
+<a name="116"></a>			Warn(self$<span class="source_string">" no action "</span>$<span class="source_type">C</span>.ActionNum$<span class="source_string">"!!!"</span>);
+<a name="117"></a>			<span class="source_type">C</span>.CurrentAction = None;
+<a name="118"></a>			return;
+<a name="119"></a>		}
+<a name="120"></a>		bDone = Actions[<span class="source_type">C</span>.ActionNum].InitActionFor(<span class="source_type">C</span>);
+<a name="121"></a>		if ( bLoggingEnabled )
+<a name="122"></a>			log(GetItemName(<span class="source_type">string</span>(<span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>))$<span class="source_string">" script "</span>$GetItemName(<span class="source_type">string</span>(tag))$<span class="source_string">" action "</span>$<span class="source_type">C</span>.ActionNum@Actions[<span class="source_type">C</span>.ActionNum].GetActionString());
+<a name="123"></a>		if  ( !bDone )
+<a name="124"></a>		{
+<a name="125"></a>			if ( Actions[<span class="source_type">C</span>.ActionNum] == None )
+<a name="126"></a>			{
+<a name="127"></a>				Warn(self$<span class="source_string">" has no action "</span>$<span class="source_type">C</span>.ActionNum$<span class="source_string">"!!!"</span>);
+<a name="128"></a>				<span class="source_type">C</span>.CurrentAction = None;
+<a name="129"></a>				return;
+<a name="130"></a>			}
+<a name="131"></a>			Actions[<span class="source_type">C</span>.ActionNum].ActionCompleted();
+<a name="132"></a>			Actions[<span class="source_type">C</span>.ActionNum].ProceedToNextAction(<span class="source_type">C</span>);
+<a name="133"></a>		}
+<a name="134"></a>	}
+<a name="135"></a>}
+<a name="136"></a>
+<a name="137"></a>defaultproperties
+<a name="138"></a>{
+<a name="139"></a>     ScriptControllerClass=<span class="source_type">Class</span><span class="source_name">'Gameplay.ScriptedController'</span>
+<a name="140"></a>     bNavigate=True
+<a name="141"></a>     bCollideWhenPlacing=True
+<a name="142"></a>     CollisionRadius=<span class="source_int">50.000000</span>
+<a name="143"></a>     CollisionHeight=<span class="source_int">100.000000</span>
+<a name="144"></a>     bDirectional=True
+<a name="145"></a>}
+<a name="146"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gameplay/gameplay-overview.html">Package</a></td>
+	<td class="header"><a href="../gameplay/scriptedsequence.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ScriptedSequence">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gameplay/scriptedhudoverlay.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gameplay/scriptedtrigger.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:08.037 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

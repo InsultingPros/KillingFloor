@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.FriendlyMonsterController</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/friendlymonstercontroller.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#FriendlyMonsterController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/friendlymonsterai.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/friendlysoldierpr.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/friendlymonstercontroller.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/friendlymonstercontroller.html">FriendlyMonsterController</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/friendlymonstercontroller.html" class="source">FriendlyMonsterController</a></span> extends <span class="source_type"><a href="../old2k4/monstercontroller.html" class="source">MonsterController</a></span>;
+<a name="2"></a>
+<a name="3"></a>var <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> Master;
+<a name="4"></a>var <span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span> Effect;
+<a name="5"></a>
+<a name="6"></a>function Possess(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">aPawn</span>)
+<a name="7"></a>{
+<a name="8"></a>    Super(<span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span>).Possess(<span class="source_type">aPawn</span>);
+<a name="9"></a>    InitializeSkill(<span class="source_type"><a href="../unrealgame/deathmatch.html" class="source">DeathMatch</a></span>(<span class="source_type">Level</span>.Game).AdjustedDifficulty);
+<a name="10"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.MaxFallSpeed = <span class="source_int">1.1</span> * <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.default.MaxFallSpeed; <span class="source_comment">// so bots will accept a little falling damage for shorter routes
+</span><a name="11"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.SetMovementPhysics();
+<a name="12"></a>    if (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Physics == PHYS_Walking)
+<a name="13"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.SetPhysics(PHYS_Falling);
+<a name="14"></a>    enable(<span class="source_name">'NotifyBump'</span>);
+<a name="15"></a>}
+<a name="16"></a>
+<a name="17"></a>
+<a name="18"></a>function SetMaster(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> NewMaster)
+<a name="19"></a>{
+<a name="20"></a>
+<a name="21"></a>    Master = NewMaster;
+<a name="22"></a>    if (Master.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None && Master.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> != None)
+<a name="23"></a>    {
+<a name="24"></a>        <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> = spawn(<span class="source_type">class</span><span class="source_name">'PlayerReplicationInfo'</span>, self);
+<a name="25"></a>        <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span> = Master.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>$<span class="source_string">"'s"</span>@<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GetHumanReadableName();
+<a name="26"></a>        <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bIsSpectator = true;
+<a name="27"></a>        <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bBot = true;
+<a name="28"></a>        <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> = Master.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>;
+<a name="29"></a>        <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.RemoteRole = ROLE_None;
+<a name="30"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> = <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>;
+<a name="31"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.bNoTeamBeacon = true;
+<a name="32"></a>    }
+<a name="33"></a>
+<a name="34"></a>    <span class="source_comment">//Effect = Pawn.spawn(class'FriendlyMonsterEffect', Pawn);
+</span><a name="35"></a>   <span class="source_comment">// Effect.SetBase(Pawn);
+</span><a name="36"></a>    <span class="source_comment">//Effect.MasterPRI = Master.PlayerReplicationInfo;
+</span><a name="37"></a>    <span class="source_comment">//Effect.Initialize();
+</span><a name="38"></a>
+<a name="39"></a>}
+<a name="40"></a>
+<a name="41"></a>function <span class="source_type">bool</span> FindNewEnemy()
+<a name="42"></a>{
+<a name="43"></a>    local <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> BestEnemy;
+<a name="44"></a>    local <span class="source_type">float</span> BestDist;
+<a name="45"></a>    local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="46"></a>
+<a name="47"></a>    BestDist = <span class="source_int">50000.f</span>;
+<a name="48"></a>    for (<span class="source_type">C</span> = <span class="source_type">Level</span>.ControllerList; <span class="source_type">C</span> != None; <span class="source_type">C</span> = <span class="source_type">C</span>.NextController)
+<a name="49"></a>        if ( <span class="source_type">C</span> != Master && <span class="source_type">C</span> != self && <span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None && (<span class="source_type"><a href="../kfmod/friendlymonstercontroller.html" class="source">FriendlyMonsterController</a></span>(<span class="source_type">C</span>) == None || <span class="source_type"><a href="../kfmod/friendlymonstercontroller.html" class="source">FriendlyMonsterController</a></span>(<span class="source_type">C</span>).Master != Master) && !<span class="source_type">C</span>.SameTeamAs(Master)
+<a name="50"></a>             && VSize(<span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location - <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location) &lt; BestDist && !<span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).SameSpeciesAs(<span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) && CanSee(<span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) )
+<a name="51"></a>        {
+<a name="52"></a>            BestEnemy = <span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>;
+<a name="53"></a>            BestDist = VSize(<span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location - <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location);
+<a name="54"></a>        }
+<a name="55"></a>
+<a name="56"></a>    if ( BestEnemy == Enemy )
+<a name="57"></a>        return false;
+<a name="58"></a>
+<a name="59"></a>    if ( BestEnemy != None )
+<a name="60"></a>    {
+<a name="61"></a>        ChangeEnemy(BestEnemy, true);
+<a name="62"></a>        return true;
+<a name="63"></a>    }
+<a name="64"></a>    return false;
+<a name="65"></a>}
+<a name="66"></a>
+<a name="67"></a>function <span class="source_type">bool</span> SetEnemy(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">NewEnemy</span>, optional <span class="source_type">bool</span> bThisIsNeverUsed, optional <span class="source_type">float</span> <span class="source_type">MonsterHateChanceOverride</span>)
+<a name="68"></a>{
+<a name="69"></a>    local <span class="source_type">float</span> EnemyDist;
+<a name="70"></a>
+<a name="71"></a>    if (<span class="source_type">NewEnemy</span> == None || <span class="source_type">NewEnemy</span>.Health &lt;= <span class="source_int">0</span> || <span class="source_type">NewEnemy</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None || <span class="source_type">NewEnemy</span> == Enemy)
+<a name="72"></a>        return false;
+<a name="73"></a>    if ( Master != None && ( (Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None && <span class="source_type">NewEnemy</span> == Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>)
+<a name="74"></a>                 || (<span class="source_type"><a href="../kfmod/friendlymonstercontroller.html" class="source">FriendlyMonsterController</a></span>(<span class="source_type">NewEnemy</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None && <span class="source_type"><a href="../kfmod/friendlymonstercontroller.html" class="source">FriendlyMonsterController</a></span>(<span class="source_type">NewEnemy</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).Master == Master) ) )
+<a name="75"></a>        return false;
+<a name="76"></a>    if (<span class="source_type">NewEnemy</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.SameTeamAs(Master) || !CanSee(<span class="source_type">NewEnemy</span>))
+<a name="77"></a>        return false;
+<a name="78"></a>
+<a name="79"></a>    if (Enemy == None)
+<a name="80"></a>    {
+<a name="81"></a>        ChangeEnemy(<span class="source_type">NewEnemy</span>, CanSee(<span class="source_type">NewEnemy</span>));
+<a name="82"></a>        return true;
+<a name="83"></a>    }
+<a name="84"></a>
+<a name="85"></a>    EnemyDist = VSize(Enemy.Location - <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location);
+<a name="86"></a>    if ( EnemyDist &lt; <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.MeleeRange )
+<a name="87"></a>        return false;
+<a name="88"></a>
+<a name="89"></a>    if ( EnemyDist &gt; <span class="source_int">1.7</span> * VSize(<span class="source_type">NewEnemy</span>.Location - <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location))
+<a name="90"></a>    {
+<a name="91"></a>        ChangeEnemy(<span class="source_type">NewEnemy</span>, CanSee(<span class="source_type">NewEnemy</span>));
+<a name="92"></a>        return true;
+<a name="93"></a>    }
+<a name="94"></a>    return false;
+<a name="95"></a>}
+<a name="96"></a>
+<a name="97"></a>function ChangeEnemy(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">NewEnemy</span>, <span class="source_type">bool</span> bCanSeeNewEnemy)
+<a name="98"></a>{
+<a name="99"></a>    Super.ChangeEnemy(<span class="source_type">NewEnemy</span>, bCanSeeNewEnemy);
+<a name="100"></a>
+<a name="101"></a>    <span class="source_comment">//hack for invasion monsters so they'll fight back
+</span><a name="102"></a>    if ( <span class="source_type"><a href="../old2k4/monstercontroller.html" class="source">MonsterController</a></span>(<span class="source_type">NewEnemy</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None && <span class="source_type"><a href="../kfmod/friendlymonstercontroller.html" class="source">FriendlyMonsterController</a></span>(<span class="source_type">NewEnemy</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) == None
+<a name="103"></a>         && (<span class="source_type">NewEnemy</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.Enemy == Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> || FRand() &lt; <span class="source_int">0.5</span>) )
+<a name="104"></a>        <span class="source_type"><a href="../old2k4/monstercontroller.html" class="source">MonsterController</a></span>(<span class="source_type">NewEnemy</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).ChangeEnemy(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>, <span class="source_type">NewEnemy</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CanSee(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>));
+<a name="105"></a>}
+<a name="106"></a>
+<a name="107"></a>function HearNoise(<span class="source_type">float</span> Loudness, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> NoiseMaker)
+<a name="108"></a>{
+<a name="109"></a>}
+<a name="110"></a>
+<a name="111"></a>event SeePlayer(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> SeenPlayer)
+<a name="112"></a>{
+<a name="113"></a>    if (Enemy == None && ((ChooseAttackCounter &lt; <span class="source_int">2</span>) || (ChooseAttackTime != <span class="source_type">Level</span>.TimeSeconds)) && SetEnemy(SeenPlayer))
+<a name="114"></a>        WhatToDoNext(<span class="source_int">3</span>);
+<a name="115"></a>    if ( Enemy == SeenPlayer )
+<a name="116"></a>    {
+<a name="117"></a>        VisibleEnemy = Enemy;
+<a name="118"></a>        EnemyVisibilityTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="119"></a>        bEnemyIsVisible = true;
+<a name="120"></a>    }
+<a name="121"></a>}
+<a name="122"></a>
+<a name="123"></a>function ExecuteWhatToDoNext()
+<a name="124"></a>{
+<a name="125"></a>    bHasFired = false;
+<a name="126"></a>    GoalString = <span class="source_string">"WhatToDoNext at "</span>$<span class="source_type">Level</span>.TimeSeconds;
+<a name="127"></a>    if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None )
+<a name="128"></a>    {
+<a name="129"></a>        warn(GetHumanReadableName()$<span class="source_string">" WhatToDoNext with no pawn"</span>);
+<a name="130"></a>        return;
+<a name="131"></a>    }
+<a name="132"></a>
+<a name="133"></a>    <span class="source_comment">// if we don't have a master or it switched teams, then we should die
+</span><a name="134"></a>    if ( Master == None || Master.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> == None || Master.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOnlySpectator
+<a name="135"></a>        || (<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None && <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> != Master.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>) )
+<a name="136"></a>    {
+<a name="137"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Suicide();
+<a name="138"></a>        return;
+<a name="139"></a>    }
+<a name="140"></a>
+<a name="141"></a>    if ( bPreparingMove && <span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).bShotAnim )
+<a name="142"></a>    {
+<a name="143"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Acceleration = vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>);
+<a name="144"></a>        GotoState(<span class="source_name">'WaitForAnim'</span>);
+<a name="145"></a>        return;
+<a name="146"></a>    }
+<a name="147"></a>    if (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Physics == PHYS_None)
+<a name="148"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.SetMovementPhysics();
+<a name="149"></a>    if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Physics == PHYS_Falling) && DoWaitForLanding() )
+<a name="150"></a>        return;
+<a name="151"></a>    if ( (Enemy != None) && ((Enemy.Health &lt;= <span class="source_int">0</span>) || (Enemy.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None)) )
+<a name="152"></a>        Enemy = None;
+<a name="153"></a>
+<a name="154"></a>    if ( (Enemy == None) || !EnemyVisible() )
+<a name="155"></a>        FindNewEnemy();
+<a name="156"></a>
+<a name="157"></a>    if ( Enemy != None )
+<a name="158"></a>        ChooseAttackMode();
+<a name="159"></a>    else if (Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None)
+<a name="160"></a>        FollowMaster();
+<a name="161"></a>    else
+<a name="162"></a>    {
+<a name="163"></a>        GoalString = <span class="source_string">"WhatToDoNext Wander or Camp at "</span>$<span class="source_type">Level</span>.TimeSeconds;
+<a name="164"></a>        WanderOrCamp(true);
+<a name="165"></a>    }
+<a name="166"></a>}
+<a name="167"></a>
+<a name="168"></a>function FollowMaster()
+<a name="169"></a>{
+<a name="170"></a>    if ( VSize(Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location - <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location) &gt; <span class="source_int">1000</span> || VSize(Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Velocity) &gt; Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.WalkingPct * Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GroundSpeed
+<a name="171"></a>         || !LineOfSightTo(Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) )
+<a name="172"></a>    {
+<a name="173"></a>        GoalString = <span class="source_string">"Follow Master "</span>$Master.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>;
+<a name="174"></a>        if (FindBestPathToward(Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>, false, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.bCanPickupInventory))
+<a name="175"></a>        {
+<a name="176"></a>            if ( Enemy != None )
+<a name="177"></a>                GotoState(<span class="source_name">'Fallback'</span>);
+<a name="178"></a>            else
+<a name="179"></a>                GotoState(<span class="source_name">'Roaming'</span>);
+<a name="180"></a>
+<a name="181"></a>            return;
+<a name="182"></a>        }
+<a name="183"></a>    }
+<a name="184"></a>
+<a name="185"></a>    GoalString = <span class="source_string">"Wander or Camp at "</span>$<span class="source_type">Level</span>.TimeSeconds;
+<a name="186"></a>    WanderOrCamp(true);
+<a name="187"></a>}
+<a name="188"></a>
+<a name="189"></a>
+<a name="190"></a>
+<a name="191"></a>function NotifyKilled(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> Killer, <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">Killed</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">KilledPawn</span>)
+<a name="192"></a>{
+<a name="193"></a>    if (Killer == self || Killer == Master)
+<a name="194"></a>        Celebrate();
+<a name="195"></a>    if (<span class="source_type">KilledPawn</span> == Enemy)
+<a name="196"></a>    {
+<a name="197"></a>        Enemy = None;
+<a name="198"></a>        FindNewEnemy();
+<a name="199"></a>    }
+<a name="200"></a>}
+<a name="201"></a>
+<a name="202"></a>function Destroyed()
+<a name="203"></a>{
+<a name="204"></a>    if (<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None)
+<a name="205"></a>        <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.Destroy();
+<a name="206"></a>    if (Effect != None)
+<a name="207"></a>        Effect.Destroy();
+<a name="208"></a>
+<a name="209"></a>    Super.Destroyed();
+<a name="210"></a>}
+<a name="211"></a>
+<a name="212"></a><span class="source_type">state</span> RestFormation
+<a name="213"></a>{
+<a name="214"></a>    function BeginState()
+<a name="215"></a>    {
+<a name="216"></a>        Enemy = None;
+<a name="217"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.bCanJump = false;
+<a name="218"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.bAvoidLedges = true;
+<a name="219"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.bStopAtLedges = true;
+<a name="220"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.SetWalking(true);
+<a name="221"></a>        MinHitWall += <span class="source_int">0.15</span>;
+<a name="222"></a>        if (Master != None && Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None)
+<a name="223"></a>            StartMonitoring(Master.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>, <span class="source_int">1000</span>);
+<a name="224"></a>    }
+<a name="225"></a>}
+<a name="226"></a>
+<a name="227"></a><span class="source_type">state</span> Fallback extends MoveToGoalWithEnemy
+<a name="228"></a>{
+<a name="229"></a>    function MayFall()
+<a name="230"></a>    {
+<a name="231"></a>        <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.bCanJump = ( (MoveTarget != None)
+<a name="232"></a>                    && ((MoveTarget.Physics != PHYS_Falling) || !MoveTarget.IsA(<span class="source_name">'Pickup'</span>)) );
+<a name="233"></a>    }
+<a name="234"></a>
+<a name="235"></a>Begin:
+<a name="236"></a>    SwitchToBestWeapon();
+<a name="237"></a>    WaitForLanding();
+<a name="238"></a>
+<a name="239"></a>Moving:
+<a name="240"></a>    if (<span class="source_type"><a href="../engine/inventoryspot.html" class="source">InventorySpot</a></span>(MoveTarget) != None)
+<a name="241"></a>        MoveTarget = <span class="source_type"><a href="../engine/inventoryspot.html" class="source">InventorySpot</a></span>(MoveTarget).GetMoveTargetFor(self,<span class="source_int">0</span>);
+<a name="242"></a>    MoveToward(MoveTarget,FaceActor(<span class="source_int">1</span>),,ShouldStrafeTo(MoveTarget));
+<a name="243"></a>    WhatToDoNext(<span class="source_int">14</span>);
+<a name="244"></a>    if ( bSoaking )
+<a name="245"></a>        SoakStop(<span class="source_string">"STUCK IN FALLBACK!"</span>);
+<a name="246"></a>    goalstring = goalstring$<span class="source_string">" STUCK IN FALLBACK!"</span>;
+<a name="247"></a>}
+<a name="248"></a>
+<a name="249"></a>defaultproperties
+<a name="250"></a>{
+<a name="251"></a>}
+<a name="252"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/friendlymonstercontroller.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#FriendlyMonsterController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/friendlymonsterai.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/friendlysoldierpr.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:01.991 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

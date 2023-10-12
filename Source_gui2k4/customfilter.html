@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.CustomFilter</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/customfilter.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#CustomFilter">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/controlbinder.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/customhudmenuassault.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/customfilter.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/customfilter.html">CustomFilter</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//	Base class for custom server browser filters
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">//	Created by Ron Prestenback
+</span><a name="5"></a><span class="source_comment">//	© 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="6"></a><span class="source_comment">//==============================================================================
+</span><a name="7"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/customfilter.html" class="source">CustomFilter</a></span> extends <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="8"></a>	DependsOn(<span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>)
+<a name="9"></a>	Config(ServerFilters)
+<a name="10"></a>	PerObjectConfig;
+<a name="11"></a>
+<a name="12"></a>enum <span class="source_type"><a href="../gui2k4/customfilter.html#EDataType" class="source">EDataType</a></span>
+<a name="13"></a>{
+<a name="14"></a>	DT_Unique,		<span class="source_comment">// Only one item with this key can exist
+</span><a name="15"></a>	DT_Ranged,		<span class="source_comment">// Max of two items with this key can exist, and QueryType cannot be QT_Equals
+</span><a name="16"></a>	DT_Multiple		<span class="source_comment">// Allow multiple items with the same name
+</span><a name="17"></a>};
+<a name="18"></a>
+<a name="19"></a>struct <span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span>
+<a name="20"></a>{
+<a name="21"></a>	var <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#QueryData" class="source">QueryData</a></span> 	<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>;	<span class="source_comment">// Key, Value, QueryType
+</span><a name="22"></a>	var <span class="source_type"><a href="../gui2k4/customfilter.html#EDataType" class="source">EDataType</a></span>						FilterType;
+<a name="23"></a>	var <span class="source_type">string</span>							ItemName;	<span class="source_comment">// FriendlyName
+</span><a name="24"></a>};
+<a name="25"></a>
+<a name="26"></a>struct <span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>
+<a name="27"></a>{
+<a name="28"></a>	var <span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span>	<span class="source_type">Item</span>;
+<a name="29"></a>	var <span class="source_type">int</span> ItemIndex;			<span class="source_comment">// Index of item
+</span><a name="30"></a>};
+<a name="31"></a>
+<a name="32"></a>var protected config array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span>&gt;	Rules;
+<a name="33"></a>var protected config <span class="source_type">string</span>             DefaultTitle;
+<a name="34"></a>var protected config <span class="source_type">bool</span>               <span class="source_type">Active</span>;
+<a name="35"></a>
+<a name="36"></a>var protected array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>&gt;		AllRules;
+<a name="37"></a>var protected <span class="source_type">string</span>                    Title;
+<a name="38"></a>var protected <span class="source_type">bool</span>                      bEnabled;
+<a name="39"></a>
+<a name="40"></a>var protected <span class="source_type">bool</span>                      bDirty;
+<a name="41"></a>
+<a name="42"></a>
+<a name="43"></a>function Created()
+<a name="44"></a>{
+<a name="45"></a>	CancelChanges();
+<a name="46"></a>}
+<a name="47"></a>
+<a name="48"></a>function CancelChanges()
+<a name="49"></a>{
+<a name="50"></a>	Title = DefaultTitle;
+<a name="51"></a>	bEnabled = <span class="source_type">Active</span>;
+<a name="52"></a>	InitializeRules();
+<a name="53"></a>
+<a name="54"></a>	bDirty = False;
+<a name="55"></a>}
+<a name="56"></a>
+<a name="57"></a><span class="source_comment">// Initialize all stored rules into the instance set
+</span><a name="58"></a>protected function InitializeRules()
+<a name="59"></a>{
+<a name="60"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="61"></a>
+<a name="62"></a>	if (AllRules.Length &gt; <span class="source_int">0</span>)
+<a name="63"></a>		AllRules.Remove(<span class="source_int">0</span>, AllRules.Length);
+<a name="64"></a>
+<a name="65"></a>	<span class="source_comment">// Create working set of rules from stored values
+</span><a name="66"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Rules.Length; <span class="source_type">i</span>++)
+<a name="67"></a>		AddRule(Rules[<span class="source_type">i</span>].ItemName, Rules[<span class="source_type">i</span>].<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key, Rules[<span class="source_type">i</span>].<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span>, Rules[<span class="source_type">i</span>].<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType, Rules[<span class="source_type">i</span>].FilterType);
+<a name="68"></a>}
+<a name="69"></a>
+<a name="70"></a>function <span class="source_type">bool</span> SetTitle( <span class="source_type">string</span> <span class="source_type">NewTitle</span> )
+<a name="71"></a>{
+<a name="72"></a>	bDirty = bDirty || <span class="source_type">NewTitle</span> != Title;
+<a name="73"></a>	Title = <span class="source_type">NewTitle</span>;
+<a name="74"></a>	return true;
+<a name="75"></a>}
+<a name="76"></a>
+<a name="77"></a>function <span class="source_type">bool</span> SetActive( <span class="source_type">bool</span> <span class="source_type">NewActive</span> )
+<a name="78"></a>{
+<a name="79"></a>	bDirty = bDirty || <span class="source_type">NewActive</span> != bEnabled;
+<a name="80"></a>	bEnabled = <span class="source_type">NewActive</span>;
+<a name="81"></a>	return true;
+<a name="82"></a>}
+<a name="83"></a>
+<a name="84"></a>function SetRules( array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>&gt; <span class="source_type">NewRules</span> )
+<a name="85"></a>{
+<a name="86"></a>	AllRules = <span class="source_type">NewRules</span>;
+<a name="87"></a>	bDirty = True;
+<a name="88"></a>}
+<a name="89"></a>
+<a name="90"></a>
+<a name="91"></a>
+<a name="92"></a>function <span class="source_type">string</span> GetTitle()
+<a name="93"></a>{
+<a name="94"></a>	return Title;
+<a name="95"></a>}
+<a name="96"></a>
+<a name="97"></a>function <span class="source_type">bool</span> IsActive()
+<a name="98"></a>{
+<a name="99"></a>	return bEnabled;
+<a name="100"></a>}
+<a name="101"></a>
+<a name="102"></a>function GetQueryRules( out array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span>&gt; <span class="source_type">OutRules</span> )
+<a name="103"></a>{
+<a name="104"></a>	Save();
+<a name="105"></a>	<span class="source_type">OutRules</span> = Rules;
+<a name="106"></a>}
+<a name="107"></a>
+<a name="108"></a>function GetRules( out array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>&gt; <span class="source_type">OutRules</span> )
+<a name="109"></a>{
+<a name="110"></a>	<span class="source_type">OutRules</span> = AllRules;
+<a name="111"></a>}
+<a name="112"></a>
+<a name="113"></a>function Save( optional <span class="source_type">bool</span> <span class="source_type">bForceSave</span> )
+<a name="114"></a>{
+<a name="115"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="116"></a>	if ( bDirty || <span class="source_type">bForceSave</span> )
+<a name="117"></a>	{
+<a name="118"></a>		DefaultTitle = Title;
+<a name="119"></a>		<span class="source_type">Active</span> = bEnabled;
+<a name="120"></a>
+<a name="121"></a>		if ( Rules.Length &gt; <span class="source_int">0</span> )
+<a name="122"></a>			Rules.Remove(<span class="source_int">0</span>, Rules.Length);
+<a name="123"></a>
+<a name="124"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; AllRules.Length; <span class="source_type">i</span>++)
+<a name="125"></a>			Rules[Rules.Length] = AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>;
+<a name="126"></a>
+<a name="127"></a>		SaveConfig();
+<a name="128"></a>	}
+<a name="129"></a>
+<a name="130"></a>	bDirty = False;
+<a name="131"></a>}
+<a name="132"></a>
+<a name="133"></a><span class="source_comment">//==============================================================================
+</span><a name="134"></a><span class="source_comment">//
+</span><a name="135"></a><span class="source_comment">// Query functions
+</span><a name="136"></a><span class="source_comment">//
+</span><a name="137"></a>
+<a name="138"></a>function <span class="source_type">int</span> Count()
+<a name="139"></a>{
+<a name="140"></a>	return AllRules.Length;
+<a name="141"></a>}
+<a name="142"></a>
+<a name="143"></a>function <span class="source_type">bool</span> FindRule( out <span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span> <span class="source_type">Rule</span>, <span class="source_type">string</span> ItemName, optional <span class="source_type">string</span> <span class="source_type">Value</span> )
+<a name="144"></a>{
+<a name="145"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="146"></a>
+<a name="147"></a>	<span class="source_type">i</span> = FindRuleIndex(ItemName,<span class="source_type">Value</span>);
+<a name="148"></a>	return GetRule(<span class="source_type">i</span>, <span class="source_type">Rule</span>);
+<a name="149"></a>}
+<a name="150"></a>
+<a name="151"></a>function <span class="source_type">bool</span> GetRule( <span class="source_type">int</span> <span class="source_type">Index</span>, out <span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span> <span class="source_type">Rule</span> )
+<a name="152"></a>{
+<a name="153"></a>	if ( ValidIndex(<span class="source_type">Index</span>) )
+<a name="154"></a>	{
+<a name="155"></a>		<span class="source_type">Rule</span> = AllRules[<span class="source_type">Index</span>].<span class="source_type">Item</span>;
+<a name="156"></a>		return True;
+<a name="157"></a>	}
+<a name="158"></a>
+<a name="159"></a>	return False;
+<a name="160"></a>}
+<a name="161"></a>
+<a name="162"></a>function <span class="source_type">int</span> FindRuleIndex(<span class="source_type">string</span> ItemName, optional <span class="source_type">string</span> <span class="source_type">Value</span>)
+<a name="163"></a>{
+<a name="164"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="165"></a>
+<a name="166"></a>	j = InStr(ItemName, <span class="source_string">"."</span>);
+<a name="167"></a>	if (j != -<span class="source_int">1</span>)
+<a name="168"></a>		ItemName = Mid(ItemName, j+<span class="source_int">1</span>);
+<a name="169"></a>
+<a name="170"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; AllRules.Length; <span class="source_type">i</span>++)
+<a name="171"></a>		if (AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key ~= ItemName)
+<a name="172"></a>		{
+<a name="173"></a>			if (<span class="source_type">Value</span> == <span class="source_string">""</span> || (<span class="source_type">Value</span> != <span class="source_string">""</span> && <span class="source_type">Value</span> ~= AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span>))
+<a name="174"></a>				return <span class="source_type">i</span>;
+<a name="175"></a>		}
+<a name="176"></a>
+<a name="177"></a>	return -<span class="source_int">1</span>;
+<a name="178"></a>}
+<a name="179"></a>
+<a name="180"></a><span class="source_comment">// This function returns index for an item name and ItemIndex (for finding the absolute index of multi-items)
+</span><a name="181"></a>function <span class="source_type">int</span> FindItemIndex(<span class="source_type">string</span> ItemName, <span class="source_type">int</span> ItemIndex)
+<a name="182"></a>{
+<a name="183"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="184"></a>
+<a name="185"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; AllRules.Length; <span class="source_type">i</span>++)
+<a name="186"></a>		if (AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key ~= ItemName && AllRules[<span class="source_type">i</span>].ItemIndex == ItemIndex)
+<a name="187"></a>			return <span class="source_type">i</span>;
+<a name="188"></a>
+<a name="189"></a>	return -<span class="source_int">1</span>;
+<a name="190"></a>}
+<a name="191"></a>
+<a name="192"></a>protected function <span class="source_type">int</span> FindLastIndex(<span class="source_type">string</span> ItemName)
+<a name="193"></a>{
+<a name="194"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="195"></a>
+<a name="196"></a>	j = -<span class="source_int">1</span>;
+<a name="197"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; AllRules.Length; <span class="source_type">i</span>++)
+<a name="198"></a>	{
+<a name="199"></a>		if (AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key ~= ItemName && AllRules[<span class="source_type">i</span>].ItemIndex &gt; j)
+<a name="200"></a>			j = AllRules[<span class="source_type">i</span>].ItemIndex;
+<a name="201"></a>	}
+<a name="202"></a>
+<a name="203"></a>	return j;
+<a name="204"></a>}
+<a name="205"></a>
+<a name="206"></a>function <span class="source_type">int</span> FindInnerIndex(<span class="source_type">string</span> ItemName, <span class="source_type">string</span> <span class="source_type">Value</span>)
+<a name="207"></a>{
+<a name="208"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="209"></a>
+<a name="210"></a>	j = InStr(ItemName, <span class="source_string">"."</span>);
+<a name="211"></a>	if (j != -<span class="source_int">1</span>)
+<a name="212"></a>		ItemName = Mid(ItemName, j+<span class="source_int">1</span>);
+<a name="213"></a>
+<a name="214"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; AllRules.Length; <span class="source_type">i</span>++)
+<a name="215"></a>		if (AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key ~= ItemName && AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span> ~= <span class="source_type">Value</span>)
+<a name="216"></a>			return AllRules[<span class="source_type">i</span>].ItemIndex;
+<a name="217"></a>
+<a name="218"></a>	return -<span class="source_int">1</span>;
+<a name="219"></a>}
+<a name="220"></a>
+<a name="221"></a>function <span class="source_type">string</span> GetRuleKey(<span class="source_type">int</span> <span class="source_type">Index</span>)
+<a name="222"></a>{
+<a name="223"></a>	if (ValidIndex(<span class="source_type">Index</span>))
+<a name="224"></a>		return AllRules[<span class="source_type">Index</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key;
+<a name="225"></a>
+<a name="226"></a>	return <span class="source_string">""</span>;
+<a name="227"></a>}
+<a name="228"></a>
+<a name="229"></a>function <span class="source_type">string</span> GetRuleType(<span class="source_type">int</span> <span class="source_type">Index</span>)
+<a name="230"></a>{
+<a name="231"></a>	if (ValidIndex(<span class="source_type">Index</span>))
+<a name="232"></a>		return GetDataTypeString(AllRules[<span class="source_type">Index</span>].<span class="source_type">Item</span>.FilterType);
+<a name="233"></a>
+<a name="234"></a>	return <span class="source_string">""</span>;
+<a name="235"></a>}
+<a name="236"></a>
+<a name="237"></a>function <span class="source_type">string</span> GetRuleQueryType( <span class="source_type">int</span> <span class="source_type">Index</span> )
+<a name="238"></a>{
+<a name="239"></a>	if ( ValidIndex(<span class="source_type">Index</span>) )
+<a name="240"></a>		return <span class="source_type">string</span>(GetEnum(enum<span class="source_name">'EQueryType'</span>, AllRules[<span class="source_type">Index</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType));
+<a name="241"></a>
+<a name="242"></a>	return <span class="source_string">""</span>;
+<a name="243"></a>}
+<a name="244"></a>
+<a name="245"></a><span class="source_comment">// Returns all values for a rule - works for single and multiple rules
+</span><a name="246"></a>function array&lt;<span class="source_type">string</span>&gt; GetRuleValues(<span class="source_type">int</span> <span class="source_type">Index</span>)
+<a name="247"></a>{
+<a name="248"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="249"></a>	local array&lt;<span class="source_type">string</span>&gt; <span class="source_type">Ar</span>;
+<a name="250"></a>	local array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>&gt; Subset;
+<a name="251"></a>
+<a name="252"></a>	Subset = GetRuleSetAt(<span class="source_type">Index</span>);
+<a name="253"></a>
+<a name="254"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Subset.Length; <span class="source_type">i</span>++)
+<a name="255"></a>		<span class="source_type">Ar</span>[<span class="source_type">i</span>] = Subset[<span class="source_type">i</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span>;
+<a name="256"></a>
+<a name="257"></a>	return <span class="source_type">Ar</span>;
+<a name="258"></a>}
+<a name="259"></a>
+<a name="260"></a>function array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>&gt; GetRuleSet(<span class="source_type">string</span> ItemName)
+<a name="261"></a>{
+<a name="262"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="263"></a>	local array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>&gt; RuleAr;
+<a name="264"></a>
+<a name="265"></a>	ChopClass(ItemName);
+<a name="266"></a>
+<a name="267"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; AllRules.Length; <span class="source_type">i</span>++)
+<a name="268"></a>		if (AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key ~= ItemName)
+<a name="269"></a>			RuleAr[RuleAr.Length] = AllRules[<span class="source_type">i</span>];
+<a name="270"></a>
+<a name="271"></a>	return RuleAr;
+<a name="272"></a>}
+<a name="273"></a>
+<a name="274"></a>function array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>&gt; GetRuleSetAt(<span class="source_type">int</span> <span class="source_type">Index</span>)
+<a name="275"></a>{
+<a name="276"></a>	local array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>&gt; RuleAr;
+<a name="277"></a>
+<a name="278"></a>	if (ValidIndex(<span class="source_type">Index</span>))
+<a name="279"></a>		RuleAr = GetRuleSet(AllRules[<span class="source_type">Index</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key);
+<a name="280"></a>
+<a name="281"></a> return RuleAr;
+<a name="282"></a>}
+<a name="283"></a>
+<a name="284"></a>function PostEdit(<span class="source_type">string</span> <span class="source_type">NewTitle</span>, array&lt;<span class="source_type"><a href="../gui2k4/customfilter.html" class="source">CustomFilter</a></span>.<span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span>&gt; <span class="source_type">NewRules</span>)
+<a name="285"></a>{
+<a name="286"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="287"></a>	AllRules.Remove(<span class="source_int">0</span>,AllRules.Length);
+<a name="288"></a>	Title = <span class="source_type">NewTitle</span>;
+<a name="289"></a>	for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;<span class="source_type">NewRules</span>.Length;<span class="source_type">i</span>++)
+<a name="290"></a>		AddRule(<span class="source_type">NewRules</span>[<span class="source_type">i</span>].ItemName,<span class="source_type">NewRules</span>[<span class="source_type">i</span>].<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key, <span class="source_type">NewRules</span>[<span class="source_type">i</span>].<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span>, <span class="source_type">NewRules</span>[<span class="source_type">i</span>].<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType, <span class="source_type">NewRules</span>[<span class="source_type">i</span>].FilterType);
+<a name="291"></a>
+<a name="292"></a>	bDirty = true;
+<a name="293"></a>	Save();
+<a name="294"></a>}
+<a name="295"></a>
+<a name="296"></a>function <span class="source_type">float</span> AddRule(<span class="source_type">string</span> <span class="source_type">NewName</span>, <span class="source_type">string</span> NewKey, <span class="source_type">string</span> <span class="source_type">NewValue</span>, <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#EQueryType" class="source">EQueryType</a></span> QType, <span class="source_type"><a href="../gui2k4/customfilter.html#EDataType" class="source">EDataType</a></span> DType)
+<a name="297"></a>{
+<a name="298"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="299"></a>	local <span class="source_type"><a href="../gui2k4/customfilter.html#CurrentFilter" class="source">CurrentFilter</a></span>					<span class="source_type">NewRule</span>;
+<a name="300"></a>	local <span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span>					<span class="source_type">NewItem</span>;
+<a name="301"></a>	local <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#QueryData" class="source">QueryData</a></span>	KeyPair;
+<a name="302"></a>
+<a name="303"></a>
+<a name="304"></a>	j = FindLastIndex(NewKey);
+<a name="305"></a>	<span class="source_type">NewRule</span>.ItemIndex = j+<span class="source_int">1</span>;
+<a name="306"></a>
+<a name="307"></a>	<span class="source_type">i</span> = AllRules.Length;
+<a name="308"></a>
+<a name="309"></a>	<span class="source_comment">// Not found, so just add it
+</span><a name="310"></a>	KeyPair.Key = NewKey;
+<a name="311"></a>	KeyPair.<span class="source_type">Value</span> = <span class="source_type">NewValue</span>;
+<a name="312"></a>	KeyPair.QueryType = QType;
+<a name="313"></a>
+<a name="314"></a>	<span class="source_type">NewItem</span>.ItemName = <span class="source_type">NewName</span>;
+<a name="315"></a>	<span class="source_type">NewItem</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span> = KeyPair;
+<a name="316"></a>	<span class="source_type">NewItem</span>.FilterType = DType;
+<a name="317"></a>
+<a name="318"></a>	<span class="source_type">NewRule</span>.<span class="source_type">Item</span> = <span class="source_type">NewItem</span>;
+<a name="319"></a>	AllRules[<span class="source_type">i</span>] = <span class="source_type">NewRule</span>;
+<a name="320"></a>
+<a name="321"></a>	bDirty = True;
+<a name="322"></a>	return <span class="source_type">i</span>;
+<a name="323"></a>}
+<a name="324"></a>
+<a name="325"></a>
+<a name="326"></a>function <span class="source_type">bool</span> RemoveRule(<span class="source_type">string</span> ItemName)
+<a name="327"></a>{
+<a name="328"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="329"></a>	local <span class="source_type">bool</span> bSuccess;
+<a name="330"></a>
+<a name="331"></a>	for ( <span class="source_type">i</span> = AllRules.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="332"></a>	{
+<a name="333"></a>		if (AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key ~= ItemName)
+<a name="334"></a>		{
+<a name="335"></a>			bDirty = True;
+<a name="336"></a>			bSuccess = True;
+<a name="337"></a>			AllRules.Remove(<span class="source_type">i</span>--, <span class="source_int">1</span>);
+<a name="338"></a>		}
+<a name="339"></a>	}
+<a name="340"></a>	return bSuccess;
+<a name="341"></a>}
+<a name="342"></a>
+<a name="343"></a>function <span class="source_type">bool</span> RemoveRuleAt(<span class="source_type">int</span> <span class="source_type">Index</span>)
+<a name="344"></a>{
+<a name="345"></a>	if (ValidIndex(<span class="source_type">Index</span>))
+<a name="346"></a>		return RemoveRule(AllRules[<span class="source_type">Index</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.Key);
+<a name="347"></a>
+<a name="348"></a>	return false;
+<a name="349"></a>}
+<a name="350"></a>
+<a name="351"></a><span class="source_comment">//==============================================================================
+</span><a name="352"></a><span class="source_comment">//
+</span><a name="353"></a><span class="source_comment">//	Saving & Loading
+</span><a name="354"></a><span class="source_comment">//
+</span><a name="355"></a>
+<a name="356"></a>function ImportFilter(<span class="source_type"><a href="../gui2k4/customfilter.html" class="source">CustomFilter</a></span> ImportFrom)
+<a name="357"></a>{
+<a name="358"></a>	SetTitle( ImportFrom.GetTitle() );
+<a name="359"></a>	SetActive( ImportFrom.IsActive() );
+<a name="360"></a>
+<a name="361"></a>	ImportFrom.GetRules( AllRules );
+<a name="362"></a>	bDirty = True;
+<a name="363"></a>}
+<a name="364"></a>
+<a name="365"></a>function ResetRules()
+<a name="366"></a>{
+<a name="367"></a>	CancelChanges();
+<a name="368"></a>}
+<a name="369"></a>
+<a name="370"></a>function <span class="source_type">bool</span> ChangeRule(<span class="source_type">int</span> <span class="source_type">Index</span>, <span class="source_type">string</span> NewTag, <span class="source_type">string</span> <span class="source_type">NewValue</span>, <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#EQueryType" class="source">EQueryType</a></span> NewType)
+<a name="371"></a>{
+<a name="372"></a>	if (!ValidIndex(<span class="source_type">Index</span>))
+<a name="373"></a>		return false;
+<a name="374"></a>
+<a name="375"></a>	AllRules[<span class="source_type">Index</span>].<span class="source_type">Item</span>.ItemName = NewTag;
+<a name="376"></a>	AllRules[<span class="source_type">Index</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.<span class="source_type">Value</span> = <span class="source_type">NewValue</span>;
+<a name="377"></a>	AllRules[<span class="source_type">Index</span>].<span class="source_type">Item</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span>.QueryType = NewType;
+<a name="378"></a>	bDirty = True;
+<a name="379"></a>	return true;
+<a name="380"></a>}
+<a name="381"></a>
+<a name="382"></a>function <span class="source_type">bool</span> ValidIndex(<span class="source_type">int</span> <span class="source_type">Index</span>)
+<a name="383"></a>{
+<a name="384"></a>	return (<span class="source_type">Index</span> &gt;= <span class="source_int">0</span> && <span class="source_type">Index</span> &lt; AllRules.Length);
+<a name="385"></a>}
+<a name="386"></a>
+<a name="387"></a><span class="source_comment">//==============================================================================
+</span><a name="388"></a><span class="source_comment">//
+</span><a name="389"></a><span class="source_comment">//	Internal functions
+</span><a name="390"></a><span class="source_comment">//
+</span><a name="391"></a>
+<a name="392"></a>static final function <span class="source_type"><a href="../gui2k4/customfilter.html#EDataType" class="source">EDataType</a></span> GetDataType(<span class="source_type">string</span> <span class="source_type">DT</span>)
+<a name="393"></a>{
+<a name="394"></a>	<span class="source_type">switch</span> (<span class="source_type">DT</span>)
+<a name="395"></a>	{
+<a name="396"></a>		case <span class="source_string">"DT_Multiple"</span>:	return DT_Multiple;
+<a name="397"></a>		case <span class="source_string">"DT_Ranged"</span>:	return DT_Ranged;
+<a name="398"></a>		default:			return DT_Unique;
+<a name="399"></a>	}
+<a name="400"></a>}
+<a name="401"></a>
+<a name="402"></a>static final function <span class="source_type">string</span> GetDataTypeString(<span class="source_type"><a href="../gui2k4/customfilter.html#EDataType" class="source">EDataType</a></span> <span class="source_type">Type</span>)
+<a name="403"></a>{
+<a name="404"></a>	if (<span class="source_type">Type</span> == DT_Unique)
+<a name="405"></a>		return <span class="source_string">"DT_Unique"</span>;
+<a name="406"></a>
+<a name="407"></a>	if (<span class="source_type">Type</span> == DT_Ranged)
+<a name="408"></a>		return <span class="source_string">"DT_Ranged"</span>;
+<a name="409"></a>
+<a name="410"></a>	if (<span class="source_type">Type</span> == DT_Multiple)
+<a name="411"></a>		return <span class="source_string">"DT_Multiple"</span>;
+<a name="412"></a>
+<a name="413"></a>	return <span class="source_string">""</span>;
+<a name="414"></a>}
+<a name="415"></a>
+<a name="416"></a>static final function <span class="source_type">string</span> GetQueryString(<span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#EQueryType" class="source">EQueryType</a></span> QT)
+<a name="417"></a>{
+<a name="418"></a>	<span class="source_type">switch</span> (QT)
+<a name="419"></a>	{
+<a name="420"></a>		case QT_Equals:				return <span class="source_string">"QT_Equals"</span>;
+<a name="421"></a>		case QT_NotEquals:			return <span class="source_string">"QT_NotEquals"</span>;
+<a name="422"></a>		case QT_LessThan:			return <span class="source_string">"QT_LessThan"</span>;
+<a name="423"></a>		case QT_LessThanEquals:		return <span class="source_string">"QT_LessThanEquals"</span>;
+<a name="424"></a>		case QT_GreaterThan:		return <span class="source_string">"QT_GreaterThan"</span>;
+<a name="425"></a>		case QT_GreaterThanEquals:	return <span class="source_string">"QT_GreaterThanEquals"</span>;
+<a name="426"></a>		default:					return <span class="source_string">"QT_Disabled"</span>;
+<a name="427"></a>	}
+<a name="428"></a>
+<a name="429"></a>	return <span class="source_string">""</span>;
+<a name="430"></a>}
+<a name="431"></a>
+<a name="432"></a>static final function <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#EQueryType" class="source">EQueryType</a></span> GetQueryType(<span class="source_type">string</span> QT)
+<a name="433"></a>{
+<a name="434"></a>	<span class="source_type">switch</span> (QT)
+<a name="435"></a>	{
+<a name="436"></a>		case <span class="source_string">"QT_Equals"</span>:				return QT_Equals;
+<a name="437"></a>		case <span class="source_string">"QT_NotEquals"</span>:			return QT_NotEquals;
+<a name="438"></a>		case <span class="source_string">"QT_LessThan"</span>:				return QT_LessThan;
+<a name="439"></a>		case <span class="source_string">"QT_LessThanEquals"</span>:		return QT_LessThanEquals;
+<a name="440"></a>		case <span class="source_string">"QT_GreaterThan"</span>:			return QT_GreaterThan;
+<a name="441"></a>		case <span class="source_string">"QT_GreaterThanEquals"</span>:	return QT_GreaterThanEquals;
+<a name="442"></a>		default:						return QT_Disabled;
+<a name="443"></a>	}
+<a name="444"></a>}
+<a name="445"></a>
+<a name="446"></a>static final function <span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span> StaticGenerateRule(<span class="source_type">string</span> <span class="source_type">FriendlyName</span>, <span class="source_type">string</span> ItemName, <span class="source_type">string</span> ItemVal, <span class="source_type"><a href="../gui2k4/customfilter.html#EDataType" class="source">EDataType</a></span> ItemDataType, <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#EQueryType" class="source">EQueryType</a></span> ItemQueryType)
+<a name="447"></a>{
+<a name="448"></a>	local <span class="source_type"><a href="../gui2k4/customfilter.html#AFilterRule" class="source">AFilterRule</a></span>					<span class="source_type">NewItem</span>;
+<a name="449"></a>	local <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#QueryData" class="source">QueryData</a></span>	KeyPair;
+<a name="450"></a>
+<a name="451"></a>	KeyPair.Key = ItemName;
+<a name="452"></a>	KeyPair.<span class="source_type">Value</span> = ItemVal;
+<a name="453"></a>	KeyPair.QueryType = ItemQueryType;
+<a name="454"></a>
+<a name="455"></a>	<span class="source_type">NewItem</span>.ItemName = <span class="source_type">FriendlyName</span>;
+<a name="456"></a>	<span class="source_type">NewItem</span>.<span class="source_type"><a href="../gui2k4/simplefilterpanel.html#FilterItem" class="source">FilterItem</a></span> = KeyPair;
+<a name="457"></a>	<span class="source_type">NewItem</span>.FilterType = ItemDataType;
+<a name="458"></a>
+<a name="459"></a>	return <span class="source_type">NewItem</span>;
+<a name="460"></a>}
+<a name="461"></a>
+<a name="462"></a>protected function <span class="source_type">string</span> GetUniqueName(<span class="source_type">string</span> <span class="source_type">Test</span>, <span class="source_type">int</span> <span class="source_type">Index</span>)
+<a name="463"></a>{
+<a name="464"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="465"></a>	local <span class="source_type">string</span> <span class="source_type">S</span>;
+<a name="466"></a>
+<a name="467"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; AllRules.Length; <span class="source_type">i</span>++)
+<a name="468"></a>	{
+<a name="469"></a>		if ( AllRules[<span class="source_type">i</span>].ItemIndex == <span class="source_type">Index</span> && AllRules[<span class="source_type">i</span>].<span class="source_type">Item</span>.ItemName ~= (<span class="source_type">Test</span> $ <span class="source_type">S</span>) )
+<a name="470"></a>		{
+<a name="471"></a>			<span class="source_type">S</span> = <span class="source_string">" "</span> $ <span class="source_type">string</span>(++j);
+<a name="472"></a>			<span class="source_type">i</span> = -<span class="source_int">1</span>;
+<a name="473"></a>		}
+<a name="474"></a>	}
+<a name="475"></a>
+<a name="476"></a>	return <span class="source_type">Test</span> $ <span class="source_type">S</span>;
+<a name="477"></a>}
+<a name="478"></a>
+<a name="479"></a>static final function ChopClass(out <span class="source_type">string</span> <span class="source_type">FullName</span>)
+<a name="480"></a>{
+<a name="481"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="482"></a>
+<a name="483"></a>	<span class="source_type">i</span> = InStr(<span class="source_type">FullName</span>, <span class="source_string">"."</span>);
+<a name="484"></a>	while (<span class="source_type">i</span> &gt;= <span class="source_int">0</span>)
+<a name="485"></a>	{
+<a name="486"></a>		<span class="source_type">FullName</span> = Mid(<span class="source_type">FullName</span>, <span class="source_type">i</span>+<span class="source_int">1</span>);
+<a name="487"></a>		<span class="source_type">i</span> = InStr(<span class="source_type">FullName</span>, <span class="source_string">"."</span>);
+<a name="488"></a>	}
+<a name="489"></a>}
+<a name="490"></a>
+<a name="491"></a>defaultproperties
+<a name="492"></a>{
+<a name="493"></a>}
+<a name="494"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/customfilter.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#CustomFilter">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/controlbinder.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/customhudmenuassault.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:00.960 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

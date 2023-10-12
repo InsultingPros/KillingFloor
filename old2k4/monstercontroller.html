@@ -1,0 +1,1611 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Old2K4.MonsterController</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../old2k4/old2k4-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_old2k4/monstercontroller.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#MonsterController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../old2k4/monster.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../old2k4/newtracer.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#old2k4/monstercontroller.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../old2k4/old2k4-overview.html">Old2K4</a>.MonsterController</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../gameplay/scriptedcontroller.html">ScriptedController</a></dd>
+
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/controller.html">Controller</a>
+      |   
+      +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/aicontroller.html">AIController</a>
+         |   
+         +-- <a href="../gameplay/gameplay-overview.html">GamePlay</a>.<a href="../gameplay/scriptedcontroller.html">ScriptedController</a>
+            |   
+            +-- <a href="../old2k4/old2k4-overview.html">Old2K4</a>.<a href="../old2k4/monstercontroller.html">MonsterController</a>
+</pre>
+
+<h4>Direct Known Subclasses:</h4>
+<blockquote>
+	<a href="../kfmod/friendlymonstercontroller.html">FriendlyMonsterController</a>, <a href="../kfmod/kffriendlyai.html">KFFriendlyAI</a>, <a href="../kfmod/kfmonstercontroller.html">KFMonsterController</a>
+</blockquote>
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Summary</th>
+</tr>
+<tr><td width="40%"><a href="#_ENEMYLOCATIONFUZZ" name="ENEMYLOCATIONFUZZ" title="go to the details">ENEMYLOCATIONFUZZ</a></td><td width="10%">=</td><td width="50%">1200</td></tr>
+<tr><td width="40%"><a href="#_MAXSTAKEOUTDIST" name="MAXSTAKEOUTDIST" title="go to the details">MAXSTAKEOUTDIST</a></td><td width="10%">=</td><td width="50%">2000</td></tr>
+<tr><td width="40%"><a href="#_MINSTRAFEDIST" name="MINSTRAFEDIST" title="go to the details">MINSTRAFEDIST</a></td><td width="10%">=</td><td width="50%">200</td></tr>
+<tr><td width="40%"><a href="#_MINVIEWDIST" name="MINVIEWDIST" title="go to the details">MINVIEWDIST</a></td><td width="10%">=</td><td width="50%">200</td></tr>
+<tr><td width="40%"><a href="#_TACTICALHEIGHTADVANTAGE" name="TACTICALHEIGHTADVANTAGE" title="go to the details">TACTICALHEIGHTADVANTAGE</a></td><td width="10%">=</td><td width="50%">320</td></tr>
+
+</table>
+
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_Accuracy" name="Accuracy" title="go to the details">Accuracy</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_AcquireTime" name="AcquireTime" title="go to the details">AcquireTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bCanFire" name="bCanFire" title="go to the details">bCanFire</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bChangeDir" name="bChangeDir" title="go to the details">bChangeDir</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bEnemyIsVisible" name="bEnemyIsVisible" title="go to the details">bEnemyIsVisible</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bForcedDirection" name="bForcedDirection" title="go to the details">bForcedDirection</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bHasFired" name="bHasFired" title="go to the details">bHasFired</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bJustLanded" name="bJustLanded" title="go to the details">bJustLanded</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bLeadTarget" name="bLeadTarget" title="go to the details">bLeadTarget</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bMustCharge" name="bMustCharge" title="go to the details">bMustCharge</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bRecommendFastMove" name="bRecommendFastMove" title="go to the details">bRecommendFastMove</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bStrafeDir" name="bStrafeDir" title="go to the details">bStrafeDir</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ChallengeTime" name="ChallengeTime" title="go to the details">ChallengeTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_ChooseAttackCounter" name="ChooseAttackCounter" title="go to the details">ChooseAttackCounter</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ChooseAttackTime" name="ChooseAttackTime" title="go to the details">ChooseAttackTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_ChoosingAttackLevel" name="ChoosingAttackLevel" title="go to the details">ChoosingAttackLevel</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_CombatStyle" name="CombatStyle" title="go to the details">CombatStyle</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_EnemyVisibilityTime" name="EnemyVisibilityTime" title="go to the details">EnemyVisibilityTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/pawn.html">Pawn</a></td><td width="66%"><a href="#_FailedHuntEnemy" name="FailedHuntEnemy" title="go to the details">FailedHuntEnemy</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FailedHuntTime" name="FailedHuntTime" title="go to the details">FailedHuntTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_GoalString" name="GoalString" title="go to the details">GoalString</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_HidingSpot" name="HidingSpot" title="go to the details">HidingSpot</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LastRespawnTime" name="LastRespawnTime" title="go to the details">LastRespawnTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LoseEnemyCheckTime" name="LoseEnemyCheckTime" title="go to the details">LoseEnemyCheckTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_NumRandomJumps" name="NumRandomJumps" title="go to the details">NumRandomJumps</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/pawn.html">pawn</a></td><td width="66%"><a href="#_OldEnemy" name="OldEnemy" title="go to the details">OldEnemy</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ReactionTime" name="ReactionTime" title="go to the details">ReactionTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_SoakString" name="SoakString" title="go to the details">SoakString</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_StartTacticalTime" name="StartTacticalTime" title="go to the details">StartTacticalTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_StopStartTime" name="StopStartTime" title="go to the details">StopStartTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_StrafingAbility" name="StrafingAbility" title="go to the details">StrafingAbility</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/pawn.html">pawn</a></td><td width="66%"><a href="#_VisibleEnemy" name="VisibleEnemy" title="go to the details">VisibleEnemy</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../gameplay/gameplay-overview.html">GamePlay</a>.<a href="../gameplay/scriptedcontroller.html">ScriptedController</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../gameplay/scriptedcontroller.html#ActionNum">ActionNum</a>, <a href="../gameplay/scriptedcontroller.html#AnimsRemaining">AnimsRemaining</a>, <a href="../gameplay/scriptedcontroller.html#bBroken">bBroken</a>, <a href="../gameplay/scriptedcontroller.html#bChangingPawns">bChangingPawns</a>, <a href="../gameplay/scriptedcontroller.html#bFakeShot">bFakeShot</a>, <a href="../gameplay/scriptedcontroller.html#bFineWeaponControl">bFineWeaponControl</a>, <a href="../gameplay/scriptedcontroller.html#bPendingDoubleJump">bPendingDoubleJump</a>, <a href="../gameplay/scriptedcontroller.html#bPendingShoot">bPendingShoot</a>, <a href="../gameplay/scriptedcontroller.html#bShootSpray">bShootSpray</a>, <a href="../gameplay/scriptedcontroller.html#bShootTarget">bShootTarget</a>, <a href="../gameplay/scriptedcontroller.html#bUseScriptFacing">bUseScriptFacing</a>, <a href="../gameplay/scriptedcontroller.html#CurrentAction">CurrentAction</a>, <a href="../gameplay/scriptedcontroller.html#CurrentAnimation">CurrentAnimation</a>, <a href="../gameplay/scriptedcontroller.html#FiringMode">FiringMode</a>, <a href="../gameplay/scriptedcontroller.html#IterationCounter">IterationCounter</a>, <a href="../gameplay/scriptedcontroller.html#IterationSectionStart">IterationSectionStart</a>, <a href="../gameplay/scriptedcontroller.html#MyPlayerController">MyPlayerController</a>, <a href="../gameplay/scriptedcontroller.html#NumShots">NumShots</a>, <a href="../gameplay/scriptedcontroller.html#PendingController">PendingController</a>, <a href="../gameplay/scriptedcontroller.html#ScriptedFocus">ScriptedFocus</a>, <a href="../gameplay/scriptedcontroller.html#SequenceScript">SequenceScript</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/aicontroller.html">AIController</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/aicontroller.html#bAdjustFromWalls">bAdjustFromWalls</a>, <a href="../engine/aicontroller.html#bHunting">bHunting</a>, <a href="../engine/aicontroller.html#bPlannedJump">bPlannedJump</a>, <a href="../engine/aicontroller.html#MyScript">MyScript</a>, <a href="../engine/aicontroller.html#Skill">Skill</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../core/object.html#Rotator">rotator</a>&nbsp;</td><td><a href="#_AdjustAim-" name="AdjustAim" title="go to the details">AdjustAim</a> (<a href="../engine/actor.html#FireProperties">FireProperties</a> FiredAmmunition, <a href="../core/object.html#Vector">vector</a> projStart, int aimerror))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../core/object.html#Rotator">rotator</a>&nbsp;</td><td><a href="#_AdjustAim-StakeOut" name="AdjustAim" title="go to the details">AdjustAim</a> (<a href="../engine/actor.html#FireProperties">FireProperties</a> FiredAmmunition, <a href="../core/object.html#Vector">vector</a> projStart, int aimerror))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>float&nbsp;</td><td><a href="#_AdjustAimError-" name="AdjustAimError" title="go to the details">AdjustAimError</a> (float aimerror, float TargetDist, bool bDefendMelee, bool bInstantProj, bool bLeadTargetNow ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_AdjustAround-" name="AdjustAround" title="go to the details">AdjustAround</a> (<a href="../engine/pawn.html">Pawn</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_AnimEnd-WaitForAnim" name="AnimEnd" title="go to the details">AnimEnd</a> (int Channel))<br /><span class="function_state">WaitForAnim</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-RangedAttack" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">RangedAttack</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-RestFormation" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">RestFormation</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-StakeOut" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-TacticalMove" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-WaitingForLanding" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">WaitingForLanding</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_CanAttack-" name="CanAttack" title="go to the details">CanAttack</a> (<a href="../engine/actor.html">Actor</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_CanAttack-StakeOut" name="CanAttack" title="go to the details">CanAttack</a> (<a href="../engine/actor.html">Actor</a> Other))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CancelCampFor-" name="CancelCampFor" title="go to the details">CancelCampFor</a> (<a href="../engine/controller.html">Controller</a> C)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CancelCampFor-RangedAttack" name="CancelCampFor" title="go to the details">CancelCampFor</a> (<a href="../engine/controller.html">Controller</a> C))<br /><span class="function_state">RangedAttack</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CancelCampFor-RestFormation" name="CancelCampFor" title="go to the details">CancelCampFor</a> (<a href="../engine/controller.html">Controller</a> C))<br /><span class="function_state">RestFormation</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Celebrate-" name="Celebrate" title="go to the details">Celebrate</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ChangeEnemy-" name="ChangeEnemy" title="go to the details">ChangeEnemy</a> (<a href="../engine/pawn.html">Pawn</a> NewEnemy, bool bCanSeeNewEnemy))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_CheckFutureSight-" name="CheckFutureSight" title="go to the details">CheckFutureSight</a> (float deltatime))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_CheckIfShouldCrouch-" name="CheckIfShouldCrouch" title="go to the details">CheckIfShouldCrouch</a> (<a href="../core/object.html#Vector">vector</a> StartPosition, <a href="../core/object.html#Vector">vector</a> TargetPosition, float probability))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ChooseAttackMode-" name="ChooseAttackMode" title="go to the details">ChooseAttackMode</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ClearShot-" name="ClearShot" title="go to the details">ClearShot</a> (<a href="../core/object.html#Vector">Vector</a> TargetLoc, bool bImmediateFire))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DamageAttitudeTo-" name="DamageAttitudeTo" title="go to the details">DamageAttitudeTo</a> (<a href="../engine/pawn.html">Pawn</a> Other, float Damage))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_DefendMelee-" name="DefendMelee" title="go to the details">DefendMelee</a> (float Dist))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>float&nbsp;</td><td><a href="#_Desireability-" name="Desireability" title="go to the details">Desireability</a> (<a href="../engine/pickup.html">Pickup</a> P))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DirectedWander-" name="DirectedWander" title="go to the details">DirectedWander</a> (<a href="../core/object.html#Vector">vector</a> WanderDir))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DisplayDebug-" name="DisplayDebug" title="go to the details">DisplayDebug</a> (<a href="../engine/canvas.html">Canvas</a> Canvas, out float YL, out float YPos))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoCharge-" name="DoCharge" title="go to the details">DoCharge</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoRangedAttackOn-" name="DoRangedAttackOn" title="go to the details">DoRangedAttackOn</a> (<a href="../engine/actor.html">Actor</a> A))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoRangedAttackOn-RangedAttack" name="DoRangedAttackOn" title="go to the details">DoRangedAttackOn</a> (<a href="../engine/actor.html">Actor</a> A))<br /><span class="function_state">RangedAttack</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoStakeOut-" name="DoStakeOut" title="go to the details">DoStakeOut</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoStakeOut-StakeOut" name="DoStakeOut" title="go to the details">DoStakeOut</a> ()))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DoTacticalMove-" name="DoTacticalMove" title="go to the details">DoTacticalMove</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_DoWaitForLanding-" name="DoWaitForLanding" title="go to the details">DoWaitForLanding</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_DoWaitForLanding-WaitingForLanding" name="DoWaitForLanding" title="go to the details">DoWaitForLanding</a> ()))<br /><span class="function_state">WaitingForLanding</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EndState-Charging" name="EndState" title="go to the details">EndState</a> ()))<br /><span class="function_state">Charging</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EndState-Hunting" name="EndState" title="go to the details">EndState</a> ()))<br /><span class="function_state">Hunting</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EndState-RestFormation" name="EndState" title="go to the details">EndState</a> ()))<br /><span class="function_state">RestFormation</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EndState-StakeOut" name="EndState" title="go to the details">EndState</a> ()))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EndState-TacticalMove" name="EndState" title="go to the details">EndState</a> ()))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EnemyChanged-" name="EnemyChanged" title="go to the details">EnemyChanged</a> (bool bNewEnemyVisible))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EnemyNotVisible-Charging" name="EnemyNotVisible" title="go to the details">EnemyNotVisible</a> ()))<br /><span class="function_state">Charging</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EnemyNotVisible-RangedAttack" name="EnemyNotVisible" title="go to the details">EnemyNotVisible</a> ()))<br /><span class="function_state">RangedAttack</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EnemyNotVisible-TacticalMove" name="EnemyNotVisible" title="go to the details">EnemyNotVisible</a> ()))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_EnemyVisible-" name="EnemyVisible" title="go to the details">EnemyVisible</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_EngageDirection-TacticalMove" name="EngageDirection" title="go to the details">EngageDirection</a> (<a href="../core/object.html#Vector">vector</a> StrafeDir, bool bForced))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ExecuteWhatToDoNext-" name="ExecuteWhatToDoNext" title="go to the details">ExecuteWhatToDoNext</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/actor.html">Actor</a>&nbsp;</td><td><a href="#_FaceActor-" name="FaceActor" title="go to the details">FaceActor</a> (float StrafingModifier))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td><a href="../engine/actor.html">Actor</a>&nbsp;</td><td><a href="#_FaceMoveTarget-" name="FaceMoveTarget" title="go to the details">FaceMoveTarget</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_FearThisSpot-" name="FearThisSpot" title="go to the details">FearThisSpot</a> (<a href="../engine/avoidmarker.html">AvoidMarker</a> aSpot))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_FightEnemy-" name="FightEnemy" title="go to the details">FightEnemy</a> (bool bCanCharge))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_FindBestPathToward-" name="FindBestPathToward" title="go to the details">FindBestPathToward</a> (<a href="../engine/actor.html">Actor</a> A, bool bCheckedReach, bool bAllowDetour))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_FindNewEnemy-" name="FindNewEnemy" title="go to the details">FindNewEnemy</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_FindNewStakeOutDir-StakeOut" name="FindNewStakeOutDir" title="go to the details">FindNewStakeOutDir</a> ()))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_FindRoamDest-" name="FindRoamDest" title="go to the details">FindRoamDest</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_FindViewSpot-Hunting" name="FindViewSpot" title="go to the details">FindViewSpot</a> ()))<br /><span class="function_state">Hunting</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_FireWeaponAt-" name="FireWeaponAt" title="go to the details">FireWeaponAt</a> (<a href="../engine/actor.html">Actor</a> A))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_Formation-" name="Formation" title="go to the details">Formation</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_Formation-RestFormation" name="Formation" title="go to the details">Formation</a> ()))<br /><span class="function_state">RestFormation</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_GameHasEnded-" name="GameHasEnded" title="go to the details">GameHasEnded</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_GetEnemyName-" name="GetEnemyName" title="go to the details">GetEnemyName</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_GetOldEnemyName-" name="GetOldEnemyName" title="go to the details">GetOldEnemyName</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_HearNoise-" name="HearNoise" title="go to the details">HearNoise</a> (float Loudness, <a href="../engine/actor.html">Actor</a> NoiseMaker))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_InitializeSkill-" name="InitializeSkill" title="go to the details">InitializeSkill</a> (float InSkill))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_IsHunting-" name="IsHunting" title="go to the details">IsHunting</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_IsHunting-Hunting" name="IsHunting" title="go to the details">IsHunting</a> ()))<br /><span class="function_state">Hunting</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_IsStrafing-" name="IsStrafing" title="go to the details">IsStrafing</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_IsStrafing-TacticalMove" name="IsStrafing" title="go to the details">IsStrafing</a> ()))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_MayFall-Charging" name="MayFall" title="go to the details">MayFall</a> ()))<br /><span class="function_state">Charging</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_MayFall-Hunting" name="MayFall" title="go to the details">MayFall</a> ()))<br /><span class="function_state">Hunting</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_MayFall-Roaming" name="MayFall" title="go to the details">MayFall</a> ()))<br /><span class="function_state">Roaming</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_MonitoredPawnAlert-RestFormation" name="MonitoredPawnAlert" title="go to the details">MonitoredPawnAlert</a> ()))<br /><span class="function_state">RestFormation</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_NearWall-" name="NearWall" title="go to the details">NearWall</a> (float walldist))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_NeedToTurn-" name="NeedToTurn" title="go to the details">NeedToTurn</a> (<a href="../core/object.html#Vector">vector</a> targ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>bool&nbsp;</td><td><a href="#_NotifyBump-" name="NotifyBump" title="go to the details">NotifyBump</a> (<a href="../engine/actor.html">actor</a> Other))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>bool&nbsp;</td><td><a href="#_NotifyBump-Charging" name="NotifyBump" title="go to the details">NotifyBump</a> (<a href="../engine/actor.html">actor</a> Other))<br /><span class="function_state">Charging</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_NotifyHitWall-TacticalMove" name="NotifyHitWall" title="go to the details">NotifyHitWall</a> (<a href="../core/object.html#Vector">vector</a> HitNormal, <a href="../engine/actor.html">actor</a> Wall))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_NotifyKilled-" name="NotifyKilled" title="go to the details">NotifyKilled</a> (<a href="../engine/controller.html">Controller</a> Killer, <a href="../engine/controller.html">Controller</a> Killed, <a href="../engine/pawn.html">pawn</a> KilledPawn))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_NotifyLanded-" name="NotifyLanded" title="go to the details">NotifyLanded</a> (<a href="../core/object.html#Vector">vector</a> HitNormal))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_NotifyLanded-WaitingForLanding" name="NotifyLanded" title="go to the details">NotifyLanded</a> (<a href="../core/object.html#Vector">vector</a> HitNormal))<br /><span class="function_state">WaitingForLanding</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_NotifyMissedJump-" name="NotifyMissedJump" title="go to the details">NotifyMissedJump</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_NotifyPhysicsVolumeChange-" name="NotifyPhysicsVolumeChange" title="go to the details">NotifyPhysicsVolumeChange</a> (<a href="../engine/physicsvolume.html">PhysicsVolume</a> NewVolume))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_NotifyTakeHit-Charging" name="NotifyTakeHit" title="go to the details">NotifyTakeHit</a> (<a href="../engine/pawn.html">pawn</a> InstigatedBy, <a href="../core/object.html#Vector">vector</a> HitLocation, int Damage, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, <a href="../core/object.html#Vector">vector</a> Momentum))<br /><span class="function_state">Charging</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_NotifyTakeHit-StakeOut" name="NotifyTakeHit" title="go to the details">NotifyTakeHit</a> (<a href="../engine/pawn.html">pawn</a> InstigatedBy, <a href="../core/object.html#Vector">vector</a> HitLocation, int Damage, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, <a href="../core/object.html#Vector">vector</a> Momentum))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PawnIsInPain-TacticalMove" name="PawnIsInPain" title="go to the details">PawnIsInPain</a> (<a href="../engine/physicsvolume.html">PhysicsVolume</a> PainVolume))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PickDestination-Hunting" name="PickDestination" title="go to the details">PickDestination</a> ()))<br /><span class="function_state">Hunting</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PickDestination-RestFormation" name="PickDestination" title="go to the details">PickDestination</a> ()))<br /><span class="function_state">RestFormation</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PickDestination-TacticalMove" name="PickDestination" title="go to the details">PickDestination</a> ()))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Possess-" name="Possess" title="go to the details">Possess</a> (<a href="../engine/pawn.html">Pawn</a> aPawn))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_PostBeginPlay-" name="PostBeginPlay" title="go to the details">PostBeginPlay</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ReceiveWarning-" name="ReceiveWarning" title="go to the details">ReceiveWarning</a> (<a href="../engine/pawn.html">Pawn</a> shooter, float projSpeed, <a href="../core/object.html#Vector">vector</a> FireDir))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ReceiveWarning-TacticalMove" name="ReceiveWarning" title="go to the details">ReceiveWarning</a> (<a href="../engine/pawn.html">Pawn</a> shooter, float projSpeed, <a href="../core/object.html#Vector">vector</a> FireDir))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ResetSkill-" name="ResetSkill" title="go to the details">ResetSkill</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Restart-" name="Restart" title="go to the details">Restart</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_SeePlayer-" name="SeePlayer" title="go to the details">SeePlayer</a> (<a href="../engine/pawn.html">Pawn</a> SeenPlayer))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SeePlayer-Hunting" name="SeePlayer" title="go to the details">SeePlayer</a> (<a href="../engine/pawn.html">Pawn</a> SeenPlayer))<br /><span class="function_state">Hunting</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_SeePlayer-StakeOut" name="SeePlayer" title="go to the details">SeePlayer</a> (<a href="../engine/pawn.html">Pawn</a> SeenPlayer))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetCombatTimer-" name="SetCombatTimer" title="go to the details">SetCombatTimer</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_SetEnemy-" name="SetEnemy" title="go to the details">SetEnemy</a> (<a href="../engine/pawn.html">Pawn</a> NewEnemy, optional bool bHateMonster, optional float MonsterHateChanceOverride ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetEnemyInfo-" name="SetEnemyInfo" title="go to the details">SetEnemyInfo</a> (bool bNewEnemyVisible))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetFall-" name="SetFall" title="go to the details">SetFall</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetFall-TacticalMove" name="SetFall" title="go to the details">SetFall</a> ()))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetFocus-StakeOut" name="SetFocus" title="go to the details">SetFocus</a> ()))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetMaxDesiredSpeed-" name="SetMaxDesiredSpeed" title="go to the details">SetMaxDesiredSpeed</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetPeripheralVision-" name="SetPeripheralVision" title="go to the details">SetPeripheralVision</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_ShouldStrafeTo-" name="ShouldStrafeTo" title="go to the details">ShouldStrafeTo</a> (<a href="../engine/actor.html">Actor</a> WayPoint))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_SoakStop-" name="SoakStop" title="go to the details">SoakStop</a> (string problem))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StopFiring-" name="StopFiring" title="go to the details">StopFiring</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StopFiring-RangedAttack" name="StopFiring" title="go to the details">StopFiring</a> ()))<br /><span class="function_state">RangedAttack</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_Stopped-" name="Stopped" title="go to the details">Stopped</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_Stopped-RangedAttack" name="Stopped" title="go to the details">Stopped</a> ()))<br /><span class="function_state">RangedAttack</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_Stopped-StakeOut" name="Stopped" title="go to the details">Stopped</a> ()))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_StrafeFromDamage-" name="StrafeFromDamage" title="go to the details">StrafeFromDamage</a> (float Damage, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; DamageType, bool bFindDest)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_StrafeFromDamage-Charging" name="StrafeFromDamage" title="go to the details">StrafeFromDamage</a> (float Damage, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; DamageType, bool bFindDest))<br /><span class="function_state">Charging</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_TestDirection-" name="TestDirection" title="go to the details">TestDirection</a> (<a href="../core/object.html#Vector">vector</a> dir, out <a href="../core/object.html#Vector">vector</a> pick))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TimedFireWeaponAtEnemy-" name="TimedFireWeaponAtEnemy" title="go to the details">TimedFireWeaponAtEnemy</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-Charging" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">Charging</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-Hunting" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">Hunting</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-MoveToGoal" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">MoveToGoal</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-MoveToGoalWithEnemy" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">MoveToGoalWithEnemy</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-RangedAttack" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">RangedAttack</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-RestFormation" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">RestFormation</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-StakeOut" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">StakeOut</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-TacticalMove" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">TacticalMove</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Timer-WaitingForLanding" name="Timer" title="go to the details">Timer</a> ()))<br /><span class="function_state">WaitingForLanding</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-" name="Trigger" title="go to the details">Trigger</a> (<a href="../engine/actor.html">actor</a> Other, pawn EventInstigator ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_TryStrafe-Charging" name="TryStrafe" title="go to the details">TryStrafe</a> (<a href="../core/object.html#Vector">vector</a> sideDir))<br /><span class="function_state">Charging</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_TryToDuck-" name="TryToDuck" title="go to the details">TryToDuck</a> (<a href="../core/object.html#Vector">vector</a> duckDir, bool bReversed))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_TryToDuck-Charging" name="TryToDuck" title="go to the details">TryToDuck</a> (<a href="../core/object.html#Vector">vector</a> duckDir, bool bReversed))<br /><span class="function_state">Charging</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TryToWalk-" name="TryToWalk" title="go to the details">TryToWalk</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_WaitForMover-" name="WaitForMover" title="go to the details">WaitForMover</a> (<a href="../engine/mover.html">Mover</a> M))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_WanderOrCamp-" name="WanderOrCamp" title="go to the details">WanderOrCamp</a> (bool bMayCrouch))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_WhatToDoNext-" name="WhatToDoNext" title="go to the details">WhatToDoNext</a> (byte CallingByte))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../gameplay/gameplay-overview.html">GamePlay</a>.<a href="../gameplay/scriptedcontroller.html">ScriptedController</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../gameplay/scriptedcontroller.html#AbortScript">AbortScript</a>, <a href="../gameplay/scriptedcontroller.html#AdjustAim">AdjustAim</a>, <a href="../gameplay/scriptedcontroller.html#AnimEnd">AnimEnd</a>, <a href="../gameplay/scriptedcontroller.html#CheckIfNearPlayer">CheckIfNearPlayer</a>, <a href="../gameplay/scriptedcontroller.html#ClearAnimation">ClearAnimation</a>, <a href="../gameplay/scriptedcontroller.html#ClearScript">ClearScript</a>, <a href="../gameplay/scriptedcontroller.html#CompleteAction">CompleteAction</a>, <a href="../gameplay/scriptedcontroller.html#DestroyPawn">DestroyPawn</a>, <a href="../gameplay/scriptedcontroller.html#DisplayDebug">DisplayDebug</a>, <a href="../gameplay/scriptedcontroller.html#EndState">EndState</a>, <a href="../gameplay/scriptedcontroller.html#GetInstigator">GetInstigator</a>, <a href="../gameplay/scriptedcontroller.html#GetMyPlayer">GetMyPlayer</a>, <a href="../gameplay/scriptedcontroller.html#GetSoundSource">GetSoundSource</a>, <a href="../gameplay/scriptedcontroller.html#InitForNextAction">InitForNextAction</a>, <a href="../gameplay/scriptedcontroller.html#LeaveScripting">LeaveScripting</a>, <a href="../gameplay/scriptedcontroller.html#LIPSincAnimEnd">LIPSincAnimEnd</a>, <a href="../gameplay/scriptedcontroller.html#MayShootAtEnemy">MayShootAtEnemy</a>, <a href="../gameplay/scriptedcontroller.html#MayShootTarget">MayShootTarget</a>, <a href="../gameplay/scriptedcontroller.html#NotifyJumpApex">NotifyJumpApex</a>, <a href="../gameplay/scriptedcontroller.html#SetDoubleJump">SetDoubleJump</a>, <a href="../gameplay/scriptedcontroller.html#SetEnemyReaction">SetEnemyReaction</a>, <a href="../gameplay/scriptedcontroller.html#SetFireYaw">SetFireYaw</a>, <a href="../gameplay/scriptedcontroller.html#SetMoveTarget">SetMoveTarget</a>, <a href="../gameplay/scriptedcontroller.html#SetNewScript">SetNewScript</a>, <a href="../gameplay/scriptedcontroller.html#TakeControlOf">TakeControlOf</a>, <a href="../gameplay/scriptedcontroller.html#Tick">Tick</a>, <a href="../gameplay/scriptedcontroller.html#Timer">Timer</a>, <a href="../gameplay/scriptedcontroller.html#Trigger">Trigger</a>, <a href="../gameplay/scriptedcontroller.html#UnPossess">UnPossess</a>, <a href="../gameplay/scriptedcontroller.html#WeaponFireAgain">WeaponFireAgain</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/aicontroller.html">AIController</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/aicontroller.html#AdjustDesireFor">AdjustDesireFor</a>, <a href="../engine/aicontroller.html#AdjustView">AdjustView</a>, <a href="../engine/aicontroller.html#DisplayDebug">DisplayDebug</a>, <a href="../engine/aicontroller.html#GetFacingDirection">GetFacingDirection</a>, <a href="../engine/aicontroller.html#GetOrderObject">GetOrderObject</a>, <a href="../engine/aicontroller.html#GetOrders">GetOrders</a>, <a href="../engine/aicontroller.html#MoverFinished">MoverFinished</a>, <a href="../engine/aicontroller.html#PreBeginPlay">PreBeginPlay</a>, <a href="../engine/aicontroller.html#PrepareForMove">PrepareForMove</a>, <a href="../engine/aicontroller.html#PriorityObjective">PriorityObjective</a>, <a href="../engine/aicontroller.html#RateWeapon">RateWeapon</a>, <a href="../engine/aicontroller.html#Reset">Reset</a>, <a href="../engine/aicontroller.html#SetOrders">SetOrders</a>, <a href="../engine/aicontroller.html#Startle">Startle</a>, <a href="../engine/aicontroller.html#Trigger">Trigger</a>, <a href="../engine/aicontroller.html#TriggerScript">TriggerScript</a>, <a href="../engine/aicontroller.html#UnderLift">UnderLift</a>, <a href="../engine/aicontroller.html#WaitForMover">WaitForMover</a>, <a href="../engine/aicontroller.html#WaitToSeeEnemy">WaitToSeeEnemy</a>, <a href="../engine/aicontroller.html#WeaponFireAgain">WeaponFireAgain</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">States Summary</th>
+</tr>
+</table>
+
+<table>
+<tr>
+	<th>Charging <a href="../Source_old2k4/monstercontroller.html#1622" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> Charging <span class="us_keyw">extends</span> MoveToGoalWithEnemy</span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_EndState+Charging">EndState</a>, <a href="#_EnemyNotVisible+Charging">EnemyNotVisible</a>, <a href="#_MayFall+Charging">MayFall</a>, <a href="#_NotifyBump+Charging">NotifyBump</a>, <a href="#_NotifyTakeHit+Charging">NotifyTakeHit</a>, <a href="#_StrafeFromDamage+Charging">StrafeFromDamage</a>, <a href="#_Timer+Charging">Timer</a>, <a href="#_TryStrafe+Charging">TryStrafe</a>, <a href="#_TryToDuck+Charging">TryToDuck</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>Hunting <a href="../Source_old2k4/monstercontroller.html#2043" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> Hunting <span class="us_keyw">extends</span> MoveToGoalWithEnemy</span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_EndState+Hunting">EndState</a>, <a href="#_FindViewSpot+Hunting">FindViewSpot</a>, <a href="#_IsHunting+Hunting">IsHunting</a>, <a href="#_MayFall+Hunting">MayFall</a>, <a href="#_PickDestination+Hunting">PickDestination</a>, <a href="#_SeePlayer+Hunting">SeePlayer</a>, <a href="#_Timer+Hunting">Timer</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>MoveToGoal <a href="../Source_old2k4/monstercontroller.html#1541" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> MoveToGoal <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Timer+MoveToGoal">Timer</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>MoveToGoalNoEnemy <a href="../Source_old2k4/monstercontroller.html#1550" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> MoveToGoalNoEnemy <span class="us_keyw">extends</span> MoveToGoal</span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>MoveToGoalWithEnemy <a href="../Source_old2k4/monstercontroller.html#1554" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> MoveToGoalWithEnemy <span class="us_keyw">extends</span> MoveToGoal</span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_Timer+MoveToGoalWithEnemy">Timer</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>NoGoal <a href="../Source_old2k4/monstercontroller.html#1442" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> NoGoal <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>RangedAttack <a href="../Source_old2k4/monstercontroller.html#2412" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> RangedAttack <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+RangedAttack">BeginState</a>, <a href="#_CancelCampFor+RangedAttack">CancelCampFor</a>, <a href="#_DoRangedAttackOn+RangedAttack">DoRangedAttackOn</a>, <a href="#_EnemyNotVisible+RangedAttack">EnemyNotVisible</a>, <a href="#_StopFiring+RangedAttack">StopFiring</a>, <a href="#_Stopped+RangedAttack">Stopped</a>, <a href="#_Timer+RangedAttack">Timer</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>RestFormation <a href="../Source_old2k4/monstercontroller.html#1451" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> RestFormation <span class="us_keyw">extends</span> NoGoal</span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+RestFormation">BeginState</a>, <a href="#_CancelCampFor+RestFormation">CancelCampFor</a>, <a href="#_EndState+RestFormation">EndState</a>, <a href="#_Formation+RestFormation">Formation</a>, <a href="#_MonitoredPawnAlert+RestFormation">MonitoredPawnAlert</a>, <a href="#_PickDestination+RestFormation">PickDestination</a>, <a href="#_Timer+RestFormation">Timer</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>Roaming <a href="../Source_old2k4/monstercontroller.html#1562" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> Roaming <span class="us_keyw">extends</span> MoveToGoalNoEnemy</span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_MayFall+Roaming">MayFall</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>StakeOut <a href="../Source_old2k4/monstercontroller.html#2245" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> StakeOut <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_AdjustAim+StakeOut">AdjustAim</a>, <a href="#_BeginState+StakeOut">BeginState</a>, <a href="#_CanAttack+StakeOut">CanAttack</a>, <a href="#_DoStakeOut+StakeOut">DoStakeOut</a>, <a href="#_EndState+StakeOut">EndState</a>, <a href="#_FindNewStakeOutDir+StakeOut">FindNewStakeOutDir</a>, <a href="#_NotifyTakeHit+StakeOut">NotifyTakeHit</a>, <a href="#_SeePlayer+StakeOut">SeePlayer</a>, <a href="#_SetFocus+StakeOut">SetFocus</a>, <a href="#_Stopped+StakeOut">Stopped</a>, <a href="#_Timer+StakeOut">Timer</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>TacticalMove <a href="../Source_old2k4/monstercontroller.html#1776" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> TacticalMove <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+TacticalMove">BeginState</a>, <a href="#_EndState+TacticalMove">EndState</a>, <a href="#_EnemyNotVisible+TacticalMove">EnemyNotVisible</a>, <a href="#_EngageDirection+TacticalMove">EngageDirection</a>, <a href="#_IsStrafing+TacticalMove">IsStrafing</a>, <a href="#_NotifyHitWall+TacticalMove">NotifyHitWall</a>, <a href="#_PawnIsInPain+TacticalMove">PawnIsInPain</a>, <a href="#_PickDestination+TacticalMove">PickDestination</a>, <a href="#_ReceiveWarning+TacticalMove">ReceiveWarning</a>, <a href="#_SetFall+TacticalMove">SetFall</a>, <a href="#_Timer+TacticalMove">Timer</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>WaitForAnim <a href="../Source_old2k4/monstercontroller.html#2504" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> WaitForAnim <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_AnimEnd+WaitForAnim">AnimEnd</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th>WaitingForLanding <a href="../Source_old2k4/monstercontroller.html#2516" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> WaitingForLanding <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+WaitingForLanding">BeginState</a>, <a href="#_DoWaitForLanding+WaitingForLanding">DoWaitForLanding</a>, <a href="#_NotifyLanded+WaitingForLanding">NotifyLanded</a>, <a href="#_Timer+WaitingForLanding">Timer</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Detail</th>
+</tr>
+</table>
+
+<h4><a name="_ENEMYLOCATIONFUZZ" class="hidden"></a>ENEMYLOCATIONFUZZ <a href="../Source_old2k4/monstercontroller.html#8" class="small">Source code</a></h4>
+<div class="declaration">const ENEMYLOCATIONFUZZ = <span class="source_int">1200</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MAXSTAKEOUTDIST" class="hidden"></a>MAXSTAKEOUTDIST <a href="../Source_old2k4/monstercontroller.html#7" class="small">Source code</a></h4>
+<div class="declaration">const MAXSTAKEOUTDIST = <span class="source_int">2000</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MINSTRAFEDIST" class="hidden"></a>MINSTRAFEDIST <a href="../Source_old2k4/monstercontroller.html#10" class="small">Source code</a></h4>
+<div class="declaration">const MINSTRAFEDIST = <span class="source_int">200</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MINVIEWDIST" class="hidden"></a>MINVIEWDIST <a href="../Source_old2k4/monstercontroller.html#11" class="small">Source code</a></h4>
+<div class="declaration">const MINVIEWDIST = <span class="source_int">200</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TACTICALHEIGHTADVANTAGE" class="hidden"></a>TACTICALHEIGHTADVANTAGE <a href="../Source_old2k4/monstercontroller.html#9" class="small">Source code</a></h4>
+<div class="declaration">const TACTICALHEIGHTADVANTAGE = <span class="source_int">320</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_Accuracy" class="hidden"></a>Accuracy <a href="../Source_old2k4/monstercontroller.html#33" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> Accuracy;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AcquireTime" class="hidden"></a>AcquireTime <a href="../Source_old2k4/monstercontroller.html#26" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> AcquireTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bCanFire" class="hidden"></a>bCanFire <a href="../Source_old2k4/monstercontroller.html#14" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bCanFire;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bChangeDir" class="hidden"></a>bChangeDir <a href="../Source_old2k4/monstercontroller.html#17" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bChangeDir;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bEnemyIsVisible" class="hidden"></a>bEnemyIsVisible <a href="../Source_old2k4/monstercontroller.html#18" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bEnemyIsVisible;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bForcedDirection" class="hidden"></a>bForcedDirection <a href="../Source_old2k4/monstercontroller.html#23" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bForcedDirection;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bHasFired" class="hidden"></a>bHasFired <a href="../Source_old2k4/monstercontroller.html#22" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bHasFired;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bJustLanded" class="hidden"></a>bJustLanded <a href="../Source_old2k4/monstercontroller.html#20" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bJustLanded;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bLeadTarget" class="hidden"></a>bLeadTarget <a href="../Source_old2k4/monstercontroller.html#16" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bLeadTarget;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bMustCharge" class="hidden"></a>bMustCharge <a href="../Source_old2k4/monstercontroller.html#19" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bMustCharge;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bRecommendFastMove" class="hidden"></a>bRecommendFastMove <a href="../Source_old2k4/monstercontroller.html#21" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bRecommendFastMove;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bStrafeDir" class="hidden"></a>bStrafeDir <a href="../Source_old2k4/monstercontroller.html#15" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bStrafeDir;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ChallengeTime" class="hidden"></a>ChallengeTime <a href="../Source_old2k4/monstercontroller.html#30" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> ChallengeTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ChooseAttackCounter" class="hidden"></a>ChooseAttackCounter <a href="../Source_old2k4/monstercontroller.html#45" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> ChooseAttackCounter;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ChooseAttackTime" class="hidden"></a>ChooseAttackTime <a href="../Source_old2k4/monstercontroller.html#44" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> ChooseAttackTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ChoosingAttackLevel" class="hidden"></a>ChoosingAttackLevel <a href="../Source_old2k4/monstercontroller.html#43" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> ChoosingAttackLevel;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CombatStyle" class="hidden"></a>CombatStyle <a href="../Source_old2k4/monstercontroller.html#35" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> CombatStyle;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnemyVisibilityTime" class="hidden"></a>EnemyVisibilityTime <a href="../Source_old2k4/monstercontroller.html#46" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> EnemyVisibilityTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FailedHuntEnemy" class="hidden"></a>FailedHuntEnemy <a href="../Source_old2k4/monstercontroller.html#52" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> FailedHuntEnemy;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FailedHuntTime" class="hidden"></a>FailedHuntTime <a href="../Source_old2k4/monstercontroller.html#51" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> FailedHuntTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GoalString" class="hidden"></a>GoalString <a href="../Source_old2k4/monstercontroller.html#39" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> GoalString;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HidingSpot" class="hidden"></a>HidingSpot <a href="../Source_old2k4/monstercontroller.html#29" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> HidingSpot;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LastRespawnTime" class="hidden"></a>LastRespawnTime <a href="../Source_old2k4/monstercontroller.html#50" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> LastRespawnTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LoseEnemyCheckTime" class="hidden"></a>LoseEnemyCheckTime <a href="../Source_old2k4/monstercontroller.html#27" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> LoseEnemyCheckTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NumRandomJumps" class="hidden"></a>NumRandomJumps <a href="../Source_old2k4/monstercontroller.html#54" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> NumRandomJumps;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OldEnemy" class="hidden"></a>OldEnemy <a href="../Source_old2k4/monstercontroller.html#48" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> OldEnemy;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReactionTime" class="hidden"></a>ReactionTime <a href="../Source_old2k4/monstercontroller.html#36" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> ReactionTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SoakString" class="hidden"></a>SoakString <a href="../Source_old2k4/monstercontroller.html#40" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> SoakString;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartTacticalTime" class="hidden"></a>StartTacticalTime <a href="../Source_old2k4/monstercontroller.html#28" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> StartTacticalTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StopStartTime" class="hidden"></a>StopStartTime <a href="../Source_old2k4/monstercontroller.html#49" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> StopStartTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StrafingAbility" class="hidden"></a>StrafingAbility <a href="../Source_old2k4/monstercontroller.html#34" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">float</span> StrafingAbility;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VisibleEnemy" class="hidden"></a>VisibleEnemy <a href="../Source_old2k4/monstercontroller.html#47" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> VisibleEnemy;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_AdjustAim-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AdjustAim <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1083" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> AdjustAim ( <span class="source_type"><a href="../engine/actor.html#FireProperties" class="source">FireProperties</a></span> FiredAmmunition, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> projStart, <span class="source_type">int</span> aimerror) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AdjustAim-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AdjustAim <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2312" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> AdjustAim ( <span class="source_type"><a href="../engine/actor.html#FireProperties" class="source">FireProperties</a></span> FiredAmmunition, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> projStart, <span class="source_type">int</span> aimerror) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AdjustAimError-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AdjustAimError <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1033" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">float</span> AdjustAimError ( <span class="source_type">float</span> aimerror, <span class="source_type">float</span> TargetDist, <span class="source_type">bool</span> bDefendMelee, <span class="source_type">bool</span> bInstantProj, <span class="source_type">bool</span> <span class="source_type">bLeadTargetNow</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AdjustAround-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> AdjustAround <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#812" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> AdjustAround ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AnimEnd-WaitForAnim" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> AnimEnd <span class="function_state">WaitForAnim</span> <a href="../Source_old2k4/monstercontroller.html#2508" class="small">Source code</a></h4>
+<div class="declaration"> event  AnimEnd ( <span class="source_type">int</span> <span class="source_type">Channel</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-RangedAttack" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">RangedAttack</span> <a href="../Source_old2k4/monstercontroller.html#2460" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-RestFormation" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">RestFormation</span> <a href="../Source_old2k4/monstercontroller.html#1479" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2370" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1940" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BeginState-WaitingForLanding" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">WaitingForLanding</span> <a href="../Source_old2k4/monstercontroller.html#2542" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CanAttack-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CanAttack <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#100" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> CanAttack ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CanAttack-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CanAttack <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2249" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> CanAttack ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CancelCampFor-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CancelCampFor <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#810" class="small">Source code</a></h4>
+<div class="declaration"> function  CancelCampFor ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CancelCampFor-RangedAttack" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CancelCampFor <span class="function_state">RangedAttack</span> <a href="../Source_old2k4/monstercontroller.html#2421" class="small">Source code</a></h4>
+<div class="declaration"> function  CancelCampFor ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CancelCampFor-RestFormation" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CancelCampFor <span class="function_state">RestFormation</span> <a href="../Source_old2k4/monstercontroller.html#1455" class="small">Source code</a></h4>
+<div class="declaration"> function  CancelCampFor ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Celebrate-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Celebrate <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1533" class="small">Source code</a></h4>
+<div class="declaration"> function  Celebrate ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ChangeEnemy-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ChangeEnemy <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#188" class="small">Source code</a></h4>
+<div class="declaration"> function  ChangeEnemy ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">NewEnemy</span>, <span class="source_type">bool</span> bCanSeeNewEnemy) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CheckFutureSight-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CheckFutureSight <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1006" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> CheckFutureSight ( <span class="source_type">float</span> <span class="source_type">deltatime</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CheckIfShouldCrouch-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> CheckIfShouldCrouch <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#276" class="small">Source code</a></h4>
+<div class="declaration"> function  CheckIfShouldCrouch ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> StartPosition, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> TargetPosition, <span class="source_type">float</span> probability) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ChooseAttackMode-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ChooseAttackMode <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#690" class="small">Source code</a></h4>
+<div class="declaration"> function  ChooseAttackMode ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClearShot-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ClearShot <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#249" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ClearShot ( <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> TargetLoc, <span class="source_type">bool</span> bImmediateFire) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DamageAttitudeTo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DamageAttitudeTo <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1430" class="small">Source code</a></h4>
+<div class="declaration"> function  DamageAttitudeTo ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span>, <span class="source_type">float</span> Damage) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DefendMelee-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DefendMelee <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1617" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> DefendMelee ( <span class="source_type">float</span> <span class="source_type">Dist</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Desireability-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Desireability <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1425" class="small">Source code</a></h4>
+<div class="declaration"> event <span class="source_type">float</span> Desireability ( <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span> <span class="source_type">P</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DirectedWander-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DirectedWander <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#837" class="small">Source code</a></h4>
+<div class="declaration"> function  DirectedWander ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> WanderDir) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DisplayDebug-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DisplayDebug <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#116" class="small">Source code</a></h4>
+<div class="declaration"> function  DisplayDebug ( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, out <span class="source_type">float</span> YL, out <span class="source_type">float</span> YPos) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoCharge-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoCharge <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1591" class="small">Source code</a></h4>
+<div class="declaration"> function  DoCharge ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoRangedAttackOn-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoRangedAttackOn <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#681" class="small">Source code</a></h4>
+<div class="declaration"> function  DoRangedAttackOn ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> A) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoRangedAttackOn-RangedAttack" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoRangedAttackOn <span class="function_state">RangedAttack</span> <a href="../Source_old2k4/monstercontroller.html#2454" class="small">Source code</a></h4>
+<div class="declaration"> function  DoRangedAttackOn ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> A) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoStakeOut-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoStakeOut <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1586" class="small">Source code</a></h4>
+<div class="declaration"> function  DoStakeOut ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoStakeOut-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoStakeOut <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2287" class="small">Source code</a></h4>
+<div class="declaration"> function  DoStakeOut ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoTacticalMove-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoTacticalMove <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1609" class="small">Source code</a></h4>
+<div class="declaration"> function  DoTacticalMove ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoWaitForLanding-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoWaitForLanding <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#534" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> DoWaitForLanding ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DoWaitForLanding-WaitingForLanding" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DoWaitForLanding <span class="function_state">WaitingForLanding</span> <a href="../Source_old2k4/monstercontroller.html#2518" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> DoWaitForLanding ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EndState-Charging" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EndState <span class="function_state">Charging</span> <a href="../Source_old2k4/monstercontroller.html#1741" class="small">Source code</a></h4>
+<div class="declaration"> function  EndState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EndState-Hunting" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EndState <span class="function_state">Hunting</span> <a href="../Source_old2k4/monstercontroller.html#2202" class="small">Source code</a></h4>
+<div class="declaration"> function  EndState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EndState-RestFormation" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EndState <span class="function_state">RestFormation</span> <a href="../Source_old2k4/monstercontroller.html#1489" class="small">Source code</a></h4>
+<div class="declaration"> function  EndState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EndState-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EndState <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2380" class="small">Source code</a></h4>
+<div class="declaration"> function  EndState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EndState-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EndState <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1952" class="small">Source code</a></h4>
+<div class="declaration"> function  EndState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnemyChanged-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EnemyChanged <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#335" class="small">Source code</a></h4>
+<div class="declaration"> function  EnemyChanged ( <span class="source_type">bool</span> bNewEnemyVisible) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnemyNotVisible-Charging" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EnemyNotVisible <span class="function_state">Charging</span> <a href="../Source_old2k4/monstercontroller.html#1736" class="small">Source code</a></h4>
+<div class="declaration"> function  EnemyNotVisible ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnemyNotVisible-RangedAttack" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EnemyNotVisible <span class="function_state">RangedAttack</span> <a href="../Source_old2k4/monstercontroller.html#2436" class="small">Source code</a></h4>
+<div class="declaration"> function  EnemyNotVisible ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnemyNotVisible-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EnemyNotVisible <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1833" class="small">Source code</a></h4>
+<div class="declaration"> function  EnemyNotVisible ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EnemyVisible-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EnemyVisible <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#540" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> EnemyVisible ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EngageDirection-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EngageDirection <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1907" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> EngageDirection ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> StrafeDir, <span class="source_type">bool</span> bForced) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ExecuteWhatToDoNext-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ExecuteWhatToDoNext <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#496" class="small">Source code</a></h4>
+<div class="declaration"> function  ExecuteWhatToDoNext ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FaceActor-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FaceActor <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1389" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> FaceActor ( <span class="source_type">float</span> StrafingModifier) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FaceMoveTarget-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FaceMoveTarget <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1341" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> FaceMoveTarget ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FearThisSpot-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FearThisSpot <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#64" class="small">Source code</a></h4>
+<div class="declaration"> function  FearThisSpot ( <span class="source_type"><a href="../engine/avoidmarker.html" class="source">AvoidMarker</a></span> aSpot) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FightEnemy-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FightEnemy <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#550" class="small">Source code</a></h4>
+<div class="declaration"> function  FightEnemy ( <span class="source_type">bool</span> bCanCharge) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FindBestPathToward-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FindBestPathToward <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#933" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> FindBestPathToward ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> A, <span class="source_type">bool</span> bCheckedReach, <span class="source_type">bool</span> bAllowDetour) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FindNewEnemy-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FindNewEnemy <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#143" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> FindNewEnemy ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FindNewStakeOutDir-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FindNewStakeOutDir <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2335" class="small">Source code</a></h4>
+<div class="declaration"> function  FindNewStakeOutDir ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FindRoamDest-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FindRoamDest <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#714" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> FindRoamDest ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FindViewSpot-Hunting" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FindViewSpot <span class="function_state">Hunting</span> <a href="../Source_old2k4/monstercontroller.html#2176" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> FindViewSpot ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FireWeaponAt-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> FireWeaponAt <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#89" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> FireWeaponAt ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> A) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Formation-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Formation <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1446" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> Formation ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Formation-RestFormation" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Formation <span class="function_state">RestFormation</span> <a href="../Source_old2k4/monstercontroller.html#1460" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> Formation ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GameHasEnded-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GameHasEnded <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#2500" class="small">Source code</a></h4>
+<div class="declaration"> function  GameHasEnded ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetEnemyName-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetEnemyName <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#488" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> GetEnemyName ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetOldEnemyName-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> GetOldEnemyName <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#480" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> GetOldEnemyName ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HearNoise-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> HearNoise <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#231" class="small">Source code</a></h4>
+<div class="declaration"> function  HearNoise ( <span class="source_type">float</span> Loudness, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> NoiseMaker) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_InitializeSkill-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> InitializeSkill <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#391" class="small">Source code</a></h4>
+<div class="declaration"> function  InitializeSkill ( <span class="source_type">float</span> InSkill) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_IsHunting-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> IsHunting <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#2038" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> IsHunting ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_IsHunting-Hunting" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> IsHunting <span class="function_state">Hunting</span> <a href="../Source_old2k4/monstercontroller.html#2051" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> IsHunting ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_IsStrafing-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> IsStrafing <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1771" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> IsStrafing ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_IsStrafing-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> IsStrafing <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1780" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> IsStrafing ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MayFall-Charging" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> MayFall <span class="function_state">Charging</span> <a href="../Source_old2k4/monstercontroller.html#1630" class="small">Source code</a></h4>
+<div class="declaration"> function  MayFall ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MayFall-Hunting" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> MayFall <span class="function_state">Hunting</span> <a href="../Source_old2k4/monstercontroller.html#2056" class="small">Source code</a></h4>
+<div class="declaration"> function  MayFall ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MayFall-Roaming" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> MayFall <span class="function_state">Roaming</span> <a href="../Source_old2k4/monstercontroller.html#1566" class="small">Source code</a></h4>
+<div class="declaration"> function  MayFall ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MonitoredPawnAlert-RestFormation" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> MonitoredPawnAlert <span class="function_state">RestFormation</span> <a href="../Source_old2k4/monstercontroller.html#1503" class="small">Source code</a></h4>
+<div class="declaration"> event  MonitoredPawnAlert ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NearWall-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NearWall <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#972" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> NearWall ( <span class="source_type">float</span> walldist) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NeedToTurn-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NeedToTurn <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#955" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> NeedToTurn ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> targ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyBump-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> NotifyBump <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#847" class="small">Source code</a></h4>
+<div class="declaration"> event <span class="source_type">bool</span> NotifyBump ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyBump-Charging" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> NotifyBump <span class="function_state">Charging</span> <a href="../Source_old2k4/monstercontroller.html#1719" class="small">Source code</a></h4>
+<div class="declaration"> event <span class="source_type">bool</span> NotifyBump ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyHitWall-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NotifyHitWall <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1800" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> NotifyHitWall ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>, <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Wall</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyKilled-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NotifyKilled <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1330" class="small">Source code</a></h4>
+<div class="declaration"> function  NotifyKilled ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> Killer, <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">Killed</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">KilledPawn</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyLanded-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NotifyLanded <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#910" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> NotifyLanded ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyLanded-WaitingForLanding" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NotifyLanded <span class="function_state">WaitingForLanding</span> <a href="../Source_old2k4/monstercontroller.html#2526" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> NotifyLanded ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyMissedJump-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> NotifyMissedJump <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#373" class="small">Source code</a></h4>
+<div class="declaration"> event  NotifyMissedJump ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyPhysicsVolumeChange-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NotifyPhysicsVolumeChange <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#346" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> NotifyPhysicsVolumeChange ( <span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span> <span class="source_type">NewVolume</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyTakeHit-Charging" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NotifyTakeHit <span class="function_state">Charging</span> <a href="../Source_old2k4/monstercontroller.html#1692" class="small">Source code</a></h4>
+<div class="declaration"> function  NotifyTakeHit ( <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> InstigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type">int</span> Damage, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Momentum</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyTakeHit-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> NotifyTakeHit <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2295" class="small">Source code</a></h4>
+<div class="declaration"> function  NotifyTakeHit ( <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> InstigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type">int</span> Damage, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Momentum</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PawnIsInPain-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PawnIsInPain <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1843" class="small">Source code</a></h4>
+<div class="declaration"> function  PawnIsInPain ( <span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span> PainVolume) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PickDestination-Hunting" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PickDestination <span class="function_state">Hunting</span> <a href="../Source_old2k4/monstercontroller.html#2086" class="small">Source code</a></h4>
+<div class="declaration"> function  PickDestination ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PickDestination-RestFormation" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PickDestination <span class="function_state">RestFormation</span> <a href="../Source_old2k4/monstercontroller.html#1472" class="small">Source code</a></h4>
+<div class="declaration"> function  PickDestination ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PickDestination-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PickDestination <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1852" class="small">Source code</a></h4>
+<div class="declaration"> function  PickDestination ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Possess-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Possess <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#379" class="small">Source code</a></h4>
+<div class="declaration"> function  Possess ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> aPawn) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PostBeginPlay-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> PostBeginPlay <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#56" class="small">Source code</a></h4>
+<div class="declaration"> function  PostBeginPlay ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReceiveWarning-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ReceiveWarning <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1260" class="small">Source code</a></h4>
+<div class="declaration"> function  ReceiveWarning ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> shooter, <span class="source_type">float</span> projSpeed, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> FireDir) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReceiveWarning-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ReceiveWarning <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1785" class="small">Source code</a></h4>
+<div class="declaration"> function  ReceiveWarning ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> shooter, <span class="source_type">float</span> projSpeed, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> FireDir) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ResetSkill-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ResetSkill <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#397" class="small">Source code</a></h4>
+<div class="declaration"> function  ResetSkill ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Restart-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Restart <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#803" class="small">Source code</a></h4>
+<div class="declaration"> function  Restart ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeePlayer-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> SeePlayer <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#237" class="small">Source code</a></h4>
+<div class="declaration"> event  SeePlayer ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> SeenPlayer) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeePlayer-Hunting" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SeePlayer <span class="function_state">Hunting</span> <a href="../Source_old2k4/monstercontroller.html#2061" class="small">Source code</a></h4>
+<div class="declaration"> function  SeePlayer ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> SeenPlayer) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SeePlayer-StakeOut" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> SeePlayer <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2259" class="small">Source code</a></h4>
+<div class="declaration"> event  SeePlayer ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> SeenPlayer) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetCombatTimer-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetCombatTimer <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#70" class="small">Source code</a></h4>
+<div class="declaration"> function  SetCombatTimer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetEnemy-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetEnemy <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#195" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> SetEnemy ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">NewEnemy</span>, optional <span class="source_type">bool</span> bHateMonster, optional <span class="source_type">float</span> <span class="source_type">MonsterHateChanceOverride</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetEnemyInfo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetEnemyInfo <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#317" class="small">Source code</a></h4>
+<div class="declaration"> function  SetEnemyInfo ( <span class="source_type">bool</span> bNewEnemyVisible) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetFall-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetFall <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#869" class="small">Source code</a></h4>
+<div class="declaration"> function  SetFall ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetFall-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetFall <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1793" class="small">Source code</a></h4>
+<div class="declaration"> function  SetFall ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetFocus-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetFocus <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2362" class="small">Source code</a></h4>
+<div class="declaration"> function  SetFocus ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetMaxDesiredSpeed-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetMaxDesiredSpeed <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#415" class="small">Source code</a></h4>
+<div class="declaration"> function  SetMaxDesiredSpeed ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetPeripheralVision-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetPeripheralVision <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#426" class="small">Source code</a></h4>
+<div class="declaration"> function  SetPeripheralVision ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ShouldStrafeTo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ShouldStrafeTo <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1348" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> ShouldStrafeTo ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> WayPoint) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SoakStop-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> SoakStop <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#700" class="small">Source code</a></h4>
+<div class="declaration"> event  SoakStop ( <span class="source_type">string</span> problem) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StopFiring-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StopFiring <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#106" class="small">Source code</a></h4>
+<div class="declaration"> function  StopFiring ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StopFiring-RangedAttack" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StopFiring <span class="function_state">RangedAttack</span> <a href="../Source_old2k4/monstercontroller.html#2426" class="small">Source code</a></h4>
+<div class="declaration"> function  StopFiring ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Stopped-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Stopped <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#2239" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> Stopped ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Stopped-RangedAttack" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Stopped <span class="function_state">RangedAttack</span> <a href="../Source_old2k4/monstercontroller.html#2416" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> Stopped ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Stopped-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Stopped <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2254" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> Stopped ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StrafeFromDamage-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StrafeFromDamage <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#342" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> StrafeFromDamage ( <span class="source_type">float</span> Damage, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>, <span class="source_type">bool</span> bFindDest )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StrafeFromDamage-Charging" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StrafeFromDamage <span class="function_state">Charging</span> <a href="../Source_old2k4/monstercontroller.html#1649" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> StrafeFromDamage ( <span class="source_type">float</span> Damage, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>, <span class="source_type">bool</span> bFindDest) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TestDirection-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TestDirection <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#779" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> TestDirection ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">dir</span>, out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> pick) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimedFireWeaponAtEnemy-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TimedFireWeaponAtEnemy <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#81" class="small">Source code</a></h4>
+<div class="declaration"> function  TimedFireWeaponAtEnemy ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-Charging" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">Charging</span> <a href="../Source_old2k4/monstercontroller.html#1729" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-Hunting" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">Hunting</span> <a href="../Source_old2k4/monstercontroller.html#2080" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-MoveToGoal" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">MoveToGoal</span> <a href="../Source_old2k4/monstercontroller.html#1543" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-MoveToGoalWithEnemy" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">MoveToGoalWithEnemy</span> <a href="../Source_old2k4/monstercontroller.html#1556" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-RangedAttack" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">RangedAttack</span> <a href="../Source_old2k4/monstercontroller.html#2442" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-RestFormation" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">RestFormation</span> <a href="../Source_old2k4/monstercontroller.html#1465" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-StakeOut" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">StakeOut</span> <a href="../Source_old2k4/monstercontroller.html#2306" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-TacticalMove" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">TacticalMove</span> <a href="../Source_old2k4/monstercontroller.html#1823" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Timer-WaitingForLanding" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Timer <span class="function_state">WaitingForLanding</span> <a href="../Source_old2k4/monstercontroller.html#2534" class="small">Source code</a></h4>
+<div class="declaration"> function  Timer ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#310" class="small">Source code</a></h4>
+<div class="declaration"> function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> ( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TryStrafe-Charging" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TryStrafe <span class="function_state">Charging</span> <a href="../Source_old2k4/monstercontroller.html#1666" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> TryStrafe ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> sideDir) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TryToDuck-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TryToDuck <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1290" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> TryToDuck ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> duckDir, <span class="source_type">bool</span> bReversed) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TryToDuck-Charging" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TryToDuck <span class="function_state">Charging</span> <a href="../Source_old2k4/monstercontroller.html#1641" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> TryToDuck ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> duckDir, <span class="source_type">bool</span> bReversed) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TryToWalk-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TryToWalk <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#466" class="small">Source code</a></h4>
+<div class="declaration"> function  TryToWalk ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WaitForMover-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> WaitForMover <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#75" class="small">Source code</a></h4>
+<div class="declaration"> function  WaitForMover ( <span class="source_type"><a href="../engine/mover.html" class="source">Mover</a></span> <span class="source_type">M</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WanderOrCamp-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> WanderOrCamp <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#1420" class="small">Source code</a></h4>
+<div class="declaration"> function  WanderOrCamp ( <span class="source_type">bool</span> bMayCrouch) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WhatToDoNext-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> WhatToDoNext <span class="function_state"></span> <a href="../Source_old2k4/monstercontroller.html#441" class="small">Source code</a></h4>
+<div class="declaration"> function  WhatToDoNext ( <span class="source_type">byte</span> CallingByte) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     bLeadTarget=True
+     CombatStyle=<span class="source_int">0.200000</span>
+     FovAngle=<span class="source_int">85.000000</span>
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../old2k4/old2k4-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_old2k4/monstercontroller.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#MonsterController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../old2k4/monster.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../old2k4/newtracer.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:49.452 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

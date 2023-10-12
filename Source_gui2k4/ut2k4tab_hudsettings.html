@@ -1,0 +1,1029 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.UT2K4Tab_HudSettings</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4tab_hudsettings.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Tab_HudSettings">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4tab_guisettings.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4tab_iamaplist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/ut2k4tab_hudsettings.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/ut2k4tab_hudsettings.html">UT2K4Tab_HudSettings</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//	Created on: 07/10/03
+</span><a name="3"></a><span class="source_comment">//	HUD Configuration Menu
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">//	Written by Ron Prestenback
+</span><a name="6"></a><span class="source_comment">//	© 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="7"></a><span class="source_comment">//==============================================================================
+</span><a name="8"></a>
+<a name="9"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span> extends <span class="source_type"><a href="../gui2k4/settings_tabs.html" class="source">Settings_Tabs</a></span>;
+<a name="10"></a>
+<a name="11"></a>var automated <span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> i_BG1, i_BG2;
+<a name="12"></a>var automated <span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>	i_Scale, i_PreviewBG, i_Preview;
+<a name="13"></a>var automated <span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span>	sl_Scale, sl_Opacity, sl_Red, sl_Green, sl_Blue;
+<a name="14"></a>var automated <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>	nu_MsgCount, nu_MsgScale, nu_MsgOffset;
+<a name="15"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>	ch_Visible, ch_Weapons, ch_Personal, ch_Score, ch_WeaponBar,
+<a name="16"></a><span class="source_comment">// if _RO_
+</span><a name="17"></a>							ch_DeathMsgs, ch_EnemyNames, ch_CustomColor;
+<a name="18"></a><span class="source_comment">// else
+</span><a name="19"></a><span class="source_comment">//							ch_Portraits,  ch_VCPortraits, ch_DeathMsgs, ch_EnemyNames, ch_CustomColor;
+</span><a name="20"></a><span class="source_comment">// end if _RO_
+</span><a name="21"></a>
+<a name="22"></a>
+<a name="23"></a>var automated <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span> co_CustomHUD;
+<a name="24"></a>var automated <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> b_CustomHUD;
+<a name="25"></a>
+<a name="26"></a><span class="source_comment">// if _RO_
+</span><a name="27"></a>var() <span class="source_type">bool</span> bVis, bWeapons, bPersonal, bScore, bNames, bCustomColor, bNoMsgs, bWeaponBar;
+<a name="28"></a><span class="source_comment">// else
+</span><a name="29"></a><span class="source_comment">// var() bool bVis, bWeapons, bPersonal, bScore, bPortraits, bVCPortraits, bNames, bCustomColor, bNoMsgs, bWeaponBar;
+</span><a name="30"></a><span class="source_comment">// end if _RO_
+</span><a name="31"></a>var() <span class="source_type">int</span> iCount, iScale, iOffset;
+<a name="32"></a>var() <span class="source_type">float</span> fScale, fOpacity;
+<a name="33"></a>var() <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> cCustom;
+<a name="34"></a>
+<a name="35"></a>var() <span class="source_type"><a href="../core/object.html#FloatBox" class="source">floatbox</a></span> DefaultBGPos, DefaultHealthPos;
+<a name="36"></a>
+<a name="37"></a>var array&lt;<span class="source_type"><a href="../engine/cachemanager.html" class="source">CacheManager</a></span>.<span class="source_type"><a href="../engine/cachemanager.html#GameRecord" class="source">GameRecord</a></span>&gt; Games;
+<a name="38"></a>
+<a name="39"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="40"></a>{
+<a name="41"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="42"></a>
+<a name="43"></a>	Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="44"></a>
+<a name="45"></a>	<span class="source_type">class</span><span class="source_name">'CacheManager'</span>.static.GetGameTypeList( Games );
+<a name="46"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Games.Length; <span class="source_type">i</span>++ )
+<a name="47"></a>	{
+<a name="48"></a>		if ( Games[<span class="source_type">i</span>].HUDMenu != <span class="source_string">""</span> )
+<a name="49"></a>			co_CustomHUD.AddItem( Games[<span class="source_type">i</span>].GameName, , <span class="source_type">string</span>(<span class="source_type">i</span>) );
+<a name="50"></a>	}
+<a name="51"></a>
+<a name="52"></a>	if ( co_CustomHUD.ItemCount() == <span class="source_int">0</span> )
+<a name="53"></a>	{
+<a name="54"></a>		RemoveComponent(co_CustomHUD);
+<a name="55"></a>		RemoveComponent(b_CustomHUD);
+<a name="56"></a>	}
+<a name="57"></a>
+<a name="58"></a>	i_BG1.ManageComponent(ch_Visible);
+<a name="59"></a>    i_BG1.ManageComponent(ch_EnemyNames);
+<a name="60"></a>    i_BG1.ManageComponent(ch_WeaponBar);
+<a name="61"></a>    i_BG1.ManageComponent(ch_Weapons);
+<a name="62"></a>    i_BG1.ManageComponent(ch_Personal);
+<a name="63"></a>    i_BG1.ManageComponent(ch_Score);
+<a name="64"></a><span class="source_comment">// if _RO_
+</span><a name="65"></a><span class="source_comment">// else
+</span><a name="66"></a><span class="source_comment">//    i_BG1.ManageComponent(ch_Portraits);
+</span><a name="67"></a><span class="source_comment">//    i_BG1.ManageComponent(ch_VCPortraits);
+</span><a name="68"></a><span class="source_comment">// end if _RO_
+</span><a name="69"></a>    i_BG1.ManageComponent(ch_DeathMsgs);
+<a name="70"></a>    i_BG1.ManageComponent(nu_MsgCount);
+<a name="71"></a>    i_BG1.ManageComponent(nu_MsgScale);
+<a name="72"></a>    i_BG1.ManageComponent(nu_MsgOffset);
+<a name="73"></a>
+<a name="74"></a>    sl_Opacity.MySlider.bDrawPercentSign = True;
+<a name="75"></a>    sl_Scale.MySlider.bDrawPercentSign = True;
+<a name="76"></a>}
+<a name="77"></a>
+<a name="78"></a>function <span class="source_type">bool</span> InternalOnClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="79"></a>{
+<a name="80"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="81"></a>
+<a name="82"></a>	if ( <span class="source_type">Sender</span> == b_CustomHUD )
+<a name="83"></a>	{
+<a name="84"></a>		<span class="source_type">i</span> = <span class="source_type">int</span>(co_CustomHUD.GetExtra());
+<a name="85"></a>
+<a name="86"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(Games[<span class="source_type">i</span>].HUDMenu,Games[<span class="source_type">i</span>].<span class="source_type">ClassName</span>);
+<a name="87"></a>	}
+<a name="88"></a>
+<a name="89"></a>	return true;
+<a name="90"></a>}
+<a name="91"></a>
+<a name="92"></a>function InternalOnLoadINI(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">string</span> <span class="source_type">s</span>)
+<a name="93"></a>{
+<a name="94"></a>	local <span class="source_type"><a href="../engine/hud.html" class="source">HUD</a></span> H;
+<a name="95"></a>
+<a name="96"></a>	H = PlayerOwner().myHUD;
+<a name="97"></a>	<span class="source_type">switch</span> (<span class="source_type">Sender</span>)
+<a name="98"></a>	{
+<a name="99"></a>    case ch_DeathMsgs:
+<a name="100"></a>        bNoMsgs = <span class="source_type">class</span><span class="source_name">'XGame.xDeathMessage'</span>.default.bNoConsoleDeathMessages;
+<a name="101"></a>        ch_DeathMsgs.SetComponentValue(bNoMsgs,true);
+<a name="102"></a>        break;
+<a name="103"></a>
+<a name="104"></a>	case ch_Visible:
+<a name="105"></a>		bVis = H.bHideHUD;
+<a name="106"></a>		ch_Visible.SetComponentValue(bVis,true);
+<a name="107"></a>		break;
+<a name="108"></a>
+<a name="109"></a>	case ch_Weapons:
+<a name="110"></a>		bWeapons = H.bShowWeaponInfo;
+<a name="111"></a>		ch_Weapons.SetComponentValue(bWeapons,true);
+<a name="112"></a>		break;
+<a name="113"></a>
+<a name="114"></a>	case ch_Personal:
+<a name="115"></a>		bPersonal = H.bShowPersonalInfo;
+<a name="116"></a>		ch_Personal.SetComponentValue(bPersonal,true);
+<a name="117"></a>		break;
+<a name="118"></a>
+<a name="119"></a>	case ch_Score:
+<a name="120"></a>		bScore = H.bShowPoints;
+<a name="121"></a>		ch_Score.SetComponentValue(bScore,true);
+<a name="122"></a>		break;
+<a name="123"></a>
+<a name="124"></a>	case ch_WeaponBar:
+<a name="125"></a>		bWeaponBar = H.bShowWeaponBar;
+<a name="126"></a>		ch_WeaponBar.SetComponentValue(bWeaponBar,true);
+<a name="127"></a>		break;
+<a name="128"></a>
+<a name="129"></a><span class="source_comment">// if _RO_
+</span><a name="130"></a><span class="source_comment">/*
+<a name="131"></a>// end if _RO_
+<a name="132"></a>	case ch_Portraits:
+<a name="133"></a>		bPortraits = H.bShowPortrait;
+<a name="134"></a>		ch_Portraits.SetComponentValue(bPortraits,true);
+<a name="135"></a>		break;
+<a name="136"></a>// if _RO_
+<a name="137"></a>*/</span>
+<a name="138"></a><span class="source_comment">// end if _RO_
+</span><a name="139"></a>
+<a name="140"></a>	case ch_EnemyNames:
+<a name="141"></a>		bNames = !H.bNoEnemyNames;
+<a name="142"></a>		ch_EnemyNames.SetComponentValue(bNames,true);
+<a name="143"></a>		break;
+<a name="144"></a>
+<a name="145"></a>	case nu_MsgCount:
+<a name="146"></a>		iCount = H.ConsoleMessageCount;
+<a name="147"></a>		nu_MsgCount.SetComponentValue(iCount,true);
+<a name="148"></a>		break;
+<a name="149"></a>
+<a name="150"></a>	case nu_MsgScale:
+<a name="151"></a>		iScale = <span class="source_int">8</span> - H.ConsoleFontSize;
+<a name="152"></a>		nu_MsgScale.SetComponentValue(iScale,true);
+<a name="153"></a>		break;
+<a name="154"></a>
+<a name="155"></a>	case nu_MsgOffset:
+<a name="156"></a>		iOffset = H.MessageFontOffset+<span class="source_int">4</span>;
+<a name="157"></a>		nu_MsgOffset.SetComponentValue(iOffset,true);
+<a name="158"></a>		break;
+<a name="159"></a>
+<a name="160"></a>	case ch_CustomColor:
+<a name="161"></a>		bCustomColor = UsingCustomColor();
+<a name="162"></a>		ch_CustomColor.SetComponentValue(bCustomColor,true);
+<a name="163"></a>		InitializeHUDColor();
+<a name="164"></a>		break;
+<a name="165"></a>
+<a name="166"></a><span class="source_comment">// if _RO_
+</span><a name="167"></a><span class="source_comment">/*
+<a name="168"></a>// end if _RO_
+<a name="169"></a>	case ch_VCPortraits:
+<a name="170"></a>		bVCPortraits = H.bShowPortraitVC;
+<a name="171"></a>		ch_VCPortraits.SetComponentValue(bVCPortraits,true);
+<a name="172"></a>		break;
+<a name="173"></a>// if _RO_
+<a name="174"></a>*/</span>
+<a name="175"></a><span class="source_comment">// end if _RO_
+</span><a name="176"></a>
+<a name="177"></a>	default:
+<a name="178"></a>		log(<span class="source_type">Name</span>@<span class="source_string">"Unknown component calling LoadINI:"</span>$ <span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>).<span class="source_type">Caption</span>);
+<a name="179"></a>		<span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>).SetComponentValue(<span class="source_type">s</span>,true);
+<a name="180"></a>	}
+<a name="181"></a>}
+<a name="182"></a>
+<a name="183"></a>function InitializeHUDColor()
+<a name="184"></a>{
+<a name="185"></a>	if (bCustomColor)
+<a name="186"></a>		cCustom = <span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.CustomHUDColor;
+<a name="187"></a>
+<a name="188"></a>	else
+<a name="189"></a>	{	cCustom = GetDefaultColor();
+<a name="190"></a>		sl_Red.DisableMe();
+<a name="191"></a>		sl_Blue.DisableMe();
+<a name="192"></a>		sl_Green.DisableMe();
+<a name="193"></a>	}
+<a name="194"></a>
+<a name="195"></a>	fScale = PlayerOwner().myHUD.HudScale * <span class="source_int">100</span>;
+<a name="196"></a>	fOpacity = (PlayerOwner().myHUD.HudOpacity / <span class="source_int">255</span>) * <span class="source_int">100</span>;
+<a name="197"></a>
+<a name="198"></a>	sl_Scale.SetValue(fScale);
+<a name="199"></a>	sl_Opacity.SetValue(fOpacity);
+<a name="200"></a>
+<a name="201"></a>	sl_Red.SetValue(cCustom.<span class="source_type">R</span>);
+<a name="202"></a>	sl_Blue.SetValue(cCustom.<span class="source_type">B</span>);
+<a name="203"></a>	sl_Green.SetValue(cCustom.G);
+<a name="204"></a>
+<a name="205"></a>
+<a name="206"></a>	UpdatePreviewColor();
+<a name="207"></a>}
+<a name="208"></a>
+<a name="209"></a>function <span class="source_type">bool</span> UsingCustomColor()
+<a name="210"></a>{
+<a name="211"></a>	if ( PlayerOwner() != None && PlayerOwner().myHUD != None && <span class="source_type"><a href="../xinterface/hudbase.html" class="source">HudBase</a></span>(PlayerOwner().myHUD) != None )
+<a name="212"></a>		return <span class="source_type"><a href="../xinterface/hudbase.html" class="source">HudBase</a></span>(PlayerOwner().myHUD).bUsingCustomHUDColor;
+<a name="213"></a>
+<a name="214"></a>	return
+<a name="215"></a>	<span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.CustomHUDColor.<span class="source_type">R</span> != <span class="source_int">0</span> ||
+<a name="216"></a>	<span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.CustomHUDColor.<span class="source_type">B</span> != <span class="source_int">0</span> ||
+<a name="217"></a>	<span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.CustomHUDColor.G != <span class="source_int">0</span> ||
+<a name="218"></a>	<span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.CustomHUDColor.<span class="source_type">A</span> != <span class="source_int">0</span>;
+<a name="219"></a>}
+<a name="220"></a>
+<a name="221"></a>function <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> GetDefaultColor()
+<a name="222"></a>{
+<a name="223"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="224"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="225"></a>
+<a name="226"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="227"></a>	if (<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> == None || <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> == None)
+<a name="228"></a>		<span class="source_type">i</span> = <span class="source_type">int</span>(<span class="source_type">PC</span>.GetUrlOption(<span class="source_string">"Team"</span>));
+<a name="229"></a>	else <span class="source_type">i</span> = <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex;
+<a name="230"></a>
+<a name="231"></a>	if (<span class="source_type"><a href="../xinterface/hudbase.html" class="source">HudBase</a></span>(<span class="source_type">PC</span>.myHUD) != None)
+<a name="232"></a>		return <span class="source_type"><a href="../xinterface/hudbase.html" class="source">HudBase</a></span>(<span class="source_type">PC</span>.myHUD).GetTeamColor(<span class="source_type">i</span>);
+<a name="233"></a>
+<a name="234"></a>	return <span class="source_type">class</span><span class="source_name">'HudBase'</span>.static.GetTeamColor(<span class="source_type">i</span>);
+<a name="235"></a>}
+<a name="236"></a>
+<a name="237"></a>function SaveSettings()
+<a name="238"></a>{
+<a name="239"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="240"></a>	local <span class="source_type"><a href="../engine/hud.html" class="source">HUD</a></span> H;
+<a name="241"></a>	local <span class="source_type">bool</span> bSave;
+<a name="242"></a>
+<a name="243"></a>	Super.SaveSettings();
+<a name="244"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="245"></a>	H = <span class="source_type">PC</span>.myHUD;
+<a name="246"></a>
+<a name="247"></a>	if ( H.bHideHud != bVis )
+<a name="248"></a>	{
+<a name="249"></a>		H.bHideHUD = bVis;
+<a name="250"></a>		bSave = True;
+<a name="251"></a>	}
+<a name="252"></a>
+<a name="253"></a>	if ( H.bShowWeaponInfo != bWeapons )
+<a name="254"></a>	{
+<a name="255"></a>		H.bShowWeaponInfo = bWeapons;
+<a name="256"></a>		bSave = True;
+<a name="257"></a>	}
+<a name="258"></a>
+<a name="259"></a>	if ( H.bShowPersonalInfo != bPersonal )
+<a name="260"></a>	{
+<a name="261"></a>		H.bShowPersonalInfo = bPersonal;
+<a name="262"></a>		bSave = True;
+<a name="263"></a>	}
+<a name="264"></a>
+<a name="265"></a>	if ( H.bShowPoints != bScore )
+<a name="266"></a>	{
+<a name="267"></a>		H.bShowPoints = bScore;
+<a name="268"></a>		bSave = True;
+<a name="269"></a>	}
+<a name="270"></a>
+<a name="271"></a>	if ( H.bShowWeaponBar != bWeaponBar)
+<a name="272"></a>	{
+<a name="273"></a>		H.bShowWeaponBar = bWeaponBar;
+<a name="274"></a>		bSave = True;
+<a name="275"></a>	}
+<a name="276"></a>
+<a name="277"></a><span class="source_comment">// if _RO_
+</span><a name="278"></a><span class="source_comment">/*
+<a name="279"></a>// end if _RO_
+<a name="280"></a>	if ( H.bShowPortrait != bPortraits )
+<a name="281"></a>	{
+<a name="282"></a>		H.bShowPortrait = bPortraits;
+<a name="283"></a>		bSave = True;
+<a name="284"></a>	}
+<a name="285"></a>
+<a name="286"></a>	if ( H.bShowPortraitVC != bVCPortraits )
+<a name="287"></a>	{
+<a name="288"></a>		H.bShowPortraitVC = bVCPortraits;
+<a name="289"></a>		bSave = True;
+<a name="290"></a>	}
+<a name="291"></a>// if _RO_
+<a name="292"></a>*/</span>
+<a name="293"></a><span class="source_comment">// end if _RO_
+</span><a name="294"></a>
+<a name="295"></a>	if ( H.bNoEnemyNames == bNames )
+<a name="296"></a>	{
+<a name="297"></a>		H.bNoEnemyNames = !bNames;
+<a name="298"></a>		bSave = True;
+<a name="299"></a>	}
+<a name="300"></a>
+<a name="301"></a>	if ( H.ConsoleMessageCount != iCount )
+<a name="302"></a>	{
+<a name="303"></a>		H.ConsoleMessageCount = iCount;
+<a name="304"></a>		bSave = True;
+<a name="305"></a>	}
+<a name="306"></a>
+<a name="307"></a>	if ( H.ConsoleFontSize != Abs(iScale - <span class="source_int">8</span>) )
+<a name="308"></a>	{
+<a name="309"></a>		H.ConsoleFontSize = Abs(iScale - <span class="source_int">8</span>);
+<a name="310"></a>		bSave = True;
+<a name="311"></a>	}
+<a name="312"></a>
+<a name="313"></a>	if ( H.MessageFontOffset != iOffset - <span class="source_int">4</span> )
+<a name="314"></a>	{
+<a name="315"></a>		H.MessageFontOffset = iOffset - <span class="source_int">4</span>;
+<a name="316"></a>		bSave = True;
+<a name="317"></a>	}
+<a name="318"></a>
+<a name="319"></a>	if ( H.HudScale != fScale / <span class="source_int">100.0</span> )
+<a name="320"></a>	{
+<a name="321"></a>		H.HudScale = fScale / <span class="source_int">100.0</span>;
+<a name="322"></a>		bSave = True;
+<a name="323"></a>	}
+<a name="324"></a>
+<a name="325"></a>	if ( H.HudOpacity != (fOpacity / <span class="source_int">100.0</span>) * <span class="source_int">255.0</span> )
+<a name="326"></a>	{
+<a name="327"></a>		H.HudOpacity = (fOpacity / <span class="source_int">100.0</span>) * <span class="source_int">255.0</span>;
+<a name="328"></a>		bSave = True;
+<a name="329"></a>	}
+<a name="330"></a>
+<a name="331"></a>	if ( <span class="source_type"><a href="../xinterface/hudbase.html" class="source">HudBase</a></span>(H) != None )
+<a name="332"></a>	{
+<a name="333"></a>		if ( SaveCustomHUDColor() || bSave )
+<a name="334"></a>			H.SaveConfig();
+<a name="335"></a>	}
+<a name="336"></a>
+<a name="337"></a>	else
+<a name="338"></a>	{
+<a name="339"></a>		if ( bSave )
+<a name="340"></a>			H.SaveConfig();
+<a name="341"></a>
+<a name="342"></a>		SaveCustomHUDColor();
+<a name="343"></a>	}
+<a name="344"></a>
+<a name="345"></a>    if ( <span class="source_type">class</span><span class="source_name">'XGame.xDeathMessage'</span>.default.bNoConsoleDeathMessages != bNoMsgs )
+<a name="346"></a>    {
+<a name="347"></a>		<span class="source_type">class</span><span class="source_name">'XGame.xDeathMessage'</span>.default.bNoConsoleDeathMessages = bNoMsgs;
+<a name="348"></a>		<span class="source_type">class</span><span class="source_name">'XGame.xDeathMessage'</span>.static.StaticSaveConfig();
+<a name="349"></a>	}
+<a name="350"></a>}
+<a name="351"></a>
+<a name="352"></a>function ResetClicked()
+<a name="353"></a>{
+<a name="354"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="355"></a>
+<a name="356"></a>	Super.ResetClicked();
+<a name="357"></a>
+<a name="358"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"bHideHUD"</span>);
+<a name="359"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"bShowWeaponInfo"</span>);
+<a name="360"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"bShowPersonalInfo"</span>);
+<a name="361"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"bShowPoints"</span>);
+<a name="362"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"bShowWeaponBar"</span>);
+<a name="363"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"bShowPortrait"</span>);
+<a name="364"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"bShowPortraitVC"</span>);
+<a name="365"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"bNoEnemyNames"</span>);
+<a name="366"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"ConsoleMessageCount"</span>);
+<a name="367"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"ConsoleFontSize"</span>);
+<a name="368"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"MessageFontOffset"</span>);
+<a name="369"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"HudScale"</span>);
+<a name="370"></a>	<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.ResetConfig(<span class="source_string">"HudOpacity"</span>);
+<a name="371"></a>
+<a name="372"></a>	<span class="source_type">class</span><span class="source_name">'HudBase'</span>.static.ResetConfig(<span class="source_string">"CustomHudColor"</span>);
+<a name="373"></a>    <span class="source_type">class</span><span class="source_name">'XGame.xDeathMessage'</span>.static.ResetConfig(<span class="source_string">"bNoConsoleDeathMessages"</span>);
+<a name="374"></a>
+<a name="375"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Components.Length; <span class="source_type">i</span>++)
+<a name="376"></a>		Components[<span class="source_type">i</span>].LoadINI();
+<a name="377"></a>}
+<a name="378"></a>
+<a name="379"></a>function <span class="source_type">bool</span> SaveCustomHUDColor()
+<a name="380"></a>{
+<a name="381"></a>	local <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> Temp;
+<a name="382"></a>	local <span class="source_type"><a href="../xinterface/hudbase.html" class="source">HudBase</a></span> Base;
+<a name="383"></a>
+<a name="384"></a>	Base = <span class="source_type"><a href="../xinterface/hudbase.html" class="source">HudBase</a></span>(PlayerOwner().myHUD);
+<a name="385"></a>	if ( Base != None )
+<a name="386"></a>	{
+<a name="387"></a>		if ( bCustomColor )
+<a name="388"></a>		{
+<a name="389"></a>			if ( Base.CustomHUDColor != cCustom )
+<a name="390"></a>			{
+<a name="391"></a>				Base.CustomHUDColor = cCustom;
+<a name="392"></a>				Base.SetCustomHUDColor();
+<a name="393"></a>				return true;
+<a name="394"></a>			}
+<a name="395"></a>		}
+<a name="396"></a>		else if ( Base.CustomHUDColor != Temp )
+<a name="397"></a>		{
+<a name="398"></a>			Base.CustomHUDColor = Temp;
+<a name="399"></a>			Base.SetCustomHUDColor();
+<a name="400"></a>			return true;
+<a name="401"></a>		}
+<a name="402"></a>	}
+<a name="403"></a>	else
+<a name="404"></a>	{
+<a name="405"></a>		if ( bCustomColor )
+<a name="406"></a>		{
+<a name="407"></a>			if ( <span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.CustomHUDColor != cCustom )
+<a name="408"></a>			{
+<a name="409"></a>				<span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.CustomHUDColor = cCustom;
+<a name="410"></a>				<span class="source_type">class</span><span class="source_name">'HudBase'</span>.static.StaticSaveConfig();
+<a name="411"></a>				return false;
+<a name="412"></a>			}
+<a name="413"></a>		}
+<a name="414"></a>		else if ( <span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.CustomHUDColor != Temp )
+<a name="415"></a>		{
+<a name="416"></a>			<span class="source_type">class</span><span class="source_name">'HudBase'</span>.default.CustomHUDColor = Temp;
+<a name="417"></a>			<span class="source_type">class</span><span class="source_name">'HudBase'</span>.static.StaticSaveConfig();
+<a name="418"></a>			return false;
+<a name="419"></a>		}
+<a name="420"></a>	}
+<a name="421"></a>
+<a name="422"></a>	return false;
+<a name="423"></a>}
+<a name="424"></a>
+<a name="425"></a>function InternalOnChange(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="426"></a>{
+<a name="427"></a>	Super.InternalOnChange(<span class="source_type">Sender</span>);
+<a name="428"></a>	<span class="source_type">switch</span> (<span class="source_type">Sender</span>)
+<a name="429"></a>	{
+<a name="430"></a>	case ch_Visible:
+<a name="431"></a>		bVis = ch_Visible.IsChecked();
+<a name="432"></a>		break;
+<a name="433"></a>
+<a name="434"></a>	case ch_Weapons:
+<a name="435"></a>		bWeapons = ch_Weapons.IsChecked();
+<a name="436"></a>		break;
+<a name="437"></a>
+<a name="438"></a>	case ch_Personal:
+<a name="439"></a>		bPersonal = ch_Personal.IsChecked();
+<a name="440"></a>		break;
+<a name="441"></a>
+<a name="442"></a>	case ch_Score:
+<a name="443"></a>		bScore = ch_Score.IsChecked();
+<a name="444"></a>		break;
+<a name="445"></a>
+<a name="446"></a>	case ch_WeaponBar:
+<a name="447"></a>		bWeaponBar = ch_WeaponBar.IsChecked();
+<a name="448"></a>		break;
+<a name="449"></a>
+<a name="450"></a>    case ch_DeathMsgs:
+<a name="451"></a>        bNoMsgs = ch_DeathMsgs.IsChecked();
+<a name="452"></a>        break;
+<a name="453"></a>
+<a name="454"></a><span class="source_comment">// if _RO_
+</span><a name="455"></a><span class="source_comment">/*
+<a name="456"></a>// end if _RO_
+<a name="457"></a>	case ch_Portraits:
+<a name="458"></a>		bPortraits = ch_Portraits.IsChecked();
+<a name="459"></a>		break;
+<a name="460"></a>
+<a name="461"></a>	case ch_VCPortraits:
+<a name="462"></a>		bVCPortraits = ch_VCPortraits.IsChecked();
+<a name="463"></a>		break;
+<a name="464"></a>// if _RO_
+<a name="465"></a>*/</span>
+<a name="466"></a><span class="source_comment">// end if _RO_
+</span><a name="467"></a>
+<a name="468"></a>	case ch_EnemyNames:
+<a name="469"></a>		bNames = ch_EnemyNames.IsChecked();
+<a name="470"></a>		break;
+<a name="471"></a>
+<a name="472"></a>	case nu_MsgCount:
+<a name="473"></a>		iCount = nu_MsgCount.GetValue();
+<a name="474"></a>		break;
+<a name="475"></a>
+<a name="476"></a>	case nu_MsgScale:
+<a name="477"></a>		iScale = nu_MsgScale.GetValue();
+<a name="478"></a>		break;
+<a name="479"></a>
+<a name="480"></a>	case nu_MsgOffset:
+<a name="481"></a>		iOffset = nu_MsgOffset.GetValue();
+<a name="482"></a>		break;
+<a name="483"></a>
+<a name="484"></a>	case sl_Scale:
+<a name="485"></a>		fScale = sl_Scale.GetValue();
+<a name="486"></a>		UpdatePreviewColor();
+<a name="487"></a>		break;
+<a name="488"></a>
+<a name="489"></a>	case sl_Opacity:
+<a name="490"></a>		fOpacity = sl_Opacity.GetValue();
+<a name="491"></a>		UpdatePreviewColor();
+<a name="492"></a>		break;
+<a name="493"></a>
+<a name="494"></a>	case ch_CustomColor:
+<a name="495"></a>		bCustomColor = ch_CustomColor.IsChecked();
+<a name="496"></a>		ChangeCustomStatus();
+<a name="497"></a>		UpdatePreviewColor();
+<a name="498"></a>		break;
+<a name="499"></a>
+<a name="500"></a>	case sl_Red:
+<a name="501"></a>		cCustom.<span class="source_type">R</span> = sl_Red.GetValue();
+<a name="502"></a>		UpdatePreviewColor();
+<a name="503"></a>		break;
+<a name="504"></a>
+<a name="505"></a>	case sl_Blue:
+<a name="506"></a>		cCustom.<span class="source_type">B</span> = sl_Blue.GetValue();
+<a name="507"></a>		UpdatePreviewColor();
+<a name="508"></a>		break;
+<a name="509"></a>
+<a name="510"></a>	case sl_Green:
+<a name="511"></a>		cCustom.G = sl_Green.GetValue();
+<a name="512"></a>		UpdatePreviewColor();
+<a name="513"></a>		break;
+<a name="514"></a>	}
+<a name="515"></a>}
+<a name="516"></a>
+<a name="517"></a>function ChangeCustomStatus()
+<a name="518"></a>{
+<a name="519"></a>	if (bCustomColor)
+<a name="520"></a>	{
+<a name="521"></a>		sl_Red.EnableMe();
+<a name="522"></a>		sl_Blue.EnableMe();
+<a name="523"></a>		sl_Green.EnableMe();
+<a name="524"></a>
+<a name="525"></a>		cCustom.<span class="source_type">R</span> = sl_Red.GetValue();
+<a name="526"></a>		cCustom.G = sl_Green.GetValue();
+<a name="527"></a>		cCustom.<span class="source_type">B</span> = sl_Blue.GetValue();
+<a name="528"></a>	}
+<a name="529"></a>	else
+<a name="530"></a>	{
+<a name="531"></a>		sl_Red.DisableMe();
+<a name="532"></a>		sl_Blue.DisableMe();
+<a name="533"></a>		sl_Green.DisableMe();
+<a name="534"></a>
+<a name="535"></a>		cCustom = GetDefaultColor();
+<a name="536"></a>	}
+<a name="537"></a>}
+<a name="538"></a>
+<a name="539"></a>function UpdatePreviewColor()
+<a name="540"></a>{
+<a name="541"></a>	local <span class="source_type">float</span> <span class="source_type">o</span>, <span class="source_type">s</span>;
+<a name="542"></a>
+<a name="543"></a>	i_PreviewBG.ImageColor = cCustom;
+<a name="544"></a>
+<a name="545"></a>	<span class="source_type">o</span> = <span class="source_int">255.0</span> * (fOpacity / <span class="source_int">100.0</span>);
+<a name="546"></a>	i_PreviewBG.ImageColor.<span class="source_type">A</span> = <span class="source_type">o</span>;
+<a name="547"></a>	i_Preview.ImageColor.<span class="source_type">A</span> = <span class="source_type">o</span>;
+<a name="548"></a>
+<a name="549"></a>	<span class="source_type">s</span> = fScale / <span class="source_int">100.0</span>;
+<a name="550"></a>	i_PreviewBG.WinWidth = DefaultBGPos.X2 * <span class="source_type">s</span>;
+<a name="551"></a>	i_PreviewBG.WinHeight = DefaultBGPos.Y2 * <span class="source_type">s</span>;
+<a name="552"></a>
+<a name="553"></a>	i_Preview.WinWidth = DefaultHealthPos.X2 * <span class="source_type">s</span>;
+<a name="554"></a>	i_Preview.WinHeight = DefaultHealthPos.Y2 * <span class="source_type">s</span>;
+<a name="555"></a>
+<a name="556"></a>	i_Scale.WinWidth =  i_PreviewBG.WinWidth;
+<a name="557"></a>	i_Scale.WinHeight = i_PreviewBG.WinHeight;
+<a name="558"></a>
+<a name="559"></a>}
+<a name="560"></a>
+<a name="561"></a>defaultproperties
+<a name="562"></a>{
+<a name="563"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=GameBK
+<a name="564"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Options"</span>
+<a name="565"></a>         WinTop=<span class="source_int">0.057604</span>
+<a name="566"></a>         WinLeft=<span class="source_int">0.031797</span>
+<a name="567"></a>         WinWidth=<span class="source_int">0.448633</span>
+<a name="568"></a>         WinHeight=<span class="source_int">0.901485</span>
+<a name="569"></a>         RenderWeight=<span class="source_int">0.001000</span>
+<a name="570"></a>         OnPreDraw=GameBK.InternalPreDraw
+<a name="571"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="572"></a>     i_BG1=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameBK'</span>
+<a name="573"></a>
+<a name="574"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=GameBK1
+<a name="575"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Visuals"</span>
+<a name="576"></a>         WinTop=<span class="source_int">0.060208</span>
+<a name="577"></a>         WinLeft=<span class="source_int">0.517578</span>
+<a name="578"></a>         WinWidth=<span class="source_int">0.448633</span>
+<a name="579"></a>         WinHeight=<span class="source_int">0.901485</span>
+<a name="580"></a>         RenderWeight=<span class="source_int">0.001000</span>
+<a name="581"></a>         OnPreDraw=GameBK1.InternalPreDraw
+<a name="582"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="583"></a>     i_BG2=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameBK1'</span>
+<a name="584"></a>
+<a name="585"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=PreviewBK
+<a name="586"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="587"></a>         ImageStyle=ISTY_Scaled
+<a name="588"></a>         ImageAlign=IMGA_Center
+<a name="589"></a>         WinTop=<span class="source_int">0.211713</span>
+<a name="590"></a>         WinLeft=<span class="source_int">0.749335</span>
+<a name="591"></a>         WinWidth=<span class="source_int">0.163437</span>
+<a name="592"></a>         WinHeight=<span class="source_int">0.121797</span>
+<a name="593"></a>         RenderWeight=<span class="source_int">1.001000</span>
+<a name="594"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="595"></a>     i_Scale=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.PreviewBK'</span>
+<a name="596"></a>
+<a name="597"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=PreviewBackground
+<a name="598"></a>         ImageStyle=ISTY_Scaled
+<a name="599"></a>         ImageAlign=IMGA_Center
+<a name="600"></a>         X1=<span class="source_int">0</span>
+<a name="601"></a>         Y1=<span class="source_int">110</span>
+<a name="602"></a>         X2=<span class="source_int">166</span>
+<a name="603"></a>         Y2=<span class="source_int">163</span>
+<a name="604"></a>         WinTop=<span class="source_int">0.211713</span>
+<a name="605"></a>         WinLeft=<span class="source_int">0.749335</span>
+<a name="606"></a>         WinWidth=<span class="source_int">0.163437</span>
+<a name="607"></a>         WinHeight=<span class="source_int">0.121797</span>
+<a name="608"></a>         RenderWeight=<span class="source_int">1.002000</span>
+<a name="609"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="610"></a>     i_PreviewBG=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.PreviewBackground'</span>
+<a name="611"></a>
+<a name="612"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=Preview
+<a name="613"></a>         ImageStyle=ISTY_Scaled
+<a name="614"></a>         ImageAlign=IMGA_Center
+<a name="615"></a>         X1=<span class="source_int">74</span>
+<a name="616"></a>         Y1=<span class="source_int">165</span>
+<a name="617"></a>         X2=<span class="source_int">123</span>
+<a name="618"></a>         Y2=<span class="source_int">216</span>
+<a name="619"></a>         WinTop=<span class="source_int">0.211559</span>
+<a name="620"></a>         WinLeft=<span class="source_int">0.749828</span>
+<a name="621"></a>         WinWidth=<span class="source_int">0.063241</span>
+<a name="622"></a>         WinHeight=<span class="source_int">0.099531</span>
+<a name="623"></a>         RenderWeight=<span class="source_int">1.003000</span>
+<a name="624"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="625"></a>     i_Preview=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.Preview'</span>
+<a name="626"></a>
+<a name="627"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span> <span class="source_type">Name</span>=GameHudScale
+<a name="628"></a>         MaxValue=<span class="source_int">100.000000</span>
+<a name="629"></a>         MinValue=<span class="source_int">50.000000</span>
+<a name="630"></a>         LabelJustification=TXTA_Center
+<a name="631"></a>         ComponentJustification=TXTA_Left
+<a name="632"></a>         CaptionWidth=<span class="source_int">0.450000</span>
+<a name="633"></a>         <span class="source_type">Caption</span>=<span class="source_string">"HUD Scaling"</span>
+<a name="634"></a>         LabelColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>)
+<a name="635"></a>         OnCreateComponent=GameHudScale.InternalOnCreateComponent
+<a name="636"></a>         Hint=<span class="source_string">"Adjust the size of the HUD"</span>
+<a name="637"></a>         WinTop=<span class="source_int">0.309670</span>
+<a name="638"></a>         WinLeft=<span class="source_int">0.555313</span>
+<a name="639"></a>         WinWidth=<span class="source_int">0.373749</span>
+<a name="640"></a>         TabOrder=<span class="source_int">12</span>
+<a name="641"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="642"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="643"></a>     sl_Scale=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudScale'</span>
+<a name="644"></a>
+<a name="645"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span> <span class="source_type">Name</span>=GameHudOpacity
+<a name="646"></a>         MaxValue=<span class="source_int">100.000000</span>
+<a name="647"></a>         MinValue=<span class="source_int">51.000000</span>
+<a name="648"></a>         LabelJustification=TXTA_Center
+<a name="649"></a>         ComponentJustification=TXTA_Left
+<a name="650"></a>         CaptionWidth=<span class="source_int">0.450000</span>
+<a name="651"></a>         <span class="source_type">Caption</span>=<span class="source_string">"HUD Opacity"</span>
+<a name="652"></a>         LabelColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>)
+<a name="653"></a>         OnCreateComponent=GameHudOpacity.InternalOnCreateComponent
+<a name="654"></a>         Hint=<span class="source_string">"Adjust the transparency of the HUD"</span>
+<a name="655"></a>         WinTop=<span class="source_int">0.361753</span>
+<a name="656"></a>         WinLeft=<span class="source_int">0.555313</span>
+<a name="657"></a>         WinWidth=<span class="source_int">0.373749</span>
+<a name="658"></a>         TabOrder=<span class="source_int">13</span>
+<a name="659"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="660"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="661"></a>     sl_Opacity=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudOpacity'</span>
+<a name="662"></a>
+<a name="663"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span> <span class="source_type">Name</span>=HudColorR
+<a name="664"></a>         MaxValue=<span class="source_int">255.000000</span>
+<a name="665"></a>         bIntSlider=True
+<a name="666"></a>         CaptionWidth=<span class="source_int">0.350000</span>
+<a name="667"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Red:"</span>
+<a name="668"></a>         LabelColor=(<span class="source_type">B</span>=<span class="source_int">0</span>,<span class="source_type">R</span>=<span class="source_int">255</span>)
+<a name="669"></a>         OnCreateComponent=HudColorR.InternalOnCreateComponent
+<a name="670"></a>         Hint=<span class="source_string">"Adjust the amount of red in the HUD."</span>
+<a name="671"></a>         WinTop=<span class="source_int">0.572917</span>
+<a name="672"></a>         WinLeft=<span class="source_int">0.610000</span>
+<a name="673"></a>         WinWidth=<span class="source_int">0.272187</span>
+<a name="674"></a>         TabOrder=<span class="source_int">15</span>
+<a name="675"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="676"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="677"></a>     sl_Red=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.HudColorR'</span>
+<a name="678"></a>
+<a name="679"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span> <span class="source_type">Name</span>=HudColorG
+<a name="680"></a>         MaxValue=<span class="source_int">255.000000</span>
+<a name="681"></a>         bIntSlider=True
+<a name="682"></a>         CaptionWidth=<span class="source_int">0.350000</span>
+<a name="683"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Green:"</span>
+<a name="684"></a>         LabelColor=(<span class="source_type">B</span>=<span class="source_int">0</span>,G=<span class="source_int">255</span>)
+<a name="685"></a>         OnCreateComponent=HudColorG.InternalOnCreateComponent
+<a name="686"></a>         Hint=<span class="source_string">"Adjust the amount of green in the HUD."</span>
+<a name="687"></a>         WinTop=<span class="source_int">0.660417</span>
+<a name="688"></a>         WinLeft=<span class="source_int">0.610000</span>
+<a name="689"></a>         WinWidth=<span class="source_int">0.272187</span>
+<a name="690"></a>         TabOrder=<span class="source_int">17</span>
+<a name="691"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="692"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="693"></a>     sl_Green=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.HudColorG'</span>
+<a name="694"></a>
+<a name="695"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span> <span class="source_type">Name</span>=HudColorB
+<a name="696"></a>         MaxValue=<span class="source_int">255.000000</span>
+<a name="697"></a>         bIntSlider=True
+<a name="698"></a>         CaptionWidth=<span class="source_int">0.350000</span>
+<a name="699"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Blue:"</span>
+<a name="700"></a>         LabelColor=(<span class="source_type">B</span>=<span class="source_int">255</span>)
+<a name="701"></a>         OnCreateComponent=HudColorB.InternalOnCreateComponent
+<a name="702"></a>         Hint=<span class="source_string">"Adjust the amount of blue in the HUD."</span>
+<a name="703"></a>         WinTop=<span class="source_int">0.752500</span>
+<a name="704"></a>         WinLeft=<span class="source_int">0.610000</span>
+<a name="705"></a>         WinWidth=<span class="source_int">0.272187</span>
+<a name="706"></a>         TabOrder=<span class="source_int">16</span>
+<a name="707"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="708"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="709"></a>     sl_Blue=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.HudColorB'</span>
+<a name="710"></a>
+<a name="711"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span> <span class="source_type">Name</span>=GameHudMessageCount
+<a name="712"></a>         MinValue=<span class="source_int">0</span>
+<a name="713"></a>         MaxValue=<span class="source_int">8</span>
+<a name="714"></a>         ComponentJustification=TXTA_Left
+<a name="715"></a>         CaptionWidth=<span class="source_int">0.700000</span>
+<a name="716"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Max. Chat Count"</span>
+<a name="717"></a>         OnCreateComponent=GameHudMessageCount.InternalOnCreateComponent
+<a name="718"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="719"></a>         Hint=<span class="source_string">"Number of lines of chat to display at once"</span>
+<a name="720"></a>         WinTop=<span class="source_int">0.196875</span>
+<a name="721"></a>         WinLeft=<span class="source_int">0.550781</span>
+<a name="722"></a>         WinWidth=<span class="source_int">0.381250</span>
+<a name="723"></a>         TabOrder=<span class="source_int">9</span>
+<a name="724"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="725"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="726"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="727"></a>     nu_MsgCount=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudMessageCount'</span>
+<a name="728"></a>
+<a name="729"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span> <span class="source_type">Name</span>=GameHudMessageScale
+<a name="730"></a>         MinValue=<span class="source_int">0</span>
+<a name="731"></a>         MaxValue=<span class="source_int">8</span>
+<a name="732"></a>         ComponentJustification=TXTA_Left
+<a name="733"></a>         CaptionWidth=<span class="source_int">0.700000</span>
+<a name="734"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Chat Font Size"</span>
+<a name="735"></a>         OnCreateComponent=GameHudMessageScale.InternalOnCreateComponent
+<a name="736"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="737"></a>         Hint=<span class="source_string">"Adjust the size of chat messages."</span>
+<a name="738"></a>         WinTop=<span class="source_int">0.321874</span>
+<a name="739"></a>         WinLeft=<span class="source_int">0.550781</span>
+<a name="740"></a>         WinWidth=<span class="source_int">0.381250</span>
+<a name="741"></a>         TabOrder=<span class="source_int">10</span>
+<a name="742"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="743"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="744"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="745"></a>     nu_MsgScale=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudMessageScale'</span>
+<a name="746"></a>
+<a name="747"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span> <span class="source_type">Name</span>=GameHudMessageOffset
+<a name="748"></a>         MinValue=<span class="source_int">0</span>
+<a name="749"></a>         MaxValue=<span class="source_int">4</span>
+<a name="750"></a>         ComponentJustification=TXTA_Left
+<a name="751"></a>         CaptionWidth=<span class="source_int">0.700000</span>
+<a name="752"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Message Font Offset"</span>
+<a name="753"></a>         OnCreateComponent=GameHudMessageOffset.InternalOnCreateComponent
+<a name="754"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="755"></a>         Hint=<span class="source_string">"Adjust the size of game messages."</span>
+<a name="756"></a>         WinTop=<span class="source_int">0.436457</span>
+<a name="757"></a>         WinLeft=<span class="source_int">0.550781</span>
+<a name="758"></a>         WinWidth=<span class="source_int">0.381250</span>
+<a name="759"></a>         TabOrder=<span class="source_int">11</span>
+<a name="760"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="761"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="762"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="763"></a>     nu_MsgOffset=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudMessageOffset'</span>
+<a name="764"></a>
+<a name="765"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=GameHudVisible
+<a name="766"></a>         ComponentJustification=TXTA_Left
+<a name="767"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="768"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Hide HUD"</span>
+<a name="769"></a>         OnCreateComponent=GameHudVisible.InternalOnCreateComponent
+<a name="770"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="771"></a>         Hint=<span class="source_string">"Hide the HUD while playing"</span>
+<a name="772"></a>         WinTop=<span class="source_int">0.043906</span>
+<a name="773"></a>         WinLeft=<span class="source_int">0.379297</span>
+<a name="774"></a>         WinWidth=<span class="source_int">0.196875</span>
+<a name="775"></a>         TabOrder=<span class="source_int">0</span>
+<a name="776"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="777"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="778"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="779"></a>     ch_Visible=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudVisible'</span>
+<a name="780"></a>
+<a name="781"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=GameHudShowWeaponInfo
+<a name="782"></a>         ComponentJustification=TXTA_Left
+<a name="783"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="784"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Show Weapon Info"</span>
+<a name="785"></a>         OnCreateComponent=GameHudShowWeaponInfo.InternalOnCreateComponent
+<a name="786"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="787"></a>         Hint=<span class="source_string">"Show current weapon ammunition status."</span>
+<a name="788"></a>         WinTop=<span class="source_int">0.181927</span>
+<a name="789"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="790"></a>         WinWidth=<span class="source_int">0.378125</span>
+<a name="791"></a>         TabOrder=<span class="source_int">3</span>
+<a name="792"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="793"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="794"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="795"></a>     ch_Weapons=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudShowWeaponInfo'</span>
+<a name="796"></a>
+<a name="797"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=GameHudShowPersonalInfo
+<a name="798"></a>         ComponentJustification=TXTA_Left
+<a name="799"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="800"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Show Personal Info"</span>
+<a name="801"></a>         OnCreateComponent=GameHudShowPersonalInfo.InternalOnCreateComponent
+<a name="802"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="803"></a>         Hint=<span class="source_string">"Display health and armor on the HUD."</span>
+<a name="804"></a>         WinTop=<span class="source_int">0.317343</span>
+<a name="805"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="806"></a>         WinWidth=<span class="source_int">0.378125</span>
+<a name="807"></a>         TabOrder=<span class="source_int">4</span>
+<a name="808"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="809"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="810"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="811"></a>     ch_Personal=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudShowPersonalInfo'</span>
+<a name="812"></a>
+<a name="813"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=GameHudShowScore
+<a name="814"></a>         ComponentJustification=TXTA_Left
+<a name="815"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="816"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Show Score"</span>
+<a name="817"></a>         OnCreateComponent=GameHudShowScore.InternalOnCreateComponent
+<a name="818"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="819"></a>         Hint=<span class="source_string">"Check to show scores on the HUD"</span>
+<a name="820"></a>         WinTop=<span class="source_int">0.452760</span>
+<a name="821"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="822"></a>         WinWidth=<span class="source_int">0.378125</span>
+<a name="823"></a>         TabOrder=<span class="source_int">5</span>
+<a name="824"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="825"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="826"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="827"></a>     ch_Score=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudShowScore'</span>
+<a name="828"></a>
+<a name="829"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=GameHudShowWeaponBar
+<a name="830"></a>         ComponentJustification=TXTA_Left
+<a name="831"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="832"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Weapon Bar"</span>
+<a name="833"></a>         OnCreateComponent=GameHudShowWeaponBar.InternalOnCreateComponent
+<a name="834"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="835"></a>         Hint=<span class="source_string">"Select whether the weapons bar should appear on the HUD"</span>
+<a name="836"></a>         WinTop=<span class="source_int">0.598593</span>
+<a name="837"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="838"></a>         WinWidth=<span class="source_int">0.378125</span>
+<a name="839"></a>         TabOrder=<span class="source_int">2</span>
+<a name="840"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="841"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="842"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="843"></a>     ch_WeaponBar=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudShowWeaponBar'</span>
+<a name="844"></a>
+<a name="845"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=GameDeathMsgs
+<a name="846"></a>         ComponentJustification=TXTA_Left
+<a name="847"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="848"></a>         <span class="source_type">Caption</span>=<span class="source_string">"No Console Death Messages"</span>
+<a name="849"></a>         OnCreateComponent=GameDeathMsgs.InternalOnCreateComponent
+<a name="850"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="851"></a>         IniDefault=<span class="source_string">"False"</span>
+<a name="852"></a>         Hint=<span class="source_string">"Turn off reporting of death messages in console"</span>
+<a name="853"></a>         WinTop=<span class="source_int">0.847553</span>
+<a name="854"></a>         WinLeft=<span class="source_int">0.047460</span>
+<a name="855"></a>         WinWidth=<span class="source_int">0.403711</span>
+<a name="856"></a>         TabOrder=<span class="source_int">8</span>
+<a name="857"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="858"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="859"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="860"></a>     ch_DeathMsgs=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameDeathMsgs'</span>
+<a name="861"></a>
+<a name="862"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=GameHudShowEnemyNames
+<a name="863"></a>         ComponentJustification=TXTA_Left
+<a name="864"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="865"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Show Enemy Names"</span>
+<a name="866"></a>         OnCreateComponent=GameHudShowEnemyNames.InternalOnCreateComponent
+<a name="867"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="868"></a>         Hint=<span class="source_string">"Display enemies' names above their heads"</span>
+<a name="869"></a>         WinTop=<span class="source_int">0.848594</span>
+<a name="870"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="871"></a>         WinWidth=<span class="source_int">0.378125</span>
+<a name="872"></a>         TabOrder=<span class="source_int">1</span>
+<a name="873"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="874"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="875"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="876"></a>     ch_EnemyNames=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.GameHudShowEnemyNames'</span>
+<a name="877"></a>
+<a name="878"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=CustomHUDColor
+<a name="879"></a>         ComponentJustification=TXTA_Left
+<a name="880"></a>         CaptionWidth=<span class="source_int">0.900000</span>
+<a name="881"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Custom HUD Color"</span>
+<a name="882"></a>         OnCreateComponent=CustomHUDColor.InternalOnCreateComponent
+<a name="883"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="884"></a>         Hint=<span class="source_string">"Use configured HUD color instead of team colors"</span>
+<a name="885"></a>         WinTop=<span class="source_int">0.481406</span>
+<a name="886"></a>         WinLeft=<span class="source_int">0.555313</span>
+<a name="887"></a>         WinWidth=<span class="source_int">0.373749</span>
+<a name="888"></a>         TabOrder=<span class="source_int">14</span>
+<a name="889"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnChange
+<a name="890"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnLoadINI
+<a name="891"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="892"></a>     ch_CustomColor=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.CustomHUDColor'</span>
+<a name="893"></a>
+<a name="894"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span> <span class="source_type">Name</span>=CustomHUDSelect
+<a name="895"></a>         bReadOnly=True
+<a name="896"></a>         Hint=<span class="source_string">"To configure settings specific to a particular gametype, select the gametype from the list, then click the button to open the menu."</span>
+<a name="897"></a>         WinTop=<span class="source_int">0.878722</span>
+<a name="898"></a>         WinLeft=<span class="source_int">0.553579</span>
+<a name="899"></a>         WinWidth=<span class="source_int">0.227863</span>
+<a name="900"></a>         WinHeight=<span class="source_int">0.030000</span>
+<a name="901"></a>         TabOrder=<span class="source_int">18</span>
+<a name="902"></a>         OnKeyEvent=CustomHUDSelect.InternalOnKeyEvent
+<a name="903"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="904"></a>     co_CustomHUD=<span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.CustomHUDSelect'</span>
+<a name="905"></a>
+<a name="906"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=CustomHUDButton
+<a name="907"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Configure"</span>
+<a name="908"></a>         Hint=<span class="source_string">"Opens the custom HUD configuration menu for the specified gametype."</span>
+<a name="909"></a>         WinTop=<span class="source_int">0.869032</span>
+<a name="910"></a>         WinLeft=<span class="source_int">0.792737</span>
+<a name="911"></a>         WinWidth=<span class="source_int">0.138577</span>
+<a name="912"></a>         WinHeight=<span class="source_int">0.050000</span>
+<a name="913"></a>         TabOrder=<span class="source_int">19</span>
+<a name="914"></a>         OnClick=<span class="source_type"><a href="../gui2k4/ut2k4tab_hudsettings.html" class="source">UT2K4Tab_HudSettings</a></span>.InternalOnClick
+<a name="915"></a>         OnKeyEvent=CustomHUDButton.InternalOnKeyEvent
+<a name="916"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="917"></a>     b_CustomHUD=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.UT2K4Tab_HudSettings.CustomHUDButton'</span>
+<a name="918"></a>
+<a name="919"></a>     DefaultBGPos=(X1=<span class="source_int">0.749335</span>,Y1=<span class="source_int">0.167488</span>,X2=<span class="source_int">0.163437</span>,Y2=<span class="source_int">0.121797</span>)
+<a name="920"></a>     DefaultHealthPos=(X1=<span class="source_int">0.748164</span>,Y1=<span class="source_int">0.169572</span>,X2=<span class="source_int">0.063241</span>,Y2=<span class="source_int">0.099531</span>)
+<a name="921"></a>     PanelCaption=<span class="source_string">"HUD"</span>
+<a name="922"></a>     WinTop=<span class="source_int">0.150000</span>
+<a name="923"></a>     WinHeight=<span class="source_int">0.740000</span>
+<a name="924"></a>}
+<a name="925"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4tab_hudsettings.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Tab_HudSettings">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4tab_guisettings.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4tab_iamaplist.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.185 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

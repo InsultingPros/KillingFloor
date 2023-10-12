@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XWebAdmin.UTServerAdminSpectator</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xwebadmin/xwebadmin-overview.html">Package</a></td>
+	<td class="header"><a href="../xwebadmin/utserveradminspectator.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UTServerAdminSpectator">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xwebadmin/utserveradmin.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xwebadmin/webskin.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xwebadmin/utserveradminspectator.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xwebadmin/xwebadmin-overview.html">XWebAdmin</a>.<a href="../xwebadmin/utserveradminspectator.html">UTServerAdminSpectator</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../xwebadmin/utserveradminspectator.html" class="source">UTServerAdminSpectator</a></span> extends <span class="source_type"><a href="../engine/messagingspectator.html" class="source">MessagingSpectator</a></span>
+<a name="2"></a>	config;
+<a name="3"></a>
+<a name="4"></a>struct <span class="source_type"><a href="../xwebadmin/utserveradminspectator.html#PlayerMessage" class="source">PlayerMessage</a></span>
+<a name="5"></a>{
+<a name="6"></a>	var <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> 	PRI;
+<a name="7"></a>	var <span class="source_type">String</span>					<span class="source_type">Text</span>;
+<a name="8"></a>	var <span class="source_type">Name</span>					<span class="source_type">Type</span>;
+<a name="9"></a>	var <span class="source_type"><a href="../xwebadmin/utserveradminspectator.html#PlayerMessage" class="source">PlayerMessage</a></span> 			Next;	<span class="source_comment">// pointer to next message
+</span><a name="10"></a>};
+<a name="11"></a>
+<a name="12"></a>var array&lt;<span class="source_type">string</span>&gt;	Messages;
+<a name="13"></a>
+<a name="14"></a>var <span class="source_type">byte</span> NextMsg, LastMsg;
+<a name="15"></a>var config <span class="source_type">byte</span> ReceivedMsgMax;
+<a name="16"></a>
+<a name="17"></a>var config <span class="source_type">bool</span> bClientMessages;
+<a name="18"></a>var config <span class="source_type">bool</span> bTeamMessages;
+<a name="19"></a>var config <span class="source_type">bool</span> bVoiceMessages;
+<a name="20"></a>var config <span class="source_type">bool</span> bLocalizedMessages;
+<a name="21"></a>var <span class="source_type"><a href="../xwebadmin/utserveradmin.html" class="source">UTServerAdmin</a></span> <span class="source_type">Server</span>;
+<a name="22"></a>
+<a name="23"></a>function <span class="source_type">bool</span> SetPause( <span class="source_type">BOOL</span> <span class="source_type">bPause</span> )
+<a name="24"></a>{
+<a name="25"></a>	log(<span class="source_string">"Webadmin spectator executing SetPause:"</span>$<span class="source_type">bPause</span>);
+<a name="26"></a>	return Super.SetPause(<span class="source_type">bPause</span>);
+<a name="27"></a>}
+<a name="28"></a>
+<a name="29"></a><span class="source_comment">/* Pause()
+<a name="30"></a>Command to try to pause the game.
+<a name="31"></a>*/</span>
+<a name="32"></a>function ServerPause()
+<a name="33"></a>{
+<a name="34"></a>	log(<span class="source_string">"Webadmin spectator executing pause command!"</span>);
+<a name="35"></a>	Super.Pause();
+<a name="36"></a>}
+<a name="37"></a>
+<a name="38"></a>event Destroyed()
+<a name="39"></a>{
+<a name="40"></a>	<span class="source_type">Server</span>.Spectator = None;
+<a name="41"></a>	Super.Destroyed();
+<a name="42"></a>}
+<a name="43"></a>
+<a name="44"></a>event PreBeginPlay()
+<a name="45"></a>{
+<a name="46"></a>	Super.PreBeginPlay();
+<a name="47"></a>	NextMsg = <span class="source_int">0</span>;
+<a name="48"></a>	LastMsg = <span class="source_int">0</span>;
+<a name="49"></a>	if (ReceivedMsgMax &lt; <span class="source_int">10</span>)
+<a name="50"></a>		ReceivedMsgMax = <span class="source_int">10</span>;
+<a name="51"></a>
+<a name="52"></a>	Messages.Length = ReceivedMsgMax;
+<a name="53"></a>}
+<a name="54"></a>
+<a name="55"></a>function <span class="source_type">int</span> LastMessage()
+<a name="56"></a>{
+<a name="57"></a>	return LastMsg;
+<a name="58"></a>}
+<a name="59"></a>
+<a name="60"></a>function <span class="source_type">string</span> NextMessage(out <span class="source_type">int</span> <span class="source_type">msg</span>)
+<a name="61"></a>{
+<a name="62"></a>local <span class="source_type">string</span> <span class="source_type">str</span>;
+<a name="63"></a>
+<a name="64"></a>	if (<span class="source_type">msg</span> == NextMsg)
+<a name="65"></a>		return <span class="source_string">""</span>;
+<a name="66"></a>
+<a name="67"></a>	<span class="source_type">str</span> = Messages[<span class="source_type">msg</span>];
+<a name="68"></a>	<span class="source_type">msg</span>++;
+<a name="69"></a>
+<a name="70"></a>	if (<span class="source_type">msg</span> &gt;= ReceivedMsgMax)
+<a name="71"></a>		<span class="source_type">msg</span> = <span class="source_int">0</span>;
+<a name="72"></a>
+<a name="73"></a>	return <span class="source_type">str</span>;
+<a name="74"></a>}
+<a name="75"></a>
+<a name="76"></a><span class="source_comment">// Implemented Rotating
+</span><a name="77"></a>function AddMessage(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI, <span class="source_type">String</span> <span class="source_type">S</span>, <span class="source_type">name</span> <span class="source_type">Type</span>)
+<a name="78"></a>{
+<a name="79"></a>	<span class="source_comment">// Add the message to the array
+</span><a name="80"></a>	Messages[NextMsg] = FormatMessage(PRI, <span class="source_type">S</span>, <span class="source_type">Type</span>);
+<a name="81"></a>	NextMsg++;
+<a name="82"></a>
+<a name="83"></a>	if (NextMsg &gt;= ReceivedMsgMax)
+<a name="84"></a>		NextMsg = <span class="source_int">0</span>;
+<a name="85"></a>
+<a name="86"></a>	if (NextMsg == LastMsg)
+<a name="87"></a>		LastMsg++;
+<a name="88"></a>
+<a name="89"></a>	if (LastMsg &gt;= ReceivedMsgMax)
+<a name="90"></a>		LastMsg = <span class="source_int">0</span>;
+<a name="91"></a>}
+<a name="92"></a>
+<a name="93"></a>function Dump()
+<a name="94"></a>{
+<a name="95"></a>	Log(<span class="source_string">"----Begin Dump----"</span>);
+<a name="96"></a>	if (<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> == None)
+<a name="97"></a>		Log(<span class="source_string">"NO PLAYER REPLICATION INFO"</span>);
+<a name="98"></a>	if (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None)
+<a name="99"></a>		Log(<span class="source_string">"NO PAWN"</span>);
+<a name="100"></a>	Log(<span class="source_string">"NextMsg:"</span>@NextMsg);
+<a name="101"></a>	Log(<span class="source_string">"LastMsg:"</span>@LastMsg);
+<a name="102"></a>	Log(<span class="source_string">"ReceivedMsgMax:"</span>@ReceivedMsgMax);
+<a name="103"></a>	Log(<span class="source_string">"Msg[0]"</span>@Messages[<span class="source_int">0</span>]);
+<a name="104"></a>	Log(<span class="source_string">"Msg[1]"</span>@Messages[<span class="source_int">1</span>]);
+<a name="105"></a>	Log(<span class="source_string">"Msg[2]"</span>@Messages[<span class="source_int">2</span>]);
+<a name="106"></a>	Log(<span class="source_string">"Msg[3]"</span>@Messages[<span class="source_int">3</span>]);
+<a name="107"></a>	Log(<span class="source_string">"Msg[4]"</span>@Messages[<span class="source_int">4</span>]);
+<a name="108"></a>	Log(<span class="source_string">"Msg[5]"</span>@Messages[<span class="source_int">5</span>]);
+<a name="109"></a>}
+<a name="110"></a>
+<a name="111"></a>function <span class="source_type">String</span> FormatMessage(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI, <span class="source_type">String</span> <span class="source_type">Text</span>, <span class="source_type">name</span> <span class="source_type">Type</span>)
+<a name="112"></a>{
+<a name="113"></a>	local <span class="source_type">String</span> Message;
+<a name="114"></a>
+<a name="115"></a>	<span class="source_comment">// format Say and TeamSay messages
+</span><a name="116"></a>	if (PRI != None) {
+<a name="117"></a>		if (<span class="source_type">Type</span> == <span class="source_name">'Say'</span> && PRI == <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>)
+<a name="118"></a>			Message = <span class="source_type">Text</span>;
+<a name="119"></a>		else if (<span class="source_type">Type</span> == <span class="source_name">'Say'</span>)
+<a name="120"></a>			Message = PRI.<span class="source_type">PlayerName</span>$<span class="source_string">": "</span>$<span class="source_type">Text</span>;
+<a name="121"></a>		else if (<span class="source_type">Type</span> == <span class="source_name">'TeamSay'</span>)
+<a name="122"></a>			Message = <span class="source_string">"["</span>$PRI.<span class="source_type">PlayerName</span>$<span class="source_string">"]: "</span>$<span class="source_type">Text</span>;
+<a name="123"></a>		else
+<a name="124"></a>			Message = <span class="source_string">"("</span>$<span class="source_type">Type</span>$<span class="source_string">") "</span>$<span class="source_type">Text</span>;
+<a name="125"></a>	}
+<a name="126"></a>	else if (<span class="source_type">Type</span> == <span class="source_name">'Console'</span>)
+<a name="127"></a>		Message = <span class="source_string">"WebAdmin:"</span>@<span class="source_type">Text</span>;
+<a name="128"></a>	else
+<a name="129"></a>		Message = <span class="source_string">"("</span>$<span class="source_type">Type</span>$<span class="source_string">") "</span>$<span class="source_type">Text</span>;
+<a name="130"></a>
+<a name="131"></a>	return Message;
+<a name="132"></a>}
+<a name="133"></a>
+<a name="134"></a>event ClientMessage( coerce <span class="source_type">string</span> <span class="source_type">S</span>, optional <span class="source_type">Name</span> <span class="source_type">Type</span> )
+<a name="135"></a>{
+<a name="136"></a>	<span class="source_comment">//Log("Admin Received a ClientMessage");
+</span><a name="137"></a>	if (bClientMessages)
+<a name="138"></a>		AddMessage(None, <span class="source_type">S</span>, <span class="source_type">Type</span>);
+<a name="139"></a>}
+<a name="140"></a>
+<a name="141"></a>function TeamMessage( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI, coerce <span class="source_type">string</span> <span class="source_type">S</span>, <span class="source_type">name</span> <span class="source_type">Type</span>)
+<a name="142"></a>{
+<a name="143"></a>	<span class="source_comment">//Log("Admin Received a TeamMessage");
+</span><a name="144"></a>	if (bTeamMessages)
+<a name="145"></a>		AddMessage(PRI, <span class="source_type">S</span>, <span class="source_type">Type</span>);
+<a name="146"></a>}
+<a name="147"></a>
+<a name="148"></a><span class="source_comment">// if _RO_
+</span><a name="149"></a>function ClientVoiceMessage(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">Sender</span>, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">Recipient</span>, <span class="source_type">name</span> messagetype, <span class="source_type">byte</span> messageID, optional <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> soundSender, optional <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> senderLocation)
+<a name="150"></a><span class="source_comment">// else
+</span><a name="151"></a><span class="source_comment">// function ClientVoiceMessage(PlayerReplicationInfo Sender, PlayerReplicationInfo Recipient, name messagetype, byte messageID)
+</span><a name="152"></a><span class="source_comment">// end if _RO_
+</span><a name="153"></a>{
+<a name="154"></a>	<span class="source_comment">//Log("Admin Received a ClientVoiceMessage");
+</span><a name="155"></a>	<span class="source_comment">// do nothing?
+</span><a name="156"></a>}
+<a name="157"></a>
+<a name="158"></a>function ReceiveLocalizedMessage( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/localmessage.html" class="source">LocalMessage</a></span>&gt; Message, optional <span class="source_type">int</span> <span class="source_type">Switch</span>, optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_1</span>, optional <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">RelatedPRI_2</span>, optional <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">OptionalObject</span> )
+<a name="159"></a>{
+<a name="160"></a>	<span class="source_comment">//Log("Admin Received a LocalizedMessage");
+</span><a name="161"></a>	<span class="source_comment">// do nothing?
+</span><a name="162"></a>}
+<a name="163"></a>
+<a name="164"></a><span class="source_comment">// A couple of functions that should not do anything
+</span><a name="165"></a>function ClientGameEnded() {}
+<a name="166"></a>
+<a name="167"></a><span class="source_comment">// Report end game in log
+</span><a name="168"></a>function GameHasEnded()
+<a name="169"></a>{
+<a name="170"></a>	AddMessage(None, <span class="source_string">"GAME HAS ENDED"</span>, <span class="source_name">'Console'</span>);
+<a name="171"></a>}
+<a name="172"></a>
+<a name="173"></a>exec function DumpMaplists( <span class="source_type">string</span> <span class="source_type">GameType</span> )
+<a name="174"></a>{
+<a name="175"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="176"></a>	local <span class="source_type">int</span> GameIndex;
+<a name="177"></a>	local <span class="source_type"><a href="../xwebadmin/stringarray.html" class="source">StringArray</a></span> ExcludeMaps, IncludeMaps;
+<a name="178"></a>
+<a name="179"></a>	if ( <span class="source_type">GameType</span> == <span class="source_string">""</span> )
+<a name="180"></a>		<span class="source_type">GameType</span> = <span class="source_type">string</span>(<span class="source_type">Level</span>.Game.<span class="source_type">Class</span>);
+<a name="181"></a>
+<a name="182"></a>	GameIndex = <span class="source_type">Level</span>.Game.MaplistHandler.GetGameIndex(<span class="source_type">GameType</span>);
+<a name="183"></a>	ExcludeMaps = <span class="source_type">Server</span>.ReloadExcludeMaps(<span class="source_type">GameType</span>);
+<a name="184"></a>	IncludeMaps = <span class="source_type">Server</span>.ReloadIncludeMaps(ExcludeMaps, GameIndex, <span class="source_type">Level</span>.Game.MaplistHandler.GetActiveList(GameIndex));
+<a name="185"></a>
+<a name="186"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ExcludeMaps.Count(); <span class="source_type">i</span>++ )
+<a name="187"></a>	{
+<a name="188"></a>		log(<span class="source_string">"  ExcludeMaps["</span>$<span class="source_type">i</span>$<span class="source_string">"]:  Item '"</span>$ExcludeMaps.GetItem(<span class="source_type">i</span>)$<span class="source_string">"' Tag '"</span>$ExcludeMaps.GetTag(<span class="source_type">i</span>)$<span class="source_string">"'"</span>);
+<a name="189"></a>	}
+<a name="190"></a>
+<a name="191"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; IncludeMaps.Count(); <span class="source_type">i</span>++ )
+<a name="192"></a>	{
+<a name="193"></a>		log(<span class="source_string">"  IncludeMaps["</span>$<span class="source_type">i</span>$<span class="source_string">"]:  Item '"</span>$IncludeMaps.GetItem(<span class="source_type">i</span>)$<span class="source_string">"' Tag '"</span>$IncludeMaps.GetTag(<span class="source_type">i</span>)$<span class="source_string">"'"</span>);
+<a name="194"></a>	}
+<a name="195"></a>}
+<a name="196"></a>
+<a name="197"></a>defaultproperties
+<a name="198"></a>{
+<a name="199"></a>     ReceivedMsgMax=<span class="source_int">32</span>
+<a name="200"></a>     bClientMessages=True
+<a name="201"></a>     bTeamMessages=True
+<a name="202"></a>     bLocalizedMessages=True
+<a name="203"></a>}
+<a name="204"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xwebadmin/xwebadmin-overview.html">Package</a></td>
+	<td class="header"><a href="../xwebadmin/utserveradminspectator.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UTServerAdminSpectator">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xwebadmin/utserveradmin.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xwebadmin/webskin.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:10.397 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

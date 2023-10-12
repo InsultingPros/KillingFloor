@@ -1,0 +1,1323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: ROEngine.ROTreadCraft</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roengine/roengine-overview.html">Package</a></td>
+	<td class="header"><a href="../roengine/rotreadcraft.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROTreadCraft">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_roengine/rotouchmessageplus.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_roengine/rovehicle.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_roengine/rotreadcraft.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/rotreadcraft.html">ROTreadCraft</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022<br />01023<br />01024<br />01025<br />01026<br />01027<br />01028<br />01029<br />01030<br />01031<br />01032<br />01033<br />01034<br />01035<br />01036<br />01037<br />01038<br />01039<br />01040<br />
+01041<br />01042<br />01043<br />01044<br />01045<br />01046<br />01047<br />01048<br />01049<br />01050<br />01051<br />01052<br />01053<br />01054<br />01055<br />01056<br />01057<br />01058<br />01059<br />01060<br />
+01061<br />01062<br />01063<br />01064<br />01065<br />01066<br />01067<br />01068<br />01069<br />01070<br />01071<br />01072<br />01073<br />01074<br />01075<br />01076<br />01077<br />01078<br />01079<br />01080<br />
+01081<br />01082<br />01083<br />01084<br />01085<br />01086<br />01087<br />01088<br />01089<br />01090<br />01091<br />01092<br />01093<br />01094<br />01095<br />01096<br />01097<br />01098<br />01099<br />01100<br />
+01101<br />01102<br />01103<br />01104<br />01105<br />01106<br />01107<br />01108<br />01109<br />01110<br />01111<br />01112<br />01113<br />01114<br />01115<br />01116<br />01117<br />01118<br />01119<br />01120<br />
+01121<br />01122<br />01123<br />01124<br />01125<br />01126<br />01127<br />01128<br />01129<br />01130<br />01131<br />01132<br />01133<br />01134<br />01135<br />01136<br />01137<br />01138<br />01139<br />01140<br />
+01141<br />01142<br />01143<br />01144<br />01145<br />01146<br />01147<br />01148<br />01149<br />01150<br />01151<br />01152<br />01153<br />01154<br />01155<br />01156<br />01157<br />01158<br />01159<br />01160<br />
+01161<br />01162<br />01163<br />01164<br />01165<br />01166<br />01167<br />01168<br />01169<br />01170<br />01171<br />01172<br />01173<br />01174<br />01175<br />01176<br />01177<br />01178<br />01179<br />01180<br />
+01181<br />01182<br />01183<br />01184<br />01185<br />01186<br />01187<br />01188<br />01189<br />01190<br />01191<br />01192<br />01193<br />01194<br />01195<br />01196<br />01197<br />01198<br />01199<br />01200<br />
+01201<br />01202<br />01203<br />01204<br />01205</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//===================================================================
+</span><a name="2"></a><span class="source_comment">// ROTreadCraft
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">// Copyright (C) 2004 John "Ramm-Jaeger"  Gibson
+</span><a name="5"></a><span class="source_comment">//
+</span><a name="6"></a><span class="source_comment">// Base Class for all Red Orchestra tread driven vehicles
+</span><a name="7"></a><span class="source_comment">//===================================================================
+</span><a name="8"></a><span class="source_type">Class</span> <span class="source_type"><a href="../roengine/rotreadcraft.html" class="source">ROTreadCraft</a></span> extends <span class="source_type"><a href="../roengine/rowheeledvehicle.html" class="source">ROWheeledVehicle</a></span>
+<a name="9"></a>	abstract;
+<a name="10"></a>
+<a name="11"></a><span class="source_comment">//=============================================================================
+</span><a name="12"></a><span class="source_comment">// Variables
+</span><a name="13"></a><span class="source_comment">//=============================================================================
+</span><a name="14"></a>
+<a name="15"></a>var()   <span class="source_type">float</span>                 MaxPitchSpeed;
+<a name="16"></a>var     <span class="source_type"><a href="../engine/variabletexpanner.html" class="source">VariableTexPanner</a></span>     LeftTreadPanner, RightTreadPanner;
+<a name="17"></a>var()   <span class="source_type">float</span>                 TreadVelocityScale;
+<a name="18"></a>
+<a name="19"></a><span class="source_comment">// sound attachment actor variables
+</span><a name="20"></a><span class="source_comment">//var()   sound               EngineSound;
+</span><a name="21"></a>var()   	<span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>               LeftTreadSound;    <span class="source_comment">// Sound for the left tread squeaking
+</span><a name="22"></a>var()   	<span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>               RightTreadSound;   <span class="source_comment">// Sound for the right tread squeaking
+</span><a name="23"></a>var()   	<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>               RumbleSound;       <span class="source_comment">// Interior rumble sound
+</span><a name="24"></a>var     	<span class="source_type">bool</span>                bPlayTreadSound;
+<a name="25"></a>var     	<span class="source_type">float</span>               TreadSoundVolume;
+<a name="26"></a><span class="source_comment">//var     ROSoundAttachment   EngineSoundAttach;
+</span><a name="27"></a>var     	<span class="source_type"><a href="../roengine/rosoundattachment.html" class="source">ROSoundAttachment</a></span>   LeftTreadSoundAttach;
+<a name="28"></a>var     	<span class="source_type"><a href="../roengine/rosoundattachment.html" class="source">ROSoundAttachment</a></span>   RightTreadSoundAttach;
+<a name="29"></a>var     	<span class="source_type"><a href="../roengine/rosoundattachment.html" class="source">ROSoundAttachment</a></span>   InteriorRumbleSoundAttach;
+<a name="30"></a>var     	<span class="source_type">float</span>               MotionSoundVolume;
+<a name="31"></a>var()   	<span class="source_type">name</span>                LeftTrackSoundBone;
+<a name="32"></a>var()   	<span class="source_type">name</span>                RightTrackSoundBone;
+<a name="33"></a>var()   	<span class="source_type">name</span>                RumbleSoundBone;
+<a name="34"></a>var()   	<span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span>               TrackDamagedSound; <span class="source_comment">// sound to play when the track is damaged
+</span><a name="35"></a>
+<a name="36"></a><span class="source_comment">// Tank hud vars
+</span><a name="37"></a>var     	<span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>        CannonTurret;        <span class="source_comment">// A pointer to this tank's turret weapon
+</span><a name="38"></a>var     	<span class="source_type"><a href="../roengine/vehicleweapon.html" class="source">VehicleWeapon</a></span>       HullMG;              <span class="source_comment">// A pointer to this tank's hull mg weapon
+</span><a name="39"></a>var     	<span class="source_type"><a href="../engine/texrotator.html" class="source">TexRotator</a></span>          TurretRot;
+<a name="40"></a>
+<a name="41"></a><span class="source_comment">// Tank hud icons
+</span><a name="42"></a>var         <span class="source_type"><a href="../engine/texrotator.html" class="source">TexRotator</a></span>          VehicleHudTurret;
+<a name="43"></a>var         <span class="source_type"><a href="../engine/texrotator.html" class="source">TexRotator</a></span>          VehicleHudTurretLook;
+<a name="44"></a>var         <span class="source_type">float</span>               VehicleHudThreadsPosX[<span class="source_int">2</span>]; <span class="source_comment">// 0 = left thread, 1 = right thread
+</span><a name="45"></a>var         <span class="source_type">float</span>               VehicleHudThreadsPosY; <span class="source_comment">// both threads always draw at same Y pos
+</span><a name="46"></a>var         <span class="source_type">float</span>               VehicleHudThreadsScale; <span class="source_comment">// both threads always draw with same scale
+</span><a name="47"></a>
+<a name="48"></a>
+<a name="49"></a>var			<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>			TankIcon;
+<a name="50"></a>var			<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>			RedDot;
+<a name="51"></a>var			<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>			GrayDot;
+<a name="52"></a>var			<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>			TreadIcon;
+<a name="53"></a>var()   	<span class="source_type">float</span>               DriverDotX;
+<a name="54"></a>var()   	<span class="source_type">float</span>               DriverDotY;
+<a name="55"></a>var()   	<span class="source_type">float</span>               CannonDotX;
+<a name="56"></a>var()   	<span class="source_type">float</span>               CannonDotY;
+<a name="57"></a>var()   	<span class="source_type">float</span>               HullMGDotX;
+<a name="58"></a>var()   	<span class="source_type">float</span>               HullMGDotY;
+<a name="59"></a>var()   	<span class="source_type">float</span>               LeftTreadX;
+<a name="60"></a>var()   	<span class="source_type">float</span>               LeftTreadY;
+<a name="61"></a>var()   	<span class="source_type">float</span>               RightTreadX;
+<a name="62"></a>var()   	<span class="source_type">float</span>               RightTreadY;
+<a name="63"></a>
+<a name="64"></a><span class="source_comment">// Vehicle animation variables
+</span><a name="65"></a>var     <span class="source_type">name</span>                  IdleHatchOpenAnim;
+<a name="66"></a>var     <span class="source_type">name</span>                  IdleHatchClosedAnim;
+<a name="67"></a>var     <span class="source_type">name</span>                  HatchOpenAnim;
+<a name="68"></a>var     <span class="source_type">name</span>                  HatchCloseAnim;
+<a name="69"></a>
+<a name="70"></a>var()	<span class="source_type"><a href="../core/object.html#InterpCurve" class="source">InterpCurve</a></span>		AddedLatFriction;
+<a name="71"></a>
+<a name="72"></a><span class="source_comment">// Wheel animation
+</span><a name="73"></a>var() 	array&lt;<span class="source_type">name</span>&gt;		LeftWheelBones; 	<span class="source_comment">// for animation only - the bone names for the wheels on the left side
+</span><a name="74"></a>var() 	array&lt;<span class="source_type">name</span>&gt;		RightWheelBones; 	<span class="source_comment">// for animation only - the bone names for the wheels on the right side
+</span><a name="75"></a>
+<a name="76"></a>var 		<span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> 			LeftWheelRot;       <span class="source_comment">// Keep track of the left wheels rotational speed for animation
+</span><a name="77"></a>var 		<span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> 			RightWheelRot;      <span class="source_comment">// Keep track of the right wheels rotational speed for animation
+</span><a name="78"></a>var()		<span class="source_type">int</span>					WheelRotationScale;
+<a name="79"></a><span class="source_comment">// Armor values
+</span><a name="80"></a>var		<span class="source_type">int</span>			FrontArmorFactor;
+<a name="81"></a>var		<span class="source_type">int</span>			RearArmorFactor;
+<a name="82"></a>var		<span class="source_type">int</span>			SideArmorFactor;
+<a name="83"></a>var     <span class="source_type">bool</span>        bHasAddedSideArmor; <span class="source_comment">// This tank has special added side armor skirts (Schurzen)
+</span><a name="84"></a>
+<a name="85"></a>var 	<span class="source_type">float</span>		TreadHitMinAngle;	<span class="source_comment">// Any hits bigger than this angle are considered tread hits
+</span><a name="86"></a>var     <span class="source_type">bool</span>		bLeftTrackDamaged;  <span class="source_comment">// The left track has been damaged
+</span><a name="87"></a>var     <span class="source_type">bool</span>		bRightTrackDamaged; <span class="source_comment">// The left track has been damaged
+</span><a name="88"></a>var		<span class="source_type">float</span>		IntendedThrottle;	<span class="source_comment">// Revving the engine up when you can't move
+</span><a name="89"></a>var 	<span class="source_type">bool</span>		bWantsToThrottle;	<span class="source_comment">// Trying to throttle, but can't move
+</span><a name="90"></a>
+<a name="91"></a>var <span class="source_type">float</span> LinTurnSpeed;
+<a name="92"></a>
+<a name="93"></a>var <span class="source_type">bool</span>  bDebugPenetration;            <span class="source_comment">// Display penetration debugging info
+</span><a name="94"></a>var() <span class="source_type">float</span> FrontLeftAngle, FrontRightAngle, RearRightAngle, RearLeftAngle; <span class="source_comment">// Used by the hit detection system to determin which side the tank was hit on
+</span><a name="95"></a><span class="source_comment">//=============================================================================
+</span><a name="96"></a><span class="source_comment">// replication
+</span><a name="97"></a><span class="source_comment">//=============================================================================
+</span><a name="98"></a>
+<a name="99"></a>replication
+<a name="100"></a>{
+<a name="101"></a>	reliable if( bNetDirty && Role==ROLE_Authority && bDisableThrottle )
+<a name="102"></a>        	bWantsToThrottle;<span class="source_comment">//IntendedThrottle;
+</span><a name="103"></a>
+<a name="104"></a>	reliable if( bNetDirty && Role==ROLE_Authority <span class="source_comment">/*&& bDisableThrottle*/</span> )
+<a name="105"></a>        	bRightTrackDamaged, bLeftTrackDamaged;
+<a name="106"></a>}
+<a name="107"></a>
+<a name="108"></a><span class="source_comment">// Temp code to get the bots using tanks better
+</span><a name="109"></a><span class="source_comment">//function float BotDesireability(Actor S, int TeamIndex, Actor Objective)
+</span><a name="110"></a><span class="source_comment">//{
+</span><a name="111"></a><span class="source_comment">//	local Bot B;
+</span><a name="112"></a><span class="source_comment">//	local SquadAI Squad;
+</span><a name="113"></a><span class="source_comment">//	local int Num;
+</span><a name="114"></a><span class="source_comment">//
+</span><a name="115"></a><span class="source_comment">//	//if ( Level.Game.JustStarted(20) && !Level.Game.IsA('ASGameInfo') )
+</span><a name="116"></a><span class="source_comment">//	//	return Super.BotDesireability(S, TeamIndex, Objective);
+</span><a name="117"></a><span class="source_comment">//
+</span><a name="118"></a><span class="source_comment">//	Squad = SquadAI(S);
+</span><a name="119"></a><span class="source_comment">//
+</span><a name="120"></a><span class="source_comment">//	if (Squad.Size == 1)
+</span><a name="121"></a><span class="source_comment">//	{
+</span><a name="122"></a><span class="source_comment">//		//if ( (Squad.Team != None) && (Squad.Team.Size == 1) && Level.Game.IsA('ASGameInfo') )
+</span><a name="123"></a><span class="source_comment">//		//	return Super.BotDesireability(S, TeamIndex, Objective);
+</span><a name="124"></a><span class="source_comment">//		return 0;
+</span><a name="125"></a><span class="source_comment">//	}
+</span><a name="126"></a><span class="source_comment">//
+</span><a name="127"></a><span class="source_comment">//	for (B = Squad.SquadMembers; B != None; B = B.NextSquadMember)
+</span><a name="128"></a><span class="source_comment">//		if (Vehicle(B.Pawn) == None && (B.RouteGoal == self || B.Pawn == None || VSize(B.Pawn.Location - Location) &lt; Squad.MaxVehicleDist(B.Pawn)))
+</span><a name="129"></a><span class="source_comment">//			Num++;
+</span><a name="130"></a><span class="source_comment">//
+</span><a name="131"></a><span class="source_comment">//	if ( Num &lt; 2 )
+</span><a name="132"></a><span class="source_comment">//		return 0;
+</span><a name="133"></a><span class="source_comment">//
+</span><a name="134"></a>	<span class="source_comment">//	return Super.BotDesireability(S, TeamIndex, Objective);
+</span><a name="135"></a><span class="source_comment">//}
+</span><a name="136"></a>
+<a name="137"></a><span class="source_comment">// Temp code to get the bots using tanks better
+</span><a name="138"></a>function <span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span> FindEntryVehicle(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">P</span>)
+<a name="139"></a>{
+<a name="140"></a>	local <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>;
+<a name="141"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="142"></a>
+<a name="143"></a>	<span class="source_comment">//if ( Level.Game.JustStarted(20) )
+</span><a name="144"></a>	<span class="source_comment">//	return Super.FindEntryVehicle(P);
+</span><a name="145"></a>
+<a name="146"></a>	<span class="source_type">B</span> = <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type">P</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="147"></a>	if (<span class="source_type">B</span> == None || WeaponPawns.length == <span class="source_int">0</span> || !IsVehicleEmpty()  <span class="source_comment">/*||((B.PlayerReplicationInfo.Team != None) && (B.PlayerReplicationInfo.Team.Size == 1) && Level.Game.IsA('ASGameInfo'))*/</span> )
+<a name="148"></a>		return Super.FindEntryVehicle(<span class="source_type">P</span>);
+<a name="149"></a>
+<a name="150"></a>	for (<span class="source_type">i</span> = WeaponPawns.length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>--)
+<a name="151"></a>		if (WeaponPawns[<span class="source_type">i</span>].Driver == None)
+<a name="152"></a>			return WeaponPawns[<span class="source_type">i</span>];
+<a name="153"></a>
+<a name="154"></a>	return Super.FindEntryVehicle(<span class="source_type">P</span>);
+<a name="155"></a>}
+<a name="156"></a>
+<a name="157"></a>simulated function <span class="source_type">bool</span> HitPenetrationPoint(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> HitRay)
+<a name="158"></a>{
+<a name="159"></a>	local <span class="source_type">bool</span> bHitAPoint;
+<a name="160"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="161"></a>
+<a name="162"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;VehHitpoints.Length; <span class="source_type">i</span>++)
+<a name="163"></a>	{
+<a name="164"></a>		if ( VehHitpoints[<span class="source_type">i</span>].bPenetrationPoint && IsPointShot(<span class="source_type">Hitlocation</span>,<span class="source_int">300</span> * HitRay, <span class="source_int">1.0</span>, <span class="source_type">i</span>) )
+<a name="165"></a>		{
+<a name="166"></a>			if( VehHitpoints[<span class="source_type">i</span>].HitPointType == HP_Driver )
+<a name="167"></a>			{
+<a name="168"></a>			    if ( Driver != none && !DriverPositions[DriverPositionIndex].bExposed )
+<a name="169"></a>	  			continue;
+<a name="170"></a>			}
+<a name="171"></a>
+<a name="172"></a>			bHitAPoint = true;
+<a name="173"></a>			break;
+<a name="174"></a>		}
+<a name="175"></a>	}
+<a name="176"></a>
+<a name="177"></a>	if (bHitAPoint)
+<a name="178"></a>		return true;
+<a name="179"></a>	else
+<a name="180"></a>	 	return false;
+<a name="181"></a>}
+<a name="182"></a>
+<a name="183"></a><span class="source_comment">// Returns true if this tank is disabled
+</span><a name="184"></a>simulated function <span class="source_type">bool</span> IsDisabled()
+<a name="185"></a>{
+<a name="186"></a>	return ((EngineHealth &lt;= <span class="source_int">0</span>) || bLeftTrackDamaged || bRightTrackDamaged);
+<a name="187"></a>}
+<a name="188"></a>
+<a name="189"></a><span class="source_comment">//=============================================================================
+</span><a name="190"></a><span class="source_comment">// Functions
+</span><a name="191"></a><span class="source_comment">//=============================================================================
+</span><a name="192"></a>
+<a name="193"></a>simulated function PostBeginPlay()
+<a name="194"></a>{
+<a name="195"></a>    super.PostBeginPlay();
+<a name="196"></a>
+<a name="197"></a><span class="source_comment">//	if( Level.NetMode != NM_Client && ROTeamGame(Level.Game).LevelInfo != none )
+</span><a name="198"></a><span class="source_comment">//	{
+</span><a name="199"></a><span class="source_comment">//		if( GetTeamNum() == 0 && ROTeamGame(Level.Game).LevelInfo.DefendingSide == SIDE_Axis )
+</span><a name="200"></a><span class="source_comment">//		{
+</span><a name="201"></a><span class="source_comment">//			if( FRand() &gt; 0.5 )
+</span><a name="202"></a><span class="source_comment">//			{
+</span><a name="203"></a><span class="source_comment">//				bDefensive = true;
+</span><a name="204"></a><span class="source_comment">//			}
+</span><a name="205"></a><span class="source_comment">//		}
+</span><a name="206"></a><span class="source_comment">//		else if( GetTeamNum() == 1 && ROTeamGame(Level.Game).LevelInfo.DefendingSide == SIDE_Allies )
+</span><a name="207"></a><span class="source_comment">//		{
+</span><a name="208"></a><span class="source_comment">//			if( FRand() &gt; 0.5 )
+</span><a name="209"></a><span class="source_comment">//			{
+</span><a name="210"></a><span class="source_comment">//				bDefensive = true;
+</span><a name="211"></a><span class="source_comment">//			}
+</span><a name="212"></a><span class="source_comment">//		}
+</span><a name="213"></a><span class="source_comment">//	}
+</span><a name="214"></a>
+<a name="215"></a>
+<a name="216"></a>	if ( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer )
+<a name="217"></a>	{
+<a name="218"></a>		SetupTreads();
+<a name="219"></a>
+<a name="220"></a>
+<a name="221"></a> <span class="source_comment">/*  	//add this back in if we add engine sound attachment points
+<a name="222"></a>        EngineSoundAttach = Spawn(class 'ROSoundAttachment');
+<a name="223"></a>        EngineSoundAttach.AmbientSound = IdleSound;
+<a name="224"></a>        //EngineSoundAttach.SoundVolume = default.SoundVolume;
+<a name="225"></a>        AttachToBone(LeftTreadSoundAttach, 'T34_Body');*/</span>
+<a name="226"></a>
+<a name="227"></a>        if (  LeftTreadSoundAttach == none )
+<a name="228"></a>        {
+<a name="229"></a>   	         LeftTreadSoundAttach = Spawn(<span class="source_type">class</span> <span class="source_name">'ROSoundAttachment'</span>);
+<a name="230"></a>             LeftTreadSoundAttach.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = LeftTreadSound;
+<a name="231"></a>             AttachToBone(LeftTreadSoundAttach, LeftTrackSoundBone);
+<a name="232"></a>        }
+<a name="233"></a>
+<a name="234"></a>        if (  RightTreadSoundAttach == none )
+<a name="235"></a>        {
+<a name="236"></a>             RightTreadSoundAttach = Spawn(<span class="source_type">class</span> <span class="source_name">'ROSoundAttachment'</span>);
+<a name="237"></a>             RightTreadSoundAttach.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = RightTreadSound;
+<a name="238"></a>             AttachToBone(RightTreadSoundAttach, RightTrackSoundBone );
+<a name="239"></a>        }
+<a name="240"></a>
+<a name="241"></a>        if (  InteriorRumbleSoundAttach == none )
+<a name="242"></a>        {
+<a name="243"></a>             InteriorRumbleSoundAttach = Spawn(<span class="source_type">class</span> <span class="source_name">'ROSoundAttachment'</span>);
+<a name="244"></a>             InteriorRumbleSoundAttach.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = RumbleSound;
+<a name="245"></a>             AttachToBone(InteriorRumbleSoundAttach, RumbleSoundBone );
+<a name="246"></a>        }
+<a name="247"></a>	}
+<a name="248"></a>}
+<a name="249"></a>
+<a name="250"></a>simulated function PostNetBeginPlay()
+<a name="251"></a>{
+<a name="252"></a>    local <span class="source_type">int</span> <span class="source_type">x</span>;
+<a name="253"></a>    super.PostNetBeginPlay();
+<a name="254"></a>
+<a name="255"></a>    for (<span class="source_type">x</span> = <span class="source_int">0</span>; <span class="source_type">x</span> &lt; Weapons.length; <span class="source_type">x</span>++)
+<a name="256"></a>    {
+<a name="257"></a>        if( <span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>(Weapons[<span class="source_type">x</span>]) != none )
+<a name="258"></a>        {
+<a name="259"></a>           CannonTurret= <span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>(Weapons[<span class="source_type">x</span>]);
+<a name="260"></a>           break;
+<a name="261"></a>        }
+<a name="262"></a>    }
+<a name="263"></a>}
+<a name="264"></a>
+<a name="265"></a>simulated function UpdatePrecacheMaterials()
+<a name="266"></a>{
+<a name="267"></a><span class="source_comment">/*    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.sparkfinal2');
+<a name="268"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.explosions.radialexplosion_1frame');
+<a name="269"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.Weapons.muzzle_4frame3rd');
+<a name="270"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.explosions.shrapnel1');
+<a name="271"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.concrete_chunks');
+<a name="272"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.snowfinal2');
+<a name="273"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.snowchunksfinal');
+<a name="274"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.waterring_2frame');
+<a name="275"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.watersplashcloud');
+<a name="276"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.watersplatter2');
+<a name="277"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.watersmoke');
+<a name="278"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.woodchunksfinal');
+<a name="279"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_dirt');
+<a name="280"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_snow');
+<a name="281"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.glowfinal');
+<a name="282"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.dirtchunks');
+<a name="283"></a>
+<a name="284"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_snow');
+<a name="285"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_snow');
+<a name="286"></a>    Level.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_snow');
+<a name="287"></a>*/</span>
+<a name="288"></a>	Super.UpdatePrecacheMaterials();
+<a name="289"></a>}
+<a name="290"></a>
+<a name="291"></a>static function StaticPrecache(<span class="source_type"><a href="../engine/levelinfo.html" class="source">LevelInfo</a></span> L)
+<a name="292"></a>{
+<a name="293"></a>	Super.StaticPrecache(L);
+<a name="294"></a><span class="source_comment">/*
+<a name="295"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.sparkfinal2');
+<a name="296"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.explosions.radialexplosion_1frame');
+<a name="297"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.Weapons.muzzle_4frame3rd');
+<a name="298"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.explosions.shrapnel1');
+<a name="299"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.concrete_chunks');
+<a name="300"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.snowfinal2');
+<a name="301"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.snowchunksfinal');
+<a name="302"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.waterring_2frame');
+<a name="303"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.watersplashcloud');
+<a name="304"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.watersplatter2');
+<a name="305"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.watersmoke');
+<a name="306"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.woodchunksfinal');
+<a name="307"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_dirt');
+<a name="308"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_snow');
+<a name="309"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.glowfinal');
+<a name="310"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.BulletHits.dirtchunks');
+<a name="311"></a>
+<a name="312"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_snow');
+<a name="313"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_snow');
+<a name="314"></a>    L.AddPrecacheMaterial(Material'Effects_Tex.explosions.aptankmark_snow');
+<a name="315"></a>*/</span>
+<a name="316"></a>}
+<a name="317"></a>
+<a name="318"></a><span class="source_comment">// DriverLeft() called by KDriverLeave()
+</span><a name="319"></a>function DriverLeft()
+<a name="320"></a>{
+<a name="321"></a> <span class="source_comment">/*   if ( EngineSoundAttach != None )
+<a name="322"></a>        EngineSoundAttach.SoundVolume = 0;
+<a name="323"></a> */</span>
+<a name="324"></a>    <span class="source_comment">// Not moving, so no motion sound
+</span><a name="325"></a>    MotionSoundVolume=<span class="source_int">0.0</span>;
+<a name="326"></a>    UpdateMovementSound();
+<a name="327"></a>
+<a name="328"></a>    Super.DriverLeft();
+<a name="329"></a>}
+<a name="330"></a>
+<a name="331"></a>simulated event DrivingStatusChanged()
+<a name="332"></a>{
+<a name="333"></a>    Super.DrivingStatusChanged();
+<a name="334"></a>
+<a name="335"></a>    if (!bDriving)
+<a name="336"></a>    {
+<a name="337"></a>        if ( LeftTreadPanner != None )
+<a name="338"></a>            LeftTreadPanner.PanRate = <span class="source_int">0.0</span>;
+<a name="339"></a>
+<a name="340"></a>        if ( RightTreadPanner != None )
+<a name="341"></a>            RightTreadPanner.PanRate = <span class="source_int">0.0</span>;
+<a name="342"></a>
+<a name="343"></a>        <span class="source_comment">// Not moving, so no motion sound
+</span><a name="344"></a>        MotionSoundVolume=<span class="source_int">0.0</span>;
+<a name="345"></a>        UpdateMovementSound();
+<a name="346"></a>    }
+<a name="347"></a>}
+<a name="348"></a>
+<a name="349"></a>simulated function UpdateMovementSound()
+<a name="350"></a>{
+<a name="351"></a>    if (  LeftTreadSoundAttach != none && !bLeftTrackDamaged)
+<a name="352"></a>    {
+<a name="353"></a>       LeftTreadSoundAttach.SoundVolume= MotionSoundVolume * <span class="source_int">0.75</span>;
+<a name="354"></a>    }
+<a name="355"></a>
+<a name="356"></a>    if (  RightTreadSoundAttach != none && !bRightTrackDamaged)
+<a name="357"></a>    {
+<a name="358"></a>       RightTreadSoundAttach.SoundVolume= MotionSoundVolume * <span class="source_int">0.75</span>;
+<a name="359"></a>    }
+<a name="360"></a>
+<a name="361"></a>    if (  InteriorRumbleSoundAttach != none)
+<a name="362"></a>    {
+<a name="363"></a>       InteriorRumbleSoundAttach.SoundVolume= MotionSoundVolume;
+<a name="364"></a>    }
+<a name="365"></a>}
+<a name="366"></a>
+<a name="367"></a>simulated function Destroyed()
+<a name="368"></a>{
+<a name="369"></a>	DestroyTreads();
+<a name="370"></a>	if( LeftTreadSoundAttach != none )
+<a name="371"></a>	    LeftTreadSoundAttach.Destroy();
+<a name="372"></a>    if( RightTreadSoundAttach != none )
+<a name="373"></a>	    RightTreadSoundAttach.Destroy();
+<a name="374"></a>    if( InteriorRumbleSoundAttach != none )
+<a name="375"></a>	    InteriorRumbleSoundAttach.Destroy();
+<a name="376"></a>
+<a name="377"></a>	super.Destroyed();
+<a name="378"></a>}
+<a name="379"></a>
+<a name="380"></a>simulated function SetupTreads()
+<a name="381"></a>{
+<a name="382"></a>	LeftTreadPanner = <span class="source_type"><a href="../engine/variabletexpanner.html" class="source">VariableTexPanner</a></span>(<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.AllocateObject(<span class="source_type">class</span><span class="source_name">'VariableTexPanner'</span>));
+<a name="383"></a>	if ( LeftTreadPanner != None )
+<a name="384"></a>	{
+<a name="385"></a>		LeftTreadPanner.<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> = Skins[<span class="source_int">2</span>];
+<a name="386"></a>		LeftTreadPanner.PanDirection = rot(<span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">16384</span>);
+<a name="387"></a>		LeftTreadPanner.PanRate = <span class="source_int">0.0</span>;
+<a name="388"></a>		Skins[<span class="source_int">2</span>] = LeftTreadPanner;
+<a name="389"></a>	}
+<a name="390"></a>	RightTreadPanner = <span class="source_type"><a href="../engine/variabletexpanner.html" class="source">VariableTexPanner</a></span>(<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.AllocateObject(<span class="source_type">class</span><span class="source_name">'VariableTexPanner'</span>));
+<a name="391"></a>	if ( RightTreadPanner != None )
+<a name="392"></a>	{
+<a name="393"></a>		RightTreadPanner.<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> = Skins[<span class="source_int">3</span>];
+<a name="394"></a>		RightTreadPanner.PanDirection = rot(<span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">16384</span>);
+<a name="395"></a>		RightTreadPanner.PanRate = <span class="source_int">0.0</span>;
+<a name="396"></a>		Skins[<span class="source_int">3</span>] = RightTreadPanner;
+<a name="397"></a>	}
+<a name="398"></a>}
+<a name="399"></a>
+<a name="400"></a>simulated function DestroyTreads()
+<a name="401"></a>{
+<a name="402"></a>	if ( LeftTreadPanner != None )
+<a name="403"></a>	{
+<a name="404"></a>		<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.FreeObject(LeftTreadPanner);
+<a name="405"></a>		LeftTreadPanner = None;
+<a name="406"></a>	}
+<a name="407"></a>	if ( RightTreadPanner != None )
+<a name="408"></a>	{
+<a name="409"></a>		<span class="source_type">Level</span>.<span class="source_type"><a href="../engine/objectpool.html" class="source">ObjectPool</a></span>.FreeObject(RightTreadPanner);
+<a name="410"></a>		RightTreadPanner = None;
+<a name="411"></a>	}
+<a name="412"></a>}
+<a name="413"></a>
+<a name="414"></a>simulated function Tick(<span class="source_type">float</span> <span class="source_type">DeltaTime</span>)
+<a name="415"></a>{
+<a name="416"></a>	local <span class="source_type">float</span> MotionSoundTemp;
+<a name="417"></a>	local <span class="source_type"><a href="../engine/actor.html#KRigidBodyState" class="source">KRigidBodyState</a></span> BodyState;
+<a name="418"></a>	local <span class="source_type">float</span> MySpeed;
+<a name="419"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="420"></a>
+<a name="421"></a>	KGetRigidBodyState(BodyState);
+<a name="422"></a>	LinTurnSpeed = <span class="source_int">0.5</span> * BodyState.AngVel.<span class="source_type">Z</span>;
+<a name="423"></a>
+<a name="424"></a>	<span class="source_comment">// Only need these effects client side
+</span><a name="425"></a>	if( <span class="source_type">Level</span>.Netmode != NM_DedicatedServer )
+<a name="426"></a>	{
+<a name="427"></a>		if( bDisableThrottle)
+<a name="428"></a>		{
+<a name="429"></a>			if(bWantsToThrottle)
+<a name="430"></a>			{
+<a name="431"></a>				IntendedThrottle=<span class="source_int">1.0</span>;
+<a name="432"></a>			}
+<a name="433"></a>			else if( IntendedThrottle &gt; <span class="source_int">0</span>)
+<a name="434"></a>			{
+<a name="435"></a>				IntendedThrottle -= (<span class="source_type">DeltaTime</span> * <span class="source_int">0.5</span>);
+<a name="436"></a>			}
+<a name="437"></a>			else
+<a name="438"></a>			{
+<a name="439"></a>				IntendedThrottle=<span class="source_int">0</span>;
+<a name="440"></a>			}
+<a name="441"></a>
+<a name="442"></a>			if( bLeftTrackDamaged )
+<a name="443"></a>			{
+<a name="444"></a>				 if( LeftTreadSoundAttach.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> != TrackDamagedSound)
+<a name="445"></a>				 	LeftTreadSoundAttach.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = TrackDamagedSound;
+<a name="446"></a>			     LeftTreadSoundAttach.SoundVolume= IntendedThrottle * <span class="source_int">255</span>;
+<a name="447"></a>			}
+<a name="448"></a>
+<a name="449"></a>			if( bRightTrackDamaged )
+<a name="450"></a>			{
+<a name="451"></a>				 if( RightTreadSoundAttach.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> != TrackDamagedSound)
+<a name="452"></a>				 	RightTreadSoundAttach.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = TrackDamagedSound;
+<a name="453"></a>				 RightTreadSoundAttach.SoundVolume= IntendedThrottle * <span class="source_int">255</span>;
+<a name="454"></a>			}
+<a name="455"></a>
+<a name="456"></a>			SoundVolume = FMax(<span class="source_int">255</span> * <span class="source_int">0.3</span>,IntendedThrottle * <span class="source_int">255</span>);
+<a name="457"></a>		}
+<a name="458"></a>		else
+<a name="459"></a>		{
+<a name="460"></a>			if (SoundVolume != default.SoundVolume)
+<a name="461"></a>			{
+<a name="462"></a>				SoundVolume = default.SoundVolume;
+<a name="463"></a>			}
+<a name="464"></a>			<span class="source_comment">//LeftTreadSoundAttach.SoundVolume=MotionSoundVolume;
+</span><a name="465"></a>			<span class="source_comment">//RightTreadSoundAttach.SoundVolume=MotionSoundVolume;
+</span><a name="466"></a>		}
+<a name="467"></a>
+<a name="468"></a>
+<a name="469"></a>		<span class="source_comment">// Shame on you Psyonix, for calling VSize() 3 times every tick, when it only needed to be called once.
+</span><a name="470"></a>		<span class="source_comment">// VSize() is very CPU intensive - Ramm
+</span><a name="471"></a>		MySpeed = VSize(Velocity);
+<a name="472"></a>
+<a name="473"></a>		<span class="source_comment">// Setup sounds that are dependent on velocity
+</span><a name="474"></a>		MotionSoundTemp =  MySpeed/MaxPitchSpeed * <span class="source_int">255</span>;
+<a name="475"></a>		if ( MySpeed &gt; <span class="source_int">0.1</span> )
+<a name="476"></a>		{
+<a name="477"></a>		  	MotionSoundVolume =  FClamp(MotionSoundTemp, <span class="source_int">0</span>, <span class="source_int">255</span>);
+<a name="478"></a>		}
+<a name="479"></a>		else
+<a name="480"></a>		{
+<a name="481"></a>		  	MotionSoundVolume=<span class="source_int">0</span>;
+<a name="482"></a>		}
+<a name="483"></a>		UpdateMovementSound();
+<a name="484"></a>
+<a name="485"></a><span class="source_comment">//		KGetRigidBodyState(BodyState);
+</span><a name="486"></a><span class="source_comment">//		LinTurnSpeed = 0.5 * BodyState.AngVel.Z;
+</span><a name="487"></a>
+<a name="488"></a>		if ( LeftTreadPanner != None )
+<a name="489"></a>		{
+<a name="490"></a>			LeftTreadPanner.PanRate = MySpeed / TreadVelocityScale;
+<a name="491"></a>			if (Velocity dot <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type">Rotation</span>) &lt; <span class="source_int">0</span>)
+<a name="492"></a>				LeftTreadPanner.PanRate = -<span class="source_int">1</span> * LeftTreadPanner.PanRate;
+<a name="493"></a>			LeftTreadPanner.PanRate += LinTurnSpeed;
+<a name="494"></a>		}
+<a name="495"></a>
+<a name="496"></a>		if ( RightTreadPanner != None )
+<a name="497"></a>		{
+<a name="498"></a>			RightTreadPanner.PanRate = MySpeed / TreadVelocityScale;
+<a name="499"></a>			if (Velocity Dot <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type">Rotation</span>) &lt; <span class="source_int">0</span>)
+<a name="500"></a>				RightTreadPanner.PanRate = -<span class="source_int">1</span> * RightTreadPanner.PanRate;
+<a name="501"></a>			RightTreadPanner.PanRate -= LinTurnSpeed;
+<a name="502"></a>		}
+<a name="503"></a>
+<a name="504"></a>		<span class="source_comment">// Animate the tank wheels
+</span><a name="505"></a>		LeftWheelRot.pitch += LeftTreadPanner.PanRate * WheelRotationScale;
+<a name="506"></a>		RightWheelRot.pitch += RightTreadPanner.PanRate * WheelRotationScale;
+<a name="507"></a>
+<a name="508"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;LeftWheelBones.Length; <span class="source_type">i</span>++)
+<a name="509"></a>		{
+<a name="510"></a>			  SetBoneRotation(LeftWheelBones[<span class="source_type">i</span>], LeftWheelRot);
+<a name="511"></a>		}
+<a name="512"></a>
+<a name="513"></a>		for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;RightWheelBones.Length; <span class="source_type">i</span>++)
+<a name="514"></a>		{
+<a name="515"></a>			  SetBoneRotation(RightWheelBones[<span class="source_type">i</span>], RightWheelRot);
+<a name="516"></a>		}
+<a name="517"></a>	}
+<a name="518"></a>
+<a name="519"></a>	<span class="source_comment">// This will slow the tank way down when it tries to turn at high speeds
+</span><a name="520"></a>	if( ForwardVel &gt; <span class="source_int">0.0</span>)
+<a name="521"></a>     	WheelLatFrictionScale = InterpCurveEval(AddedLatFriction, ForwardVel);
+<a name="522"></a>     else
+<a name="523"></a>     	WheelLatFrictionScale = default.WheelLatFrictionScale;
+<a name="524"></a>
+<a name="525"></a>
+<a name="526"></a>	Super.Tick( <span class="source_type">DeltaTime</span> );
+<a name="527"></a>}
+<a name="528"></a>
+<a name="529"></a>function ClientVehicleCeaseFire(<span class="source_type">bool</span> bWasAltFire)
+<a name="530"></a>{
+<a name="531"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="532"></a>
+<a name="533"></a>	if (!bWasAltFire)
+<a name="534"></a>	{
+<a name="535"></a>		Super.ClientVehicleCeaseFire(bWasAltFire);
+<a name="536"></a>		return;
+<a name="537"></a>	}
+<a name="538"></a>
+<a name="539"></a>	<span class="source_type">PC</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="540"></a>	if (<span class="source_type">PC</span> == None)
+<a name="541"></a>		return;
+<a name="542"></a>
+<a name="543"></a>	bWeaponIsAltFiring = false;
+<a name="544"></a>	<span class="source_type">PC</span>.StopZoom();
+<a name="545"></a>}
+<a name="546"></a>
+<a name="547"></a>function <span class="source_type">bool</span> RecommendLongRangedAttack()
+<a name="548"></a>{
+<a name="549"></a>	return true;
+<a name="550"></a>}
+<a name="551"></a>
+<a name="552"></a>function DriverRadiusDamage(<span class="source_type">float</span> DamageAmount, <span class="source_type">float</span> DamageRadius, <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">EventInstigator</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>, <span class="source_type">float</span> <span class="source_type">Momentum</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>)
+<a name="553"></a>{
+<a name="554"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="555"></a>	local <span class="source_type">float</span> damageScale, <span class="source_type">dist</span>;
+<a name="556"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">dir</span>;
+<a name="557"></a>
+<a name="558"></a>	<span class="source_comment">//log("DriverRadiusDamage is screwing us");
+</span><a name="559"></a>	<span class="source_comment">//return;
+</span><a name="560"></a>
+<a name="561"></a>	<span class="source_comment">//if driver has collision, whatever is causing the radius damage will hit the driver by itself
+</span><a name="562"></a>	if (<span class="source_type">EventInstigator</span> == None || Driver == None || Driver.bCollideActors || bRemoteControlled)
+<a name="563"></a>		return;
+<a name="564"></a>
+<a name="565"></a>       <span class="source_comment">//log("Driver ="$Driver$" bExposed "$DriverPositions[DriverPositionIndex].bExposed);
+</span><a name="566"></a>
+<a name="567"></a>	<span class="source_type">dir</span> = Driver.Location - <span class="source_type">HitLocation</span>;
+<a name="568"></a>	<span class="source_type">dist</span> = FMax(<span class="source_int">1</span>, VSize(<span class="source_type">dir</span>));
+<a name="569"></a>	<span class="source_type">dir</span> = <span class="source_type">dir</span>/<span class="source_type">dist</span>;
+<a name="570"></a>	damageScale = <span class="source_int">1</span> - FMax(<span class="source_int">0</span>,(<span class="source_type">dist</span> - Driver.CollisionRadius)/DamageRadius);
+<a name="571"></a>	if (damageScale &lt;= <span class="source_int">0</span>)
+<a name="572"></a>		return;
+<a name="573"></a>
+<a name="574"></a>	if ( Driver != none && DriverPositions[DriverPositionIndex].bExposed )
+<a name="575"></a>    {
+<a name="576"></a>    	Driver.SetDelayedDamageInstigatorController(<span class="source_type">EventInstigator</span>);
+<a name="577"></a>    	Driver.TakeDamage( damageScale * DamageAmount, <span class="source_type">EventInstigator</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>, Driver.Location - <span class="source_int">0.5</span> * (Driver.CollisionHeight + Driver.CollisionRadius) * <span class="source_type">dir</span>,
+<a name="578"></a>    			   damageScale * <span class="source_type">Momentum</span> * <span class="source_type">dir</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span> );
+<a name="579"></a>	}
+<a name="580"></a>
+<a name="581"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; WeaponPawns.length; <span class="source_type">i</span>++)
+<a name="582"></a>		if (!WeaponPawns[<span class="source_type">i</span>].bCollideActors)
+<a name="583"></a>			WeaponPawns[<span class="source_type">i</span>].DriverRadiusDamage(DamageAmount, DamageRadius, <span class="source_type">EventInstigator</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>, <span class="source_type">Momentum</span>, <span class="source_type">HitLocation</span>);
+<a name="584"></a>}
+<a name="585"></a>
+<a name="586"></a>function DamageTrack(<span class="source_type">bool</span> bLeftTrack)
+<a name="587"></a>{
+<a name="588"></a>	if(bLeftTrack)
+<a name="589"></a>	{
+<a name="590"></a>		bDisableThrottle=true;
+<a name="591"></a>        bLeftTrackDamaged=true;
+<a name="592"></a>	}
+<a name="593"></a>	else
+<a name="594"></a>	{
+<a name="595"></a>		bDisableThrottle=true;
+<a name="596"></a>        bRightTrackDamaged=true;
+<a name="597"></a>	}
+<a name="598"></a>}
+<a name="599"></a>
+<a name="600"></a>function <span class="source_type">bool</span> StronglyRecommended(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">S</span>, <span class="source_type">int</span> TeamIndex, <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Objective)
+<a name="601"></a>{
+<a name="602"></a>	return True;
+<a name="603"></a>}
+<a name="604"></a>
+<a name="605"></a><span class="source_comment">//
+</span><a name="606"></a><span class="source_comment">// TakeDamage - overloaded to prevent bayonet and bash attacks from damaging vehicles
+</span><a name="607"></a><span class="source_comment">//				for Tanks, we'll probably want to prevent bullets from doing damage too
+</span><a name="608"></a>function TakeDamage(<span class="source_type">int</span> <span class="source_type">Damage</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> instigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Momentum</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>, optional <span class="source_type">int</span> <span class="source_type">HitIndex</span>)
+<a name="609"></a>{
+<a name="610"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> LocDir, HitDir;
+<a name="611"></a>	local <span class="source_type">float</span> HitAngle,Side, InAngle;
+<a name="612"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>;
+<a name="613"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="614"></a>    local <span class="source_type">float</span> VehicleDamageMod;
+<a name="615"></a>    local <span class="source_type">int</span> HitPointDamage;
+<a name="616"></a>	local <span class="source_type">int</span> InstigatorTeam;
+<a name="617"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">controller</a></span> InstigatorController;
+<a name="618"></a>
+<a name="619"></a>	<span class="source_comment">// Fix for suicide death messages
+</span><a name="620"></a>    if (<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span> == <span class="source_type">class</span><span class="source_name">'Suicided'</span>)
+<a name="621"></a>    {
+<a name="622"></a>	    <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span> = <span class="source_type">Class</span><span class="source_name">'ROSuicided'</span>;
+<a name="623"></a>	    Super(<span class="source_type"><a href="../roengine/rovehicle.html" class="source">ROVehicle</a></span>).TakeDamage(<span class="source_type">Damage</span>, instigatedBy, <span class="source_type">Hitlocation</span>, <span class="source_type">Momentum</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>);
+<a name="624"></a>	}
+<a name="625"></a>	else if (<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span> == <span class="source_type">class</span><span class="source_name">'ROSuicided'</span>)
+<a name="626"></a>	{
+<a name="627"></a>		super(<span class="source_type"><a href="../roengine/rovehicle.html" class="source">ROVehicle</a></span>).TakeDamage(<span class="source_type">Damage</span>, instigatedBy, <span class="source_type">Hitlocation</span>, <span class="source_type">Momentum</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>);
+<a name="628"></a>	}
+<a name="629"></a>
+<a name="630"></a>
+<a name="631"></a>	<span class="source_comment">// Quick fix for the thing giving itself impact damage
+</span><a name="632"></a>	if(instigatedBy == self)
+<a name="633"></a>		return;
+<a name="634"></a>
+<a name="635"></a>	<span class="source_comment">// Don't allow your own teammates to destroy vehicles in spawns (and you know some jerks would get off on doing that to thier team :) )
+</span><a name="636"></a>	if( !bDriverAlreadyEntered )
+<a name="637"></a>	{
+<a name="638"></a>		if ( InstigatedBy != None )
+<a name="639"></a>			InstigatorController = instigatedBy.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>;
+<a name="640"></a>
+<a name="641"></a>		if ( InstigatorController == None )
+<a name="642"></a>		{
+<a name="643"></a>			if ( <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>.default.bDelayedDamage )
+<a name="644"></a>				InstigatorController = DelayedDamageInstigatorController;
+<a name="645"></a>		}
+<a name="646"></a>
+<a name="647"></a>		if ( InstigatorController != None )
+<a name="648"></a>		{
+<a name="649"></a>			InstigatorTeam = InstigatorController.GetTeamNum();
+<a name="650"></a>
+<a name="651"></a>			if ( (GetTeamNum() != <span class="source_int">255</span>) && (InstigatorTeam != <span class="source_int">255</span>) )
+<a name="652"></a>			{
+<a name="653"></a>				if ( GetTeamNum() == InstigatorTeam )
+<a name="654"></a>				{
+<a name="655"></a>					return;
+<a name="656"></a>				}
+<a name="657"></a>			}
+<a name="658"></a>		}
+<a name="659"></a>	}
+<a name="660"></a>
+<a name="661"></a>    <span class="source_comment">// Modify the damage based on what it should do to the vehicle
+</span><a name="662"></a>	if (<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span> != none)
+<a name="663"></a>	{
+<a name="664"></a>	   if(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/roweapondamagetype.html" class="source">ROWeaponDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>) != none)
+<a name="665"></a>       		VehicleDamageMod = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/roweapondamagetype.html" class="source">ROWeaponDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>).default.TankDamageModifier;
+<a name="666"></a>       else if(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovehicledamagetype.html" class="source">ROVehicleDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>) != none)
+<a name="667"></a>	   		VehicleDamageMod = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/rovehicledamagetype.html" class="source">ROVehicleDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>).default.TankDamageModifier;
+<a name="668"></a>    }
+<a name="669"></a>
+<a name="670"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;VehHitpoints.Length; <span class="source_type">i</span>++)
+<a name="671"></a>	{
+<a name="672"></a>    	HitPointDamage=<span class="source_type">Damage</span>;
+<a name="673"></a>
+<a name="674"></a>		if ( VehHitpoints[<span class="source_type">i</span>].HitPointType == HP_Driver )
+<a name="675"></a>		{
+<a name="676"></a>			<span class="source_comment">// Damage for large weapons
+</span><a name="677"></a>			if(	<span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/roweapondamagetype.html" class="source">ROWeaponDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>) != none && <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/roweapondamagetype.html" class="source">ROWeaponDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>).default.VehicleDamageModifier &gt; <span class="source_int">0.25</span> )
+<a name="678"></a>			{
+<a name="679"></a>				if ( Driver != none && DriverPositions[DriverPositionIndex].bExposed && IsPointShot(<span class="source_type">Hitlocation</span>,<span class="source_type">Momentum</span>, <span class="source_int">1.0</span>, <span class="source_type">i</span>))
+<a name="680"></a>				{
+<a name="681"></a>					<span class="source_comment">//Level.Game.Broadcast(self, "HitDriver");
+</span><a name="682"></a>					Driver.TakeDamage(<span class="source_type">Damage</span>, instigatedBy, <span class="source_type">Hitlocation</span>, <span class="source_type">Momentum</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>);
+<a name="683"></a>				}
+<a name="684"></a>			}
+<a name="685"></a>			<span class="source_comment">// Damage for small (non penetrating) arms
+</span><a name="686"></a>			else
+<a name="687"></a>			{
+<a name="688"></a>				if ( Driver != none && DriverPositions[DriverPositionIndex].bExposed && IsPointShot(<span class="source_type">Hitlocation</span>,<span class="source_type">Momentum</span>, <span class="source_int">1.0</span>, <span class="source_type">i</span>, DriverHitCheckDist))
+<a name="689"></a>				{
+<a name="690"></a>					<span class="source_comment">//Level.Game.Broadcast(self, "HitDriver");
+</span><a name="691"></a>					Driver.TakeDamage(<span class="source_type">Damage</span>, instigatedBy, <span class="source_type">Hitlocation</span>, <span class="source_type">Momentum</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>);
+<a name="692"></a>				}
+<a name="693"></a>			}
+<a name="694"></a>		}
+<a name="695"></a>		else if ( IsPointShot(<span class="source_type">Hitlocation</span>,<span class="source_type">Momentum</span>, <span class="source_int">1.0</span>, <span class="source_type">i</span>))
+<a name="696"></a>		{
+<a name="697"></a>			HitPointDamage *= VehHitpoints[<span class="source_type">i</span>].DamageMultiplier;
+<a name="698"></a>			HitPointDamage *= VehicleDamageMod;
+<a name="699"></a>
+<a name="700"></a>            <span class="source_comment">//log("We hit "$GetEnum(enum'EPawnHitPointType',VehHitpoints[i].HitPointType));
+</span><a name="701"></a>
+<a name="702"></a>			if ( VehHitpoints[<span class="source_type">i</span>].HitPointType == HP_Engine )
+<a name="703"></a>			{
+<a name="704"></a>				DamageEngine(HitPointDamage, instigatedBy, <span class="source_type">Hitlocation</span>, <span class="source_type">Momentum</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>);
+<a name="705"></a>			}
+<a name="706"></a>			else if ( VehHitpoints[<span class="source_type">i</span>].HitPointType == HP_AmmoStore )
+<a name="707"></a>			{
+<a name="708"></a>				<span class="source_type">Damage</span> *= VehHitpoints[<span class="source_type">i</span>].DamageMultiplier;
+<a name="709"></a>				break;
+<a name="710"></a>			}
+<a name="711"></a>		}
+<a name="712"></a>	}
+<a name="713"></a>
+<a name="714"></a>    LocDir = <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>(<span class="source_type">Rotation</span>);
+<a name="715"></a>
+<a name="716"></a>    LocDir.<span class="source_type">Z</span> = <span class="source_int">0</span>;
+<a name="717"></a>    HitDir =  <span class="source_type">Hitlocation</span> - Location;
+<a name="718"></a>    HitDir.<span class="source_type">Z</span> = <span class="source_int">0</span>;
+<a name="719"></a>    HitAngle = Acos( Normal(LocDir) dot Normal(HitDir));
+<a name="720"></a>
+<a name="721"></a>	<span class="source_comment">// Convert the angle into degrees from radians
+</span><a name="722"></a>    HitAngle*=<span class="source_int">57.2957795131</span>;
+<a name="723"></a>
+<a name="724"></a>    GetAxes(<span class="source_type">Rotation</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>);
+<a name="725"></a>    Side = <span class="source_type">Y</span> dot HitDir;
+<a name="726"></a>
+<a name="727"></a>    if( side &gt;= <span class="source_int">0</span>)
+<a name="728"></a>    {
+<a name="729"></a>       HitAngle = <span class="source_int">360</span> + (HitAngle* -<span class="source_int">1</span>);
+<a name="730"></a>    }
+<a name="731"></a>
+<a name="732"></a>	<span class="source_comment">// We are only concerned with side hits for now to calculate track hits.
+</span><a name="733"></a>	<span class="source_comment">// Leave this here though in case we need to calculate front or side hits
+</span><a name="734"></a>	<span class="source_comment">// here later.
+</span><a name="735"></a><span class="source_comment">/*    if ( HitAngle &gt;= 335 || Hitangle &lt; 25 )
+<a name="736"></a>    {
+<a name="737"></a>       log ("We hit the front of the vehicle!!!!");
+<a name="738"></a>
+<a name="739"></a>    }
+<a name="740"></a>    else*/</span> if ( HitAngle &gt;= FrontRightAngle && Hitangle &lt; RearRightAngle )
+<a name="741"></a>    {
+<a name="742"></a>	    HitDir = <span class="source_type">Hitlocation</span> - Location;
+<a name="743"></a>
+<a name="744"></a>	    InAngle= Acos(Normal(HitDir) dot Normal(<span class="source_type">Z</span>));
+<a name="745"></a>
+<a name="746"></a>		if( InAngle &gt; TreadHitMinAngle)
+<a name="747"></a>		{
+<a name="748"></a>			if (<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span> != none && <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/roweapondamagetype.html" class="source">ROWeaponDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>) != none &&
+<a name="749"></a>				<span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/roweapondamagetype.html" class="source">ROWeaponDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>).default.TreadDamageModifier &gt;= <span class="source_int">1.0</span>)
+<a name="750"></a>			{
+<a name="751"></a>				DamageTrack(true);
+<a name="752"></a>				return;
+<a name="753"></a>			}
+<a name="754"></a>		}
+<a name="755"></a>
+<a name="756"></a>
+<a name="757"></a>       <span class="source_comment">//log ("We hit the left side of the vehicle!!!!");
+</span><a name="758"></a>    }
+<a name="759"></a><span class="source_comment">/*    else if ( HitAngle &gt;= 137 && Hitangle &lt; 223 )
+<a name="760"></a>    {
+<a name="761"></a>       log ("We hit the back of the vehicle!!!!");
+<a name="762"></a>       Damage *= 2.0;
+<a name="763"></a>    }*/</span>
+<a name="764"></a>    else if ( HitAngle &gt;= RearLeftAngle && Hitangle &lt; FrontLeftAngle )
+<a name="765"></a>    {
+<a name="766"></a>	    HitDir = <span class="source_type">Hitlocation</span> - Location;
+<a name="767"></a>
+<a name="768"></a>	    InAngle= Acos(Normal(HitDir) dot Normal(<span class="source_type">Z</span>));
+<a name="769"></a>
+<a name="770"></a>		if( InAngle &gt; TreadHitMinAngle)
+<a name="771"></a>		{
+<a name="772"></a>			if (<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span> != none && <span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/roweapondamagetype.html" class="source">ROWeaponDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>) != none &&
+<a name="773"></a>				<span class="source_type">class</span>&lt;<span class="source_type"><a href="../roengine/roweapondamagetype.html" class="source">ROWeaponDamageType</a></span>&gt;(<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>).default.TreadDamageModifier &gt;= <span class="source_int">1.0</span>)
+<a name="774"></a>			{
+<a name="775"></a>				DamageTrack(false);
+<a name="776"></a>				return;
+<a name="777"></a>			}
+<a name="778"></a>		}
+<a name="779"></a>    }
+<a name="780"></a><span class="source_comment">/*    else
+<a name="781"></a>    {
+<a name="782"></a>       log ("We shoulda hit something!!!!");
+<a name="783"></a>    }*/</span>
+<a name="784"></a>
+<a name="785"></a>
+<a name="786"></a>    <span class="source_comment">// Add in the Vehicle damage modifier for the actual damage to the vehicle itself
+</span><a name="787"></a>    <span class="source_type">Damage</span> *= VehicleDamageMod;
+<a name="788"></a>
+<a name="789"></a>    super(<span class="source_type"><a href="../roengine/rovehicle.html" class="source">ROVehicle</a></span>).TakeDamage(<span class="source_type">Damage</span>, instigatedBy, <span class="source_type">Hitlocation</span>, <span class="source_type">Momentum</span>, <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>);
+<a name="790"></a>}
+<a name="791"></a>
+<a name="792"></a>simulated function <span class="source_type">float</span> GetPenetrationProbability( <span class="source_type">float</span> <span class="source_type">AOI</span> )
+<a name="793"></a>{
+<a name="794"></a>    local <span class="source_type">float</span> <span class="source_type">index</span>;
+<a name="795"></a><span class="source_comment">//     if( AOI &gt; 70 )
+</span><a name="796"></a><span class="source_comment">//     {
+</span><a name="797"></a><span class="source_comment">//         // Calculate the amount of armor the round has to penetrate
+</span><a name="798"></a><span class="source_comment">//         return FMax(Sin(AOI * 0.01745329252),0);
+</span><a name="799"></a><span class="source_comment">//
+</span><a name="800"></a><span class="source_comment">//     }
+</span><a name="801"></a><span class="source_comment">//     else
+</span><a name="802"></a><span class="source_comment">//     {
+</span><a name="803"></a><span class="source_comment">//         // Calculate the amount of armor the round has to penetrate, minus the deflection factor
+</span><a name="804"></a><span class="source_comment">//         log("Pen %"$(100 * Sin(AOI * 0.01745329252))$" deflection "$((70-AOI)*0.6));
+</span><a name="805"></a><span class="source_comment">//
+</span><a name="806"></a><span class="source_comment">//         return FMax(((100 * Sin(AOI * 0.01745329252)) - ((70-AOI)*0.6))/100,0);
+</span><a name="807"></a><span class="source_comment">//     }
+</span><a name="808"></a>
+<a name="809"></a>     <span class="source_comment">// convert the incoming angle to radians
+</span><a name="810"></a>     <span class="source_comment">//AOI = AOI * 0.01745329252;
+</span><a name="811"></a>
+<a name="812"></a>     <span class="source_comment">// Preliminary work on new penetration probability
+</span><a name="813"></a>     <span class="source_comment">// Calculate the amount of armor the round has to penetrate, minus the deflection factor
+</span><a name="814"></a>     <span class="source_comment">//return FMax(((100 * Sin(AOI)) - (20 * Cos(AOI)))/100,0);
+</span><a name="815"></a>
+<a name="816"></a>    <span class="source_type">index</span> = (<span class="source_type">AOI</span>/<span class="source_int">90</span>)*<span class="source_int">12</span>;
+<a name="817"></a>
+<a name="818"></a>	if( <span class="source_type">index</span> &lt;= <span class="source_int">1</span>)			return <span class="source_int">0.0</span>;
+<a name="819"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">2</span>)	return <span class="source_int">0.01</span>;
+<a name="820"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">3</span>)	return <span class="source_int">0.03</span>;
+<a name="821"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">4</span>)	return <span class="source_int">0.08</span>;
+<a name="822"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">5</span>)	return <span class="source_int">0.17</span>;
+<a name="823"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">6</span>)	return <span class="source_int">0.28</span>;
+<a name="824"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">7</span>)	return <span class="source_int">0.42</span>;
+<a name="825"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">8</span>)	return <span class="source_int">0.58</span>;
+<a name="826"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">9</span>)	return <span class="source_int">0.72</span>;
+<a name="827"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">10</span>)	return <span class="source_int">0.83</span>;
+<a name="828"></a>	else if ( <span class="source_type">index</span> &lt;= <span class="source_int">11</span>)	return <span class="source_int">0.92</span>;
+<a name="829"></a>	else 					return <span class="source_int">1.0</span>;
+<a name="830"></a>}
+<a name="831"></a>
+<a name="832"></a>simulated function <span class="source_type">bool</span> ShouldPenetrate(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> HitRotation, <span class="source_type">int</span> PenetrationNumber, optional <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>)
+<a name="833"></a>{
+<a name="834"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> LocDir, HitDir;
+<a name="835"></a>	local <span class="source_type">float</span> HitAngle,Side,InAngle;
+<a name="836"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>;
+<a name="837"></a>    local <span class="source_type">float</span> InAngleDegrees;
+<a name="838"></a>    local <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> AimRot;
+<a name="839"></a>
+<a name="840"></a>	if (HitPenetrationPoint(<span class="source_type">HitLocation</span>, HitRotation))
+<a name="841"></a>	{
+<a name="842"></a>		return true;
+<a name="843"></a>	}
+<a name="844"></a>
+<a name="845"></a>	<span class="source_comment">// Figure out which side we hit
+</span><a name="846"></a>    LocDir = <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>(<span class="source_type">Rotation</span>);
+<a name="847"></a>    LocDir.<span class="source_type">Z</span> = <span class="source_int">0</span>;
+<a name="848"></a>    HitDir =  <span class="source_type">Hitlocation</span> - Location;
+<a name="849"></a>    HitDir.<span class="source_type">Z</span> = <span class="source_int">0</span>;
+<a name="850"></a>    HitAngle = Acos( Normal(LocDir) dot Normal(HitDir));
+<a name="851"></a>
+<a name="852"></a>	<span class="source_comment">//  Penetration Debugging
+</span><a name="853"></a>    if( bDebugPenetration )
+<a name="854"></a>    {
+<a name="855"></a>        log(<span class="source_string">"Raw hitangle = "</span>$HitAngle$<span class="source_string">" Converted hitangle = "</span>$(<span class="source_int">57.2957795131</span> * HitAngle));
+<a name="856"></a>    }
+<a name="857"></a>
+<a name="858"></a>	<span class="source_comment">// Convert the angle into degrees from radians
+</span><a name="859"></a>    HitAngle*=<span class="source_int">57.2957795131</span>;
+<a name="860"></a>    GetAxes(<span class="source_type">Rotation</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>);
+<a name="861"></a>    Side = <span class="source_type">Y</span> dot HitDir;
+<a name="862"></a>
+<a name="863"></a>    <span class="source_comment">//  Penetration Debugging
+</span><a name="864"></a>    if( bDebugPenetration )
+<a name="865"></a>    {
+<a name="866"></a>        ClearStayingDebugLines();
+<a name="867"></a>        AimRot = <span class="source_type">Rotation</span>;
+<a name="868"></a>        AimRot.Yaw += (FrontLeftAngle/<span class="source_int">360.0</span>)*<span class="source_int">65536</span>;
+<a name="869"></a>        DrawStayingDebugLine( Location, Location + <span class="source_int">2000</span>*<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>(AimRot),<span class="source_int">0</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="870"></a>        AimRot = <span class="source_type">Rotation</span>;
+<a name="871"></a>        AimRot.Yaw += (FrontRightAngle/<span class="source_int">360.0</span>)*<span class="source_int">65536</span>;
+<a name="872"></a>        DrawStayingDebugLine( Location, Location + <span class="source_int">2000</span>*<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>(AimRot),<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="873"></a>        AimRot = <span class="source_type">Rotation</span>;
+<a name="874"></a>        AimRot.Yaw += (RearRightAngle/<span class="source_int">360.0</span>)*<span class="source_int">65536</span>;
+<a name="875"></a>        DrawStayingDebugLine( Location, Location + <span class="source_int">2000</span>*<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>(AimRot),<span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">255</span>);
+<a name="876"></a>        AimRot = <span class="source_type">Rotation</span>;
+<a name="877"></a>        AimRot.Yaw += (RearLeftAngle/<span class="source_int">360.0</span>)*<span class="source_int">65536</span>;
+<a name="878"></a>        DrawStayingDebugLine( Location, Location + <span class="source_int">2000</span>*<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>(AimRot),<span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">0</span>);
+<a name="879"></a>    }
+<a name="880"></a>
+<a name="881"></a>    if( side &gt;= <span class="source_int">0</span>)
+<a name="882"></a>    {
+<a name="883"></a>       HitAngle = <span class="source_int">360</span> + (HitAngle* -<span class="source_int">1</span>);
+<a name="884"></a>    }
+<a name="885"></a>
+<a name="886"></a>    if ( HitAngle &gt;= FrontLeftAngle || Hitangle &lt; FrontRightAngle )
+<a name="887"></a>    {
+<a name="888"></a>	   InAngle= Acos(Normal(-HitRotation) dot Normal(<span class="source_type">X</span>));
+<a name="889"></a>       InAngleDegrees = <span class="source_int">90</span>-(InAngle * <span class="source_int">57.2957795131</span>);
+<a name="890"></a>
+<a name="891"></a>        <span class="source_comment">//  Penetration Debugging
+</span><a name="892"></a>        if( bDebugPenetration )
+<a name="893"></a>        {
+<a name="894"></a>            <span class="source_comment">//ClearStayingDebugLines();
+</span><a name="895"></a>            DrawStayingDebugLine( <span class="source_type">HitLocation</span>, <span class="source_type">HitLocation</span> + <span class="source_int">2000</span>*Normal(<span class="source_type">X</span>),<span class="source_int">0</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="896"></a>            DrawStayingDebugLine( <span class="source_type">HitLocation</span>, <span class="source_type">HitLocation</span> + <span class="source_int">2000</span>*Normal(-HitRotation),<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="897"></a>            Spawn(<span class="source_type">class</span> <span class="source_name">'ROEngine.RODebugTracer'</span>,self,,<span class="source_type">HitLocation</span>,<span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>(HitRotation));
+<a name="898"></a>       		log (<span class="source_string">"We hit the front of the vehicle!!!!"</span>);
+<a name="899"></a>       		log(<span class="source_string">"InAngle = "</span>$InAngle$<span class="source_string">" degrees "</span>$InAngleDegrees);
+<a name="900"></a>        	log(<span class="source_string">"PenetrationNumber = "</span>$PenetrationNumber);
+<a name="901"></a>        	log(<span class="source_string">"FrontArmorFactor = "</span>$FrontArmorFactor);
+<a name="902"></a>        	log(<span class="source_string">"Probability % = "</span>$GetPenetrationProbability(InAngleDegrees));
+<a name="903"></a>        	log(<span class="source_string">"Total Power = "</span>$(PenetrationNumber * GetPenetrationProbability(InAngleDegrees)));
+<a name="904"></a>        	log(<span class="source_string">"Final Calc = "</span>$(FrontArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees)))$<span class="source_string">" Penetrated = "</span>$!( (FrontArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees))) &gt;= <span class="source_int">0.01</span> ));
+<a name="905"></a>        }
+<a name="906"></a>
+<a name="907"></a>		if( (FrontArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees))) &gt;= <span class="source_int">0.01</span> )
+<a name="908"></a>			return false;
+<a name="909"></a>		else
+<a name="910"></a>		    return true;
+<a name="911"></a>    }
+<a name="912"></a>    else if ( HitAngle &gt;= FrontRightAngle && Hitangle &lt; RearRightAngle )
+<a name="913"></a>    {
+<a name="914"></a>        <span class="source_comment">// Don't penetrate with fausts if there is added side armor
+</span><a name="915"></a>        if( bHasAddedSideArmor && <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span> != none && <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>.default.bArmorStops )
+<a name="916"></a>        {
+<a name="917"></a>            return false;
+<a name="918"></a>        }
+<a name="919"></a>
+<a name="920"></a>	    HitDir = <span class="source_type">Hitlocation</span> - Location;
+<a name="921"></a>
+<a name="922"></a>	    InAngle= Acos(Normal(HitDir) dot Normal(<span class="source_type">Z</span>));
+<a name="923"></a>
+<a name="924"></a>		if( InAngle &gt; TreadHitMinAngle)
+<a name="925"></a>		{
+<a name="926"></a>			return true;
+<a name="927"></a>		}
+<a name="928"></a>
+<a name="929"></a>	   	InAngle= Acos(Normal(-HitRotation) dot Normal(-<span class="source_type">Y</span>));
+<a name="930"></a>        InAngleDegrees = <span class="source_int">90</span>-(InAngle * <span class="source_int">57.2957795131</span>);
+<a name="931"></a>
+<a name="932"></a>		<span class="source_comment">//  Penetration Debugging
+</span><a name="933"></a>        if( bDebugPenetration )
+<a name="934"></a>        {
+<a name="935"></a>            <span class="source_comment">//ClearStayingDebugLines();
+</span><a name="936"></a>            DrawStayingDebugLine( <span class="source_type">HitLocation</span>, <span class="source_type">HitLocation</span> + <span class="source_int">2000</span>*Normal(-<span class="source_type">Y</span>),<span class="source_int">0</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="937"></a>            DrawStayingDebugLine( <span class="source_type">HitLocation</span>, <span class="source_type">HitLocation</span> + <span class="source_int">2000</span>*Normal(-HitRotation),<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="938"></a>            Spawn(<span class="source_type">class</span> <span class="source_name">'ROEngine.RODebugTracer'</span>,self,,<span class="source_type">HitLocation</span>,<span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>(HitRotation));
+<a name="939"></a>           	log (<span class="source_string">"We hit the left side of the vehicle!!!!"</span>);
+<a name="940"></a>       		log(<span class="source_string">"InAngle = "</span>$InAngle$<span class="source_string">" degrees "</span>$InAngleDegrees);
+<a name="941"></a>        	log(<span class="source_string">"PenetrationNumber = "</span>$PenetrationNumber);
+<a name="942"></a>        	log(<span class="source_string">"SideArmorFactor = "</span>$SideArmorFactor);
+<a name="943"></a>        	log(<span class="source_string">"Probability % = "</span>$GetPenetrationProbability(InAngleDegrees));
+<a name="944"></a>        	log(<span class="source_string">"Total Power = "</span>$(PenetrationNumber * GetPenetrationProbability(InAngleDegrees)));
+<a name="945"></a>        	log(<span class="source_string">"Final Calc = "</span>$(SideArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees)))$<span class="source_string">" Penetrated = "</span>$!( (FrontArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees))) &gt;= <span class="source_int">0.01</span> ));
+<a name="946"></a>        }
+<a name="947"></a>
+<a name="948"></a>		if( (SideArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees))) &gt;= <span class="source_int">0.01</span> )
+<a name="949"></a>			return false;
+<a name="950"></a>		else
+<a name="951"></a>		    return true;
+<a name="952"></a>    }
+<a name="953"></a>    else if ( HitAngle &gt;= RearRightAngle && Hitangle &lt; RearLeftAngle )
+<a name="954"></a>    {
+<a name="955"></a>		InAngle= Acos(Normal(-HitRotation) dot Normal(-<span class="source_type">X</span>));
+<a name="956"></a>        InAngleDegrees = <span class="source_int">90</span>-(InAngle * <span class="source_int">57.2957795131</span>);
+<a name="957"></a>
+<a name="958"></a>		<span class="source_comment">//  Penetration Debugging
+</span><a name="959"></a>		if( bDebugPenetration )
+<a name="960"></a>        {
+<a name="961"></a>            <span class="source_comment">//ClearStayingDebugLines();
+</span><a name="962"></a>            DrawStayingDebugLine( <span class="source_type">HitLocation</span>, <span class="source_type">HitLocation</span> + <span class="source_int">2000</span>*Normal(-<span class="source_type">X</span>),<span class="source_int">0</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="963"></a>            DrawStayingDebugLine( <span class="source_type">HitLocation</span>, <span class="source_type">HitLocation</span> + <span class="source_int">2000</span>*Normal(-HitRotation),<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="964"></a>            Spawn(<span class="source_type">class</span> <span class="source_name">'ROEngine.RODebugTracer'</span>,self,,<span class="source_type">HitLocation</span>,<span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>(HitRotation));
+<a name="965"></a>    		log (<span class="source_string">"We hit the back of the vehicle!!!!"</span>);
+<a name="966"></a>       		log(<span class="source_string">"InAngle = "</span>$InAngle$<span class="source_string">" degrees "</span>$InAngleDegrees);
+<a name="967"></a>        	log(<span class="source_string">"PenetrationNumber = "</span>$PenetrationNumber);
+<a name="968"></a>        	log(<span class="source_string">"RearArmorFactor = "</span>$RearArmorFactor);
+<a name="969"></a>        	log(<span class="source_string">"Probability % = "</span>$GetPenetrationProbability(InAngleDegrees));
+<a name="970"></a>        	log(<span class="source_string">"Total Power = "</span>$(PenetrationNumber * GetPenetrationProbability(InAngleDegrees)));
+<a name="971"></a>        	log(<span class="source_string">"Final Calc = "</span>$(RearArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees)))$<span class="source_string">" Penetrated = "</span>$!( (FrontArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees))) &gt;= <span class="source_int">0.01</span> ));
+<a name="972"></a>        }
+<a name="973"></a>
+<a name="974"></a>		if( (RearArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees))) &gt;= <span class="source_int">0.01</span> )
+<a name="975"></a>			return false;
+<a name="976"></a>		else
+<a name="977"></a>		    return true;
+<a name="978"></a>    }
+<a name="979"></a>    else if ( HitAngle &gt;= RearLeftAngle && Hitangle &lt; FrontLeftAngle )
+<a name="980"></a>    {
+<a name="981"></a>        <span class="source_comment">// Don't penetrate with fausts if there is added side armor
+</span><a name="982"></a>        if( bHasAddedSideArmor && <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span> != none && <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>.default.bArmorStops )
+<a name="983"></a>        {
+<a name="984"></a>            return false;
+<a name="985"></a>        }
+<a name="986"></a>
+<a name="987"></a>	    HitDir = <span class="source_type">Hitlocation</span> - Location;
+<a name="988"></a>
+<a name="989"></a>	    InAngle= Acos(Normal(HitDir) dot Normal(<span class="source_type">Z</span>));
+<a name="990"></a>
+<a name="991"></a>		if( InAngle &gt; TreadHitMinAngle)
+<a name="992"></a>		{
+<a name="993"></a>			return true;
+<a name="994"></a>		}
+<a name="995"></a>
+<a name="996"></a>	   	InAngle= Acos(Normal(-HitRotation) dot Normal(<span class="source_type">Y</span>));
+<a name="997"></a>        InAngleDegrees = <span class="source_int">90</span>-(InAngle * <span class="source_int">57.2957795131</span>);
+<a name="998"></a>
+<a name="999"></a>		<span class="source_comment">//  Penetration Debugging
+</span><a name="1000"></a>		if( bDebugPenetration )
+<a name="1001"></a>        {
+<a name="1002"></a>            <span class="source_comment">//ClearStayingDebugLines();
+</span><a name="1003"></a>            DrawStayingDebugLine( <span class="source_type">HitLocation</span>, <span class="source_type">HitLocation</span> + <span class="source_int">2000</span>*Normal(<span class="source_type">Y</span>),<span class="source_int">0</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="1004"></a>            DrawStayingDebugLine( <span class="source_type">HitLocation</span>, <span class="source_type">HitLocation</span> + <span class="source_int">2000</span>*Normal(-HitRotation),<span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">0</span>);
+<a name="1005"></a>            Spawn(<span class="source_type">class</span> <span class="source_name">'ROEngine.RODebugTracer'</span>,self,,<span class="source_type">HitLocation</span>,<span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>(HitRotation));
+<a name="1006"></a>           	log (<span class="source_string">"We hit the right side of the vehicle!!!!"</span>);
+<a name="1007"></a>       		log(<span class="source_string">"InAngle = "</span>$InAngle$<span class="source_string">" degrees "</span>$InAngleDegrees);
+<a name="1008"></a>        	log(<span class="source_string">"PenetrationNumber = "</span>$PenetrationNumber);
+<a name="1009"></a>        	log(<span class="source_string">"SideArmorFactor = "</span>$SideArmorFactor);
+<a name="1010"></a>        	log(<span class="source_string">"Probability % = "</span>$GetPenetrationProbability(InAngleDegrees));
+<a name="1011"></a>        	log(<span class="source_string">"Total Power = "</span>$(PenetrationNumber * GetPenetrationProbability(InAngleDegrees)));
+<a name="1012"></a>        	log(<span class="source_string">"Final Calc = "</span>$(SideArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees)))$<span class="source_string">" Penetrated = "</span>$!( (FrontArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees))) &gt;= <span class="source_int">0.01</span> ));
+<a name="1013"></a>        }
+<a name="1014"></a>
+<a name="1015"></a>		if( (SideArmorFactor - (PenetrationNumber * GetPenetrationProbability(InAngleDegrees))) &gt;= <span class="source_int">0.01</span> )
+<a name="1016"></a>			return false;
+<a name="1017"></a>		else
+<a name="1018"></a>		    return true;
+<a name="1019"></a>    }
+<a name="1020"></a>    else
+<a name="1021"></a>    {
+<a name="1022"></a>       log (<span class="source_string">"We shoulda hit something!!!!"</span>);
+<a name="1023"></a>       return false;
+<a name="1024"></a>    }
+<a name="1025"></a>}
+<a name="1026"></a>
+<a name="1027"></a>function <span class="source_type">float</span> ModifyThreat(<span class="source_type">float</span> current, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> Threat)
+<a name="1028"></a>{
+<a name="1029"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> to, <span class="source_type">t</span>;
+<a name="1030"></a>	local <span class="source_type">float</span> <span class="source_type">r</span>;
+<a name="1031"></a>
+<a name="1032"></a>	if (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(Threat) != None)
+<a name="1033"></a>	{
+<a name="1034"></a>		current += <span class="source_int">0.2</span>;
+<a name="1035"></a>		if (<span class="source_type"><a href="../roengine/rotreadcraft.html" class="source">ROTreadCraft</a></span>(Threat) != None)
+<a name="1036"></a>		{
+<a name="1037"></a>			current += <span class="source_int">0.2</span>;
+<a name="1038"></a>			<span class="source_comment">// big bonus points for perpendicular tank targets
+</span><a name="1039"></a>			to = Normal(Threat.Location - Location);
+<a name="1040"></a>			to.<span class="source_type">z</span> = <span class="source_int">0</span>;
+<a name="1041"></a>			<span class="source_type">t</span> = Normal(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>(Threat.<span class="source_type">Rotation</span>));
+<a name="1042"></a>			<span class="source_type">t</span>.<span class="source_type">z</span> = <span class="source_int">0</span>;
+<a name="1043"></a>			<span class="source_type">r</span> = to dot <span class="source_type">t</span>;
+<a name="1044"></a>			if ( (<span class="source_type">r</span> &gt;= <span class="source_int">0.90630</span> && <span class="source_type">r</span> &lt; -<span class="source_int">0.73135</span>) || (<span class="source_type">r</span> &gt;= -<span class="source_int">0.73135</span> && <span class="source_type">r</span> &lt; <span class="source_int">0.90630</span>) )
+<a name="1045"></a>				current += <span class="source_int">0.3</span>;
+<a name="1046"></a>		}
+<a name="1047"></a>		else if (<span class="source_type"><a href="../roengine/rowheeledvehicle.html" class="source">ROWheeledVehicle</a></span>(Threat) != None && <span class="source_type"><a href="../roengine/rowheeledvehicle.html" class="source">ROWheeledVehicle</a></span>(Threat).bIsAPC)
+<a name="1048"></a>			current += <span class="source_int">0.1</span>;
+<a name="1049"></a>	}
+<a name="1050"></a>	else
+<a name="1051"></a>		current += <span class="source_int">0.25</span>;
+<a name="1052"></a>	return current;
+<a name="1053"></a>}
+<a name="1054"></a>
+<a name="1055"></a>simulated function UpdateTurretReferences()
+<a name="1056"></a>{
+<a name="1057"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1058"></a>
+<a name="1059"></a>    if (CannonTurret == none)
+<a name="1060"></a>    {
+<a name="1061"></a>    	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; WeaponPawns.length; <span class="source_type">i</span>++)
+<a name="1062"></a>    	{
+<a name="1063"></a>    		if (WeaponPawns[<span class="source_type">i</span>].Gun.IsA(<span class="source_name">'ROTankCannon'</span>))
+<a name="1064"></a>    		{
+<a name="1065"></a>    		    CannonTurret = <span class="source_type"><a href="../roengine/rotankcannon.html" class="source">ROTankCannon</a></span>(WeaponPawns[<span class="source_type">i</span>].Gun);
+<a name="1066"></a>    		    break;
+<a name="1067"></a>    		}
+<a name="1068"></a>   		}
+<a name="1069"></a>    }
+<a name="1070"></a>
+<a name="1071"></a>    if (HullMG == none)
+<a name="1072"></a>    {
+<a name="1073"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; WeaponPawns.length; <span class="source_type">i</span>++)
+<a name="1074"></a>		{
+<a name="1075"></a>			if (WeaponPawns[<span class="source_type">i</span>].Gun.IsA(<span class="source_name">'ROMountedTankMG'</span>))
+<a name="1076"></a>			{
+<a name="1077"></a>			    HullMG = WeaponPawns[<span class="source_type">i</span>].Gun;
+<a name="1078"></a>			    break;
+<a name="1079"></a>			}
+<a name="1080"></a>   		}
+<a name="1081"></a>    }
+<a name="1082"></a>}
+<a name="1083"></a>
+<a name="1084"></a><span class="source_comment">// test0r
+</span><a name="1085"></a>function exec DamageTank()
+<a name="1086"></a>{
+<a name="1087"></a>    Health /= <span class="source_int">2</span>;
+<a name="1088"></a>    EngineHealth /= <span class="source_int">2</span>;
+<a name="1089"></a>    bLeftTrackDamaged = true;
+<a name="1090"></a>    bRightTrackDamaged = true;
+<a name="1091"></a>}
+<a name="1092"></a>
+<a name="1093"></a>defaultproperties
+<a name="1094"></a>{
+<a name="1095"></a>     TreadVelocityScale=<span class="source_int">450.000000</span>
+<a name="1096"></a>     VehicleHudThreadsPosX(<span class="source_int">0</span>)=<span class="source_int">0.350000</span>
+<a name="1097"></a>     VehicleHudThreadsPosX(<span class="source_int">1</span>)=<span class="source_int">0.650000</span>
+<a name="1098"></a>     VehicleHudThreadsPosY=<span class="source_int">0.500000</span>
+<a name="1099"></a>     VehicleHudThreadsScale=<span class="source_int">0.650000</span>
+<a name="1100"></a>     AddedLatFriction=(Points=((OutVal=<span class="source_int">1.000000</span>),(InVal=<span class="source_int">250.000000</span>,OutVal=<span class="source_int">1.000000</span>),(InVal=<span class="source_int">300.000000</span>,OutVal=<span class="source_int">3.000000</span>),(InVal=<span class="source_int">10000000000.000000</span>,OutVal=<span class="source_int">3.000000</span>)))
+<a name="1101"></a>     WheelRotationScale=<span class="source_int">500</span>
+<a name="1102"></a>     FrontArmorFactor=<span class="source_int">6</span>
+<a name="1103"></a>     RearArmorFactor=<span class="source_int">2</span>
+<a name="1104"></a>     SideArmorFactor=<span class="source_int">3</span>
+<a name="1105"></a>     TreadHitMinAngle=<span class="source_int">2.000000</span>
+<a name="1106"></a>     FrontLeftAngle=<span class="source_int">333.000000</span>
+<a name="1107"></a>     FrontRightAngle=<span class="source_int">28.000000</span>
+<a name="1108"></a>     RearRightAngle=<span class="source_int">152.000000</span>
+<a name="1109"></a>     RearLeftAngle=<span class="source_int">207.000000</span>
+<a name="1110"></a>     WheelSoftness=<span class="source_int">0.025000</span>
+<a name="1111"></a>     WheelPenScale=<span class="source_int">2.000000</span>
+<a name="1112"></a>     WheelPenOffset=<span class="source_int">0.010000</span>
+<a name="1113"></a>     WheelRestitution=<span class="source_int">0.100000</span>
+<a name="1114"></a>     WheelInertia=<span class="source_int">0.100000</span>
+<a name="1115"></a>     WheelLongFrictionFunc=(Points=(,(InVal=<span class="source_int">100.000000</span>,OutVal=<span class="source_int">1.000000</span>),(InVal=<span class="source_int">200.000000</span>,OutVal=<span class="source_int">0.900000</span>),(InVal=<span class="source_int">10000000000.000000</span>,OutVal=<span class="source_int">0.900000</span>)))
+<a name="1116"></a>     WheelLongSlip=<span class="source_int">0.001000</span>
+<a name="1117"></a>     WheelLatSlipFunc=(Points=(,(InVal=<span class="source_int">30.000000</span>,OutVal=<span class="source_int">0.009000</span>),(InVal=<span class="source_int">10000000000.000000</span>)))
+<a name="1118"></a>     WheelLongFrictionScale=<span class="source_int">1.500000</span>
+<a name="1119"></a>     WheelLatFrictionScale=<span class="source_int">3.000000</span>
+<a name="1120"></a>     WheelHandbrakeSlip=<span class="source_int">0.010000</span>
+<a name="1121"></a>     WheelHandbrakeFriction=<span class="source_int">0.100000</span>
+<a name="1122"></a>     WheelSuspensionTravel=<span class="source_int">15.000000</span>
+<a name="1123"></a>     WheelSuspensionMaxRenderTravel=<span class="source_int">15.000000</span>
+<a name="1124"></a>     FTScale=<span class="source_int">0.030000</span>
+<a name="1125"></a>     ChassisTorqueScale=<span class="source_int">0.250000</span>
+<a name="1126"></a>     MinBrakeFriction=<span class="source_int">4.000000</span>
+<a name="1127"></a>     MaxSteerAngleCurve=(Points=((OutVal=<span class="source_int">35.000000</span>),(InVal=<span class="source_int">1500.000000</span>,OutVal=<span class="source_int">20.000000</span>),(InVal=<span class="source_int">1000000000.000000</span>,OutVal=<span class="source_int">15.000000</span>)))
+<a name="1128"></a>     TorqueCurve=(Points=((OutVal=<span class="source_int">12.000000</span>),(InVal=<span class="source_int">200.000000</span>,OutVal=<span class="source_int">3.000000</span>),(InVal=<span class="source_int">1500.000000</span>,OutVal=<span class="source_int">4.000000</span>),(InVal=<span class="source_int">2200.000000</span>)))
+<a name="1129"></a>     GearRatios(<span class="source_int">0</span>)=-<span class="source_int">0.200000</span>
+<a name="1130"></a>     GearRatios(<span class="source_int">1</span>)=<span class="source_int">0.200000</span>
+<a name="1131"></a>     GearRatios(<span class="source_int">2</span>)=<span class="source_int">0.350000</span>
+<a name="1132"></a>     GearRatios(<span class="source_int">3</span>)=<span class="source_int">0.550000</span>
+<a name="1133"></a>     GearRatios(<span class="source_int">4</span>)=<span class="source_int">0.600000</span>
+<a name="1134"></a>     TransRatio=<span class="source_int">0.120000</span>
+<a name="1135"></a>     ChangeUpPoint=<span class="source_int">2000.000000</span>
+<a name="1136"></a>     ChangeDownPoint=<span class="source_int">1000.000000</span>
+<a name="1137"></a>     LSDFactor=<span class="source_int">1.000000</span>
+<a name="1138"></a>     EngineBrakeFactor=<span class="source_int">0.000100</span>
+<a name="1139"></a>     EngineBrakeRPMScale=<span class="source_int">0.100000</span>
+<a name="1140"></a>     MaxBrakeTorque=<span class="source_int">20.000000</span>
+<a name="1141"></a>     SteerSpeed=<span class="source_int">160.000000</span>
+<a name="1142"></a>     TurnDamping=<span class="source_int">50.000000</span>
+<a name="1143"></a>     StopThreshold=<span class="source_int">100.000000</span>
+<a name="1144"></a>     HandbrakeThresh=<span class="source_int">200.000000</span>
+<a name="1145"></a>     EngineInertia=<span class="source_int">0.100000</span>
+<a name="1146"></a>     IdleRPM=<span class="source_int">500.000000</span>
+<a name="1147"></a>     EngineRPMSoundRange=<span class="source_int">5000.000000</span>
+<a name="1148"></a>     RevMeterScale=<span class="source_int">4000.000000</span>
+<a name="1149"></a>     bSpecialTankTurning=True
+<a name="1150"></a>     StartUpForce=<span class="source_string">"TankStartUp"</span>
+<a name="1151"></a>     ShutDownForce=<span class="source_string">"TankShutDown"</span>
+<a name="1152"></a>     ViewShakeRadius=<span class="source_int">600.000000</span>
+<a name="1153"></a>     ViewShakeOffsetMag=(<span class="source_type">X</span>=<span class="source_int">0.500000</span>,<span class="source_type">Z</span>=<span class="source_int">2.000000</span>)
+<a name="1154"></a>     ViewShakeOffsetFreq=<span class="source_int">7.000000</span>
+<a name="1155"></a>     DisintegrationHealth=-<span class="source_int">10000.000000</span>
+<a name="1156"></a>     DestructionLinearMomentum=(Min=<span class="source_int">100.000000</span>,<span class="source_type">Max</span>=<span class="source_int">350.000000</span>)
+<a name="1157"></a>     DestructionAngularMomentum=(<span class="source_type">Max</span>=<span class="source_int">150.000000</span>)
+<a name="1158"></a>     DamagedEffectOffset=(<span class="source_type">X</span>=-<span class="source_int">40.000000</span>,<span class="source_type">Y</span>=<span class="source_int">10.000000</span>,<span class="source_type">Z</span>=<span class="source_int">10.000000</span>)
+<a name="1159"></a>     ImpactDamageMult=<span class="source_int">0.001000</span>
+<a name="1160"></a>     bMustBeTankCommander=True
+<a name="1161"></a>     EngineHealth=<span class="source_int">325</span>
+<a name="1162"></a>     VehicleMass=<span class="source_int">12.500000</span>
+<a name="1163"></a>     bHasHandbrake=True
+<a name="1164"></a>     DrivePos=(<span class="source_type">X</span>=<span class="source_int">30.000000</span>,<span class="source_type">Y</span>=-<span class="source_int">20.000000</span>,<span class="source_type">Z</span>=<span class="source_int">55.000000</span>)
+<a name="1165"></a>     ExitPositions(<span class="source_int">0</span>)=(<span class="source_type">Y</span>=-<span class="source_int">165.000000</span>,<span class="source_type">Z</span>=<span class="source_int">40.000000</span>)
+<a name="1166"></a>     ExitPositions(<span class="source_int">1</span>)=(<span class="source_type">Y</span>=<span class="source_int">165.000000</span>,<span class="source_type">Z</span>=<span class="source_int">40.000000</span>)
+<a name="1167"></a>     ExitPositions(<span class="source_int">2</span>)=(<span class="source_type">Y</span>=-<span class="source_int">165.000000</span>,<span class="source_type">Z</span>=-<span class="source_int">40.000000</span>)
+<a name="1168"></a>     ExitPositions(<span class="source_int">3</span>)=(<span class="source_type">Y</span>=<span class="source_int">165.000000</span>,<span class="source_type">Z</span>=-<span class="source_int">40.000000</span>)
+<a name="1169"></a>     EntryRadius=<span class="source_int">160.000000</span>
+<a name="1170"></a>     FPCamPos=(<span class="source_type">X</span>=<span class="source_int">29.000000</span>,<span class="source_type">Y</span>=-<span class="source_int">25.000000</span>,<span class="source_type">Z</span>=<span class="source_int">46.000000</span>)
+<a name="1171"></a>     TPCamDistance=<span class="source_int">375.000000</span>
+<a name="1172"></a>     CenterSpringForce=<span class="source_string">"SpringONSSRV"</span>
+<a name="1173"></a>     TPCamLookat=(<span class="source_type">X</span>=<span class="source_int">0.000000</span>,<span class="source_type">Z</span>=<span class="source_int">0.000000</span>)
+<a name="1174"></a>     TPCamWorldOffset=(<span class="source_type">Z</span>=<span class="source_int">100.000000</span>)
+<a name="1175"></a>     VehiclePositionString=<span class="source_string">"in a Tank"</span>
+<a name="1176"></a>     VehicleNameString=<span class="source_string">"Tank"</span>
+<a name="1177"></a>     MaxDesireability=<span class="source_int">1.400000</span>
+<a name="1178"></a>     ObjectiveGetOutDist=<span class="source_int">1500.000000</span>
+<a name="1179"></a>     GroundSpeed=<span class="source_int">325.000000</span>
+<a name="1180"></a>     HealthMax=<span class="source_int">300.000000</span>
+<a name="1181"></a>     Health=<span class="source_int">300</span>
+<a name="1182"></a>     CollisionRadius=<span class="source_int">100.000000</span>
+<a name="1183"></a>     CollisionHeight=<span class="source_int">400.000000</span>
+<a name="1184"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../engine/karmaparamsrbfull.html" class="source">KarmaParamsRBFull</a></span> <span class="source_type">Name</span>=KParams0
+<a name="1185"></a>         KInertiaTensor(<span class="source_int">0</span>)=<span class="source_int">1.000000</span>
+<a name="1186"></a>         KInertiaTensor(<span class="source_int">3</span>)=<span class="source_int">3.000000</span>
+<a name="1187"></a>         KInertiaTensor(<span class="source_int">5</span>)=<span class="source_int">3.000000</span>
+<a name="1188"></a>         KCOMOffset=(<span class="source_type">Z</span>=-<span class="source_int">0.500000</span>)
+<a name="1189"></a>         KLinearDamping=<span class="source_int">0.050000</span>
+<a name="1190"></a>         KAngularDamping=<span class="source_int">0.050000</span>
+<a name="1191"></a>         KStartEnabled=True
+<a name="1192"></a>         bKNonSphericalInertia=True
+<a name="1193"></a>         KMaxAngularSpeed=<span class="source_int">1.000000</span>
+<a name="1194"></a>         bHighDetailOnly=False
+<a name="1195"></a>         bClientOnly=False
+<a name="1196"></a>         bKDoubleTickRate=True
+<a name="1197"></a>         bDestroyOnWorldPenetrate=True
+<a name="1198"></a>         bDoSafetime=True
+<a name="1199"></a>         KFriction=<span class="source_int">0.500000</span>
+<a name="1200"></a>         KImpactThreshold=<span class="source_int">700.000000</span>
+<a name="1201"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1202"></a>     KParams=<span class="source_type"><a href="../engine/karmaparamsrbfull.html" class="source">KarmaParamsRBFull</a></span><span class="source_name">'ROEngine.ROTreadCraft.KParams0'</span>
+<a name="1203"></a>
+<a name="1204"></a>}
+<a name="1205"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roengine/roengine-overview.html">Package</a></td>
+	<td class="header"><a href="../roengine/rotreadcraft.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROTreadCraft">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_roengine/rotouchmessageplus.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_roengine/rovehicle.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:07.698 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: ROEngine.ROPlayerInput</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roengine/roengine-overview.html">Package</a></td>
+	<td class="header"><a href="../roengine/roplayerinput.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROPlayerInput">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_roengine/roplayer.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_roengine/roplayerreplicationinfo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_roengine/roplayerinput.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../roengine/roengine-overview.html">ROEngine</a>.<a href="../roengine/roplayerinput.html">ROPlayerInput</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// ROPlayerInput
+</span><a name="3"></a><span class="source_comment">// Object within ROPlayer that manages player input.
+</span><a name="4"></a><span class="source_comment">// only spawned on client
+</span><a name="5"></a><span class="source_comment">// Author. Ramm-Jaeger
+</span><a name="6"></a><span class="source_comment">// Note, left a bunch of unreal stuff in here in case anyone wants to modify it
+</span><a name="7"></a><span class="source_comment">//=============================================================================
+</span><a name="8"></a>
+<a name="9"></a><span class="source_type">class</span> <span class="source_type"><a href="../roengine/roplayerinput.html" class="source">ROPlayerInput</a></span> extends <span class="source_type"><a href="../engine/playerinput.html" class="source">PlayerInput</a></span> within <span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>
+<a name="10"></a>	config(<span class="source_type">User</span>);
+<a name="11"></a>
+<a name="12"></a><span class="source_comment">/*var globalconfig	bool	bInvertMouse;
+<a name="13"></a>
+<a name="14"></a>var bool		bWasForward;	// used for doubleclick move
+<a name="15"></a>var bool		bWasBack;
+<a name="16"></a>var bool		bWasLeft;
+<a name="17"></a>var bool		bWasRight;
+<a name="18"></a>var bool		bEdgeForward;
+<a name="19"></a>var bool		bEdgeBack;
+<a name="20"></a>var bool		bEdgeLeft;
+<a name="21"></a>var bool 		bEdgeRight;
+<a name="22"></a>var	bool		bAdjustSampling;
+<a name="23"></a>
+<a name="24"></a>// Mouse smoothing
+<a name="25"></a>var globalconfig byte   MouseSmoothingMode;
+<a name="26"></a>var globalconfig float  MouseSmoothingStrength;
+<a name="27"></a>var globalconfig float	MouseSensitivity;
+<a name="28"></a>var globalconfig float  MouseSamplingTime;
+<a name="29"></a>var globalconfig float  MouseAccelThreshold;
+<a name="30"></a>
+<a name="31"></a>var float SmoothedMouse[2], ZeroTime[2], SamplingTime[2], MaybeTime[2], OldSamples[4];
+<a name="32"></a>var int MouseSamples[2];
+<a name="33"></a>
+<a name="34"></a>var	float DoubleClickTimer; // max double click interval for double click move
+<a name="35"></a>var globalconfig float	DoubleClickTime;
+<a name="36"></a>var globalconfig bool bEnableDodging;
+<a name="37"></a>
+<a name="38"></a>//=============================================================================
+<a name="39"></a>// Input related functions.
+<a name="40"></a>
+<a name="41"></a>function bool InvertLook();
+<a name="42"></a>*/</span>
+<a name="43"></a><span class="source_comment">// Postprocess the player's input.
+</span><a name="44"></a>event <span class="source_type"><a href="../engine/playerinput.html" class="source">PlayerInput</a></span>( <span class="source_type">float</span> <span class="source_type">DeltaTime</span> )
+<a name="45"></a>{
+<a name="46"></a>	local <span class="source_type">float</span> FOVScale, MouseScale;
+<a name="47"></a>
+<a name="48"></a>	<span class="source_comment">// Ignore input if we're playing back a client-side demo.
+</span><a name="49"></a>	if( Outer.bDemoOwner && !Outer.default.bDemoOwner )
+<a name="50"></a>		return;
+<a name="51"></a>
+<a name="52"></a>	<span class="source_comment">// Check for Double click move
+</span><a name="53"></a>	<span class="source_comment">// flag transitions
+</span><a name="54"></a>	bEdgeForward = (bWasForward ^^ (aBaseY &gt; <span class="source_int">0</span>));
+<a name="55"></a>	bEdgeBack = (bWasBack ^^ (aBaseY &lt; <span class="source_int">0</span>));
+<a name="56"></a>	bEdgeLeft = (bWasLeft ^^ (aStrafe &lt; <span class="source_int">0</span>));
+<a name="57"></a>	bEdgeRight = (bWasRight ^^ (aStrafe &gt; <span class="source_int">0</span>));
+<a name="58"></a>	bWasForward = (aBaseY &gt; <span class="source_int">0</span>);
+<a name="59"></a>	bWasBack = (aBaseY &lt; <span class="source_int">0</span>);
+<a name="60"></a>	bWasLeft = (aStrafe &lt; <span class="source_int">0</span>);
+<a name="61"></a>	bWasRight = (aStrafe &gt; <span class="source_int">0</span>);
+<a name="62"></a>
+<a name="63"></a>	<span class="source_comment">// Modify mouse sensitivity based on the scope - Ramm
+</span><a name="64"></a>	if( Outer.GetMouseModifier() &lt; <span class="source_int">0</span> )
+<a name="65"></a>	{
+<a name="66"></a>	    FOVScale = DesiredFOV * <span class="source_int">0.01111</span>; <span class="source_comment">// 0.01111 = 1/90
+</span><a name="67"></a>	}
+<a name="68"></a>	else
+<a name="69"></a>	{
+<a name="70"></a>	    FOVScale = Outer.GetMouseModifier() * <span class="source_int">0.01111</span>; <span class="source_comment">// 0.01111 = 1/90
+</span><a name="71"></a>	}
+<a name="72"></a>
+<a name="73"></a>	<span class="source_comment">// Smooth and amplify mouse movement
+</span><a name="74"></a>	MouseScale = MouseSensitivity * FOVScale;
+<a name="75"></a>	aMouseX = SmoothMouse(aMouseX*MouseScale, <span class="source_type">DeltaTime</span>,bXAxis,<span class="source_int">0</span>);
+<a name="76"></a>	aMouseY = SmoothMouse(aMouseY*MouseScale, <span class="source_type">DeltaTime</span>,bYAxis,<span class="source_int">1</span>);
+<a name="77"></a>
+<a name="78"></a>    <span class="source_comment">// Modify mouse sensitivity based on prone scaler - Not needed any more - Ramm
+</span><a name="79"></a>	<span class="source_comment">//aMouseX = aMouseX * Outer.GetProneModifier();
+</span><a name="80"></a>	<span class="source_comment">//aMouseY = aMouseY * Outer.GetProneModifier();
+</span><a name="81"></a>
+<a name="82"></a>	aMouseX = AccelerateMouse(aMouseX);
+<a name="83"></a>	aMouseY = AccelerateMouse(aMouseY);
+<a name="84"></a>
+<a name="85"></a>	<span class="source_comment">// adjust keyboard and joystick movements
+</span><a name="86"></a>	aLookUp *= FOVScale;
+<a name="87"></a>	aTurn   *= FOVScale;
+<a name="88"></a>
+<a name="89"></a>	<span class="source_comment">// Remap raw x-axis movement.
+</span><a name="90"></a>	if( bStrafe!=<span class="source_int">0</span> ) <span class="source_comment">// strafe
+</span><a name="91"></a>		aStrafe += aBaseX * <span class="source_int">7.5</span> + aMouseX;
+<a name="92"></a>	else <span class="source_comment">// forward
+</span><a name="93"></a>		aTurn  += aBaseX * FOVScale + aMouseX;
+<a name="94"></a>	aBaseX = <span class="source_int">0</span>;
+<a name="95"></a>
+<a name="96"></a>	<span class="source_comment">// Remap mouse y-axis movement.
+</span><a name="97"></a>	if( (bStrafe == <span class="source_int">0</span>) && (bAlwaysMouseLook || (bLook!=<span class="source_int">0</span>)) )
+<a name="98"></a>	{
+<a name="99"></a>		<span class="source_comment">// Look up/down.
+</span><a name="100"></a>		if ( bInvertMouse )
+<a name="101"></a>			aLookUp -= aMouseY;
+<a name="102"></a>		else
+<a name="103"></a>			aLookUp += aMouseY;
+<a name="104"></a>	}
+<a name="105"></a>	else <span class="source_comment">// Move forward/backward.
+</span><a name="106"></a>		aForward += aMouseY;
+<a name="107"></a>
+<a name="108"></a>	if ( bSnapLevel != <span class="source_int">0</span> )
+<a name="109"></a>	{
+<a name="110"></a>		bCenterView = true;
+<a name="111"></a>		bKeyboardLook = false;
+<a name="112"></a>	}
+<a name="113"></a>	else if (aLookUp != <span class="source_int">0</span>)
+<a name="114"></a>	{
+<a name="115"></a>		bCenterView = false;
+<a name="116"></a>		bKeyboardLook = true;
+<a name="117"></a>	}
+<a name="118"></a>	else if ( bSnapToLevel && !bAlwaysMouseLook )
+<a name="119"></a>	{
+<a name="120"></a>		bCenterView = true;
+<a name="121"></a>		bKeyboardLook = false;
+<a name="122"></a>	}
+<a name="123"></a>
+<a name="124"></a>	<span class="source_comment">// Remap other y-axis movement.
+</span><a name="125"></a>	if ( bFreeLook != <span class="source_int">0</span> )
+<a name="126"></a>	{
+<a name="127"></a>		bKeyboardLook = true;
+<a name="128"></a>		aLookUp += <span class="source_int">0.5</span> * aBaseY * FOVScale;
+<a name="129"></a>	}
+<a name="130"></a>	else
+<a name="131"></a>		aForward += aBaseY;
+<a name="132"></a>
+<a name="133"></a>	aBaseY = <span class="source_int">0</span>;
+<a name="134"></a>
+<a name="135"></a>	<span class="source_comment">// Handle walking.
+</span><a name="136"></a>	HandleWalking();
+<a name="137"></a>}
+<a name="138"></a>
+<a name="139"></a>static function <span class="source_type">float</span> GetMouseSensitivity()
+<a name="140"></a>{
+<a name="141"></a>	return default.MouseSensitivity;
+<a name="142"></a>}
+<a name="143"></a>
+<a name="144"></a><span class="source_comment">/*
+<a name="145"></a>exec function SetSmoothingMode(byte B)
+<a name="146"></a>{
+<a name="147"></a>	MouseSmoothingMode = B;
+<a name="148"></a>	log("Smoothing mode "$MouseSmoothingMode);
+<a name="149"></a>}
+<a name="150"></a>
+<a name="151"></a>exec function SetSmoothingStrength(float F)
+<a name="152"></a>{
+<a name="153"></a>	MouseSmoothingStrength = FClamp(F,0,1);
+<a name="154"></a>}
+<a name="155"></a>
+<a name="156"></a>function float AccelerateMouse(float aMouse)
+<a name="157"></a>{
+<a name="158"></a>	local float Accel;
+<a name="159"></a>
+<a name="160"></a>	if ( abs(aMouse) == 0 )
+<a name="161"></a>		return 0;
+<a name="162"></a>
+<a name="163"></a>	Accel = MouseAccelThreshold * MouseSensitivity;
+<a name="164"></a>	if ( abs(aMouse) &lt; Accel )
+<a name="165"></a>	{
+<a name="166"></a>		if ( abs(aMouse) &lt; 0.1 * Accel )
+<a name="167"></a>			aMouse *= 0.1;
+<a name="168"></a>		else
+<a name="169"></a>			aMouse = aMouse * abs(aMouse)/Accel;
+<a name="170"></a>	}
+<a name="171"></a>	return aMouse;
+<a name="172"></a>}
+<a name="173"></a>
+<a name="174"></a>function float SmoothMouse(float aMouse, float DeltaTime, out byte SampleCount, int Index)
+<a name="175"></a>{
+<a name="176"></a>	local int i, sum;
+<a name="177"></a>
+<a name="178"></a>	if ( MouseSmoothingMode == 0 )
+<a name="179"></a>		return aMouse;
+<a name="180"></a>
+<a name="181"></a>	if ( aMouse == 0 )
+<a name="182"></a>	{
+<a name="183"></a>		ZeroTime[Index] += DeltaTime;
+<a name="184"></a>		if ( ZeroTime[Index] &lt; MouseSamplingTime )
+<a name="185"></a>		{
+<a name="186"></a>			SamplingTime[Index] += DeltaTime;
+<a name="187"></a>			MaybeTime[Index] += DeltaTime;
+<a name="188"></a>			aMouse = SmoothedMouse[Index];
+<a name="189"></a>		}
+<a name="190"></a>		else
+<a name="191"></a>		{
+<a name="192"></a>			if ( bAdjustSampling && (MouseSamples[Index] &gt; 9) )
+<a name="193"></a>			{
+<a name="194"></a>				SamplingTime[Index] -= MaybeTime[Index];
+<a name="195"></a>				MouseSamplingTime = 0.9 * MouseSamplingTime + 0.1 * SamplingTime[Index]/MouseSamples[Index];
+<a name="196"></a>			}
+<a name="197"></a>			SamplingTime[Index] = 0;
+<a name="198"></a>			SmoothedMouse[Index] = 0;
+<a name="199"></a>			MouseSamples[Index] = 0;
+<a name="200"></a>		}
+<a name="201"></a>	}
+<a name="202"></a>	else
+<a name="203"></a>	{
+<a name="204"></a>		MaybeTime[Index] = 0;
+<a name="205"></a>
+<a name="206"></a>		if ( SmoothedMouse[Index] != 0 )
+<a name="207"></a>		{
+<a name="208"></a>			MouseSamples[Index] += SampleCount;
+<a name="209"></a>			if ( DeltaTime &gt; MouseSamplingTime * (SampleCount + 1) )
+<a name="210"></a>				SamplingTime[Index] += MouseSamplingTime * SampleCount;
+<a name="211"></a>			else
+<a name="212"></a>			{
+<a name="213"></a>				SamplingTime[Index] += DeltaTime;
+<a name="214"></a>				aMouse = aMouse * DeltaTime/(MouseSamplingTime * SampleCount);
+<a name="215"></a>			}
+<a name="216"></a>		}
+<a name="217"></a>		else
+<a name="218"></a>			SamplingTime[Index] = 0.5 * MouseSamplingTime;
+<a name="219"></a>
+<a name="220"></a>		SmoothedMouse[Index] = aMouse/SampleCount;
+<a name="221"></a>		ZeroTime[Index] = 0;
+<a name="222"></a>	}
+<a name="223"></a>	SampleCount = 0;
+<a name="224"></a>
+<a name="225"></a>	if ( MouseSmoothingMode &gt; 1 )
+<a name="226"></a>	{
+<a name="227"></a>		if ( aMouse == 0 )
+<a name="228"></a>		{
+<a name="229"></a>			// stop in next tick
+<a name="230"></a>			for ( i=0; i&lt;3; i++ )
+<a name="231"></a>			{
+<a name="232"></a>				sum += (i+1) * 0.1;
+<a name="233"></a>				aMouse += sum * OldSamples[i];
+<a name="234"></a>				OldSamples[i] = 0;
+<a name="235"></a>			}
+<a name="236"></a>			OldSamples[3] = 0;
+<a name="237"></a>		}
+<a name="238"></a>		else
+<a name="239"></a>		{
+<a name="240"></a>			aMouse = 0.4 * aMouse;
+<a name="241"></a>			OldSamples[3] = aMouse;
+<a name="242"></a>			for ( i=0; i&lt;3; i++ )
+<a name="243"></a>			{
+<a name="244"></a>				aMouse += (i+1) * 0.1 * OldSamples[i];
+<a name="245"></a>				OldSamples[i] = OldSamples[i+1];
+<a name="246"></a>			}
+<a name="247"></a>
+<a name="248"></a>		}
+<a name="249"></a>	}
+<a name="250"></a>	return aMouse;
+<a name="251"></a>}
+<a name="252"></a>
+<a name="253"></a>function UpdateSensitivity(float F)
+<a name="254"></a>{
+<a name="255"></a>	MouseSensitivity = FMax(0,F);
+<a name="256"></a>    default.MouseSensitivity = MouseSensitivity;
+<a name="257"></a>	//class'PlayerInput'.static.StaticSaveConfig();
+<a name="258"></a>}
+<a name="259"></a>
+<a name="260"></a>function float GetDefaultSensitivity()
+<a name="261"></a>{
+<a name="262"></a>    return default.MouseSensitivity;
+<a name="263"></a>}
+<a name="264"></a>
+<a name="265"></a>function UpdateAccel(float F)
+<a name="266"></a>{
+<a name="267"></a>	MouseAccelThreshold = FMax(0,f);
+<a name="268"></a>	default.MouseAccelThreshold = MouseAccelThreshold;
+<a name="269"></a>	class'PlayerInput'.static.StaticSaveConfig();
+<a name="270"></a>}
+<a name="271"></a>
+<a name="272"></a>function UpdateSmoothing( int Mode )
+<a name="273"></a>{
+<a name="274"></a>    MouseSmoothingMode = Mode;
+<a name="275"></a>    default.MouseSmoothingMode = MouseSmoothingMode;
+<a name="276"></a>	class'PlayerInput'.static.StaticSaveConfig();
+<a name="277"></a>}
+<a name="278"></a>
+<a name="279"></a>function ChangeSnapView( bool B )
+<a name="280"></a>{
+<a name="281"></a>	bSnapToLevel = B;
+<a name="282"></a>}
+<a name="283"></a>
+<a name="284"></a>// check for double click move
+<a name="285"></a>function Actor.eDoubleClickDir CheckForDoubleClickMove(float DeltaTime)
+<a name="286"></a>{
+<a name="287"></a>	local Actor.eDoubleClickDir DoubleClickMove, OldDoubleClick;
+<a name="288"></a>
+<a name="289"></a>    if (!bEnableDodging)
+<a name="290"></a>    {
+<a name="291"></a>        DoubleClickMove = DCLICK_None;
+<a name="292"></a>        return DoubleClickMove;
+<a name="293"></a>    }
+<a name="294"></a>
+<a name="295"></a>    if ( DoubleClickDir == DCLICK_Active )
+<a name="296"></a>		DoubleClickMove = DCLICK_Active;
+<a name="297"></a>	else
+<a name="298"></a>		DoubleClickMove = DCLICK_None;
+<a name="299"></a>	if (DoubleClickTime &gt; 0.0)
+<a name="300"></a>	{
+<a name="301"></a>		if ( DoubleClickDir == DCLICK_Active )
+<a name="302"></a>		{
+<a name="303"></a>			if ( (Pawn != None) && (Pawn.Physics == PHYS_Walking) )
+<a name="304"></a>			{
+<a name="305"></a>				DoubleClickTimer = 0;
+<a name="306"></a>				DoubleClickDir = DCLICK_Done;
+<a name="307"></a>			}
+<a name="308"></a>		}
+<a name="309"></a>		else if ( DoubleClickDir != DCLICK_Done )
+<a name="310"></a>		{
+<a name="311"></a>			OldDoubleClick = DoubleClickDir;
+<a name="312"></a>			DoubleClickDir = DCLICK_None;
+<a name="313"></a>
+<a name="314"></a>			if (bEdgeForward && bWasForward)
+<a name="315"></a>				DoubleClickDir = DCLICK_Forward;
+<a name="316"></a>			else if (bEdgeBack && bWasBack)
+<a name="317"></a>				DoubleClickDir = DCLICK_Back;
+<a name="318"></a>			else if (bEdgeLeft && bWasLeft)
+<a name="319"></a>				DoubleClickDir = DCLICK_Left;
+<a name="320"></a>			else if (bEdgeRight && bWasRight)
+<a name="321"></a>				DoubleClickDir = DCLICK_Right;
+<a name="322"></a>
+<a name="323"></a>			if ( DoubleClickDir == DCLICK_None)
+<a name="324"></a>				DoubleClickDir = OldDoubleClick;
+<a name="325"></a>			else if ( DoubleClickDir != OldDoubleClick )
+<a name="326"></a>				DoubleClickTimer = DoubleClickTime + 0.5 * DeltaTime;
+<a name="327"></a>			else
+<a name="328"></a>				DoubleClickMove = DoubleClickDir;
+<a name="329"></a>		}
+<a name="330"></a>
+<a name="331"></a>		if (DoubleClickDir == DCLICK_Done)
+<a name="332"></a>		{
+<a name="333"></a>			DoubleClickTimer = FMin(DoubleClickTimer-DeltaTime,0);
+<a name="334"></a>			if (DoubleClickTimer &lt; -0.35)
+<a name="335"></a>			{
+<a name="336"></a>				DoubleClickDir = DCLICK_None;
+<a name="337"></a>				DoubleClickTimer = DoubleClickTime;
+<a name="338"></a>			}
+<a name="339"></a>		}
+<a name="340"></a>		else if ((DoubleClickDir != DCLICK_None) && (DoubleClickDir != DCLICK_Active))
+<a name="341"></a>		{
+<a name="342"></a>			DoubleClickTimer -= DeltaTime;
+<a name="343"></a>			if (DoubleClickTimer &lt; 0)
+<a name="344"></a>			{
+<a name="345"></a>				DoubleClickDir = DCLICK_None;
+<a name="346"></a>				DoubleClickTimer = DoubleClickTime;
+<a name="347"></a>			}
+<a name="348"></a>		}
+<a name="349"></a>	}
+<a name="350"></a>	return DoubleClickMove;
+<a name="351"></a>}
+<a name="352"></a>*/</span>
+<a name="353"></a>
+<a name="354"></a>defaultproperties
+<a name="355"></a>{
+<a name="356"></a>}
+<a name="357"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roengine/roengine-overview.html">Package</a></td>
+	<td class="header"><a href="../roengine/roplayerinput.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROPlayerInput">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_roengine/roplayer.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_roengine/roplayerreplicationinfo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:07.330 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

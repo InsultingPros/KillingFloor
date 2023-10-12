@@ -1,0 +1,599 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.WeaponFire</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/weaponfire.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#WeaponFire">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/weaponattachment.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/weaponpickup.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/weaponfire.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/weaponfire.html">WeaponFire</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/weaponfire.html" class="source">WeaponFire</a></span> extends <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="2"></a>    native;
+<a name="3"></a>
+<a name="4"></a>var() <span class="source_type">bool</span> bSplashDamage;
+<a name="5"></a>var() <span class="source_type">bool</span> bSplashJump;
+<a name="6"></a>var() <span class="source_type">bool</span> bRecommendSplashDamage;
+<a name="7"></a>var() <span class="source_type">bool</span> bTossed;
+<a name="8"></a>var() <span class="source_type">bool</span> bLeadTarget;
+<a name="9"></a>var() <span class="source_type">bool</span> bInstantHit;
+<a name="10"></a>
+<a name="11"></a><span class="source_comment">// other useful stuff //
+</span><a name="12"></a>var() <span class="source_type">bool</span>  bPawnRapidFireAnim; <span class="source_comment">// for determining what anim the firer should play
+</span><a name="13"></a>var() <span class="source_type">bool</span>  bReflective;
+<a name="14"></a>var <span class="source_type">bool</span> bTimerLoop;
+<a name="15"></a>var() <span class="source_type">bool</span>  bFireOnRelease;    <span class="source_comment">// if true, shot will be fired when button is released, HoldTime will be the time the button was held for
+</span><a name="16"></a>var() <span class="source_type">bool</span>  bWaitForRelease;   <span class="source_comment">// if true, fire button must be released between each shot
+</span><a name="17"></a>var() <span class="source_type">bool</span>  bModeExclusive;    <span class="source_comment">// if true, no other fire modes can be active at the same time as this one
+</span><a name="18"></a>
+<a name="19"></a>var   <span class="source_type">bool</span>  bIsFiring;
+<a name="20"></a>var   <span class="source_type">bool</span>  bNowWaiting;
+<a name="21"></a>var   <span class="source_type">bool</span>  bServerDelayStopFire;
+<a name="22"></a>var   <span class="source_type">bool</span>  bServerDelayStartFire;
+<a name="23"></a>var	  <span class="source_type">bool</span>	bInstantStop;
+<a name="24"></a>
+<a name="25"></a><span class="source_comment">// if _RO_
+</span><a name="26"></a>var	  <span class="source_type">bool</span>	bMeleeMode;			<span class="source_comment">// This fire mode is a melee fire mode. Used by the weapon for various state checking
+</span><a name="27"></a><span class="source_comment">// end _RO_
+</span><a name="28"></a>
+<a name="29"></a><span class="source_comment">// muzzle flash & smoke //
+</span><a name="30"></a>var() <span class="source_type">bool</span> bAttachSmokeEmitter;
+<a name="31"></a>var() <span class="source_type">bool</span> bAttachFlashEmitter;
+<a name="32"></a>
+<a name="33"></a><span class="source_comment">// timer
+</span><a name="34"></a>var <span class="source_type">float</span> TimerInterval;
+<a name="35"></a>var <span class="source_type">float</span> NextTimerPop;
+<a name="36"></a>
+<a name="37"></a>var() <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>;
+<a name="38"></a>var <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">Instigator</span>;
+<a name="39"></a>var <span class="source_type"><a href="../engine/levelinfo.html" class="source">LevelInfo</a></span> <span class="source_type">Level</span>;
+<a name="40"></a>var <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Owner</span>;
+<a name="41"></a>
+<a name="42"></a>var   <span class="source_type">float</span> NextFireTime;
+<a name="43"></a>var() <span class="source_type">float</span> PreFireTime;       <span class="source_comment">// seconds before first shot
+</span><a name="44"></a>var() <span class="source_type">float</span> MaxHoldTime;
+<a name="45"></a>var() <span class="source_type">float</span> HoldTime;
+<a name="46"></a>
+<a name="47"></a>var() <span class="source_type">int</span> ThisModeNum;
+<a name="48"></a>var <span class="source_type">float</span> TransientSoundVolume;
+<a name="49"></a>var <span class="source_type">float</span> TransientSoundRadius;
+<a name="50"></a>
+<a name="51"></a><span class="source_comment">// animation //
+</span><a name="52"></a>var() <span class="source_type">Name</span> PreFireAnim;
+<a name="53"></a>var() <span class="source_type">Name</span> FireAnim;
+<a name="54"></a>var() <span class="source_type">Name</span> FireLoopAnim;
+<a name="55"></a>var() <span class="source_type">Name</span> FireEndAnim;
+<a name="56"></a>var() <span class="source_type">Name</span> ReloadAnim;
+<a name="57"></a>
+<a name="58"></a>var() <span class="source_type">float</span> PreFireAnimRate;
+<a name="59"></a>var() <span class="source_type">float</span> FireAnimRate;
+<a name="60"></a>var() <span class="source_type">float</span> FireLoopAnimRate;
+<a name="61"></a>var() <span class="source_type">float</span> FireEndAnimRate;
+<a name="62"></a>var() <span class="source_type">float</span> ReloadAnimRate;
+<a name="63"></a>var() <span class="source_type">float</span> TweenTime;
+<a name="64"></a>
+<a name="65"></a><span class="source_comment">// sound //
+</span><a name="66"></a>var() <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> FireSound;
+<a name="67"></a>var() <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> ReloadSound;
+<a name="68"></a>var() <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> NoAmmoSound;
+<a name="69"></a>
+<a name="70"></a><span class="source_comment">// jdf ---
+</span><a name="71"></a><span class="source_comment">// Force Feedback //
+</span><a name="72"></a>var() <span class="source_type">String</span> FireForce;
+<a name="73"></a>var() <span class="source_type">String</span> ReloadForce;
+<a name="74"></a>var() <span class="source_type">String</span> NoAmmoForce;
+<a name="75"></a><span class="source_comment">// --- jdf
+</span><a name="76"></a>
+<a name="77"></a><span class="source_comment">// timing //
+</span><a name="78"></a>var() <span class="source_type">float</span> FireRate;          <span class="source_comment">// seconds between shots
+</span><a name="79"></a>var   <span class="source_type">float</span> ServerStartFireTime;
+<a name="80"></a>
+<a name="81"></a><span class="source_comment">// ammo //
+</span><a name="82"></a>var() <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/ammunition.html" class="source">Ammunition</a></span>&gt; AmmoClass;
+<a name="83"></a>var() <span class="source_type">int</span> AmmoPerFire;
+<a name="84"></a>var() <span class="source_type">int</span> AmmoClipSize;
+<a name="85"></a>var() <span class="source_type">float</span> Load;
+<a name="86"></a>
+<a name="87"></a><span class="source_comment">// camera shakes //
+</span><a name="88"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ShakeRotMag;           <span class="source_comment">// how far to rot view
+</span><a name="89"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ShakeRotRate;          <span class="source_comment">// how fast to rot view
+</span><a name="90"></a>var() <span class="source_type">float</span>  ShakeRotTime;          <span class="source_comment">// how much time to rot the instigator's view
+</span><a name="91"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ShakeOffsetMag;        <span class="source_comment">// max view offset vertically
+</span><a name="92"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ShakeOffsetRate;       <span class="source_comment">// how fast to offset view vertically
+</span><a name="93"></a>var() <span class="source_type">float</span>  ShakeOffsetTime;       <span class="source_comment">// how much time to offset view
+</span><a name="94"></a>
+<a name="95"></a><span class="source_comment">// AI //
+</span><a name="96"></a>var() <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/projectile.html" class="source">Projectile</a></span>&gt; ProjectileClass;
+<a name="97"></a>var() <span class="source_type">float</span> BotRefireRate;
+<a name="98"></a>var() <span class="source_type">float</span> WarnTargetPct;
+<a name="99"></a>
+<a name="100"></a>
+<a name="101"></a><span class="source_comment">// if _RO_
+</span><a name="102"></a>var() <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span>&gt; FlashEmitterClass;
+<a name="103"></a>var() <span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span> FlashEmitter;
+<a name="104"></a>var() <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span>&gt; SmokeEmitterClass;
+<a name="105"></a>var() <span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span> SmokeEmitter;
+<a name="106"></a><span class="source_comment">// else
+</span><a name="107"></a><span class="source_comment">//var() class&lt;xEmitter&gt; FlashEmitterClass;
+</span><a name="108"></a><span class="source_comment">//var() xEmitter FlashEmitter;
+</span><a name="109"></a><span class="source_comment">//var() class&lt;xEmitter&gt; SmokeEmitterClass;
+</span><a name="110"></a><span class="source_comment">//var() xEmitter SmokeEmitter;
+</span><a name="111"></a>
+<a name="112"></a>var() <span class="source_type">float</span> AimError; <span class="source_comment">// 0=none 1000=quite a bit
+</span><a name="113"></a>var() <span class="source_type">float</span> Spread; <span class="source_comment">// rotator units. no relation to AimError
+</span><a name="114"></a>var() enum <span class="source_type"><a href="../engine/weaponfire.html#ESpreadStyle" class="source">ESpreadStyle</a></span>
+<a name="115"></a>{
+<a name="116"></a>    SS_None,
+<a name="117"></a>    SS_Random, <span class="source_comment">// spread is max random angle deviation
+</span><a name="118"></a>    SS_Line,   <span class="source_comment">// spread is angle between each projectile
+</span><a name="119"></a>    SS_Ring
+<a name="120"></a>} SpreadStyle;
+<a name="121"></a>
+<a name="122"></a>var <span class="source_type">int</span> FireCount;
+<a name="123"></a>var() <span class="source_type">float</span> DamageAtten; <span class="source_comment">// attenuate instant-hit/projectile damage by this multiplier
+</span><a name="124"></a>
+<a name="125"></a>var <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/actor.html#FireProperties" class="source">FireProperties</a></span> SavedFireProperties;
+<a name="126"></a>
+<a name="127"></a><span class="source_comment">// (cpptext)
+</span><a name="128"></a><span class="source_comment">// (cpptext)
+</span><a name="129"></a><span class="source_comment">// (cpptext)
+</span><a name="130"></a><span class="source_comment">// (cpptext)
+</span><a name="131"></a><span class="source_comment">// (cpptext)
+</span><a name="132"></a>
+<a name="133"></a>simulated function SetTimer( <span class="source_type">float</span> NewTimerRate, <span class="source_type">bool</span> <span class="source_type">bLoop</span> )
+<a name="134"></a>{
+<a name="135"></a>	bTimerLoop = <span class="source_type">bLoop</span>;
+<a name="136"></a>	TimerInterval = NewTimerRate;
+<a name="137"></a>	NextTimerPop = <span class="source_type">Level</span>.TimeSeconds + TimerInterval;
+<a name="138"></a>}
+<a name="139"></a>
+<a name="140"></a>event Timer();
+<a name="141"></a>
+<a name="142"></a>simulated function PreBeginPlay();
+<a name="143"></a>simulated function BeginPlay();
+<a name="144"></a>simulated function PostNetBeginPlay();
+<a name="145"></a>
+<a name="146"></a>simulated event SetInitialState()
+<a name="147"></a>{
+<a name="148"></a>	GotoState( <span class="source_name">'Auto'</span> );
+<a name="149"></a>}
+<a name="150"></a>
+<a name="151"></a>simulated function PostBeginPlay()
+<a name="152"></a>{
+<a name="153"></a>    Load = AmmoPerFire;
+<a name="154"></a>
+<a name="155"></a>    if (bFireOnRelease)
+<a name="156"></a>        bWaitForRelease = true;
+<a name="157"></a>
+<a name="158"></a>    if (bWaitForRelease)
+<a name="159"></a>        bNowWaiting = true;
+<a name="160"></a>}
+<a name="161"></a>
+<a name="162"></a>simulated function DestroyEffects()
+<a name="163"></a>{
+<a name="164"></a>    if (FlashEmitter != None)
+<a name="165"></a>        FlashEmitter.Destroy();
+<a name="166"></a>
+<a name="167"></a>    if (SmokeEmitter != None)
+<a name="168"></a>        SmokeEmitter.Destroy();
+<a name="169"></a>}
+<a name="170"></a>
+<a name="171"></a>simulated function InitEffects()
+<a name="172"></a>{
+<a name="173"></a>    <span class="source_comment">// don't even spawn on server
+</span><a name="174"></a>    if ( (<span class="source_type">Level</span>.NetMode == NM_DedicatedServer) || (<span class="source_type"><a href="../engine/aicontroller.html" class="source">AIController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None) )
+<a name="175"></a>		return;
+<a name="176"></a>    if ( (FlashEmitterClass != None) && ((FlashEmitter == None) || FlashEmitter.bDeleteMe) )
+<a name="177"></a>    {
+<a name="178"></a>        FlashEmitter = <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.Spawn(FlashEmitterClass);
+<a name="179"></a>    }
+<a name="180"></a>    if ( (SmokeEmitterClass != None) && ((SmokeEmitter == None) || SmokeEmitter.bDeleteMe) )
+<a name="181"></a>    {
+<a name="182"></a>        SmokeEmitter = <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.Spawn(SmokeEmitterClass);
+<a name="183"></a>    }
+<a name="184"></a>}
+<a name="185"></a>
+<a name="186"></a>function DoFireEffect()
+<a name="187"></a>{
+<a name="188"></a>}
+<a name="189"></a>
+<a name="190"></a>function DrawMuzzleFlash(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="191"></a>{
+<a name="192"></a>    <span class="source_comment">// Draw smoke first
+</span><a name="193"></a>    if (SmokeEmitter != None && SmokeEmitter.Base != <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>)
+<a name="194"></a>    {
+<a name="195"></a>        SmokeEmitter.SetLocation( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.GetEffectStart() );
+<a name="196"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawActor( SmokeEmitter, false, false, <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.DisplayFOV );
+<a name="197"></a>    }
+<a name="198"></a>
+<a name="199"></a>    if (FlashEmitter != None && FlashEmitter.Base != <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>)
+<a name="200"></a>    {
+<a name="201"></a>        FlashEmitter.SetLocation( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.GetEffectStart() );
+<a name="202"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawActor( FlashEmitter, false, false, <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.DisplayFOV );
+<a name="203"></a>    }
+<a name="204"></a>}
+<a name="205"></a>
+<a name="206"></a>function FlashMuzzleFlash()
+<a name="207"></a>{
+<a name="208"></a>    if (FlashEmitter != None)
+<a name="209"></a>        FlashEmitter.<span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>(<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>, <span class="source_type">Instigator</span>);
+<a name="210"></a>}
+<a name="211"></a>
+<a name="212"></a>function StartMuzzleSmoke()
+<a name="213"></a>{
+<a name="214"></a>    if ( !<span class="source_type">Level</span>.bDropDetail && (SmokeEmitter != None) )
+<a name="215"></a>        SmokeEmitter.<span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>(<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>, <span class="source_type">Instigator</span>);
+<a name="216"></a>}
+<a name="217"></a>
+<a name="218"></a>function ShakeView()
+<a name="219"></a>{
+<a name="220"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">P</span>;
+<a name="221"></a>
+<a name="222"></a>    <span class="source_type">P</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="223"></a>    if ( <span class="source_type">P</span> != None )
+<a name="224"></a>        <span class="source_type">P</span>.WeaponShakeView(ShakeRotMag, ShakeRotRate, ShakeRotTime,
+<a name="225"></a>                    ShakeOffsetMag, ShakeOffsetRate, ShakeOffsetTime);
+<a name="226"></a>}
+<a name="227"></a>
+<a name="228"></a><span class="source_comment">// jdf ---
+</span><a name="229"></a>function ClientPlayForceFeedback( <span class="source_type">String</span> <span class="source_type">EffectName</span> )
+<a name="230"></a>{
+<a name="231"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="232"></a>
+<a name="233"></a>    <span class="source_type">PC</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="234"></a>    if (<span class="source_type">PC</span> != None && <span class="source_type">PC</span>.bEnableWeaponForceFeedback )
+<a name="235"></a>    {
+<a name="236"></a>        <span class="source_type">PC</span>.ClientPlayForceFeedback(<span class="source_type">EffectName</span>);
+<a name="237"></a>    }
+<a name="238"></a>}
+<a name="239"></a>
+<a name="240"></a>function StopForceFeedback( <span class="source_type">String</span> <span class="source_type">EffectName</span> )
+<a name="241"></a>{
+<a name="242"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="243"></a>
+<a name="244"></a>    <span class="source_type">PC</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="245"></a>    if (<span class="source_type">PC</span> != None && <span class="source_type">PC</span>.bEnableWeaponForceFeedback )
+<a name="246"></a>		<span class="source_type">PC</span>.StopForceFeedback(<span class="source_type">EffectName</span>);
+<a name="247"></a>}
+<a name="248"></a><span class="source_comment">// --- jdf
+</span><a name="249"></a>
+<a name="250"></a>function Update(<span class="source_type">float</span> <span class="source_type">dt</span>)
+<a name="251"></a>{
+<a name="252"></a>}
+<a name="253"></a>
+<a name="254"></a>function StartFiring()
+<a name="255"></a>{
+<a name="256"></a>}
+<a name="257"></a>
+<a name="258"></a>function StopFiring()
+<a name="259"></a>{
+<a name="260"></a>}
+<a name="261"></a>
+<a name="262"></a>function StartBerserk()
+<a name="263"></a>{
+<a name="264"></a>    FireRate = default.FireRate * <span class="source_int">0.75</span>;
+<a name="265"></a>    FireAnimRate = default.FireAnimRate/<span class="source_int">0.75</span>;
+<a name="266"></a>    ReloadAnimRate = default.ReloadAnimRate/<span class="source_int">0.75</span>;
+<a name="267"></a>}
+<a name="268"></a>
+<a name="269"></a>function StopBerserk()
+<a name="270"></a>{
+<a name="271"></a>    FireRate = default.FireRate;
+<a name="272"></a>    FireAnimRate = default.FireAnimRate;
+<a name="273"></a>    ReloadAnimRate = default.ReloadAnimRate;
+<a name="274"></a>}
+<a name="275"></a>
+<a name="276"></a>function StartSuperBerserk()
+<a name="277"></a>{
+<a name="278"></a>    FireRate = default.FireRate/<span class="source_type">Level</span>.GRI.WeaponBerserk;
+<a name="279"></a>    FireAnimRate = default.FireAnimRate * <span class="source_type">Level</span>.GRI.WeaponBerserk;
+<a name="280"></a>    ReloadAnimRate = default.ReloadAnimRate * <span class="source_type">Level</span>.GRI.WeaponBerserk;
+<a name="281"></a>}
+<a name="282"></a>
+<a name="283"></a>function <span class="source_type">bool</span> IsFiring()
+<a name="284"></a>{
+<a name="285"></a>	return bIsFiring;
+<a name="286"></a>}
+<a name="287"></a>
+<a name="288"></a>event ModeTick(<span class="source_type">float</span> <span class="source_type">dt</span>);
+<a name="289"></a>
+<a name="290"></a>event ModeDoFire()
+<a name="291"></a>{
+<a name="292"></a>    if (!AllowFire())
+<a name="293"></a>        return;
+<a name="294"></a>
+<a name="295"></a>    if (MaxHoldTime &gt; <span class="source_int">0.0</span>)
+<a name="296"></a>        HoldTime = FMin(HoldTime, MaxHoldTime);
+<a name="297"></a>
+<a name="298"></a>    <span class="source_comment">// server
+</span><a name="299"></a>    if (<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.Role == ROLE_Authority)
+<a name="300"></a>    {
+<a name="301"></a>        <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.ConsumeAmmo(ThisModeNum, Load);
+<a name="302"></a>        DoFireEffect();
+<a name="303"></a>		HoldTime = <span class="source_int">0</span>;	<span class="source_comment">// if bot decides to stop firing, HoldTime must be reset first
+</span><a name="304"></a>        if ( (<span class="source_type">Instigator</span> == None) || (<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None) )
+<a name="305"></a>			return;
+<a name="306"></a>
+<a name="307"></a>        if ( <span class="source_type"><a href="../engine/aicontroller.html" class="source">AIController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None )
+<a name="308"></a>            <span class="source_type"><a href="../engine/aicontroller.html" class="source">AIController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).WeaponFireAgain(BotRefireRate, true);
+<a name="309"></a>
+<a name="310"></a>        <span class="source_type">Instigator</span>.DeactivateSpawnProtection();
+<a name="311"></a>    }
+<a name="312"></a>
+<a name="313"></a>    <span class="source_comment">// client
+</span><a name="314"></a>    if (<span class="source_type">Instigator</span>.IsLocallyControlled())
+<a name="315"></a>    {
+<a name="316"></a>        ShakeView();
+<a name="317"></a>        PlayFiring();
+<a name="318"></a>        FlashMuzzleFlash();
+<a name="319"></a>        StartMuzzleSmoke();
+<a name="320"></a>    }
+<a name="321"></a>    else <span class="source_comment">// server
+</span><a name="322"></a>    {
+<a name="323"></a>        ServerPlayFiring();
+<a name="324"></a>    }
+<a name="325"></a>
+<a name="326"></a>    <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.IncrementFlashCount(ThisModeNum);
+<a name="327"></a>
+<a name="328"></a>    <span class="source_comment">// set the next firing time. must be careful here so client and server do not get out of sync
+</span><a name="329"></a>    if (bFireOnRelease)
+<a name="330"></a>    {
+<a name="331"></a>        if (bIsFiring)
+<a name="332"></a>            NextFireTime += MaxHoldTime + FireRate;
+<a name="333"></a>        else
+<a name="334"></a>            NextFireTime = <span class="source_type">Level</span>.TimeSeconds + FireRate;
+<a name="335"></a>    }
+<a name="336"></a>    else
+<a name="337"></a>    {
+<a name="338"></a>        NextFireTime += FireRate;
+<a name="339"></a>        NextFireTime = FMax(NextFireTime, <span class="source_type">Level</span>.TimeSeconds);
+<a name="340"></a>    }
+<a name="341"></a>
+<a name="342"></a>    Load = AmmoPerFire;
+<a name="343"></a>    HoldTime = <span class="source_int">0</span>;
+<a name="344"></a>
+<a name="345"></a>    if (<span class="source_type">Instigator</span>.PendingWeapon != <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> && <span class="source_type">Instigator</span>.PendingWeapon != None)
+<a name="346"></a>    {
+<a name="347"></a>        bIsFiring = false;
+<a name="348"></a>        <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PutDown();
+<a name="349"></a>    }
+<a name="350"></a>}
+<a name="351"></a>
+<a name="352"></a>event ModeHoldFire()
+<a name="353"></a>{
+<a name="354"></a>    if (<span class="source_type">Instigator</span>.IsLocallyControlled())
+<a name="355"></a>        PlayStartHold();
+<a name="356"></a>}
+<a name="357"></a>
+<a name="358"></a>
+<a name="359"></a>simulated function <span class="source_type">bool</span> AllowFire()
+<a name="360"></a>{
+<a name="361"></a>	<span class="source_comment">// if _RO_
+</span><a name="362"></a>	if ( <span class="source_type">Instigator</span>.IsProneTransitioning() )
+<a name="363"></a>		return false;
+<a name="364"></a>	else	<span class="source_comment">// end _RO_
+</span><a name="365"></a>    	return ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.AmmoAmount(ThisModeNum) &gt;= AmmoPerFire);
+<a name="366"></a>}
+<a name="367"></a>
+<a name="368"></a><span class="source_comment">//// server propagation of firing ////
+</span><a name="369"></a>function ServerPlayFiring()
+<a name="370"></a>{
+<a name="371"></a>    <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PlayOwnedSound(FireSound,SLOT_Interact,TransientSoundVolume,,TransientSoundRadius,,false);
+<a name="372"></a>}
+<a name="373"></a>
+<a name="374"></a>
+<a name="375"></a><span class="source_comment">//// client animation ////
+</span><a name="376"></a>
+<a name="377"></a>function PlayPreFire()
+<a name="378"></a>{
+<a name="379"></a>    if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.<span class="source_type">Mesh</span> != None && <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.HasAnim(PreFireAnim) )
+<a name="380"></a>    {
+<a name="381"></a>        <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PlayAnim(PreFireAnim, PreFireAnimRate, TweenTime);
+<a name="382"></a>    }
+<a name="383"></a>}
+<a name="384"></a>
+<a name="385"></a>function PlayStartHold()
+<a name="386"></a>{
+<a name="387"></a>}
+<a name="388"></a>
+<a name="389"></a>function PlayFiring()
+<a name="390"></a>{
+<a name="391"></a>	if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.<span class="source_type">Mesh</span> != None )
+<a name="392"></a>	{
+<a name="393"></a>		if ( FireCount &gt; <span class="source_int">0</span> )
+<a name="394"></a>		{
+<a name="395"></a>			if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.HasAnim(FireLoopAnim) )
+<a name="396"></a>			{
+<a name="397"></a>				<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PlayAnim(FireLoopAnim, FireLoopAnimRate, <span class="source_int">0.0</span>);
+<a name="398"></a>			}
+<a name="399"></a>			else
+<a name="400"></a>			{
+<a name="401"></a>				<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PlayAnim(FireAnim, FireAnimRate, TweenTime);
+<a name="402"></a>			}
+<a name="403"></a>		}
+<a name="404"></a>		else
+<a name="405"></a>		{
+<a name="406"></a>			<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PlayAnim(FireAnim, FireAnimRate, TweenTime);
+<a name="407"></a>		}
+<a name="408"></a>	}
+<a name="409"></a>    <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PlayOwnedSound(FireSound,SLOT_Interact,TransientSoundVolume,,TransientSoundRadius,Default.FireAnimRate/FireAnimRate,false);
+<a name="410"></a>    ClientPlayForceFeedback(FireForce);  <span class="source_comment">// jdf
+</span><a name="411"></a>
+<a name="412"></a>    FireCount++;
+<a name="413"></a>}
+<a name="414"></a>
+<a name="415"></a>function PlayFireEnd()
+<a name="416"></a>{
+<a name="417"></a>    if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.<span class="source_type">Mesh</span> != None && <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.HasAnim(FireEndAnim) )
+<a name="418"></a>    {
+<a name="419"></a>        <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PlayAnim(FireEndAnim, FireEndAnimRate, TweenTime);
+<a name="420"></a>    }
+<a name="421"></a>}
+<a name="422"></a>
+<a name="423"></a>function <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> AdjustAim(<span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> Start, <span class="source_type">float</span> InAimError)
+<a name="424"></a>{
+<a name="425"></a>	if ( !SavedFireProperties.bInitialized )
+<a name="426"></a>	{
+<a name="427"></a>		SavedFireProperties.AmmoClass = AmmoClass;
+<a name="428"></a>		SavedFireProperties.ProjectileClass = ProjectileClass;
+<a name="429"></a>		SavedFireProperties.WarnTargetPct = WarnTargetPct;
+<a name="430"></a>		SavedFireProperties.MaxRange = MaxRange();
+<a name="431"></a>		SavedFireProperties.bTossed = bTossed;
+<a name="432"></a>		SavedFireProperties.bTrySplash = bRecommendSplashDamage;
+<a name="433"></a>		SavedFireProperties.bLeadTarget = bLeadTarget;
+<a name="434"></a>		SavedFireProperties.bInstantHit = bInstantHit;
+<a name="435"></a>		SavedFireProperties.bInitialized = true;
+<a name="436"></a>	}
+<a name="437"></a>    return <span class="source_type">Instigator</span>.AdjustAim(SavedFireProperties, Start, InAimError);
+<a name="438"></a>}
+<a name="439"></a>
+<a name="440"></a>simulated function <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> GetFireStart(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">X</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Y</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Z</span>)
+<a name="441"></a>{
+<a name="442"></a>    return <span class="source_type">Instigator</span>.Location + <span class="source_type">Instigator</span>.EyePosition();
+<a name="443"></a>}
+<a name="444"></a>
+<a name="445"></a>simulated function DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, out <span class="source_type">float</span> <span class="source_type">YL</span>, out <span class="source_type">float</span> YPos)
+<a name="446"></a>{
+<a name="447"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">0</span>,<span class="source_int">255</span>,<span class="source_int">0</span>);
+<a name="448"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"  FIREMODE "</span>$self$<span class="source_string">" IsFiring "</span>$bIsFiring$<span class="source_string">" in state "</span>$GetStateName());
+<a name="449"></a>    YPos += <span class="source_type">YL</span>;
+<a name="450"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="451"></a><span class="source_comment">/*
+<a name="452"></a>    Canvas.DrawText("  FireOnRelease "$bFireOnRelease$" HoldTime "$HoldTime$" MaxHoldTime "$MaxHoldTime);
+<a name="453"></a>    YPos += YL;
+<a name="454"></a>    Canvas.SetPos(4,YPos);
+<a name="455"></a>
+<a name="456"></a>    Canvas.DrawText("  NextFireTime "$NextFireTime$" NowWaiting "$bNowWaiting);
+<a name="457"></a>    YPos += YL;
+<a name="458"></a>    Canvas.SetPos(4,YPos);
+<a name="459"></a>*/</span>
+<a name="460"></a>}
+<a name="461"></a>
+<a name="462"></a>function <span class="source_type">float</span> MaxRange()
+<a name="463"></a>{
+<a name="464"></a>	return <span class="source_int">5000</span>;
+<a name="465"></a>}
+<a name="466"></a>
+<a name="467"></a><span class="source_comment">// for convenience/ backwards compatibility
+</span><a name="468"></a>function <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> Spawn
+<a name="469"></a>(
+<a name="470"></a>	<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span>&gt;      SpawnClass,
+<a name="471"></a>	optional <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span>	  SpawnOwner,
+<a name="472"></a>	optional <span class="source_type">name</span>     SpawnTag,
+<a name="473"></a>	optional <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>   SpawnLocation,
+<a name="474"></a>	optional <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>  <span class="source_type">SpawnRotation</span>
+<a name="475"></a>)
+<a name="476"></a>{
+<a name="477"></a>	return <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.Spawn(SpawnClass,SpawnOwner,SpawnTag,SpawnLocation,<span class="source_type">SpawnRotation</span>);
+<a name="478"></a>}
+<a name="479"></a>
+<a name="480"></a>function <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> Trace
+<a name="481"></a>(
+<a name="482"></a>	out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>      <span class="source_type">HitLocation</span>,
+<a name="483"></a>	out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>      <span class="source_type">HitNormal</span>,
+<a name="484"></a>	<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>          TraceEnd,
+<a name="485"></a>	optional <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> TraceStart,
+<a name="486"></a>	optional <span class="source_type">bool</span>   bTraceActors,
+<a name="487"></a>	optional <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Extent,
+<a name="488"></a>	optional out <span class="source_type"><a href="../engine/material.html" class="source">material</a></span> <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>
+<a name="489"></a>)
+<a name="490"></a>{
+<a name="491"></a>	return <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.Trace(<span class="source_type">HitLocation</span>,<span class="source_type">HitNormal</span>,TraceEnd,TraceStart,bTraceActors,Extent,<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>);
+<a name="492"></a>}
+<a name="493"></a>
+<a name="494"></a>defaultproperties
+<a name="495"></a>{
+<a name="496"></a>     bInstantHit=True
+<a name="497"></a>     bModeExclusive=True
+<a name="498"></a>     TransientSoundVolume=<span class="source_int">0.500000</span>
+<a name="499"></a>     TransientSoundRadius=<span class="source_int">400.000000</span>
+<a name="500"></a>     PreFireAnim=<span class="source_string">"PreFire"</span>
+<a name="501"></a>     FireAnim=<span class="source_string">"Fire"</span>
+<a name="502"></a>     FireLoopAnim=<span class="source_string">"FireLoop"</span>
+<a name="503"></a>     FireEndAnim=<span class="source_string">"FireEnd"</span>
+<a name="504"></a>     ReloadAnim=<span class="source_string">"Reload"</span>
+<a name="505"></a>     PreFireAnimRate=<span class="source_int">1.000000</span>
+<a name="506"></a>     FireAnimRate=<span class="source_int">1.000000</span>
+<a name="507"></a>     FireLoopAnimRate=<span class="source_int">1.000000</span>
+<a name="508"></a>     FireEndAnimRate=<span class="source_int">1.000000</span>
+<a name="509"></a>     ReloadAnimRate=<span class="source_int">1.000000</span>
+<a name="510"></a>     TweenTime=<span class="source_int">0.100000</span>
+<a name="511"></a>     FireRate=<span class="source_int">0.500000</span>
+<a name="512"></a>     BotRefireRate=<span class="source_int">0.950000</span>
+<a name="513"></a>     aimerror=<span class="source_int">600.000000</span>
+<a name="514"></a>     DamageAtten=<span class="source_int">1.000000</span>
+<a name="515"></a>}
+<a name="516"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/weaponfire.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#WeaponFire">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/weaponattachment.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/weaponpickup.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.655 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

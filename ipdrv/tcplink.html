@@ -1,0 +1,399 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - IPDrv.TcpLink</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../ipdrv/ipdrv-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_ipdrv/tcplink.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#TcpLink">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../ipdrv/serverqueryclient.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../ipdrv/udpgamespyquery.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#ipdrv/tcplink.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../ipdrv/ipdrv-overview.html">IPDrv</a>.TcpLink</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../ipdrv/internetlink.html">InternetLink</a></dd>
+<dt>Modifiers</dt><dd>native transient </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/info.html">Info</a>
+      |   
+      +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/internetinfo.html">InternetInfo</a>
+         |   
+         +-- <a href="../ipdrv/ipdrv-overview.html">IPDrv</a>.<a href="../ipdrv/internetlink.html">InternetLink</a>
+            |   
+            +-- <a href="../ipdrv/ipdrv-overview.html">IPDrv</a>.<a href="../ipdrv/tcplink.html">TcpLink</a>
+</pre>
+
+<h4>Direct Known Subclasses:</h4>
+<blockquote>
+	<a href="../ipdrv/bufferedtcplink.html">BufferedTcpLink</a>, <a href="../uweb/webconnection.html">WebConnection</a>, <a href="../uweb/webserver.html">WebServer</a>
+</blockquote>
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../ipdrv/tcplink.html">TcpLink</a>&gt;</td><td width="66%"><a href="#_AcceptClass" name="AcceptClass" title="go to the details">AcceptClass</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../ipdrv/tcplink.html#ELinkState">ELinkState</a></td><td width="66%"><a href="#_LinkState" name="LinkState" title="go to the details">LinkState</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_RecvBuf" name="RecvBuf" title="go to the details">RecvBuf</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../ipdrv/internetlink.html#IpAddr">IpAddr</a></td><td width="66%"><a href="#_RemoteAddr" name="RemoteAddr" title="go to the details">RemoteAddr</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">Array&lt;byte&gt;</td><td width="66%"><a href="#_SendFIFO" name="SendFIFO" title="go to the details">SendFIFO</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../ipdrv/ipdrv-overview.html">IPDrv</a>.<a href="../ipdrv/internetlink.html">InternetLink</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../ipdrv/internetlink.html#DataPending">DataPending</a>, <a href="../ipdrv/internetlink.html#InLineMode">InLineMode</a>, <a href="../ipdrv/internetlink.html#LinkMode">LinkMode</a>, <a href="../ipdrv/internetlink.html#OutLineMode">OutLineMode</a>, <a href="../ipdrv/internetlink.html#Port">Port</a>, <a href="../ipdrv/internetlink.html#PrivateResolveInfo">PrivateResolveInfo</a>, <a href="../ipdrv/internetlink.html#ReceiveMode">ReceiveMode</a>, <a href="../ipdrv/internetlink.html#RemoteSocket">RemoteSocket</a>, <a href="../ipdrv/internetlink.html#Socket">Socket</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+<tr><td><a href="#_ELinkState" name="ELinkState" title="go to the details">ELinkState</a><br /><span class="small">STATE_Initialized,
+STATE_Ready,
+STATE_Listening,
+STATE_Connecting,
+STATE_Connected,
+STATE_ListenClosePending,
+STATE_ConnectClosePending,
+STATE_ListenClosing,
+STATE_ConnectClosing</span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../ipdrv/ipdrv-overview.html">IPDrv</a>.<a href="../ipdrv/internetlink.html">InternetLink</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../ipdrv/internetlink.html#ELineMode">ELineMode</a>, <a href="../ipdrv/internetlink.html#ELinkMode">ELinkMode</a>, <a href="../ipdrv/internetlink.html#EReceiveMode">EReceiveMode</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../ipdrv/ipdrv-overview.html">IPDrv</a>.<a href="../ipdrv/internetlink.html">InternetLink</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../ipdrv/internetlink.html#IpAddr">IpAddr</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Accepted-" name="Accepted" title="go to the details">Accepted</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_BindPort-" name="BindPort" title="go to the details">BindPort</a> (optional int Port, optional bool bUseNextAvailable)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_Close-" name="Close" title="go to the details">Close</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Closed-" name="Closed" title="go to the details">Closed</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_IsConnected-" name="IsConnected" title="go to the details">IsConnected</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_Listen-" name="Listen" title="go to the details">Listen</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_Open-" name="Open" title="go to the details">Open</a> (<a href="../ipdrv/internetlink.html#IpAddr">IpAddr</a> Addr)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Opened-" name="Opened" title="go to the details">Opened</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_OpenNoSteam-" name="OpenNoSteam" title="go to the details">OpenNoSteam</a> (<a href="../ipdrv/internetlink.html#IpAddr">IpAddr</a> Addr)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_ReadBinary-" name="ReadBinary" title="go to the details">ReadBinary</a> (int Count, out byte B[255])<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_ReadText-" name="ReadText" title="go to the details">ReadText</a> (out string Str)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_ReceivedBinary-" name="ReceivedBinary" title="go to the details">ReceivedBinary</a> (int Count, byte B[255])<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_ReceivedLine-" name="ReceivedLine" title="go to the details">ReceivedLine</a> (string Line)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_ReceivedText-" name="ReceivedText" title="go to the details">ReceivedText</a> (string Text)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_SendBinary-" name="SendBinary" title="go to the details">SendBinary</a> (int Count, byte B[255])<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>int&nbsp;</td><td><a href="#_SendText-" name="SendText" title="go to the details">SendText</a> (coerce string Str)<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../ipdrv/ipdrv-overview.html">IPDrv</a>.<a href="../ipdrv/internetlink.html">InternetLink</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../ipdrv/internetlink.html#GameSpyGameName">GameSpyGameName</a>, <a href="../ipdrv/internetlink.html#GameSpyValidate">GameSpyValidate</a>, <a href="../ipdrv/internetlink.html#GetLastError">GetLastError</a>, <a href="../ipdrv/internetlink.html#GetLocalIP">GetLocalIP</a>, <a href="../ipdrv/internetlink.html#IpAddrToString">IpAddrToString</a>, <a href="../ipdrv/internetlink.html#IsDataPending">IsDataPending</a>, <a href="../ipdrv/internetlink.html#ParseURL">ParseURL</a>, <a href="../ipdrv/internetlink.html#Resolve">Resolve</a>, <a href="../ipdrv/internetlink.html#Resolved">Resolved</a>, <a href="../ipdrv/internetlink.html#ResolveFailed">ResolveFailed</a>, <a href="../ipdrv/internetlink.html#StringToIpAddr">StringToIpAddr</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/internetinfo.html">InternetInfo</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/internetinfo.html#GetBeaconAddress">GetBeaconAddress</a>, <a href="../engine/internetinfo.html#GetBeaconCount">GetBeaconCount</a>, <a href="../engine/internetinfo.html#GetBeaconText">GetBeaconText</a>, <a href="../engine/internetinfo.html#Init">Init</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_AcceptClass" class="hidden"></a>AcceptClass <a href="../Source_ipdrv/tcplink.html#45" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../ipdrv/tcplink.html" class="source">TcpLink</a></span>&gt; AcceptClass;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LinkState" class="hidden"></a>LinkState <a href="../Source_ipdrv/tcplink.html#26" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../ipdrv/tcplink.html#ELinkState" class="source">ELinkState</a></span> LinkState;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RecvBuf" class="hidden"></a>RecvBuf <a href="../Source_ipdrv/tcplink.html#47" class="small">Source code</a></h4>
+<div class="declaration">var const <span class="source_type">string</span> RecvBuf;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RemoteAddr" class="hidden"></a>RemoteAddr <a href="../Source_ipdrv/tcplink.html#39" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span> RemoteAddr;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SendFIFO" class="hidden"></a>SendFIFO <a href="../Source_ipdrv/tcplink.html#46" class="small">Source code</a></h4>
+<div class="declaration">var const Array&lt;<span class="source_type">byte</span>&gt; SendFIFO;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Enumerations Detail</th>
+</tr>
+</table>
+
+<h4><a name="_ELinkState" class="hidden"></a>ELinkState <a href="../Source_ipdrv/tcplink.html#26" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../ipdrv/tcplink.html#ELinkState" class="source">ELinkState</a></span><br />
+{<blockquote>STATE_Initialized,
+STATE_Ready,
+STATE_Listening,
+STATE_Connecting,
+STATE_Connected,
+STATE_ListenClosePending,
+STATE_ConnectClosePending,
+STATE_ListenClosing,
+STATE_ConnectClosing</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_Accepted-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Accepted <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#88" class="small">Source code</a></h4>
+<div class="declaration"> event  Accepted (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BindPort-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BindPort <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#52" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">int</span> BindPort ( optional <span class="source_type">int</span> <span class="source_type">Port</span>, optional <span class="source_type">bool</span> bUseNextAvailable )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Close-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Close <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#65" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">bool</span> Close (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Closed-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Closed <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#94" class="small">Source code</a></h4>
+<div class="declaration"> event  Closed (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_IsConnected-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> IsConnected <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#68" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">bool</span> IsConnected (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Listen-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Listen <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#56" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">bool</span> Listen (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Open-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Open <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#59" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">bool</span> Open ( <span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span> <span class="source_type">Addr</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Opened-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Opened <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#91" class="small">Source code</a></h4>
+<div class="declaration"> event  Opened (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OpenNoSteam-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> OpenNoSteam <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#62" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">bool</span> OpenNoSteam ( <span class="source_type"><a href="../ipdrv/internetlink.html#IpAddr" class="source">IpAddr</a></span> <span class="source_type">Addr</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReadBinary-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ReadBinary <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#82" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">int</span> ReadBinary ( <span class="source_type">int</span> Count, out <span class="source_type">byte</span> <span class="source_type">B</span>[<span class="source_int">255</span>] )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReadText-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ReadText <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#79" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">int</span> ReadText ( out <span class="source_type">string</span> <span class="source_type">Str</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReceivedBinary-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> ReceivedBinary <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#104" class="small">Source code</a></h4>
+<div class="declaration"> event  ReceivedBinary ( <span class="source_type">int</span> Count, <span class="source_type">byte</span> <span class="source_type">B</span>[<span class="source_int">255</span>] )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReceivedLine-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> ReceivedLine <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#101" class="small">Source code</a></h4>
+<div class="declaration"> event  ReceivedLine ( <span class="source_type">string</span> Line )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ReceivedText-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> ReceivedText <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#97" class="small">Source code</a></h4>
+<div class="declaration"> event  ReceivedText ( <span class="source_type">string</span> <span class="source_type">Text</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SendBinary-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SendBinary <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#75" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">int</span> SendBinary ( <span class="source_type">int</span> Count, <span class="source_type">byte</span> <span class="source_type">B</span>[<span class="source_int">255</span>] )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SendText-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SendText <span class="function_state"></span> <a href="../Source_ipdrv/tcplink.html#72" class="small">Source code</a></h4>
+<div class="declaration">native function <span class="source_type">int</span> SendText ( coerce <span class="source_type">string</span> <span class="source_type">Str</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     bAlwaysTick=True
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../ipdrv/ipdrv-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_ipdrv/tcplink.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#TcpLink">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../ipdrv/serverqueryclient.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../ipdrv/udpgamespyquery.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:55.428 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

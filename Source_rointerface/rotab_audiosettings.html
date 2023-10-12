@@ -1,0 +1,1103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: ROInterface.ROTab_AudioSettings</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/rotab_audiosettings.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROTab_AudioSettings">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/rosty_titlebar.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/rotab_controls.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_rointerface/rotab_audiosettings.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../rointerface/rointerface-overview.html">ROInterface</a>.<a href="../rointerface/rotab_audiosettings.html">ROTab_AudioSettings</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// ROTab_AudioSettings
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_comment">// The audio config tab
+</span><a name="5"></a><span class="source_comment">// This contains alot of code duplicated from UT2K4Tab_AudioSettings and
+</span><a name="6"></a><span class="source_comment">// VoiceChatConfig
+</span><a name="7"></a><span class="source_comment">//=============================================================================
+</span><a name="8"></a><span class="source_comment">// Red Orchestra Source
+</span><a name="9"></a><span class="source_comment">// Copyright (C) 2005 Mathieu Mallet
+</span><a name="10"></a><span class="source_comment">//=============================================================================
+</span><a name="11"></a>
+<a name="12"></a><span class="source_type">class</span> <span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span> extends <span class="source_type"><a href="../gui2k4/settings_tabs.html" class="source">Settings_Tabs</a></span>;
+<a name="13"></a>
+<a name="14"></a>var localized <span class="source_type">string</span>	AudioModes[<span class="source_int">4</span>],
+<a name="15"></a>						VoiceModes[<span class="source_int">3</span>];
+<a name="16"></a>
+<a name="17"></a>
+<a name="18"></a>var automated <span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span>	i_BG1, i_BG2, i_BG3;
+<a name="19"></a>var automated <span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span>		sl_MusicVol, sl_EffectsVol, sl_VOIP;
+<a name="20"></a>var automated <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>	co_Mode, co_Voices, co_Announce;
+<a name="21"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckbox</a></span> 	ch_ReverseStereo, ch_MessageBeep, ch_DisableGameMusic, ch_LowDetail, ch_Default, ch_VoiceChat;
+<a name="22"></a>
+<a name="23"></a><span class="source_comment">//var automated moCheckBox    ch_AJPublic, ch_AJLocal, ch_AJTeam, ch_AutoSpeak, ch_Dampen;
+</span><a name="24"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>    ch_AJPublic, ch_AutoSpeak, ch_Dampen;
+<a name="25"></a>var automated <span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span>     ed_Active;
+<a name="26"></a>var automated <span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span>     ed_ChatPassword;
+<a name="27"></a>var automated <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>    co_Quality, co_LANQuality;
+<a name="28"></a>
+<a name="29"></a>var <span class="source_type">float</span>	fMusic, fEffects, fVOIP;
+<a name="30"></a>var <span class="source_type">int</span>		iVoice, iMode, iVoiceMode;
+<a name="31"></a>var <span class="source_type">bool</span>	bRev, bBeep, bDisableGameMusic, bLow, bCompat, b3DSound, bEAX, bDefault, bVoiceChat, bDampen;
+<a name="32"></a>
+<a name="33"></a><span class="source_comment">//var bool bAJPublic, bAJLocal, bAJTeam, bAutoSpeak;
+</span><a name="34"></a>var <span class="source_type">bool</span> bAJPublic, bAutoSpeak;
+<a name="35"></a>var <span class="source_type">string</span>  sPwd, sCodec, sLANCodec, sActive;
+<a name="36"></a>var <span class="source_type">float</span> fVoice;
+<a name="37"></a>
+<a name="38"></a>var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/voicechatreplicationinfo.html" class="source">VoiceChatReplicationInfo</a></span>&gt; VoiceChatClass;
+<a name="39"></a>var <span class="source_type">string</span> VoiceChatClassName;
+<a name="40"></a>
+<a name="41"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="42"></a>{
+<a name="43"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="44"></a>    local <span class="source_type">bool</span> bIsWin32;
+<a name="45"></a>   	local <span class="source_type">string</span> CName, CDesc;
+<a name="46"></a>	local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/voicechatreplicationinfo.html" class="source">VoiceChatReplicationInfo</a></span>&gt; Cls;
+<a name="47"></a>	local array&lt;<span class="source_type">string</span>&gt;    InstalledCodecs;
+<a name="48"></a>
+<a name="49"></a>	bIsWin32 = ( ( PlatformIsWindows() ) && ( !PlatformIs64Bit() ) );
+<a name="50"></a>
+<a name="51"></a>	Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="52"></a>
+<a name="53"></a>	if ( bIsWin32 )
+<a name="54"></a>	{
+<a name="55"></a>		for(<span class="source_type">i</span> = <span class="source_int">0</span>;<span class="source_type">i</span> &lt; ArrayCount(AudioModes);<span class="source_type">i</span>++)
+<a name="56"></a>			co_Mode.AddItem(AudioModes[<span class="source_type">i</span>]);
+<a name="57"></a>	}
+<a name="58"></a>	else
+<a name="59"></a>	{
+<a name="60"></a>		co_Mode.AddItem(<span class="source_string">"OpenAL"</span>);
+<a name="61"></a>	}
+<a name="62"></a>
+<a name="63"></a>	for(<span class="source_type">i</span> = <span class="source_int">0</span>;<span class="source_type">i</span> &lt; ArrayCount(VoiceModes);<span class="source_type">i</span>++)
+<a name="64"></a>		co_Voices.AddItem(VoiceModes[<span class="source_type">i</span>]);
+<a name="65"></a>
+<a name="66"></a>	<span class="source_comment">// Need to load TeamVoiceReplicationInfo to get team channel names
+</span><a name="67"></a>	Cls = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/voicechatreplicationinfo.html" class="source">VoiceChatReplicationInfo</a></span>&gt;( DynamicLoadObject( VoiceChatClassName, <span class="source_type">class</span><span class="source_name">'Class'</span>) );
+<a name="68"></a>	if ( Cls != None )
+<a name="69"></a>		VoiceChatClass = Cls;
+<a name="70"></a>
+<a name="71"></a>	VoiceChatClass.static.GetInstalledCodecs( InstalledCodecs );
+<a name="72"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; InstalledCodecs.Length; <span class="source_type">i</span>++ )
+<a name="73"></a>	{
+<a name="74"></a>		VoiceChatClass.static.GetCodecInfo( InstalledCodecs[<span class="source_type">i</span>], CName, CDesc );
+<a name="75"></a>		co_Quality.AddItem( CName,, InstalledCodecs[<span class="source_type">i</span>] );
+<a name="76"></a>		co_LANQuality.AddItem( CName,, InstalledCodecs[<span class="source_type">i</span>] );
+<a name="77"></a>	}
+<a name="78"></a>
+<a name="79"></a>    ed_ChatPassword.MaskText(True);
+<a name="80"></a>
+<a name="81"></a>
+<a name="82"></a>	i_BG1.ManageComponent(sl_MusicVol);
+<a name="83"></a>	i_BG1.ManageComponent(ch_DisableGameMusic);
+<a name="84"></a>	i_BG1.ManageComponent(sl_EffectsVol);
+<a name="85"></a>	i_BG1.ManageComponent(sl_VOIP);
+<a name="86"></a>	i_BG1.ManageComponent(co_Mode);
+<a name="87"></a>	i_BG1.ManageComponent(ch_LowDetail);
+<a name="88"></a>	i_BG1.ManageComponent(ch_Default);
+<a name="89"></a>	i_BG1.ManageComponent(ch_reverseStereo);
+<a name="90"></a>	i_BG1.ManageComponent(co_Voices);
+<a name="91"></a>	i_BG1.ManageComponent(ch_MessageBeep);
+<a name="92"></a>
+<a name="93"></a>	i_BG3.ManageComponent(ch_VoiceChat);
+<a name="94"></a>	i_BG3.ManageComponent(ch_Dampen);
+<a name="95"></a>	i_BG3.ManageComponent(ch_AJPublic);
+<a name="96"></a>	<span class="source_comment">//i_BG3.ManageComponent(ch_AJLocal);
+</span><a name="97"></a>	<span class="source_comment">//i_BG3.ManageComponent(ch_AJTeam);
+</span><a name="98"></a>	i_BG3.ManageComponent(ch_AutoSpeak);
+<a name="99"></a>	i_BG3.ManageComponent(ed_Active);
+<a name="100"></a>	i_BG3.ManageComponent(ed_ChatPassword);
+<a name="101"></a>	i_BG3.ManageComponent(co_Quality);
+<a name="102"></a>	i_BG3.ManageComponent(co_LANQuality);
+<a name="103"></a>
+<a name="104"></a>
+<a name="105"></a>	<span class="source_comment">// !!! FIXME: Might use a preinstalled system OpenAL in the future on
+</span><a name="106"></a>	<span class="source_comment">// !!! FIXME:  Mac or Unix, but for now, we don't...  --ryan.
+</span><a name="107"></a>	if ( !PlatformIsWindows() )
+<a name="108"></a>		ch_Default.DisableMe();
+<a name="109"></a>}
+<a name="110"></a>
+<a name="111"></a>function ResetClicked()
+<a name="112"></a>{
+<a name="113"></a>	local <span class="source_type">class</span>&lt;<span class="source_type">AudioSubSystem</span>&gt; <span class="source_type">A</span>;
+<a name="114"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="115"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="116"></a>
+<a name="117"></a>	Super.ResetClicked();
+<a name="118"></a>
+<a name="119"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="120"></a>
+<a name="121"></a>	<span class="source_type">A</span> = <span class="source_type">class</span>&lt;<span class="source_type">AudioSubSystem</span>&gt;(DynamicLoadObject(GetNativeClassName(<span class="source_string">"Engine.Engine.AudioDevice"</span>), <span class="source_type">Class</span><span class="source_name">'Class'</span>));
+<a name="122"></a>	<span class="source_type">A</span>.static.ResetConfig();
+<a name="123"></a>
+<a name="124"></a>	<span class="source_type">class</span><span class="source_name">'Hud'</span>.static.ResetConfig(<span class="source_string">"bMessageBeep"</span>);
+<a name="125"></a>	<span class="source_type">class</span><span class="source_name">'LevelInfo'</span>.static.ResetConfig(<span class="source_string">"bLowSoundDetail"</span>);
+<a name="126"></a>
+<a name="127"></a>	<span class="source_type">class</span><span class="source_name">'PlayerController'</span>.static.ResetConfig(<span class="source_string">"bNoVoiceTaunts"</span>);
+<a name="128"></a>	<span class="source_type">class</span><span class="source_name">'PlayerController'</span>.static.ResetConfig(<span class="source_string">"bNoVoiceMessages"</span>);
+<a name="129"></a>
+<a name="130"></a>	<span class="source_type">A</span>.static.ResetConfig(<span class="source_string">"VoiceVolume"</span>);
+<a name="131"></a>
+<a name="132"></a>	<span class="source_type">class</span><span class="source_name">'Engine.PlayerController'</span>.static.ResetConfig(<span class="source_string">"VoiceChatCodec"</span>);
+<a name="133"></a>	<span class="source_type">class</span><span class="source_name">'Engine.PlayerController'</span>.static.ResetConfig(<span class="source_string">"VoiceChatLANCodec"</span>);
+<a name="134"></a>    <span class="source_type">class</span><span class="source_name">'Engine.PlayerController'</span>.static.ResetConfig(<span class="source_string">"AutoJoinMask"</span>);
+<a name="135"></a>    <span class="source_type">class</span><span class="source_name">'Engine.PlayerController'</span>.static.ResetConfig(<span class="source_string">"ChatPassword"</span>);
+<a name="136"></a>    <span class="source_type">class</span><span class="source_name">'Engine.PlayerController'</span>.static.ResetConfig(<span class="source_string">"DefaultActiveChannel"</span>);
+<a name="137"></a>    <span class="source_type">class</span><span class="source_name">'Engine.PlayerController'</span>.static.ResetConfig(<span class="source_string">"bEnableInitialChatRoom"</span>);
+<a name="138"></a>    <span class="source_type">class</span><span class="source_name">'ROPlayer'</span>.static.ResetConfig(<span class="source_string">"bEnableMusicInGame"</span>);
+<a name="139"></a>
+<a name="140"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Components.Length; <span class="source_type">i</span>++)
+<a name="141"></a>		Components[<span class="source_type">i</span>].LoadINI();
+<a name="142"></a>}
+<a name="143"></a>
+<a name="144"></a>function InternalOnLoadINI(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">string</span> <span class="source_type">s</span>)
+<a name="145"></a>{
+<a name="146"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="147"></a>	local <span class="source_type">bool</span> bIsWin32;
+<a name="148"></a>
+<a name="149"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="150"></a>
+<a name="151"></a>	<span class="source_type">switch</span> (<span class="source_type">Sender</span>)
+<a name="152"></a>	{
+<a name="153"></a>    	case sl_MusicVol:
+<a name="154"></a>    		fMusic = <span class="source_type">float</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice MusicVolume"</span>));
+<a name="155"></a>    		sl_MusicVol.SetComponentValue(fMusic,true);
+<a name="156"></a>    		break;
+<a name="157"></a>
+<a name="158"></a>    	case ch_DisableGameMusic:
+<a name="159"></a>            if (<span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">PC</span>) != none)
+<a name="160"></a>                bDisableGameMusic = <span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">PC</span>).bDisableMusicInGame;
+<a name="161"></a>            else
+<a name="162"></a>                bDisableGameMusic = <span class="source_type">class</span><span class="source_name">'ROPlayer'</span>.default.bDisableMusicInGame;
+<a name="163"></a>    		ch_DisableGameMusic.SetComponentValue(bDisableGameMusic,true);
+<a name="164"></a>            break;
+<a name="165"></a>
+<a name="166"></a>    	case sl_EffectsVol:
+<a name="167"></a>    		fEffects = <span class="source_type">float</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice SoundVolume"</span>));
+<a name="168"></a>    		sl_EffectsVol.SetComponentValue(fEffects,true);
+<a name="169"></a>    		break;
+<a name="170"></a>
+<a name="171"></a>    	case co_Mode:
+<a name="172"></a>    		iMode = <span class="source_int">1</span>;
+<a name="173"></a>    		bIsWin32 = ( ( PlatformIsWindows() ) && ( !PlatformIs64Bit() ) );
+<a name="174"></a>    		if ( !bIsWin32 )
+<a name="175"></a>    		{
+<a name="176"></a>    			bCompat = False;
+<a name="177"></a>    			b3DSound = True;
+<a name="178"></a>    			iMode = <span class="source_int">0</span>;
+<a name="179"></a>    		}
+<a name="180"></a>    		else
+<a name="181"></a>    		{
+<a name="182"></a>    			if ( <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice CompatibilityMode"</span>)) )
+<a name="183"></a>    			{
+<a name="184"></a>    				bCompat = True;
+<a name="185"></a>    				iMode = <span class="source_int">0</span>;
+<a name="186"></a>    			}
+<a name="187"></a>
+<a name="188"></a>    			if ( <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice Use3DSound"</span>)) )
+<a name="189"></a>    			{
+<a name="190"></a>    				b3DSound = True;
+<a name="191"></a>    				iMode = <span class="source_int">2</span>;
+<a name="192"></a>    			}
+<a name="193"></a>
+<a name="194"></a>    			if ( <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice UseEAX"</span> )) )
+<a name="195"></a>    			{
+<a name="196"></a>    				bEAX = True;
+<a name="197"></a>    				iMode = <span class="source_int">3</span>;
+<a name="198"></a>    			}
+<a name="199"></a>    		}
+<a name="200"></a>    		co_Mode.SilentSetIndex(iMode);
+<a name="201"></a>    		break;
+<a name="202"></a>
+<a name="203"></a>    	case ch_ReverseStereo:
+<a name="204"></a>    		bRev = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice ReverseStereo"</span>));
+<a name="205"></a>    		ch_ReverseStereo.SetComponentValue(bRev,true);
+<a name="206"></a>    		break;
+<a name="207"></a>
+<a name="208"></a>    	case ch_Default:
+<a name="209"></a>    		bDefault = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice UseDefaultDriver"</span>));
+<a name="210"></a>    		ch_Default.SetComponentValue(bDefault,true);
+<a name="211"></a>    		break;
+<a name="212"></a>
+<a name="213"></a>    	case co_Voices:
+<a name="214"></a>    		if ( <span class="source_type">PC</span>.bNoAutoTaunts ) iVoiceMode = <span class="source_int">1</span>;
+<a name="215"></a>    		if ( <span class="source_type">PC</span>.bNoVoiceTaunts ) iVoiceMode = <span class="source_int">1</span>;
+<a name="216"></a>    		if ( <span class="source_type">PC</span>.bNoVoiceMessages ) iVoiceMode = <span class="source_int">2</span>;
+<a name="217"></a>    		co_Voices.SilentSetIndex(iVoiceMode);
+<a name="218"></a>    		break;
+<a name="219"></a>
+<a name="220"></a>    	case ch_MessageBeep:
+<a name="221"></a>    		bBeep = <span class="source_type">class</span><span class="source_name">'HUD'</span>.default.bMessageBeep;
+<a name="222"></a>    		ch_MessageBeep.SetComponentValue(bBeep,true);
+<a name="223"></a>    		break;
+<a name="224"></a>
+<a name="225"></a>    	case ch_LowDetail:
+<a name="226"></a>    		bLow = <span class="source_type">PC</span>.<span class="source_type">Level</span>.bLowSoundDetail;
+<a name="227"></a>
+<a name="228"></a>    		<span class="source_comment">// Make sure both are the same - LevelInfo.bLowSoundDetail take priority
+</span><a name="229"></a>    		if ( bLow != <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice LowQualitySound"</span> )) )
+<a name="230"></a>    		{
+<a name="231"></a>    			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice LowQualitySound"</span>@bLow);
+<a name="232"></a>    			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"SOUND_REBOOT"</span>);
+<a name="233"></a>
+<a name="234"></a>    			<span class="source_comment">// Restart music.
+</span><a name="235"></a>    			if( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">""</span> && <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">"None"</span> )
+<a name="236"></a>    				<span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song, MTRAN_Instant );
+<a name="237"></a>
+<a name="238"></a>    			else <span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">class</span><span class="source_name">'ROMainMenu'</span>.default.MenuSong, MTRAN_Instant );
+<a name="239"></a>    		}
+<a name="240"></a>
+<a name="241"></a>    		ch_LowDetail.SetComponentValue(bLow,true);
+<a name="242"></a>    		break;
+<a name="243"></a>
+<a name="244"></a>    	case ch_VoiceChat:
+<a name="245"></a>    		bVoiceChat = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice UseVoIP"</span>));
+<a name="246"></a>    		ch_VoiceChat.SetComponentValue(bVoiceChat,true);
+<a name="247"></a>    		UpdateVOIPControlsState();
+<a name="248"></a>    		break;
+<a name="249"></a>
+<a name="250"></a>
+<a name="251"></a>        case ed_ChatPassword:
+<a name="252"></a>            sPwd = <span class="source_type">PC</span>.ChatPassword;
+<a name="253"></a>            ed_ChatPassword.SetComponentValue(sPwd, True);
+<a name="254"></a>            break;
+<a name="255"></a>
+<a name="256"></a>        case sl_VOIP:
+<a name="257"></a>        	fVoice = <span class="source_type">float</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice VoiceVolume"</span>));
+<a name="258"></a>        	sl_VOIP.SetComponentValue(fVoice, True);
+<a name="259"></a>        	break;
+<a name="260"></a>
+<a name="261"></a>    	case co_Quality:
+<a name="262"></a>    		sCodec = <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/voicechatreplicationinfo.html#VoiceChatCodec" class="source">VoiceChatCodec</a></span>;
+<a name="263"></a>    		co_Quality.SetExtra(sCodec,true);
+<a name="264"></a>    		break;
+<a name="265"></a>
+<a name="266"></a>    	case co_LANQuality:
+<a name="267"></a>    		sLANCodec = <span class="source_type">PC</span>.VoiceChatLANCodec;
+<a name="268"></a>    		co_LANQuality.SetExtra(sLANCodec,true);
+<a name="269"></a>    		break;
+<a name="270"></a>
+<a name="271"></a>    	case ch_Dampen:
+<a name="272"></a>    	    bDampen = <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice DampenWithVoIP"</span>));
+<a name="273"></a>    	    ch_Dampen.SetComponentValue(bDampen,true);
+<a name="274"></a>    	    break;
+<a name="275"></a>
+<a name="276"></a>    	case ch_AJPublic:
+<a name="277"></a>    		bAJPublic = <span class="source_type">bool</span>(<span class="source_type">PC</span>.AutoJoinMask & <span class="source_int">1</span>);
+<a name="278"></a>    		ch_AJPublic.SetComponentValue(bAJPublic,True);
+<a name="279"></a>    		break;
+<a name="280"></a>
+<a name="281"></a>    	<span class="source_comment">/*case ch_AJLocal:
+<a name="282"></a>    		bAJLocal = bool(PC.AutoJoinMask & 2);
+<a name="283"></a>    		ch_AJLocal.SetComponentValue(bAJLocal,True);
+<a name="284"></a>    		break;
+<a name="285"></a>
+<a name="286"></a>    	case ch_AJTeam:
+<a name="287"></a>    		bAJTeam = bool(PC.AutoJoinMask & 4);
+<a name="288"></a>    		ch_AJTeam.SetComponentValue(bAJTeam,True);
+<a name="289"></a>    		break;*/</span>
+<a name="290"></a>
+<a name="291"></a>    	case ch_AutoSpeak:
+<a name="292"></a>    		bAutoSpeak = <span class="source_type">PC</span>.bEnableInitialChatRoom;
+<a name="293"></a>    		if ( bAutoSpeak )
+<a name="294"></a>    			EnableComponent(ed_Active);
+<a name="295"></a>    		else DisableComponent(ed_Active);
+<a name="296"></a>
+<a name="297"></a>    		ch_AutoSpeak.SetComponentValue(bAutoSpeak, True);
+<a name="298"></a>    		break;
+<a name="299"></a>
+<a name="300"></a>    	case ed_Active:
+<a name="301"></a>    		sActive = <span class="source_type">PC</span>.DefaultActiveChannel;
+<a name="302"></a>    		ed_Active.SetComponentValue(sActive, True);
+<a name="303"></a>    		break;
+<a name="304"></a>
+<a name="305"></a>
+<a name="306"></a>    	default:
+<a name="307"></a>    		log(<span class="source_type">Name</span>@<span class="source_string">"Unknown component calling LoadINI:"</span>$ <span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>).<span class="source_type">Caption</span>);
+<a name="308"></a>    		<span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>).SetComponentValue(<span class="source_type">s</span>,true);
+<a name="309"></a>	}
+<a name="310"></a>}
+<a name="311"></a>
+<a name="312"></a>function InternalOnChange(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="313"></a>{
+<a name="314"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="315"></a>	local <span class="source_type">bool</span> bIsWin32;
+<a name="316"></a>
+<a name="317"></a>	bIsWin32 = ( ( PlatformIsWindows() ) && ( !PlatformIs64Bit() ) );
+<a name="318"></a>
+<a name="319"></a>	Super.InternalOnChange(<span class="source_type">Sender</span>);
+<a name="320"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="321"></a>
+<a name="322"></a>	<span class="source_type">switch</span>(<span class="source_type">Sender</span>)
+<a name="323"></a>	{
+<a name="324"></a>		case sl_MusicVol:
+<a name="325"></a>			fMusic = sl_MusicVol.GetValue();
+<a name="326"></a>			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice MusicVolume"</span>@fMusic);
+<a name="327"></a>			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"SetMusicVolume"</span>@fMusic);
+<a name="328"></a>
+<a name="329"></a>			if( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">""</span> && <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">"None"</span> )
+<a name="330"></a>				<span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song, MTRAN_Instant );
+<a name="331"></a>			else <span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">class</span><span class="source_name">'ROMainMenu'</span>.default.MenuSong, MTRAN_Instant );
+<a name="332"></a>			break;
+<a name="333"></a>
+<a name="334"></a>		case ch_DisableGameMusic:
+<a name="335"></a>			bDisableGameMusic = ch_DisableGameMusic.IsChecked();
+<a name="336"></a>		    break;
+<a name="337"></a>
+<a name="338"></a>		case sl_EffectsVol:
+<a name="339"></a>			fEffects = sl_EffectsVol.GetValue();
+<a name="340"></a>			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice SoundVolume"</span>@fEffects);
+<a name="341"></a>			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"stopsounds"</span>);
+<a name="342"></a>			<span class="source_comment">// ifndef _RO_
+</span><a name="343"></a>			<span class="source_comment">//PC.PlaySound(sound'PickupSounds.AdrenelinPickup');
+</span><a name="344"></a>			break;
+<a name="345"></a>
+<a name="346"></a>		case co_Mode:
+<a name="347"></a>			if ( !bIsWin32 )  <span class="source_comment">// Simple OpenAL abstraction...  --ryan.
+</span><a name="348"></a>				break;
+<a name="349"></a>
+<a name="350"></a>			iMode = co_Mode.GetIndex();
+<a name="351"></a>			if (iMode &gt; <span class="source_int">1</span>)
+<a name="352"></a>				ShowPerformanceWarning();
+<a name="353"></a>
+<a name="354"></a>			bCompat = iMode &lt; <span class="source_int">1</span>;
+<a name="355"></a>			b3DSound = iMode &gt; <span class="source_int">1</span>;
+<a name="356"></a>			bEAX = iMode &gt; <span class="source_int">2</span>;
+<a name="357"></a>	        <span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice CompatibilityMode"</span>@bCompat);
+<a name="358"></a>	        <span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice Use3DSound"</span>@b3DSound);
+<a name="359"></a>	        <span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice UseEAX"</span>@bEAX);
+<a name="360"></a>			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"SOUND_REBOOT"</span>);
+<a name="361"></a>
+<a name="362"></a>			<span class="source_comment">// Restart music.
+</span><a name="363"></a>			if( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">""</span> && <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">"None"</span> )
+<a name="364"></a>				<span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song, MTRAN_Instant );
+<a name="365"></a>			else <span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">class</span><span class="source_name">'ROMainMenu'</span>.default.MenuSong, MTRAN_Instant );
+<a name="366"></a>			break;
+<a name="367"></a>
+<a name="368"></a>		case ch_ReverseStereo:
+<a name="369"></a>			bRev = ch_ReverseStereo.IsChecked();
+<a name="370"></a>			break;
+<a name="371"></a>
+<a name="372"></a>		case ch_MessageBeep:
+<a name="373"></a>			bBeep = ch_MessageBeep.IsChecked();
+<a name="374"></a>			break;
+<a name="375"></a>
+<a name="376"></a>		case co_Voices:
+<a name="377"></a>			iVoiceMode = co_Voices.GetIndex();
+<a name="378"></a>			break;
+<a name="379"></a>
+<a name="380"></a>		case ch_Default:
+<a name="381"></a>			bDefault = ch_Default.IsChecked();
+<a name="382"></a>			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice UseDefaultDriver"</span>@bDefault);
+<a name="383"></a>			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"SOUND_REBOOT"</span>);
+<a name="384"></a>			break;
+<a name="385"></a>
+<a name="386"></a>		case ch_LowDetail:
+<a name="387"></a>			bLow = ch_LowDetail.IsChecked();
+<a name="388"></a>
+<a name="389"></a>			<span class="source_type">PC</span>.<span class="source_type">Level</span>.bLowSoundDetail = bLow;
+<a name="390"></a>			<span class="source_comment">//PC.Level.StaticSaveConfig();
+</span><a name="391"></a>			<span class="source_type">PC</span>.<span class="source_type">Level</span>.SaveConfig();
+<a name="392"></a>
+<a name="393"></a>			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice LowQualitySound"</span>@bLow);
+<a name="394"></a>			<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"SOUND_REBOOT"</span>);
+<a name="395"></a>
+<a name="396"></a>			<span class="source_comment">// Restart music.
+</span><a name="397"></a>			if( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">""</span> && <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">"None"</span> )
+<a name="398"></a>				<span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song, MTRAN_Instant );
+<a name="399"></a>			else <span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">class</span><span class="source_name">'ROMainMenu'</span>.default.MenuSong, MTRAN_Instant );
+<a name="400"></a>			break;
+<a name="401"></a>
+<a name="402"></a>		case ch_VoiceChat:
+<a name="403"></a>			bVoiceChat = ch_VoiceChat.IsChecked();
+<a name="404"></a>			UpdateVOIPControlsState();
+<a name="405"></a>			break;
+<a name="406"></a>
+<a name="407"></a>        case ch_Dampen:
+<a name="408"></a>            bDampen = ch_Dampen.IsChecked();
+<a name="409"></a>            break;
+<a name="410"></a>
+<a name="411"></a>        case ed_ChatPassword:
+<a name="412"></a>            sPwd = ed_ChatPassword.GetText();
+<a name="413"></a>            break;
+<a name="414"></a>
+<a name="415"></a>        case sl_VOIP:
+<a name="416"></a>        	fVoice = sl_VOIP.GetValue();
+<a name="417"></a>        	break;
+<a name="418"></a>
+<a name="419"></a>		case co_Quality:
+<a name="420"></a>			sCodec = co_Quality.GetExtra();
+<a name="421"></a>			break;
+<a name="422"></a>
+<a name="423"></a>		case co_LANQuality:
+<a name="424"></a>			sLANCodec = co_LANQuality.GetExtra();
+<a name="425"></a>			break;
+<a name="426"></a>
+<a name="427"></a>		case ch_AJPublic:
+<a name="428"></a>			bAJPublic = ch_AJPublic.IsChecked();
+<a name="429"></a>			break;
+<a name="430"></a>
+<a name="431"></a>		<span class="source_comment">/*case ch_AJLocal:
+<a name="432"></a>			bAJLocal = ch_AJLocal.IsChecked();
+<a name="433"></a>			break;
+<a name="434"></a>
+<a name="435"></a>		case ch_AJTeam:
+<a name="436"></a>			bAJTeam = ch_AJTeam.IsChecked();
+<a name="437"></a>			break;*/</span>
+<a name="438"></a>
+<a name="439"></a>		case ch_AutoSpeak:
+<a name="440"></a>			bAutoSpeak = ch_AutoSpeak.IsChecked();
+<a name="441"></a>			if ( bAutoSpeak )
+<a name="442"></a>				EnableComponent(ed_Active);
+<a name="443"></a>			else DisableComponent(ed_Active);
+<a name="444"></a>			break;
+<a name="445"></a>
+<a name="446"></a>		case ed_Active:
+<a name="447"></a>			sActive = ed_Active.GetText();
+<a name="448"></a>			break;
+<a name="449"></a>
+<a name="450"></a>	}
+<a name="451"></a>}
+<a name="452"></a>
+<a name="453"></a>function SaveSettings()
+<a name="454"></a>{
+<a name="455"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="456"></a>	local <span class="source_type">bool</span> bSave, bReboot;
+<a name="457"></a>
+<a name="458"></a>	Super.SaveSettings();
+<a name="459"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="460"></a>
+<a name="461"></a>	if (<span class="source_type">PC</span>.bNoAutoTaunts != iVoiceMode &gt; <span class="source_int">0</span>)
+<a name="462"></a>	{
+<a name="463"></a>		<span class="source_type">PC</span>.bNoAutoTaunts = iVoiceMode &gt; <span class="source_int">0</span>;
+<a name="464"></a>		<span class="source_type">PC</span>.default.bNoAutoTaunts = <span class="source_type">PC</span>.bNoAutoTaunts;
+<a name="465"></a>		bSave = True;
+<a name="466"></a>	}
+<a name="467"></a>
+<a name="468"></a>	if (<span class="source_type">PC</span>.bNoVoiceTaunts != iVoiceMode &gt; <span class="source_int">0</span>)
+<a name="469"></a>	{
+<a name="470"></a>		<span class="source_type">PC</span>.bNoVoiceTaunts = iVoiceMode &gt; <span class="source_int">0</span>;
+<a name="471"></a>		<span class="source_type">PC</span>.default.bNoVoiceTaunts = <span class="source_type">PC</span>.bNoVoiceTaunts;
+<a name="472"></a>		bSave = True;
+<a name="473"></a>	}
+<a name="474"></a>
+<a name="475"></a>	if (<span class="source_type">PC</span>.bNoVoiceMessages != iVoiceMode == <span class="source_int">2</span>)
+<a name="476"></a>	{
+<a name="477"></a>		<span class="source_type">PC</span>.bNoVoiceMessages = iVoiceMode == <span class="source_int">2</span>;
+<a name="478"></a>		<span class="source_type">PC</span>.default.bNoVoiceMessages = <span class="source_type">PC</span>.bNoVoiceMessages;
+<a name="479"></a>		bSave = True;
+<a name="480"></a>	}
+<a name="481"></a>
+<a name="482"></a>	if (fMusic != sl_MusicVol.GetValue())
+<a name="483"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice MusicVolume"</span>@fMusic);
+<a name="484"></a>
+<a name="485"></a>	if (<span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">PC</span>) != none)
+<a name="486"></a>	{
+<a name="487"></a>        if (<span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">PC</span>).bDisableMusicInGame != bDisableGameMusic)
+<a name="488"></a>        {
+<a name="489"></a>            <span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">PC</span>).bDisableMusicInGame = bDisableGameMusic;
+<a name="490"></a>	        bSave = true;
+<a name="491"></a>
+<a name="492"></a>            <span class="source_comment">//If they are on the menu, leave the music playing
+</span><a name="493"></a>            if ( <span class="source_type">PC</span>.<span class="source_type">Level</span>.ZoneTag != <span class="source_name">'ROEntry'</span>)
+<a name="494"></a>            {
+<a name="495"></a>                if ( bDisableGameMusic )
+<a name="496"></a>                {
+<a name="497"></a>                    <span class="source_comment">//Stop any playing music
+</span><a name="498"></a>                    <span class="source_type">PC</span>.StopAllMusic();
+<a name="499"></a>                }
+<a name="500"></a>                else
+<a name="501"></a>                {
+<a name="502"></a>    			    <span class="source_comment">// Restart level's music, if it exists
+</span><a name="503"></a>    			    if( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">""</span> && <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">"None"</span> )
+<a name="504"></a>    				    <span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song, MTRAN_Instant );
+<a name="505"></a>                }
+<a name="506"></a>            }
+<a name="507"></a>        }
+<a name="508"></a>	}
+<a name="509"></a>	else
+<a name="510"></a>	{
+<a name="511"></a>	    if (<span class="source_type">class</span><span class="source_name">'ROPlayer'</span>.default.bDisableMusicInGame != bDisableGameMusic)
+<a name="512"></a>        {
+<a name="513"></a>            <span class="source_type">class</span><span class="source_name">'ROPlayer'</span>.default.bDisableMusicInGame = bDisableGameMusic;
+<a name="514"></a>	        <span class="source_type">class</span><span class="source_name">'ROPlayer'</span>.static.StaticSaveConfig();
+<a name="515"></a>
+<a name="516"></a>            <span class="source_comment">//If they are on the menu, leave the music playing
+</span><a name="517"></a>            if ( <span class="source_type">PC</span>.<span class="source_type">Level</span>.ZoneTag != <span class="source_name">'ROEntry'</span>)
+<a name="518"></a>            {
+<a name="519"></a>                if ( bDisableGameMusic )
+<a name="520"></a>                {
+<a name="521"></a>                    <span class="source_comment">//Stop any playing music
+</span><a name="522"></a>                    <span class="source_type">PC</span>.StopAllMusic();
+<a name="523"></a>                }
+<a name="524"></a>                else
+<a name="525"></a>                {
+<a name="526"></a>    			    <span class="source_comment">// Restart level's music, if it exists
+</span><a name="527"></a>    			    if( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">""</span> && <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song != <span class="source_string">"None"</span> )
+<a name="528"></a>    				    <span class="source_type">PC</span>.ClientSetMusic( <span class="source_type">PC</span>.<span class="source_type">Level</span>.Song, MTRAN_Instant );
+<a name="529"></a>                }
+<a name="530"></a>            }
+<a name="531"></a>        }
+<a name="532"></a>	}
+<a name="533"></a>
+<a name="534"></a>	if (fEffects != sl_EffectsVol.GetValue())
+<a name="535"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice SoundVolume"</span>@fEffects);
+<a name="536"></a>
+<a name="537"></a>	if (<span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice ReverseStereo"</span>)) != bRev)
+<a name="538"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice ReverseStereo"</span>@bRev);
+<a name="539"></a>
+<a name="540"></a>	if (<span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice DampenWithVoIP"</span>)) != bDampen)
+<a name="541"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice DampenWithVoIP"</span>@bDampen);
+<a name="542"></a>
+<a name="543"></a>	if (bDefault != <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice UseDefaultDriver"</span>)))
+<a name="544"></a>	{
+<a name="545"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice UseDefaultDriver"</span>@bDefault);
+<a name="546"></a>		bReboot = True;
+<a name="547"></a>	}
+<a name="548"></a>
+<a name="549"></a>	if( <span class="source_type">PC</span>.MyHud != None )
+<a name="550"></a>	{
+<a name="551"></a>		if ( <span class="source_type">PC</span>.myHUD.bMessageBeep != bBeep )
+<a name="552"></a>		{
+<a name="553"></a>			<span class="source_type">PC</span>.myHUD.bMessageBeep = bBeep;
+<a name="554"></a>			<span class="source_type">PC</span>.myHUD.SaveConfig();
+<a name="555"></a>		}
+<a name="556"></a>	}
+<a name="557"></a>
+<a name="558"></a>	else
+<a name="559"></a>	{
+<a name="560"></a>		if ( <span class="source_type">class</span><span class="source_name">'HUD'</span>.default.bMessageBeep != bBeep )
+<a name="561"></a>		{
+<a name="562"></a>			<span class="source_type">class</span><span class="source_name">'HUD'</span>.default.bMessageBeep = bBeep;
+<a name="563"></a>			<span class="source_type">class</span><span class="source_name">'HUD'</span>.static.StaticSaveConfig();
+<a name="564"></a>		}
+<a name="565"></a>	}
+<a name="566"></a>
+<a name="567"></a>	if ( bAJPublic != <span class="source_type">bool</span>(<span class="source_type">PC</span>.AutoJoinMask & <span class="source_int">1</span>) )
+<a name="568"></a>	{
+<a name="569"></a>		if ( bAJPublic )
+<a name="570"></a>			<span class="source_type">PC</span>.AutoJoinMask = <span class="source_type">PC</span>.AutoJoinMask | <span class="source_int">1</span>;
+<a name="571"></a>		else <span class="source_type">PC</span>.AutoJoinMask = <span class="source_type">PC</span>.AutoJoinMask & ~<span class="source_int">1</span>;
+<a name="572"></a>		bSave = True;
+<a name="573"></a>	}
+<a name="574"></a>
+<a name="575"></a>	<span class="source_comment">/*if ( bAJLocal != bool(PC.AutoJoinMask & 2) )
+<a name="576"></a>	{
+<a name="577"></a>		if ( bAJLocal )
+<a name="578"></a>			PC.AutoJoinMask = PC.AutoJoinMask | 2;
+<a name="579"></a>		else PC.AutoJoinMask = PC.AutoJoinMask & ~2;
+<a name="580"></a>		bSave = True;
+<a name="581"></a>	}
+<a name="582"></a>
+<a name="583"></a>	if ( bAJTeam != bool(PC.AutoJoinMask & 4) )
+<a name="584"></a>	{
+<a name="585"></a>		if ( bAJTeam )
+<a name="586"></a>			PC.AutoJoinMask = PC.AutoJoinMask | 4;
+<a name="587"></a>		else PC.AutoJoinMask = PC.AutoJoinMask & ~4;
+<a name="588"></a>		bSave = True;
+<a name="589"></a>	}*/</span>
+<a name="590"></a>
+<a name="591"></a>    if ( fVoice != <span class="source_type">float</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice VoiceVolume"</span>)) )
+<a name="592"></a>    	<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"set ini:Engine.Engine.AudioDevice VoiceVolume"</span>@fVoice);
+<a name="593"></a>
+<a name="594"></a>    if ( sCodec != <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/voicechatreplicationinfo.html#VoiceChatCodec" class="source">VoiceChatCodec</a></span> )
+<a name="595"></a>    {
+<a name="596"></a>    	<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/voicechatreplicationinfo.html#VoiceChatCodec" class="source">VoiceChatCodec</a></span> = sCodec;
+<a name="597"></a>    	bSave = True;
+<a name="598"></a>    }
+<a name="599"></a>
+<a name="600"></a>    if ( sLANCodec != <span class="source_type">PC</span>.VoiceChatLANCodec )
+<a name="601"></a>    {
+<a name="602"></a>    	<span class="source_type">PC</span>.VoiceChatLANCodec = sLANCodec;
+<a name="603"></a>    	bSave = True;
+<a name="604"></a>    }
+<a name="605"></a>
+<a name="606"></a>    if ( <span class="source_type">PC</span>.bEnableInitialChatRoom != bAutoSpeak )
+<a name="607"></a>    {
+<a name="608"></a>    	<span class="source_type">PC</span>.bEnableInitialChatRoom = bAutoSpeak;
+<a name="609"></a>    	bSave = True;
+<a name="610"></a>    }
+<a name="611"></a>
+<a name="612"></a>	if ( !(<span class="source_type">PC</span>.DefaultActiveChannel ~= sActive) )
+<a name="613"></a>	{
+<a name="614"></a>		<span class="source_type">PC</span>.DefaultActiveChannel = sActive;
+<a name="615"></a>		bSave = True;
+<a name="616"></a>	}
+<a name="617"></a>
+<a name="618"></a>    if (<span class="source_type">PC</span>.ChatPassword != sPwd)
+<a name="619"></a>    {
+<a name="620"></a>        <span class="source_type">PC</span>.SetChatPassword(sPwd);
+<a name="621"></a>        bSave = False;
+<a name="622"></a>    }
+<a name="623"></a>
+<a name="624"></a>    if (bVoiceChat != <span class="source_type">bool</span>(<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice UseVoIP"</span>)))
+<a name="625"></a>	{
+<a name="626"></a>		if (bVoiceChat)
+<a name="627"></a>			<span class="source_type">PC</span>.EnableVoiceChat();
+<a name="628"></a>		else
+<a name="629"></a>            <span class="source_type">PC</span>.DisableVoiceChat();
+<a name="630"></a>
+<a name="631"></a>		bReboot = False;
+<a name="632"></a>	}
+<a name="633"></a>
+<a name="634"></a>	if (bSave)
+<a name="635"></a>		<span class="source_type">PC</span>.SaveConfig();
+<a name="636"></a>
+<a name="637"></a>	if (bReboot)
+<a name="638"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"SOUND_REBOOT"</span>);
+<a name="639"></a>}
+<a name="640"></a>
+<a name="641"></a>function UpdateVOIPControlsState()
+<a name="642"></a>{
+<a name="643"></a>    if (bVoiceChat)
+<a name="644"></a>    {
+<a name="645"></a>        <span class="source_comment">//ch_AJLocal.EnableMe();
+</span><a name="646"></a>        sl_VOIP.EnableMe();
+<a name="647"></a>        <span class="source_comment">//ch_AJLocal.EnableMe();
+</span><a name="648"></a>        ch_AJPublic.EnableMe();
+<a name="649"></a>        <span class="source_comment">//ch_AJTeam.EnableMe();
+</span><a name="650"></a>        ed_Active.EnableMe();
+<a name="651"></a>        ed_ChatPassword.EnableMe();
+<a name="652"></a>        co_Quality.EnableMe();
+<a name="653"></a>        co_LANQuality.EnableMe();
+<a name="654"></a>        ch_AutoSpeak.EnableMe();
+<a name="655"></a>    }
+<a name="656"></a>    else
+<a name="657"></a>    {
+<a name="658"></a>        <span class="source_comment">//ch_AJLocal.DisableMe();
+</span><a name="659"></a>        sl_VOIP.DisableMe();
+<a name="660"></a>        <span class="source_comment">//ch_AJLocal.DisableMe();
+</span><a name="661"></a>        ch_AJPublic.DisableMe();
+<a name="662"></a>        <span class="source_comment">//ch_AJTeam.DisableMe();
+</span><a name="663"></a>        ed_Active.DisableMe();
+<a name="664"></a>        ed_ChatPassword.DisableMe();
+<a name="665"></a>        co_Quality.DisableMe();
+<a name="666"></a>        co_LANQuality.DisableMe();
+<a name="667"></a>        ch_AutoSpeak.DisableMe();
+<a name="668"></a>    }
+<a name="669"></a>}
+<a name="670"></a>
+<a name="671"></a>defaultproperties
+<a name="672"></a>{
+<a name="673"></a>     AudioModes(<span class="source_int">0</span>)=<span class="source_string">"Safe Mode"</span>
+<a name="674"></a>     AudioModes(<span class="source_int">1</span>)=<span class="source_string">"3D Audio"</span>
+<a name="675"></a>     AudioModes(<span class="source_int">2</span>)=<span class="source_string">"H/W 3D Audio"</span>
+<a name="676"></a>     AudioModes(<span class="source_int">3</span>)=<span class="source_string">"H/W 3D + EAX"</span>
+<a name="677"></a>     VoiceModes(<span class="source_int">0</span>)=<span class="source_string">"All"</span>
+<a name="678"></a>     VoiceModes(<span class="source_int">1</span>)=<span class="source_string">"No taunts"</span>
+<a name="679"></a>     VoiceModes(<span class="source_int">2</span>)=<span class="source_string">"None"</span>
+<a name="680"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=AudioBK1
+<a name="681"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Sound System"</span>
+<a name="682"></a>         WinTop=<span class="source_int">0.100000</span>
+<a name="683"></a>         WinLeft=<span class="source_int">0.000948</span>
+<a name="684"></a>         WinWidth=<span class="source_int">0.485000</span>
+<a name="685"></a>         WinHeight=<span class="source_int">0.700000</span>
+<a name="686"></a>         OnPreDraw=AudioBK1.InternalPreDraw
+<a name="687"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="688"></a>     i_BG1=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioBK1'</span>
+<a name="689"></a>
+<a name="690"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=AudioBK3
+<a name="691"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Voice Chat"</span>
+<a name="692"></a>         WinTop=<span class="source_int">0.100000</span>
+<a name="693"></a>         WinLeft=<span class="source_int">0.495826</span>
+<a name="694"></a>         WinWidth=<span class="source_int">0.502751</span>
+<a name="695"></a>         WinHeight=<span class="source_int">0.633059</span>
+<a name="696"></a>         OnPreDraw=AudioBK3.InternalPreDraw
+<a name="697"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="698"></a>     i_BG3=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioBK3'</span>
+<a name="699"></a>
+<a name="700"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span> <span class="source_type">Name</span>=AudioMusicVolume
+<a name="701"></a>         MaxValue=<span class="source_int">1.000000</span>
+<a name="702"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Music Volume"</span>
+<a name="703"></a>         OnCreateComponent=AudioMusicVolume.InternalOnCreateComponent
+<a name="704"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="705"></a>         IniDefault=<span class="source_string">"0.5"</span>
+<a name="706"></a>         Hint=<span class="source_string">"Adjusts the volume of the background music."</span>
+<a name="707"></a>         WinTop=<span class="source_int">0.070522</span>
+<a name="708"></a>         WinLeft=<span class="source_int">0.018164</span>
+<a name="709"></a>         WinWidth=<span class="source_int">0.450000</span>
+<a name="710"></a>         TabOrder=<span class="source_int">2</span>
+<a name="711"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="712"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="713"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="714"></a>     sl_MusicVol=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioMusicVolume'</span>
+<a name="715"></a>
+<a name="716"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span> <span class="source_type">Name</span>=AudioEffectsVolumeSlider
+<a name="717"></a>         MaxValue=<span class="source_int">1.000000</span>
+<a name="718"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Effects Volume"</span>
+<a name="719"></a>         OnCreateComponent=AudioEffectsVolumeSlider.InternalOnCreateComponent
+<a name="720"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="721"></a>         IniDefault=<span class="source_string">"0.9"</span>
+<a name="722"></a>         Hint=<span class="source_string">"Adjusts the volume of all in game sound effects."</span>
+<a name="723"></a>         WinTop=<span class="source_int">0.070522</span>
+<a name="724"></a>         WinLeft=<span class="source_int">0.524024</span>
+<a name="725"></a>         WinWidth=<span class="source_int">0.450000</span>
+<a name="726"></a>         TabOrder=<span class="source_int">1</span>
+<a name="727"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="728"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="729"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="730"></a>     sl_EffectsVol=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioEffectsVolumeSlider'</span>
+<a name="731"></a>
+<a name="732"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span> <span class="source_type">Name</span>=VoiceVolume
+<a name="733"></a>         MaxValue=<span class="source_int">10.000000</span>
+<a name="734"></a>         MinValue=<span class="source_int">1.000000</span>
+<a name="735"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Voice Chat Volume"</span>
+<a name="736"></a>         OnCreateComponent=VoiceVolume.InternalOnCreateComponent
+<a name="737"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="738"></a>         Hint=<span class="source_string">"Adjusts the volume of other players' voice chat communication."</span>
+<a name="739"></a>         WinTop=<span class="source_int">0.142484</span>
+<a name="740"></a>         WinLeft=<span class="source_int">0.518507</span>
+<a name="741"></a>         WinWidth=<span class="source_int">0.408907</span>
+<a name="742"></a>         RenderWeight=<span class="source_int">1.040000</span>
+<a name="743"></a>         TabOrder=<span class="source_int">3</span>
+<a name="744"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="745"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="746"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="747"></a>     sl_VOIP=<span class="source_type"><a href="../xinterface/moslider.html" class="source">moSlider</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.VoiceVolume'</span>
+<a name="748"></a>
+<a name="749"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=AudioMode
+<a name="750"></a>         bReadOnly=True
+<a name="751"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Audio Mode"</span>
+<a name="752"></a>         OnCreateComponent=AudioMode.InternalOnCreateComponent
+<a name="753"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="754"></a>         IniDefault=<span class="source_string">"Software 3D Audio"</span>
+<a name="755"></a>         Hint=<span class="source_string">"Changes the audio system mode."</span>
+<a name="756"></a>         WinTop=<span class="source_int">0.149739</span>
+<a name="757"></a>         WinLeft=<span class="source_int">0.018164</span>
+<a name="758"></a>         WinWidth=<span class="source_int">0.450000</span>
+<a name="759"></a>         TabOrder=<span class="source_int">4</span>
+<a name="760"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="761"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="762"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="763"></a>     co_Mode=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioMode'</span>
+<a name="764"></a>
+<a name="765"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=AudioPlayVoices
+<a name="766"></a>         bReadOnly=True
+<a name="767"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Play Voice Messages"</span>
+<a name="768"></a>         OnCreateComponent=AudioPlayVoices.InternalOnCreateComponent
+<a name="769"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="770"></a>         IniDefault=<span class="source_string">"All"</span>
+<a name="771"></a>         Hint=<span class="source_string">"Defines the types of voice messages to play."</span>
+<a name="772"></a>         WinTop=<span class="source_int">0.149739</span>
+<a name="773"></a>         WinLeft=<span class="source_int">0.524024</span>
+<a name="774"></a>         WinWidth=<span class="source_int">0.450000</span>
+<a name="775"></a>         TabOrder=<span class="source_int">8</span>
+<a name="776"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="777"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="778"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="779"></a>     co_Voices=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioPlayVoices'</span>
+<a name="780"></a>
+<a name="781"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=AudioReverseStereo
+<a name="782"></a>         ComponentJustification=TXTA_Left
+<a name="783"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="784"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Reverse Stereo"</span>
+<a name="785"></a>         OnCreateComponent=AudioReverseStereo.InternalOnCreateComponent
+<a name="786"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="787"></a>         IniDefault=<span class="source_string">"False"</span>
+<a name="788"></a>         Hint=<span class="source_string">"Reverses the left and right audio channels."</span>
+<a name="789"></a>         WinTop=<span class="source_int">0.405678</span>
+<a name="790"></a>         WinLeft=<span class="source_int">0.018164</span>
+<a name="791"></a>         WinWidth=<span class="source_int">0.450000</span>
+<a name="792"></a>         TabOrder=<span class="source_int">7</span>
+<a name="793"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="794"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="795"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="796"></a>     ch_ReverseStereo=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioReverseStereo'</span>
+<a name="797"></a>
+<a name="798"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=AudioMessageBeep
+<a name="799"></a>         ComponentJustification=TXTA_Left
+<a name="800"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="801"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Message Beep"</span>
+<a name="802"></a>         OnCreateComponent=AudioMessageBeep.InternalOnCreateComponent
+<a name="803"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="804"></a>         IniDefault=<span class="source_string">"True"</span>
+<a name="805"></a>         Hint=<span class="source_string">"Enables a beep when receiving a text message from other players."</span>
+<a name="806"></a>         WinTop=<span class="source_int">0.405678</span>
+<a name="807"></a>         WinLeft=<span class="source_int">0.524024</span>
+<a name="808"></a>         WinWidth=<span class="source_int">0.450000</span>
+<a name="809"></a>         TabOrder=<span class="source_int">9</span>
+<a name="810"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="811"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="812"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="813"></a>     ch_MessageBeep=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioMessageBeep'</span>
+<a name="814"></a>
+<a name="815"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=DisableGameMusic
+<a name="816"></a>         ComponentJustification=TXTA_Left
+<a name="817"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="818"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Disable Music During Gameplay"</span>
+<a name="819"></a>         OnCreateComponent=DisableGameMusic.InternalOnCreateComponent
+<a name="820"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="821"></a>         IniDefault=<span class="source_string">"False"</span>
+<a name="822"></a>         Hint=<span class="source_string">"Turns off background music during gameplay."</span>
+<a name="823"></a>         WinTop=<span class="source_int">0.235052</span>
+<a name="824"></a>         WinLeft=<span class="source_int">0.018164</span>
+<a name="825"></a>         WinWidth=<span class="source_int">0.450000</span>
+<a name="826"></a>         TabOrder=<span class="source_int">10</span>
+<a name="827"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="828"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="829"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="830"></a>     ch_DisableGameMusic=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.DisableGameMusic'</span>
+<a name="831"></a>
+<a name="832"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=AudioLowDetail
+<a name="833"></a>         ComponentJustification=TXTA_Left
+<a name="834"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="835"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Low Sound Detail"</span>
+<a name="836"></a>         OnCreateComponent=AudioLowDetail.InternalOnCreateComponent
+<a name="837"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="838"></a>         IniDefault=<span class="source_string">"False"</span>
+<a name="839"></a>         Hint=<span class="source_string">"Lowers quality of sound."</span>
+<a name="840"></a>         WinTop=<span class="source_int">0.235052</span>
+<a name="841"></a>         WinLeft=<span class="source_int">0.018164</span>
+<a name="842"></a>         WinWidth=<span class="source_int">0.450000</span>
+<a name="843"></a>         TabOrder=<span class="source_int">5</span>
+<a name="844"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="845"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="846"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="847"></a>     ch_LowDetail=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioLowDetail'</span>
+<a name="848"></a>
+<a name="849"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=AudioDefaultDriver
+<a name="850"></a>         ComponentJustification=TXTA_Left
+<a name="851"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="852"></a>         <span class="source_type">Caption</span>=<span class="source_string">"System Driver"</span>
+<a name="853"></a>         OnCreateComponent=AudioDefaultDriver.InternalOnCreateComponent
+<a name="854"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="855"></a>         IniDefault=<span class="source_string">"False"</span>
+<a name="856"></a>         Hint=<span class="source_string">"Use system installed OpenAL driver"</span>
+<a name="857"></a>         WinTop=<span class="source_int">0.320365</span>
+<a name="858"></a>         WinLeft=<span class="source_int">0.018164</span>
+<a name="859"></a>         WinWidth=<span class="source_int">0.450000</span>
+<a name="860"></a>         TabOrder=<span class="source_int">6</span>
+<a name="861"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="862"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="863"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="864"></a>     ch_Default=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AudioDefaultDriver'</span>
+<a name="865"></a>
+<a name="866"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=EnableVoiceChat
+<a name="867"></a>         CaptionWidth=-<span class="source_int">1.000000</span>
+<a name="868"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Enable Voice Chat"</span>
+<a name="869"></a>         OnCreateComponent=EnableVoiceChat.InternalOnCreateComponent
+<a name="870"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="871"></a>         Hint=<span class="source_string">"Enables the voice chat system during online matches."</span>
+<a name="872"></a>         WinTop=<span class="source_int">0.834777</span>
+<a name="873"></a>         WinLeft=<span class="source_int">0.527734</span>
+<a name="874"></a>         WinWidth=<span class="source_int">0.461134</span>
+<a name="875"></a>         TabOrder=<span class="source_int">20</span>
+<a name="876"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="877"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="878"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="879"></a>     ch_VoiceChat=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.EnableVoiceChat'</span>
+<a name="880"></a>
+<a name="881"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=AutoJoinPublic
+<a name="882"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="883"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Autojoin Public Channel"</span>
+<a name="884"></a>         OnCreateComponent=AutoJoinPublic.InternalOnCreateComponent
+<a name="885"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="886"></a>         Hint=<span class="source_string">"Automatically join the 'Public' channel upon connecting to a server."</span>
+<a name="887"></a>         WinTop=<span class="source_int">0.145784</span>
+<a name="888"></a>         WinLeft=<span class="source_int">0.086280</span>
+<a name="889"></a>         WinWidth=<span class="source_int">0.826652</span>
+<a name="890"></a>         TabOrder=<span class="source_int">23</span>
+<a name="891"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="892"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="893"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="894"></a>     ch_AJPublic=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AutoJoinPublic'</span>
+<a name="895"></a>
+<a name="896"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=AutoSpeakCheckbox
+<a name="897"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Auto-select Active Channel"</span>
+<a name="898"></a>         OnCreateComponent=AutoSpeakCheckbox.InternalOnCreateComponent
+<a name="899"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="900"></a>         Hint=<span class="source_string">"Automatically set an active channel when you join a server.  The default channel is determined by the gametype, but you can specify your own using the editbox below"</span>
+<a name="901"></a>         WinTop=<span class="source_int">0.603526</span>
+<a name="902"></a>         WinLeft=<span class="source_int">0.039812</span>
+<a name="903"></a>         WinWidth=<span class="source_int">0.442638</span>
+<a name="904"></a>         WinHeight=<span class="source_int">0.060000</span>
+<a name="905"></a>         TabOrder=<span class="source_int">24</span>
+<a name="906"></a>         bBoundToParent=True
+<a name="907"></a>         bScaleToParent=True
+<a name="908"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="909"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="910"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="911"></a>     ch_AutoSpeak=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.AutoSpeakCheckbox'</span>
+<a name="912"></a>
+<a name="913"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=Dampen
+<a name="914"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="915"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Dampen Game Volume When Using VOIP"</span>
+<a name="916"></a>         OnCreateComponent=Dampen.InternalOnCreateComponent
+<a name="917"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="918"></a>         Hint=<span class="source_string">"Dampens the volume of the game when receiving VOIP communications."</span>
+<a name="919"></a>         WinTop=<span class="source_int">0.145784</span>
+<a name="920"></a>         WinLeft=<span class="source_int">0.086280</span>
+<a name="921"></a>         WinWidth=<span class="source_int">0.826652</span>
+<a name="922"></a>         TabOrder=<span class="source_int">21</span>
+<a name="923"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="924"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="925"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="926"></a>     ch_Dampen=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.Dampen'</span>
+<a name="927"></a>
+<a name="928"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span> <span class="source_type">Name</span>=DefaultActiveChannelEditBox
+<a name="929"></a>         CaptionWidth=<span class="source_int">0.600000</span>
+<a name="930"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Default Channel Name"</span>
+<a name="931"></a>         OnCreateComponent=DefaultActiveChannelEditBox.InternalOnCreateComponent
+<a name="932"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="933"></a>         Hint=<span class="source_string">"Enter the name of the channel to speak on by default when you join the server.  To use the default chatroom for whichever gametype you're playing, leave this field empty"</span>
+<a name="934"></a>         WinTop=<span class="source_int">0.757277</span>
+<a name="935"></a>         WinLeft=<span class="source_int">0.032569</span>
+<a name="936"></a>         WinWidth=<span class="source_int">0.420403</span>
+<a name="937"></a>         TabOrder=<span class="source_int">25</span>
+<a name="938"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="939"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="940"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="941"></a>     ed_Active=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.DefaultActiveChannelEditBox'</span>
+<a name="942"></a>
+<a name="943"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span> <span class="source_type">Name</span>=ChatPasswordEdit
+<a name="944"></a>         CaptionWidth=<span class="source_int">0.600000</span>
+<a name="945"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Chat Password"</span>
+<a name="946"></a>         OnCreateComponent=ChatPasswordEdit.InternalOnCreateComponent
+<a name="947"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="948"></a>         Hint=<span class="source_string">"Set a password on your personal chat room to limit who is allowed to join"</span>
+<a name="949"></a>         WinTop=<span class="source_int">0.332828</span>
+<a name="950"></a>         WinLeft=<span class="source_int">0.032569</span>
+<a name="951"></a>         WinWidth=<span class="source_int">0.420403</span>
+<a name="952"></a>         TabOrder=<span class="source_int">26</span>
+<a name="953"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="954"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="955"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="956"></a>     ed_ChatPassword=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.ChatPasswordEdit'</span>
+<a name="957"></a>
+<a name="958"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=VoiceQuality
+<a name="959"></a>         bReadOnly=True
+<a name="960"></a>         CaptionWidth=<span class="source_int">0.600000</span>
+<a name="961"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Internet Quality"</span>
+<a name="962"></a>         OnCreateComponent=VoiceQuality.InternalOnCreateComponent
+<a name="963"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="964"></a>         Hint=<span class="source_string">"Determines the codec used to transmit voice chat to and from internet servers."</span>
+<a name="965"></a>         WinTop=<span class="source_int">0.241391</span>
+<a name="966"></a>         WinLeft=<span class="source_int">0.523390</span>
+<a name="967"></a>         WinWidth=<span class="source_int">0.408907</span>
+<a name="968"></a>         TabOrder=<span class="source_int">27</span>
+<a name="969"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="970"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="971"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="972"></a>     co_Quality=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.VoiceQuality'</span>
+<a name="973"></a>
+<a name="974"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=VoiceQualityLAN
+<a name="975"></a>         bReadOnly=True
+<a name="976"></a>         CaptionWidth=<span class="source_int">0.600000</span>
+<a name="977"></a>         <span class="source_type">Caption</span>=<span class="source_string">"LAN Quality"</span>
+<a name="978"></a>         OnCreateComponent=VoiceQualityLAN.InternalOnCreateComponent
+<a name="979"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="980"></a>         Hint=<span class="source_string">"Determines the codec used to transmit voice chat to and from LAN servers."</span>
+<a name="981"></a>         WinTop=<span class="source_int">0.333786</span>
+<a name="982"></a>         WinLeft=<span class="source_int">0.523390</span>
+<a name="983"></a>         WinWidth=<span class="source_int">0.408907</span>
+<a name="984"></a>         TabOrder=<span class="source_int">28</span>
+<a name="985"></a>         OnChange=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnChange
+<a name="986"></a>         OnLoadINI=<span class="source_type"><a href="../rointerface/rotab_audiosettings.html" class="source">ROTab_AudioSettings</a></span>.InternalOnLoadINI
+<a name="987"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="988"></a>     co_LANQuality=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'ROInterface.ROTab_AudioSettings.VoiceQualityLAN'</span>
+<a name="989"></a>
+<a name="990"></a>     VoiceChatClass=<span class="source_type">Class</span><span class="source_name">'Engine.VoiceChatReplicationInfo'</span>
+<a name="991"></a>     VoiceChatClassName=<span class="source_string">"UnrealGame.TeamVoiceReplicationInfo"</span>
+<a name="992"></a>     PanelCaption=<span class="source_string">"Audio"</span>
+<a name="993"></a>     WinTop=<span class="source_int">0.150000</span>
+<a name="994"></a>     WinHeight=<span class="source_int">0.740000</span>
+<a name="995"></a>}
+<a name="996"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/rotab_audiosettings.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROTab_AudioSettings">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/rosty_titlebar.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/rotab_controls.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:07.581 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

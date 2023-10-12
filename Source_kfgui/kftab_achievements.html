@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFGui.KFTab_Achievements</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kftab_achievements.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFTab_Achievements">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kfsty2nobackground.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kftab_botconfigsp.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfgui/kftab_achievements.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfgui/kfgui-overview.html">KFGui</a>.<a href="../kfgui/kftab_achievements.html">KFTab_Achievements</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfgui/kftab_achievements.html" class="source">KFTab_Achievements</a></span> extends <span class="source_type"><a href="../xinterface/ut2k4tabpanel.html" class="source">UT2K4TabPanel</a></span>;
+<a name="2"></a>
+<a name="3"></a>var	automated <span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span>	i_BGAchievements;
+<a name="4"></a>var	automated <span class="source_type"><a href="../xinterface/guiprogressbar.html" class="source">GUIProgressBar</a></span>		pb_AchievementProgress;
+<a name="5"></a>var	automated <span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span>				l_AchievementProgress;
+<a name="6"></a>var	automated <span class="source_type"><a href="../kfgui/kfachievementslistbox.html" class="source">KFAchievementsListBox</a></span>	lb_Achievements;
+<a name="7"></a>
+<a name="8"></a>var	localized <span class="source_type">string</span>	OutOfString;
+<a name="9"></a>var	localized <span class="source_type">string</span>	UnlockedString;
+<a name="10"></a>
+<a name="11"></a>function ShowPanel(<span class="source_type">bool</span> <span class="source_type">bShow</span>)
+<a name="12"></a>{
+<a name="13"></a>	local <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span> KFStatsAndAchievements;
+<a name="14"></a>	local <span class="source_type">int</span> CompletedCount;
+<a name="15"></a>
+<a name="16"></a>	if ( <span class="source_type">bShow</span> )
+<a name="17"></a>	{
+<a name="18"></a>		if ( PlayerOwner() != none )
+<a name="19"></a>		{
+<a name="20"></a>			KFStatsAndAchievements = <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(PlayerOwner().SteamStatsAndAchievements);
+<a name="21"></a>
+<a name="22"></a>			if ( KFStatsAndAchievements != none )
+<a name="23"></a>			{
+<a name="24"></a>				<span class="source_comment">// Initialize the List
+</span><a name="25"></a>				lb_Achievements.<span class="source_type">List</span>.InitList(KFStatsAndAchievements);
+<a name="26"></a>
+<a name="27"></a>				<span class="source_comment">// Initialize Achievement Progress
+</span><a name="28"></a>				CompletedCount = KFStatsAndAchievements.GetAchievementCompletedCount();
+<a name="29"></a>				pb_AchievementProgress.<span class="source_type">Value</span> = CompletedCount;
+<a name="30"></a>				pb_AchievementProgress.High = KFStatsAndAchievements.Achievements.Length;
+<a name="31"></a>				l_AchievementProgress.<span class="source_type">Caption</span> = CompletedCount @ OutOfString @ KFStatsAndAchievements.Achievements.Length @ UnlockedString;
+<a name="32"></a>		    }
+<a name="33"></a>		}
+<a name="34"></a>	}
+<a name="35"></a>
+<a name="36"></a>	super.ShowPanel(<span class="source_type">bShow</span>);
+<a name="37"></a>}
+<a name="38"></a>
+<a name="39"></a>defaultproperties
+<a name="40"></a>{
+<a name="41"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=BGAchievements
+<a name="42"></a>         HeaderBase=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Med_border'</span>
+<a name="43"></a>         <span class="source_type">Caption</span>=<span class="source_string">"My Achievements"</span>
+<a name="44"></a>         WinTop=<span class="source_int">0.018000</span>
+<a name="45"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="46"></a>         WinWidth=<span class="source_int">0.900000</span>
+<a name="47"></a>         WinHeight=<span class="source_int">0.960000</span>
+<a name="48"></a>         OnPreDraw=BGAchievements.InternalPreDraw
+<a name="49"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="50"></a>     i_BGAchievements=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'KFGui.KFTab_Achievements.BGAchievements'</span>
+<a name="51"></a>
+<a name="52"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiprogressbar.html" class="source">GUIProgressBar</a></span> <span class="source_type">Name</span>=AchievementProgressBar
+<a name="53"></a>         BarBack=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_InterfaceArt_tex.Menu.Innerborder'</span>
+<a name="54"></a>         BarTop=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.progress_bar'</span>
+<a name="55"></a>         BarColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>)
+<a name="56"></a>         CaptionWidth=<span class="source_int">0.000000</span>
+<a name="57"></a>         bShowValue=False
+<a name="58"></a>         BorderSize=<span class="source_int">3.000000</span>
+<a name="59"></a>         WinTop=<span class="source_int">0.090000</span>
+<a name="60"></a>         WinLeft=<span class="source_int">0.180867</span>
+<a name="61"></a>         WinWidth=<span class="source_int">0.655610</span>
+<a name="62"></a>         WinHeight=<span class="source_int">0.030000</span>
+<a name="63"></a>         RenderWeight=<span class="source_int">1.200000</span>
+<a name="64"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="65"></a>     pb_AchievementProgress=<span class="source_type"><a href="../xinterface/guiprogressbar.html" class="source">GUIProgressBar</a></span><span class="source_name">'KFGui.KFTab_Achievements.AchievementProgressBar'</span>
+<a name="66"></a>
+<a name="67"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span> <span class="source_type">Name</span>=AchievementProgressLabel
+<a name="68"></a>         <span class="source_type">Caption</span>=<span class="source_string">"0 of 0 unlocked"</span>
+<a name="69"></a>         TextColor=(<span class="source_type">B</span>=<span class="source_int">192</span>,G=<span class="source_int">192</span>,<span class="source_type">R</span>=<span class="source_int">192</span>)
+<a name="70"></a>         WinTop=<span class="source_int">0.120000</span>
+<a name="71"></a>         WinLeft=<span class="source_int">0.180867</span>
+<a name="72"></a>         WinWidth=<span class="source_int">0.655610</span>
+<a name="73"></a>         WinHeight=<span class="source_int">0.030000</span>
+<a name="74"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="75"></a>     l_AchievementProgress=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span><span class="source_name">'KFGui.KFTab_Achievements.AchievementProgressLabel'</span>
+<a name="76"></a>
+<a name="77"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../kfgui/kfachievementslistbox.html" class="source">KFAchievementsListBox</a></span> <span class="source_type">Name</span>=AchievementsList
+<a name="78"></a>         OnCreateComponent=AchievementsList.InternalOnCreateComponent
+<a name="79"></a>         WinTop=<span class="source_int">0.187382</span>
+<a name="80"></a>         WinLeft=<span class="source_int">0.072959</span>
+<a name="81"></a>         WinWidth=<span class="source_int">0.851529</span>
+<a name="82"></a>         WinHeight=<span class="source_int">0.777808</span>
+<a name="83"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="84"></a>     lb_Achievements=<span class="source_type"><a href="../kfgui/kfachievementslistbox.html" class="source">KFAchievementsListBox</a></span><span class="source_name">'KFGui.KFTab_Achievements.AchievementsList'</span>
+<a name="85"></a>
+<a name="86"></a>     OutOfString=<span class="source_string">"of"</span>
+<a name="87"></a>     UnlockedString=<span class="source_string">"unlocked"</span>
+<a name="88"></a>     WinTop=<span class="source_int">0.150000</span>
+<a name="89"></a>     WinHeight=<span class="source_int">0.720000</span>
+<a name="90"></a>}
+<a name="91"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kftab_achievements.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFTab_Achievements">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kfsty2nobackground.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kftab_botconfigsp.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.246 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

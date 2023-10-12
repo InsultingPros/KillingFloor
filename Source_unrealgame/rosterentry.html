@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: UnrealGame.RosterEntry</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/rosterentry.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#RosterEntry">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/restingformation.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/saymessageplus.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_unrealgame/rosterentry.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../unrealgame/unrealgame-overview.html">UnrealGame</a>.<a href="../unrealgame/rosterentry.html">RosterEntry</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../unrealgame/rosterentry.html" class="source">RosterEntry</a></span> extends <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="2"></a>		editinlinenew;
+<a name="3"></a>
+<a name="4"></a><span class="source_comment">// If RO
+</span><a name="5"></a>var() <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>&gt; PawnClass;
+<a name="6"></a><span class="source_comment">// Else
+</span><a name="7"></a><span class="source_comment">//var() class&lt;UnrealPawn&gt; PawnClass;
+</span><a name="8"></a>var() <span class="source_type">string</span> PawnClassName;
+<a name="9"></a>var() <span class="source_type">string</span> <span class="source_type">PlayerName</span>;
+<a name="10"></a>var() <span class="source_type">string</span> ModifiedPlayerName;
+<a name="11"></a>var() <span class="source_type">string</span> VoiceTypeName;
+<a name="12"></a>var() enum <span class="source_type"><a href="../unrealgame/rosterentry.html#EOrders" class="source">EOrders</a></span>
+<a name="13"></a>{
+<a name="14"></a>	ORDERS_None,
+<a name="15"></a>	ORDERS_Attack,
+<a name="16"></a>	ORDERS_Defend,
+<a name="17"></a>	ORDERS_Freelance,
+<a name="18"></a>	ORDERS_Support,
+<a name="19"></a>	ORDERS_Roam
+<a name="20"></a>} Orders;
+<a name="21"></a>var() <span class="source_type">bool</span> bTaken;
+<a name="22"></a>
+<a name="23"></a>var() <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>&gt; FavoriteWeapon;
+<a name="24"></a>var() <span class="source_type">float</span> Aggressiveness;		<span class="source_comment">// 0 to 1 (0.3 default, higher is more aggressive)
+</span><a name="25"></a>var() <span class="source_type">float</span> Accuracy;			<span class="source_comment">// -1 to 1 (0 is default, higher is more accurate)
+</span><a name="26"></a>var() <span class="source_type">float</span> CombatStyle;		<span class="source_comment">// 0 to 1 (0= stay back more, 1 = charge more)
+</span><a name="27"></a>var() <span class="source_type">float</span> StrafingAbility;	<span class="source_comment">// -1 to 1 (higher uses strafing more)
+</span><a name="28"></a>var() <span class="source_type">float</span> Tactics;			<span class="source_comment">// -1 to 1 (higher uses better team tactics)
+</span><a name="29"></a>var() <span class="source_type">float</span> ReactionTime;
+<a name="30"></a>var() <span class="source_type">float</span> Jumpiness;			<span class="source_comment">// -1 to 1
+</span><a name="31"></a>var <span class="source_type">bool</span> bJumpy;				<span class="source_comment">// OBSOLETE
+</span><a name="32"></a>
+<a name="33"></a>function Init() <span class="source_comment">//amb
+</span><a name="34"></a>{
+<a name="35"></a>    if( PawnClassName != <span class="source_string">""</span> )
+<a name="36"></a>        PawnClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../unrealgame/unrealpawn.html" class="source">UnrealPawn</a></span>&gt;(DynamicLoadObject(PawnClassName, <span class="source_type">class</span><span class="source_name">'class'</span>));
+<a name="37"></a>    <span class="source_comment">//log(self$" PawnClass="$PawnClass);
+</span><a name="38"></a>}
+<a name="39"></a>
+<a name="40"></a>function PrecacheRosterFor(<span class="source_type"><a href="../unrealgame/unrealteaminfo.html" class="source">UnrealTeamInfo</a></span> <span class="source_type">T</span>);
+<a name="41"></a>
+<a name="42"></a>function SetOrders( <span class="source_type"><a href="../engine/gameprofile.html" class="source">GameProfile</a></span>.<span class="source_type"><a href="../engine/gameprofile.html#EPlayerPos" class="source">EPlayerPos</a></span> <span class="source_type">Position</span>)
+<a name="43"></a>{
+<a name="44"></a>	<span class="source_type">switch</span> ( <span class="source_type">Position</span> )
+<a name="45"></a>	{
+<a name="46"></a>		case POS_Defense:
+<a name="47"></a>			Orders = ORDERS_Defend;
+<a name="48"></a>			break;
+<a name="49"></a>		case POS_Offense:
+<a name="50"></a>			Orders = ORDERS_Attack;
+<a name="51"></a>			break;
+<a name="52"></a>		case POS_Roam:
+<a name="53"></a>			Orders = ORDERS_Freelance;
+<a name="54"></a>			break;
+<a name="55"></a>		case POS_Supporting:
+<a name="56"></a>			Orders = ORDERS_Support;
+<a name="57"></a>			break;
+<a name="58"></a>	}
+<a name="59"></a>}
+<a name="60"></a>
+<a name="61"></a>function <span class="source_type">bool</span> RecommendSupport()
+<a name="62"></a>{
+<a name="63"></a>	return ( Orders == ORDERS_Support );
+<a name="64"></a>}
+<a name="65"></a>
+<a name="66"></a>function <span class="source_type">bool</span> NoRecommendation()
+<a name="67"></a>{
+<a name="68"></a>	return ( Orders == ORDERS_None );
+<a name="69"></a>}
+<a name="70"></a>
+<a name="71"></a>function <span class="source_type">bool</span> RecommendDefense()
+<a name="72"></a>{
+<a name="73"></a>	return ( Orders == ORDERS_Defend );
+<a name="74"></a>}
+<a name="75"></a>
+<a name="76"></a>function <span class="source_type">bool</span> RecommendFreelance()
+<a name="77"></a>{
+<a name="78"></a>	return ( Orders == ORDERS_Freelance );
+<a name="79"></a>}
+<a name="80"></a>
+<a name="81"></a>function <span class="source_type">bool</span> RecommendAttack()
+<a name="82"></a>{
+<a name="83"></a>	return ( Orders == ORDERS_Attack );
+<a name="84"></a>}
+<a name="85"></a>
+<a name="86"></a>function InitBot(<span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>)
+<a name="87"></a>{
+<a name="88"></a>    <span class="source_type">class</span><span class="source_name">'CustomBotConfig'</span>.static.Customize(self);
+<a name="89"></a>
+<a name="90"></a>	<span class="source_type">B</span>.FavoriteWeapon = FavoriteWeapon;
+<a name="91"></a>	<span class="source_type">B</span>.Aggressiveness = FClamp(Aggressiveness, <span class="source_int">0</span>, <span class="source_int">1</span>);
+<a name="92"></a>	<span class="source_type">B</span>.BaseAggressiveness = <span class="source_type">B</span>.Aggressiveness;
+<a name="93"></a>	<span class="source_type">B</span>.Accuracy = FClamp(Accuracy, -<span class="source_int">5</span>, <span class="source_int">5</span>);
+<a name="94"></a>	<span class="source_type">B</span>.StrafingAbility = FClamp(StrafingAbility, -<span class="source_int">5</span>, <span class="source_int">5</span>);
+<a name="95"></a>	<span class="source_type">B</span>.CombatStyle = FClamp(CombatStyle, <span class="source_int">0</span>, <span class="source_int">1</span>);
+<a name="96"></a>	<span class="source_type">B</span>.Tactics = FClamp(Tactics, -<span class="source_int">5</span>, <span class="source_int">5</span>);
+<a name="97"></a>	<span class="source_type">B</span>.ReactionTime = FClamp(ReactionTime, -<span class="source_int">5</span>, <span class="source_int">5</span>);
+<a name="98"></a>	<span class="source_type">B</span>.Jumpiness = Jumpiness;
+<a name="99"></a>	if ( <span class="source_type">B</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None )
+<a name="100"></a>		<span class="source_type">B</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.VoiceTypeName = VoiceTypeName;
+<a name="101"></a>}
+<a name="102"></a>
+<a name="103"></a>defaultproperties
+<a name="104"></a>{
+<a name="105"></a>     Aggressiveness=<span class="source_int">0.300000</span>
+<a name="106"></a>     CombatStyle=<span class="source_int">0.200000</span>
+<a name="107"></a>}
+<a name="108"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/rosterentry.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#RosterEntry">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/restingformation.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/saymessageplus.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:07.454 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

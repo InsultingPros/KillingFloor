@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: UnrealGame.TeamVoiceReplicationInfo</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/teamvoicereplicationinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#TeamVoiceReplicationInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/teamvoicepack.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/timermessage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_unrealgame/teamvoicereplicationinfo.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../unrealgame/unrealgame-overview.html">UnrealGame</a>.<a href="../unrealgame/teamvoicereplicationinfo.html">TeamVoiceReplicationInfo</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280
+</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//	Description
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">//	Written by Ron Prestenback
+</span><a name="5"></a><span class="source_comment">//	© 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="6"></a><span class="source_comment">//==============================================================================
+</span><a name="7"></a><span class="source_type">class</span> <span class="source_type"><a href="../unrealgame/teamvoicereplicationinfo.html" class="source">TeamVoiceReplicationInfo</a></span> extends <span class="source_type"><a href="../unrealgame/unrealvoicereplicationinfo.html" class="source">UnrealVoiceReplicationInfo</a></span>;
+<a name="8"></a>
+<a name="9"></a>var <span class="source_type">int</span> RedTeamMask, BlueTeamMask;
+<a name="10"></a>
+<a name="11"></a><span class="source_comment">// Whether players from opposing teams allowed to join each other's chatroom.
+</span><a name="12"></a><span class="source_comment">// Set from gameinfo
+</span><a name="13"></a>var <span class="source_type">bool</span> bTeamChatOnly;
+<a name="14"></a>
+<a name="15"></a>replication
+<a name="16"></a>{
+<a name="17"></a>	reliable if ( Role == ROLE_Authority && (bNetDirty || bNetInitial) )
+<a name="18"></a>		RedTeamMask, BlueTeamMask, bTeamChatOnly;
+<a name="19"></a>}
+<a name="20"></a>
+<a name="21"></a>simulated event InitChannels()
+<a name="22"></a>{
+<a name="23"></a>	local <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> TeamVCR;
+<a name="24"></a>
+<a name="25"></a>	Super.InitChannels();
+<a name="26"></a>
+<a name="27"></a>	TeamVCR = AddVoiceChannel();
+<a name="28"></a>	if ( TeamVCR != None )
+<a name="29"></a>		TeamVCR.SetTeam(<span class="source_int">0</span>); <span class="source_comment">//AXIS_TEAM_INDEX
+</span><a name="30"></a>
+<a name="31"></a>	TeamVCR = AddVoiceChannel();
+<a name="32"></a>	if ( TeamVCR != None )
+<a name="33"></a>		TeamVCR.SetTeam(<span class="source_int">1</span>); <span class="source_comment">//ALLIES_TEAM_INDEX
+</span><a name="34"></a>}
+<a name="35"></a>
+<a name="36"></a>simulated function <span class="source_type">bool</span> ValidRoom( <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> <span class="source_type">Room</span> )
+<a name="37"></a>{
+<a name="38"></a>	return bEnableVoiceChat && <span class="source_type">Room</span> != None && <span class="source_type">Room</span>.ChannelIndex &lt; <span class="source_int">4</span> && <span class="source_type">Room</span>.<span class="source_type">Owner</span> == Self;
+<a name="39"></a>}
+<a name="40"></a>
+<a name="41"></a>function SetMask( <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> <span class="source_type">Room</span>, <span class="source_type">int</span> <span class="source_type">NewMask</span> )
+<a name="42"></a>{
+<a name="43"></a>	if ( !ValidRoom(<span class="source_type">Room</span>) )
+<a name="44"></a>		return;
+<a name="45"></a>
+<a name="46"></a>	if ( <span class="source_type">Room</span>.ChannelIndex == <span class="source_int">2</span> )
+<a name="47"></a>		RedTeamMask = <span class="source_type">NewMask</span>;
+<a name="48"></a>
+<a name="49"></a>	else if ( <span class="source_type">Room</span>.ChannelIndex == <span class="source_int">3</span> )
+<a name="50"></a>		BlueTeamMask = <span class="source_type">NewMask</span>;
+<a name="51"></a>
+<a name="52"></a>	else Super.SetMask(<span class="source_type">Room</span>,<span class="source_type">NewMask</span>);
+<a name="53"></a>}
+<a name="54"></a>
+<a name="55"></a>simulated function <span class="source_type">int</span> GetMask( <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> <span class="source_type">Room</span> )
+<a name="56"></a>{
+<a name="57"></a>	if ( !ValidRoom(<span class="source_type">Room</span>) )
+<a name="58"></a>		return <span class="source_int">0</span>;
+<a name="59"></a>
+<a name="60"></a>	if ( <span class="source_type">Room</span>.ChannelIndex == <span class="source_int">2</span> )
+<a name="61"></a>		return RedTeamMask;
+<a name="62"></a>
+<a name="63"></a>	if ( <span class="source_type">Room</span>.ChannelIndex == <span class="source_int">3</span> )
+<a name="64"></a>		return BlueTeamMask;
+<a name="65"></a>
+<a name="66"></a>	return Super.GetMask(<span class="source_type">Room</span>);
+<a name="67"></a>}
+<a name="68"></a>
+<a name="69"></a>simulated event <span class="source_type">int</span> GetChannelIndex(<span class="source_type">string</span> ChannelTitle, optional <span class="source_type">int</span> TeamIndex)
+<a name="70"></a>{
+<a name="71"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="72"></a>
+<a name="73"></a>	if ( ChannelTitle != <span class="source_string">""</span> )
+<a name="74"></a>	{
+<a name="75"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Channels.Length; <span class="source_type">i</span>++)
+<a name="76"></a>			if (Channels[<span class="source_type">i</span>] != None && Channels[<span class="source_type">i</span>].GetTitle() ~= ChannelTitle && Channels[<span class="source_type">i</span>].GetTeam() == TeamIndex)
+<a name="77"></a>				return Channels[<span class="source_type">i</span>].ChannelIndex;
+<a name="78"></a>	}
+<a name="79"></a>
+<a name="80"></a>	return Super.GetChannelIndex(ChannelTitle, TeamIndex);
+<a name="81"></a>}
+<a name="82"></a>simulated function <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> GetChannel(<span class="source_type">string</span> ChatRoomName, optional <span class="source_type">int</span> TeamIndex)
+<a name="83"></a>{
+<a name="84"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="85"></a>
+<a name="86"></a><span class="source_comment">//	log(Name@"GetChannel()"@ChatRoomName@TeamIndex,'VoiceChat');
+</span><a name="87"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Channels.Length; <span class="source_type">i</span>++)
+<a name="88"></a>		if (Channels[<span class="source_type">i</span>] != None && Channels[<span class="source_type">i</span>].GetTitle() ~= ChatRoomName && Channels[<span class="source_type">i</span>].<span class="source_type">Owner</span> != None && Channels[<span class="source_type">i</span>].GetTeam() == TeamIndex)
+<a name="89"></a>			return Channels[<span class="source_type">i</span>];
+<a name="90"></a>
+<a name="91"></a>	return Super.GetChannel(ChatRoomName, TeamIndex);
+<a name="92"></a>}
+<a name="93"></a>
+<a name="94"></a>function <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span>.<span class="source_type"><a href="../engine/voicechatroom.html#EJoinChatResult" class="source">EJoinChatResult</a></span> JoinChannel(<span class="source_type">string</span> ChannelTitle, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI, <span class="source_type">string</span> <span class="source_type">Password</span>)
+<a name="95"></a>{
+<a name="96"></a>	local <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> VCR;
+<a name="97"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="98"></a>
+<a name="99"></a>	if (PRI != None || PRI.<span class="source_type">Team</span> == None)
+<a name="100"></a>		return JCR_Invalid;
+<a name="101"></a>
+<a name="102"></a>	VCR = GetChannel(ChannelTitle, PRI.<span class="source_type">Team</span>.TeamIndex);
+<a name="103"></a>	if ( VCR == None )
+<a name="104"></a>		return JCR_Invalid;
+<a name="105"></a>
+<a name="106"></a>	if ( VCR.GetTeam() != PRI.<span class="source_type">Team</span>.TeamIndex )
+<a name="107"></a>	{
+<a name="108"></a>		if ( VCR.IsTeamChannel() )
+<a name="109"></a>			return JCR_NotAllowed;
+<a name="110"></a>
+<a name="111"></a>		<span class="source_type">i</span> = GetPublicChannelCount();
+<a name="112"></a>		if ( bTeamChatOnly && VCR.ChannelIndex &gt; <span class="source_type">i</span> )
+<a name="113"></a>			return JCR_NotAllowed;
+<a name="114"></a>	}
+<a name="115"></a>
+<a name="116"></a>	return VCR.JoinChannel(PRI, <span class="source_type">Password</span>);
+<a name="117"></a>}
+<a name="118"></a>
+<a name="119"></a>function <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span>.<span class="source_type"><a href="../engine/voicechatroom.html#EJoinChatResult" class="source">EJoinChatResult</a></span> JoinChannelAt(<span class="source_type">int</span> ChannelIndex, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI, <span class="source_type">string</span> <span class="source_type">Password</span>)
+<a name="120"></a>{
+<a name="121"></a>	local <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> VCR;
+<a name="122"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="123"></a>
+<a name="124"></a>	if ( PRI == None || PRI.<span class="source_type">Team</span> == None )
+<a name="125"></a>		return JCR_Invalid;
+<a name="126"></a>
+<a name="127"></a>	VCR = GetChannelAt(ChannelIndex);
+<a name="128"></a>	if ( VCR.GetTeam() != PRI.<span class="source_type">Team</span>.TeamIndex )
+<a name="129"></a>	{
+<a name="130"></a>		if ( VCR.IsTeamChannel() )
+<a name="131"></a>			return JCR_NotAllowed;
+<a name="132"></a>
+<a name="133"></a>		<span class="source_type">i</span> = GetPublicChannelCount();
+<a name="134"></a>		if ( bTeamChatOnly && VCR.ChannelIndex &gt; <span class="source_type">i</span> )
+<a name="135"></a>			return JCR_NotAllowed;
+<a name="136"></a>	}
+<a name="137"></a>
+<a name="138"></a>	return VCR.JoinChannel(PRI, <span class="source_type">Password</span>);
+<a name="139"></a>}
+<a name="140"></a>
+<a name="141"></a>function NotifyTeamChange(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI, <span class="source_type">int</span> TeamIndex)
+<a name="142"></a>{
+<a name="143"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j, <span class="source_type">idx</span>;
+<a name="144"></a>
+<a name="145"></a>	if ( Role &lt; ROLE_Authority )
+<a name="146"></a>		return;
+<a name="147"></a>
+<a name="148"></a>	j = GetPublicChannelCount();
+<a name="149"></a><span class="source_comment">//	log(Name@"NotifyTeamChange PRI:"$PRI.PlayerName@"TeamIndex:"$TeamIndex@"GetPublicChannelCount():"$j/*@"PublicChannelCount:"$PublicChannelCount*/,'VoiceChat');
+</span><a name="150"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Channels.Length; <span class="source_type">i</span>++)
+<a name="151"></a>	{
+<a name="152"></a>		if ( Channels[<span class="source_type">i</span>] == None )
+<a name="153"></a>			continue;
+<a name="154"></a>
+<a name="155"></a>		if ( Channels[<span class="source_type">i</span>].ChannelIndex == -<span class="source_int">1</span> )
+<a name="156"></a>		{
+<a name="157"></a>			log(<span class="source_type">Name</span>@<span class="source_string">"NotifyTeamChange"</span>@<span class="source_type">i</span>@Channels[<span class="source_type">i</span>].<span class="source_type">Name</span>@Channels[<span class="source_type">i</span>].GetTitle()@<span class="source_string">"index is -1!"</span>,<span class="source_name">'VoiceChat'</span>);
+<a name="158"></a>			continue;
+<a name="159"></a>		}
+<a name="160"></a>
+<a name="161"></a>		if ( Channels[<span class="source_type">i</span>].ChannelIndex &lt; j )
+<a name="162"></a>		{
+<a name="163"></a>			if (Channels[<span class="source_type">i</span>].NotifyTeamChange(PRI, TeamIndex))
+<a name="164"></a>			{
+<a name="165"></a>				<span class="source_type">idx</span> = GetOpposingTeamChannel(Channels[<span class="source_type">i</span>].ChannelIndex);
+<a name="166"></a>
+<a name="167"></a>				<span class="source_type">Level</span>.Game.ChangeVoiceChannel( PRI, Channels[<span class="source_type">i</span>].ChannelIndex, <span class="source_type">idx</span> );
+<a name="168"></a>				if ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(PRI.<span class="source_type">Owner</span>) != None && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(PRI.<span class="source_type">Owner</span>).ActiveRoom != None &&
+<a name="169"></a>				     <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(PRI.<span class="source_type">Owner</span>).ActiveRoom.ChannelIndex == <span class="source_type">idx</span> )
+<a name="170"></a>				{
+<a name="171"></a>					<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(PRI.<span class="source_type">Owner</span>).ActiveRoom = Channels[<span class="source_type">i</span>];
+<a name="172"></a>					<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(PRI.<span class="source_type">Owner</span>).ClientSetActiveRoom(Channels[<span class="source_type">i</span>].ChannelIndex);
+<a name="173"></a>				}
+<a name="174"></a>			}
+<a name="175"></a>		}
+<a name="176"></a>
+<a name="177"></a>		else
+<a name="178"></a>		{
+<a name="179"></a>			if ( bTeamChatOnly && Channels[<span class="source_type">i</span>].IsMember(PRI) && Channels[<span class="source_type">i</span>].GetTeam() != TeamIndex && Channels[<span class="source_type">i</span>].<span class="source_type">Owner</span> != PRI )
+<a name="180"></a>				<span class="source_type">Level</span>.Game.ChangeVoiceChannel( PRI, -<span class="source_int">1</span>, Channels[<span class="source_type">i</span>].ChannelIndex );
+<a name="181"></a>		}
+<a name="182"></a>	}
+<a name="183"></a>}
+<a name="184"></a>
+<a name="185"></a>event Timer()
+<a name="186"></a>{
+<a name="187"></a>	super.Timer();
+<a name="188"></a>
+<a name="189"></a>	VerifyTeamChatters();
+<a name="190"></a>
+<a name="191"></a>}
+<a name="192"></a>
+<a name="193"></a>function VerifyTeamChatters()
+<a name="194"></a>{
+<a name="195"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">P</span>;
+<a name="196"></a>	local <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> ChatChannel, FixedChannel;
+<a name="197"></a>	local <span class="source_type">int</span> OpposingIndex;
+<a name="198"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="199"></a>
+<a name="200"></a>	for ( <span class="source_type">P</span>=<span class="source_type">Level</span>.ControllerList; <span class="source_type">P</span>!=None; <span class="source_type">P</span>=<span class="source_type">P</span>.nextController )
+<a name="201"></a>	{
+<a name="202"></a>        <span class="source_type">PC</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">P</span>);
+<a name="203"></a>		if ( <span class="source_type">PC</span> != none && <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != none && <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> != none)
+<a name="204"></a>		{
+<a name="205"></a>			if( <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex == ALLIES_TEAM_INDEX )
+<a name="206"></a>			{
+<a name="207"></a>			    OpposingIndex = AXIS_TEAM_INDEX;
+<a name="208"></a>			}
+<a name="209"></a>			else if( <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex == AXIS_TEAM_INDEX )
+<a name="210"></a>			{
+<a name="211"></a>				OpposingIndex = ALLIES_TEAM_INDEX;
+<a name="212"></a>			}
+<a name="213"></a>			else
+<a name="214"></a>			{
+<a name="215"></a>				continue;
+<a name="216"></a>			}
+<a name="217"></a>
+<a name="218"></a>			ChatChannel = GetChannel(<span class="source_string">"Team"</span>, OpposingIndex);
+<a name="219"></a>
+<a name="220"></a>			if( ChatChannel.IsMember(<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>) )
+<a name="221"></a>			{
+<a name="222"></a>				log(<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>$<span class="source_string">" is in the wrong channel - fixing !!! Opposing Index = "</span>$OpposingIndex$<span class="source_string">" team "</span>$<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex);
+<a name="223"></a>
+<a name="224"></a>                FixedChannel = GetChannel(<span class="source_string">"Team"</span>, <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex);
+<a name="225"></a>
+<a name="226"></a>				<span class="source_type">Level</span>.Game.ChangeVoiceChannel( <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>, FixedChannel.ChannelIndex, ChatChannel.ChannelIndex );
+<a name="227"></a>
+<a name="228"></a>				if ( <span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None )
+<a name="229"></a>					<span class="source_type">P</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationinfo</a></span>.ActiveChannel = FixedChannel.ChannelIndex;
+<a name="230"></a>
+<a name="231"></a>				<span class="source_type">PC</span>.ActiveRoom = FixedChannel;
+<a name="232"></a>				<span class="source_type">PC</span>.ClientSetActiveRoom(FixedChannel.ChannelIndex);
+<a name="233"></a>			}
+<a name="234"></a><span class="source_comment">//			else
+</span><a name="235"></a><span class="source_comment">//			{
+</span><a name="236"></a><span class="source_comment">//				log(P.PlayerReplicationInfo.PlayerName$" is in the right channel!!! Opposing Index = "$OpposingIndex$" team "$P.PlayerReplicationInfo.Team.TeamIndex);
+</span><a name="237"></a><span class="source_comment">//			}
+</span><a name="238"></a>		}
+<a name="239"></a>	}
+<a name="240"></a>}
+<a name="241"></a>
+<a name="242"></a>simulated function <span class="source_type">string</span> GetTitle( <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> <span class="source_type">Room</span> )
+<a name="243"></a>{
+<a name="244"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">idx</span>;
+<a name="245"></a>
+<a name="246"></a>	if ( !ValidRoom(<span class="source_type">Room</span>) )
+<a name="247"></a>		return Super.GetTitle(<span class="source_type">Room</span>);
+<a name="248"></a>
+<a name="249"></a>	<span class="source_type">idx</span> = <span class="source_type">Room</span>.ChannelIndex;
+<a name="250"></a>	if ( <span class="source_type">idx</span> &gt;= PublicChannelNames.Length )
+<a name="251"></a>	{
+<a name="252"></a>		<span class="source_type">i</span> = (PublicChannelNames.Length - <span class="source_int">2</span>);
+<a name="253"></a>		<span class="source_type">idx</span> -= <span class="source_type">i</span>;
+<a name="254"></a>	}
+<a name="255"></a>
+<a name="256"></a>	return PublicChannelNames[<span class="source_type">idx</span>];
+<a name="257"></a>}
+<a name="258"></a>
+<a name="259"></a>simulated function <span class="source_type">int</span> GetOpposingTeamChannel(<span class="source_type">int</span> ChannelIndex)
+<a name="260"></a>{
+<a name="261"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, cnt;
+<a name="262"></a>	local <span class="source_type"><a href="../engine/voicechatroom.html" class="source">VoiceChatRoom</a></span> <span class="source_type">Room</span>;
+<a name="263"></a>
+<a name="264"></a>	<span class="source_type">Room</span> = GetChannelAt(ChannelIndex);
+<a name="265"></a>	cnt = GetPublicChannelCount();
+<a name="266"></a>
+<a name="267"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; cnt; <span class="source_type">i</span>++ )
+<a name="268"></a>		if ( Channels[<span class="source_type">i</span>] != None && Channels[<span class="source_type">i</span>] != <span class="source_type">Room</span> && Channels[<span class="source_type">i</span>].GetTitle() == <span class="source_type">Room</span>.GetTitle() )
+<a name="269"></a>			return Channels[<span class="source_type">i</span>].ChannelIndex;
+<a name="270"></a>
+<a name="271"></a>	return -<span class="source_int">1</span>;
+<a name="272"></a>}
+<a name="273"></a>
+<a name="274"></a>defaultproperties
+<a name="275"></a>{
+<a name="276"></a>     PublicChannelNames(<span class="source_int">2</span>)=<span class="source_string">"Team"</span>
+<a name="277"></a>     ChatRoomClass=<span class="source_type">Class</span><span class="source_name">'UnrealGame.UnrealTeamChatRoom'</span>
+<a name="278"></a>     DefaultChannel=<span class="source_int">2</span>
+<a name="279"></a>}
+<a name="280"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/teamvoicereplicationinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#TeamVoiceReplicationInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/teamvoicepack.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/timermessage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:09.557 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

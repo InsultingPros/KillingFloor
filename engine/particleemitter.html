@@ -1,0 +1,1776 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Engine.ParticleEmitter</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/particleemitter.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#ParticleEmitter">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/palette.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/particlematerial.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#engine/particleemitter.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.ParticleEmitter</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../core/object.html">Object</a></dd>
+<dt>Modifiers</dt><dd>abstract editinlinenew native </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/particleemitter.html">ParticleEmitter</a>
+</pre>
+
+<h4>Direct Known Subclasses:</h4>
+<blockquote>
+	<a href="../engine/beamemitter.html">BeamEmitter</a>, <a href="../engine/meshemitter.html">MeshEmitter</a>, <a href="../engine/sparkemitter.html">SparkEmitter</a>, <a href="../engine/spriteemitter.html">SpriteEmitter</a>, <a href="../engine/trailemitter.html">TrailEmitter</a>
+</blockquote>
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Contants from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#ALLIES_TEAM_INDEX">ALLIES_TEAM_INDEX</a>, <a href="../core/object.html#AXIS_TEAM_INDEX">AXIS_TEAM_INDEX</a>, <a href="../core/object.html#MaxInt">MaxInt</a>, <a href="../core/object.html#NEUTRAL_TEAM_INDEX">NEUTRAL_TEAM_INDEX</a>, <a href="../core/object.html#Pi">Pi</a>, <a href="../core/object.html#RF_NotForClient">RF_NotForClient</a>, <a href="../core/object.html#RF_NotForEdit">RF_NotForEdit</a>, <a href="../core/object.html#RF_NotForServer">RF_NotForServer</a>, <a href="../core/object.html#RF_Public">RF_Public</a>, <a href="../core/object.html#RF_Standalone">RF_Standalone</a>, <a href="../core/object.html#RF_Transactional">RF_Transactional</a>, <a href="../core/object.html#RF_Transient">RF_Transient</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_ActiveParticles" name="ActiveParticles" title="go to the details">ActiveParticles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_AllParticlesDead" name="AllParticlesDead" title="go to the details">AllParticlesDead</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_Backup_Disabled" name="Backup_Disabled" title="go to the details">Backup_Disabled</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Box">box</a></td><td width="66%"><a href="#_BoundingBox" name="BoundingBox" title="go to the details">BoundingBox</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_CurrentCollisionSoundIndex" name="CurrentCollisionSoundIndex" title="go to the details">CurrentCollisionSoundIndex</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_CurrentMeshSpawningIndex" name="CurrentMeshSpawningIndex" title="go to the details">CurrentMeshSpawningIndex</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_CurrentSpawningSoundIndex" name="CurrentSpawningSoundIndex" title="go to the details">CurrentSpawningSoundIndex</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_CurrentSpawnOnTrigger" name="CurrentSpawnOnTrigger" title="go to the details">CurrentSpawnOnTrigger</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_DeferredParticles" name="DeferredParticles" title="go to the details">DeferredParticles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_GlobalOffset" name="GlobalOffset" title="go to the details">GlobalOffset</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_Inactive" name="Inactive" title="go to the details">Inactive</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_InactiveTime" name="InactiveTime" title="go to the details">InactiveTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_InitialDelay" name="InitialDelay" title="go to the details">InitialDelay</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_Initialized" name="Initialized" title="go to the details">Initialized</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_KillPending" name="KillPending" title="go to the details">KillPending</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_MaxActiveParticles" name="MaxActiveParticles" title="go to the details">MaxActiveParticles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MaxSizeScale" name="MaxSizeScale" title="go to the details">MaxSizeScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../core/object.html#Vector">vector</a>&gt;</td><td width="66%"><a href="#_MeshVertsAndNormals" name="MeshVertsAndNormals" title="go to the details">MeshVertsAndNormals</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_OtherIndex" name="OtherIndex" title="go to the details">OtherIndex</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/emitter.html">emitter</a></td><td width="66%"><a href="#_Owner" name="Owner" title="go to the details">Owner</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_ParticleIndex" name="ParticleIndex" title="go to the details">ParticleIndex</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/particleemitter.html#Particle">Particle</a>&gt;</td><td width="66%"><a href="#_Particles" name="Particles" title="go to the details">Particles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_PPSFraction" name="PPSFraction" title="go to the details">PPSFraction</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_PS2Data" name="PS2Data" title="go to the details">PS2Data</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_RealDisableFogging" name="RealDisableFogging" title="go to the details">RealDisableFogging</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_RealExtentMultiplier" name="RealExtentMultiplier" title="go to the details">RealExtentMultiplier</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_RealMeshNormal" name="RealMeshNormal" title="go to the details">RealMeshNormal</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_RealVelocityLossRange" name="RealVelocityLossRange" title="go to the details">RealVelocityLossRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_RenderableParticles" name="RenderableParticles" title="go to the details">RenderableParticles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimeTillReset" name="TimeTillReset" title="go to the details">TimeTillReset</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_WarmedUp" name="WarmedUp" title="go to the details">WarmedUp</a></td></tr>
+<tr><th colspan="2" class="small">Acceleration</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_Acceleration" name="Acceleration" title="go to the details">Acceleration</a></td></tr>
+<tr><th colspan="2" class="small">Collision</th></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../core/object.html#Plane">plane</a>&gt;</td><td width="66%"><a href="#_CollisionPlanes" name="CollisionPlanes" title="go to the details">CollisionPlanes</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_DampingFactorRange" name="DampingFactorRange" title="go to the details">DampingFactorRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_ExtentMultiplier" name="ExtentMultiplier" title="go to the details">ExtentMultiplier</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_MaxCollisions" name="MaxCollisions" title="go to the details">MaxCollisions</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_SpawnAmount" name="SpawnAmount" title="go to the details">SpawnAmount</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_SpawnedVelocityScaleRange" name="SpawnedVelocityScaleRange" title="go to the details">SpawnedVelocityScaleRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_SpawnFromOtherEmitter" name="SpawnFromOtherEmitter" title="go to the details">SpawnFromOtherEmitter</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseCollision" name="UseCollision" title="go to the details">UseCollision</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseCollisionPlanes" name="UseCollisionPlanes" title="go to the details">UseCollisionPlanes</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseMaxCollisions" name="UseMaxCollisions" title="go to the details">UseMaxCollisions</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseSpawnedVelocityScale" name="UseSpawnedVelocityScale" title="go to the details">UseSpawnedVelocityScale</a></td></tr>
+<tr><th colspan="2" class="small">Color</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_ColorMultiplierRange" name="ColorMultiplierRange" title="go to the details">ColorMultiplierRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/particleemitter.html#ParticleColorScale">ParticleColorScale</a>&gt;</td><td width="66%"><a href="#_ColorScale" name="ColorScale" title="go to the details">ColorScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ColorScaleRepeats" name="ColorScaleRepeats" title="go to the details">ColorScaleRepeats</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_Opacity" name="Opacity" title="go to the details">Opacity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseColorScale" name="UseColorScale" title="go to the details">UseColorScale</a></td></tr>
+<tr><th colspan="2" class="small">Fading</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_FadeIn" name="FadeIn" title="go to the details">FadeIn</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FadeInEndTime" name="FadeInEndTime" title="go to the details">FadeInEndTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Plane">plane</a></td><td width="66%"><a href="#_FadeInFactor" name="FadeInFactor" title="go to the details">FadeInFactor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_FadeOut" name="FadeOut" title="go to the details">FadeOut</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Plane">plane</a></td><td width="66%"><a href="#_FadeOutFactor" name="FadeOutFactor" title="go to the details">FadeOutFactor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FadeOutStartTime" name="FadeOutStartTime" title="go to the details">FadeOutStartTime</a></td></tr>
+<tr><th colspan="2" class="small">Force</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseActorForces" name="UseActorForces" title="go to the details">UseActorForces</a></td></tr>
+<tr><th colspan="2" class="small">General</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#EParticleCoordinateSystem">EParticleCoordinateSystem</a></td><td width="66%"><a href="#_CoordinateSystem" name="CoordinateSystem" title="go to the details">CoordinateSystem</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#EParticleEffectAxis">EParticleEffectAxis</a></td><td width="66%"><a href="#_EffectAxis" name="EffectAxis" title="go to the details">EffectAxis</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_MaxParticles" name="MaxParticles" title="go to the details">MaxParticles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_ResetAfterChange" name="ResetAfterChange" title="go to the details">ResetAfterChange</a></td></tr>
+<tr><th colspan="2" class="small">Local</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_AutoDestroy" name="AutoDestroy" title="go to the details">AutoDestroy</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_AutoReset" name="AutoReset" title="go to the details">AutoReset</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_AutoResetTimeRange" name="AutoResetTimeRange" title="go to the details">AutoResetTimeRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#EDetailMode">EDetailMode</a></td><td width="66%"><a href="#_DetailMode" name="DetailMode" title="go to the details">DetailMode</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_Disabled" name="Disabled" title="go to the details">Disabled</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_DisableFogging" name="DisableFogging" title="go to the details">DisableFogging</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_Name" name="Name" title="go to the details">Name</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_RespawnDeadParticles" name="RespawnDeadParticles" title="go to the details">RespawnDeadParticles</a></td></tr>
+<tr><th colspan="2" class="small">Location</th></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_AddLocationFromOtherEmitter" name="AddLocationFromOtherEmitter" title="go to the details">AddLocationFromOtherEmitter</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_SphereRadiusRange" name="SphereRadiusRange" title="go to the details">SphereRadiusRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_StartLocationOffset" name="StartLocationOffset" title="go to the details">StartLocationOffset</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_StartLocationPolarRange" name="StartLocationPolarRange" title="go to the details">StartLocationPolarRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_StartLocationRange" name="StartLocationRange" title="go to the details">StartLocationRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#EParticleStartLocationShape">EParticleStartLocationShape</a></td><td width="66%"><a href="#_StartLocationShape" name="StartLocationShape" title="go to the details">StartLocationShape</a></td></tr>
+<tr><th colspan="2" class="small">Mass</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_StartMassRange" name="StartMassRange" title="go to the details">StartMassRange</a></td></tr>
+<tr><th colspan="2" class="small">MeshSpawning</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_MeshNormal" name="MeshNormal" title="go to the details">MeshNormal</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_MeshNormalThresholdRange" name="MeshNormalThresholdRange" title="go to the details">MeshNormalThresholdRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_MeshScaleRange" name="MeshScaleRange" title="go to the details">MeshScaleRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#EParticleMeshSpawning">EParticleMeshSpawning</a></td><td width="66%"><a href="#_MeshSpawning" name="MeshSpawning" title="go to the details">MeshSpawning</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">staticmesh</td><td width="66%"><a href="#_MeshSpawningStaticMesh" name="MeshSpawningStaticMesh" title="go to the details">MeshSpawningStaticMesh</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_SpawnOnlyInDirectionOfNormal" name="SpawnOnlyInDirectionOfNormal" title="go to the details">SpawnOnlyInDirectionOfNormal</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UniformMeshScale" name="UniformMeshScale" title="go to the details">UniformMeshScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UniformVelocityScale" name="UniformVelocityScale" title="go to the details">UniformVelocityScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseColorFromMesh" name="UseColorFromMesh" title="go to the details">UseColorFromMesh</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_VelocityFromMesh" name="VelocityFromMesh" title="go to the details">VelocityFromMesh</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_VelocityScaleRange" name="VelocityScaleRange" title="go to the details">VelocityScaleRange</a></td></tr>
+<tr><th colspan="2" class="small">Performance</th></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_LowDetailFactor" name="LowDetailFactor" title="go to the details">LowDetailFactor</a></td></tr>
+<tr><th colspan="2" class="small">Rendering</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_AcceptsProjectors" name="AcceptsProjectors" title="go to the details">AcceptsProjectors</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_AlphaRef" name="AlphaRef" title="go to the details">AlphaRef</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_AlphaTest" name="AlphaTest" title="go to the details">AlphaTest</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_ZTest" name="ZTest" title="go to the details">ZTest</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_ZWrite" name="ZWrite" title="go to the details">ZWrite</a></td></tr>
+<tr><th colspan="2" class="small">Revolution</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_RevolutionCenterOffsetRange" name="RevolutionCenterOffsetRange" title="go to the details">RevolutionCenterOffsetRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/particleemitter.html#ParticleRevolutionScale">ParticleRevolutionScale</a>&gt;</td><td width="66%"><a href="#_RevolutionScale" name="RevolutionScale" title="go to the details">RevolutionScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_RevolutionScaleRepeats" name="RevolutionScaleRepeats" title="go to the details">RevolutionScaleRepeats</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_RevolutionsPerSecondRange" name="RevolutionsPerSecondRange" title="go to the details">RevolutionsPerSecondRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseRevolution" name="UseRevolution" title="go to the details">UseRevolution</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseRevolutionScale" name="UseRevolutionScale" title="go to the details">UseRevolutionScale</a></td></tr>
+<tr><th colspan="2" class="small">Rotation</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_DampRotation" name="DampRotation" title="go to the details">DampRotation</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_RotationDampingFactorRange" name="RotationDampingFactorRange" title="go to the details">RotationDampingFactorRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_RotationNormal" name="RotationNormal" title="go to the details">RotationNormal</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Rotator">rotator</a></td><td width="66%"><a href="#_RotationOffset" name="RotationOffset" title="go to the details">RotationOffset</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_SpinCCWorCW" name="SpinCCWorCW" title="go to the details">SpinCCWorCW</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_SpinParticles" name="SpinParticles" title="go to the details">SpinParticles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_SpinsPerSecondRange" name="SpinsPerSecondRange" title="go to the details">SpinsPerSecondRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_StartSpinRange" name="StartSpinRange" title="go to the details">StartSpinRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#EParticleRotationSource">EParticleRotationSource</a></td><td width="66%"><a href="#_UseRotationFrom" name="UseRotationFrom" title="go to the details">UseRotationFrom</a></td></tr>
+<tr><th colspan="2" class="small">Size</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_DetermineVelocityByLocationDifference" name="DetermineVelocityByLocationDifference" title="go to the details">DetermineVelocityByLocationDifference</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ScaleSizeByVelocityMax" name="ScaleSizeByVelocityMax" title="go to the details">ScaleSizeByVelocityMax</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_ScaleSizeByVelocityMultiplier" name="ScaleSizeByVelocityMultiplier" title="go to the details">ScaleSizeByVelocityMultiplier</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_ScaleSizeXByVelocity" name="ScaleSizeXByVelocity" title="go to the details">ScaleSizeXByVelocity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_ScaleSizeYByVelocity" name="ScaleSizeYByVelocity" title="go to the details">ScaleSizeYByVelocity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_ScaleSizeZByVelocity" name="ScaleSizeZByVelocity" title="go to the details">ScaleSizeZByVelocity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/particleemitter.html#ParticleTimeScale">ParticleTimeScale</a>&gt;</td><td width="66%"><a href="#_SizeScale" name="SizeScale" title="go to the details">SizeScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_SizeScaleRepeats" name="SizeScaleRepeats" title="go to the details">SizeScaleRepeats</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_StartSizeRange" name="StartSizeRange" title="go to the details">StartSizeRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UniformSize" name="UniformSize" title="go to the details">UniformSize</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseAbsoluteTimeForSizeScale" name="UseAbsoluteTimeForSizeScale" title="go to the details">UseAbsoluteTimeForSizeScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseRegularSizeScale" name="UseRegularSizeScale" title="go to the details">UseRegularSizeScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseSizeScale" name="UseSizeScale" title="go to the details">UseSizeScale</a></td></tr>
+<tr><th colspan="2" class="small">SkeletalMesh</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_RelativeBoneIndexRange" name="RelativeBoneIndexRange" title="go to the details">RelativeBoneIndexRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/actor.html">actor</a></td><td width="66%"><a href="#_SkeletalMeshActor" name="SkeletalMeshActor" title="go to the details">SkeletalMeshActor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_SkeletalScale" name="SkeletalScale" title="go to the details">SkeletalScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#ESkelLocationUpdate">ESkelLocationUpdate</a></td><td width="66%"><a href="#_UseSkeletalLocationAs" name="UseSkeletalLocationAs" title="go to the details">UseSkeletalLocationAs</a></td></tr>
+<tr><th colspan="2" class="small">Sound</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#EParticleCollisionSound">EParticleCollisionSound</a></td><td width="66%"><a href="#_CollisionSound" name="CollisionSound" title="go to the details">CollisionSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_CollisionSoundIndex" name="CollisionSoundIndex" title="go to the details">CollisionSoundIndex</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_CollisionSoundProbability" name="CollisionSoundProbability" title="go to the details">CollisionSoundProbability</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/particleemitter.html#ParticleSound">ParticleSound</a>&gt;</td><td width="66%"><a href="#_Sounds" name="Sounds" title="go to the details">Sounds</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#EParticleCollisionSound">EParticleCollisionSound</a></td><td width="66%"><a href="#_SpawningSound" name="SpawningSound" title="go to the details">SpawningSound</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_SpawningSoundIndex" name="SpawningSoundIndex" title="go to the details">SpawningSoundIndex</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_SpawningSoundProbability" name="SpawningSoundProbability" title="go to the details">SpawningSoundProbability</a></td></tr>
+<tr><th colspan="2" class="small">Spawning</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_AutomaticInitialSpawning" name="AutomaticInitialSpawning" title="go to the details">AutomaticInitialSpawning</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_InitialParticlesPerSecond" name="InitialParticlesPerSecond" title="go to the details">InitialParticlesPerSecond</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ParticlesPerSecond" name="ParticlesPerSecond" title="go to the details">ParticlesPerSecond</a></td></tr>
+<tr><th colspan="2" class="small">Texture</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_BlendBetweenSubdivisions" name="BlendBetweenSubdivisions" title="go to the details">BlendBetweenSubdivisions</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#EParticleDrawStyle">EParticleDrawStyle</a></td><td width="66%"><a href="#_DrawStyle" name="DrawStyle" title="go to the details">DrawStyle</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_SubdivisionEnd" name="SubdivisionEnd" title="go to the details">SubdivisionEnd</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;float&gt;</td><td width="66%"><a href="#_SubdivisionScale" name="SubdivisionScale" title="go to the details">SubdivisionScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_SubdivisionStart" name="SubdivisionStart" title="go to the details">SubdivisionStart</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/texture.html">texture</a></td><td width="66%"><a href="#_Texture" name="Texture" title="go to the details">Texture</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_TextureUSubdivisions" name="TextureUSubdivisions" title="go to the details">TextureUSubdivisions</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_TextureVSubdivisions" name="TextureVSubdivisions" title="go to the details">TextureVSubdivisions</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseRandomSubdivision" name="UseRandomSubdivision" title="go to the details">UseRandomSubdivision</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseSubdivisionScale" name="UseSubdivisionScale" title="go to the details">UseSubdivisionScale</a></td></tr>
+<tr><th colspan="2" class="small">Tick</th></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_MinSquaredVelocity" name="MinSquaredVelocity" title="go to the details">MinSquaredVelocity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_SecondsBeforeInactive" name="SecondsBeforeInactive" title="go to the details">SecondsBeforeInactive</a></td></tr>
+<tr><th colspan="2" class="small">Time</th></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_InitialDelayRange" name="InitialDelayRange" title="go to the details">InitialDelayRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_InitialTimeRange" name="InitialTimeRange" title="go to the details">InitialTimeRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_LifetimeRange" name="LifetimeRange" title="go to the details">LifetimeRange</a></td></tr>
+<tr><th colspan="2" class="small">Trigger</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_ResetOnTrigger" name="ResetOnTrigger" title="go to the details">ResetOnTrigger</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_SpawnOnTriggerPPS" name="SpawnOnTriggerPPS" title="go to the details">SpawnOnTriggerPPS</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_SpawnOnTriggerRange" name="SpawnOnTriggerRange" title="go to the details">SpawnOnTriggerRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_TriggerDisabled" name="TriggerDisabled" title="go to the details">TriggerDisabled</a></td></tr>
+<tr><th colspan="2" class="small">Velocity</th></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_AddVelocityFromOtherEmitter" name="AddVelocityFromOtherEmitter" title="go to the details">AddVelocityFromOtherEmitter</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_AddVelocityFromOwner" name="AddVelocityFromOwner" title="go to the details">AddVelocityFromOwner</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_AddVelocityMultiplierRange" name="AddVelocityMultiplierRange" title="go to the details">AddVelocityMultiplierRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/particleemitter.html#EParticleVelocityDirection">EParticleVelocityDirection</a></td><td width="66%"><a href="#_GetVelocityDirectionFrom" name="GetVelocityDirectionFrom" title="go to the details">GetVelocityDirectionFrom</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_MaxAbsVelocity" name="MaxAbsVelocity" title="go to the details">MaxAbsVelocity</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_RotateVelocityLossRange" name="RotateVelocityLossRange" title="go to the details">RotateVelocityLossRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_StartVelocityRadialRange" name="StartVelocityRadialRange" title="go to the details">StartVelocityRadialRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_StartVelocityRange" name="StartVelocityRange" title="go to the details">StartVelocityRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_UseVelocityScale" name="UseVelocityScale" title="go to the details">UseVelocityScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#RangeVector">rangevector</a></td><td width="66%"><a href="#_VelocityLossRange" name="VelocityLossRange" title="go to the details">VelocityLossRange</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/particleemitter.html#ParticleVelocityScale">ParticleVelocityScale</a>&gt;</td><td width="66%"><a href="#_VelocityScale" name="VelocityScale" title="go to the details">VelocityScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_VelocityScaleRepeats" name="VelocityScaleRepeats" title="go to the details">VelocityScaleRepeats</a></td></tr>
+<tr><th colspan="2" class="small">Warmup</th></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_RelativeWarmupTime" name="RelativeWarmupTime" title="go to the details">RelativeWarmupTime</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_WarmupTicksPerSecond" name="WarmupTicksPerSecond" title="go to the details">WarmupTicksPerSecond</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#Class">Class</a>, <a href="../core/object.html#Name">Name</a>, <a href="../core/object.html#ObjectFlags">ObjectFlags</a>, <a href="../core/object.html#ObjectInternal[7]">ObjectInternal[7]</a>, <a href="../core/object.html#Outer">Outer</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+<tr><td><a href="#_EBlendMode" name="EBlendMode" title="go to the details">EBlendMode</a><br /><span class="small">BM_MODULATE,
+BM_MODULATE2X,
+BM_MODULATE4X,
+BM_ADD,
+BM_ADDSIGNED,
+BM_ADDSIGNED2X,
+BM_SUBTRACT,
+BM_ADDSMOOTH,
+BM_BLENDDIFFUSEALPHA,
+BM_BLENDTEXTUREALPHA,
+BM_BLENDFACTORALPHA,
+BM_BLENDTEXTUREALPHAPM,
+BM_BLENDCURRENTALPHA,
+BM_PREMODULATE,
+BM_MODULATEALPHA_ADDCOLOR,
+BM_MODULATEINVALPHA_ADDCOLOR,
+BM_MODULATEINVCOLOR_ADDALPHA,
+BM_HACK</span></td></tr>
+<tr><td><a href="#_EParticleCollisionSound" name="EParticleCollisionSound" title="go to the details">EParticleCollisionSound</a><br /><span class="small">PTSC_None,
+PTSC_LinearGlobal,
+PTSC_LinearLocal,
+PTSC_Random</span></td></tr>
+<tr><td><a href="#_EParticleCoordinateSystem" name="EParticleCoordinateSystem" title="go to the details">EParticleCoordinateSystem</a><br /><span class="small">PTCS_Independent,
+PTCS_Relative,
+PTCS_Absolute</span></td></tr>
+<tr><td><a href="#_EParticleDrawStyle" name="EParticleDrawStyle" title="go to the details">EParticleDrawStyle</a><br /><span class="small">PTDS_Regular,
+PTDS_AlphaBlend,
+PTDS_Modulated,
+PTDS_Translucent,
+PTDS_AlphaModulate_MightNotFogCorrectly,
+PTDS_Darken,
+PTDS_Brighten</span></td></tr>
+<tr><td><a href="#_EParticleEffectAxis" name="EParticleEffectAxis" title="go to the details">EParticleEffectAxis</a><br /><span class="small">PTEA_NegativeX,
+PTEA_PositiveZ</span></td></tr>
+<tr><td><a href="#_EParticleMeshSpawning" name="EParticleMeshSpawning" title="go to the details">EParticleMeshSpawning</a><br /><span class="small">PTMS_None,
+PTMS_Linear,
+PTMS_Random</span></td></tr>
+<tr><td><a href="#_EParticleRotationSource" name="EParticleRotationSource" title="go to the details">EParticleRotationSource</a><br /><span class="small">PTRS_None,
+PTRS_Actor,
+PTRS_Offset,
+PTRS_Normal</span></td></tr>
+<tr><td><a href="#_EParticleStartLocationShape" name="EParticleStartLocationShape" title="go to the details">EParticleStartLocationShape</a><br /><span class="small">PTLS_Box,
+PTLS_Sphere,
+PTLS_Polar,
+PTLS_All</span></td></tr>
+<tr><td><a href="#_EParticleVelocityDirection" name="EParticleVelocityDirection" title="go to the details">EParticleVelocityDirection</a><br /><span class="small">PTVD_None,
+PTVD_StartPositionAndOwner,
+PTVD_OwnerAndStartPosition,
+PTVD_AddRadial</span></td></tr>
+<tr><td><a href="#_ESkelLocationUpdate" name="ESkelLocationUpdate" title="go to the details">ESkelLocationUpdate</a><br /><span class="small">PTSU_None,
+PTSU_SpawnOffset,
+PTSU_Location</span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#EAxis">EAxis</a>, <a href="../core/object.html#ECamOrientation">ECamOrientation</a>, <a href="../core/object.html#EDetailMode">EDetailMode</a>, <a href="../core/object.html#EDrawPivot">EDrawPivot</a>, <a href="../core/object.html#ESheerAxis">ESheerAxis</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+<tr><td><a href="#_Particle" name="Particle" title="go to the details">Particle</a><br /><span class="small">Location, OldLocation, Velocity, StartSize, SpinsPerSecond, StartSpin, RevolutionCenter, RevolutionsPerSecond, RevolutionsMultiplier, Size, StartLocation, ColorMultiplier, VelocityMultiplier, OldMeshLocation, Color, Time, MaxLifetime, Mass, HitCount, Flags, Subdivision, BoneIndex</span></td></tr>
+<tr><td><a href="#_ParticleColorScale" name="ParticleColorScale" title="go to the details">ParticleColorScale</a><br /><span class="small">RelativeTime, Color</span></td></tr>
+<tr><td><a href="#_ParticleRevolutionScale" name="ParticleRevolutionScale" title="go to the details">ParticleRevolutionScale</a><br /><span class="small">RelativeTime, RelativeRevolution</span></td></tr>
+<tr><td><a href="#_ParticleSound" name="ParticleSound" title="go to the details">ParticleSound</a><br /><span class="small">Sound, Radius, Pitch, Weight, Volume, Probability</span></td></tr>
+<tr><td><a href="#_ParticleTimeScale" name="ParticleTimeScale" title="go to the details">ParticleTimeScale</a><br /><span class="small">RelativeTime, RelativeSize</span></td></tr>
+<tr><td><a href="#_ParticleVelocityScale" name="ParticleVelocityScale" title="go to the details">ParticleVelocityScale</a><br /><span class="small">RelativeTime, RelativeVelocity</span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#BoundingVolume">BoundingVolume</a>, <a href="../core/object.html#Box">Box</a>, <a href="../core/object.html#Color">Color</a>, <a href="../core/object.html#CompressedPosition">CompressedPosition</a>, <a href="../core/object.html#Coords">Coords</a>, <a href="../core/object.html#FloatBox">FloatBox</a>, <a href="../core/object.html#Guid">Guid</a>, <a href="../core/object.html#IntBox">IntBox</a>, <a href="../core/object.html#InterpCurve">InterpCurve</a>, <a href="../core/object.html#InterpCurvePoint">InterpCurvePoint</a>, <a href="../core/object.html#Matrix">Matrix</a>, <a href="../core/object.html#Plane">Plane</a>, <a href="../core/object.html#Quat">Quat</a>, <a href="../core/object.html#Range">Range</a>, <a href="../core/object.html#RangeVector">RangeVector</a>, <a href="../core/object.html#Rotator">Rotator</a>, <a href="../core/object.html#Scale">Scale</a>, <a href="../core/object.html#TMultiMap">TMultiMap</a>, <a href="../core/object.html#Vector">Vector</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Reset-" name="Reset" title="go to the details">Reset</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SpawnParticle-" name="SpawnParticle" title="go to the details">SpawnParticle</a> (int Amount)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Trigger-" name="Trigger" title="go to the details">Trigger</a> ()<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../core/object.html#!">!</a>, <a href="../core/object.html#!=">!=</a>, <a href="../core/object.html#$">$</a>, <a href="../core/object.html#$=">$=</a>, <a href="../core/object.html#%">%</a>, <a href="../core/object.html#&">&</a>, <a href="../core/object.html#&&">&&</a>, <a href="../core/object.html#*">*</a>, <a href="../core/object.html#**">**</a>, <a href="../core/object.html#*=">*=</a>, <a href="../core/object.html#+">+</a>, <a href="../core/object.html#++">++</a>, <a href="../core/object.html#+=">+=</a>, <a href="../core/object.html#-">-</a>, <a href="../core/object.html#--">--</a>, <a href="../core/object.html#-=">-=</a>, <a href="../core/object.html#/ ">/ </a>, <a href="../core/object.html#/=">/=</a>, <a href="../core/object.html#&lt;">&lt;</a>, <a href="../core/object.html#&lt;&lt;">&lt;&lt;</a>, <a href="../core/object.html#&lt;=">&lt;=</a>, <a href="../core/object.html#==">==</a>, <a href="../core/object.html#&gt;">&gt;</a>, <a href="../core/object.html#&gt;=">&gt;=</a>, <a href="../core/object.html#&gt;&gt;">&gt;&gt;</a>, <a href="../core/object.html#&gt;&gt;&gt;">&gt;&gt;&gt;</a>, <a href="../core/object.html#@">@</a>, <a href="../core/object.html#@=">@=</a>, <a href="../core/object.html#Abs">Abs</a>, <a href="../core/object.html#Acos">Acos</a>, <a href="../core/object.html#AllObjects">AllObjects</a>, <a href="../core/object.html#Asc">Asc</a>, <a href="../core/object.html#Asin">Asin</a>, <a href="../core/object.html#Atan">Atan</a>, <a href="../core/object.html#BeginState">BeginState</a>, <a href="../core/object.html#Caps">Caps</a>, <a href="../core/object.html#Ceil">Ceil</a>, <a href="../core/object.html#Chr">Chr</a>, <a href="../core/object.html#Clamp">Clamp</a>, <a href="../core/object.html#ClassIsChildOf">ClassIsChildOf</a>, <a href="../core/object.html#ClearConfig">ClearConfig</a>, <a href="../core/object.html#ClockwiseFrom">ClockwiseFrom</a>, <a href="../core/object.html#Cos">Cos</a>, <a href="../core/object.html#Created">Created</a>, <a href="../core/object.html#Cross">Cross</a>, <a href="../core/object.html#Disable">Disable</a>, <a href="../core/object.html#Divide">Divide</a>, <a href="../core/object.html#Dot">Dot</a>, <a href="../core/object.html#DynamicLoadObject">DynamicLoadObject</a>, <a href="../core/object.html#EatStr">EatStr</a>, <a href="../core/object.html#Enable">Enable</a>, <a href="../core/object.html#EndState">EndState</a>, <a href="../core/object.html#Eval">Eval</a>, <a href="../core/object.html#Exp">Exp</a>, <a href="../core/object.html#FClamp">FClamp</a>, <a href="../core/object.html#FindObject">FindObject</a>, <a href="../core/object.html#FMax">FMax</a>, <a href="../core/object.html#FMin">FMin</a>, <a href="../core/object.html#FRand">FRand</a>, <a href="../core/object.html#GetAxes">GetAxes</a>, <a href="../core/object.html#GetEnum">GetEnum</a>, <a href="../core/object.html#GetItemName">GetItemName</a>, <a href="../core/object.html#GetPerObjectNames">GetPerObjectNames</a>, <a href="../core/object.html#GetPropertyText">GetPropertyText</a>, <a href="../core/object.html#GetReferencers">GetReferencers</a>, <a href="../core/object.html#GetStateName">GetStateName</a>, <a href="../core/object.html#GetUnAxes">GetUnAxes</a>, <a href="../core/object.html#GotoState">GotoState</a>, <a href="../core/object.html#InStr">InStr</a>, <a href="../core/object.html#InterpCurveEval">InterpCurveEval</a>, <a href="../core/object.html#InterpCurveGetInputDomain">InterpCurveGetInputDomain</a>, <a href="../core/object.html#InterpCurveGetOutputRange">InterpCurveGetOutputRange</a>, <a href="../core/object.html#Invert">Invert</a>, <a href="../core/object.html#IsA">IsA</a>, <a href="../core/object.html#IsInState">IsInState</a>, <a href="../core/object.html#IsOnConsole">IsOnConsole</a>, <a href="../core/object.html#IsSoaking">IsSoaking</a>, <a href="../core/object.html#Left">Left</a>, <a href="../core/object.html#Len">Len</a>, <a href="../core/object.html#Lerp">Lerp</a>, <a href="../core/object.html#Localize">Localize</a>, <a href="../core/object.html#Locs">Locs</a>, <a href="../core/object.html#Log">Log</a>, <a href="../core/object.html#Loge">Loge</a>, <a href="../core/object.html#Max">Max</a>, <a href="../core/object.html#Mid">Mid</a>, <a href="../core/object.html#Min">Min</a>, <a href="../core/object.html#MirrorVectorByNormal">MirrorVectorByNormal</a>, <a href="../core/object.html#Normal">Normal</a>, <a href="../core/object.html#Normalize">Normalize</a>, <a href="../core/object.html#OrthoRotation">OrthoRotation</a>, <a href="../core/object.html#PlatformIs64Bit">PlatformIs64Bit</a>, <a href="../core/object.html#PlatformIsMacOS">PlatformIsMacOS</a>, <a href="../core/object.html#PlatformIsOpenGL">PlatformIsOpenGL</a>, <a href="../core/object.html#PlatformIsUnix">PlatformIsUnix</a>, <a href="../core/object.html#PlatformIsWindows">PlatformIsWindows</a>, <a href="../core/object.html#QuatFindBetween">QuatFindBetween</a>, <a href="../core/object.html#QuatFromAxisAndAngle">QuatFromAxisAndAngle</a>, <a href="../core/object.html#QuatFromRotator">QuatFromRotator</a>, <a href="../core/object.html#QuatInvert">QuatInvert</a>, <a href="../core/object.html#QuatProduct">QuatProduct</a>, <a href="../core/object.html#QuatRotateVector">QuatRotateVector</a>, <a href="../core/object.html#QuatSlerp">QuatSlerp</a>, <a href="../core/object.html#QuatToRotator">QuatToRotator</a>, <a href="../core/object.html#Rand">Rand</a>, <a href="../core/object.html#RandRange">RandRange</a>, <a href="../core/object.html#Repl">Repl</a>, <a href="../core/object.html#ReplaceText">ReplaceText</a>, <a href="../core/object.html#ResetConfig">ResetConfig</a>, <a href="../core/object.html#Right">Right</a>, <a href="../core/object.html#RotRand">RotRand</a>, <a href="../core/object.html#Round">Round</a>, <a href="../core/object.html#SaveConfig">SaveConfig</a>, <a href="../core/object.html#SetPropertyText">SetPropertyText</a>, <a href="../core/object.html#Sin">Sin</a>, <a href="../core/object.html#Smerp">Smerp</a>, <a href="../core/object.html#Split">Split</a>, <a href="../core/object.html#Sqrt">Sqrt</a>, <a href="../core/object.html#Square">Square</a>, <a href="../core/object.html#StaticClearConfig">StaticClearConfig</a>, <a href="../core/object.html#StaticSaveConfig">StaticSaveConfig</a>, <a href="../core/object.html#StopWatch">StopWatch</a>, <a href="../core/object.html#StrCmp">StrCmp</a>, <a href="../core/object.html#Tan">Tan</a>, <a href="../core/object.html#VRand">VRand</a>, <a href="../core/object.html#VSize">VSize</a>, <a href="../core/object.html#VSizeSquared">VSizeSquared</a>, <a href="../core/object.html#Warn">Warn</a>, <a href="../core/object.html#^">^</a>, <a href="../core/object.html#^^">^^</a>, <a href="../core/object.html#|">|</a>, <a href="../core/object.html#||">||</a>, <a href="../core/object.html#~">~</a>, <a href="../core/object.html#~=">~=</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_ActiveParticles" class="hidden"></a>ActiveParticles <a href="../Source_engine/particleemitter.html#333" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> ActiveParticles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AllParticlesDead" class="hidden"></a>AllParticlesDead <a href="../Source_engine/particleemitter.html#328" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">bool</span> AllParticlesDead;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Backup_Disabled" class="hidden"></a>Backup_Disabled <a href="../Source_engine/particleemitter.html#178" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> Backup_Disabled;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BoundingBox" class="hidden"></a>BoundingBox <a href="../Source_engine/particleemitter.html#335" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type"><a href="../core/object.html#Box" class="source">box</a></span> BoundingBox;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CurrentCollisionSoundIndex" class="hidden"></a>CurrentCollisionSoundIndex <a href="../Source_engine/particleemitter.html#344" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> CurrentCollisionSoundIndex;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CurrentMeshSpawningIndex" class="hidden"></a>CurrentMeshSpawningIndex <a href="../Source_engine/particleemitter.html#346" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> CurrentMeshSpawningIndex;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CurrentSpawningSoundIndex" class="hidden"></a>CurrentSpawningSoundIndex <a href="../Source_engine/particleemitter.html#345" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> CurrentSpawningSoundIndex;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CurrentSpawnOnTrigger" class="hidden"></a>CurrentSpawnOnTrigger <a href="../Source_engine/particleemitter.html#352" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> CurrentSpawnOnTrigger;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DeferredParticles" class="hidden"></a>DeferredParticles <a href="../Source_engine/particleemitter.html#349" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> DeferredParticles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GlobalOffset" class="hidden"></a>GlobalOffset <a href="../Source_engine/particleemitter.html#340" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> GlobalOffset;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Inactive" class="hidden"></a>Inactive <a href="../Source_engine/particleemitter.html#326" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">bool</span> Inactive;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_InactiveTime" class="hidden"></a>InactiveTime <a href="../Source_engine/particleemitter.html#330" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">float</span> InactiveTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_InitialDelay" class="hidden"></a>InitialDelay <a href="../Source_engine/particleemitter.html#339" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">float</span> InitialDelay;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Initialized" class="hidden"></a>Initialized <a href="../Source_engine/particleemitter.html#325" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">bool</span> Initialized;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KillPending" class="hidden"></a>KillPending <a href="../Source_engine/particleemitter.html#348" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> KillPending;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxActiveParticles" class="hidden"></a>MaxActiveParticles <a href="../Source_engine/particleemitter.html#343" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> MaxActiveParticles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxSizeScale" class="hidden"></a>MaxSizeScale <a href="../Source_engine/particleemitter.html#347" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">float</span> MaxSizeScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MeshVertsAndNormals" class="hidden"></a>MeshVertsAndNormals <a href="../Source_engine/particleemitter.html#351" class="small">Source code</a></h4>
+<div class="declaration">var transient array&lt;<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>&gt; MeshVertsAndNormals;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OtherIndex" class="hidden"></a>OtherIndex <a href="../Source_engine/particleemitter.html#338" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> OtherIndex;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Owner" class="hidden"></a>Owner <a href="../Source_engine/particleemitter.html#324" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type"><a href="../engine/emitter.html" class="source">emitter</a></span> <span class="source_type">Owner</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ParticleIndex" class="hidden"></a>ParticleIndex <a href="../Source_engine/particleemitter.html#332" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> ParticleIndex;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Particles" class="hidden"></a>Particles <a href="../Source_engine/particleemitter.html#331" class="small">Source code</a></h4>
+<div class="declaration">var transient array&lt;<span class="source_type"><a href="../engine/particleemitter.html#Particle" class="source">Particle</a></span>&gt; Particles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PPSFraction" class="hidden"></a>PPSFraction <a href="../Source_engine/particleemitter.html#334" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">float</span> PPSFraction;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_PS2Data" class="hidden"></a>PS2Data <a href="../Source_engine/particleemitter.html#342" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> PS2Data;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RealDisableFogging" class="hidden"></a>RealDisableFogging <a href="../Source_engine/particleemitter.html#327" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">bool</span> RealDisableFogging;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RealExtentMultiplier" class="hidden"></a>RealExtentMultiplier <a href="../Source_engine/particleemitter.html#337" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RealExtentMultiplier;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RealMeshNormal" class="hidden"></a>RealMeshNormal <a href="../Source_engine/particleemitter.html#350" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RealMeshNormal;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RealVelocityLossRange" class="hidden"></a>RealVelocityLossRange <a href="../Source_engine/particleemitter.html#354" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> RealVelocityLossRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RenderableParticles" class="hidden"></a>RenderableParticles <a href="../Source_engine/particleemitter.html#353" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">int</span> RenderableParticles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimeTillReset" class="hidden"></a>TimeTillReset <a href="../Source_engine/particleemitter.html#341" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">float</span> TimeTillReset;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WarmedUp" class="hidden"></a>WarmedUp <a href="../Source_engine/particleemitter.html#329" class="small">Source code</a></h4>
+<div class="declaration">var transient <span class="source_type">bool</span> WarmedUp;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Acceleration</h3>
+<h4><a name="_Acceleration" class="hidden"></a>Acceleration <a href="../Source_engine/particleemitter.html#212" class="small">Source code</a></h4>
+<div class="declaration">var(Acceleration) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Acceleration;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Collision</h3>
+<h4><a name="_CollisionPlanes" class="hidden"></a>CollisionPlanes <a href="../Source_engine/particleemitter.html#216" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) array&lt;<span class="source_type"><a href="../core/object.html#Plane" class="source">plane</a></span>&gt; CollisionPlanes;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DampingFactorRange" class="hidden"></a>DampingFactorRange <a href="../Source_engine/particleemitter.html#215" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> DampingFactorRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ExtentMultiplier" class="hidden"></a>ExtentMultiplier <a href="../Source_engine/particleemitter.html#214" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ExtentMultiplier;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxCollisions" class="hidden"></a>MaxCollisions <a href="../Source_engine/particleemitter.html#217" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> MaxCollisions;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnAmount" class="hidden"></a>SpawnAmount <a href="../Source_engine/particleemitter.html#219" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type">int</span> SpawnAmount;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnedVelocityScaleRange" class="hidden"></a>SpawnedVelocityScaleRange <a href="../Source_engine/particleemitter.html#220" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> SpawnedVelocityScaleRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnFromOtherEmitter" class="hidden"></a>SpawnFromOtherEmitter <a href="../Source_engine/particleemitter.html#218" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type">int</span> SpawnFromOtherEmitter;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseCollision" class="hidden"></a>UseCollision <a href="../Source_engine/particleemitter.html#165" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type">bool</span> UseCollision;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseCollisionPlanes" class="hidden"></a>UseCollisionPlanes <a href="../Source_engine/particleemitter.html#166" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type">bool</span> UseCollisionPlanes;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseMaxCollisions" class="hidden"></a>UseMaxCollisions <a href="../Source_engine/particleemitter.html#167" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type">bool</span> UseMaxCollisions;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseSpawnedVelocityScale" class="hidden"></a>UseSpawnedVelocityScale <a href="../Source_engine/particleemitter.html#168" class="small">Source code</a></h4>
+<div class="declaration">var(Collision) <span class="source_type">bool</span> UseSpawnedVelocityScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Color</h3>
+<h4><a name="_ColorMultiplierRange" class="hidden"></a>ColorMultiplierRange <a href="../Source_engine/particleemitter.html#224" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> ColorMultiplierRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ColorScale" class="hidden"></a>ColorScale <a href="../Source_engine/particleemitter.html#222" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>) array&lt;<span class="source_type"><a href="../engine/particleemitter.html#ParticleColorScale" class="source">ParticleColorScale</a></span>&gt; ColorScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ColorScaleRepeats" class="hidden"></a>ColorScaleRepeats <a href="../Source_engine/particleemitter.html#223" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>) <span class="source_type">float</span> ColorScaleRepeats;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Opacity" class="hidden"></a>Opacity <a href="../Source_engine/particleemitter.html#225" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>) <span class="source_type">float</span> Opacity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseColorScale" class="hidden"></a>UseColorScale <a href="../Source_engine/particleemitter.html#169" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>) <span class="source_type">bool</span> UseColorScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Fading</h3>
+<h4><a name="_FadeIn" class="hidden"></a>FadeIn <a href="../Source_engine/particleemitter.html#171" class="small">Source code</a></h4>
+<div class="declaration">var(Fading) <span class="source_type">bool</span> FadeIn;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FadeInEndTime" class="hidden"></a>FadeInEndTime <a href="../Source_engine/particleemitter.html#230" class="small">Source code</a></h4>
+<div class="declaration">var(Fading) <span class="source_type">float</span> FadeInEndTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FadeInFactor" class="hidden"></a>FadeInFactor <a href="../Source_engine/particleemitter.html#229" class="small">Source code</a></h4>
+<div class="declaration">var(Fading) <span class="source_type"><a href="../core/object.html#Plane" class="source">plane</a></span> FadeInFactor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FadeOut" class="hidden"></a>FadeOut <a href="../Source_engine/particleemitter.html#170" class="small">Source code</a></h4>
+<div class="declaration">var(Fading) <span class="source_type">bool</span> FadeOut;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FadeOutFactor" class="hidden"></a>FadeOutFactor <a href="../Source_engine/particleemitter.html#227" class="small">Source code</a></h4>
+<div class="declaration">var(Fading) <span class="source_type"><a href="../core/object.html#Plane" class="source">plane</a></span> FadeOutFactor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FadeOutStartTime" class="hidden"></a>FadeOutStartTime <a href="../Source_engine/particleemitter.html#228" class="small">Source code</a></h4>
+<div class="declaration">var(Fading) <span class="source_type">float</span> FadeOutStartTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Force</h3>
+<h4><a name="_UseActorForces" class="hidden"></a>UseActorForces <a href="../Source_engine/particleemitter.html#172" class="small">Source code</a></h4>
+<div class="declaration">var(Force) <span class="source_type">bool</span> UseActorForces;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">General</h3>
+<h4><a name="_CoordinateSystem" class="hidden"></a>CoordinateSystem <a href="../Source_engine/particleemitter.html#232" class="small">Source code</a></h4>
+<div class="declaration">var(General) <span class="source_type"><a href="../engine/particleemitter.html#EParticleCoordinateSystem" class="source">EParticleCoordinateSystem</a></span> CoordinateSystem;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EffectAxis" class="hidden"></a>EffectAxis <a href="../Source_engine/particleemitter.html#234" class="small">Source code</a></h4>
+<div class="declaration">var(General) <span class="source_type"><a href="../engine/particleemitter.html#EParticleEffectAxis" class="source">EParticleEffectAxis</a></span> EffectAxis;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxParticles" class="hidden"></a>MaxParticles <a href="../Source_engine/particleemitter.html#233" class="small">Source code</a></h4>
+<div class="declaration">var(General) const <span class="source_type">int</span> MaxParticles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ResetAfterChange" class="hidden"></a>ResetAfterChange <a href="../Source_engine/particleemitter.html#173" class="small">Source code</a></h4>
+<div class="declaration">var(General) <span class="source_type">bool</span> ResetAfterChange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Local</h3>
+<h4><a name="_AutoDestroy" class="hidden"></a>AutoDestroy <a href="../Source_engine/particleemitter.html#175" class="small">Source code</a></h4>
+<div class="declaration">var(Local) <span class="source_type">bool</span> AutoDestroy;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AutoReset" class="hidden"></a>AutoReset <a href="../Source_engine/particleemitter.html#176" class="small">Source code</a></h4>
+<div class="declaration">var(Local) <span class="source_type">bool</span> AutoReset;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AutoResetTimeRange" class="hidden"></a>AutoResetTimeRange <a href="../Source_engine/particleemitter.html#236" class="small">Source code</a></h4>
+<div class="declaration">var(Local) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> AutoResetTimeRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DetailMode" class="hidden"></a>DetailMode <a href="../Source_engine/particleemitter.html#238" class="small">Source code</a></h4>
+<div class="declaration">var(Local) <span class="source_type"><a href="../core/object.html#EDetailMode" class="source">EDetailMode</a></span> DetailMode;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Disabled" class="hidden"></a>Disabled <a href="../Source_engine/particleemitter.html#177" class="small">Source code</a></h4>
+<div class="declaration">var(Local) <span class="source_type">bool</span> Disabled;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DisableFogging" class="hidden"></a>DisableFogging <a href="../Source_engine/particleemitter.html#179" class="small">Source code</a></h4>
+<div class="declaration">var(Local) <span class="source_type">bool</span> DisableFogging;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Name" class="hidden"></a>Name <a href="../Source_engine/particleemitter.html#237" class="small">Source code</a></h4>
+<div class="declaration">var(Local) <span class="source_type">string</span> <span class="source_type">Name</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RespawnDeadParticles" class="hidden"></a>RespawnDeadParticles <a href="../Source_engine/particleemitter.html#174" class="small">Source code</a></h4>
+<div class="declaration">var(Local) <span class="source_type">bool</span> RespawnDeadParticles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Location</h3>
+<h4><a name="_AddLocationFromOtherEmitter" class="hidden"></a>AddLocationFromOtherEmitter <a href="../Source_engine/particleemitter.html#242" class="small">Source code</a></h4>
+<div class="declaration">var(Location) <span class="source_type">int</span> AddLocationFromOtherEmitter;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SphereRadiusRange" class="hidden"></a>SphereRadiusRange <a href="../Source_engine/particleemitter.html#244" class="small">Source code</a></h4>
+<div class="declaration">var(Location) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> SphereRadiusRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartLocationOffset" class="hidden"></a>StartLocationOffset <a href="../Source_engine/particleemitter.html#240" class="small">Source code</a></h4>
+<div class="declaration">var(Location) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> StartLocationOffset;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartLocationPolarRange" class="hidden"></a>StartLocationPolarRange <a href="../Source_engine/particleemitter.html#245" class="small">Source code</a></h4>
+<div class="declaration">var(Location) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> StartLocationPolarRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartLocationRange" class="hidden"></a>StartLocationRange <a href="../Source_engine/particleemitter.html#241" class="small">Source code</a></h4>
+<div class="declaration">var(Location) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> StartLocationRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartLocationShape" class="hidden"></a>StartLocationShape <a href="../Source_engine/particleemitter.html#243" class="small">Source code</a></h4>
+<div class="declaration">var(Location) <span class="source_type"><a href="../engine/particleemitter.html#EParticleStartLocationShape" class="source">EParticleStartLocationShape</a></span> StartLocationShape;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Mass</h3>
+<h4><a name="_StartMassRange" class="hidden"></a>StartMassRange <a href="../Source_engine/particleemitter.html#247" class="small">Source code</a></h4>
+<div class="declaration">var(Mass) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> StartMassRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">MeshSpawning</h3>
+<h4><a name="_MeshNormal" class="hidden"></a>MeshNormal <a href="../Source_engine/particleemitter.html#253" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> MeshNormal;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MeshNormalThresholdRange" class="hidden"></a>MeshNormalThresholdRange <a href="../Source_engine/particleemitter.html#254" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> MeshNormalThresholdRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MeshScaleRange" class="hidden"></a>MeshScaleRange <a href="../Source_engine/particleemitter.html#252" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> MeshScaleRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MeshSpawning" class="hidden"></a>MeshSpawning <a href="../Source_engine/particleemitter.html#250" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type"><a href="../engine/particleemitter.html#EParticleMeshSpawning" class="source">EParticleMeshSpawning</a></span> MeshSpawning;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MeshSpawningStaticMesh" class="hidden"></a>MeshSpawningStaticMesh <a href="../Source_engine/particleemitter.html#249" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type">staticmesh</span> MeshSpawningStaticMesh;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnOnlyInDirectionOfNormal" class="hidden"></a>SpawnOnlyInDirectionOfNormal <a href="../Source_engine/particleemitter.html#184" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type">bool</span> SpawnOnlyInDirectionOfNormal;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UniformMeshScale" class="hidden"></a>UniformMeshScale <a href="../Source_engine/particleemitter.html#181" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type">bool</span> UniformMeshScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UniformVelocityScale" class="hidden"></a>UniformVelocityScale <a href="../Source_engine/particleemitter.html#182" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type">bool</span> UniformVelocityScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseColorFromMesh" class="hidden"></a>UseColorFromMesh <a href="../Source_engine/particleemitter.html#183" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type">bool</span> UseColorFromMesh;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VelocityFromMesh" class="hidden"></a>VelocityFromMesh <a href="../Source_engine/particleemitter.html#180" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type">bool</span> VelocityFromMesh;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VelocityScaleRange" class="hidden"></a>VelocityScaleRange <a href="../Source_engine/particleemitter.html#251" class="small">Source code</a></h4>
+<div class="declaration">var(MeshSpawning) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> VelocityScaleRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Performance</h3>
+<h4><a name="_LowDetailFactor" class="hidden"></a>LowDetailFactor <a href="../Source_engine/particleemitter.html#210" class="small">Source code</a></h4>
+<div class="declaration">var(Performance) <span class="source_type">float</span> LowDetailFactor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Rendering</h3>
+<h4><a name="_AcceptsProjectors" class="hidden"></a>AcceptsProjectors <a href="../Source_engine/particleemitter.html#186" class="small">Source code</a></h4>
+<div class="declaration">var(Rendering) <span class="source_type">bool</span> AcceptsProjectors;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AlphaRef" class="hidden"></a>AlphaRef <a href="../Source_engine/particleemitter.html#256" class="small">Source code</a></h4>
+<div class="declaration">var(Rendering) <span class="source_type">int</span> AlphaRef;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AlphaTest" class="hidden"></a>AlphaTest <a href="../Source_engine/particleemitter.html#185" class="small">Source code</a></h4>
+<div class="declaration">var(Rendering) <span class="source_type">bool</span> AlphaTest;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ZTest" class="hidden"></a>ZTest <a href="../Source_engine/particleemitter.html#187" class="small">Source code</a></h4>
+<div class="declaration">var(Rendering) <span class="source_type">bool</span> ZTest;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ZWrite" class="hidden"></a>ZWrite <a href="../Source_engine/particleemitter.html#188" class="small">Source code</a></h4>
+<div class="declaration">var(Rendering) <span class="source_type">bool</span> ZWrite;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Revolution</h3>
+<h4><a name="_RevolutionCenterOffsetRange" class="hidden"></a>RevolutionCenterOffsetRange <a href="../Source_engine/particleemitter.html#257" class="small">Source code</a></h4>
+<div class="declaration">var(Revolution) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> RevolutionCenterOffsetRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RevolutionScale" class="hidden"></a>RevolutionScale <a href="../Source_engine/particleemitter.html#259" class="small">Source code</a></h4>
+<div class="declaration">var(Revolution) array&lt;<span class="source_type"><a href="../engine/particleemitter.html#ParticleRevolutionScale" class="source">ParticleRevolutionScale</a></span>&gt; RevolutionScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RevolutionScaleRepeats" class="hidden"></a>RevolutionScaleRepeats <a href="../Source_engine/particleemitter.html#260" class="small">Source code</a></h4>
+<div class="declaration">var(Revolution) <span class="source_type">float</span> RevolutionScaleRepeats;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RevolutionsPerSecondRange" class="hidden"></a>RevolutionsPerSecondRange <a href="../Source_engine/particleemitter.html#258" class="small">Source code</a></h4>
+<div class="declaration">var(Revolution) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> RevolutionsPerSecondRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseRevolution" class="hidden"></a>UseRevolution <a href="../Source_engine/particleemitter.html#189" class="small">Source code</a></h4>
+<div class="declaration">var(Revolution) <span class="source_type">bool</span> UseRevolution;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseRevolutionScale" class="hidden"></a>UseRevolutionScale <a href="../Source_engine/particleemitter.html#190" class="small">Source code</a></h4>
+<div class="declaration">var(Revolution) <span class="source_type">bool</span> UseRevolutionScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Rotation</h3>
+<h4><a name="_DampRotation" class="hidden"></a>DampRotation <a href="../Source_engine/particleemitter.html#192" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Rotation</span>) <span class="source_type">bool</span> DampRotation;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RotationDampingFactorRange" class="hidden"></a>RotationDampingFactorRange <a href="../Source_engine/particleemitter.html#267" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Rotation</span>) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> RotationDampingFactorRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RotationNormal" class="hidden"></a>RotationNormal <a href="../Source_engine/particleemitter.html#268" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Rotation</span>) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RotationNormal;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RotationOffset" class="hidden"></a>RotationOffset <a href="../Source_engine/particleemitter.html#263" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Rotation</span>) <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> RotationOffset;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpinCCWorCW" class="hidden"></a>SpinCCWorCW <a href="../Source_engine/particleemitter.html#264" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Rotation</span>) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> SpinCCWorCW;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpinParticles" class="hidden"></a>SpinParticles <a href="../Source_engine/particleemitter.html#191" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Rotation</span>) <span class="source_type">bool</span> SpinParticles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpinsPerSecondRange" class="hidden"></a>SpinsPerSecondRange <a href="../Source_engine/particleemitter.html#265" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Rotation</span>) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> SpinsPerSecondRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartSpinRange" class="hidden"></a>StartSpinRange <a href="../Source_engine/particleemitter.html#266" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Rotation</span>) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> StartSpinRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseRotationFrom" class="hidden"></a>UseRotationFrom <a href="../Source_engine/particleemitter.html#262" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Rotation</span>) <span class="source_type"><a href="../engine/particleemitter.html#EParticleRotationSource" class="source">EParticleRotationSource</a></span> UseRotationFrom;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Size</h3>
+<h4><a name="_DetermineVelocityByLocationDifference" class="hidden"></a>DetermineVelocityByLocationDifference <a href="../Source_engine/particleemitter.html#197" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">bool</span> DetermineVelocityByLocationDifference;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ScaleSizeByVelocityMax" class="hidden"></a>ScaleSizeByVelocityMax <a href="../Source_engine/particleemitter.html#274" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">float</span> ScaleSizeByVelocityMax;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ScaleSizeByVelocityMultiplier" class="hidden"></a>ScaleSizeByVelocityMultiplier <a href="../Source_engine/particleemitter.html#273" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ScaleSizeByVelocityMultiplier;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ScaleSizeXByVelocity" class="hidden"></a>ScaleSizeXByVelocity <a href="../Source_engine/particleemitter.html#198" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">bool</span> ScaleSizeXByVelocity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ScaleSizeYByVelocity" class="hidden"></a>ScaleSizeYByVelocity <a href="../Source_engine/particleemitter.html#199" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">bool</span> ScaleSizeYByVelocity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ScaleSizeZByVelocity" class="hidden"></a>ScaleSizeZByVelocity <a href="../Source_engine/particleemitter.html#200" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">bool</span> ScaleSizeZByVelocity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SizeScale" class="hidden"></a>SizeScale <a href="../Source_engine/particleemitter.html#270" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) array&lt;<span class="source_type"><a href="../engine/particleemitter.html#ParticleTimeScale" class="source">ParticleTimeScale</a></span>&gt; SizeScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SizeScaleRepeats" class="hidden"></a>SizeScaleRepeats <a href="../Source_engine/particleemitter.html#271" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">float</span> SizeScaleRepeats;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartSizeRange" class="hidden"></a>StartSizeRange <a href="../Source_engine/particleemitter.html#272" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> StartSizeRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UniformSize" class="hidden"></a>UniformSize <a href="../Source_engine/particleemitter.html#196" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">bool</span> UniformSize;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseAbsoluteTimeForSizeScale" class="hidden"></a>UseAbsoluteTimeForSizeScale <a href="../Source_engine/particleemitter.html#194" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">bool</span> UseAbsoluteTimeForSizeScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseRegularSizeScale" class="hidden"></a>UseRegularSizeScale <a href="../Source_engine/particleemitter.html#195" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">bool</span> UseRegularSizeScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseSizeScale" class="hidden"></a>UseSizeScale <a href="../Source_engine/particleemitter.html#193" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type">Size</span>) <span class="source_type">bool</span> UseSizeScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">SkeletalMesh</h3>
+<h4><a name="_RelativeBoneIndexRange" class="hidden"></a>RelativeBoneIndexRange <a href="../Source_engine/particleemitter.html#279" class="small">Source code</a></h4>
+<div class="declaration">var(SkeletalMesh) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> RelativeBoneIndexRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SkeletalMeshActor" class="hidden"></a>SkeletalMeshActor <a href="../Source_engine/particleemitter.html#277" class="small">Source code</a></h4>
+<div class="declaration">var(SkeletalMesh) <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> SkeletalMeshActor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SkeletalScale" class="hidden"></a>SkeletalScale <a href="../Source_engine/particleemitter.html#278" class="small">Source code</a></h4>
+<div class="declaration">var(SkeletalMesh) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> SkeletalScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseSkeletalLocationAs" class="hidden"></a>UseSkeletalLocationAs <a href="../Source_engine/particleemitter.html#276" class="small">Source code</a></h4>
+<div class="declaration">var(SkeletalMesh) <span class="source_type"><a href="../engine/particleemitter.html#ESkelLocationUpdate" class="source">ESkelLocationUpdate</a></span> UseSkeletalLocationAs;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Sound</h3>
+<h4><a name="_CollisionSound" class="hidden"></a>CollisionSound <a href="../Source_engine/particleemitter.html#285" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>) <span class="source_type"><a href="../engine/particleemitter.html#EParticleCollisionSound" class="source">EParticleCollisionSound</a></span> CollisionSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CollisionSoundIndex" class="hidden"></a>CollisionSoundIndex <a href="../Source_engine/particleemitter.html#286" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> CollisionSoundIndex;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_CollisionSoundProbability" class="hidden"></a>CollisionSoundProbability <a href="../Source_engine/particleemitter.html#287" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> CollisionSoundProbability;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Sounds" class="hidden"></a>Sounds <a href="../Source_engine/particleemitter.html#281" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>) array&lt;<span class="source_type"><a href="../engine/particleemitter.html#ParticleSound" class="source">ParticleSound</a></span>&gt; Sounds;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawningSound" class="hidden"></a>SpawningSound <a href="../Source_engine/particleemitter.html#282" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>) <span class="source_type"><a href="../engine/particleemitter.html#EParticleCollisionSound" class="source">EParticleCollisionSound</a></span> SpawningSound;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawningSoundIndex" class="hidden"></a>SpawningSoundIndex <a href="../Source_engine/particleemitter.html#283" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> SpawningSoundIndex;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawningSoundProbability" class="hidden"></a>SpawningSoundProbability <a href="../Source_engine/particleemitter.html#284" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> SpawningSoundProbability;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Spawning</h3>
+<h4><a name="_AutomaticInitialSpawning" class="hidden"></a>AutomaticInitialSpawning <a href="../Source_engine/particleemitter.html#201" class="small">Source code</a></h4>
+<div class="declaration">var(Spawning) <span class="source_type">bool</span> AutomaticInitialSpawning;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_InitialParticlesPerSecond" class="hidden"></a>InitialParticlesPerSecond <a href="../Source_engine/particleemitter.html#290" class="small">Source code</a></h4>
+<div class="declaration">var(Spawning) <span class="source_type">float</span> InitialParticlesPerSecond;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ParticlesPerSecond" class="hidden"></a>ParticlesPerSecond <a href="../Source_engine/particleemitter.html#289" class="small">Source code</a></h4>
+<div class="declaration">var(Spawning) <span class="source_type">float</span> ParticlesPerSecond;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Texture</h3>
+<h4><a name="_BlendBetweenSubdivisions" class="hidden"></a>BlendBetweenSubdivisions <a href="../Source_engine/particleemitter.html#202" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) <span class="source_type">bool</span> BlendBetweenSubdivisions;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DrawStyle" class="hidden"></a>DrawStyle <a href="../Source_engine/particleemitter.html#292" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) <span class="source_type"><a href="../engine/particleemitter.html#EParticleDrawStyle" class="source">EParticleDrawStyle</a></span> DrawStyle;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SubdivisionEnd" class="hidden"></a>SubdivisionEnd <a href="../Source_engine/particleemitter.html#298" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) <span class="source_type">int</span> SubdivisionEnd;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SubdivisionScale" class="hidden"></a>SubdivisionScale <a href="../Source_engine/particleemitter.html#296" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) array&lt;<span class="source_type">float</span>&gt; SubdivisionScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SubdivisionStart" class="hidden"></a>SubdivisionStart <a href="../Source_engine/particleemitter.html#297" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) <span class="source_type">int</span> SubdivisionStart;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Texture" class="hidden"></a>Texture <a href="../Source_engine/particleemitter.html#293" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span> <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TextureUSubdivisions" class="hidden"></a>TextureUSubdivisions <a href="../Source_engine/particleemitter.html#294" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) <span class="source_type">int</span> TextureUSubdivisions;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TextureVSubdivisions" class="hidden"></a>TextureVSubdivisions <a href="../Source_engine/particleemitter.html#295" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) <span class="source_type">int</span> TextureVSubdivisions;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseRandomSubdivision" class="hidden"></a>UseRandomSubdivision <a href="../Source_engine/particleemitter.html#204" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) <span class="source_type">bool</span> UseRandomSubdivision;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseSubdivisionScale" class="hidden"></a>UseSubdivisionScale <a href="../Source_engine/particleemitter.html#203" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>) <span class="source_type">bool</span> UseSubdivisionScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Tick</h3>
+<h4><a name="_MinSquaredVelocity" class="hidden"></a>MinSquaredVelocity <a href="../Source_engine/particleemitter.html#301" class="small">Source code</a></h4>
+<div class="declaration">var(Tick) <span class="source_type">float</span> MinSquaredVelocity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SecondsBeforeInactive" class="hidden"></a>SecondsBeforeInactive <a href="../Source_engine/particleemitter.html#300" class="small">Source code</a></h4>
+<div class="declaration">var(Tick) <span class="source_type">float</span> SecondsBeforeInactive;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Time</h3>
+<h4><a name="_InitialDelayRange" class="hidden"></a>InitialDelayRange <a href="../Source_engine/particleemitter.html#305" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../core/time.html" class="source">Time</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> InitialDelayRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_InitialTimeRange" class="hidden"></a>InitialTimeRange <a href="../Source_engine/particleemitter.html#303" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../core/time.html" class="source">Time</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> InitialTimeRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LifetimeRange" class="hidden"></a>LifetimeRange <a href="../Source_engine/particleemitter.html#304" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../core/time.html" class="source">Time</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> LifetimeRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Trigger</h3>
+<h4><a name="_ResetOnTrigger" class="hidden"></a>ResetOnTrigger <a href="../Source_engine/particleemitter.html#206" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>) <span class="source_type">bool</span> ResetOnTrigger;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnOnTriggerPPS" class="hidden"></a>SpawnOnTriggerPPS <a href="../Source_engine/particleemitter.html#308" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>) <span class="source_type">float</span> SpawnOnTriggerPPS;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnOnTriggerRange" class="hidden"></a>SpawnOnTriggerRange <a href="../Source_engine/particleemitter.html#307" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> SpawnOnTriggerRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TriggerDisabled" class="hidden"></a>TriggerDisabled <a href="../Source_engine/particleemitter.html#205" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>) <span class="source_type">bool</span> TriggerDisabled;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Velocity</h3>
+<h4><a name="_AddVelocityFromOtherEmitter" class="hidden"></a>AddVelocityFromOtherEmitter <a href="../Source_engine/particleemitter.html#315" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type">int</span> AddVelocityFromOtherEmitter;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AddVelocityFromOwner" class="hidden"></a>AddVelocityFromOwner <a href="../Source_engine/particleemitter.html#208" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type">bool</span> AddVelocityFromOwner;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AddVelocityMultiplierRange" class="hidden"></a>AddVelocityMultiplierRange <a href="../Source_engine/particleemitter.html#316" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> AddVelocityMultiplierRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_GetVelocityDirectionFrom" class="hidden"></a>GetVelocityDirectionFrom <a href="../Source_engine/particleemitter.html#317" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type"><a href="../engine/particleemitter.html#EParticleVelocityDirection" class="source">EParticleVelocityDirection</a></span> GetVelocityDirectionFrom;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_MaxAbsVelocity" class="hidden"></a>MaxAbsVelocity <a href="../Source_engine/particleemitter.html#312" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> MaxAbsVelocity;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RotateVelocityLossRange" class="hidden"></a>RotateVelocityLossRange <a href="../Source_engine/particleemitter.html#314" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type">bool</span> RotateVelocityLossRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartVelocityRadialRange" class="hidden"></a>StartVelocityRadialRange <a href="../Source_engine/particleemitter.html#311" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> StartVelocityRadialRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartVelocityRange" class="hidden"></a>StartVelocityRange <a href="../Source_engine/particleemitter.html#310" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> StartVelocityRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UseVelocityScale" class="hidden"></a>UseVelocityScale <a href="../Source_engine/particleemitter.html#207" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type">bool</span> UseVelocityScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VelocityLossRange" class="hidden"></a>VelocityLossRange <a href="../Source_engine/particleemitter.html#313" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type"><a href="../core/object.html#RangeVector" class="source">rangevector</a></span> VelocityLossRange;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VelocityScale" class="hidden"></a>VelocityScale <a href="../Source_engine/particleemitter.html#318" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) array&lt;<span class="source_type"><a href="../engine/particleemitter.html#ParticleVelocityScale" class="source">ParticleVelocityScale</a></span>&gt; VelocityScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VelocityScaleRepeats" class="hidden"></a>VelocityScaleRepeats <a href="../Source_engine/particleemitter.html#319" class="small">Source code</a></h4>
+<div class="declaration">var(Velocity) <span class="source_type">float</span> VelocityScaleRepeats;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Warmup</h3>
+<h4><a name="_RelativeWarmupTime" class="hidden"></a>RelativeWarmupTime <a href="../Source_engine/particleemitter.html#322" class="small">Source code</a></h4>
+<div class="declaration">var(Warmup) <span class="source_type">float</span> RelativeWarmupTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WarmupTicksPerSecond" class="hidden"></a>WarmupTicksPerSecond <a href="../Source_engine/particleemitter.html#321" class="small">Source code</a></h4>
+<div class="declaration">var(Warmup) <span class="source_type">float</span> WarmupTicksPerSecond;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Enumerations Detail</th>
+</tr>
+</table>
+
+<h4><a name="_EBlendMode" class="hidden"></a>EBlendMode <a href="../Source_engine/particleemitter.html#12" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#EBlendMode" class="source">EBlendMode</a></span><br />
+{<blockquote>BM_MODULATE,
+BM_MODULATE2X,
+BM_MODULATE4X,
+BM_ADD,
+BM_ADDSIGNED,
+BM_ADDSIGNED2X,
+BM_SUBTRACT,
+BM_ADDSMOOTH,
+BM_BLENDDIFFUSEALPHA,
+BM_BLENDTEXTUREALPHA,
+BM_BLENDFACTORALPHA,
+BM_BLENDTEXTUREALPHAPM,
+BM_BLENDCURRENTALPHA,
+BM_PREMODULATE,
+BM_MODULATEALPHA_ADDCOLOR,
+BM_MODULATEINVALPHA_ADDCOLOR,
+BM_MODULATEINVCOLOR_ADDALPHA,
+BM_HACK</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EParticleCollisionSound" class="hidden"></a>EParticleCollisionSound <a href="../Source_engine/particleemitter.html#82" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#EParticleCollisionSound" class="source">EParticleCollisionSound</a></span><br />
+{<blockquote>PTSC_None,
+PTSC_LinearGlobal,
+PTSC_LinearLocal,
+PTSC_Random</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EParticleCoordinateSystem" class="hidden"></a>EParticleCoordinateSystem <a href="../Source_engine/particleemitter.html#45" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#EParticleCoordinateSystem" class="source">EParticleCoordinateSystem</a></span><br />
+{<blockquote>PTCS_Independent,
+PTCS_Relative,
+PTCS_Absolute</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EParticleDrawStyle" class="hidden"></a>EParticleDrawStyle <a href="../Source_engine/particleemitter.html#34" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#EParticleDrawStyle" class="source">EParticleDrawStyle</a></span><br />
+{<blockquote>PTDS_Regular,
+PTDS_AlphaBlend,
+PTDS_Modulated,
+PTDS_Translucent,
+PTDS_AlphaModulate_MightNotFogCorrectly,
+PTDS_Darken,
+PTDS_Brighten</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EParticleEffectAxis" class="hidden"></a>EParticleEffectAxis <a href="../Source_engine/particleemitter.html#76" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#EParticleEffectAxis" class="source">EParticleEffectAxis</a></span><br />
+{<blockquote>PTEA_NegativeX,
+PTEA_PositiveZ</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EParticleMeshSpawning" class="hidden"></a>EParticleMeshSpawning <a href="../Source_engine/particleemitter.html#90" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#EParticleMeshSpawning" class="source">EParticleMeshSpawning</a></span><br />
+{<blockquote>PTMS_None,
+PTMS_Linear,
+PTMS_Random</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EParticleRotationSource" class="hidden"></a>EParticleRotationSource <a href="../Source_engine/particleemitter.html#52" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#EParticleRotationSource" class="source">EParticleRotationSource</a></span><br />
+{<blockquote>PTRS_None,
+PTRS_Actor,
+PTRS_Offset,
+PTRS_Normal</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EParticleStartLocationShape" class="hidden"></a>EParticleStartLocationShape <a href="../Source_engine/particleemitter.html#68" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#EParticleStartLocationShape" class="source">EParticleStartLocationShape</a></span><br />
+{<blockquote>PTLS_Box,
+PTLS_Sphere,
+PTLS_Polar,
+PTLS_All</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EParticleVelocityDirection" class="hidden"></a>EParticleVelocityDirection <a href="../Source_engine/particleemitter.html#60" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#EParticleVelocityDirection" class="source">EParticleVelocityDirection</a></span><br />
+{<blockquote>PTVD_None,
+PTVD_StartPositionAndOwner,
+PTVD_OwnerAndStartPosition,
+PTVD_AddRadial</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ESkelLocationUpdate" class="hidden"></a>ESkelLocationUpdate <a href="../Source_engine/particleemitter.html#97" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/particleemitter.html#ESkelLocationUpdate" class="source">ESkelLocationUpdate</a></span><br />
+{<blockquote>PTSU_None,
+PTSU_SpawnOffset,
+PTSU_Location</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Structures Detail</th>
+</tr>
+</table>
+
+<h4><a name="_Particle" class="hidden"></a>Particle <a href="../Source_engine/particleemitter.html#128" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../engine/particleemitter.html#Particle" class="source">Particle</a></span><br />
+{<blockquote>var <span class="source_type">int</span> BoneIndex;<br />
+var <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ColorMultiplier;<br />
+var <span class="source_type">int</span> Flags;<br />
+var <span class="source_type">int</span> HitCount;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Location;<br />
+var <span class="source_type">float</span> Mass;<br />
+var <span class="source_type">float</span> MaxLifetime;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> OldLocation;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> OldMeshLocation;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RevolutionCenter;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RevolutionsMultiplier;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RevolutionsPerSecond;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Size</span>;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> SpinsPerSecond;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> StartLocation;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> StartSize;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> StartSpin;<br />
+var <span class="source_type">int</span> Subdivision;<br />
+var <span class="source_type">float</span> <span class="source_type"><a href="../core/time.html" class="source">Time</a></span>;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Velocity;<br />
+var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> VelocityMultiplier;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ParticleColorScale" class="hidden"></a>ParticleColorScale <a href="../Source_engine/particleemitter.html#116" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../engine/particleemitter.html#ParticleColorScale" class="source">ParticleColorScale</a></span><br />
+{<blockquote>var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>;<br />
+var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type">float</span> RelativeTime;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ParticleRevolutionScale" class="hidden"></a>ParticleRevolutionScale <a href="../Source_engine/particleemitter.html#110" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../engine/particleemitter.html#ParticleRevolutionScale" class="source">ParticleRevolutionScale</a></span><br />
+{<blockquote>var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RelativeRevolution;<br />
+var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type">float</span> RelativeTime;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ParticleSound" class="hidden"></a>ParticleSound <a href="../Source_engine/particleemitter.html#154" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../engine/particleemitter.html#ParticleSound" class="source">ParticleSound</a></span><br />
+{<blockquote>var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> Pitch;<br />
+var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> Probability;<br />
+var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> <span class="source_type">Radius</span>;<br />
+var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>;<br />
+var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> <span class="source_type"><a href="../engine/volume.html" class="source">Volume</a></span>;<br />
+var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type">int</span> <span class="source_type">Weight</span>;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ParticleTimeScale" class="hidden"></a>ParticleTimeScale <a href="../Source_engine/particleemitter.html#104" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../engine/particleemitter.html#ParticleTimeScale" class="source">ParticleTimeScale</a></span><br />
+{<blockquote>var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type">float</span> RelativeSize;<br />
+var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type">float</span> RelativeTime;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ParticleVelocityScale" class="hidden"></a>ParticleVelocityScale <a href="../Source_engine/particleemitter.html#122" class="small">Source code</a></h4>
+<div class="declaration">struct <span class="source_type"><a href="../engine/particleemitter.html#ParticleVelocityScale" class="source">ParticleVelocityScale</a></span><br />
+{<blockquote>var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type">float</span> RelativeTime;<br />
+var(<span class="source_type"><a href="../engine/particleemitter.html" class="source">ParticleEmitter</a></span>) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> RelativeVelocity;<br />
+</blockquote>};
+</div>
+<blockquote class="comment">
+
+<br />
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_Reset-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Reset <span class="function_state"></span> <a href="../Source_engine/particleemitter.html#359" class="small">Source code</a></h4>
+<div class="declaration">native function  Reset (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SpawnParticle-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SpawnParticle <span class="function_state"></span> <a href="../Source_engine/particleemitter.html#357" class="small">Source code</a></h4>
+<div class="declaration">native function  SpawnParticle ( <span class="source_type">int</span> <span class="source_type">Amount</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Trigger-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Trigger <span class="function_state"></span> <a href="../Source_engine/particleemitter.html#358" class="small">Source code</a></h4>
+<div class="declaration">native function  <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span> (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     RespawnDeadParticles=True
+     UniformMeshScale=True
+     UniformVelocityScale=True
+     AlphaTest=True
+     ZTest=True
+     UseRegularSizeScale=True
+     AutomaticInitialSpawning=True
+     TriggerDisabled=True
+     LowDetailFactor=<span class="source_int">0.650000</span>
+     ExtentMultiplier=(X=<span class="source_int">1.000000</span>,<span class="source_type">Y</span>=<span class="source_int">1.000000</span>,Z=<span class="source_int">1.000000</span>)
+     DampingFactorRange=(X=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),<span class="source_type">Y</span>=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),Z=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>))
+     SpawnFromOtherEmitter=-<span class="source_int">1</span>
+     ColorMultiplierRange=(X=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),<span class="source_type">Y</span>=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),Z=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>))
+     Opacity=<span class="source_int">1.000000</span>
+     FadeOutFactor=(W=<span class="source_int">1.000000</span>,X=<span class="source_int">1.000000</span>,<span class="source_type">Y</span>=<span class="source_int">1.000000</span>,Z=<span class="source_int">1.000000</span>)
+     FadeInFactor=(W=<span class="source_int">1.000000</span>,X=<span class="source_int">1.000000</span>,<span class="source_type">Y</span>=<span class="source_int">1.000000</span>,Z=<span class="source_int">1.000000</span>)
+     MaxParticles=<span class="source_int">10</span>
+     AddLocationFromOtherEmitter=-<span class="source_int">1</span>
+     StartMassRange=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>)
+     VelocityScaleRange=(X=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),<span class="source_type">Y</span>=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),Z=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>))
+     MeshScaleRange=(X=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),<span class="source_type">Y</span>=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),Z=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>))
+     MeshNormal=(Z=<span class="source_int">1.000000</span>)
+     SpinCCWorCW=(X=<span class="source_int">0.500000</span>,<span class="source_type">Y</span>=<span class="source_int">0.500000</span>,Z=<span class="source_int">0.500000</span>)
+     StartSizeRange=(X=(Min=<span class="source_int">100.000000</span>,<span class="source_type">Max</span>=<span class="source_int">100.000000</span>),<span class="source_type">Y</span>=(Min=<span class="source_int">100.000000</span>,<span class="source_type">Max</span>=<span class="source_int">100.000000</span>),Z=(Min=<span class="source_int">100.000000</span>,<span class="source_type">Max</span>=<span class="source_int">100.000000</span>))
+     ScaleSizeByVelocityMultiplier=(X=<span class="source_int">1.000000</span>,<span class="source_type">Y</span>=<span class="source_int">1.000000</span>,Z=<span class="source_int">1.000000</span>)
+     ScaleSizeByVelocityMax=<span class="source_int">10000000.000000</span>
+     SkeletalScale=(X=<span class="source_int">1.000000</span>,<span class="source_type">Y</span>=<span class="source_int">1.000000</span>,Z=<span class="source_int">1.000000</span>)
+     RelativeBoneIndexRange=(<span class="source_type">Max</span>=<span class="source_int">1.000000</span>)
+     DrawStyle=PTDS_Translucent
+     <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Engine.S_Emitter'</span>
+     SecondsBeforeInactive=<span class="source_int">1.000000</span>
+     LifetimeRange=(Min=<span class="source_int">4.000000</span>,<span class="source_type">Max</span>=<span class="source_int">4.000000</span>)
+     AddVelocityFromOtherEmitter=-<span class="source_int">1</span>
+     AddVelocityMultiplierRange=(X=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),<span class="source_type">Y</span>=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>),Z=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>))
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/particleemitter.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#ParticleEmitter">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/palette.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/particlematerial.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:50.488 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

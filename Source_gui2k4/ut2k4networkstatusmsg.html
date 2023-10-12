@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.UT2K4NetworkStatusMsg</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4networkstatusmsg.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4NetworkStatusMsg">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4movies.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4onslaughtloginmenu.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/ut2k4networkstatusmsg.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/ut2k4networkstatusmsg.html">UT2K4NetworkStatusMsg</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//	Written by Ron Prestenback
+</span><a name="3"></a><span class="source_comment">//  This menu indicates that a non-recoverable network error has occurred, and the player will
+</span><a name="4"></a><span class="source_comment">//  be kicked back to the main menu when this menu is closed.
+</span><a name="5"></a><span class="source_comment">//	© 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="6"></a><span class="source_comment">//==============================================================================
+</span><a name="7"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/ut2k4networkstatusmsg.html" class="source">UT2K4NetworkStatusMsg</a></span> extends <span class="source_type"><a href="../gui2k4/lockedfloatingwindow.html" class="source">LockedFloatingWindow</a></span>;
+<a name="8"></a>
+<a name="9"></a>var automated <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span> stbNetworkMessage;
+<a name="10"></a>var localized 	<span class="source_type">string</span> 	StatusMessages[<span class="source_int">16</span>];
+<a name="11"></a>var localized 	<span class="source_type">string</span> 	StatusTitle[<span class="source_int">16</span>];
+<a name="12"></a>var localized   <span class="source_type">string</span>  UnknownError;
+<a name="13"></a>var 			<span class="source_type">string</span>	StatusCodes[<span class="source_int">16</span>];
+<a name="14"></a>var 			<span class="source_type">bool</span>	bExit;
+<a name="15"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="16"></a>{
+<a name="17"></a>
+<a name="18"></a>	Super.InitComponent(Mycontroller, <span class="source_type">MyOwner</span>);
+<a name="19"></a>	PlayerOwner().ClearProgressMessages();
+<a name="20"></a>
+<a name="21"></a>	b_Cancel.SetVisibility(false);
+<a name="22"></a>    b_OK.OnClick = InternalOnClick;
+<a name="23"></a>
+<a name="24"></a>	sb_Main.ManageComponent(stbNetworkMessage);
+<a name="25"></a>}
+<a name="26"></a>
+<a name="27"></a>event <span class="source_type">bool</span> NotifyLevelChange()
+<a name="28"></a>{
+<a name="29"></a>	return false;
+<a name="30"></a>}
+<a name="31"></a>
+<a name="32"></a>event HandleParameters(<span class="source_type">string</span> Param1, <span class="source_type">string</span> <span class="source_type">Param2</span>)
+<a name="33"></a>{
+<a name="34"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="35"></a>	local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="36"></a>
+<a name="37"></a>	for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;ArrayCount(StatusCodes);<span class="source_type">i</span>++)
+<a name="38"></a>    	if (StatusCodes[<span class="source_type">i</span>] ~= Param1)
+<a name="39"></a>        {
+<a name="40"></a>        	<span class="source_type">s</span> = StatusMessages[<span class="source_type">i</span>];
+<a name="41"></a>       		ReplaceText(<span class="source_type">s</span>, <span class="source_string">"%data%"</span>, <span class="source_type">Param2</span>);
+<a name="42"></a>        	t_WindowTitle.SetCaption(StatusTitle[<span class="source_type">i</span>]);
+<a name="43"></a>        	break;
+<a name="44"></a>        }
+<a name="45"></a>
+<a name="46"></a>
+<a name="47"></a>
+<a name="48"></a>	if ( <span class="source_type">i</span> == ArrayCount(StatusCodes) )
+<a name="49"></a>	{
+<a name="50"></a>		if (Param1==<span class="source_string">""</span>)
+<a name="51"></a>		{
+<a name="52"></a>			<span class="source_type">s</span> = UnknownError;
+<a name="53"></a>			if ( Param1 != <span class="source_string">""</span> )
+<a name="54"></a>				<span class="source_type">s</span> $= <span class="source_string">"||"</span> $ Param1;
+<a name="55"></a>
+<a name="56"></a>			if ( <span class="source_type">Param2</span> != <span class="source_string">""</span> )
+<a name="57"></a>				<span class="source_type">s</span> $= <span class="source_string">"||"</span> $ <span class="source_type">Param2</span>;
+<a name="58"></a>		}
+<a name="59"></a>		else
+<a name="60"></a>			<span class="source_type">s</span> = Param1 $ <span class="source_string">"||"</span> $ <span class="source_type">Param2</span>;
+<a name="61"></a>	}
+<a name="62"></a>	stbNetworkMessage.SetContent(<span class="source_type">s</span>);
+<a name="63"></a>}
+<a name="64"></a>function <span class="source_type">bool</span> FloatingPreDraw( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span> )
+<a name="65"></a>{
+<a name="66"></a>	if (bExit)
+<a name="67"></a>	{
+<a name="68"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseMenu(False);
+<a name="69"></a>		return true;
+<a name="70"></a>	}
+<a name="71"></a>	return super.FloatingPreDraw(<span class="source_type">c</span>);
+<a name="72"></a>}
+<a name="73"></a>
+<a name="74"></a>defaultproperties
+<a name="75"></a>{
+<a name="76"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span> <span class="source_type">Name</span>=Scroller
+<a name="77"></a>         bNoTeletype=True
+<a name="78"></a>         OnCreateComponent=Scroller.InternalOnCreateComponent
+<a name="79"></a>         WinTop=<span class="source_int">0.133333</span>
+<a name="80"></a>         WinLeft=<span class="source_int">0.033108</span>
+<a name="81"></a>         WinWidth=<span class="source_int">0.925338</span>
+<a name="82"></a>         WinHeight=<span class="source_int">0.790203</span>
+<a name="83"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="84"></a>     stbNetworkMessage=<span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span><span class="source_name">'GUI2K4.UT2K4NetworkStatusMsg.Scroller'</span>
+<a name="85"></a>
+<a name="86"></a>     StatusMessages(<span class="source_int">0</span>)=<span class="source_string">"The Master server has determined your CD-Key is either invalid or already in use.  If this problem persists, please contact Steam Technicial support."</span>
+<a name="87"></a>     StatusMessages(<span class="source_int">1</span>)=<span class="source_string">"A communication link to the Killing Floor master server could not be established.  Please check your connection to the internet and try again."</span>
+<a name="88"></a>     StatusMessages(<span class="source_int">2</span>)=<span class="source_string">"Apparently, your communication link to the Killing Floor master server has been interrupted.  Please check your connection to the internet and try again."</span>
+<a name="89"></a>     StatusMessages(<span class="source_int">3</span>)=<span class="source_string">"Must Upgrade"</span>
+<a name="90"></a>     StatusMessages(<span class="source_int">4</span>)=<span class="source_string">"Client is in Developer Mode!||Your client is currently operating in developer mode and it's access to the master server has been restricted.  Please restart the game and avoid using SET commands that may cause problems.  If the problem persists, please contact Steam Technicial support."</span>
+<a name="91"></a>     StatusMessages(<span class="source_int">5</span>)=<span class="source_string">"Modified Client!||Your copy of Killing Floor has in some way been modified.  Because of this, its access to the master server has been restricted.  If this problem persists, please reinstall the game or the latest patch.||This error has been logged at the master server."</span>
+<a name="92"></a>     StatusMessages(<span class="source_int">6</span>)=<span class="source_string">"Your CD-KEY has been banned by the master server.  this ban will remain in place until %data%"</span>
+<a name="93"></a>     StatusMessages(<span class="source_int">7</span>)=<span class="source_string">"The server you are trying to connect to is currently full.  Please try this server again later, or you may wish to try connecting as a spectator if the server allows it"</span>
+<a name="94"></a>     StatusMessages(<span class="source_int">8</span>)=<span class="source_string">"The admin of this server has banned you playing here.  If you feel you do not deserve this ban, the admin's contact email is [%data%]"</span>
+<a name="95"></a>     StatusMessages(<span class="source_int">9</span>)=<span class="source_string">"This copy of Killing Floor is not compatible with the server you are connecting to."</span>
+<a name="96"></a>     StatusMessages(<span class="source_int">10</span>)=<span class="source_string">"There was a fatal problem during login that has caused you to be disconnected from the server.||Reason: %data%"</span>
+<a name="97"></a>     StatusMessages(<span class="source_int">11</span>)=<span class="source_string">"You have been forcibly removed from the game.||Reason: %data%"</span>
+<a name="98"></a>     StatusMessages(<span class="source_int">12</span>)=<span class="source_string">"An admin of this server has banned you for the remainder of the current game.||If you feel you do not deserve this ban, the admin's email is:|[%data%]."</span>
+<a name="99"></a>     StatusMessages(<span class="source_int">13</span>)=<span class="source_string">"You've been permanently banned from playing on this server.||If you feel you do not deserve this ban, the admin's contact email is:|[%data%]."</span>
+<a name="100"></a>     StatusMessages(<span class="source_int">14</span>)=<span class="source_string">"An unknown Steam error is preventing you from connecting to this server.||If the problem persists please contact Valve for support."</span>
+<a name="101"></a>     StatusMessages(<span class="source_int">15</span>)=<span class="source_string">"You have been banned from this game by VAC."</span>
+<a name="102"></a>     StatusTitle(<span class="source_int">0</span>)=<span class="source_string">"Invalid CD-Key"</span>
+<a name="103"></a>     StatusTitle(<span class="source_int">1</span>)=<span class="source_string">"Connection Failed"</span>
+<a name="104"></a>     StatusTitle(<span class="source_int">2</span>)=<span class="source_string">"Connection Timed Out"</span>
+<a name="105"></a>     StatusTitle(<span class="source_int">3</span>)=<span class="source_string">"Must Upgrade"</span>
+<a name="106"></a>     StatusTitle(<span class="source_int">4</span>)=<span class="source_string">"Developer Mode"</span>
+<a name="107"></a>     StatusTitle(<span class="source_int">5</span>)=<span class="source_string">"Modified Client"</span>
+<a name="108"></a>     StatusTitle(<span class="source_int">6</span>)=<span class="source_string">"You have been Banned"</span>
+<a name="109"></a>     StatusTitle(<span class="source_int">7</span>)=<span class="source_string">"The Server is Full"</span>
+<a name="110"></a>     StatusTitle(<span class="source_int">8</span>)=<span class="source_string">"You have been banned"</span>
+<a name="111"></a>     StatusTitle(<span class="source_int">9</span>)=<span class="source_string">"Incompatible Version"</span>
+<a name="112"></a>     StatusTitle(<span class="source_int">10</span>)=<span class="source_string">"Problem during Login"</span>
+<a name="113"></a>     StatusTitle(<span class="source_int">11</span>)=<span class="source_string">"Kicked"</span>
+<a name="114"></a>     StatusTitle(<span class="source_int">12</span>)=<span class="source_string">"Session Ban"</span>
+<a name="115"></a>     StatusTitle(<span class="source_int">13</span>)=<span class="source_string">"Permanent Ban"</span>
+<a name="116"></a>     StatusTitle(<span class="source_int">14</span>)=<span class="source_string">"Steam Error"</span>
+<a name="117"></a>     StatusTitle(<span class="source_int">15</span>)=<span class="source_string">"Steam VAC Ban"</span>
+<a name="118"></a>     UnknownError=<span class="source_string">"Unknown Network Error"</span>
+<a name="119"></a>     StatusCodes(<span class="source_int">0</span>)=<span class="source_string">"RI_AuthenticationFailed"</span>
+<a name="120"></a>     StatusCodes(<span class="source_int">1</span>)=<span class="source_string">"RI_ConnectionFailed"</span>
+<a name="121"></a>     StatusCodes(<span class="source_int">2</span>)=<span class="source_string">"RI_ConnectionTimeOut"</span>
+<a name="122"></a>     StatusCodes(<span class="source_int">3</span>)=<span class="source_string">"RI_MustUpgrade"</span>
+<a name="123"></a>     StatusCodes(<span class="source_int">4</span>)=<span class="source_string">"RI_DevClient"</span>
+<a name="124"></a>     StatusCodes(<span class="source_int">5</span>)=<span class="source_string">"RI_BadClient"</span>
+<a name="125"></a>     StatusCodes(<span class="source_int">6</span>)=<span class="source_string">"RI_BannedClient"</span>
+<a name="126"></a>     StatusCodes(<span class="source_int">7</span>)=<span class="source_string">"FC_ServerFull"</span>
+<a name="127"></a>     StatusCodes(<span class="source_int">8</span>)=<span class="source_string">"FC_LocalBan"</span>
+<a name="128"></a>     StatusCodes(<span class="source_int">9</span>)=<span class="source_string">"FC_Challege"</span>
+<a name="129"></a>     StatusCodes(<span class="source_int">10</span>)=<span class="source_string">"FC_Login"</span>
+<a name="130"></a>     StatusCodes(<span class="source_int">11</span>)=<span class="source_string">"AC_Kicked"</span>
+<a name="131"></a>     StatusCodes(<span class="source_int">12</span>)=<span class="source_string">"AC_SessionBan"</span>
+<a name="132"></a>     StatusCodes(<span class="source_int">13</span>)=<span class="source_string">"AC_Ban"</span>
+<a name="133"></a>     StatusCodes(<span class="source_int">14</span>)=<span class="source_string">"ST_Unknown"</span>
+<a name="134"></a>     StatusCodes(<span class="source_int">15</span>)=<span class="source_string">"ST_VACBan"</span>
+<a name="135"></a>     WindowName=<span class="source_string">"Network Connection Lost"</span>
+<a name="136"></a>}
+<a name="137"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4networkstatusmsg.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4NetworkStatusMsg">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4movies.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4onslaughtloginmenu.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.060 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

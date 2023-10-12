@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: UnrealGame.MessageTrigger</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/messagetrigger.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#MessageTrigger">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/maleannouncer.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/mutberserk.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_unrealgame/messagetrigger.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../unrealgame/unrealgame-overview.html">UnrealGame</a>.<a href="../unrealgame/messagetrigger.html">MessageTrigger</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// MessageTrigger
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_comment">// Broadcasts a message to all players
+</span><a name="5"></a><span class="source_comment">//=============================================================================
+</span><a name="6"></a>
+<a name="7"></a><span class="source_type">class</span> <span class="source_type"><a href="../unrealgame/messagetrigger.html" class="source">MessageTrigger</a></span> extends <span class="source_type"><a href="../engine/triggers.html" class="source">Triggers</a></span>;
+<a name="8"></a>
+<a name="9"></a>var()	enum <span class="source_type"><a href="../unrealgame/messagetrigger.html#EMT_MessageType" class="source">EMT_MessageType</a></span>
+<a name="10"></a>{
+<a name="11"></a>	EMT_Default,
+<a name="12"></a>	EMT_CriticalEvent,
+<a name="13"></a>	EMT_DeathMessage,
+<a name="14"></a>	EMT_Say,
+<a name="15"></a>	EMT_TeamSay,
+<a name="16"></a>} MessageType;
+<a name="17"></a>
+<a name="18"></a>var() localized <span class="source_type">string</span>	Message;
+<a name="19"></a>
+<a name="20"></a>var() <span class="source_type">byte</span>	<span class="source_type">Team</span>;
+<a name="21"></a>
+<a name="22"></a>
+<a name="23"></a>event <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">EventInstigator</span> )
+<a name="24"></a>{
+<a name="25"></a>	local <span class="source_type">name</span>				<span class="source_type">MSGType</span>;
+<a name="26"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>		<span class="source_type">C</span>;
+<a name="27"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>	<span class="source_type">P</span>;
+<a name="28"></a>
+<a name="29"></a>	<span class="source_type">switch</span> ( MessageType )
+<a name="30"></a>	{
+<a name="31"></a>		case EMT_CriticalEvent	: <span class="source_type">MSGType</span> = <span class="source_name">'CriticalEvent'</span>;		break;
+<a name="32"></a>		case EMT_DeathMessage	: <span class="source_type">MSGType</span> = <span class="source_name">'xDeathMessage'</span>;		break;
+<a name="33"></a>		case EMT_Say			: <span class="source_type">MSGType</span> = <span class="source_name">'SayMessagePlus'</span>;		break;
+<a name="34"></a>		case EMT_TeamSay		: <span class="source_type">MSGType</span> = <span class="source_name">'TeamSayMessagePlus'</span>;	break;
+<a name="35"></a>		default					: <span class="source_type">MSGType</span> = <span class="source_name">'StringMessagePlus'</span>;	break;
+<a name="36"></a>	}
+<a name="37"></a>
+<a name="38"></a>	for ( <span class="source_type">C</span>=<span class="source_type">Level</span>.ControllerList; <span class="source_type">C</span>!=None; <span class="source_type">C</span>=<span class="source_type">C</span>.NextController )
+<a name="39"></a>	{
+<a name="40"></a>		<span class="source_type">P</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">C</span>);
+<a name="41"></a>		if ( <span class="source_type">P</span> != None && CheckTeam(<span class="source_type">P</span>) )
+<a name="42"></a>			<span class="source_type">P</span>.TeamMessage(<span class="source_type">C</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>, Message, <span class="source_type">MSGType</span>);
+<a name="43"></a>	}
+<a name="44"></a>}
+<a name="45"></a>
+<a name="46"></a>function <span class="source_type">bool</span> CheckTeam( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">P</span> )
+<a name="47"></a>{
+<a name="48"></a>	local <span class="source_type">byte</span> DefendingTeam;
+<a name="49"></a>
+<a name="50"></a>	if ( <span class="source_type">Team</span> == <span class="source_int">255</span> )
+<a name="51"></a>		return true;
+<a name="52"></a>
+<a name="53"></a>	DefendingTeam = <span class="source_type">Level</span>.Game.GetDefenderNum();
+<a name="54"></a>
+<a name="55"></a>	<span class="source_comment">// Normal Player Team
+</span><a name="56"></a>	if ( DefendingTeam == <span class="source_int">255</span> )
+<a name="57"></a>		return <span class="source_type">P</span>.GetTeamNum() == <span class="source_type">Team</span>;
+<a name="58"></a>
+<a name="59"></a>	<span class="source_comment">// Check Attackers
+</span><a name="60"></a>	if ( <span class="source_type">Team</span> == <span class="source_int">0</span> && DefendingTeam != <span class="source_type">P</span>.GetTeamNum() )
+<a name="61"></a>		return true;
+<a name="62"></a>
+<a name="63"></a>	<span class="source_comment">// Check Defenders
+</span><a name="64"></a>	if ( <span class="source_type">Team</span> == <span class="source_int">1</span> && DefendingTeam == <span class="source_type">P</span>.GetTeamNum() )
+<a name="65"></a>		return true;
+<a name="66"></a>
+<a name="67"></a>	return false;
+<a name="68"></a>}
+<a name="69"></a>
+<a name="70"></a>defaultproperties
+<a name="71"></a>{
+<a name="72"></a>     messagetype=EMT_CriticalEvent
+<a name="73"></a>     Message=<span class="source_string">"My Message"</span>
+<a name="74"></a>     <span class="source_type">Team</span>=<span class="source_int">255</span>
+<a name="75"></a>}
+<a name="76"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../unrealgame/unrealgame-overview.html">Package</a></td>
+	<td class="header"><a href="../unrealgame/messagetrigger.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#MessageTrigger">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_unrealgame/maleannouncer.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_unrealgame/mutberserk.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:05.416 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

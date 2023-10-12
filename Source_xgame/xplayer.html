@@ -1,0 +1,1133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XGame.xPlayer</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xgame/xgame-overview.html">Package</a></td>
+	<td class="header"><a href="../xgame/xplayer.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#xPlayer">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xgame/xpawnsoundgroup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xgame/xplayerreplicationinfo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xgame/xplayer.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xgame/xgame-overview.html">XGame</a>.<a href="../xgame/xplayer.html">xPlayer</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022<br />01023<br />01024</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../xgame/xplayer.html" class="source">xPlayer</a></span> extends <span class="source_type"><a href="../unrealgame/unrealplayer.html" class="source">UnrealPlayer</a></span>
+<a name="2"></a>    DependsOn(<span class="source_type"><a href="../xgame/xutil.html" class="source">xUtil</a></span>);
+<a name="3"></a>
+<a name="4"></a><span class="source_macro">#exec OBJ LOAD File=ROMenuSounds.uax
+</span><a name="5"></a>
+<a name="6"></a><span class="source_comment">// attract mode
+</span><a name="7"></a>var <span class="source_type"><a href="../xgame/attractcamera.html" class="source">AttractCamera</a></span> camlist[<span class="source_int">20</span>];
+<a name="8"></a>var <span class="source_type">int</span> numcams, curcam;
+<a name="9"></a>var <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> attracttarget, attracttarget2;
+<a name="10"></a>var <span class="source_type">float</span> camtime, targettime, gibwatchtime;
+<a name="11"></a>var <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> focuspoint;
+<a name="12"></a>
+<a name="13"></a><span class="source_comment">// combos
+</span><a name="14"></a>const MinComboKeyTime = <span class="source_int">0.05</span>;   <span class="source_comment">// keys pressed faster than this will be considered a double-press
+</span><a name="15"></a>const MaxComboKeyTime = <span class="source_int">0.35</span>;   <span class="source_comment">// max time player has between button presses
+</span><a name="16"></a>
+<a name="17"></a>var transient <span class="source_type">int</span> InputHistory[<span class="source_int">4</span>];
+<a name="18"></a>var transient <span class="source_type">float</span> LastKeyTime;
+<a name="19"></a>var transient <span class="source_type">int</span> OldKey;
+<a name="20"></a>var <span class="source_type">float</span> MinAdrenalineCost;
+<a name="21"></a>var <span class="source_type">string</span> ComboNameList[<span class="source_int">16</span>];
+<a name="22"></a>var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/combo.html" class="source">Combo</a></span>&gt; ComboList[<span class="source_int">16</span>];
+<a name="23"></a>
+<a name="24"></a>var <span class="source_type"><a href="../xgame/xutil.html" class="source">xUtil</a></span>.<span class="source_type"><a href="../xgame/xutil.html#PlayerRecord" class="source">PlayerRecord</a></span> PawnSetupRecord;
+<a name="25"></a>var <span class="source_type">float</span> LastRulesRequestTime;
+<a name="26"></a>var <span class="source_type">float</span> LastMapListRequestTime;
+<a name="27"></a>
+<a name="28"></a>var <span class="source_type">bool</span> autozoom;
+<a name="29"></a>var globalconfig <span class="source_type">bool</span> bClassicTrans;
+<a name="30"></a>var <span class="source_type">bool</span> bHighBeaconTrajectory;
+<a name="31"></a>var <span class="source_type">bool</span> bWaitingForPRI, bWaitingForVRI;
+<a name="32"></a>var config <span class="source_type">bool</span> bDebuggingVoiceChat;
+<a name="33"></a>
+<a name="34"></a>var config <span class="source_type">bool</span> bAutoDemoRec;
+<a name="35"></a>
+<a name="36"></a>delegate ProcessRule(<span class="source_type">string</span> <span class="source_type">NewRule</span>);	<span class="source_comment">// Should be assigned elsewhere
+</span><a name="37"></a>delegate ProcessMapName(<span class="source_type">string</span> NewMap);
+<a name="38"></a>
+<a name="39"></a>replication
+<a name="40"></a>{
+<a name="41"></a>	<span class="source_comment">// client to server
+</span><a name="42"></a>	reliable if ( Role &lt; ROLE_Authority )
+<a name="43"></a>		ServerDoCombo, ServerRequestRules, ServerRequestMapList, AdminMenu, ServerRequestPlayerInfo,
+<a name="44"></a>        ServerSpecViewGoal, ServerSetClassicTrans;
+<a name="45"></a>	unreliable if( Role &lt; ROLE_Authority )
+<a name="46"></a>		L33tPhrase;
+<a name="47"></a>    reliable if ( Role == ROLE_Authority)
+<a name="48"></a>    	ClientReceiveRule, ClientReceiveMapName, ClientReceiveCombo, ClientReceiveBan;
+<a name="49"></a>}
+<a name="50"></a>
+<a name="51"></a>exec function CheckPriority()
+<a name="52"></a>{
+<a name="53"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="54"></a>	local <span class="source_type">int</span> Count;
+<a name="55"></a>
+<a name="56"></a>	if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None )
+<a name="57"></a>	{
+<a name="58"></a>		DebugMessage(<span class="source_string">"Pawn is none - returning"</span>);
+<a name="59"></a>		return;
+<a name="60"></a>	}
+<a name="61"></a>
+<a name="62"></a>	for( Inv = <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; Inv != None && Count &lt; <span class="source_int">1000</span>; Inv = Inv.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="63"></a>	{
+<a name="64"></a>		if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv) != None )
+<a name="65"></a>			DebugMessage(<span class="source_string">"Weapon:"</span>$Inv.<span class="source_type">Name</span>@<span class="source_string">"Priority:"</span>$<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv).Priority,<span class="source_name">'PriorityDebug'</span>);
+<a name="66"></a>
+<a name="67"></a>		Count++;
+<a name="68"></a>	}
+<a name="69"></a>}
+<a name="70"></a>
+<a name="71"></a>simulated function DebugMessage(<span class="source_type">string</span> DebugString, optional <span class="source_type">name</span> <span class="source_type">Type</span>)
+<a name="72"></a>{
+<a name="73"></a>	ClientMessage(DebugString);
+<a name="74"></a>	log(DebugString,<span class="source_type">Type</span>);
+<a name="75"></a>}
+<a name="76"></a>
+<a name="77"></a>
+<a name="78"></a>simulated function <span class="source_type">String</span> GetRoleString()
+<a name="79"></a>{
+<a name="80"></a>	local <span class="source_type">String</span> <span class="source_type">T</span>;
+<a name="81"></a>
+<a name="82"></a>	<span class="source_type">T</span> = <span class="source_string">"Role: "</span>;
+<a name="83"></a>	<span class="source_type">Switch</span>(Role)
+<a name="84"></a>	{
+<a name="85"></a>		case ROLE_None: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"None"</span>; break;
+<a name="86"></a>		case ROLE_DumbProxy: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"DumbProxy"</span>; break;
+<a name="87"></a>		case ROLE_SimulatedProxy: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"SimulatedProxy"</span>; break;
+<a name="88"></a>		case ROLE_AutonomousProxy: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"AutonomousProxy"</span>; break;
+<a name="89"></a>		case ROLE_Authority: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Authority"</span>; break;
+<a name="90"></a>	}
+<a name="91"></a>
+<a name="92"></a>	return <span class="source_type">T</span>;
+<a name="93"></a>}
+<a name="94"></a>
+<a name="95"></a>simulated function <span class="source_type">String</span> GetPhysicsString()
+<a name="96"></a>{
+<a name="97"></a>	Local <span class="source_type">String</span> <span class="source_type">T</span>;
+<a name="98"></a>
+<a name="99"></a>	<span class="source_type">T</span> = <span class="source_string">"Physics: "</span>;
+<a name="100"></a>	<span class="source_type">Switch</span>( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Physics )
+<a name="101"></a>	{
+<a name="102"></a>		case PHYS_None: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"None"</span>; break;
+<a name="103"></a>		case PHYS_Walking: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Walking"</span>; break;
+<a name="104"></a>		case PHYS_Falling: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Falling"</span>; break;
+<a name="105"></a>		case PHYS_Swimming: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Swimming"</span>; break;
+<a name="106"></a>		case PHYS_Flying: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Flying"</span>; break;
+<a name="107"></a>		case PHYS_Rotating: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Rotating"</span>; break;
+<a name="108"></a>		case PHYS_Projectile: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Projectile"</span>; break;
+<a name="109"></a>		case PHYS_Interpolating: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Interpolating"</span>; break;
+<a name="110"></a>		case PHYS_MovingBrush: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"MovingBrush"</span>; break;
+<a name="111"></a>		case PHYS_Spider: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Spider"</span>; break;
+<a name="112"></a>		case PHYS_Trailer: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Trailer"</span>; break;
+<a name="113"></a>		case PHYS_Ladder: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Ladder"</span>; break;
+<a name="114"></a>		case PHYS_Karma: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Karma"</span>; break;
+<a name="115"></a>	}
+<a name="116"></a>	return <span class="source_type">T</span>;
+<a name="117"></a>}
+<a name="118"></a>
+<a name="119"></a><span class="source_comment">// Voice chat debug
+</span><a name="120"></a>
+<a name="121"></a>function ServerRequestRules()
+<a name="122"></a>{
+<a name="123"></a> 	local <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">Response</span>;
+<a name="124"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="125"></a>
+<a name="126"></a>
+<a name="127"></a>    if ( <span class="source_type">Level</span>.Pauser == None && <span class="source_type">Level</span>.TimeSeconds - LastRulesRequestTime &lt; <span class="source_int">3.0</span>)
+<a name="128"></a>    {
+<a name="129"></a>    	log(<span class="source_string">"ServerRequestRules Level.TimeSeconds:"</span>$<span class="source_type">Level</span>.TimeSeconds@<span class="source_string">"LastRequestTime:"</span>$LastRulesRequestTime);
+<a name="130"></a>		return;
+<a name="131"></a>	}
+<a name="132"></a>
+<a name="133"></a>    LastRulesRequestTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="134"></a>    <span class="source_type">Level</span>.Game.GetServerDetails(<span class="source_type">Response</span>);
+<a name="135"></a>    ClientReceiveRule(<span class="source_string">""</span>);
+<a name="136"></a>    for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;<span class="source_type">Response</span>.<span class="source_type">ServerInfo</span>.Length;<span class="source_type">i</span>++)
+<a name="137"></a>	   	ClientReceiveRule(<span class="source_type">Response</span>.<span class="source_type">ServerInfo</span>[<span class="source_type">i</span>].Key$<span class="source_string">"="</span>$<span class="source_type">Response</span>.<span class="source_type">ServerInfo</span>[<span class="source_type">i</span>].<span class="source_type">Value</span>);
+<a name="138"></a>}
+<a name="139"></a>
+<a name="140"></a>function ClientReceiveRule(<span class="source_type">string</span> <span class="source_type">NewRule</span>)
+<a name="141"></a>{
+<a name="142"></a>	ProcessRule(<span class="source_type">NewRule</span>);
+<a name="143"></a>}
+<a name="144"></a>
+<a name="145"></a>function ServerRequestMapList()
+<a name="146"></a>{
+<a name="147"></a>	local <span class="source_type">int</span> <span class="source_type">x</span>;
+<a name="148"></a>	local array&lt;<span class="source_type">string</span>&gt; <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>;
+<a name="149"></a>
+<a name="150"></a>	if ( <span class="source_type">Level</span>.Pauser == None &&
+<a name="151"></a>		(<span class="source_type">Level</span>.TimeSeconds - LastMapListRequestTime &lt; <span class="source_int">3.0</span> || <span class="source_type">Level</span>.Game.MapListType == <span class="source_string">""</span>) )
+<a name="152"></a>		return;
+<a name="153"></a>
+<a name="154"></a>	LastMapListRequestTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="155"></a>	<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span> = <span class="source_type">Level</span>.Game.GetMapRotation();
+<a name="156"></a>
+<a name="157"></a>	ClientReceiveMapName(<span class="source_string">""</span>);
+<a name="158"></a>	for (<span class="source_type">x</span> = <span class="source_int">0</span>; <span class="source_type">x</span> &lt; <span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>.length; <span class="source_type">x</span>++)
+<a name="159"></a>		ClientReceiveMapName(<span class="source_type"><a href="../engine/maplist.html" class="source">MapList</a></span>[<span class="source_type">x</span>]);
+<a name="160"></a>}
+<a name="161"></a>
+<a name="162"></a>function ClientReceiveMapName(<span class="source_type">string</span> NewMap)
+<a name="163"></a>{
+<a name="164"></a>	ProcessMapName(NewMap);
+<a name="165"></a>}
+<a name="166"></a>
+<a name="167"></a>function StopFiring()
+<a name="168"></a>{
+<a name="169"></a>}
+<a name="170"></a>
+<a name="171"></a>simulated function PlayBeepSound()
+<a name="172"></a>{
+<a name="173"></a>	<span class="source_comment">// Replaceme , this sound
+</span><a name="174"></a>    if ( <span class="source_type">ViewTarget</span> != None )
+<a name="175"></a>		<span class="source_type">ViewTarget</span>.PlaySound(<span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span><span class="source_name">'ROMenuSounds.msfxMouseClick'</span>, SLOT_None,,,,,false);
+<a name="176"></a>}
+<a name="177"></a>
+<a name="178"></a>simulated function <span class="source_type">float</span> RateWeapon(<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> w)
+<a name="179"></a>{
+<a name="180"></a>    return w.Default.Priority;
+<a name="181"></a>}
+<a name="182"></a>
+<a name="183"></a>exec function L33TPhrase( <span class="source_type">int</span> <span class="source_type">phraseNum</span> )
+<a name="184"></a>{
+<a name="185"></a>	SendMessage(None, <span class="source_name">'HIDDEN'</span>, <span class="source_type">phraseNum</span>, <span class="source_int">5</span>, <span class="source_name">'GLOBAL'</span>);
+<a name="186"></a>}
+<a name="187"></a>
+<a name="188"></a>simulated event PostBeginPlay()
+<a name="189"></a>{
+<a name="190"></a>    local <span class="source_type">int</span> <span class="source_type">c</span>;
+<a name="191"></a>
+<a name="192"></a>    Super.PostBeginPlay();
+<a name="193"></a>
+<a name="194"></a>    for (<span class="source_type">c</span> = <span class="source_int">0</span>; <span class="source_type">c</span> &lt; ArrayCount(ComboList); <span class="source_type">c</span>++)
+<a name="195"></a>    {
+<a name="196"></a>        if ( ComboNameList[<span class="source_type">c</span>] != <span class="source_string">""</span> )
+<a name="197"></a>        {
+<a name="198"></a> 			ComboList[<span class="source_type">c</span>] = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/combo.html" class="source">Combo</a></span>&gt;(DynamicLoadObject(ComboNameList[<span class="source_type">c</span>],<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="199"></a>			if ( ComboList[<span class="source_type">c</span>] == None )
+<a name="200"></a>				break;
+<a name="201"></a>			MinAdrenalineCost = FMin(MinAdrenalineCost,ComboList[<span class="source_type">c</span>].Default.AdrenalineCost);
+<a name="202"></a>		}
+<a name="203"></a>    }
+<a name="204"></a>    FillCameraList();
+<a name="205"></a>    LastKillTime = -<span class="source_int">5.0</span>;
+<a name="206"></a>}
+<a name="207"></a>
+<a name="208"></a>simulated event PostNetBeginPlay()
+<a name="209"></a>{
+<a name="210"></a>	super.PostNetBeginPlay();
+<a name="211"></a>	if ( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer )
+<a name="212"></a>		ServerSetClassicTrans(bClassicTrans);
+<a name="213"></a>}
+<a name="214"></a>
+<a name="215"></a>function ServerSetClassicTrans(<span class="source_type">bool</span> <span class="source_type">B</span>)
+<a name="216"></a>{
+<a name="217"></a>	bHighBeaconTrajectory = <span class="source_type">B</span>;
+<a name="218"></a>}
+<a name="219"></a>
+<a name="220"></a>simulated function ClientReceiveCombo(<span class="source_type">string</span> NewCombo)
+<a name="221"></a>{
+<a name="222"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="223"></a>
+<a name="224"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">16</span>; <span class="source_type">i</span>++ )
+<a name="225"></a>	{
+<a name="226"></a>		if ( ComboNameList[<span class="source_type">i</span>] ~= NewCombo )
+<a name="227"></a>			return;
+<a name="228"></a>		else if ( ComboNameList[<span class="source_type">i</span>] == <span class="source_string">""</span> )
+<a name="229"></a>		{
+<a name="230"></a>			ComboNameList[<span class="source_type">i</span>] = NewCombo;
+<a name="231"></a> 			ComboList[<span class="source_type">i</span>] = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/combo.html" class="source">Combo</a></span>&gt;(DynamicLoadObject(ComboNameList[<span class="source_type">i</span>],<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="232"></a>			if ( ComboList[<span class="source_type">i</span>] == None )
+<a name="233"></a>				return;
+<a name="234"></a>			MinAdrenalineCost = FMin(MinAdrenalineCost,ComboList[<span class="source_type">i</span>].Default.AdrenalineCost);
+<a name="235"></a>			return;
+<a name="236"></a>		}
+<a name="237"></a>	}
+<a name="238"></a>}
+<a name="239"></a>
+<a name="240"></a>event PlayerTick( <span class="source_type">float</span> <span class="source_type">DeltaTime</span> )
+<a name="241"></a>{
+<a name="242"></a>    local <span class="source_type">int</span> CurrentKey, DiffKey;
+<a name="243"></a>    local <span class="source_type">int</span> <span class="source_type">c</span>, <span class="source_type">i</span>;
+<a name="244"></a>	local <span class="source_type">bool</span> bFullBuffer,bMatch;
+<a name="245"></a>
+<a name="246"></a>	Super.PlayerTick(<span class="source_type">DeltaTime</span>);
+<a name="247"></a>
+<a name="248"></a>	if ( <span class="source_type">Viewport</span>(<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>) == None )
+<a name="249"></a>		return;
+<a name="250"></a>
+<a name="251"></a>    if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || !bAdrenalineEnabled || (Adrenaline &lt; MinAdrenalineCost) )
+<a name="252"></a>    {
+<a name="253"></a>		InputHistory[<span class="source_int">0</span>] = <span class="source_int">0</span>;
+<a name="254"></a>		return;
+<a name="255"></a>	}
+<a name="256"></a>    CurrentKey = <span class="source_int">0</span>;
+<a name="257"></a>
+<a name="258"></a>    if (aForward &gt; <span class="source_int">0</span>)		CurrentKey = CurrentKey | <span class="source_int">1</span>; <span class="source_comment">// CK_Up
+</span><a name="259"></a>    else if (aForward &lt; <span class="source_int">0</span>)  CurrentKey = CurrentKey | <span class="source_int">2</span>; <span class="source_comment">// CK_Down
+</span><a name="260"></a>    if (aStrafe &gt; <span class="source_int">0</span>)		CurrentKey = CurrentKey | <span class="source_int">4</span>; <span class="source_comment">// CK_Left
+</span><a name="261"></a>    else if (aStrafe &lt; <span class="source_int">0</span>)   CurrentKey = CurrentKey | <span class="source_int">8</span>; <span class="source_comment">// CK_Right
+</span><a name="262"></a>
+<a name="263"></a>    if ( CurrentKey != OldKey )
+<a name="264"></a>    {
+<a name="265"></a>        DiffKey = CurrentKey & ~OldKey; <span class="source_comment">// keys that are pressed now but were not last frame
+</span><a name="266"></a>
+<a name="267"></a>        if (DiffKey != <span class="source_int">0</span>)
+<a name="268"></a>        {
+<a name="269"></a>            if (<span class="source_type">Level</span>.TimeSeconds - LastKeyTime &lt; MinComboKeyTime) <span class="source_comment">// if the time was too short between the last keypress, consider it a double press
+</span><a name="270"></a>            {
+<a name="271"></a>                InputHistory[<span class="source_int">0</span>] = InputHistory[<span class="source_int">0</span>] | DiffKey;
+<a name="272"></a>            }
+<a name="273"></a>            else if (<span class="source_type">Level</span>.TimeSeconds - LastKeyTime &gt; MaxComboKeyTime) <span class="source_comment">// wipe the buffer if too long since last keypress
+</span><a name="274"></a>            {
+<a name="275"></a>                InputHistory[<span class="source_int">0</span>] = Diffkey;
+<a name="276"></a>                InputHistory[<span class="source_int">1</span>] = <span class="source_int">0</span>;
+<a name="277"></a>                LastKeyTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="278"></a>            }
+<a name="279"></a>            else
+<a name="280"></a>            {
+<a name="281"></a>				bFullBuffer = true;
+<a name="282"></a>                for ( <span class="source_type">i</span>=<span class="source_int">3</span>; <span class="source_type">i</span>&gt;<span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="283"></a>                {
+<a name="284"></a>                    InputHistory[<span class="source_type">i</span>] = InputHistory[<span class="source_type">i</span> - <span class="source_int">1</span>];
+<a name="285"></a>                    if ( InputHistory[<span class="source_type">i</span>] == <span class="source_int">0</span> )
+<a name="286"></a>						bFullBuffer = false;
+<a name="287"></a>				}
+<a name="288"></a>                InputHistory[<span class="source_int">0</span>] = DiffKey;
+<a name="289"></a>                LastKeyTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="290"></a>            }
+<a name="291"></a>
+<a name="292"></a>            <span class="source_comment">// check for combo matches
+</span><a name="293"></a>            if ( bFullBuffer )
+<a name="294"></a>            {
+<a name="295"></a>                for ( <span class="source_type">c</span>=<span class="source_int">0</span>; <span class="source_type">c</span>&lt;<span class="source_int">16</span>; <span class="source_type">c</span>++ )
+<a name="296"></a>                {
+<a name="297"></a>                    if ( ComboList[<span class="source_type">c</span>] == None )
+<a name="298"></a>                        break;
+<a name="299"></a>                    else if ( (ComboList[<span class="source_type">c</span>].Default.species == None) || (ComboList[<span class="source_type">c</span>].Default.species == <span class="source_type"><a href="../xgame/xpawn.html" class="source">xPawn</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).Species) )
+<a name="300"></a>                    {
+<a name="301"></a>						bMatch = true;
+<a name="302"></a>                        for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt;<span class="source_int">4</span>; <span class="source_type">i</span>++)
+<a name="303"></a>                            if ( InputHistory[<span class="source_type">i</span>] != ComboList[<span class="source_type">c</span>].Default.keys[<span class="source_type">i</span>] )
+<a name="304"></a>                            {
+<a name="305"></a>								bMatch = false;
+<a name="306"></a>                                break;
+<a name="307"></a>                            }
+<a name="308"></a>
+<a name="309"></a>                        if ( bMatch )
+<a name="310"></a>                        {
+<a name="311"></a>                            DoCombo(ComboList[<span class="source_type">c</span>]);
+<a name="312"></a>                            InputHistory[<span class="source_int">0</span>] = <span class="source_int">0</span>;
+<a name="313"></a>                        }
+<a name="314"></a>                    }
+<a name="315"></a>                }
+<a name="316"></a>            }
+<a name="317"></a>        }
+<a name="318"></a>
+<a name="319"></a>        OldKey = CurrentKey;
+<a name="320"></a>    }
+<a name="321"></a>}
+<a name="322"></a>
+<a name="323"></a>function DoCombo( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/combo.html" class="source">Combo</a></span>&gt; <span class="source_type">ComboClass</span> )
+<a name="324"></a>{
+<a name="325"></a>    if (Adrenaline &gt;= <span class="source_type">ComboClass</span>.default.AdrenalineCost && !<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.InCurrentCombo() )
+<a name="326"></a>    {
+<a name="327"></a>        ServerDoCombo( <span class="source_type">ComboClass</span> );
+<a name="328"></a>    }
+<a name="329"></a>}
+<a name="330"></a>
+<a name="331"></a>function ServerDoCombo( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/combo.html" class="source">Combo</a></span>&gt; <span class="source_type">ComboClass</span> )
+<a name="332"></a>{
+<a name="333"></a>	if ( (<span class="source_type">ComboClass</span> == None) || (<span class="source_type"><a href="../xgame/xpawn.html" class="source">xPawn</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) == None) )
+<a name="334"></a>		return;
+<a name="335"></a>    if (Adrenaline &gt;= <span class="source_type">ComboClass</span>.default.AdrenalineCost && !<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.InCurrentCombo() )
+<a name="336"></a>    {
+<a name="337"></a>        if (<span class="source_type">ComboClass</span>.default.ExecMessage != <span class="source_string">""</span>)
+<a name="338"></a>        <span class="source_comment">// Temp commented out - Ramm
+</span><a name="339"></a>        <span class="source_comment">//    ReceiveLocalizedMessage( class'ComboMessage', , , , ComboClass );
+</span><a name="340"></a>
+<a name="341"></a>        <span class="source_type"><a href="../xgame/xpawn.html" class="source">xPawn</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).DoCombo( <span class="source_type">ComboClass</span> );
+<a name="342"></a>    }
+<a name="343"></a>}
+<a name="344"></a>
+<a name="345"></a><span class="source_type">state</span> AttractMode
+<a name="346"></a>{
+<a name="347"></a>	ignores SwitchWeapon, RestartLevel, ClientRestart, Suicide,
+<a name="348"></a>	 ThrowWeapon, NotifyPhysicsVolumeChange, NotifyHeadVolumeChange,
+<a name="349"></a>     Say, TeamSay;
+<a name="350"></a>
+<a name="351"></a>	function <span class="source_type">bool</span> IsSpectating()
+<a name="352"></a>	{
+<a name="353"></a>		return true;
+<a name="354"></a>	}
+<a name="355"></a>
+<a name="356"></a>	function ProcessMove(<span class="source_type">float</span> <span class="source_type">DeltaTime</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> NewAccel, <span class="source_type"><a href="../engine/actor.html#EDoubleClickDir" class="source">eDoubleClickDir</a></span> DoubleClickMove, <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> DeltaRot)
+<a name="357"></a>	{
+<a name="358"></a>	}
+<a name="359"></a>
+<a name="360"></a>	function PlayerMove(<span class="source_type">float</span> <span class="source_type">DeltaTime</span>)
+<a name="361"></a>	{
+<a name="362"></a>        local <span class="source_type">float</span> deltayaw, destyaw;
+<a name="363"></a>        local <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> newrot;
+<a name="364"></a>
+<a name="365"></a>        if ( attracttarget == None )
+<a name="366"></a>			return;
+<a name="367"></a>
+<a name="368"></a>        <span class="source_comment">// updates camera yaw to smoothly rotate to the pawn facing
+</span><a name="369"></a>        if ( bBehindView )
+<a name="370"></a>        {
+<a name="371"></a>			if ( (attracttarget.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None) || (AttractTarget.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.Enemy == None) )
+<a name="372"></a>				return;
+<a name="373"></a>            NewRot = <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span>(attracttarget.<span class="source_type"><a href="../engine/controller.html" class="source">controller</a></span>.Enemy.location - attracttarget.location);
+<a name="374"></a>			destyaw = NewRot.Yaw;
+<a name="375"></a>            deltayaw = (destyaw & <span class="source_int">65535</span>) - (<span class="source_type">rotation</span>.yaw & <span class="source_int">65535</span>);
+<a name="376"></a>            if (deltayaw &lt; -<span class="source_int">32768</span>) deltayaw += <span class="source_int">65536</span>;
+<a name="377"></a>            else if (deltayaw &gt; <span class="source_int">32768</span>) deltayaw -= <span class="source_int">65536</span>;
+<a name="378"></a>
+<a name="379"></a>            newrot = <span class="source_type">rotation</span>;
+<a name="380"></a>            newrot.yaw += deltayaw * <span class="source_type">DeltaTime</span>;
+<a name="381"></a>            SetRotation(newrot);
+<a name="382"></a>        }
+<a name="383"></a>        else
+<a name="384"></a>        {
+<a name="385"></a>            newrot = CameraTrack(attracttarget, <span class="source_type">DeltaTime</span>);
+<a name="386"></a>            SetRotation(newrot);
+<a name="387"></a>        }
+<a name="388"></a>	}
+<a name="389"></a>
+<a name="390"></a>	exec function NextWeapon()
+<a name="391"></a>	{
+<a name="392"></a>	}
+<a name="393"></a>
+<a name="394"></a>	exec function PrevWeapon()
+<a name="395"></a>	{
+<a name="396"></a>	}
+<a name="397"></a>
+<a name="398"></a>	exec function Fire( optional <span class="source_type">float</span> <span class="source_type">F</span> )
+<a name="399"></a>	{
+<a name="400"></a>        <span class="source_comment">// start playing
+</span><a name="401"></a>	}
+<a name="402"></a>
+<a name="403"></a>	exec function AltFire( optional <span class="source_type">float</span> <span class="source_type">F</span> )
+<a name="404"></a>	{
+<a name="405"></a>        Fire(<span class="source_type">F</span>);
+<a name="406"></a>	}
+<a name="407"></a>
+<a name="408"></a>	function BeginState()
+<a name="409"></a>	{
+<a name="410"></a>		if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None )
+<a name="411"></a>		{
+<a name="412"></a>			SetLocation(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location);
+<a name="413"></a>		}
+<a name="414"></a>		bCollideWorld = true;
+<a name="415"></a>        if ( curcam == -<span class="source_int">1</span> )
+<a name="416"></a>        {
+<a name="417"></a>            FillCameraList();
+<a name="418"></a>            camtime = <span class="source_int">0</span>;
+<a name="419"></a>            targettime = <span class="source_int">0</span>;
+<a name="420"></a>            autozoom = true;
+<a name="421"></a>            curcam = -<span class="source_int">1</span>;
+<a name="422"></a>        }
+<a name="423"></a>
+<a name="424"></a>        Timer();
+<a name="425"></a>        SetTimer(<span class="source_int">0.5</span>, true);
+<a name="426"></a>	}
+<a name="427"></a>
+<a name="428"></a>	function EndState()
+<a name="429"></a>	{
+<a name="430"></a>		<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bIsSpectator = false;
+<a name="431"></a>		bCollideWorld = false;
+<a name="432"></a>        curcam = -<span class="source_int">1</span>;
+<a name="433"></a>	}
+<a name="434"></a>
+<a name="435"></a>    function Timer()
+<a name="436"></a>    {
+<a name="437"></a>        local <span class="source_type">bool</span> switchedbots;
+<a name="438"></a>        local <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> newloc;
+<a name="439"></a>        local <span class="source_type">int</span> newcam;
+<a name="440"></a>
+<a name="441"></a>        camtime += <span class="source_int">0.5</span>;
+<a name="442"></a>        targettime += <span class="source_int">0.5</span>;
+<a name="443"></a>        bFrozen = false;
+<a name="444"></a>
+<a name="445"></a>        <span class="source_comment">// keep watching a target for a few seconds after it dies
+</span><a name="446"></a>        if (gibwatchtime &gt; <span class="source_int">0</span>)
+<a name="447"></a>        {
+<a name="448"></a>            gibwatchtime -= <span class="source_int">0.5</span>;
+<a name="449"></a>            if (gibwatchtime &lt;= <span class="source_int">0</span>)
+<a name="450"></a>                attracttarget = None;
+<a name="451"></a>            else
+<a name="452"></a>                return;
+<a name="453"></a>        }
+<a name="454"></a>        else if ( attracttarget != None && attracttarget.Health &lt;= <span class="source_int">0</span> )
+<a name="455"></a>        {
+<a name="456"></a>            gibwatchtime = <span class="source_int">4</span>;
+<a name="457"></a>            <span class="source_comment">//Log("attract: watching gib");
+</span><a name="458"></a>        }
+<a name="459"></a>
+<a name="460"></a>        <span class="source_comment">// switch targets //
+</span><a name="461"></a>        if (attracttarget == None
+<a name="462"></a>            || targettime &gt; <span class="source_int">30</span> )
+<a name="463"></a>        {
+<a name="464"></a>            attracttarget = PickNextBot(attracttarget);
+<a name="465"></a>            switchedbots = true;
+<a name="466"></a>            targettime = <span class="source_int">0</span>;
+<a name="467"></a>         }
+<a name="468"></a>
+<a name="469"></a>        if (attracttarget == None)
+<a name="470"></a>            return;
+<a name="471"></a>
+<a name="472"></a>        <span class="source_comment">// switch views //
+</span><a name="473"></a>        if (
+<a name="474"></a>            switchedbots ||
+<a name="475"></a>            camtime &gt; <span class="source_int">10</span> ||
+<a name="476"></a>            bBehindView == false && (<span class="source_type">rotation</span>.pitch &lt; -<span class="source_int">10000</span> || !LineOfSight(curcam, attracttarget))
+<a name="477"></a>        )
+<a name="478"></a>        {
+<a name="479"></a>            camtime = <span class="source_int">0</span>;
+<a name="480"></a>            FovAngle = default.FovAngle;
+<a name="481"></a>            SetViewTarget(self);
+<a name="482"></a>	    	bBehindView = false;
+<a name="483"></a>
+<a name="484"></a>            <span class="source_comment">// look for a placed camera
+</span><a name="485"></a>            if (FindFixedCam(attracttarget, newcam))
+<a name="486"></a>            {
+<a name="487"></a>                focuspoint = attracttarget.Location;
+<a name="488"></a>                curcam = newcam;
+<a name="489"></a>                SetLocation(camlist[curcam].Location);
+<a name="490"></a>                FovAngle = camlist[curcam].ViewAngle;
+<a name="491"></a>
+<a name="492"></a>                SetRotation(CameraTrack(attracttarget, <span class="source_int">0</span>));
+<a name="493"></a>                <span class="source_comment">//Log("attract: camera "$camlist[curcam]);
+</span><a name="494"></a>            }
+<a name="495"></a>            <span class="source_comment">// use a floating camera
+</span><a name="496"></a>            else if (FRand() &lt; <span class="source_int">0.5</span>)
+<a name="497"></a>            {
+<a name="498"></a>                newloc = FindFloatingCam(attracttarget);
+<a name="499"></a>                focuspoint = attracttarget.Location;
+<a name="500"></a>                curcam = -<span class="source_int">1</span>;
+<a name="501"></a>                SetLocation(newloc);
+<a name="502"></a>
+<a name="503"></a>                SetRotation(CameraTrack(attracttarget, <span class="source_int">0</span>));
+<a name="504"></a>                <span class="source_comment">//Log("attract: free camera");
+</span><a name="505"></a>            }
+<a name="506"></a>            <span class="source_comment">// chase mode
+</span><a name="507"></a>            else
+<a name="508"></a>            {
+<a name="509"></a>                curcam = -<span class="source_int">1</span>;
+<a name="510"></a>    		    SetViewTarget(attracttarget);
+<a name="511"></a>	    	    bBehindView = true;
+<a name="512"></a>                SetRotation(attracttarget.<span class="source_type">rotation</span>);
+<a name="513"></a>                CameraDeltaRotation.Pitch = -<span class="source_int">3000</span>;
+<a name="514"></a>                CameraDist = <span class="source_int">6</span>;
+<a name="515"></a>                <span class="source_comment">//Log("attract: chase camera");
+</span><a name="516"></a>            }
+<a name="517"></a>        }
+<a name="518"></a>    }
+<a name="519"></a>}
+<a name="520"></a>
+<a name="521"></a><span class="source_type">state</span> ViewPlayer extends PlayerWalking
+<a name="522"></a>{
+<a name="523"></a>	function PlayerMove(<span class="source_type">float</span> <span class="source_type">DeltaTime</span>)
+<a name="524"></a>	{
+<a name="525"></a>        Super.PlayerMove(<span class="source_type">DeltaTime</span>);
+<a name="526"></a>
+<a name="527"></a>        CameraSwivel = CameraTrack(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>, <span class="source_type">DeltaTime</span>);
+<a name="528"></a>    }
+<a name="529"></a>
+<a name="530"></a>    function PlayerCalcView(out <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> ViewActor, out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> CameraLocation, out <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">CameraRotation</span> )
+<a name="531"></a>    {
+<a name="532"></a>        <span class="source_comment">// not calling super
+</span><a name="533"></a>        <span class="source_type">CameraRotation</span> = CameraSwivel;
+<a name="534"></a>        CameraLocation = location; <span class="source_comment">//camlist[curcam].location;
+</span><a name="535"></a>        ViewActor = self;
+<a name="536"></a>    }
+<a name="537"></a>
+<a name="538"></a>    function BeginState()
+<a name="539"></a>    {
+<a name="540"></a>        FillCameraList();
+<a name="541"></a>        bBehindView = true;
+<a name="542"></a>        SetViewTarget(self);
+<a name="543"></a>        curcam = -<span class="source_int">2</span>;
+<a name="544"></a>        autozoom = true;
+<a name="545"></a>        Timer();
+<a name="546"></a>        SetTimer(<span class="source_int">0.5</span>, true);
+<a name="547"></a>    }
+<a name="548"></a>
+<a name="549"></a>    function EndState()
+<a name="550"></a>    {
+<a name="551"></a>        CameraSwivel = rot(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>);
+<a name="552"></a>        bBehindView = false;
+<a name="553"></a>        FovAngle = default.FovAngle;
+<a name="554"></a>        DesiredFOV = FovAngle;
+<a name="555"></a>        SetViewTarget(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>);
+<a name="556"></a>    }
+<a name="557"></a>
+<a name="558"></a>    function Timer()
+<a name="559"></a>    {
+<a name="560"></a>        local <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> newloc;
+<a name="561"></a>        local <span class="source_type">int</span> newcam;
+<a name="562"></a>
+<a name="563"></a>        if (curcam == -<span class="source_int">2</span> || !LineOfSight(curcam, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>))
+<a name="564"></a>        {
+<a name="565"></a>            <span class="source_comment">//Log("attract: switch camera");
+</span><a name="566"></a>
+<a name="567"></a>            camtime = <span class="source_int">0</span>;
+<a name="568"></a>
+<a name="569"></a>            if (FindFixedCam(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>, newcam))
+<a name="570"></a>            {
+<a name="571"></a>                if (curcam != newcam)
+<a name="572"></a>                {
+<a name="573"></a>                    focuspoint = <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>.Location;
+<a name="574"></a>                    curcam = newcam;
+<a name="575"></a>                    SetLocation(camlist[curcam].location);
+<a name="576"></a>                    FovAngle = camlist[curcam].ViewAngle;
+<a name="577"></a>                    <span class="source_comment">//Log("attract: viewing from "$camlist[curcam]);
+</span><a name="578"></a>                }
+<a name="579"></a>                else
+<a name="580"></a>                {
+<a name="581"></a>                    <span class="source_comment">//Log("attract: zoinks! this shouldn't happen");
+</span><a name="582"></a>                }
+<a name="583"></a>            }
+<a name="584"></a>            else
+<a name="585"></a>            {
+<a name="586"></a>                newloc = FindFloatingCam(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>);
+<a name="587"></a>                SetLocation(newloc);
+<a name="588"></a>                curcam = -<span class="source_int">1</span>;
+<a name="589"></a>                FovAngle = default.FovAngle;
+<a name="590"></a>                focuspoint = <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>.Location;
+<a name="591"></a>                <span class="source_comment">//Log("attract: floating");
+</span><a name="592"></a>            }
+<a name="593"></a>
+<a name="594"></a>            CameraSwivel = CameraTrack(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>, <span class="source_int">0</span>);
+<a name="595"></a>        }
+<a name="596"></a>    }
+<a name="597"></a>
+<a name="598"></a>    exec function TogglePlayerAttract()
+<a name="599"></a>    {
+<a name="600"></a>        GotoState(<span class="source_name">'PlayerWalking'</span>);
+<a name="601"></a>    }
+<a name="602"></a>}
+<a name="603"></a>
+<a name="604"></a>function FillCameraList()
+<a name="605"></a>{
+<a name="606"></a>    local <span class="source_type"><a href="../xgame/attractcamera.html" class="source">AttractCamera</a></span> <span class="source_type">cam</span>;
+<a name="607"></a>    numcams = <span class="source_int">0</span>;
+<a name="608"></a>    foreach AllActors(<span class="source_type">class</span><span class="source_name">'AttractCamera'</span>, <span class="source_type">cam</span>)
+<a name="609"></a>    {
+<a name="610"></a>        camlist[numcams++] = <span class="source_type">cam</span>;
+<a name="611"></a>        if (numcams == <span class="source_int">20</span>) break;
+<a name="612"></a>    }
+<a name="613"></a>}
+<a name="614"></a>
+<a name="615"></a>function <span class="source_type">bool</span> FindFixedCam(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">target</span>, out <span class="source_type">int</span> newcam)
+<a name="616"></a>{
+<a name="617"></a>    local <span class="source_type">int</span> <span class="source_type">c</span>, bestc;
+<a name="618"></a>    local <span class="source_type">float</span> <span class="source_type">dist</span>, bestdist;
+<a name="619"></a>
+<a name="620"></a>    bestc = -<span class="source_int">1</span>;
+<a name="621"></a>
+<a name="622"></a>    for (<span class="source_type">c</span> = <span class="source_int">0</span>; <span class="source_type">c</span> &lt; numcams; <span class="source_type">c</span>++)
+<a name="623"></a>    {
+<a name="624"></a>        <span class="source_type">dist</span> = VSize(<span class="source_type">target</span>.location - camlist[<span class="source_type">c</span>].location);
+<a name="625"></a>
+<a name="626"></a>        if ((bestc == -<span class="source_int">1</span> || <span class="source_type">dist</span> &lt; bestdist) && LineOfSight(<span class="source_type">c</span>, <span class="source_type">target</span>))
+<a name="627"></a>        {
+<a name="628"></a>            bestc = <span class="source_type">c</span>;
+<a name="629"></a>            bestdist = <span class="source_type">dist</span>;
+<a name="630"></a>        }
+<a name="631"></a>    }
+<a name="632"></a>
+<a name="633"></a>    if (bestc == -<span class="source_int">1</span>) return false;
+<a name="634"></a>
+<a name="635"></a>    newcam = bestc;
+<a name="636"></a>    return true;
+<a name="637"></a>}
+<a name="638"></a>
+<a name="639"></a>function <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> FindFloatingCam(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">target</span>)
+<a name="640"></a>{
+<a name="641"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> v1, v2, d;
+<a name="642"></a>    local <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> <span class="source_type">r</span>;
+<a name="643"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> hitloc, <span class="source_type">hitnormal</span>;
+<a name="644"></a>    local <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">hitactor</span>;
+<a name="645"></a>    local <span class="source_type">int</span> tries;
+<a name="646"></a>
+<a name="647"></a>    while (tries++ &lt; <span class="source_int">10</span>)
+<a name="648"></a>    {
+<a name="649"></a>        v1 = <span class="source_type">target</span>.Location;
+<a name="650"></a>        <span class="source_type">r</span> = <span class="source_type">target</span>.<span class="source_type">Rotation</span>;
+<a name="651"></a>        <span class="source_type">r</span>.Pitch = FRand()*<span class="source_int">12000</span> - <span class="source_int">2000</span>;
+<a name="652"></a>        if (VSize(<span class="source_type">target</span>.Velocity) &lt; <span class="source_int">100</span>)
+<a name="653"></a>            <span class="source_type">r</span>.Yaw += FRand()*<span class="source_int">24000</span>;
+<a name="654"></a>        else
+<a name="655"></a>            <span class="source_type">r</span>.Yaw += FRand()*<span class="source_int">12000</span>;
+<a name="656"></a>        d = <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type">r</span>);
+<a name="657"></a>        v2 = v1 + d*<span class="source_int">2000</span>;
+<a name="658"></a>        v1 += d*<span class="source_int">50</span>;
+<a name="659"></a>
+<a name="660"></a>        <span class="source_type">hitactor</span> = Trace(hitloc, <span class="source_type">hitnormal</span>, v2, v1, false);
+<a name="661"></a>
+<a name="662"></a>        if (<span class="source_type">hitactor</span> != None && VSize(hitloc - v1) &gt; <span class="source_int">250</span>)
+<a name="663"></a>        {
+<a name="664"></a>            return (hitloc - d*<span class="source_int">50</span>);
+<a name="665"></a>        }
+<a name="666"></a>    }
+<a name="667"></a>    <span class="source_comment">// no good spots found, return something reasonable
+</span><a name="668"></a>    if (<span class="source_type">hitactor</span> != None)
+<a name="669"></a>        return (hitloc - d*<span class="source_int">50</span>);
+<a name="670"></a>    else
+<a name="671"></a>        return v2;
+<a name="672"></a>}
+<a name="673"></a>
+<a name="674"></a>function <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> PickNextBot(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> current)
+<a name="675"></a>{
+<a name="676"></a>    local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> con;
+<a name="677"></a>    local <span class="source_type">int</span> <span class="source_type">b</span>;
+<a name="678"></a>
+<a name="679"></a>    if (current != None) con = current.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>;
+<a name="680"></a>    for (<span class="source_type">b</span>=<span class="source_int">0</span>; <span class="source_type">b</span>&lt;<span class="source_type">Level</span>.Game.NumBots; <span class="source_type">b</span>++)
+<a name="681"></a>    {
+<a name="682"></a>        if (con != None) con = con.NextController;
+<a name="683"></a>        if (con == None) con = <span class="source_type">Level</span>.ControllerList;
+<a name="684"></a>        if (con.IsA(<span class="source_name">'Bot'</span>) && con.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None && !con.IsInState(<span class="source_name">'PlayerWaiting'</span>))
+<a name="685"></a>        {
+<a name="686"></a>            return con.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>;
+<a name="687"></a>        }
+<a name="688"></a>    }
+<a name="689"></a>    return None;
+<a name="690"></a>}
+<a name="691"></a>
+<a name="692"></a>function <span class="source_type">bool</span> LineOfSight(<span class="source_type">int</span> <span class="source_type">c</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">target</span>)
+<a name="693"></a>{
+<a name="694"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> v1, v2;
+<a name="695"></a>    local <span class="source_type"><a href="../xgame/attractcamera.html" class="source">AttractCamera</a></span> <span class="source_type">cam</span>;
+<a name="696"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> hitloc, <span class="source_type">hitnormal</span>;
+<a name="697"></a>
+<a name="698"></a>    if (<span class="source_type">c</span> &gt;= <span class="source_int">0</span>) {
+<a name="699"></a>        <span class="source_type">cam</span> = camlist[<span class="source_type">c</span>];
+<a name="700"></a>        v1 = <span class="source_type">cam</span>.location;
+<a name="701"></a>    } else {
+<a name="702"></a>        v1 = self.location;
+<a name="703"></a>    }
+<a name="704"></a>    v2 = <span class="source_type">target</span>.location;
+<a name="705"></a>    v2.<span class="source_type">z</span> += <span class="source_type">target</span>.eyeheight;
+<a name="706"></a>    v2 += Normal(v1 - v2) * <span class="source_int">100</span>;
+<a name="707"></a>    return (Trace(hitloc, <span class="source_type">hitnormal</span>, v1, v2, false) == None);
+<a name="708"></a>}
+<a name="709"></a>
+<a name="710"></a>function <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span> CameraTrack(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">target</span>, <span class="source_type">float</span> <span class="source_type">DeltaTime</span>)
+<a name="711"></a>{
+<a name="712"></a>    local <span class="source_type">float</span> <span class="source_type">dist</span>;
+<a name="713"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> lead;
+<a name="714"></a>    local <span class="source_type">float</span> minzoomdist, maxzoomdist, viewangle, viewwidth;
+<a name="715"></a>
+<a name="716"></a>    <span class="source_comment">// update focuspoint
+</span><a name="717"></a>    lead = <span class="source_type">target</span>.location + Vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">2</span>) * <span class="source_type">Target</span>.CollisionHeight; <span class="source_comment">// + target.Velocity*0.5;
+</span><a name="718"></a>    <span class="source_type">dist</span> = VSize(lead - focuspoint);
+<a name="719"></a>    if (<span class="source_type">dist</span> &gt; <span class="source_int">20</span>)
+<a name="720"></a>    {
+<a name="721"></a>        focuspoint += Normal(lead - focuspoint) * <span class="source_type">dist</span> * <span class="source_type">DeltaTime</span> * <span class="source_int">2.0</span>;
+<a name="722"></a>    }
+<a name="723"></a>
+<a name="724"></a>    <span class="source_comment">// adjust zoom within bounds (FovAngle 30-100)
+</span><a name="725"></a>    if (autozoom)
+<a name="726"></a>    {
+<a name="727"></a>        <span class="source_type">dist</span> = VSize(Location - <span class="source_type">target</span>.Location);
+<a name="728"></a>
+<a name="729"></a>        if (curcam &gt;= <span class="source_int">0</span>)
+<a name="730"></a>        {
+<a name="731"></a>            minzoomdist = camlist[curcam].minzoomdist;
+<a name="732"></a>            maxzoomdist = camlist[curcam].maxzoomdist;
+<a name="733"></a>            viewangle = camlist[curcam].ViewAngle;
+<a name="734"></a>        }
+<a name="735"></a>        else
+<a name="736"></a>        {
+<a name="737"></a>            minzoomdist = <span class="source_int">600</span>;
+<a name="738"></a>            maxzoomdist = <span class="source_int">1200</span>;
+<a name="739"></a>            viewangle = default.FovAngle;
+<a name="740"></a>        }
+<a name="741"></a>
+<a name="742"></a>        if (<span class="source_type">dist</span> &lt; minzoomdist)
+<a name="743"></a>        {
+<a name="744"></a>            FovAngle = viewangle;
+<a name="745"></a>        }
+<a name="746"></a>        else if (<span class="source_type">dist</span> &lt; maxzoomdist)
+<a name="747"></a>        {
+<a name="748"></a>            viewwidth = minzoomdist*Tan(viewangle*PI/<span class="source_int">180</span> / <span class="source_int">2</span>);
+<a name="749"></a>            FovAngle = Atan(viewwidth, <span class="source_type">dist</span>) * <span class="source_int">180</span>/PI * <span class="source_int">2</span>;
+<a name="750"></a>        }
+<a name="751"></a>
+<a name="752"></a>        DesiredFOV = FovAngle;
+<a name="753"></a>    }
+<a name="754"></a>
+<a name="755"></a>    return <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span>(focuspoint - location);
+<a name="756"></a>}
+<a name="757"></a>
+<a name="758"></a>function PawnDied(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">P</span>)
+<a name="759"></a>{
+<a name="760"></a>	if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != <span class="source_type">P</span> )
+<a name="761"></a>		return;
+<a name="762"></a>    bBehindview = true;
+<a name="763"></a>	LastKillTime = -<span class="source_int">5.0</span>;
+<a name="764"></a>
+<a name="765"></a>    if (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None)
+<a name="766"></a>    {
+<a name="767"></a>        curcam = -<span class="source_int">1</span>;
+<a name="768"></a>        SetLocation(FindFloatingCam(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>));
+<a name="769"></a>        SetRotation(CameraTrack(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>, <span class="source_int">0</span>));
+<a name="770"></a>    }
+<a name="771"></a>
+<a name="772"></a>    Super.PawnDied(<span class="source_type">P</span>);
+<a name="773"></a>}
+<a name="774"></a>
+<a name="775"></a>function SetPawnClass(<span class="source_type">string</span> inClass, <span class="source_type">string</span> inCharacter)
+<a name="776"></a>{
+<a name="777"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/xpawn.html" class="source">xPawn</a></span>&gt; pClass;
+<a name="778"></a>
+<a name="779"></a>    if ( inClass != <span class="source_string">""</span> )
+<a name="780"></a>	{
+<a name="781"></a>		pClass = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/xpawn.html" class="source">xPawn</a></span>&gt;(DynamicLoadObject(inClass, <span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="782"></a>		if ( (pClass != None) && pClass.Default.bCanPickupInventory )
+<a name="783"></a>			PawnClass = pClass;
+<a name="784"></a>	}
+<a name="785"></a>
+<a name="786"></a>    PawnSetupRecord = <span class="source_type">class</span><span class="source_name">'xUtil'</span>.static.FindPlayerRecord(inCharacter);
+<a name="787"></a>    <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.SetCharacterName(inCharacter);
+<a name="788"></a>}
+<a name="789"></a>
+<a name="790"></a>function SetPawnFemale()
+<a name="791"></a>{
+<a name="792"></a>	if ( PawnSetupRecord.Species == None )
+<a name="793"></a>		<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bIsFemale = true;
+<a name="794"></a>}
+<a name="795"></a>
+<a name="796"></a>function Possess( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">aPawn</span> )
+<a name="797"></a>{
+<a name="798"></a>    local <span class="source_type"><a href="../xgame/xpawn.html" class="source">xPawn</a></span> xp;
+<a name="799"></a>
+<a name="800"></a>    Super.Possess( <span class="source_type">aPawn</span> );
+<a name="801"></a>
+<a name="802"></a>    xp = <span class="source_type"><a href="../xgame/xpawn.html" class="source">xPawn</a></span>(<span class="source_type">aPawn</span>);
+<a name="803"></a>	if(xp != None)
+<a name="804"></a>		xp.Setup(PawnSetupRecord, true);
+<a name="805"></a>	if ( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer )
+<a name="806"></a>		ServerSetClassicTrans(bClassicTrans);
+<a name="807"></a>}
+<a name="808"></a>
+<a name="809"></a><span class="source_comment">// for changing character on the fly (for next respawn)
+</span><a name="810"></a>exec function ChangeCharacter(<span class="source_type">string</span> newCharacter, optional <span class="source_type">string</span> inClass)
+<a name="811"></a>{
+<a name="812"></a>    SetPawnClass(<span class="source_type">string</span>(PawnClass), newCharacter);
+<a name="813"></a>	UpdateURL(<span class="source_string">"Character"</span>, newCharacter, true);
+<a name="814"></a>    SaveConfig();
+<a name="815"></a>}
+<a name="816"></a>
+<a name="817"></a>simulated function <span class="source_type">bool</span> NeedNetNotify()
+<a name="818"></a>{
+<a name="819"></a>	return Super.NeedNetNotify() || bWaitingForPRI || (bVoiceChatEnabled && bWaitingForVRI);
+<a name="820"></a>}
+<a name="821"></a>
+<a name="822"></a>simulated event PostNetReceive()
+<a name="823"></a>{
+<a name="824"></a>    local <span class="source_type"><a href="../xgame/xutil.html" class="source">xUtil</a></span>.<span class="source_type"><a href="../xgame/xutil.html#PlayerRecord" class="source">PlayerRecord</a></span> rec;
+<a name="825"></a>
+<a name="826"></a>	Super.PostNetReceive();
+<a name="827"></a>
+<a name="828"></a>	if ( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None && bWaitingForPRI )
+<a name="829"></a>    {
+<a name="830"></a>		bWaitingForPRI = False;
+<a name="831"></a>
+<a name="832"></a>        	rec = <span class="source_type">class</span><span class="source_name">'xUtil'</span>.static.FindPlayerRecord(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.CharacterName);
+<a name="833"></a>
+<a name="834"></a>		if ( rec.Species != None )
+<a name="835"></a>		{
+<a name="836"></a>			if ( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> == None )
+<a name="837"></a>				rec.Species.static.LoadResources(rec, <span class="source_type">Level</span>, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>, <span class="source_int">255</span>);
+<a name="838"></a>			else
+<a name="839"></a>				rec.Species.static.LoadResources(rec, <span class="source_type">Level</span>, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex);
+<a name="840"></a>		}
+<a name="841"></a>
+<a name="842"></a>        <span class="source_comment">// Handle auto Demo Recording
+</span><a name="843"></a>
+<a name="844"></a>		if ( bAutoDemoRec && <span class="source_type">level</span>.NetMode==NM_Client && !bDemoOwner )
+<a name="845"></a>			<span class="source_type"><a href="../engine/player.html" class="source">Player</a></span>.<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>.DelayedConsoleCommand(<span class="source_string">"demorec"</span>);
+<a name="846"></a>    }
+<a name="847"></a>
+<a name="848"></a>	if ( VoiceReplicationInfo != None && bWaitingForVRI )
+<a name="849"></a>	{
+<a name="850"></a>		if ( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None && !<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.NeedNetNotify() )
+<a name="851"></a>		{
+<a name="852"></a>			bWaitingForVRI = VoiceReplicationInfo.GetPublicChannelCount(true) == <span class="source_int">0</span>;
+<a name="853"></a>			if ( !bWaitingForVRI )
+<a name="854"></a>			{
+<a name="855"></a>				VoiceReplicationInfo.SetOwner(Self);
+<a name="856"></a>				if ( bVoiceChatEnabled )
+<a name="857"></a>					InitializeVoiceChat();
+<a name="858"></a>				else DisableVoiceChat();
+<a name="859"></a>			}
+<a name="860"></a>		}
+<a name="861"></a>	}
+<a name="862"></a>
+<a name="863"></a>	bNetNotify = NeedNetNotify();
+<a name="864"></a>}
+<a name="865"></a>
+<a name="866"></a>exec function AdminMenu( <span class="source_type">string</span> <span class="source_type">CommandLine</span> )
+<a name="867"></a>{
+<a name="868"></a>}
+<a name="869"></a>
+<a name="870"></a>function ServerRequestPlayerInfo()
+<a name="871"></a>{
+<a name="872"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="873"></a>    local <span class="source_type"><a href="../xgame/xplayer.html" class="source">xPlayer</a></span> xPC;
+<a name="874"></a>
+<a name="875"></a>    for (<span class="source_type">C</span>=<span class="source_type">Level</span>.ControllerList;<span class="source_type">C</span>!=None;<span class="source_type">C</span>=<span class="source_type">C</span>.NextController)
+<a name="876"></a>    {
+<a name="877"></a>    	xPC = <span class="source_type"><a href="../xgame/xplayer.html" class="source">XPlayer</a></span>(<span class="source_type">C</span>);
+<a name="878"></a>        if (xPC!=None)
+<a name="879"></a>			ClientReceiveRule(xPC.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>$chr(<span class="source_int">27</span>)$xPC.GetPlayerIDHash()$chr(<span class="source_int">27</span>)$xPC.GetPlayerNetworkAddress());
+<a name="880"></a>		else
+<a name="881"></a>        	ClientReceiveRule(<span class="source_type">C</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>$chr(<span class="source_int">27</span>)$<span class="source_string">"AI Controlled"</span>$chr(<span class="source_int">27</span>)$<span class="source_string">"BOT"</span>);
+<a name="882"></a>	}
+<a name="883"></a>
+<a name="884"></a>	ClientReceiveRule(<span class="source_string">"Done"</span>);
+<a name="885"></a>}
+<a name="886"></a>
+<a name="887"></a>exec function SpecViewGoal()
+<a name="888"></a>{
+<a name="889"></a>	ServerSpecViewGoal();
+<a name="890"></a>}
+<a name="891"></a>
+<a name="892"></a>function ServerSpecViewGoal()
+<a name="893"></a>{
+<a name="894"></a> 	local <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> NewGoal;
+<a name="895"></a>
+<a name="896"></a>    if ( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.bOnlySpectator && IsInState(<span class="source_name">'Spectating'</span>) )
+<a name="897"></a>    {
+<a name="898"></a>    	NewGoal = <span class="source_type">Level</span>.Game.FindSpecGoalFor(<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>,<span class="source_int">0</span>);
+<a name="899"></a>        if (NewGoal!=None)
+<a name="900"></a>        {
+<a name="901"></a>        	if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(NewGoal)!=None )
+<a name="902"></a>            {
+<a name="903"></a>                SetViewTarget(NewGoal);
+<a name="904"></a>			    ClientSetViewTarget(NewGoal);
+<a name="905"></a>		        bBehindView = true; <span class="source_comment">//bChaseCam;
+</span><a name="906"></a>        	}
+<a name="907"></a>            else
+<a name="908"></a>            {
+<a name="909"></a>            	SetViewTarget(None);
+<a name="910"></a>                ClientSetViewTarget(None);
+<a name="911"></a>                bBehindView = false;
+<a name="912"></a>
+<a name="913"></a>                SetLocation(NewGoal.Location);
+<a name="914"></a>                ClientSetLocation(NewGoal.Location,<span class="source_type">Rotation</span>);
+<a name="915"></a>            }
+<a name="916"></a>        }
+<a name="917"></a>    }
+<a name="918"></a>}
+<a name="919"></a>
+<a name="920"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="921"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="922"></a><span class="source_comment">//  Chat Manager
+</span><a name="923"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="924"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="925"></a>function ServerRequestBanInfo(<span class="source_type">int</span> <span class="source_type">PlayerID</span>)
+<a name="926"></a>{
+<a name="927"></a>	local array&lt;<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>&gt; CArr;
+<a name="928"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="929"></a>	<span class="source_comment">//log(Name@"ServerRequestBanInfo:"$PlayerID,'ChatManager');
+</span><a name="930"></a>	if ( <span class="source_type">Level</span> != None && <span class="source_type">Level</span>.Game != None )
+<a name="931"></a>	{
+<a name="932"></a>		<span class="source_type">Level</span>.Game.GetPlayerControllerList(CArr);
+<a name="933"></a>		for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; CArr.Length; <span class="source_type">i</span>++)
+<a name="934"></a>		{
+<a name="935"></a>			<span class="source_comment">// Don't send our own info
+</span><a name="936"></a>			if ( CArr[<span class="source_type">i</span>] == Self )
+<a name="937"></a>				continue;
+<a name="938"></a>
+<a name="939"></a>			<span class="source_comment">//log(Name@"ServerRequestBanInfo CArr["$i$"]:"$CArr[i]@"ID:"$CArr[i].PlayerReplicationInfo.PlayerID,'ChatManager');
+</span><a name="940"></a>			if ( <span class="source_type">PlayerID</span> == -<span class="source_int">1</span> || CArr[<span class="source_type">i</span>].<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerID</span> == <span class="source_type">PlayerID</span> )
+<a name="941"></a>			{
+<a name="942"></a>				log(<span class="source_type">Name</span>@<span class="source_string">"Sending BanInfo To Client PlayerID:"</span>$CArr[<span class="source_type">i</span>].<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerID</span>@<span class="source_string">"Hash:"</span>$CArr[<span class="source_type">i</span>].GetPlayerIDHash()@<span class="source_string">"Address:"</span>$CArr[<span class="source_type">i</span>].GetPlayerNetworkAddress(),<span class="source_name">'ChatManager'</span>);
+<a name="943"></a>				ChatManager.TrackNewPlayer(CArr[<span class="source_type">i</span>].<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerID</span>, CArr[<span class="source_type">i</span>].GetPlayerIDHash(), CArr[<span class="source_type">i</span>].GetPlayerNetworkAddress());
+<a name="944"></a>				ClientReceiveBan(CArr[<span class="source_type">i</span>].<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerID</span>$Chr(<span class="source_int">27</span>)$CArr[<span class="source_type">i</span>].GetPlayerIDHash()$chr(<span class="source_int">27</span>)$CArr[<span class="source_type">i</span>].GetPlayerNetworkAddress());
+<a name="945"></a>			}
+<a name="946"></a>		}
+<a name="947"></a>	}
+<a name="948"></a>}
+<a name="949"></a>
+<a name="950"></a>function ClientReceiveBan(<span class="source_type">string</span> BanInfo)
+<a name="951"></a>{
+<a name="952"></a>	if ( <span class="source_type"><a href="../unrealgame/unrealplayerchatmanager.html" class="source">UnrealPlayerChatManager</a></span>(ChatManager) != None )
+<a name="953"></a>		<span class="source_type"><a href="../unrealgame/unrealplayerchatmanager.html" class="source">UnrealPlayerChatManager</a></span>(ChatManager).ReceiveBanInfo(BanInfo);
+<a name="954"></a>}
+<a name="955"></a>
+<a name="956"></a>
+<a name="957"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="958"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="959"></a><span class="source_comment">//  Voice Chat
+</span><a name="960"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="961"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="962"></a>simulated function InitializeVoiceChat()
+<a name="963"></a>{
+<a name="964"></a>	Super.InitializeVoiceChat();
+<a name="965"></a>
+<a name="966"></a>	<span class="source_comment">// Check player hashes for all players on the server
+</span><a name="967"></a>	ServerRequestBanInfo(-<span class="source_int">1</span>);
+<a name="968"></a>}
+<a name="969"></a>
+<a name="970"></a>simulated exec function ShowAliases()
+<a name="971"></a>{
+<a name="972"></a>	local array&lt;<span class="source_type">string</span>&gt; Output;
+<a name="973"></a>	local <span class="source_type"><a href="../engine/security.html" class="source">Security</a></span> <span class="source_type">S</span>;
+<a name="974"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="975"></a>
+<a name="976"></a>	<span class="source_type">S</span> = Spawn(<span class="source_type">class</span><span class="source_name">'Engine.Security'</span>);
+<a name="977"></a>	if (<span class="source_type">S</span>!=None)
+<a name="978"></a>	{
+<a name="979"></a>		<span class="source_type">S</span>.LocalPerform(<span class="source_int">100</span>,<span class="source_string">""</span>,<span class="source_string">""</span>,Output);
+<a name="980"></a>		Log(<span class="source_string">"No of Aliases:"</span>@Output.Length);
+<a name="981"></a>		for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;Output.Length;<span class="source_type">i</span>++)
+<a name="982"></a>		  log(<span class="source_string">"   Alias"</span>@<span class="source_type">i</span>$<span class="source_string">":"</span>@Output[<span class="source_type">i</span>]);
+<a name="983"></a>
+<a name="984"></a>		<span class="source_type">S</span>.Destroy();
+<a name="985"></a>	}
+<a name="986"></a>}
+<a name="987"></a>
+<a name="988"></a>simulated exec function ShowBindings()
+<a name="989"></a>{
+<a name="990"></a>	local array&lt;<span class="source_type">string</span>&gt; Output;
+<a name="991"></a>	local <span class="source_type"><a href="../engine/security.html" class="source">Security</a></span> <span class="source_type">S</span>;
+<a name="992"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="993"></a>
+<a name="994"></a>	<span class="source_type">S</span> = Spawn(<span class="source_type">class</span><span class="source_name">'Engine.Security'</span>);
+<a name="995"></a>	if (<span class="source_type">S</span>!=None)
+<a name="996"></a>	{
+<a name="997"></a>		<span class="source_type">S</span>.LocalPerform(<span class="source_int">101</span>,<span class="source_string">""</span>,<span class="source_string">""</span>,Output);
+<a name="998"></a>		Log(<span class="source_string">"No of Bindings:"</span>@Output.Length);
+<a name="999"></a>		for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;Output.Length;<span class="source_type">i</span>++)
+<a name="1000"></a>		  log(<span class="source_string">"   Binding"</span>@<span class="source_type">i</span>$<span class="source_string">":"</span>@Output[<span class="source_type">i</span>]);
+<a name="1001"></a>
+<a name="1002"></a>		<span class="source_type">S</span>.Destroy();
+<a name="1003"></a>	}
+<a name="1004"></a>}
+<a name="1005"></a>
+<a name="1006"></a>exec function check()
+<a name="1007"></a>{
+<a name="1008"></a>	local <span class="source_type"><a href="../engine/decoration.html" class="source">decoration</a></span> d;
+<a name="1009"></a>	foreach allactors(<span class="source_type">class</span><span class="source_name">'decoration'</span>,d)
+<a name="1010"></a>		log(<span class="source_string">"#### D:"</span>@D@vsize(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>.location - d.location));
+<a name="1011"></a>}
+<a name="1012"></a>
+<a name="1013"></a>defaultproperties
+<a name="1014"></a>{
+<a name="1015"></a>     curcam=-<span class="source_int">1</span>
+<a name="1016"></a>     MinAdrenalineCost=<span class="source_int">100.000000</span>
+<a name="1017"></a>     bWaitingForPRI=True
+<a name="1018"></a>     bWaitingForVRI=True
+<a name="1019"></a>     SpeakingBeaconTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Cursors.soundBeacon_a00'</span>
+<a name="1020"></a>     PlayerReplicationInfoClass=<span class="source_type">Class</span><span class="source_name">'XGame.xPlayerReplicationInfo'</span>
+<a name="1021"></a>     PawnClass=<span class="source_type">Class</span><span class="source_name">'XGame.xPawn'</span>
+<a name="1022"></a>     bNetNotify=True
+<a name="1023"></a>}
+<a name="1024"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xgame/xgame-overview.html">Package</a></td>
+	<td class="header"><a href="../xgame/xplayer.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#xPlayer">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xgame/xpawnsoundgroup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xgame/xplayerreplicationinfo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:10.858 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,1007 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: ROInterface.ROScoreBoard</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/roscoreboard.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROScoreBoard">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/ronetworkstatusmessage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/roserverloading.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_rointerface/roscoreboard.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../rointerface/rointerface-overview.html">ROInterface</a>.<a href="../rointerface/roscoreboard.html">ROScoreBoard</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// ROScoreBoard
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_comment">// New scoreboard
+</span><a name="5"></a><span class="source_comment">//=============================================================================
+</span><a name="6"></a><span class="source_comment">// Red Orchestra Source
+</span><a name="7"></a><span class="source_comment">// Copyright (C) 2003 Erik Christensen
+</span><a name="8"></a><span class="source_comment">//=============================================================================
+</span><a name="9"></a>
+<a name="10"></a><span class="source_type">class</span> <span class="source_type"><a href="../rointerface/roscoreboard.html" class="source">ROScoreBoard</a></span> extends <span class="source_type"><a href="../engine/scoreboard.html" class="source">ScoreBoard</a></span>;
+<a name="11"></a>
+<a name="12"></a><span class="source_comment">//=============================================================================
+</span><a name="13"></a><span class="source_comment">// Variables
+</span><a name="14"></a><span class="source_comment">//=============================================================================
+</span><a name="15"></a>
+<a name="16"></a>const MAXPLAYERS = <span class="source_int">32</span>;
+<a name="17"></a>const SPECTATOR = <span class="source_int">3</span>;
+<a name="18"></a>const MAXPERSIDE = <span class="source_int">18</span>;
+<a name="19"></a>const MAXPERSIDEWIDE = <span class="source_int">16</span>;
+<a name="20"></a>
+<a name="21"></a>var()	<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>			HeaderImage;
+<a name="22"></a>
+<a name="23"></a>var()	localized	<span class="source_type">string</span>		SpectatorTeamName;
+<a name="24"></a>var()	localized	<span class="source_type">string</span>		UnassignedTeamName;
+<a name="25"></a>var()	localized	<span class="source_type">string</span>		TitleText;
+<a name="26"></a>var()	localized	<span class="source_type">string</span>		NameText;
+<a name="27"></a>var()	localized	<span class="source_type">string</span>		AdminText;
+<a name="28"></a>var()	localized	<span class="source_type">string</span>		RoleText;
+<a name="29"></a>var()	localized	<span class="source_type">string</span>		ScoreText;
+<a name="30"></a>var()	localized	<span class="source_type">string</span>		TimeText;
+<a name="31"></a>var()	localized	<span class="source_type">string</span>		PingText;
+<a name="32"></a>var()	localized	<span class="source_type">string</span>		PlayerText;
+<a name="33"></a>var()	localized	<span class="source_type">string</span>		PlayerPluralText;
+<a name="34"></a>var()	localized	<span class="source_type">string</span>		TotalsText;
+<a name="35"></a>var()	localized	<span class="source_type">string</span>		ObjectivesHeldText;
+<a name="36"></a>var()	localized	<span class="source_type">string</span>		RequiredObjHeldText;
+<a name="37"></a>var()	localized	<span class="source_type">string</span>		SecondaryObjHeldText;
+<a name="38"></a>var()	localized	<span class="source_type">string</span>		RoundsWonText;
+<a name="39"></a>var()	localized 	<span class="source_type">string</span>		TeamNameAllies;
+<a name="40"></a>var()	localized 	<span class="source_type">string</span>		TeamNameAxis;
+<a name="41"></a>
+<a name="42"></a>var()	<span class="source_type">float</span>				NameLength;
+<a name="43"></a>var()	<span class="source_type">float</span>				TeamScoreLength;
+<a name="44"></a>var()	<span class="source_type">float</span>				RoleLength;
+<a name="45"></a>var()	<span class="source_type">float</span>				ScoreLength;
+<a name="46"></a>var()	<span class="source_type">float</span>				TimeLength;
+<a name="47"></a>var()	<span class="source_type">float</span>				PingLength;
+<a name="48"></a>
+<a name="49"></a>var()	<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>				TeamColors[<span class="source_int">4</span>];
+<a name="50"></a><span class="source_comment">/*var()	Color				GermanColor;
+<a name="51"></a>var()	Color				RussianColor;
+<a name="52"></a>var()	Color				UnassignedColor;
+<a name="53"></a>var()	Color				SpectatorColor;*/</span>
+<a name="54"></a>var()	<span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span>				HighlightColor;
+<a name="55"></a>
+<a name="56"></a>var	<span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>		PRIArray[<span class="source_int">10</span>];
+<a name="57"></a>var	<span class="source_type">int</span>				AvgPing[<span class="source_int">4</span>];
+<a name="58"></a>var	<span class="source_type">float</span>				Padding;
+<a name="59"></a>
+<a name="60"></a><span class="source_comment">// New Scoreboard vars
+</span><a name="61"></a>var() localized <span class="source_type">string</span> ReinforcementsText;
+<a name="62"></a>var() localized <span class="source_type">string</span> WaitingText;
+<a name="63"></a>var() localized <span class="source_type">string</span> AdminWaitingText;
+<a name="64"></a>var config <span class="source_type">bool</span> bAlphaSortScoreBoard;
+<a name="65"></a>
+<a name="66"></a>const BaseGermanX = <span class="source_int">0.75</span>;
+<a name="67"></a>const BaseRussianX = <span class="source_int">15.25</span>;
+<a name="68"></a>
+<a name="69"></a><span class="source_comment">//=============================================================================
+</span><a name="70"></a><span class="source_comment">// Functions
+</span><a name="71"></a><span class="source_comment">//=============================================================================
+</span><a name="72"></a>
+<a name="73"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="74"></a><span class="source_comment">// UpdateScoreboard - Called every frame to update the scoreboard
+</span><a name="75"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="76"></a><span class="source_comment">// This is a modified version based of of Crube's BFE scoreboard mutator
+</span><a name="77"></a>simulated function UpdateScoreBoard (<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>)
+<a name="78"></a>{
+<a name="79"></a>	local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> PRI;
+<a name="80"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j, CurMaxPerSide;
+<a name="81"></a>	local <span class="source_type">float</span> <span class="source_type">X</span>,<span class="source_type">Y</span>,cellHeight,XL,<span class="source_type">YL</span>,LeftY,RightY, CurrentTime;
+<a name="82"></a>	local <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> TeamColor;
+<a name="83"></a>	local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> GermanPRI[<span class="source_int">32</span>];
+<a name="84"></a>	local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> RussianPRI[<span class="source_int">32</span>];
+<a name="85"></a>	local <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span> UnassignedPRI[<span class="source_int">32</span>];
+<a name="86"></a>	local <span class="source_type">int</span> GECount,RUCount,UnassignedCount, AxisTotalScore, AlliesTotalScore;
+<a name="87"></a>	local <span class="source_type">int</span> AxisReqObjCount, AlliesReqObjCount, Axis2ndObjCount, Allies2ndObjCount;
+<a name="88"></a>	local <span class="source_type">string</span> RoleName,<span class="source_type">S</span>;
+<a name="89"></a>	local <span class="source_type">bool</span> bHighLight, bRequiredObjectives;
+<a name="90"></a>	local <span class="source_type">bool</span> bOwnerDrawn;
+<a name="91"></a>
+<a name="92"></a>	if ( <span class="source_type">C</span> == None )
+<a name="93"></a>		return;
+<a name="94"></a>
+<a name="95"></a>    <span class="source_comment">//Widescreen mode uses a different maximum per side setting
+</span><a name="96"></a>	if ( <span class="source_type">float</span>(<span class="source_type">C</span>.SizeX) / <span class="source_type">C</span>.SizeY &gt;= <span class="source_int">1.60</span> ) <span class="source_comment">//1.6 = 16/10 which is 16:10 ratio and 16:9 comes to 1.77
+</span><a name="97"></a>	    CurMaxPerSide = MAXPERSIDEWIDE;
+<a name="98"></a>	else
+<a name="99"></a>	    CurMaxPerSide = MAXPERSIDE;
+<a name="100"></a>
+<a name="101"></a>	bOwnerDrawn = false;
+<a name="102"></a>
+<a name="103"></a>	Padding = <span class="source_int">0.025</span> * <span class="source_type">C</span>.SizeX;
+<a name="104"></a>
+<a name="105"></a>	<span class="source_type">C</span>.Style = <span class="source_int">5</span>;
+<a name="106"></a>	<span class="source_type">C</span>.SetDrawColor(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">128</span>);
+<a name="107"></a>	<span class="source_type">C</span>.SetPos(<span class="source_int">0.0</span>,<span class="source_int">0.0</span>);
+<a name="108"></a>	<span class="source_type">C</span>.DrawRect(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'WhiteSquareTexture'</span>,<span class="source_type">C</span>.ClipX,<span class="source_type">C</span>.ClipY);
+<a name="109"></a>
+<a name="110"></a>	<span class="source_type">C</span>.SetPos(<span class="source_int">0.0</span>,CalcY(<span class="source_int">0.5</span>,<span class="source_type">C</span>));
+<a name="111"></a>	<span class="source_type">C</span>.SetDrawColor(<span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">255</span>);
+<a name="112"></a>	<span class="source_type">C</span>.DrawTile(HeaderImage,<span class="source_type">C</span>.ClipX,CalcY(<span class="source_int">1</span>,<span class="source_type">C</span>),<span class="source_int">0.0</span>,<span class="source_int">0.0</span>,<span class="source_int">2048.0</span>,<span class="source_int">64.0</span>);
+<a name="113"></a>
+<a name="114"></a>	<span class="source_type">C</span>.SetDrawColor(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">255</span>);
+<a name="115"></a>	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetLargeMenuFont(<span class="source_type">C</span>);
+<a name="116"></a>	<span class="source_type">C</span>.DrawTextJustified(TitleText,<span class="source_int">1</span>,<span class="source_int">0.0</span>,<span class="source_int">0.0</span>,<span class="source_type">C</span>.ClipX,CalcY(<span class="source_int">2</span>,<span class="source_type">C</span>));
+<a name="117"></a>	<span class="source_type">C</span>.DrawColor = HudClass.Default.WhiteColor;
+<a name="118"></a>	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallMenuFont(<span class="source_type">C</span>);
+<a name="119"></a>
+<a name="120"></a>	<span class="source_type">C</span>.TextSize(<span class="source_string">"Text"</span>,XL,<span class="source_type">YL</span>);
+<a name="121"></a>	cellHeight = <span class="source_type">YL</span> + (<span class="source_type">YL</span> * <span class="source_int">0.25</span>);
+<a name="122"></a>
+<a name="123"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_int">4</span>; <span class="source_type">i</span>++)
+<a name="124"></a>		AvgPing[<span class="source_type">i</span>] = <span class="source_int">0</span>;
+<a name="125"></a>
+<a name="126"></a>	for(<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GRI.PRIArray.Length; <span class="source_type">i</span>++)
+<a name="127"></a>	{
+<a name="128"></a>		PRI = <span class="source_type"><a href="../roengine/roplayerreplicationinfo.html" class="source">ROPlayerReplicationInfo</a></span>(GRI.PRIArray[<span class="source_type">i</span>]);
+<a name="129"></a>		if( PRI != none )
+<a name="130"></a>		{
+<a name="131"></a>			if ( PRI.bOnlySpectator || PRI.RoleInfo == none )
+<a name="132"></a>				UnassignedPRI[UnassignedCount++] = PRI;
+<a name="133"></a>			else
+<a name="134"></a>			{
+<a name="135"></a>				if ( PRI.<span class="source_type">Team</span> != None )
+<a name="136"></a>				{
+<a name="137"></a>					<span class="source_type">switch</span>( PRI.<span class="source_type">Team</span>.TeamIndex )
+<a name="138"></a>					{
+<a name="139"></a>						case <span class="source_int">0</span>:
+<a name="140"></a>							GermanPRI[GECount++] = PRI;
+<a name="141"></a>							break;
+<a name="142"></a>						case <span class="source_int">1</span>:
+<a name="143"></a>							RussianPRI[RUCount++] = PRI;
+<a name="144"></a>							break;
+<a name="145"></a>						case <span class="source_int">2</span>:
+<a name="146"></a>							UnassignedPRI[UnassignedCount++] = PRI;
+<a name="147"></a>					}
+<a name="148"></a>					AvgPing[PRI.<span class="source_type">Team</span>.TeamIndex] += <span class="source_int">4</span> * PRI.Ping;  <span class="source_comment">// because this is how it is done in ROTeamGame DRR
+</span><a name="149"></a>				}
+<a name="150"></a>			}
+<a name="151"></a>		}
+<a name="152"></a>	}
+<a name="153"></a>
+<a name="154"></a>  	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; ArrayCount(<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).Objectives); <span class="source_type">i</span>++)
+<a name="155"></a>	{
+<a name="156"></a>		if (<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).Objectives[<span class="source_type">i</span>] == None)
+<a name="157"></a>			continue;
+<a name="158"></a>
+<a name="159"></a>		<span class="source_comment">// Count up the objective types
+</span><a name="160"></a>		if (<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).Objectives[<span class="source_type">i</span>].ObjState == OBJ_Axis)
+<a name="161"></a>		{
+<a name="162"></a>			if( <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).Objectives[<span class="source_type">i</span>].bRequired )
+<a name="163"></a>			{
+<a name="164"></a>				AxisReqObjCount++;
+<a name="165"></a>			}
+<a name="166"></a>			else
+<a name="167"></a>			{
+<a name="168"></a>				bRequiredObjectives=true;
+<a name="169"></a>				Axis2ndObjCount++;
+<a name="170"></a>			}
+<a name="171"></a>		}
+<a name="172"></a>		else if (<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).Objectives[<span class="source_type">i</span>].ObjState == OBJ_Allies)
+<a name="173"></a>		{
+<a name="174"></a>			if( <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).Objectives[<span class="source_type">i</span>].bRequired )
+<a name="175"></a>			{
+<a name="176"></a>				AlliesReqObjCount++;
+<a name="177"></a>			}
+<a name="178"></a>			else
+<a name="179"></a>			{
+<a name="180"></a>			    bRequiredObjectives=true;
+<a name="181"></a>				Allies2ndObjCount++;
+<a name="182"></a>			}
+<a name="183"></a>		}
+<a name="184"></a>	}
+<a name="185"></a>
+<a name="186"></a>	if( RUCount &gt; <span class="source_int">0</span> )
+<a name="187"></a>		AvgPing[<span class="source_int">1</span>] /= RUCount;
+<a name="188"></a>	else
+<a name="189"></a>		AvgPing[<span class="source_int">1</span>] = <span class="source_int">0</span>;
+<a name="190"></a>
+<a name="191"></a>	if( GECount &gt; <span class="source_int">0</span> )
+<a name="192"></a>		AvgPing[<span class="source_int">0</span>] /= GECount;
+<a name="193"></a>	else
+<a name="194"></a>		AvgPing[<span class="source_int">0</span>] = <span class="source_int">0</span>;
+<a name="195"></a>
+<a name="196"></a>	if( bAlphaSortScoreBoard )
+<a name="197"></a>	{
+<a name="198"></a>		for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;GECount-<span class="source_int">1</span>; <span class="source_type">i</span>++ )
+<a name="199"></a>			for( j=<span class="source_type">i</span>+<span class="source_int">1</span>; j&lt;GECount; j++ )
+<a name="200"></a>				if( GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span> &gt; GermanPRI[j].<span class="source_type">PlayerName</span> )
+<a name="201"></a>				{
+<a name="202"></a>					PRI = GermanPRI[<span class="source_type">i</span>];
+<a name="203"></a>					GermanPRI[<span class="source_type">i</span>] = GermanPRI[j];
+<a name="204"></a>					GermanPRI[j] = PRI;
+<a name="205"></a>				}
+<a name="206"></a>
+<a name="207"></a>		for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;RUCount-<span class="source_int">1</span>; <span class="source_type">i</span>++ )
+<a name="208"></a>			for( j=<span class="source_type">i</span>+<span class="source_int">1</span>; j&lt;RUCount; j++ )
+<a name="209"></a>				if( RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span> &gt; RussianPRI[j].<span class="source_type">PlayerName</span> )
+<a name="210"></a>				{
+<a name="211"></a>					PRI = RussianPRI[<span class="source_type">i</span>];
+<a name="212"></a>					RussianPRI[<span class="source_type">i</span>] = RussianPRI[j];
+<a name="213"></a>					RussianPRI[j] = PRI;
+<a name="214"></a>				}
+<a name="215"></a>	}
+<a name="216"></a>
+<a name="217"></a>	<span class="source_comment">// Draw the round timer
+</span><a name="218"></a>	if (<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI) != None)
+<a name="219"></a>	{
+<a name="220"></a>		<span class="source_comment">// Update round timer
+</span><a name="221"></a>		if (!<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).bMatchHasBegun)
+<a name="222"></a>			CurrentTime = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).RoundStartTime + <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).PreStartTime - GRI.ElapsedTime;
+<a name="223"></a>		else
+<a name="224"></a>			CurrentTime = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).RoundStartTime + <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).RoundDuration - GRI.ElapsedTime;
+<a name="225"></a>
+<a name="226"></a>		<span class="source_type">S</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).default.TimeRemainingText $ <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetTimeString(CurrentTime);
+<a name="227"></a>
+<a name="228"></a>		if (<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).bShowServerIPOnScoreboard && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>) != None)
+<a name="229"></a>		    <span class="source_type">S</span> $= <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).default.SpacingText $ <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).default.IPText $ <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>).GetServerIP();
+<a name="230"></a>
+<a name="231"></a>        if (<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).bShowTimeOnScoreboard)
+<a name="232"></a>		    <span class="source_type">S</span> $= <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).default.SpacingText $ <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).default.TimeText $ <span class="source_type">Level</span>.Hour$<span class="source_string">":"</span>$<span class="source_type">Level</span>.Minute @ <span class="source_string">" on "</span> @ <span class="source_type">Level</span>.Month$<span class="source_string">"/"</span>$<span class="source_type">Level</span>.Day$<span class="source_string">"/"</span>$<span class="source_type">Level</span>.Year;
+<a name="233"></a>
+<a name="234"></a>		<span class="source_type">X</span> = CalcX(BaseGermanX,<span class="source_type">C</span>);
+<a name="235"></a>		<span class="source_type">Y</span> = CalcY(<span class="source_int">2</span>,<span class="source_type">C</span>);
+<a name="236"></a>
+<a name="237"></a>		<span class="source_type">C</span>.DrawColor = HudClass.Default.WhiteColor;
+<a name="238"></a>		<span class="source_type">C</span>.SetPos(<span class="source_type">X</span>, <span class="source_type">Y</span>);
+<a name="239"></a>		<span class="source_type">C</span>.DrawTextClipped(<span class="source_type">S</span>);
+<a name="240"></a>	}
+<a name="241"></a>
+<a name="242"></a>	<span class="source_comment">// Draw German data
+</span><a name="243"></a>	<span class="source_type">X</span> = CalcX(BaseGermanX,<span class="source_type">C</span>);
+<a name="244"></a>	<span class="source_type">Y</span> = CalcY(<span class="source_int">2</span>,<span class="source_type">C</span>);
+<a name="245"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="246"></a>	TeamColor = TeamColors[<span class="source_int">0</span>];
+<a name="247"></a>	DrawCell(<span class="source_type">C</span>,TeamNameAxis$<span class="source_string">" - "</span>$<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).UnitName[<span class="source_int">0</span>],<span class="source_int">0</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="248"></a>
+<a name="249"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="250"></a>	DrawCell(<span class="source_type">C</span>,ReinforcementsText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).SpawnCount[<span class="source_int">0</span>]) $ <span class="source_string">"%"</span>,<span class="source_int">0</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="251"></a>	if( GRI.RoundLimit != <span class="source_int">0</span> )
+<a name="252"></a>		DrawCell(<span class="source_type">C</span>,RoundsWonText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(<span class="source_type">int</span>(GRI.Teams[<span class="source_int">0</span>].<span class="source_type">Score</span>))$<span class="source_string">"/"</span>$<span class="source_type">string</span>(GRI.RoundLimit),<span class="source_int">0</span>,CalcX(BaseGermanX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="253"></a>	else
+<a name="254"></a>		DrawCell(<span class="source_type">C</span>,RoundsWonText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(<span class="source_type">int</span>(GRI.Teams[<span class="source_int">0</span>].<span class="source_type">Score</span>)),<span class="source_int">0</span>,CalcX(BaseGermanX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="255"></a>
+<a name="256"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="257"></a>	if( bRequiredObjectives )
+<a name="258"></a>	{
+<a name="259"></a>		DrawCell(<span class="source_type">C</span>,RequiredObjHeldText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(AxisReqObjCount),<span class="source_int">0</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="260"></a>	    DrawCell(<span class="source_type">C</span>,SecondaryObjHeldText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(Axis2ndObjCount),<span class="source_int">0</span>,CalcX(BaseGermanX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="261"></a>	}
+<a name="262"></a>	else
+<a name="263"></a>	{
+<a name="264"></a>		DrawCell(<span class="source_type">C</span>,ObjectivesHeldText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(AxisReqObjCount),<span class="source_int">0</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="265"></a>	}
+<a name="266"></a>
+<a name="267"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="268"></a>	DrawCell(<span class="source_type">C</span>,PlayerText $ <span class="source_string">" ("</span> $ GECount $ <span class="source_string">")"</span>,<span class="source_int">0</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="269"></a>
+<a name="270"></a>	DrawCell(<span class="source_type">C</span>,RoleText,<span class="source_int">0</span>,CalcX(BaseGermanX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">4.0</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="271"></a>	DrawCell(<span class="source_type">C</span>,ScoreText,<span class="source_int">1</span>,CalcX(BaseGermanX + <span class="source_int">11.0</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="272"></a>	DrawCell(<span class="source_type">C</span>,PingText,<span class="source_int">1</span>,CalcX(BaseGermanX + <span class="source_int">12.5</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="273"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="274"></a>	for( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; GECount; <span class="source_type">i</span>++ )
+<a name="275"></a>	{
+<a name="276"></a>		<span class="source_comment">//If we're on the last available spot, the owner is on this team, and we haven't drawn the owner's score
+</span><a name="277"></a>		if ( <span class="source_type">i</span> &gt;= CurMaxPerSide - <span class="source_int">1</span> && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex == AXIS_TEAM_INDEX && !bOwnerDrawn )
+<a name="278"></a>		{
+<a name="279"></a>		    <span class="source_comment">//If this is not the owner, skip it
+</span><a name="280"></a>		    if ( GermanPRI[<span class="source_type">i</span>] != <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> )
+<a name="281"></a>		        continue;
+<a name="282"></a>        }
+<a name="283"></a>		else if ( <span class="source_type">i</span> &gt;= CurMaxPerSide )
+<a name="284"></a>		    break;
+<a name="285"></a>
+<a name="286"></a>		if ( GermanPRI[<span class="source_type">i</span>] == <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> )
+<a name="287"></a>		{
+<a name="288"></a>			bHighlight = True;
+<a name="289"></a>            bOwnerDrawn = True;
+<a name="290"></a>        }
+<a name="291"></a>		else
+<a name="292"></a>			bHighlight = False;
+<a name="293"></a>
+<a name="294"></a>		if ( GermanPRI[<span class="source_type">i</span>].RoleInfo != None )
+<a name="295"></a>		{
+<a name="296"></a>			if( <span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">Owner</span>) != none && <span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">Owner</span>).bUseNativeRoleNames )
+<a name="297"></a>			{
+<a name="298"></a>	        	RoleName = GermanPRI[<span class="source_type">i</span>].RoleInfo.Default.AltName;
+<a name="299"></a>	        }
+<a name="300"></a>	        else
+<a name="301"></a>	        {
+<a name="302"></a>	        	RoleName = GermanPRI[<span class="source_type">i</span>].RoleInfo.Default.MyName;
+<a name="303"></a>	        }
+<a name="304"></a>		}
+<a name="305"></a>		else
+<a name="306"></a>			RoleName = <span class="source_string">""</span>;
+<a name="307"></a>
+<a name="308"></a>		<span class="source_comment">// Draw name
+</span><a name="309"></a>		if( <span class="source_type">Level</span>.NetMode != NM_Standalone && <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).bPlayerMustReady )
+<a name="310"></a>		{
+<a name="311"></a>			if( GermanPRI[<span class="source_type">i</span>].bReadyToPlay || GermanPRI[<span class="source_type">i</span>].bBot )
+<a name="312"></a>			{
+<a name="313"></a>				if( GermanPRI[<span class="source_type">i</span>].bAdmin )
+<a name="314"></a>				{
+<a name="315"></a>					<span class="source_comment">// Draw Player name
+</span><a name="316"></a>					<span class="source_type">C</span>.StrLen(GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText, XL, <span class="source_type">YL</span>);
+<a name="317"></a>					if( (XL/<span class="source_type">C</span>.ClipX) &gt; <span class="source_int">0.21</span>)
+<a name="318"></a>					{
+<a name="319"></a>			        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallerMenuFont(<span class="source_type">C</span>);
+<a name="320"></a>			        	DrawCell(<span class="source_type">C</span>,GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HudClass.Default.WhiteColor,HighLightColor);
+<a name="321"></a>			        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallMenuFont(<span class="source_type">C</span>);
+<a name="322"></a>			        }
+<a name="323"></a>			        else
+<a name="324"></a>			        {
+<a name="325"></a>						DrawCell(<span class="source_type">C</span>,GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HudClass.Default.WhiteColor,HighLightColor);
+<a name="326"></a>					}
+<a name="327"></a>				}
+<a name="328"></a>				else
+<a name="329"></a>				{
+<a name="330"></a>					DrawCell(<span class="source_type">C</span>,GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="331"></a>				}
+<a name="332"></a>			}
+<a name="333"></a>			else
+<a name="334"></a>			{
+<a name="335"></a>				if( GermanPRI[<span class="source_type">i</span>].bAdmin )
+<a name="336"></a>				{
+<a name="337"></a>					<span class="source_comment">// Draw Player name
+</span><a name="338"></a>					<span class="source_type">C</span>.StrLen(GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$AdminWaitingText, XL, <span class="source_type">YL</span>);
+<a name="339"></a>					if( (XL/<span class="source_type">C</span>.ClipX) &gt; <span class="source_int">0.22</span>)
+<a name="340"></a>					{
+<a name="341"></a>			        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallerMenuFont(<span class="source_type">C</span>);
+<a name="342"></a>			        	DrawCell(<span class="source_type">C</span>,GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$AdminWaitingText,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HUDClass.default.GrayColor,HighLightColor);
+<a name="343"></a>			        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallMenuFont(<span class="source_type">C</span>);
+<a name="344"></a>			        }
+<a name="345"></a>			        else
+<a name="346"></a>			        {
+<a name="347"></a>						DrawCell(<span class="source_type">C</span>,GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$AdminWaitingText,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HUDClass.default.GrayColor,HighLightColor);
+<a name="348"></a>					}
+<a name="349"></a>				}
+<a name="350"></a>				else
+<a name="351"></a>				{
+<a name="352"></a>					DrawCell(<span class="source_type">C</span>,GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$WaitingText,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HUDClass.default.GrayColor,HighLightColor);
+<a name="353"></a>				}
+<a name="354"></a>			}
+<a name="355"></a>		}
+<a name="356"></a>		else
+<a name="357"></a>		{
+<a name="358"></a>			if( GermanPRI[<span class="source_type">i</span>].bAdmin )
+<a name="359"></a>			{
+<a name="360"></a>				<span class="source_comment">// Draw Player name
+</span><a name="361"></a>				<span class="source_type">C</span>.StrLen(GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText, XL, <span class="source_type">YL</span>);
+<a name="362"></a>				if( (XL/<span class="source_type">C</span>.ClipX) &gt; <span class="source_int">0.21</span>)
+<a name="363"></a>				{
+<a name="364"></a>		        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallerMenuFont(<span class="source_type">C</span>);
+<a name="365"></a>		        	DrawCell(<span class="source_type">C</span>,GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HudClass.Default.WhiteColor,HighLightColor);
+<a name="366"></a>		        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallMenuFont(<span class="source_type">C</span>);
+<a name="367"></a>		        }
+<a name="368"></a>		        else
+<a name="369"></a>		        {
+<a name="370"></a>					DrawCell(<span class="source_type">C</span>,GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HudClass.Default.WhiteColor,HighLightColor);
+<a name="371"></a>				}
+<a name="372"></a>			}
+<a name="373"></a>			else
+<a name="374"></a>			{
+<a name="375"></a>				DrawCell(<span class="source_type">C</span>,GermanPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="376"></a>			}
+<a name="377"></a>		}
+<a name="378"></a>
+<a name="379"></a>		<span class="source_comment">// Draw rolename
+</span><a name="380"></a>		<span class="source_type">C</span>.StrLen(RoleName, XL, <span class="source_type">YL</span>);
+<a name="381"></a>		if( (XL/<span class="source_type">C</span>.ClipX) &gt; <span class="source_int">0.13</span>)
+<a name="382"></a>		{
+<a name="383"></a>        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallerMenuFont(<span class="source_type">C</span>);
+<a name="384"></a>        	DrawCell(<span class="source_type">C</span>,RoleName,<span class="source_int">0</span>,CalcX(BaseGermanX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">4.0</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="385"></a>        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallMenuFont(<span class="source_type">C</span>);
+<a name="386"></a>        }
+<a name="387"></a>        else
+<a name="388"></a>        {
+<a name="389"></a>			DrawCell(<span class="source_type">C</span>,RoleName,<span class="source_int">0</span>,CalcX(BaseGermanX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">4.0</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="390"></a>		}
+<a name="391"></a>
+<a name="392"></a>        AxisTotalScore += GermanPRI[<span class="source_type">i</span>].<span class="source_type">Score</span>;
+<a name="393"></a>
+<a name="394"></a>		DrawCell(<span class="source_type">C</span>,<span class="source_type">string</span>(<span class="source_type">int</span>(GermanPRI[<span class="source_type">i</span>].<span class="source_type">Score</span>)),<span class="source_int">1</span>,CalcX(BaseGermanX + <span class="source_int">11.0</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="395"></a>		DrawCell(<span class="source_type">C</span>,<span class="source_type">string</span>(<span class="source_int">4</span> * GermanPRI[<span class="source_type">i</span>].Ping),<span class="source_int">1</span>,CalcX(BaseGermanX + <span class="source_int">12.5</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="396"></a>		<span class="source_type">Y</span> += cellHeight;
+<a name="397"></a>		if( <span class="source_type">Y</span> + cellHeight &gt; <span class="source_type">C</span>.ClipY )
+<a name="398"></a>			break;
+<a name="399"></a>	}
+<a name="400"></a>
+<a name="401"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="402"></a>
+<a name="403"></a>    DrawCell(<span class="source_type">C</span>,TotalsText$<span class="source_string">" : "</span>,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">11</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="404"></a>	DrawCell(<span class="source_type">C</span>,<span class="source_type">string</span>(AxisTotalScore),<span class="source_int">1</span>,CalcX(BaseGermanX + <span class="source_int">11.0</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="405"></a>	DrawCell(<span class="source_type">C</span>,<span class="source_type">string</span>(AvgPing[<span class="source_int">0</span>]),<span class="source_int">1</span>,CalcX(BaseGermanX + <span class="source_int">12.5</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="406"></a>
+<a name="407"></a>	LeftY = <span class="source_type">Y</span>;
+<a name="408"></a>
+<a name="409"></a>	<span class="source_comment">// Draw Russian data
+</span><a name="410"></a>	<span class="source_type">X</span> = CalcX(BaseRussianX,<span class="source_type">C</span>);
+<a name="411"></a>	<span class="source_type">Y</span> = CalcY(<span class="source_int">2</span>,<span class="source_type">C</span>);
+<a name="412"></a>	TeamColor = TeamColors[<span class="source_int">1</span>];
+<a name="413"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="414"></a>	DrawCell(<span class="source_type">C</span>,TeamNameAllies$<span class="source_string">" - "</span>$<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).UnitName[<span class="source_int">1</span>],<span class="source_int">0</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="415"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="416"></a>
+<a name="417"></a>	DrawCell(<span class="source_type">C</span>,ReinforcementsText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(<span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).SpawnCount[<span class="source_int">1</span>]) $ <span class="source_string">"%"</span>,<span class="source_int">0</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="418"></a>	if( GRI.RoundLimit != <span class="source_int">0</span> )
+<a name="419"></a>		DrawCell(<span class="source_type">C</span>,RoundsWonText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(<span class="source_type">int</span>(GRI.Teams[<span class="source_int">1</span>].<span class="source_type">Score</span>))$<span class="source_string">"/"</span>$<span class="source_type">string</span>(GRI.RoundLimit),<span class="source_int">0</span>,CalcX(BaseRussianX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="420"></a>	else
+<a name="421"></a>		DrawCell(<span class="source_type">C</span>,RoundsWonText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(<span class="source_type">int</span>(GRI.Teams[<span class="source_int">1</span>].<span class="source_type">Score</span>)),<span class="source_int">0</span>,CalcX(BaseRussianX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="422"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="423"></a>
+<a name="424"></a>	if( bRequiredObjectives )
+<a name="425"></a>	{
+<a name="426"></a>		DrawCell(<span class="source_type">C</span>,RequiredObjHeldText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(AlliesReqObjCount),<span class="source_int">0</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="427"></a>	    DrawCell(<span class="source_type">C</span>,SecondaryObjHeldText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(Allies2ndObjCount),<span class="source_int">0</span>,CalcX(BaseRussianX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="428"></a>	}
+<a name="429"></a>	else
+<a name="430"></a>	{
+<a name="431"></a>		DrawCell(<span class="source_type">C</span>,ObjectivesHeldText $ <span class="source_string">" : "</span> $ <span class="source_type">string</span>(AlliesReqObjCount),<span class="source_int">0</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,CalcX(<span class="source_int">13.5</span>,<span class="source_type">C</span>),cellHeight,false,TeamColor);
+<a name="432"></a>	}
+<a name="433"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="434"></a>
+<a name="435"></a>	DrawCell(<span class="source_type">C</span>,PlayerText $ <span class="source_string">" ("</span> $ RUCount $ <span class="source_string">")"</span>,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="436"></a>	DrawCell(<span class="source_type">C</span>,RoleText,<span class="source_int">0</span>,CalcX(BaseRussianX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">4.0</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="437"></a>	DrawCell(<span class="source_type">C</span>,ScoreText,<span class="source_int">1</span>,CalcX(BaseRussianX + <span class="source_int">11.0</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="438"></a>	DrawCell(<span class="source_type">C</span>,PingText,<span class="source_int">1</span>,CalcX(BaseRussianX + <span class="source_int">12.5</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="439"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="440"></a>	for( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; RUCount; <span class="source_type">i</span>++ )
+<a name="441"></a>	{
+<a name="442"></a>		<span class="source_comment">//If we're on the last available spot, the owner is on this team, and we haven't drawn the owner's score
+</span><a name="443"></a>		if ( <span class="source_type">i</span> &gt;= CurMaxPerSide - <span class="source_int">1</span> && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex == ALLIES_TEAM_INDEX && !bOwnerDrawn )
+<a name="444"></a>		{
+<a name="445"></a>		    <span class="source_comment">//If this is not the owner, skip it
+</span><a name="446"></a>		    if ( RussianPRI[<span class="source_type">i</span>] != <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> )
+<a name="447"></a>		        continue;
+<a name="448"></a>        }
+<a name="449"></a>		else if ( <span class="source_type">i</span> &gt;= CurMaxPerSide )
+<a name="450"></a>		    break;
+<a name="451"></a>
+<a name="452"></a>		if ( RussianPRI[<span class="source_type">i</span>] == <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> )
+<a name="453"></a>		{
+<a name="454"></a>			bHighlight = True;
+<a name="455"></a>            bOwnerDrawn = True;
+<a name="456"></a>        }
+<a name="457"></a>		else
+<a name="458"></a>			bHighlight = False;
+<a name="459"></a>
+<a name="460"></a>		if ( RussianPRI[<span class="source_type">i</span>].RoleInfo != None )
+<a name="461"></a>		{
+<a name="462"></a>			if( <span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">Owner</span>) != none && <span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">Owner</span>).bUseNativeRoleNames )
+<a name="463"></a>			{
+<a name="464"></a>	        	RoleName = RussianPRI[<span class="source_type">i</span>].RoleInfo.Default.AltName;
+<a name="465"></a>	        }
+<a name="466"></a>	        else
+<a name="467"></a>	        {
+<a name="468"></a>	        	RoleName = RussianPRI[<span class="source_type">i</span>].RoleInfo.Default.MyName;
+<a name="469"></a>	        }
+<a name="470"></a>		}
+<a name="471"></a>		else
+<a name="472"></a>			RoleName = <span class="source_string">""</span>;
+<a name="473"></a>
+<a name="474"></a>		<span class="source_comment">// Draw name
+</span><a name="475"></a>		if( <span class="source_type">Level</span>.NetMode != NM_Standalone && <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).bPlayerMustReady )
+<a name="476"></a>		{
+<a name="477"></a>			if( RussianPRI[<span class="source_type">i</span>].bReadyToPlay || RussianPRI[<span class="source_type">i</span>].bBot)
+<a name="478"></a>			{
+<a name="479"></a>				if( RussianPRI[<span class="source_type">i</span>].bAdmin )
+<a name="480"></a>				{
+<a name="481"></a>					<span class="source_comment">// Draw rolename
+</span><a name="482"></a>					<span class="source_type">C</span>.StrLen(RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText, XL, <span class="source_type">YL</span>);
+<a name="483"></a>					if( (XL/<span class="source_type">C</span>.ClipX) &gt; <span class="source_int">0.21</span>)
+<a name="484"></a>					{
+<a name="485"></a>			        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallerMenuFont(<span class="source_type">C</span>);
+<a name="486"></a>			        	DrawCell(<span class="source_type">C</span>,RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HudClass.Default.WhiteColor,HighLightColor);
+<a name="487"></a>			        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallMenuFont(<span class="source_type">C</span>);
+<a name="488"></a>			        }
+<a name="489"></a>			        else
+<a name="490"></a>			        {
+<a name="491"></a>						DrawCell(<span class="source_type">C</span>,RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HudClass.Default.WhiteColor,HighLightColor);
+<a name="492"></a>					}
+<a name="493"></a>				}
+<a name="494"></a>				else
+<a name="495"></a>				{
+<a name="496"></a>					DrawCell(<span class="source_type">C</span>,RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="497"></a>				}
+<a name="498"></a>			}
+<a name="499"></a>			else
+<a name="500"></a>			{
+<a name="501"></a>				if( RussianPRI[<span class="source_type">i</span>].bAdmin )
+<a name="502"></a>				{
+<a name="503"></a>					<span class="source_comment">// Draw Player name
+</span><a name="504"></a>					<span class="source_type">C</span>.StrLen(RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$AdminWaitingText, XL, <span class="source_type">YL</span>);
+<a name="505"></a>					if( (XL/<span class="source_type">C</span>.ClipX) &gt; <span class="source_int">0.22</span>)
+<a name="506"></a>					{
+<a name="507"></a>			        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallerMenuFont(<span class="source_type">C</span>);
+<a name="508"></a>			        	DrawCell(<span class="source_type">C</span>,RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$AdminWaitingText,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HUDClass.default.GrayColor,HighLightColor);
+<a name="509"></a>			        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallMenuFont(<span class="source_type">C</span>);
+<a name="510"></a>			        }
+<a name="511"></a>			        else
+<a name="512"></a>			        {
+<a name="513"></a>						DrawCell(<span class="source_type">C</span>,RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$AdminWaitingText,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HUDClass.default.GrayColor,HighLightColor);
+<a name="514"></a>					}
+<a name="515"></a>				}
+<a name="516"></a>				else
+<a name="517"></a>				{
+<a name="518"></a>					DrawCell(<span class="source_type">C</span>,RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$WaitingText,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HUDClass.default.GrayColor,HighLightColor);
+<a name="519"></a>				}
+<a name="520"></a>			}
+<a name="521"></a>		}
+<a name="522"></a>		else
+<a name="523"></a>		{
+<a name="524"></a>			if( RussianPRI[<span class="source_type">i</span>].bAdmin )
+<a name="525"></a>			{
+<a name="526"></a>				<span class="source_comment">// Draw rolename
+</span><a name="527"></a>				<span class="source_type">C</span>.StrLen(RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText, XL, <span class="source_type">YL</span>);
+<a name="528"></a>				if( (XL/<span class="source_type">C</span>.ClipX) &gt; <span class="source_int">0.21</span>)
+<a name="529"></a>				{
+<a name="530"></a>		        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallerMenuFont(<span class="source_type">C</span>);
+<a name="531"></a>		        	DrawCell(<span class="source_type">C</span>,RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HudClass.Default.WhiteColor,HighLightColor);
+<a name="532"></a>		        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallMenuFont(<span class="source_type">C</span>);
+<a name="533"></a>		        }
+<a name="534"></a>		        else
+<a name="535"></a>		        {
+<a name="536"></a>					DrawCell(<span class="source_type">C</span>,RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" "</span>$AdminText,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,HudClass.Default.WhiteColor,HighLightColor);
+<a name="537"></a>				}
+<a name="538"></a>			}
+<a name="539"></a>			else
+<a name="540"></a>			{
+<a name="541"></a>				DrawCell(<span class="source_type">C</span>,RussianPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">7</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="542"></a>			}
+<a name="543"></a>		}
+<a name="544"></a>
+<a name="545"></a>		<span class="source_comment">// Draw rolename
+</span><a name="546"></a>		<span class="source_type">C</span>.StrLen(RoleName, XL, <span class="source_type">YL</span>);
+<a name="547"></a>		if( (XL/<span class="source_type">C</span>.ClipX) &gt; <span class="source_int">0.13</span>)
+<a name="548"></a>		{
+<a name="549"></a>        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallerMenuFont(<span class="source_type">C</span>);
+<a name="550"></a>        	DrawCell(<span class="source_type">C</span>,RoleName,<span class="source_int">0</span>,CalcX(BaseRussianX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">4.0</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="551"></a>        	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallMenuFont(<span class="source_type">C</span>);
+<a name="552"></a>        }
+<a name="553"></a>        else
+<a name="554"></a>        {
+<a name="555"></a>			DrawCell(<span class="source_type">C</span>,RoleName,<span class="source_int">0</span>,CalcX(BaseRussianX + <span class="source_int">7</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">4.0</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="556"></a>		}
+<a name="557"></a>
+<a name="558"></a>        AlliesTotalScore += RussianPRI[<span class="source_type">i</span>].<span class="source_type">Score</span>;
+<a name="559"></a>
+<a name="560"></a>        DrawCell(<span class="source_type">C</span>,<span class="source_type">string</span>(<span class="source_type">int</span>(RussianPRI[<span class="source_type">i</span>].<span class="source_type">Score</span>)),<span class="source_int">1</span>,CalcX(BaseRussianX + <span class="source_int">11.0</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="561"></a>		DrawCell(<span class="source_type">C</span>,<span class="source_type">string</span>(<span class="source_int">4</span> * RussianPRI[<span class="source_type">i</span>].Ping),<span class="source_int">1</span>,CalcX(BaseRussianX + <span class="source_int">12.5</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,bHighLight,TeamColor,HighLightColor);
+<a name="562"></a>		<span class="source_type">Y</span> += cellHeight;
+<a name="563"></a>		if( <span class="source_type">Y</span> + cellHeight &gt; <span class="source_type">C</span>.ClipY )
+<a name="564"></a>			break;
+<a name="565"></a>	}
+<a name="566"></a>
+<a name="567"></a>	<span class="source_type">Y</span> += cellHeight;
+<a name="568"></a>
+<a name="569"></a>    DrawCell(<span class="source_type">C</span>,TotalsText$<span class="source_string">" : "</span>,<span class="source_int">0</span>,CalcX(BaseRussianX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">11</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="570"></a>	DrawCell(<span class="source_type">C</span>,<span class="source_type">string</span>(AlliesTotalScore),<span class="source_int">1</span>,CalcX(BaseRussianX + <span class="source_int">11.0</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="571"></a>	DrawCell(<span class="source_type">C</span>,<span class="source_type">string</span>(AvgPing[<span class="source_int">1</span>]),<span class="source_int">1</span>,CalcX(BaseRussianX + <span class="source_int">12.5</span>,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">1.5</span>,<span class="source_type">C</span>),cellHeight,True,HudClass.Default.WhiteColor,TeamColor);
+<a name="572"></a>
+<a name="573"></a>	RightY = <span class="source_type">Y</span>;
+<a name="574"></a>
+<a name="575"></a>	if( LeftY &lt;= RightY )
+<a name="576"></a>		<span class="source_type">Y</span> = RightY;
+<a name="577"></a>	else
+<a name="578"></a>		<span class="source_type">Y</span> = LeftY;
+<a name="579"></a>
+<a name="580"></a>	<span class="source_type">Y</span> += cellHeight + <span class="source_int">3</span>;<span class="source_comment">//Add some extra spacing above the spectators
+</span><a name="581"></a>
+<a name="582"></a>	if( <span class="source_type">Y</span> + cellHeight &gt; <span class="source_type">C</span>.ClipY )
+<a name="583"></a>		return;
+<a name="584"></a>
+<a name="585"></a>   	<span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../roengine/rohud.html" class="source">ROHud</a></span>&gt;(HudClass).static.GetSmallerMenuFont(<span class="source_type">C</span>);
+<a name="586"></a>	<span class="source_type">C</span>.TextSize(<span class="source_string">"Text"</span>,XL,<span class="source_type">YL</span>);
+<a name="587"></a>	cellHeight = <span class="source_type">YL</span> + (<span class="source_type">YL</span> * <span class="source_int">0.05</span>);
+<a name="588"></a>	<span class="source_type">S</span> = SpectatorTeamName $ <span class="source_string">" & "</span> $ UnassignedTeamName $ <span class="source_string">" ("</span> $ UnassignedCount $ <span class="source_string">") : "</span>;
+<a name="589"></a>	for( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; UnassignedCount; <span class="source_type">i</span>++ )
+<a name="590"></a>	{
+<a name="591"></a>		<span class="source_type">C</span>.TextSize(<span class="source_type">S</span> $ <span class="source_string">","</span> $ UnassignedPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>,XL,<span class="source_type">YL</span>);
+<a name="592"></a>		if( CalcX(<span class="source_int">1</span>,<span class="source_type">C</span>) + XL &gt; <span class="source_type">C</span>.ClipX )
+<a name="593"></a>		{
+<a name="594"></a>			DrawCell(<span class="source_type">C</span>,<span class="source_type">S</span>,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">29</span>,<span class="source_type">C</span>),cellHeight,False,HudClass.Default.WhiteColor);
+<a name="595"></a>			<span class="source_type">S</span> = <span class="source_string">""</span>;
+<a name="596"></a>			<span class="source_type">Y</span> = <span class="source_type">Y</span> + cellHeight;
+<a name="597"></a>			if( <span class="source_type">Y</span> + cellHeight &gt; <span class="source_type">C</span>.ClipY )
+<a name="598"></a>				return;
+<a name="599"></a>		}
+<a name="600"></a>
+<a name="601"></a>		if( <span class="source_type">i</span> &lt; UnassignedCount - <span class="source_int">1</span> )
+<a name="602"></a>			<span class="source_type">S</span> = <span class="source_type">S</span> $ UnassignedPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span> $ <span class="source_string">","</span>;
+<a name="603"></a>		else
+<a name="604"></a>		{
+<a name="605"></a>			<span class="source_type">S</span> = <span class="source_type">S</span> $ UnassignedPRI[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>;
+<a name="606"></a>			DrawCell(<span class="source_type">C</span>,<span class="source_type">S</span>,<span class="source_int">0</span>,CalcX(BaseGermanX,<span class="source_type">C</span>),<span class="source_type">Y</span>,CalcX(<span class="source_int">29</span>,<span class="source_type">C</span>),cellHeight,false,HudClass.Default.WhiteColor);
+<a name="607"></a>		}
+<a name="608"></a>	}
+<a name="609"></a>}
+<a name="610"></a>
+<a name="611"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="612"></a><span class="source_comment">// DrawHeaders - Draws the titles for the columns
+</span><a name="613"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="614"></a>
+<a name="615"></a>simulated function <span class="source_type">float</span> DrawHeaders(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>)
+<a name="616"></a>{
+<a name="617"></a>	local <span class="source_type">float</span> <span class="source_type">X</span>, <span class="source_type">Y</span>, XL, <span class="source_type">YL</span>;
+<a name="618"></a>
+<a name="619"></a>	<span class="source_type">X</span> = <span class="source_int">0.05</span> * <span class="source_type">C</span>.ClipX + Padding;
+<a name="620"></a>	<span class="source_type">Y</span> = <span class="source_int">0.10</span> * <span class="source_type">C</span>.ClipY;
+<a name="621"></a>
+<a name="622"></a>	<span class="source_type">C</span>.SetPos(<span class="source_type">X</span>, <span class="source_type">Y</span>);
+<a name="623"></a>	<span class="source_type">C</span>.DrawTextClipped(NameText);
+<a name="624"></a>	<span class="source_type">X</span> += NameLength * <span class="source_type">C</span>.ClipX;
+<a name="625"></a>	<span class="source_type">X</span> += TeamScoreLength * <span class="source_type">C</span>.ClipX;
+<a name="626"></a>
+<a name="627"></a>	<span class="source_type">C</span>.SetPos(<span class="source_type">X</span>, <span class="source_type">Y</span>);
+<a name="628"></a>	<span class="source_type">C</span>.DrawTextClipped(RoleText);
+<a name="629"></a>	<span class="source_type">X</span> += RoleLength * <span class="source_type">C</span>.ClipX;
+<a name="630"></a>
+<a name="631"></a>	<span class="source_type">C</span>.SetPos(<span class="source_type">X</span>, <span class="source_type">Y</span>);
+<a name="632"></a>	<span class="source_type">C</span>.DrawTextClipped(ScoreText);
+<a name="633"></a>	<span class="source_type">X</span> += ScoreLength * <span class="source_type">C</span>.ClipX;
+<a name="634"></a>
+<a name="635"></a>	<span class="source_type">C</span>.SetPos(<span class="source_type">X</span>, <span class="source_type">Y</span>);
+<a name="636"></a>	<span class="source_type">C</span>.DrawTextClipped(TimeText);
+<a name="637"></a>	<span class="source_type">X</span> += TimeLength * <span class="source_type">C</span>.ClipX;
+<a name="638"></a>
+<a name="639"></a>	<span class="source_type">C</span>.SetPos(<span class="source_type">X</span>, <span class="source_type">Y</span>);
+<a name="640"></a>	<span class="source_type">C</span>.DrawTextClipped(PingText);
+<a name="641"></a>
+<a name="642"></a>	<span class="source_type">C</span>.TextSize(<span class="source_string">"Text"</span>, XL, <span class="source_type">YL</span>);
+<a name="643"></a>
+<a name="644"></a>	return <span class="source_type">Y</span> + <span class="source_type">YL</span> + Padding;
+<a name="645"></a>}
+<a name="646"></a>
+<a name="647"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="648"></a><span class="source_comment">// DrawTeam - Draws the team bar and all players for a given team
+</span><a name="649"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="650"></a>
+<a name="651"></a>simulated function <span class="source_type">float</span> DrawTeam(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>, <span class="source_type">int</span> <span class="source_type">TeamNum</span>, <span class="source_type">float</span> YPos, <span class="source_type">int</span> PlayerCount)
+<a name="652"></a>{
+<a name="653"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="654"></a>	local <span class="source_type">float</span> <span class="source_type">X</span>, <span class="source_type">Y</span>, XL, <span class="source_type">YL</span>, CellHeight;
+<a name="655"></a>	local <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> TeamColor;
+<a name="656"></a>	local <span class="source_type">string</span> <span class="source_type">T</span>, <span class="source_type">P</span>;
+<a name="657"></a>	local <span class="source_type">bool</span> bHighlight;
+<a name="658"></a>
+<a name="659"></a>	<span class="source_type">X</span> = <span class="source_int">0.05</span> * <span class="source_type">C</span>.ClipX;
+<a name="660"></a>	<span class="source_type">Y</span> = YPos;
+<a name="661"></a>
+<a name="662"></a>	<span class="source_type">C</span>.TextSize(<span class="source_string">"Text"</span>, XL, <span class="source_type">YL</span>);
+<a name="663"></a>	CellHeight = <span class="source_type">YL</span> + <span class="source_int">4</span> * Padding;
+<a name="664"></a>
+<a name="665"></a>	TeamColor = TeamColors[<span class="source_type">TeamNum</span>];
+<a name="666"></a>
+<a name="667"></a>	<span class="source_comment">// Draw team name
+</span><a name="668"></a>	if (PlayerCount == <span class="source_int">1</span>)
+<a name="669"></a>		<span class="source_type">P</span> = PlayerText;
+<a name="670"></a>	else
+<a name="671"></a>		<span class="source_type">P</span> = PlayerPluralText;
+<a name="672"></a>
+<a name="673"></a>	if (<span class="source_type">TeamNum</span> == NEUTRAL_TEAM_INDEX)
+<a name="674"></a>		<span class="source_type">T</span> = UnassignedTeamName $ <span class="source_string">" ("</span> $ PlayerCount @ <span class="source_type">P</span> $ <span class="source_string">") "</span>;
+<a name="675"></a>	else if (<span class="source_type">TeamNum</span> == SPECTATOR)
+<a name="676"></a>		<span class="source_type">T</span> = SpectatorTeamName $ <span class="source_string">" ("</span> $ PlayerCount @ <span class="source_type">P</span> $ <span class="source_string">") "</span>;
+<a name="677"></a>	else
+<a name="678"></a>		<span class="source_type">T</span> = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).UnitName[<span class="source_type">TeamNum</span>] $ <span class="source_string">" ("</span> $ PlayerCount @ <span class="source_type">P</span> $ <span class="source_string">") "</span>;
+<a name="679"></a>
+<a name="680"></a>	DrawCell(<span class="source_type">C</span>, <span class="source_type">T</span>, <span class="source_int">0</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, NameLength * <span class="source_type">C</span>.ClipX, CellHeight, true, HUDClass.default.WhiteColor, TeamColor);
+<a name="681"></a>	<span class="source_type">X</span> += NameLength * <span class="source_type">C</span>.ClipX;
+<a name="682"></a>
+<a name="683"></a>	<span class="source_comment">// Draw reinforcements
+</span><a name="684"></a>	if (<span class="source_type">TeamNum</span> == NEUTRAL_TEAM_INDEX || <span class="source_type">TeamNum</span> == SPECTATOR)
+<a name="685"></a>		<span class="source_type">T</span> = <span class="source_string">""</span>;
+<a name="686"></a>	else
+<a name="687"></a>		<span class="source_type">T</span> = <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).SpawnCount[<span class="source_type">TeamNum</span>] $ <span class="source_string">"%"</span>;
+<a name="688"></a>
+<a name="689"></a>	DrawCell(<span class="source_type">C</span>, <span class="source_type">T</span>, <span class="source_int">1</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, TeamScoreLength * <span class="source_type">C</span>.ClipX, CellHeight, true, HUDClass.default.WhiteColor, TeamColor);
+<a name="690"></a>	<span class="source_type">X</span> += TeamScoreLength * <span class="source_type">C</span>.ClipX;
+<a name="691"></a>
+<a name="692"></a>	<span class="source_comment">// Draw nothing for the role cell
+</span><a name="693"></a>	DrawCell(<span class="source_type">C</span>, <span class="source_string">""</span>, <span class="source_int">0</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, RoleLength * <span class="source_type">C</span>.ClipX, CellHeight, true, HUDClass.default.WhiteColor, TeamColor);
+<a name="694"></a>	<span class="source_type">X</span> += RoleLength * <span class="source_type">C</span>.ClipX;
+<a name="695"></a>
+<a name="696"></a>	<span class="source_comment">// Draw team score
+</span><a name="697"></a>	if (<span class="source_type">TeamNum</span> == NEUTRAL_TEAM_INDEX || <span class="source_type">TeamNum</span> == SPECTATOR)
+<a name="698"></a>		<span class="source_type">T</span> = <span class="source_string">""</span>;
+<a name="699"></a>	else
+<a name="700"></a>		<span class="source_type">T</span> = <span class="source_type">string</span>(<span class="source_type">int</span>(GRI.Teams[<span class="source_type">TeamNum</span>].<span class="source_type">Score</span>));
+<a name="701"></a>
+<a name="702"></a>	DrawCell(<span class="source_type">C</span>, <span class="source_type">T</span>, <span class="source_int">1</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, ScoreLength * <span class="source_type">C</span>.ClipX, CellHeight, true, HUDClass.default.WhiteColor, TeamColor);
+<a name="703"></a>	<span class="source_type">X</span> += ScoreLength * <span class="source_type">C</span>.ClipX;
+<a name="704"></a>
+<a name="705"></a>	<span class="source_comment">// Draw nothing for the time cell
+</span><a name="706"></a>	DrawCell(<span class="source_type">C</span>, <span class="source_string">""</span>, <span class="source_int">0</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, TimeLength * <span class="source_type">C</span>.ClipX, CellHeight, true, HUDClass.default.WhiteColor, TeamColor);
+<a name="707"></a>	<span class="source_type">X</span> += TimeLength * <span class="source_type">C</span>.ClipX;
+<a name="708"></a>
+<a name="709"></a>	<span class="source_comment">// Draw average ping
+</span><a name="710"></a>	DrawCell(<span class="source_type">C</span>, AvgPing[<span class="source_type">TeamNum</span>], <span class="source_int">1</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, PingLength * <span class="source_type">C</span>.ClipX, CellHeight, true, HUDClass.default.WhiteColor, TeamColor);
+<a name="711"></a>
+<a name="712"></a>	<span class="source_type">Y</span> += CellHeight;
+<a name="713"></a>
+<a name="714"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Min(PlayerCount, ArrayCount(PRIArray)); <span class="source_type">i</span>++)
+<a name="715"></a>	{
+<a name="716"></a>		<span class="source_comment">// Make sure there's enough room to draw this row
+</span><a name="717"></a>		if (<span class="source_type">Y</span> + CellHeight &gt; <span class="source_type">C</span>.ClipY)
+<a name="718"></a>			break;
+<a name="719"></a>
+<a name="720"></a>		if (PRIArray[<span class="source_type">i</span>].bIsSpectator || PRIArray[<span class="source_type">i</span>].bWaitingPlayer)
+<a name="721"></a>			TeamColor = HUDClass.default.GrayColor;
+<a name="722"></a>		else
+<a name="723"></a>			TeamColor = TeamColors[<span class="source_type">TeamNum</span>];
+<a name="724"></a>
+<a name="725"></a>		if (PRIArray[<span class="source_type">i</span>] == <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>)
+<a name="726"></a>			bHighlight = true;
+<a name="727"></a>		else
+<a name="728"></a>			bHighlight = false;
+<a name="729"></a>
+<a name="730"></a>
+<a name="731"></a>		<span class="source_type">X</span> = <span class="source_int">0.05</span> * <span class="source_type">C</span>.ClipX;
+<a name="732"></a>
+<a name="733"></a>		<span class="source_comment">// Draw name
+</span><a name="734"></a>		if( <span class="source_type"><a href="../roengine/rogamereplicationinfo.html" class="source">ROGameReplicationInfo</a></span>(GRI).bPlayerMustReady )
+<a name="735"></a>		{
+<a name="736"></a>			if( PRIArray[<span class="source_type">i</span>].bReadyToPlay )
+<a name="737"></a>				DrawCell(<span class="source_type">C</span>, PRIArray[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>, <span class="source_int">0</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, NameLength * <span class="source_type">C</span>.ClipX, CellHeight, bHighlight, TeamColor, HighlightColor);
+<a name="738"></a>			else
+<a name="739"></a>				DrawCell(<span class="source_type">C</span>, PRIArray[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>$<span class="source_string">" --Waiting--"</span>, <span class="source_int">0</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, NameLength * <span class="source_type">C</span>.ClipX, CellHeight, bHighlight, TeamColor, HighlightColor);
+<a name="740"></a>			<span class="source_type">X</span> += NameLength * <span class="source_type">C</span>.ClipX;
+<a name="741"></a>		}
+<a name="742"></a>		else
+<a name="743"></a>		{
+<a name="744"></a>			DrawCell(<span class="source_type">C</span>, PRIArray[<span class="source_type">i</span>].<span class="source_type">PlayerName</span>, <span class="source_int">0</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, NameLength * <span class="source_type">C</span>.ClipX, CellHeight, bHighlight, TeamColor, HighlightColor);
+<a name="745"></a>			<span class="source_type">X</span> += NameLength * <span class="source_type">C</span>.ClipX;
+<a name="746"></a>		}
+<a name="747"></a>
+<a name="748"></a>		<span class="source_comment">// Draw admin text
+</span><a name="749"></a>		if (PRIArray[<span class="source_type">i</span>].bAdmin)
+<a name="750"></a>			<span class="source_type">T</span> = AdminText;
+<a name="751"></a>		else
+<a name="752"></a>			<span class="source_type">T</span> = <span class="source_string">""</span>;
+<a name="753"></a>
+<a name="754"></a>		DrawCell(<span class="source_type">C</span>, <span class="source_type">T</span>, <span class="source_int">0</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, TeamScoreLength * <span class="source_type">C</span>.ClipX, CellHeight, bHighlight, TeamColor, HighlightColor);
+<a name="755"></a>		<span class="source_type">X</span> += TeamScoreLength * <span class="source_type">C</span>.ClipX;
+<a name="756"></a>
+<a name="757"></a>		<span class="source_comment">// Draw role
+</span><a name="758"></a>		if (PRIArray[<span class="source_type">i</span>].RoleInfo != None)
+<a name="759"></a>		{
+<a name="760"></a>			if( <span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">Owner</span>) != none && <span class="source_type"><a href="../roengine/roplayer.html" class="source">ROPlayer</a></span>(<span class="source_type">Owner</span>).bUseNativeRoleNames )
+<a name="761"></a>			{
+<a name="762"></a>	        	<span class="source_type">T</span> = PRIArray[<span class="source_type">i</span>].RoleInfo.default.AltName;
+<a name="763"></a>	        }
+<a name="764"></a>	        else
+<a name="765"></a>	        {
+<a name="766"></a>	        	<span class="source_type">T</span> = PRIArray[<span class="source_type">i</span>].RoleInfo.default.MyName;
+<a name="767"></a>	        }
+<a name="768"></a>		}
+<a name="769"></a>		else
+<a name="770"></a>			<span class="source_type">T</span> = <span class="source_string">""</span>;
+<a name="771"></a>
+<a name="772"></a>		DrawCell(<span class="source_type">C</span>, <span class="source_type">T</span>, <span class="source_int">0</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, RoleLength * <span class="source_type">C</span>.ClipX, CellHeight, bHighlight, TeamColor, HighlightColor);
+<a name="773"></a>		<span class="source_type">X</span> += RoleLength * <span class="source_type">C</span>.ClipX;
+<a name="774"></a>
+<a name="775"></a>		<span class="source_comment">// Draw score
+</span><a name="776"></a>		DrawCell(<span class="source_type">C</span>, <span class="source_type">int</span>(PRIArray[<span class="source_type">i</span>].<span class="source_type">Score</span>), <span class="source_int">1</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, ScoreLength * <span class="source_type">C</span>.ClipX, CellHeight, bHighlight, TeamColor, HighlightColor);
+<a name="777"></a>		<span class="source_type">X</span> += ScoreLength * <span class="source_type">C</span>.ClipX;
+<a name="778"></a>
+<a name="779"></a>		<span class="source_comment">// Draw time
+</span><a name="780"></a>		DrawCell(<span class="source_type">C</span>, FormatTime(GRI.ElapsedTime - PRIArray[<span class="source_type">i</span>].StartTime), <span class="source_int">1</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, TimeLength * <span class="source_type">C</span>.ClipX, CellHeight, bHighlight, TeamColor, HighlightColor);
+<a name="781"></a>		<span class="source_type">X</span> += TimeLength * <span class="source_type">C</span>.ClipX;
+<a name="782"></a>
+<a name="783"></a>		<span class="source_comment">// Draw ping
+</span><a name="784"></a>		DrawCell(<span class="source_type">C</span>, <span class="source_int">4</span> * PRIArray[<span class="source_type">i</span>].Ping, <span class="source_int">1</span>, <span class="source_type">X</span>, <span class="source_type">Y</span>, PingLength * <span class="source_type">C</span>.ClipX, CellHeight, bHighlight, TeamColor, HighlightColor); <span class="source_comment">// 4 * ping because thats they way it is in ROTeamGame
+</span><a name="785"></a>
+<a name="786"></a>		<span class="source_type">Y</span> += CellHeight;
+<a name="787"></a>	}
+<a name="788"></a>
+<a name="789"></a>	return <span class="source_type">Y</span>;
+<a name="790"></a>}
+<a name="791"></a>
+<a name="792"></a><span class="source_comment">// This is a modified version based of of Crube's BFE scoreboard mutator
+</span><a name="793"></a>simulated function DrawCell(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>, coerce <span class="source_type">string</span> <span class="source_type">Text</span>, <span class="source_type">byte</span> Align, <span class="source_type">float</span> XPos, <span class="source_type">float</span> YPos, <span class="source_type">float</span> <span class="source_type">Width</span>, <span class="source_type">float</span> Height, <span class="source_type">bool</span> bDrawBacking, <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span> <span class="source_type">F</span>, optional <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span> <span class="source_type">B</span>)
+<a name="794"></a>{
+<a name="795"></a>	local <span class="source_type">float</span> <span class="source_type">X</span>;
+<a name="796"></a>	local <span class="source_type">float</span> <span class="source_type">Y</span>;
+<a name="797"></a>	local <span class="source_type">float</span> XL;
+<a name="798"></a>	local <span class="source_type">float</span> <span class="source_type">YL</span>;
+<a name="799"></a>
+<a name="800"></a>	<span class="source_type">X</span> = XPos;
+<a name="801"></a>	<span class="source_type">Y</span> = YPos;
+<a name="802"></a>	<span class="source_type">C</span>.TextSize(<span class="source_string">"TEST"</span>,XL,<span class="source_type">YL</span>);
+<a name="803"></a>	<span class="source_type">C</span>.SetOrigin(<span class="source_type">X</span>,<span class="source_type">Y</span>);
+<a name="804"></a>	<span class="source_type">C</span>.SetClip(XPos + <span class="source_type">Width</span>,YPos + Height);
+<a name="805"></a>	if ( bDrawBacking )
+<a name="806"></a>	{
+<a name="807"></a>		<span class="source_type">C</span>.SetPos(<span class="source_int">0.0</span>,<span class="source_int">0.0</span>);
+<a name="808"></a>		<span class="source_type">C</span>.DrawColor = <span class="source_type">B</span>;
+<a name="809"></a>		<span class="source_type">C</span>.DrawRect(<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'WhiteSquareTexture'</span>,<span class="source_type">C</span>.ClipX - <span class="source_type">C</span>.OrgX,<span class="source_type">C</span>.ClipY - <span class="source_type">C</span>.OrgY);
+<a name="810"></a>	}
+<a name="811"></a>	if ( <span class="source_type">Text</span> != <span class="source_string">""</span> )
+<a name="812"></a>	{
+<a name="813"></a>		<span class="source_type">C</span>.SetPos(<span class="source_int">0</span>,<span class="source_int">0</span>);
+<a name="814"></a>		<span class="source_type">C</span>.DrawColor = <span class="source_type">F</span>;
+<a name="815"></a>		<span class="source_type">C</span>.DrawTextJustified(<span class="source_type">Text</span>,Align,<span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">C</span>.ClipX,<span class="source_type">C</span>.ClipY);
+<a name="816"></a>	}
+<a name="817"></a>	<span class="source_type">C</span>.SetOrigin(<span class="source_int">0.0</span>,<span class="source_int">0.0</span>);
+<a name="818"></a>	<span class="source_type">C</span>.SetClip(<span class="source_type">C</span>.SizeX,<span class="source_type">C</span>.SizeY);
+<a name="819"></a>}
+<a name="820"></a>
+<a name="821"></a>simulated function <span class="source_type">float</span> CalcX(<span class="source_type">float</span> <span class="source_type">X</span>, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>)
+<a name="822"></a>{
+<a name="823"></a>	return <span class="source_type">X</span> * <span class="source_type">C</span>.SizeX / <span class="source_int">30</span>;
+<a name="824"></a>}
+<a name="825"></a>
+<a name="826"></a>simulated function <span class="source_type">float</span> CalcY(<span class="source_type">float</span> <span class="source_type">Y</span>, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>)
+<a name="827"></a>{
+<a name="828"></a>	return <span class="source_type">Y</span> * <span class="source_type">C</span>.SizeY / <span class="source_int">22</span>;
+<a name="829"></a>}
+<a name="830"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="831"></a><span class="source_comment">// InOrder - Sorts the PRIs appropriately
+</span><a name="832"></a><span class="source_comment">//-----------------------------------------------------------------------------
+</span><a name="833"></a>
+<a name="834"></a>simulated function <span class="source_type">bool</span> InOrder( <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> P1, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> <span class="source_type">P2</span> )
+<a name="835"></a>{
+<a name="836"></a>	if( P1.bOnlySpectator )
+<a name="837"></a>	{
+<a name="838"></a>		if( <span class="source_type">P2</span>.bOnlySpectator )
+<a name="839"></a>			return true;
+<a name="840"></a>		else
+<a name="841"></a>			return false;
+<a name="842"></a>	}
+<a name="843"></a>	else if ( <span class="source_type">P2</span>.bOnlySpectator )
+<a name="844"></a>		return true;
+<a name="845"></a>
+<a name="846"></a>	if( P1.<span class="source_type">Score</span> &lt; <span class="source_type">P2</span>.<span class="source_type">Score</span> )
+<a name="847"></a>		return false;
+<a name="848"></a>
+<a name="849"></a>	if( P1.<span class="source_type">Score</span> == <span class="source_type">P2</span>.<span class="source_type">Score</span> )
+<a name="850"></a>	{
+<a name="851"></a>		<span class="source_comment">// Don't worry about deaths, just sort by name if scores are even
+</span><a name="852"></a>		if (P1.<span class="source_type">PlayerName</span> &lt; <span class="source_type">P2</span>.<span class="source_type">PlayerName</span>)
+<a name="853"></a>			return false;
+<a name="854"></a>
+<a name="855"></a>		<span class="source_comment">/*if ( P1.Deaths &gt; P2.Deaths )
+<a name="856"></a>			return false;
+<a name="857"></a>		if ( (P1.Deaths == P2.Deaths) && (PlayerController(P2.Owner) != None) && (Viewport(PlayerController(P2.Owner).Player) != None) )
+<a name="858"></a>			return false;*/</span>
+<a name="859"></a>	}
+<a name="860"></a>	return true;
+<a name="861"></a>}
+<a name="862"></a>
+<a name="863"></a><span class="source_comment">//=============================================================================
+</span><a name="864"></a><span class="source_comment">// defaultproperties
+</span><a name="865"></a><span class="source_comment">//=============================================================================
+</span><a name="866"></a>
+<a name="867"></a>defaultproperties
+<a name="868"></a>{
+<a name="869"></a>     HeaderImage=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.HUD.RO_Headerbar'</span>
+<a name="870"></a>     SpectatorTeamName=<span class="source_string">"Spectators"</span>
+<a name="871"></a>     UnassignedTeamName=<span class="source_string">"Unassigned"</span>
+<a name="872"></a>     TitleText=<span class="source_string">"SCORES"</span>
+<a name="873"></a>     NameText=<span class="source_string">"Name"</span>
+<a name="874"></a>     AdminText=<span class="source_string">"Admin"</span>
+<a name="875"></a>     RoleText=<span class="source_string">"Role"</span>
+<a name="876"></a>     ScoreText=<span class="source_string">"Score"</span>
+<a name="877"></a>     TimeText=<span class="source_string">"Time"</span>
+<a name="878"></a>     PingText=<span class="source_string">"Ping"</span>
+<a name="879"></a>     PlayerText=<span class="source_string">"Player"</span>
+<a name="880"></a>     PlayerPluralText=<span class="source_string">"Players"</span>
+<a name="881"></a>     TotalsText=<span class="source_string">"Team Totals"</span>
+<a name="882"></a>     ObjectivesHeldText=<span class="source_string">"Objectives Held"</span>
+<a name="883"></a>     RequiredObjHeldText=<span class="source_string">"Required Objectives Held"</span>
+<a name="884"></a>     SecondaryObjHeldText=<span class="source_string">"Secondary Objectives Held"</span>
+<a name="885"></a>     RoundsWonText=<span class="source_string">"Rounds Won"</span>
+<a name="886"></a>     TeamNameAllies=<span class="source_string">"Allies"</span>
+<a name="887"></a>     TeamNameAxis=<span class="source_string">"Axis"</span>
+<a name="888"></a>     NameLength=<span class="source_int">0.300000</span>
+<a name="889"></a>     TeamScoreLength=<span class="source_int">0.100000</span>
+<a name="890"></a>     RoleLength=<span class="source_int">0.200000</span>
+<a name="891"></a>     ScoreLength=<span class="source_int">0.100000</span>
+<a name="892"></a>     TimeLength=<span class="source_int">0.100000</span>
+<a name="893"></a>     PingLength=<span class="source_int">0.100000</span>
+<a name="894"></a>     TeamColors(<span class="source_int">0</span>)=(<span class="source_type">B</span>=<span class="source_int">128</span>,G=<span class="source_int">128</span>,<span class="source_type">R</span>=<span class="source_int">64</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="895"></a>     TeamColors(<span class="source_int">1</span>)=(<span class="source_type">B</span>=<span class="source_int">64</span>,G=<span class="source_int">64</span>,<span class="source_type">R</span>=<span class="source_int">192</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="896"></a>     TeamColors(<span class="source_int">2</span>)=(<span class="source_type">B</span>=<span class="source_int">32</span>,G=<span class="source_int">32</span>,<span class="source_type">R</span>=<span class="source_int">32</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="897"></a>     TeamColors(<span class="source_int">3</span>)=(<span class="source_type">B</span>=<span class="source_int">128</span>,G=<span class="source_int">128</span>,<span class="source_type">R</span>=<span class="source_int">128</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="898"></a>     HighlightColor=(<span class="source_type">B</span>=<span class="source_int">128</span>,G=<span class="source_int">128</span>,<span class="source_type">R</span>=<span class="source_int">128</span>,<span class="source_type">A</span>=<span class="source_int">64</span>)
+<a name="899"></a>     ReinforcementsText=<span class="source_string">"Reinforcements"</span>
+<a name="900"></a>     WaitingText=<span class="source_string">" -Not Ready-"</span>
+<a name="901"></a>     AdminWaitingText=<span class="source_string">" -Admin Hold-"</span>
+<a name="902"></a>     HudClass=<span class="source_type">Class</span><span class="source_name">'ROEngine.ROHud'</span>
+<a name="903"></a>}
+<a name="904"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../rointerface/rointerface-overview.html">Package</a></td>
+	<td class="header"><a href="../rointerface/roscoreboard.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROScoreBoard">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_rointerface/ronetworkstatusmessage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_rointerface/roserverloading.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:07.404 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

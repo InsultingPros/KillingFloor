@@ -1,0 +1,571 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Engine.Console</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/console.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#Console">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/combiner.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/constantcolor.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#engine/console.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.Console</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../engine/interaction.html">Interaction</a></dd>
+
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/interactions.html">Interactions</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/interaction.html">Interaction</a>
+      |   
+      +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/console.html">Console</a>
+</pre>
+
+<h4>Direct Known Subclasses:</h4>
+<blockquote>
+	<a href="../xinterface/extendedconsole.html">ExtendedConsole</a>
+</blockquote>
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bIgnoreKeys" name="bIgnoreKeys" title="go to the details">bIgnoreKeys</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bTyping" name="bTyping" title="go to the details">bTyping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;string&gt;</td><td width="66%"><a href="#_BufferedConsoleCommands" name="BufferedConsoleCommands" title="go to the details">BufferedConsoleCommands</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_ConsoleHotKey" name="ConsoleHotKey" title="go to the details">ConsoleHotKey</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_HistoryBot" name="HistoryBot" title="go to the details">HistoryBot</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_HistoryCur" name="HistoryCur" title="go to the details">HistoryCur</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_HistoryTop" name="HistoryTop" title="go to the details">HistoryTop</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_History[16]" name="History[16]" title="go to the details">History[16]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">string</td><td width="66%"><a href="#_TypedStr" name="TypedStr" title="go to the details">TypedStr</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_TypedStrPos" name="TypedStrPos" title="go to the details">TypedStrPos</a></td></tr>
+<tr><th colspan="2" class="small">Console</th></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bHoldingBack" name="bHoldingBack" title="go to the details">bHoldingBack</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bHoldingStart" name="bHoldingStart" title="go to the details">bHoldingStart</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bRunningDemo" name="bRunningDemo" title="go to the details">bRunningDemo</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">String</td><td width="66%"><a href="#_DemoLevels[64]" name="DemoLevels[64]" title="go to the details">DemoLevels[64]</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimeBeforeReboot" name="TimeBeforeReboot" title="go to the details">TimeBeforeReboot</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimeHoldingReboot" name="TimeHoldingReboot" title="go to the details">TimeHoldingReboot</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimeIdle" name="TimeIdle" title="go to the details">TimeIdle</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimePerDemo" name="TimePerDemo" title="go to the details">TimePerDemo</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimePerSoak" name="TimePerSoak" title="go to the details">TimePerSoak</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimePerTitle" name="TimePerTitle" title="go to the details">TimePerTitle</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimeTooIdle" name="TimeTooIdle" title="go to the details">TimeTooIdle</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/interaction.html">Interaction</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/interaction.html#bActive">bActive</a>, <a href="../engine/interaction.html#bNativeEvents">bNativeEvents</a>, <a href="../engine/interaction.html#bRequiresTick">bRequiresTick</a>, <a href="../engine/interaction.html#bVisible">bVisible</a>, <a href="../engine/interaction.html#Master">Master</a>, <a href="../engine/interaction.html#ViewportOwner">ViewportOwner</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/interactions.html">Interactions</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/interactions.html#EInputAction">EInputAction</a>, <a href="../engine/interactions.html#EInputKey">EInputKey</a>, <a href="../engine/interactions.html#EStreamFinishReason">EStreamFinishReason</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_BeginState-Typing" name="BeginState" title="go to the details">BeginState</a> ()))<br /><span class="function_state">Typing</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Chat-" name="Chat" title="go to the details">Chat</a> (coerce string Msg, float MsgLife, <a href="../engine/playerreplicationinfo.html">PlayerReplicationInfo</a> PRI)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_ConnectFailure-" name="ConnectFailure" title="go to the details">ConnectFailure</a> (string FailCode, tring URL)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ConsoleClose-" name="ConsoleClose" title="go to the details">ConsoleClose</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ConsoleOpen-" name="ConsoleOpen" title="go to the details">ConsoleOpen</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_ConsoleToggle-" name="ConsoleToggle" title="go to the details">ConsoleToggle</a> ()<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_DelayedConsoleCommand-" name="DelayedConsoleCommand" title="go to the details">DelayedConsoleCommand</a> (string command))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_EndState-Typing" name="EndState" title="go to the details">EndState</a> ()))<br /><span class="function_state">Typing</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Initialized-" name="Initialized" title="go to the details">Initialized</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>bool&nbsp;</td><td><a href="#_KeyEvent-" name="KeyEvent" title="go to the details">KeyEvent</a> (<a href="../engine/interactions.html#EInputKey">EInputKey</a> Key, <a href="../engine/interactions.html#EInputAction">EInputAction</a> Action, FLOAT Delta ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_KeyEvent-Typing" name="KeyEvent" title="go to the details">KeyEvent</a> (<a href="../engine/interactions.html#EInputKey">EInputKey</a> Key, <a href="../engine/interactions.html#EInputAction">EInputAction</a> Action, FLOAT Delta ))<br /><span class="function_state">Typing</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>bool&nbsp;</td><td><a href="#_KeyType-Typing" name="KeyType" title="go to the details">KeyType</a> (<a href="../engine/interactions.html#EInputKey">EInputKey</a> Key, optional string Unicode ))<br /><span class="function_state">Typing</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Message-" name="Message" title="go to the details">Message</a> (coerce string Msg, float MsgLife)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_NativeConsoleOpen-" name="NativeConsoleOpen" title="go to the details">NativeConsoleOpen</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_NotifyLevelChange-" name="NotifyLevelChange" title="go to the details">NotifyLevelChange</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>string&nbsp;</td><td><a href="#_SetInitialMusic-" name="SetInitialMusic" title="go to the details">SetInitialMusic</a> (string NewSong))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_SetMusic-" name="SetMusic" title="go to the details">SetMusic</a> (string NewSong)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StartRollingDemo-" name="StartRollingDemo" title="go to the details">StartRollingDemo</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_StopRollingDemo-" name="StopRollingDemo" title="go to the details">StopRollingDemo</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Talk-" name="Talk" title="go to the details">Talk</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TeamTalk-" name="TeamTalk" title="go to the details">TeamTalk</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_Tick-" name="Tick" title="go to the details">Tick</a> (float Delta ))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Type-" name="Type" title="go to the details">Type</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Type-Typing" name="Type" title="go to the details">Type</a> ()))<br /><span class="function_state">Typing</span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TypingClose-" name="TypingClose" title="go to the details">TypingClose</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TypingOpen-" name="TypingOpen" title="go to the details">TypingOpen</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_UnPressButtons-" name="UnPressButtons" title="go to the details">UnPressButtons</a> ()))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_event.gif" alt="event" title="event" /></td><td>&nbsp;</td><td><a href="#_ViewportInitialized-" name="ViewportInitialized" title="go to the details">ViewportInitialized</a> ()))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/interaction.html">Interaction</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/interaction.html#ConsoleCommand">ConsoleCommand</a>, <a href="../engine/interaction.html#Initialize">Initialize</a>, <a href="../engine/interaction.html#Initialized">Initialized</a>, <a href="../engine/interaction.html#KeyEvent">KeyEvent</a>, <a href="../engine/interaction.html#KeyType">KeyType</a>, <a href="../engine/interaction.html#Message">Message</a>, <a href="../engine/interaction.html#NotifyLevelChange">NotifyLevelChange</a>, <a href="../engine/interaction.html#NotifyMusicChange">NotifyMusicChange</a>, <a href="../engine/interaction.html#PostRender">PostRender</a>, <a href="../engine/interaction.html#PreRender">PreRender</a>, <a href="../engine/interaction.html#ScreenToWorld">ScreenToWorld</a>, <a href="../engine/interaction.html#SetFocus">SetFocus</a>, <a href="../engine/interaction.html#StreamFinished">StreamFinished</a>, <a href="../engine/interaction.html#Tick">Tick</a>, <a href="../engine/interaction.html#WorldToScreen">WorldToScreen</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/interactions.html">Interactions</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/interactions.html#GetFriendlyName">GetFriendlyName</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">States Summary</th>
+</tr>
+</table>
+
+<table>
+<tr>
+	<th>Typing <a href="../Source_engine/console.html#202" class="small">Source code</a></th>
+</tr>
+<tr>
+	<td>
+	<span class="declaration"><span class="us_keyw"> state</span> Typing <span class="us_keyw"></span> </span><br />
+	<blockquote class="comment">
+	
+	</blockquote>
+	</td>
+</tr>
+<tr>
+	<td><a href="#_BeginState+Typing">BeginState</a>, <a href="#_EndState+Typing">EndState</a>, <a href="#_KeyEvent+Typing">KeyEvent</a>, <a href="#_KeyType+Typing">KeyType</a>, <a href="#_Type+Typing">Type</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_bIgnoreKeys" class="hidden"></a>bIgnoreKeys <a href="../Source_engine/console.html#13" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bIgnoreKeys;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bTyping" class="hidden"></a>bTyping <a href="../Source_engine/console.html#12" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">bool</span> bTyping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_BufferedConsoleCommands" class="hidden"></a>BufferedConsoleCommands <a href="../Source_engine/console.html#31" class="small">Source code</a></h4>
+<div class="declaration">var array&lt;<span class="source_type">string</span>&gt; BufferedConsoleCommands;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ConsoleHotKey" class="hidden"></a>ConsoleHotKey <a href="../Source_engine/console.html#7" class="small">Source code</a></h4>
+<div class="declaration">var config <span class="source_type">byte</span> ConsoleHotKey;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HistoryBot" class="hidden"></a>HistoryBot <a href="../Source_engine/console.html#9" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> HistoryBot;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HistoryCur" class="hidden"></a>HistoryCur <a href="../Source_engine/console.html#9" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> HistoryCur;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_HistoryTop" class="hidden"></a>HistoryTop <a href="../Source_engine/console.html#9" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> HistoryTop;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_History[16]" class="hidden"></a>History[16] <a href="../Source_engine/console.html#10" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> History[<span class="source_int">16</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TypedStr" class="hidden"></a>TypedStr <a href="../Source_engine/console.html#10" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">string</span> TypedStr;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TypedStrPos" class="hidden"></a>TypedStrPos <a href="../Source_engine/console.html#11" class="small">Source code</a></h4>
+<div class="declaration">var <span class="source_type">int</span> TypedStrPos;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">Console</h3>
+<h4><a name="_bHoldingBack" class="hidden"></a>bHoldingBack <a href="../Source_engine/console.html#17" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) transient <span class="source_type">bool</span> bHoldingBack;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bHoldingStart" class="hidden"></a>bHoldingStart <a href="../Source_engine/console.html#16" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) transient <span class="source_type">bool</span> bHoldingStart;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bRunningDemo" class="hidden"></a>bRunningDemo <a href="../Source_engine/console.html#15" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) transient <span class="source_type">bool</span> bRunningDemo;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DemoLevels[64]" class="hidden"></a>DemoLevels[64] <a href="../Source_engine/console.html#29" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) globalconfig <span class="source_type">String</span> DemoLevels[<span class="source_int">64</span>];</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimeBeforeReboot" class="hidden"></a>TimeBeforeReboot <a href="../Source_engine/console.html#25" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) globalconfig <span class="source_type">float</span> TimeBeforeReboot;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimeHoldingReboot" class="hidden"></a>TimeHoldingReboot <a href="../Source_engine/console.html#20" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) transient <span class="source_type">float</span> TimeHoldingReboot;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimeIdle" class="hidden"></a>TimeIdle <a href="../Source_engine/console.html#19" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) transient <span class="source_type">float</span> TimeIdle;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimePerDemo" class="hidden"></a>TimePerDemo <a href="../Source_engine/console.html#23" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) globalconfig <span class="source_type">float</span> TimePerDemo;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimePerSoak" class="hidden"></a>TimePerSoak <a href="../Source_engine/console.html#27" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) globalconfig <span class="source_type">float</span> TimePerSoak;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimePerTitle" class="hidden"></a>TimePerTitle <a href="../Source_engine/console.html#22" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) globalconfig <span class="source_type">float</span> TimePerTitle;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimeTooIdle" class="hidden"></a>TimeTooIdle <a href="../Source_engine/console.html#24" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>) globalconfig <span class="source_type">float</span> TimeTooIdle;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_BeginState-Typing" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> BeginState <span class="function_state">Typing</span> <a href="../Source_engine/console.html#353" class="small">Source code</a></h4>
+<div class="declaration"> function  BeginState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Chat-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Chat <span class="function_state"></span> <a href="../Source_engine/console.html#146" class="small">Source code</a></h4>
+<div class="declaration"> function  Chat ( coerce <span class="source_type">string</span> Msg, <span class="source_type">float</span> MsgLife, <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> PRI )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ConnectFailure-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> ConnectFailure <span class="function_state"></span> <a href="../Source_engine/console.html#397" class="small">Source code</a></h4>
+<div class="declaration"> event  ConnectFailure ( <span class="source_type">string</span> FailCode,<span class="source_type">string</span> <span class="source_type">URL</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ConsoleClose-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ConsoleClose <span class="function_state"></span> <a href="../Source_engine/console.html#89" class="small">Source code</a></h4>
+<div class="declaration">exec function  ConsoleClose (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ConsoleOpen-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ConsoleOpen <span class="function_state"></span> <a href="../Source_engine/console.html#88" class="small">Source code</a></h4>
+<div class="declaration">exec function  ConsoleOpen (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ConsoleToggle-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> ConsoleToggle <span class="function_state"></span> <a href="../Source_engine/console.html#90" class="small">Source code</a></h4>
+<div class="declaration">exec function  ConsoleToggle (  )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_DelayedConsoleCommand-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> DelayedConsoleCommand <span class="function_state"></span> <a href="../Source_engine/console.html#135" class="small">Source code</a></h4>
+<div class="declaration"> function  DelayedConsoleCommand ( <span class="source_type">string</span> <span class="source_type">command</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_EndState-Typing" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> EndState <span class="function_state">Typing</span> <a href="../Source_engine/console.html#360" class="small">Source code</a></h4>
+<div class="declaration"> function  EndState ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Initialized-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Initialized <span class="function_state"></span> <a href="../Source_engine/console.html#33" class="small">Source code</a></h4>
+<div class="declaration"> event  Initialized ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyEvent-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> KeyEvent <span class="function_state"></span> <a href="../Source_engine/console.html#149" class="small">Source code</a></h4>
+<div class="declaration"> event <span class="source_type">bool</span> KeyEvent ( <span class="source_type"><a href="../engine/interactions.html#EInputKey" class="source">EInputKey</a></span> Key, <span class="source_type"><a href="../engine/interactions.html#EInputAction" class="source">EInputAction</a></span> Action, <span class="source_type">FLOAT</span> <span class="source_type">Delta</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyEvent-Typing" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> KeyEvent <span class="function_state">Typing</span> <a href="../Source_engine/console.html#228" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> KeyEvent ( <span class="source_type"><a href="../engine/interactions.html#EInputKey" class="source">EInputKey</a></span> Key, <span class="source_type"><a href="../engine/interactions.html#EInputAction" class="source">EInputAction</a></span> Action, <span class="source_type">FLOAT</span> <span class="source_type">Delta</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_KeyType-Typing" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> KeyType <span class="function_state">Typing</span> <a href="../Source_engine/console.html#210" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">bool</span> KeyType ( <span class="source_type"><a href="../engine/interactions.html#EInputKey" class="source">EInputKey</a></span> Key, optional <span class="source_type">string</span> <span class="source_type">Unicode</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Message-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Message <span class="function_state"></span> <a href="../Source_engine/console.html#147" class="small">Source code</a></h4>
+<div class="declaration"> event  Message ( coerce <span class="source_type">string</span> Msg, <span class="source_type">float</span> MsgLife )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NativeConsoleOpen-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> NativeConsoleOpen <span class="function_state"></span> <a href="../Source_engine/console.html#51" class="small">Source code</a></h4>
+<div class="declaration"> event  NativeConsoleOpen ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NotifyLevelChange-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> NotifyLevelChange <span class="function_state"></span> <a href="../Source_engine/console.html#130" class="small">Source code</a></h4>
+<div class="declaration"> event  NotifyLevelChange ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetInitialMusic-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetInitialMusic <span class="function_state"></span> <a href="../Source_engine/console.html#401" class="small">Source code</a></h4>
+<div class="declaration"> function <span class="source_type">string</span> SetInitialMusic ( <span class="source_type">string</span> NewSong) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_SetMusic-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> SetMusic <span class="function_state"></span> <a href="../Source_engine/console.html#399" class="small">Source code</a></h4>
+<div class="declaration"> function  SetMusic ( <span class="source_type">string</span> NewSong )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StartRollingDemo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StartRollingDemo <span class="function_state"></span> <a href="../Source_engine/console.html#92" class="small">Source code</a></h4>
+<div class="declaration">exec function  StartRollingDemo ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_StopRollingDemo-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> StopRollingDemo <span class="function_state"></span> <a href="../Source_engine/console.html#123" class="small">Source code</a></h4>
+<div class="declaration">exec function  StopRollingDemo ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Talk-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Talk <span class="function_state"></span> <a href="../Source_engine/console.html#74" class="small">Source code</a></h4>
+<div class="declaration">exec function  Talk ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TeamTalk-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TeamTalk <span class="function_state"></span> <a href="../Source_engine/console.html#81" class="small">Source code</a></h4>
+<div class="declaration">exec function  TeamTalk ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Tick-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> Tick <span class="function_state"></span> <a href="../Source_engine/console.html#368" class="small">Source code</a></h4>
+<div class="declaration">simulated event  Tick ( <span class="source_type">float</span> <span class="source_type">Delta</span> ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Type-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Type <span class="function_state"></span> <a href="../Source_engine/console.html#67" class="small">Source code</a></h4>
+<div class="declaration">exec function  <span class="source_type">Type</span> ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Type-Typing" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Type <span class="function_state">Typing</span> <a href="../Source_engine/console.html#204" class="small">Source code</a></h4>
+<div class="declaration">exec function  <span class="source_type">Type</span> ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TypingClose-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TypingClose <span class="function_state"></span> <a href="../Source_engine/console.html#188" class="small">Source code</a></h4>
+<div class="declaration"> function  TypingClose ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TypingOpen-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TypingOpen <span class="function_state"></span> <a href="../Source_engine/console.html#176" class="small">Source code</a></h4>
+<div class="declaration"> function  TypingOpen ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UnPressButtons-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> UnPressButtons <span class="function_state"></span> <a href="../Source_engine/console.html#55" class="small">Source code</a></h4>
+<div class="declaration"> function  UnPressButtons ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ViewportInitialized-" class="hidden"></a><img src="../img_event.gif" alt="" title="event" /> ViewportInitialized <span class="function_state"></span> <a href="../Source_engine/console.html#42" class="small">Source code</a></h4>
+<div class="declaration"> event  ViewportInitialized ( ) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     HistoryBot=-<span class="source_int">1</span>
+     TimePerDemo=<span class="source_int">300.000000</span>
+     TimeTooIdle=<span class="source_int">60.000000</span>
+     TimeBeforeReboot=<span class="source_int">5.000000</span>
+     bRequiresTick=True
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/console.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#Console">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/combiner.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/constantcolor.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:42.493 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

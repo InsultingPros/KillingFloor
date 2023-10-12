@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.GUIImageList</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guiimagelist.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUIImageList">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guiimage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guilabel.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/guiimagelist.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/guiimagelist.html">GUIImageList</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// GUIImageList is simply a GUIImage that has its current image selected from an array
+</span><a name="2"></a><span class="source_comment">// It rotates using mouse wheel/arrow keys
+</span><a name="3"></a>
+<a name="4"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/guiimagelist.html" class="source">GUIImageList</a></span> extends <span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>;
+<a name="5"></a><span class="source_comment">//	Native;
+</span><a name="6"></a>
+<a name="7"></a>var() editinline array&lt;<span class="source_type">string</span>&gt; MatNames;
+<a name="8"></a>var() array&lt;<span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>&gt; Materials;
+<a name="9"></a>var() editconst <span class="source_type">int</span> CurIndex;
+<a name="10"></a>var() <span class="source_type">bool</span> bWrap;
+<a name="11"></a>
+<a name="12"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="13"></a>{
+<a name="14"></a>	Super.Initcomponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="15"></a>	OnKeyEvent=internalKeyEvent;
+<a name="16"></a>}
+<a name="17"></a>
+<a name="18"></a>function AddMaterial(<span class="source_type">string</span> MatName, out <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> Mat)
+<a name="19"></a>{
+<a name="20"></a>local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="21"></a>
+<a name="22"></a>	if (Mat != None)
+<a name="23"></a>	{
+<a name="24"></a>		<span class="source_type">i</span> = Materials.Length;
+<a name="25"></a>		Materials[<span class="source_type">i</span>]=Mat;
+<a name="26"></a>		MatNames[<span class="source_type">i</span>]=MatName;
+<a name="27"></a>	}
+<a name="28"></a>}
+<a name="29"></a>
+<a name="30"></a>function <span class="source_type">string</span> GetCurMatName()
+<a name="31"></a>{
+<a name="32"></a>	if (CurIndex &gt;= <span class="source_int">0</span> && CurIndex &lt; Materials.Length)
+<a name="33"></a>		return MatNames[CurIndex];
+<a name="34"></a>
+<a name="35"></a>	return <span class="source_string">""</span>;
+<a name="36"></a>}
+<a name="37"></a>
+<a name="38"></a>function SetIndex(<span class="source_type">int</span> <span class="source_type">index</span>)
+<a name="39"></a>{
+<a name="40"></a>	if (<span class="source_type">index</span> &gt;= <span class="source_int">0</span> && <span class="source_type">index</span> &lt; Materials.Length)
+<a name="41"></a>	{
+<a name="42"></a>		CurIndex = <span class="source_type">index</span>;
+<a name="43"></a>		<span class="source_type">Image</span> = Materials[<span class="source_type">index</span>];
+<a name="44"></a>	}
+<a name="45"></a>	else
+<a name="46"></a>	{
+<a name="47"></a>		<span class="source_type">Image</span> = None;
+<a name="48"></a>		CurIndex = -<span class="source_int">1</span>;
+<a name="49"></a>	}
+<a name="50"></a>}
+<a name="51"></a>
+<a name="52"></a>function <span class="source_type">bool</span> internalKeyEvent(out <span class="source_type">byte</span> Key, out <span class="source_type">byte</span> <span class="source_type">State</span>, <span class="source_type">float</span> <span class="source_type">delta</span>)
+<a name="53"></a>{
+<a name="54"></a>	if ( <span class="source_type">State</span> != <span class="source_int">3</span> )
+<a name="55"></a>		return false;
+<a name="56"></a>
+<a name="57"></a>	<span class="source_type">switch</span> ( Key )
+<a name="58"></a>	{
+<a name="59"></a>	case <span class="source_int">0x25</span>:	<span class="source_comment">// Up/Left/MouseWheelUp
+</span><a name="60"></a>	case <span class="source_int">0x26</span>:
+<a name="61"></a>	case <span class="source_int">0x64</span>:
+<a name="62"></a>	case <span class="source_int">0x68</span>:
+<a name="63"></a>	case <span class="source_int">0xEC</span>:
+<a name="64"></a>		PrevImage();
+<a name="65"></a>		return true;
+<a name="66"></a>
+<a name="67"></a>	case <span class="source_int">0x27</span>:  <span class="source_comment">// Down/Right/MouseWheelDn
+</span><a name="68"></a>	case <span class="source_int">0x28</span>:
+<a name="69"></a>	case <span class="source_int">0x62</span>:
+<a name="70"></a>	case <span class="source_int">0x66</span>:
+<a name="71"></a>	case <span class="source_int">0xED</span>:
+<a name="72"></a>		NextImage();
+<a name="73"></a>		return true;
+<a name="74"></a>
+<a name="75"></a>
+<a name="76"></a>	case <span class="source_int">0x24</span>:	<span class="source_comment">// Home
+</span><a name="77"></a>	case <span class="source_int">0x67</span>:
+<a name="78"></a>		FirstImage();
+<a name="79"></a>		return true;
+<a name="80"></a>
+<a name="81"></a>	case <span class="source_int">0x23</span>:	<span class="source_comment">// End
+</span><a name="82"></a>	case <span class="source_int">0x61</span>:
+<a name="83"></a>		LastImage();
+<a name="84"></a>		return true;
+<a name="85"></a>	}
+<a name="86"></a>
+<a name="87"></a>	return false;
+<a name="88"></a>}
+<a name="89"></a>
+<a name="90"></a>function PrevImage()
+<a name="91"></a>{
+<a name="92"></a>	if (CurIndex &lt; <span class="source_int">1</span>)
+<a name="93"></a>	{
+<a name="94"></a>		if (bWrap)
+<a name="95"></a>			SetIndex(Materials.Length - <span class="source_int">1</span>);
+<a name="96"></a>	}
+<a name="97"></a>	else
+<a name="98"></a>		SetIndex(CurIndex - <span class="source_int">1</span>);
+<a name="99"></a>}
+<a name="100"></a>
+<a name="101"></a>function NextImage()
+<a name="102"></a>{
+<a name="103"></a>	if (CurIndex &lt; <span class="source_int">0</span>)
+<a name="104"></a>		SetIndex(<span class="source_int">0</span>);
+<a name="105"></a>	else if ((CurIndex + <span class="source_int">1</span>) &gt;= Materials.Length)
+<a name="106"></a>	{
+<a name="107"></a>		if (bWrap)
+<a name="108"></a>			SetIndex(<span class="source_int">0</span>);
+<a name="109"></a>	}
+<a name="110"></a>	else
+<a name="111"></a>		SetIndex(CurIndex + <span class="source_int">1</span>);
+<a name="112"></a>}
+<a name="113"></a>
+<a name="114"></a>function FirstImage()
+<a name="115"></a>{
+<a name="116"></a>	if (Materials.Length &gt; <span class="source_int">0</span>)
+<a name="117"></a>		SetIndex(<span class="source_int">0</span>);
+<a name="118"></a>}
+<a name="119"></a>
+<a name="120"></a>function LastImage()
+<a name="121"></a>{
+<a name="122"></a>	if (Materials.Length &gt; <span class="source_int">0</span>)
+<a name="123"></a>		SetIndex(Materials.Length - <span class="source_int">1</span>);
+<a name="124"></a>}
+<a name="125"></a>
+<a name="126"></a>defaultproperties
+<a name="127"></a>{
+<a name="128"></a>     StyleName=<span class="source_string">"NoBackground"</span>
+<a name="129"></a>     bTabStop=True
+<a name="130"></a>     bAcceptsInput=True
+<a name="131"></a>     bCaptureMouse=True
+<a name="132"></a>}
+<a name="133"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/guiimagelist.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#GUIImageList">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/guiimage.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/guilabel.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:02.432 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

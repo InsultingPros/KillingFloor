@@ -1,0 +1,1685 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.StreamPlayer</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/streamplayer.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#StreamPlayer">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/streamdirectorynode.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/streamplaylisteditor.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/streamplayer.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/streamplayer.html">StreamPlayer</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022<br />01023<br />01024<br />01025<br />01026<br />01027<br />01028<br />01029<br />01030<br />01031<br />01032<br />01033<br />01034<br />01035<br />01036<br />01037<br />01038<br />01039<br />01040<br />
+01041<br />01042<br />01043<br />01044<br />01045<br />01046<br />01047<br />01048<br />01049<br />01050<br />01051<br />01052<br />01053<br />01054<br />01055<br />01056<br />01057<br />01058<br />01059<br />01060<br />
+01061<br />01062<br />01063<br />01064<br />01065<br />01066<br />01067<br />01068<br />01069<br />01070<br />01071<br />01072<br />01073<br />01074<br />01075<br />01076<br />01077<br />01078<br />01079<br />01080<br />
+01081<br />01082<br />01083<br />01084<br />01085<br />01086<br />01087<br />01088<br />01089<br />01090<br />01091<br />01092<br />01093<br />01094<br />01095<br />01096<br />01097<br />01098<br />01099<br />01100<br />
+01101<br />01102<br />01103<br />01104<br />01105<br />01106<br />01107<br />01108<br />01109<br />01110<br />01111<br />01112<br />01113<br />01114<br />01115<br />01116<br />01117<br />01118<br />01119<br />01120<br />
+01121<br />01122<br />01123<br />01124<br />01125<br />01126<br />01127<br />01128<br />01129<br />01130<br />01131<br />01132<br />01133<br />01134<br />01135<br />01136<br />01137<br />01138<br />01139<br />01140<br />
+01141<br />01142<br />01143<br />01144<br />01145<br />01146<br />01147<br />01148<br />01149<br />01150<br />01151<br />01152<br />01153<br />01154<br />01155<br />01156<br />01157<br />01158<br />01159<br />01160<br />
+01161<br />01162<br />01163<br />01164<br />01165<br />01166<br />01167<br />01168<br />01169<br />01170<br />01171<br />01172<br />01173<br />01174<br />01175<br />01176<br />01177<br />01178<br />01179<br />01180<br />
+01181<br />01182<br />01183<br />01184<br />01185<br />01186<br />01187<br />01188<br />01189<br />01190<br />01191<br />01192<br />01193<br />01194<br />01195<br />01196<br />01197<br />01198<br />01199<br />01200<br />
+01201<br />01202<br />01203<br />01204<br />01205<br />01206<br />01207<br />01208<br />01209<br />01210<br />01211<br />01212<br />01213<br />01214<br />01215<br />01216<br />01217<br />01218<br />01219<br />01220<br />
+01221<br />01222<br />01223<br />01224<br />01225<br />01226<br />01227<br />01228<br />01229<br />01230<br />01231<br />01232<br />01233<br />01234<br />01235<br />01236<br />01237<br />01238<br />01239<br />01240<br />
+01241<br />01242<br />01243<br />01244<br />01245<br />01246<br />01247<br />01248<br />01249<br />01250<br />01251<br />01252<br />01253<br />01254<br />01255<br />01256<br />01257<br />01258<br />01259<br />01260<br />
+01261<br />01262<br />01263<br />01264<br />01265<br />01266<br />01267<br />01268<br />01269<br />01270<br />01271<br />01272<br />01273<br />01274<br />01275<br />01276<br />01277<br />01278<br />01279<br />01280<br />
+01281<br />01282<br />01283<br />01284<br />01285<br />01286<br />01287<br />01288<br />01289<br />01290<br />01291<br />01292<br />01293<br />01294<br />01295<br />01296<br />01297<br />01298<br />01299<br />01300<br />
+01301<br />01302<br />01303<br />01304<br />01305<br />01306<br />01307<br />01308<br />01309<br />01310<br />01311<br />01312<br />01313<br />01314<br />01315<br />01316<br />01317<br />01318<br />01319<br />01320<br />
+01321<br />01322<br />01323<br />01324<br />01325<br />01326<br />01327<br />01328<br />01329<br />01330<br />01331<br />01332<br />01333<br />01334<br />01335<br />01336<br />01337<br />01338<br />01339<br />01340<br />
+01341<br />01342<br />01343<br />01344<br />01345<br />01346<br />01347<br />01348<br />01349<br />01350<br />01351<br />01352<br />01353<br />01354<br />01355<br />01356<br />01357<br />01358<br />01359<br />01360<br />
+01361<br />01362<br />01363<br />01364<br />01365<br />01366<br />01367<br />01368<br />01369<br />01370<br />01371<br />01372<br />01373<br />01374<br />01375<br />01376<br />01377<br />01378<br />01379<br />01380<br />
+01381<br />01382<br />01383<br />01384<br />01385<br />01386<br />01387<br />01388<br />01389<br />01390<br />01391<br />01392<br />01393<br />01394<br />01395<br />01396<br />01397<br />01398<br />01399<br />01400<br />
+01401<br />01402<br />01403<br />01404<br />01405<br />01406<br />01407<br />01408<br />01409<br />01410<br />01411<br />01412<br />01413<br />01414<br />01415<br />01416<br />01417<br />01418<br />01419<br />01420<br />
+01421<br />01422<br />01423<br />01424<br />01425<br />01426<br />01427<br />01428<br />01429<br />01430<br />01431<br />01432<br />01433<br />01434<br />01435<br />01436<br />01437<br />01438<br />01439<br />01440<br />
+01441<br />01442<br />01443<br />01444<br />01445<br />01446<br />01447<br />01448<br />01449<br />01450<br />01451<br />01452<br />01453<br />01454<br />01455<br />01456<br />01457<br />01458<br />01459<br />01460<br />
+01461<br />01462<br />01463<br />01464<br />01465<br />01466<br />01467<br />01468<br />01469<br />01470<br />01471<br />01472<br />01473<br />01474<br />01475<br />01476<br />01477<br />01478<br />01479<br />01480<br />
+01481<br />01482<br />01483<br />01484<br />01485<br />01486<br />01487<br />01488<br />01489<br />01490<br />01491<br />01492<br />01493<br />01494<br />01495<br />01496<br />01497<br />01498<br />01499<br />01500<br />
+01501<br />01502<br />01503<br />01504<br />01505<br />01506<br />01507<br />01508<br />01509<br />01510<br />01511<br />01512<br />01513<br />01514<br />01515<br />01516<br />01517<br />01518<br />01519<br />01520<br />
+01521<br />01522<br />01523<br />01524<br />01525<br />01526<br />01527<br />01528<br />01529<br />01530<br />01531<br />01532<br />01533<br />01534<br />01535<br />01536<br />01537<br />01538<br />01539<br />01540<br />
+01541<br />01542<br />01543<br />01544<br />01545<br />01546<br />01547<br />01548<br />01549<br />01550</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//	Created on: 10/15/2003
+</span><a name="3"></a><span class="source_comment">//	Graphical User Interface for MP3 & OGG player control
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">//	Written by Ron Prestenback
+</span><a name="6"></a><span class="source_comment">//	© 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="7"></a><span class="source_comment">//==============================================================================
+</span><a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span> extends <span class="source_type"><a href="../gui2k4/floatingwindow.html" class="source">FloatingWindow</a></span>;
+<a name="9"></a>
+<a name="10"></a>var() Automated	<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>				Bk1,bk2;
+<a name="11"></a>var() Automated	<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> 	sb_PlayList, sb_Management;
+<a name="12"></a>
+<a name="13"></a>var() Automated <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>    lb_SongInfo;
+<a name="14"></a>var() Automated <span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span>          	l_Time;
+<a name="15"></a>var() Automated <span class="source_type"><a href="../xinterface/guilistbox.html" class="source">GUIListBox</a></span>        	lb_Playlist,lb_AllPlaylists;
+<a name="16"></a>
+<a name="17"></a>var() Automated <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>			b_BotA, b_BotB, b_BotC;
+<a name="18"></a>
+<a name="19"></a>var() Automated <span class="source_type"><a href="../xinterface/guislider.html" class="source">GUISlider</a></span>         	sl_Volume;
+<a name="20"></a>var() Automated <span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span>      	b_Play, b_Stop, b_NextTrack, b_PrevTrack, b_Playlist, b_Management;
+<a name="21"></a>var() Automated <span class="source_type"><a href="../xinterface/guicheckboxbutton.html" class="source">GUICheckboxButton</a></span> 	ch_Shuffle, ch_ShuffleAll, ch_Repeat, ch_RepeatAll;
+<a name="22"></a>
+<a name="23"></a>var() editconst noexport <span class="source_type"><a href="../xinterface/guilist.html" class="source">GUIList</a></span>    li_Playlist, li_AllLists;
+<a name="24"></a>
+<a name="25"></a>var() editconst noexport editinline <span class="source_type"><a href="../engine/streaminteraction.html" class="source">StreamInteraction</a></span>           Handler;
+<a name="26"></a>var() editconst noexport editinline <span class="source_type"><a href="../engine/streamplaylistmanager.html" class="source">StreamPlaylistManager</a></span>       PlaylistManager;
+<a name="27"></a>var() editconst noexport editinline <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span>              CurrentPlaylist;
+<a name="28"></a>
+<a name="29"></a>var() config <span class="source_type">string</span>               	OptionsMenu;
+<a name="30"></a>var() config <span class="source_type">string</span>               	ID3TagEditorMenu;
+<a name="31"></a>var() config <span class="source_type">string</span>               	PlaylistEditorMenu;
+<a name="32"></a>var() config <span class="source_type">float</span>					ExpandedHeight;
+<a name="33"></a>var() <span class="source_type">float</span>                         ConstrictedHeight;
+<a name="34"></a>
+<a name="35"></a>var() editconst noexport <span class="source_type">int</span>      SongSeconds;
+<a name="36"></a>var() <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>                    PauseImage, PlayImage, OpenFolder, ClosedFolder;
+<a name="37"></a>
+<a name="38"></a>var() localized <span class="source_type">string</span> CollapsePlaylistHint, ExpandPlaylistHint, PlayHint, PauseHint,
+<a name="39"></a>					 CollapseManagementHint, ExpandManagementHint;
+<a name="40"></a>
+<a name="41"></a>var() localized <span class="source_type">string</span> RenameCaption, <span class="source_type">NewCaption</span>, PlaylistNameCaption;
+<a name="42"></a>var() localized <span class="source_type">string</span> PLAdd,PLRemove,PLClear;
+<a name="43"></a>var() localized <span class="source_type">string</span> MGNew,MGRemove,MGRename;
+<a name="44"></a>
+<a name="45"></a>var() <span class="source_type">int</span> DebugIndex;
+<a name="46"></a>var() <span class="source_type">bool</span> bExpand, bConstrict;
+<a name="47"></a>
+<a name="48"></a>var() editconst noexport <span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span>  cm_Playlist, cm_AllLists;
+<a name="49"></a>
+<a name="50"></a>enum <span class="source_type"><a href="../gui2k4/streamplayer.html#epbWinMode" class="source">epbWinMode</a></span>     <span class="source_comment">// Defines the various states of a component
+</span><a name="51"></a>{
+<a name="52"></a>    MODE_Compact,		<span class="source_comment">// Compact, just the player controls
+</span><a name="53"></a>    MODE_PlayList,		<span class="source_comment">// Play list is showing
+</span><a name="54"></a>    MODE_Manager,		<span class="source_comment">// Play list manage is showing
+</span><a name="55"></a>};
+<a name="56"></a>
+<a name="57"></a>var() <span class="source_type"><a href="../gui2k4/streamplayer.html#epbWinMode" class="source">epbWinMode</a></span> WindowMode;
+<a name="58"></a>
+<a name="59"></a>function InitComponent( <span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span> )
+<a name="60"></a>{
+<a name="61"></a>	Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="62"></a>
+<a name="63"></a>	li_Playlist = lb_Playlist.<span class="source_type">List</span>;
+<a name="64"></a>	li_Playlist.TextAlign = TXTA_Left;
+<a name="65"></a>	li_Playlist.OnDblClick = PlaylistDblClick;
+<a name="66"></a>	li_Playlist.OnChange = InternalOnChange;
+<a name="67"></a>	li_Playlist.bMultiSelect = True;
+<a name="68"></a>	li_Playlist.bDropSource = True;
+<a name="69"></a>	li_Playlist.bDropTarget = True;
+<a name="70"></a>	li_Playlist.OnDragDrop = PlaylistReceiveDrop;
+<a name="71"></a>	li_Playlist.OnEndDrag = PlaylistDragEnded;
+<a name="72"></a>	li_Playlist.ContextMenu = cm_Playlist;
+<a name="73"></a>
+<a name="74"></a>	li_AllLists = lb_AllPlaylists.<span class="source_type">List</span>;
+<a name="75"></a>	li_AllLists.TextAlign = TXTA_Left;
+<a name="76"></a>	li_AllLists.OnDblClick = PlaylistDblClick;
+<a name="77"></a>	li_AllLists.OnChange = InternalOnChange;
+<a name="78"></a>	li_Alllists.bMultiSelect = False;
+<a name="79"></a>	li_AllLists.bDropTarget = True;
+<a name="80"></a>	li_AllLists.bInitializeList = False;
+<a name="81"></a>	li_AllLists.ContextMenu = cm_AllLists;
+<a name="82"></a>	li_AllLists.OnDragDrop = AllListsReceiveDrop;
+<a name="83"></a>
+<a name="84"></a>	sl_Volume.OnPreDrawCaption = SliderPreDrawCaption;
+<a name="85"></a>
+<a name="86"></a>	sb_PlayList.ManageComponent(lb_PlayList);
+<a name="87"></a>	sb_Management.ManageComponent(lb_AllPlayLists);
+<a name="88"></a>}
+<a name="89"></a>
+<a name="90"></a>function ResolutionChanged( <span class="source_type">int</span> <span class="source_type">ResX</span>, <span class="source_type">int</span> <span class="source_type">ResY</span> )
+<a name="91"></a>{
+<a name="92"></a>	if (WindowMode==MODE_Compact)
+<a name="93"></a>		Constrict();
+<a name="94"></a>
+<a name="95"></a>	super.ResolutionChanged(<span class="source_type">ResX</span>,<span class="source_type">ResY</span>);
+<a name="96"></a>}
+<a name="97"></a>
+<a name="98"></a>event Opened( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span> )
+<a name="99"></a>{
+<a name="100"></a>	Super.Opened(<span class="source_type">Sender</span>);
+<a name="101"></a>
+<a name="102"></a>	Constrict();
+<a name="103"></a>	if ( !SetPlaylistManager() )
+<a name="104"></a>		Warn(<span class="source_string">"Error setting PlaylistManager!"</span>);
+<a name="105"></a>
+<a name="106"></a>	sl_Volume.SetValue( <span class="source_type">float</span>(PlayerOwner().ConsoleCommand(<span class="source_string">"get ini:Engine.Engine.AudioDevice MusicVolume"</span>)) );
+<a name="107"></a>	RefreshPlaylistSelections();
+<a name="108"></a>	RefreshCurrentPlaylist();
+<a name="109"></a>	RefreshPlaybackOptions();
+<a name="110"></a>
+<a name="111"></a>}
+<a name="112"></a>
+<a name="113"></a>event Closed(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">bool</span> <span class="source_type">bCancelled</span>)
+<a name="114"></a>{
+<a name="115"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="116"></a>
+<a name="117"></a>	<span class="source_type">i</span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.FindMenuIndexByName(PlaylistEditorMenu);
+<a name="118"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized && <span class="source_type">i</span> != -<span class="source_int">1</span> )
+<a name="119"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.RemoveMenuAt(<span class="source_type">i</span>,true);
+<a name="120"></a>
+<a name="121"></a>	Super.Closed(<span class="source_type">Sender</span>, <span class="source_type">bCancelled</span>);
+<a name="122"></a>	PlaylistManager.Save();
+<a name="123"></a>	HideAll();
+<a name="124"></a>}
+<a name="125"></a>
+<a name="126"></a>function SaveCurrentPosition()
+<a name="127"></a>{
+<a name="128"></a>	if (WindowMode!=MODE_Compact)
+<a name="129"></a>		ExpandedHeight = WinHeight;
+<a name="130"></a>
+<a name="131"></a>	DefaultLeft = WinLeft;
+<a name="132"></a>	DefaultTop = WinTop;
+<a name="133"></a>	DefaultWidth = WinWidth;
+<a name="134"></a>
+<a name="135"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.<span class="source_type">ResX</span> &lt;= <span class="source_int">640</span> )
+<a name="136"></a>		DefaultHeight = <span class="source_int">0.32</span>;
+<a name="137"></a>	else DefaultHeight = <span class="source_int">0.27</span>;
+<a name="138"></a>
+<a name="139"></a>	SaveConfig();
+<a name="140"></a>}
+<a name="141"></a>
+<a name="142"></a>function <span class="source_type">bool</span> SetHandler()
+<a name="143"></a>{
+<a name="144"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="145"></a>
+<a name="146"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None || <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ViewportOwner == None )
+<a name="147"></a>		return false;
+<a name="148"></a>
+<a name="149"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ViewportOwner.LocalInteractions.Length; <span class="source_type">i</span>++ )
+<a name="150"></a>	{
+<a name="151"></a>		if ( <span class="source_type"><a href="../engine/streaminteraction.html" class="source">StreamInteraction</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ViewportOwner.LocalInteractions[<span class="source_type">i</span>]) != None )
+<a name="152"></a>		{
+<a name="153"></a>			Handler = <span class="source_type"><a href="../engine/streaminteraction.html" class="source">StreamInteraction</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ViewportOwner.LocalInteractions[<span class="source_type">i</span>]);
+<a name="154"></a>			Handler.OnStreamChanged = HandleStreamChange;
+<a name="155"></a>			Handler.OnStreamingStopped = HandleStreamStop;
+<a name="156"></a>			Handler.OnAdjustVolume = HandleAdjustVolume;
+<a name="157"></a>			return true;
+<a name="158"></a>		}
+<a name="159"></a>	}
+<a name="160"></a>
+<a name="161"></a>	log(<span class="source_string">"StreamPlayer.SetHandler() - no StreamInteractions found!"</span>,<span class="source_name">'MusicPlayer'</span>);
+<a name="162"></a>	return false;
+<a name="163"></a>}
+<a name="164"></a>
+<a name="165"></a>function <span class="source_type">bool</span> SetPlaylistManager()
+<a name="166"></a>{
+<a name="167"></a>	if ( PlaylistManager != None )
+<a name="168"></a>	{
+<a name="169"></a>		if ( Handler == None && !SetHandler() )
+<a name="170"></a>			return false;
+<a name="171"></a>
+<a name="172"></a>		return true;
+<a name="173"></a>	}
+<a name="174"></a>
+<a name="175"></a>	if ( Handler == None && !SetHandler() )
+<a name="176"></a>		return false;
+<a name="177"></a>
+<a name="178"></a>	PlaylistManager = Handler.PlaylistManager;
+<a name="179"></a>	PlaylistManager.ChangedActivePlaylist = ActivePlaylistChanged;
+<a name="180"></a>
+<a name="181"></a>	return PlaylistManager != None;
+<a name="182"></a>}
+<a name="183"></a>
+<a name="184"></a><span class="source_comment">// Reload the values for shuffle, repeat, and volume
+</span><a name="185"></a>function RefreshPlaybackOptions()
+<a name="186"></a>{
+<a name="187"></a>	sl_Volume.SetValue( Handler.GetStreamVolume() );
+<a name="188"></a>	ch_Shuffle.bChecked = PlaylistManager.GetShuffle();
+<a name="189"></a>	ch_ShuffleAll.bChecked = PlaylistManager.GetShuffleAll();
+<a name="190"></a>	ch_Repeat.bChecked = PlaylistManager.GetRepeat();
+<a name="191"></a>	ch_RepeatAll.bChecked = PlaylistManager.GetRepeatAll();
+<a name="192"></a>}
+<a name="193"></a>
+<a name="194"></a>function RefreshPlaylistSelections()
+<a name="195"></a>{
+<a name="196"></a>	local <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> <span class="source_type">List</span>;
+<a name="197"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="198"></a>	local <span class="source_type">string</span> <span class="source_type">str</span>;
+<a name="199"></a>
+<a name="200"></a>	if ( PlaylistManager == None )
+<a name="201"></a>		return;
+<a name="202"></a>
+<a name="203"></a>	<span class="source_comment">// Save the selected item so we can reselect it if it still exists after the refresh
+</span><a name="204"></a>	<span class="source_type">str</span> = li_AllLists.Get();
+<a name="205"></a>
+<a name="206"></a>	li_AllLists.Clear();
+<a name="207"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; PlaylistManager.GetPlaylistCount(); <span class="source_type">i</span>++ )
+<a name="208"></a>	{
+<a name="209"></a>		<span class="source_type">List</span> = PlaylistManager.GetPlaylistAt(<span class="source_type">i</span>);
+<a name="210"></a>		li_AllLists.Add(<span class="source_type">List</span>.GetTitle(), <span class="source_type">List</span>);
+<a name="211"></a>	}
+<a name="212"></a>
+<a name="213"></a>	<span class="source_type">i</span> = li_AllLists.FindIndex(<span class="source_type">str</span>);
+<a name="214"></a>
+<a name="215"></a>	<span class="source_comment">// If couldn't find the previously selected list, attempt to set index to current playlist
+</span><a name="216"></a>	if ( <span class="source_type">i</span> == -<span class="source_int">1</span> && CurrentPlaylist != None )
+<a name="217"></a>		<span class="source_type">i</span> = PlaylistManager.FindPlaylistIndex(CurrentPlaylist);
+<a name="218"></a>
+<a name="219"></a>	<span class="source_comment">// If that didn't work, don't worry about it
+</span><a name="220"></a>	li_AllLists.SilentSetIndex(<span class="source_type">i</span>);
+<a name="221"></a>}
+<a name="222"></a>
+<a name="223"></a>function ActivePlaylistChanged( <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> <span class="source_type">NewList</span> )
+<a name="224"></a>{
+<a name="225"></a>	RefreshCurrentPlaylist();
+<a name="226"></a>	if ( WindowMode == MODE_Manager )
+<a name="227"></a>		ShowPlaylist();
+<a name="228"></a>}
+<a name="229"></a>
+<a name="230"></a>function RefreshCurrentPlaylist()
+<a name="231"></a>{
+<a name="232"></a>	if ( CurrentPlaylist != None )
+<a name="233"></a>		CurrentPlaylist.OnPlaylistChanged = None;
+<a name="234"></a>
+<a name="235"></a>	CurrentPlaylist = PlaylistManager.GetCurrentPlaylist();
+<a name="236"></a>	if ( CurrentPlaylist == None )
+<a name="237"></a>	{
+<a name="238"></a>		Warn(<span class="source_string">"Invalid playlist selected!"</span>);
+<a name="239"></a>		return;
+<a name="240"></a>	}
+<a name="241"></a>
+<a name="242"></a>	LoadCurrentPlaylist();
+<a name="243"></a>	li_Playlist.SetIndex( li_Playlist.FindIndex(<span class="source_string">""</span>,,,CurrentPlaylist.GetCurrentStream()) );
+<a name="244"></a>	li_AllLists.SilentSetIndex( li_AllLists.FindIndex(<span class="source_string">""</span>,,,CurrentPlaylist) );
+<a name="245"></a>}
+<a name="246"></a>
+<a name="247"></a>function LoadCurrentPlaylist()
+<a name="248"></a>{
+<a name="249"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="250"></a>	local array&lt;<span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span>&gt; Songs;
+<a name="251"></a>
+<a name="252"></a>	li_Playlist.Clear();
+<a name="253"></a>	if ( CurrentPlaylist == None )
+<a name="254"></a>		return;
+<a name="255"></a>
+<a name="256"></a>	CurrentPlaylist.GetSongs( Songs );
+<a name="257"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Songs.Length; <span class="source_type">i</span>++ )
+<a name="258"></a>		li_Playlist.Add( Songs[<span class="source_type">i</span>].GetSongTitle(), Songs[<span class="source_type">i</span>], Songs[<span class="source_type">i</span>].GetPath() );
+<a name="259"></a>
+<a name="260"></a>	CurrentPlaylist.OnPlaylistChanged = HandlePlaylistChange;
+<a name="261"></a>}
+<a name="262"></a>
+<a name="263"></a>function HandlePlaylistChange()
+<a name="264"></a>{
+<a name="265"></a>	LoadCurrentPlaylist();
+<a name="266"></a>	PlaylistManager.Save();
+<a name="267"></a>}
+<a name="268"></a>
+<a name="269"></a><span class="source_comment">// Called when a new stream has begun playing
+</span><a name="270"></a>function HandleStreamChange( <span class="source_type">string</span> <span class="source_type">NewStreamFileName</span> )
+<a name="271"></a>{
+<a name="272"></a>	local <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span> <span class="source_type">S</span>;
+<a name="273"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="274"></a>
+<a name="275"></a>	<span class="source_type">i</span> = CurrentPlaylist.FindIndexByName(<span class="source_type">NewStreamFileName</span>);
+<a name="276"></a>	<span class="source_type">S</span> = CurrentPlaylist.GetStreamAt(<span class="source_type">i</span>);
+<a name="277"></a>
+<a name="278"></a>	<span class="source_comment">// Set timer for seconds display
+</span><a name="279"></a>	ResetSongCounter();
+<a name="280"></a>
+<a name="281"></a>	if ( <span class="source_type">S</span> != None )
+<a name="282"></a>		CurrentPlaylist.SetCurrent(<span class="source_type">i</span>);
+<a name="283"></a>	else
+<a name="284"></a>	{
+<a name="285"></a>		li_Playlist.SetIndex(-<span class="source_int">1</span>);
+<a name="286"></a>
+<a name="287"></a>		<span class="source_comment">// Attempt to load an id3 tag for this file
+</span><a name="288"></a>		<span class="source_type">S</span> = Handler.FileManager.CreateStream(<span class="source_type">NewStreamFileName</span>);
+<a name="289"></a>	}
+<a name="290"></a>
+<a name="291"></a>	ReadStream(<span class="source_type">S</span>);
+<a name="292"></a>	PlaylistManager.Save();
+<a name="293"></a>}
+<a name="294"></a>
+<a name="295"></a><span class="source_comment">// Called when a song is stopped
+</span><a name="296"></a>function HandleStreamStop()
+<a name="297"></a>{
+<a name="298"></a>	UpdateSongTimeDisplay();
+<a name="299"></a>	UpdatePlayButton();
+<a name="300"></a>	li_Playlist.SetIndex(-<span class="source_int">1</span>);
+<a name="301"></a>	DisableComponent(b_Stop);
+<a name="302"></a>
+<a name="303"></a>	PlaylistManager.Save();
+<a name="304"></a>}
+<a name="305"></a>
+<a name="306"></a>function HandleAdjustVolume( <span class="source_type">float</span> <span class="source_type">NewVolume</span> )
+<a name="307"></a>{
+<a name="308"></a>	sl_Volume.SetValue(<span class="source_type">NewVolume</span>);
+<a name="309"></a>}
+<a name="310"></a>
+<a name="311"></a>function <span class="source_type">bool</span> InternalOnClick( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">C</span> )
+<a name="312"></a>{
+<a name="313"></a>	local <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span> <span class="source_type">Obj</span>;
+<a name="314"></a>
+<a name="315"></a>	<span class="source_type">switch</span> ( <span class="source_type">C</span> )
+<a name="316"></a>	{
+<a name="317"></a>	case b_Play:
+<a name="318"></a>		if ( !li_Playlist.IsValid() && !Handler.IsPlaying() )
+<a name="319"></a>		{
+<a name="320"></a>			li_Playlist.SilentSetIndex(<span class="source_int">0</span>);
+<a name="321"></a>			Play();
+<a name="322"></a>		}
+<a name="323"></a>
+<a name="324"></a>		<span class="source_type">Obj</span> = <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span>(li_Playlist.GetObject());
+<a name="325"></a>		if ( <span class="source_type">Obj</span> == None || <span class="source_type">Obj</span> != Handler.CurrentStreamAttachment )
+<a name="326"></a>		{
+<a name="327"></a>			Play();
+<a name="328"></a>			return true;
+<a name="329"></a>		}
+<a name="330"></a>
+<a name="331"></a>		PauseCurrent();
+<a name="332"></a>		return true;
+<a name="333"></a>
+<a name="334"></a>	case b_Stop:
+<a name="335"></a>		StopCurrent();
+<a name="336"></a>		return true;
+<a name="337"></a>
+<a name="338"></a>	case b_NextTrack:
+<a name="339"></a>		NextTrack();
+<a name="340"></a>		return true;
+<a name="341"></a>
+<a name="342"></a>	case b_PrevTrack:
+<a name="343"></a>		PrevTrack();
+<a name="344"></a>		return true;
+<a name="345"></a>
+<a name="346"></a>
+<a name="347"></a>	case b_Playlist:
+<a name="348"></a>		TogglePlaylist();
+<a name="349"></a>		return true;
+<a name="350"></a>
+<a name="351"></a>	case b_Management:
+<a name="352"></a>		ToggleManagement();
+<a name="353"></a>		return true;
+<a name="354"></a>
+<a name="355"></a>	case b_BotA:
+<a name="356"></a>		if (WindowMode==MODE_PlayList)
+<a name="357"></a>			return <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu( PlaylistEditorMenu, CurrentPlaylist.GetTitle() );
+<a name="358"></a>		else if (WindowMode==MODE_Manager)
+<a name="359"></a>			NewPlaylist();
+<a name="360"></a>
+<a name="361"></a>		return true;
+<a name="362"></a>
+<a name="363"></a>	case b_BotB:
+<a name="364"></a>		if (WindowMode==MODE_PlayList)
+<a name="365"></a>			CurrentListRemove();
+<a name="366"></a>		else if (WindowMode==MODE_Manager)
+<a name="367"></a>			RemovePlayList();
+<a name="368"></a>
+<a name="369"></a>		return true;
+<a name="370"></a>
+<a name="371"></a>	case b_BotC:
+<a name="372"></a>		if (WindowMode==MODE_PlayList)
+<a name="373"></a>			CurrentListClear();
+<a name="374"></a>		else if (WindowMode==MODE_Manager)
+<a name="375"></a>			RenamePlayList();
+<a name="376"></a>
+<a name="377"></a>	}
+<a name="378"></a>
+<a name="379"></a>	return true;
+<a name="380"></a>}
+<a name="381"></a>
+<a name="382"></a>
+<a name="383"></a>
+<a name="384"></a>function <span class="source_type">int</span> GetPlaylistManagerIndex( <span class="source_type">int</span> <span class="source_type">ListIndex</span> )
+<a name="385"></a>{
+<a name="386"></a>	if ( PlaylistManager == None || li_AllLists == None )
+<a name="387"></a>		return -<span class="source_int">1</span>;
+<a name="388"></a>
+<a name="389"></a>	if ( !li_AllLists.IsValidIndex(<span class="source_type">ListIndex</span>) )
+<a name="390"></a>		<span class="source_type">ListIndex</span> = li_AllLists.<span class="source_type">Index</span>;
+<a name="391"></a>
+<a name="392"></a>	return PlaylistManager.FindNameIndex( li_AllLists.GetItemAtIndex(<span class="source_type">ListIndex</span>) );
+<a name="393"></a>}
+<a name="394"></a>
+<a name="395"></a>function InternalOnChange( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">C</span> )
+<a name="396"></a>{
+<a name="397"></a>	<span class="source_type">switch</span> ( <span class="source_type">C</span> )
+<a name="398"></a>	{
+<a name="399"></a>	case sl_Volume:
+<a name="400"></a>		Handler.SetMusicVolume(sl_Volume.<span class="source_type">Value</span>);
+<a name="401"></a>		break;
+<a name="402"></a>
+<a name="403"></a>	case ch_Shuffle:
+<a name="404"></a>		PlaylistManager.SetShuffle(ch_Shuffle.bChecked);
+<a name="405"></a>		ch_ShuffleAll.bChecked = PlaylistManager.GetShuffleAll();
+<a name="406"></a>		break;
+<a name="407"></a>
+<a name="408"></a>	case ch_ShuffleAll:
+<a name="409"></a>		PlaylistManager.SetShuffleAll(ch_ShuffleAll.bChecked);
+<a name="410"></a>		ch_Shuffle.bChecked = PlaylistManager.GetShuffle();
+<a name="411"></a>		break;
+<a name="412"></a>
+<a name="413"></a>	case ch_Repeat:
+<a name="414"></a>		PlaylistManager.SetRepeat( ch_Repeat.bChecked );
+<a name="415"></a>		ch_RepeatAll.bChecked = PlaylistManager.GetRepeatAll();
+<a name="416"></a>		break;
+<a name="417"></a>
+<a name="418"></a>	case ch_RepeatAll:
+<a name="419"></a>		PlaylistManager.SetRepeatAll( ch_RepeatAll.bChecked );
+<a name="420"></a>		ch_Repeat.bChecked = PlaylistManager.GetRepeat();
+<a name="421"></a>		break;
+<a name="422"></a>
+<a name="423"></a>	case li_Playlist:
+<a name="424"></a>		if ( !Handler.IsPlaying() && li_Playlist.IsValid() )
+<a name="425"></a>			ReadTagInfo( <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span>(li_Playlist.GetObject()) );
+<a name="426"></a>
+<a name="427"></a>		break;
+<a name="428"></a>	}
+<a name="429"></a>}
+<a name="430"></a>
+<a name="431"></a><span class="source_comment">// Just return true because I don't want a caption drawn for this slider
+</span><a name="432"></a>function <span class="source_type">bool</span> SliderPreDrawCaption( out <span class="source_type">float</span> <span class="source_type">X</span>, out <span class="source_type">float</span> <span class="source_type">Y</span>, out <span class="source_type">float</span> XL, out <span class="source_type">float</span> <span class="source_type">YL</span>, out <span class="source_type"><a href="../xinterface/gui.html#eTextAlign" class="source">ETextAlign</a></span> <span class="source_type">Justification</span> )
+<a name="433"></a>{
+<a name="434"></a>	return true;
+<a name="435"></a>}
+<a name="436"></a>
+<a name="437"></a>function <span class="source_type">bool</span> AllListsReceiveDrop(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="438"></a>{
+<a name="439"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">idx</span>;
+<a name="440"></a>	local array&lt;<span class="source_type"><a href="../xinterface/gui.html#GUIListElem" class="source">GUIListElem</a></span>&gt; Elems;
+<a name="441"></a>	local array&lt;<span class="source_type">string</span>&gt; Items;
+<a name="442"></a>	local <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span> <span class="source_type">str</span>;
+<a name="443"></a>	local <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span> <span class="source_type">List</span>;
+<a name="444"></a>
+<a name="445"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource == li_Playlist )
+<a name="446"></a>	{
+<a name="447"></a>		<span class="source_type">List</span> = PlaylistManager.GetPlaylistAt( GetPlaylistManagerIndex(li_AllLists.DropIndex) );
+<a name="448"></a>		if ( <span class="source_type">List</span> == None || <span class="source_type">List</span> == CurrentPlaylist )
+<a name="449"></a>			return false;
+<a name="450"></a>
+<a name="451"></a>		<span class="source_type">List</span>.InitializePlaylist(Handler.FileManager);
+<a name="452"></a>		Elems = li_Playlist.GetPendingElements(True);
+<a name="453"></a>		for ( <span class="source_type">i</span> = Elems.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="454"></a>		{
+<a name="455"></a>			<span class="source_type">str</span> = <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span>(Elems[<span class="source_type">i</span>].ExtraData);
+<a name="456"></a>			if ( <span class="source_type">str</span> != None )
+<a name="457"></a>				<span class="source_type">List</span>.AddStream(-<span class="source_int">1</span>, <span class="source_type">str</span>, True);
+<a name="458"></a>		}
+<a name="459"></a>
+<a name="460"></a>		return true;
+<a name="461"></a>	}
+<a name="462"></a>	else if ( <span class="source_type"><a href="../gui2k4/directorytreelist.html" class="source">DirectoryTreeList</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource) != None )
+<a name="463"></a>	{
+<a name="464"></a>		Items = <span class="source_type"><a href="../gui2k4/directorytreelist.html" class="source">DirectoryTreeList</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource).GetPendingItems();
+<a name="465"></a>		<span class="source_type">idx</span> = GetPlaylistManagerIndex(li_AllLists.DropIndex);
+<a name="466"></a>		<span class="source_type">List</span> = PlaylistManager.GetPlaylistAt( <span class="source_type">idx</span> );
+<a name="467"></a>		if ( <span class="source_type">List</span> == None )
+<a name="468"></a>			return False;
+<a name="469"></a>
+<a name="470"></a>		for ( <span class="source_type">i</span> = Items.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="471"></a>			PlaylistManager.InsertInPlaylist( <span class="source_type">idx</span>, -<span class="source_int">1</span>, Items[<span class="source_type">i</span>], <span class="source_type">i</span> &gt; <span class="source_int">0</span>);
+<a name="472"></a>
+<a name="473"></a>		return True;
+<a name="474"></a>	}
+<a name="475"></a>
+<a name="476"></a>	return false;
+<a name="477"></a>}
+<a name="478"></a>
+<a name="479"></a><span class="source_comment">// Check which type of file we're dropping, and perform the appropriate action
+</span><a name="480"></a>function <span class="source_type">bool</span> PlaylistReceiveDrop(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="481"></a>{
+<a name="482"></a>	local array&lt;<span class="source_type">string</span>&gt; Items;
+<a name="483"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">idx</span>;
+<a name="484"></a>
+<a name="485"></a>	<span class="source_comment">// If this was a drag-n-drop between the same list, perform the default behavior
+</span><a name="486"></a>	if ( <span class="source_type">Sender</span> == li_Playlist )
+<a name="487"></a>	{
+<a name="488"></a>		if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource != li_AllLists && li_Playlist.InternalOnDragDrop(<span class="source_type">Sender</span>) )
+<a name="489"></a>			return true;
+<a name="490"></a>
+<a name="491"></a>		<span class="source_comment">// if source is the directory list, then figure what type of file we're attempting to drop
+</span><a name="492"></a>		if ( <span class="source_type"><a href="../gui2k4/directorytreelist.html" class="source">DirectoryTreeList</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource) != None )
+<a name="493"></a>		{
+<a name="494"></a>			Items = <span class="source_type"><a href="../gui2k4/directorytreelist.html" class="source">DirectoryTreeList</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.DropSource).GetPendingItems();
+<a name="495"></a>			<span class="source_type">idx</span> = li_Playlist.DropIndex;
+<a name="496"></a>
+<a name="497"></a>			if ( !li_Playlist.IsValidIndex(<span class="source_type">idx</span>) )
+<a name="498"></a>				<span class="source_type">idx</span> = li_Playlist.Elements.Length;
+<a name="499"></a>
+<a name="500"></a>			for ( <span class="source_type">i</span> = Items.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="501"></a>				PlaylistManager.InsertInPlaylist(PlaylistManager.GetCurrentIndex(), <span class="source_type">idx</span>, Items[<span class="source_type">i</span>], <span class="source_type">i</span> &gt; <span class="source_int">0</span>);
+<a name="502"></a>
+<a name="503"></a>			li_Playlist.SetIndex(<span class="source_type">idx</span>);
+<a name="504"></a>			return true;
+<a name="505"></a>		}
+<a name="506"></a>	}
+<a name="507"></a>	return false;
+<a name="508"></a>}
+<a name="509"></a>
+<a name="510"></a>function PlaylistDragEnded(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> Accepting, <span class="source_type">bool</span> bAccepted)
+<a name="511"></a>{
+<a name="512"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="513"></a>	local array&lt;<span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span>&gt; Streams;
+<a name="514"></a>
+<a name="515"></a>	li_Playlist.InternalOnEndDrag(Accepting, bAccepted);
+<a name="516"></a>	if ( bAccepted )
+<a name="517"></a>	{
+<a name="518"></a>		if ( Accepting == li_Playlist )
+<a name="519"></a>		{
+<a name="520"></a>			Streams.Length = li_Playlist.Elements.Length;
+<a name="521"></a>			for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; li_Playlist.Elements.Length; <span class="source_type">i</span>++ )
+<a name="522"></a>				Streams[<span class="source_type">i</span>] = <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span>(li_Playlist.GetObjectAtIndex(<span class="source_type">i</span>));
+<a name="523"></a>
+<a name="524"></a>			CurrentPlaylist.InitializePlaylist(Handler.FileManager);
+<a name="525"></a>			CurrentPlaylist.SetSongs(Streams);
+<a name="526"></a>		}
+<a name="527"></a>	}
+<a name="528"></a>}
+<a name="529"></a>
+<a name="530"></a>function Play()
+<a name="531"></a>{
+<a name="532"></a>	<span class="source_comment">// The stream knows where it's located on the disk
+</span><a name="533"></a>	Handler.PlaySong(li_Playlist.GetExtra(),<span class="source_int">0.0</span>);
+<a name="534"></a>	UpdatePlayButton();
+<a name="535"></a>}
+<a name="536"></a>function StopCurrent()
+<a name="537"></a>{
+<a name="538"></a>	Handler.StopSong();
+<a name="539"></a>	UpdatePlayButton();
+<a name="540"></a>}
+<a name="541"></a>
+<a name="542"></a>function NextTrack()
+<a name="543"></a>{
+<a name="544"></a>	Handler.NextSong();
+<a name="545"></a>	UpdatePlayButton();
+<a name="546"></a>}
+<a name="547"></a>
+<a name="548"></a>function PrevTrack()
+<a name="549"></a>{
+<a name="550"></a>	Handler.PrevSong();
+<a name="551"></a>}
+<a name="552"></a>
+<a name="553"></a>function PauseCurrent()
+<a name="554"></a>{
+<a name="555"></a>	if ( !Handler.IsPlaying() )
+<a name="556"></a>		Play();
+<a name="557"></a>	else
+<a name="558"></a>	{
+<a name="559"></a>		Handler.PauseSong();
+<a name="560"></a>		UpdatePlayButton();
+<a name="561"></a>	}
+<a name="562"></a>}
+<a name="563"></a>
+<a name="564"></a>function <span class="source_type">bool</span> PlaylistDblClick( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">C</span> )
+<a name="565"></a>{
+<a name="566"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="567"></a>
+<a name="568"></a>	if ( <span class="source_type">C</span> == li_Playlist )
+<a name="569"></a>	{
+<a name="570"></a>		Play();
+<a name="571"></a>		return true;
+<a name="572"></a>	}
+<a name="573"></a>
+<a name="574"></a>	else if ( <span class="source_type">C</span> == li_AllLists )
+<a name="575"></a>	{
+<a name="576"></a>		<span class="source_type">i</span> = PlaylistManager.FindPlaylistIndex( <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span>(li_AllLists.GetObject()) );
+<a name="577"></a>		PlaylistManager.ActivatePlaylist(<span class="source_type">i</span>);
+<a name="578"></a><span class="source_comment">//		ShowPlayList(); -- this should be called by ActivatePlaylist
+</span><a name="579"></a>		return true;
+<a name="580"></a>	}
+<a name="581"></a>
+<a name="582"></a>	return false;
+<a name="583"></a>}
+<a name="584"></a>
+<a name="585"></a>function ReadTagInfo( <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span> <span class="source_type">StreamObj</span> )
+<a name="586"></a>{
+<a name="587"></a>	local <span class="source_type">string</span> TagText;
+<a name="588"></a>	local <span class="source_type"><a href="../engine/streamtag.html" class="source">StreamTag</a></span> sTag;
+<a name="589"></a>
+<a name="590"></a>	sTag = <span class="source_type">StreamObj</span>.GetTag();
+<a name="591"></a>
+<a name="592"></a>	<span class="source_comment">// Get tag info
+</span><a name="593"></a>	TagText = <span class="source_type">StreamObj</span>.GetSongTitle();
+<a name="594"></a>	if ( sTag != None )
+<a name="595"></a>	{
+<a name="596"></a>		if ( TagText != <span class="source_string">""</span> )
+<a name="597"></a>			TagText $= <span class="source_string">"|"</span>;
+<a name="598"></a>
+<a name="599"></a>		TagText $= sTag.Artist.FieldValue;
+<a name="600"></a>		if ( TagText != <span class="source_string">""</span> )
+<a name="601"></a>			TagText $= <span class="source_string">"|"</span>;
+<a name="602"></a>
+<a name="603"></a>		TagText $= sTag.Album.FieldValue;
+<a name="604"></a><span class="source_comment">/*
+<a name="605"></a>	// if this song only had an ID3v1 tag associated with it, it isn't possible to get the song duration
+<a name="606"></a>	// until the audio code actually loads the mp3/ogg file, so if the duration is 0.0, request an update
+<a name="607"></a>		if ( float(sTag.Duration.FieldValue) &lt;= 0.0 )
+<a name="608"></a>			sTag.Duration.FieldValue = string(Handler.GetStreamDuration() * 1000);
+<a name="609"></a>*/</span>
+<a name="610"></a>		<span class="source_comment">// Add any other desired tag fields here
+</span><a name="611"></a>	}
+<a name="612"></a>	lb_SongInfo.SetContent(TagText);
+<a name="613"></a>}
+<a name="614"></a>
+<a name="615"></a>function ReadStream( <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span> <span class="source_type">StreamObj</span> )
+<a name="616"></a>{
+<a name="617"></a>	if ( <span class="source_type">StreamObj</span> == None )
+<a name="618"></a>	{
+<a name="619"></a>		log(<span class="source_string">"ReadStream() called with StreamObj == None"</span>,<span class="source_name">'MusicPlayer'</span>);
+<a name="620"></a>		return;
+<a name="621"></a>	}
+<a name="622"></a>
+<a name="623"></a>	ReadTagInfo(<span class="source_type">StreamObj</span>);
+<a name="624"></a>	EnableComponent(b_Stop);
+<a name="625"></a>
+<a name="626"></a>	li_Playlist.SilentSetIndex( li_Playlist.FindIndex(<span class="source_string">""</span>,,,<span class="source_type">StreamObj</span>) );
+<a name="627"></a>	Handler.SetStreamAttachment(<span class="source_type">StreamObj</span>);
+<a name="628"></a>}
+<a name="629"></a>
+<a name="630"></a>function ReadStreamAt( <span class="source_type">int</span> <span class="source_type">Index</span> )
+<a name="631"></a>{
+<a name="632"></a>	local <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span> <span class="source_type">StreamObj</span>;
+<a name="633"></a>
+<a name="634"></a>	<span class="source_type">StreamObj</span> = <span class="source_type"><a href="../engine/stream.html" class="source">Stream</a></span>(lb_Playlist.<span class="source_type">List</span>.GetObjectAtIndex(<span class="source_type">Index</span>));
+<a name="635"></a>	if ( <span class="source_type">StreamObj</span> == None )
+<a name="636"></a>	{
+<a name="637"></a>		log(<span class="source_string">"ReadStreamInfo couldn't find stream object at index"</span>@<span class="source_type">index</span>,<span class="source_name">'MusicPlayer'</span>);
+<a name="638"></a>		return;
+<a name="639"></a>	}
+<a name="640"></a>
+<a name="641"></a>	ReadStream(<span class="source_type">StreamObj</span>);
+<a name="642"></a>}
+<a name="643"></a>
+<a name="644"></a>event Timer()
+<a name="645"></a>{
+<a name="646"></a>	if ( Handler != None )
+<a name="647"></a>		UpdateSongTimeDisplay();
+<a name="648"></a>}
+<a name="649"></a>
+<a name="650"></a>function ResetSongCounter( optional <span class="source_type">bool</span> <span class="source_type">bNoRestart</span> )
+<a name="651"></a>{
+<a name="652"></a>	SongSeconds = <span class="source_int">0</span>;
+<a name="653"></a>
+<a name="654"></a>	if ( <span class="source_type">bNoRestart</span> ) KillTimer();
+<a name="655"></a>	else SetTimer(<span class="source_int">1.0</span>, True);
+<a name="656"></a>
+<a name="657"></a>	Timer();
+<a name="658"></a>}
+<a name="659"></a>
+<a name="660"></a>protected function UpdateSongTimeDisplay()
+<a name="661"></a>{
+<a name="662"></a>	SongSeconds = <span class="source_type">int</span>( Handler.GetStreamPosition() );
+<a name="663"></a>	l_Time.<span class="source_type">Caption</span> = <span class="source_type">class</span><span class="source_name">'StreamBase'</span>.static.FormatTimeDisplay(SongSeconds);
+<a name="664"></a>
+<a name="665"></a>}
+<a name="666"></a>
+<a name="667"></a>function UpdatePlayButton()
+<a name="668"></a>{
+<a name="669"></a>	if ( Handler == None )
+<a name="670"></a>		return;
+<a name="671"></a>
+<a name="672"></a>	if ( Handler.IsPlaying() && !Handler.IsPaused() )
+<a name="673"></a>	{
+<a name="674"></a>		b_Play.Graphic = PauseImage;
+<a name="675"></a>		b_Play.SetHint(PauseHint);
+<a name="676"></a>	}
+<a name="677"></a>	else
+<a name="678"></a>	{
+<a name="679"></a>		b_Play.SetHint(PlayHint);
+<a name="680"></a>		b_Play.Graphic = PlayImage;
+<a name="681"></a>	}
+<a name="682"></a>}
+<a name="683"></a>
+<a name="684"></a><span class="source_comment">// ===========================================================
+</span><a name="685"></a><span class="source_comment">// Context Menu
+</span><a name="686"></a><span class="source_comment">// ===========================================================
+</span><a name="687"></a>
+<a name="688"></a>function PlayerMenuClick( <span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span> <span class="source_type">Menu</span>, <span class="source_type">int</span> <span class="source_type">Index</span> )
+<a name="689"></a>{
+<a name="690"></a>	if ( <span class="source_type">Index</span> &lt; <span class="source_int">0</span> || <span class="source_type">Index</span> &gt;= <span class="source_type">Menu</span>.ContextItems.Length )
+<a name="691"></a>		return;
+<a name="692"></a>
+<a name="693"></a>	if ( <span class="source_type">Menu</span>.ContextItems[<span class="source_type">Index</span>] == <span class="source_string">"-"</span> )
+<a name="694"></a>		return;
+<a name="695"></a>
+<a name="696"></a>	<span class="source_type">switch</span> ( <span class="source_type">Index</span> )
+<a name="697"></a>	{
+<a name="698"></a>	case <span class="source_int">0</span>:
+<a name="699"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(OptionsMenu);
+<a name="700"></a>		return;
+<a name="701"></a>	}
+<a name="702"></a>}
+<a name="703"></a>
+<a name="704"></a>function RemovePlayList()
+<a name="705"></a>{
+<a name="706"></a>	PlaylistManager.RemovePlaylist(li_AllLists.Get());
+<a name="707"></a>	RefreshPlaylistSelections();
+<a name="708"></a>}
+<a name="709"></a>
+<a name="710"></a>function CurrentListClear()
+<a name="711"></a>{
+<a name="712"></a>	PlaylistManager.ClearCurrentPlaylist();
+<a name="713"></a>	LoadCurrentPlaylist();
+<a name="714"></a>}
+<a name="715"></a>
+<a name="716"></a>function PlaylistMenuClick(  <span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span> <span class="source_type">Menu</span>, <span class="source_type">int</span> <span class="source_type">Index</span> )
+<a name="717"></a>{
+<a name="718"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="719"></a>
+<a name="720"></a>	if ( <span class="source_type">Index</span> &lt; <span class="source_int">0</span> || <span class="source_type">Index</span> &gt;= <span class="source_type">Menu</span>.ContextItems.Length )
+<a name="721"></a>		return;
+<a name="722"></a>
+<a name="723"></a>	if ( <span class="source_type">Menu</span>.ContextItems[<span class="source_type">Index</span>] == <span class="source_string">"-"</span> )
+<a name="724"></a>		return;
+<a name="725"></a>
+<a name="726"></a>	<span class="source_type">switch</span> ( <span class="source_type">Index</span> )
+<a name="727"></a>	{
+<a name="728"></a>	case <span class="source_int">0</span>:	<span class="source_comment">// Activate
+</span><a name="729"></a>		<span class="source_type">i</span> = PlaylistManager.FindPlaylistIndex( <span class="source_type"><a href="../engine/streamplaylist.html" class="source">StreamPlaylist</a></span>(li_AllLists.GetObject()) );
+<a name="730"></a>		PlaylistManager.ActivatePlaylist(<span class="source_type">i</span>);
+<a name="731"></a><span class="source_comment">//		ShowPlayList();
+</span><a name="732"></a>		break;
+<a name="733"></a>
+<a name="734"></a>	case <span class="source_int">1</span>:	<span class="source_comment">// Rename
+</span><a name="735"></a>		RenamePlayList();
+<a name="736"></a>		break;
+<a name="737"></a>
+<a name="738"></a>	case <span class="source_int">2</span>: <span class="source_comment">// Create
+</span><a name="739"></a>		NewPlayList();
+<a name="740"></a>		break;
+<a name="741"></a>
+<a name="742"></a>	case <span class="source_int">4</span>: <span class="source_comment">// Remove
+</span><a name="743"></a>		RemovePlayList();
+<a name="744"></a>		break;
+<a name="745"></a>
+<a name="746"></a>	case <span class="source_int">5</span>: <span class="source_comment">// Clear
+</span><a name="747"></a>		CurrentListClear();
+<a name="748"></a>		break;
+<a name="749"></a>	}
+<a name="750"></a>}
+<a name="751"></a>
+<a name="752"></a>function CurrentListRemove()
+<a name="753"></a>{
+<a name="754"></a>	local array&lt;<span class="source_type"><a href="../xinterface/gui.html#GUIListElem" class="source">GUIListElem</a></span>&gt; Paths;
+<a name="755"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="756"></a>
+<a name="757"></a>	Paths = li_Playlist.GetPendingElements(True);
+<a name="758"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Paths.Length; <span class="source_type">i</span>++ )
+<a name="759"></a>		PlaylistManager.RemoveFromCurrentPlaylist(Paths[<span class="source_type">i</span>].ExtraStrData, <span class="source_type">i</span> &lt; Paths.Length -<span class="source_int">1</span> );
+<a name="760"></a>}
+<a name="761"></a>
+<a name="762"></a>function SongMenuClick( <span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span> <span class="source_type">Menu</span>, <span class="source_type">int</span> <span class="source_type">Index</span> )
+<a name="763"></a>{
+<a name="764"></a>	if ( <span class="source_type">Index</span> &lt; <span class="source_int">0</span> || <span class="source_type">Index</span> &gt;= <span class="source_type">Menu</span>.ContextItems.Length )
+<a name="765"></a>		return;
+<a name="766"></a>
+<a name="767"></a>	if ( <span class="source_type">Menu</span>.ContextItems[<span class="source_type">Index</span>] == <span class="source_string">"-"</span> )
+<a name="768"></a>		return;
+<a name="769"></a>
+<a name="770"></a>	<span class="source_type">switch</span> ( <span class="source_type">Index</span> )
+<a name="771"></a>	{
+<a name="772"></a>	case <span class="source_int">0</span>: <span class="source_comment">// Play
+</span><a name="773"></a>		Play(); break;
+<a name="774"></a>
+<a name="775"></a>	case <span class="source_int">1</span>: <span class="source_comment">// Editor
+</span><a name="776"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(PlaylistEditorMenu); break;
+<a name="777"></a>
+<a name="778"></a><span class="source_comment">//	case 2: // Tag
+</span><a name="779"></a><span class="source_comment">//		if ( li_Playlist.IsValid() && Controller.OpenMenu(ID3TagEditorMenu,li_Playlist.GetExtra()) )
+</span><a name="780"></a><span class="source_comment">//			Controller.ActivePage.HandleObject(li_Playlist.GetObject());
+</span><a name="781"></a><span class="source_comment">//		break;
+</span><a name="782"></a>
+<a name="783"></a>	case <span class="source_int">3</span>: <span class="source_comment">// Remove
+</span><a name="784"></a>		CurrentListRemove();
+<a name="785"></a>		break;
+<a name="786"></a>
+<a name="787"></a>	case <span class="source_int">4</span>: <span class="source_comment">// Clear
+</span><a name="788"></a>		CurrentListClear();
+<a name="789"></a>		break;
+<a name="790"></a>	}
+<a name="791"></a>
+<a name="792"></a>	li_Playlist.ClearPendingElements();
+<a name="793"></a>}
+<a name="794"></a>
+<a name="795"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="796"></a>
+<a name="797"></a>function NewPlaylist()
+<a name="798"></a>{
+<a name="799"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.RequestDataMenu, <span class="source_type">NewCaption</span>, PlaylistNameCaption) )
+<a name="800"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ActivePage.OnClose = NewPlaylistClosed;
+<a name="801"></a>}
+<a name="802"></a>
+<a name="803"></a>function RenamePlayList()
+<a name="804"></a>{
+<a name="805"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.RequestDataMenu, RenameCaption, PlaylistNameCaption) )
+<a name="806"></a>	{
+<a name="807"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ActivePage.SetDataString( li_Alllists.Get() );
+<a name="808"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ActivePage.OnClose = RenameClosed;
+<a name="809"></a>	}
+<a name="810"></a>}
+<a name="811"></a>
+<a name="812"></a>function NewPlaylistClosed( <span class="source_type">bool</span> <span class="source_type">bCancelled</span> )
+<a name="813"></a>{
+<a name="814"></a>	local <span class="source_type">string</span> <span class="source_type">PlaylistName</span>;
+<a name="815"></a>
+<a name="816"></a>	if ( !<span class="source_type">bCancelled</span> )
+<a name="817"></a>	{
+<a name="818"></a>		<span class="source_type">PlaylistName</span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ActivePage.GetDataString();
+<a name="819"></a>		if ( PlaylistManager.ActivatePlaylist(PlaylistManager.AddPlaylist(<span class="source_type">PlaylistName</span>), true) )
+<a name="820"></a>			RefreshPlaylistSelections();
+<a name="821"></a>	}
+<a name="822"></a>}
+<a name="823"></a>
+<a name="824"></a>function RenameClosed( <span class="source_type">bool</span> <span class="source_type">bCancelled</span> )
+<a name="825"></a>{
+<a name="826"></a>	local <span class="source_type">string</span> <span class="source_type">PlaylistName</span>;
+<a name="827"></a>
+<a name="828"></a>	if ( !<span class="source_type">bCancelled</span> )
+<a name="829"></a>	{
+<a name="830"></a>		<span class="source_type">PlaylistName</span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ActivePage.GetDataString();
+<a name="831"></a>		if ( PlaylistManager.RenamePlaylist(GetPlaylistManagerIndex(-<span class="source_int">1</span>), <span class="source_type">PlaylistName</span>) )
+<a name="832"></a>			RefreshPlaylistSelections();
+<a name="833"></a>	}
+<a name="834"></a>}
+<a name="835"></a>
+<a name="836"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="837"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="838"></a><span class="source_comment">//  Page/Component Animation
+</span><a name="839"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="840"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="841"></a><span class="source_comment">/*
+<a name="842"></a>function SetDefaultPosition()
+<a name="843"></a>{
+<a name="844"></a>	local float F;
+<a name="845"></a>
+<a name="846"></a>	F = MinPageHeight;
+<a name="847"></a>	MinPageHeight = default.MinPageHeight;
+<a name="848"></a>
+<a name="849"></a>	Super.SetDefaultPosition();
+<a name="850"></a>
+<a name="851"></a>	MinPageHeight = F;
+<a name="852"></a>}
+<a name="853"></a>*/</span>
+<a name="854"></a>event SetVisibility( <span class="source_type">bool</span> <span class="source_type">bIsVisible</span> )
+<a name="855"></a>{
+<a name="856"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="857"></a>
+<a name="858"></a>	if ( !<span class="source_type">bIsVisible</span> )
+<a name="859"></a>	{
+<a name="860"></a>		Super.SetVisibility(<span class="source_type">bIsVisible</span>);
+<a name="861"></a>		return;
+<a name="862"></a>	}
+<a name="863"></a>
+<a name="864"></a>	Super(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span>).SetVisibility(<span class="source_type">bIsVisible</span>);
+<a name="865"></a>
+<a name="866"></a>    if ( !PropagateVisibility )
+<a name="867"></a>    	return;
+<a name="868"></a>
+<a name="869"></a>    for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Controls.Length; <span class="source_type">i</span>++ )
+<a name="870"></a>    {
+<a name="871"></a>    	<span class="source_comment">// If the playlist is supposed to be hidden, skip it
+</span><a name="872"></a>    	if ( Controls[<span class="source_type">i</span>] == sb_Playlist && WindowMode!=MODE_Playlist ||
+<a name="873"></a>		     Controls[<span class="source_type">i</span>] == sb_Management && WindowMode!=MODE_Manager )
+<a name="874"></a>    		continue;
+<a name="875"></a>
+<a name="876"></a>    	Controls[<span class="source_type">i</span>].SetVisibility(True);
+<a name="877"></a>    }
+<a name="878"></a>}
+<a name="879"></a>
+<a name="880"></a>
+<a name="881"></a>function Expand()
+<a name="882"></a>{
+<a name="883"></a>	bResizeHeightAllowed = True;
+<a name="884"></a>	if ( ExpandedHeight &lt; WinHeight )
+<a name="885"></a>		ExpandedHeight=WinHeight+<span class="source_int">0.1</span>;
+<a name="886"></a>
+<a name="887"></a>	WinHeight = RelativeHeight(ExpandedHeight);
+<a name="888"></a>	MinPageHeight = <span class="source_int">0.4</span>;
+<a name="889"></a>
+<a name="890"></a>	CheckBounds();
+<a name="891"></a>}
+<a name="892"></a>
+<a name="893"></a>function Constrict()
+<a name="894"></a>{
+<a name="895"></a>	bResizeHeightAllowed = False;
+<a name="896"></a>	WindowMode = MODE_Compact;
+<a name="897"></a>
+<a name="898"></a>	if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.<span class="source_type">ResX</span> &lt;= <span class="source_int">640</span> )
+<a name="899"></a>	{
+<a name="900"></a>		MinPageHeight = <span class="source_int">0.32</span>;
+<a name="901"></a>		WinHeight= <span class="source_int">0.32</span>;
+<a name="902"></a>	}
+<a name="903"></a>
+<a name="904"></a>	else
+<a name="905"></a>	{
+<a name="906"></a>		MinPageHeight = <span class="source_int">0.27</span>;
+<a name="907"></a>		WinHeight = <span class="source_int">0.27</span>;
+<a name="908"></a>	}
+<a name="909"></a>}
+<a name="910"></a>
+<a name="911"></a>function HideAll()
+<a name="912"></a>{
+<a name="913"></a>	Constrict();
+<a name="914"></a>	sb_PlayList.SetVisibility(false);
+<a name="915"></a>	sb_Management.SetVisibility(false);
+<a name="916"></a>	b_BotA.SetVisibility(false);
+<a name="917"></a>	b_BotB.SetVisibility(false);
+<a name="918"></a>	b_BotC.SetVisibility(false);
+<a name="919"></a>
+<a name="920"></a>}
+<a name="921"></a>
+<a name="922"></a>function TogglePlaylist()
+<a name="923"></a>{
+<a name="924"></a>	if (WindowMode!=MODE_PlayList)
+<a name="925"></a>		ShowPlayList();
+<a name="926"></a>	else
+<a name="927"></a>		HidePlayList();
+<a name="928"></a>}
+<a name="929"></a>
+<a name="930"></a>function ShowPlayList()
+<a name="931"></a>{
+<a name="932"></a>	if (WindowMode==MODE_Compact)	<span class="source_comment">// Expand the Window up
+</span><a name="933"></a>		Expand();
+<a name="934"></a>
+<a name="935"></a>	sb_PlayList.<span class="source_type">Caption</span> = PlayListManager.GetCurrentTitle();
+<a name="936"></a>
+<a name="937"></a>	b_BotA.SetVisibility(true); b_BotA.<span class="source_type">Caption</span> = plAdd;
+<a name="938"></a>	b_BotB.SetVisibility(true); b_BotB.<span class="source_type">Caption</span> = plRemove;
+<a name="939"></a>	b_BotC.SetVisibility(true); b_BotC.<span class="source_type">Caption</span> = plClear;
+<a name="940"></a>
+<a name="941"></a>	sb_PlayList.SetVisibility(true);
+<a name="942"></a>	sb_Management.SetVisibility(false);
+<a name="943"></a>
+<a name="944"></a>	WindowMode = MODE_PlayList;
+<a name="945"></a>
+<a name="946"></a>	b_PlayList.Graphic=OpenFolder;
+<a name="947"></a>
+<a name="948"></a>}
+<a name="949"></a>
+<a name="950"></a>function HidePlayList()
+<a name="951"></a>{
+<a name="952"></a>	Constrict();
+<a name="953"></a>
+<a name="954"></a>	b_BotA.SetVisibility(false);
+<a name="955"></a>	b_BotB.SetVisibility(false);
+<a name="956"></a>	b_BotC.SetVisibility(false);
+<a name="957"></a>
+<a name="958"></a>	sb_PlayList.SetVisibility(false);
+<a name="959"></a>	b_PlayList.Graphic=ClosedFolder;
+<a name="960"></a>}
+<a name="961"></a>
+<a name="962"></a>function ToggleManagement()
+<a name="963"></a>{
+<a name="964"></a>	if (WindowMode!=MODE_Manager)
+<a name="965"></a>		ShowManagement();
+<a name="966"></a>	else
+<a name="967"></a>    	HideManagement();
+<a name="968"></a>
+<a name="969"></a>	return;
+<a name="970"></a>}
+<a name="971"></a>
+<a name="972"></a>function ShowManagement()
+<a name="973"></a>{
+<a name="974"></a>	if (WindowMode==MODE_Compact)	<span class="source_comment">// Expand the Window up
+</span><a name="975"></a>		Expand();
+<a name="976"></a>
+<a name="977"></a>	b_BotA.SetVisibility(true); b_BotA.<span class="source_type">Caption</span> = mgNew;
+<a name="978"></a>	b_BotB.SetVisibility(true); b_BotB.<span class="source_type">Caption</span> = mgRemove;
+<a name="979"></a>	b_BotC.SetVisibility(true); b_BotC.<span class="source_type">Caption</span> = mgRename;
+<a name="980"></a>
+<a name="981"></a>	sb_PlayList.SetVisibility(false);
+<a name="982"></a>	sb_Management.SetVisibility(true);
+<a name="983"></a>	WindowMode = MODE_Manager;
+<a name="984"></a>	b_Playlist.Graphic = ClosedFolder;
+<a name="985"></a>}
+<a name="986"></a>
+<a name="987"></a>function HideManagement()
+<a name="988"></a>{
+<a name="989"></a>	Constrict();
+<a name="990"></a>
+<a name="991"></a>	b_BotA.SetVisibility(false);
+<a name="992"></a>	b_BotB.SetVisibility(false);
+<a name="993"></a>	b_BotC.SetVisibility(false);
+<a name="994"></a>
+<a name="995"></a>	sb_Management.SetVisibility(false);
+<a name="996"></a>}
+<a name="997"></a>
+<a name="998"></a>
+<a name="999"></a>function ManageDragOver( <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span> )
+<a name="1000"></a>{
+<a name="1001"></a>	if ( bAnimating )
+<a name="1002"></a>		return;
+<a name="1003"></a>
+<a name="1004"></a>	if ( <span class="source_type">Sender</span> == b_Management && WindowMode != MODE_Manager )
+<a name="1005"></a>		ShowManagement();
+<a name="1006"></a>
+<a name="1007"></a>	else if ( <span class="source_type">Sender</span> == b_Playlist && WindowMode != MODE_Playlist )
+<a name="1008"></a>		ShowPlaylist();
+<a name="1009"></a>}
+<a name="1010"></a>
+<a name="1011"></a>function <span class="source_type">bool</span> FloatingPreDraw( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span> )
+<a name="1012"></a>{
+<a name="1013"></a>
+<a name="1014"></a>	local <span class="source_type">float</span> <span class="source_type">X</span>,<span class="source_type">Y</span>,xl,<span class="source_type">yl</span>, BK1L, BK1T, BK1W, BK1H;
+<a name="1015"></a>	local <span class="source_type">float</span> l,<span class="source_type">t</span>,w,h;
+<a name="1016"></a>	local <span class="source_type">float</span> bl,bt,bw,bh,bs;
+<a name="1017"></a>	local <span class="source_type">bool</span> <span class="source_type">b</span>;
+<a name="1018"></a>
+<a name="1019"></a>	if ( bInit )
+<a name="1020"></a>		Constrict();
+<a name="1021"></a>
+<a name="1022"></a>	<span class="source_type">b</span> = super.FloatingPreDraw(<span class="source_type">c</span>);
+<a name="1023"></a>
+<a name="1024"></a>	<span class="source_comment">// dock the songinfo box to the title bar
+</span><a name="1025"></a>	<span class="source_type">t</span> = t_WindowTitle.ActualTop()+ t_WindowTitle.ActualHeight();
+<a name="1026"></a>
+<a name="1027"></a>	l = ActualLeft();
+<a name="1028"></a>	w = ActualWidth();
+<a name="1029"></a>
+<a name="1030"></a>	l_Time.Style.TextSize(<span class="source_type">C</span>,MenuState,<span class="source_string">"100:00"</span>,XL,<span class="source_type">YL</span>,l_Time.FontScale);
+<a name="1031"></a>	h = <span class="source_type">YL</span>*<span class="source_int">3</span>;
+<a name="1032"></a>
+<a name="1033"></a>	<span class="source_comment">// Align the controls.
+</span><a name="1034"></a>
+<a name="1035"></a>	<span class="source_type">x</span> = l + w - (<span class="source_type">C</span>.SizeX*<span class="source_int">0.01</span>);
+<a name="1036"></a>	<span class="source_type">y</span> = <span class="source_type">t</span> + (<span class="source_type">C</span>.SizeY*<span class="source_int">0.01</span>);
+<a name="1037"></a>
+<a name="1038"></a>	<span class="source_comment">// Timer Box
+</span><a name="1039"></a>	BK1.WinTop = BK1.RelativeTop(<span class="source_type">y</span>);
+<a name="1040"></a>	BK1.WinHeight = BK1.RelativeHeight(<span class="source_int">3</span>*<span class="source_type">YL</span>);
+<a name="1041"></a>	BK1.WinWidth = BK1.RelativeWidth(XL + (XL*<span class="source_int">0.32</span>));
+<a name="1042"></a>	BK1.WinLeft = BK1.RelativeLeft(<span class="source_type">X</span> - BK1.ActualWidth());
+<a name="1043"></a>
+<a name="1044"></a>	BK1T = BK1.ActualTop();
+<a name="1045"></a>	BK1W = BK1.ActualWidth();
+<a name="1046"></a>	BK1H = BK1.ActualHeight();
+<a name="1047"></a>	BK1L = BK1.ActualLeft();
+<a name="1048"></a>
+<a name="1049"></a>	l_Time.SetPosition(BK1L, BK1T, BK1W, BK1H, True);
+<a name="1050"></a>
+<a name="1051"></a>	<span class="source_type">X</span> = BK1L - (<span class="source_type">C</span>.SizeX*<span class="source_int">0.01</span>);
+<a name="1052"></a>	lb_SongInfo.WinTop    = lb_SongInfo.RelativeTop(<span class="source_type">y</span> - <span class="source_type">C</span>.SizeY * <span class="source_int">0.01</span>);
+<a name="1053"></a>	lb_SongInfo.WinLeft   = lb_SongInfo.RelativeLeft(l + (<span class="source_type">C</span>.SizeX*<span class="source_int">0.02</span>));
+<a name="1054"></a>	lb_SongInfo.WinWidth  = lb_SongInfo.RelativeWidth(<span class="source_type">X</span> - (lb_SongInfo.ActualLeft()));
+<a name="1055"></a>
+<a name="1056"></a>	<span class="source_comment">// Do the buttons
+</span><a name="1057"></a>
+<a name="1058"></a>	bh = ActualHeight(ch_Shuffle.StandardHeight);
+<a name="1059"></a>	bw = bh;
+<a name="1060"></a>	bt = BK1T + BK1H - bh;
+<a name="1061"></a>	bs = <span class="source_type">C</span>.SizeX*<span class="source_int">0.01</span>;
+<a name="1062"></a>	bl = <span class="source_type">x</span> - bw;
+<a name="1063"></a>
+<a name="1064"></a>
+<a name="1065"></a>	MoveButton(ch_ShuffleAll,BL,BT,BW,BH,BS);
+<a name="1066"></a>	MoveButton(ch_Shuffle,BL,BT,BW,BH,BS);
+<a name="1067"></a>	MoveButton(ch_RepeatAll,BL,BT,BW,BH,BS);
+<a name="1068"></a>	MoveButton(ch_Repeat,BL,BT,BW,BH,BS);
+<a name="1069"></a>	MoveButton(b_NextTrack,BL,BT,BW,BH,BS);
+<a name="1070"></a>	MoveButton(b_Play,BL,BT,BW,BH,BS);
+<a name="1071"></a>	MoveButton(b_Stop,BL,BT,BW,BH,BS);
+<a name="1072"></a>	MoveButton(b_PrevTrack,BL,BT,BW,BH,BS);
+<a name="1073"></a>
+<a name="1074"></a>	sl_Volume.WinLeft = sl_Volume.RelativeLeft(lb_SongInfo.ActualLeft());
+<a name="1075"></a>	sl_Volume.WinTop = sl_Volume.RelativeTop(bt);
+<a name="1076"></a>	sl_Volume.WinHeight = sl_Volume.RelativeHeight(bh);
+<a name="1077"></a>	sl_Volume.WinWidth = sl_Volume.RelativeWidth(bl - sl_Volume.ActualLeft());
+<a name="1078"></a>
+<a name="1079"></a>	lb_SongInfo.WinHeight = lb_SongInfo.RelativeHeight( (sl_Volume.ActualTop() - (<span class="source_type">C</span>.SizeY * <span class="source_int">0.01</span>)) - lb_SongInfo.ActualTop() );
+<a name="1080"></a>	<span class="source_type">t</span> = sl_Volume.ActualTop() + sl_Volume.ActualHeight() + (<span class="source_type">C</span>.SizeY *<span class="source_int">0.01</span>);
+<a name="1081"></a>	l = sl_Volume.ActualLeft();
+<a name="1082"></a>
+<a name="1083"></a>	b_PlayList.SetPosition(l,<span class="source_type">t</span>,bw,bh,true);
+<a name="1084"></a>	b_Management.SetPosition(l+bw+bs,<span class="source_type">t</span>,bw,bh,true);
+<a name="1085"></a>
+<a name="1086"></a>	l = l+(bw*<span class="source_int">2</span>)+(bs*<span class="source_int">2</span>);
+<a name="1087"></a>	bt = <span class="source_type">t</span> + bh*<span class="source_int">0.32</span>;
+<a name="1088"></a>
+<a name="1089"></a>	bk2.WinLeft = bk2.RelativeLeft(l);
+<a name="1090"></a>	bk2.WinTop = bk2.RelativeTop(bt);
+<a name="1091"></a>	bk2.WinHeight = bk2.RelativeHeight(bh*<span class="source_int">0.5</span>);
+<a name="1092"></a>	bk2.WinWidth = bk2.RelativeWidth((BK1L+BK1W-bw) - bk2.ActualLeft());
+<a name="1093"></a>
+<a name="1094"></a>	l = ActualLeft();
+<a name="1095"></a>	w = ActualWidth();
+<a name="1096"></a>	<span class="source_type">t</span> = bt + (bh*<span class="source_int">1.5</span>);
+<a name="1097"></a>
+<a name="1098"></a>	if (WindowMode==MODE_PlayList)
+<a name="1099"></a>	{
+<a name="1100"></a>		sb_PlayList.WinLeft   = sb_Playlist.RelativeLeft(l);
+<a name="1101"></a>		sb_PlayList.WinWidth  = sb_Playlist.RelativeWidth(w);
+<a name="1102"></a>		sb_PlayList.WinTop    = sb_Playlist.RelativeTop(<span class="source_type">t</span>);
+<a name="1103"></a>		sb_PlayList.WinHeight = sb_Playlist.RelativeHeight(ActualTop() + ActualHeight() - <span class="source_type">t</span>);
+<a name="1104"></a>		<span class="source_type">T</span> = <span class="source_type">t</span> + sb_PlayList.ActualHeight() - <span class="source_int">32</span>;
+<a name="1105"></a>		SetBottomButtons(<span class="source_type">C</span>,sb_PlayList.ActualLeft(),<span class="source_type">T</span>,sb_PlayList.ActualWidth(), <span class="source_int">32</span>);
+<a name="1106"></a>	}
+<a name="1107"></a>
+<a name="1108"></a>	if (WindowMode==MODE_Manager)
+<a name="1109"></a>	{
+<a name="1110"></a>		sb_Management.WinLeft   = sb_Management.RelativeLeft(l);
+<a name="1111"></a>		sb_Management.WinWidth  = sb_Management.RelativeWidth(w);
+<a name="1112"></a>		sb_Management.WinTop    = sb_Management.RelativeTop(<span class="source_type">t</span>);
+<a name="1113"></a>		sb_Management.WinHeight = sb_Management.RelativeHeight(ActualTop() + ActualHeight() - <span class="source_type">t</span>);
+<a name="1114"></a>		<span class="source_type">T</span> = <span class="source_type">t</span> + sb_Management.ActualHeight() - <span class="source_int">32</span>;
+<a name="1115"></a>		SetBottomButtons(<span class="source_type">C</span>,sb_Management.ActualLeft(),<span class="source_type">T</span>, sb_Management.ActualWidth(), <span class="source_int">32</span>);
+<a name="1116"></a>	}
+<a name="1117"></a>
+<a name="1118"></a>	return <span class="source_type">b</span>;
+<a name="1119"></a>}
+<a name="1120"></a>
+<a name="1121"></a>function MoveButton(<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">B</span>, out <span class="source_type">float</span> L, <span class="source_type">float</span> <span class="source_type">T</span>, <span class="source_type">float</span> W, <span class="source_type">float</span> H, <span class="source_type">float</span> <span class="source_type">S</span>)
+<a name="1122"></a>{
+<a name="1123"></a>	<span class="source_type">B</span>.SetPosition(l,<span class="source_type">t</span>,w,h,true);
+<a name="1124"></a>	L -= w+<span class="source_type">S</span>;
+<a name="1125"></a>}
+<a name="1126"></a>
+<a name="1127"></a>function SetBottomButtons(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>, <span class="source_type">float</span> Left, <span class="source_type">float</span> Top, <span class="source_type">float</span> <span class="source_type">Width</span>, <span class="source_type">float</span> Height)
+<a name="1128"></a>{
+<a name="1129"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1130"></a>	local <span class="source_type">float</span> xsize,xl,<span class="source_type">yl</span>,<span class="source_type">s</span>;
+<a name="1131"></a>	local <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">B</span>;
+<a name="1132"></a>
+<a name="1133"></a>	<span class="source_type">s</span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.<span class="source_type">ResX</span>*<span class="source_int">0.01</span>;
+<a name="1134"></a>	for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;Controls.Length;<span class="source_type">i</span>++)
+<a name="1135"></a>		if ( Controls[<span class="source_type">i</span>].Tag&gt;<span class="source_int">0</span> )
+<a name="1136"></a>		{
+<a name="1137"></a>			<span class="source_type">B</span> = <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(Controls[<span class="source_type">i</span>]);
+<a name="1138"></a>			<span class="source_type">b</span>.Style.TextSize(<span class="source_type">C</span>,<span class="source_type">b</span>.MenuState,<span class="source_type">b</span>.<span class="source_type">Caption</span>,XL,<span class="source_type">YL</span>,<span class="source_type">b</span>.FontScale);
+<a name="1139"></a>			xsize += XL + <span class="source_type">S</span>;
+<a name="1140"></a>			Controls[<span class="source_type">i</span>].WinWidth = Controls[<span class="source_type">i</span>].RelativeWidth(XL + <span class="source_type">S</span>);
+<a name="1141"></a>		}
+<a name="1142"></a>
+<a name="1143"></a>
+<a name="1144"></a>	Left = Left + (<span class="source_type">Width</span>/<span class="source_int">2</span>) - (xsize/<span class="source_int">2</span>);
+<a name="1145"></a>	for (<span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;Controls.Length;<span class="source_type">i</span>++)
+<a name="1146"></a>		if ( Controls[<span class="source_type">i</span>].Tag&gt;<span class="source_int">0</span> )
+<a name="1147"></a>		{
+<a name="1148"></a>			Controls[<span class="source_type">i</span>].WinTop =   Controls[<span class="source_type">i</span>].RelativeTop(Top);
+<a name="1149"></a>			Controls[<span class="source_type">i</span>].WinLeft =  Controls[<span class="source_type">i</span>].RelativeLeft(Left);
+<a name="1150"></a>			Controls[<span class="source_type">i</span>].WinHeight= Controls[<span class="source_type">i</span>].RelativeHeight(Height);
+<a name="1151"></a>			Left += Controls[<span class="source_type">i</span>].ActualWidth();
+<a name="1152"></a>		}
+<a name="1153"></a>}
+<a name="1154"></a>
+<a name="1155"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1156"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1157"></a><span class="source_comment">//  Notifications
+</span><a name="1158"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1159"></a><span class="source_comment">// =====================================================================================================================
+</span><a name="1160"></a>function ResizedBoth()
+<a name="1161"></a>{
+<a name="1162"></a>	ExpandedHeight = RelativeHeight();
+<a name="1163"></a>	Super.ResizedBoth();
+<a name="1164"></a>}
+<a name="1165"></a>
+<a name="1166"></a>function ResizedHeight()
+<a name="1167"></a>{
+<a name="1168"></a>	ExpandedHeight = RelativeHeight();
+<a name="1169"></a>	Super.ResizedHeight();
+<a name="1170"></a>}
+<a name="1171"></a>
+<a name="1172"></a>defaultproperties
+<a name="1173"></a>{
+<a name="1174"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=Img1
+<a name="1175"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1176"></a>         ImageStyle=ISTY_Stretched
+<a name="1177"></a>         WinTop=<span class="source_int">0.200000</span>
+<a name="1178"></a>         WinLeft=<span class="source_int">0.200000</span>
+<a name="1179"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="1180"></a>         WinHeight=<span class="source_int">0.200000</span>
+<a name="1181"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1182"></a>     Bk1=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'GUI2K4.StreamPlayer.Img1'</span>
+<a name="1183"></a>
+<a name="1184"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=Img2
+<a name="1185"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1186"></a>         ImageStyle=ISTY_Scaled
+<a name="1187"></a>         WinTop=<span class="source_int">0.200000</span>
+<a name="1188"></a>         WinLeft=<span class="source_int">0.200000</span>
+<a name="1189"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="1190"></a>         WinHeight=<span class="source_int">0.200000</span>
+<a name="1191"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1192"></a>     bk2=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'GUI2K4.StreamPlayer.Img2'</span>
+<a name="1193"></a>
+<a name="1194"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../gui2k4/altsectionbackground.html" class="source">AltSectionBackground</a></span> <span class="source_type">Name</span>=sbPlayList
+<a name="1195"></a>         bFillClient=True
+<a name="1196"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Current Playlist"</span>
+<a name="1197"></a>         LeftPadding=<span class="source_int">0.000000</span>
+<a name="1198"></a>         RightPadding=<span class="source_int">0.000000</span>
+<a name="1199"></a>         WinTop=<span class="source_int">0.200000</span>
+<a name="1200"></a>         WinLeft=<span class="source_int">0.200000</span>
+<a name="1201"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="1202"></a>         WinHeight=<span class="source_int">0.200000</span>
+<a name="1203"></a>         bVisible=False
+<a name="1204"></a>         OnPreDraw=sbPlayList.InternalPreDraw
+<a name="1205"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1206"></a>     sb_PlayList=<span class="source_type"><a href="../gui2k4/altsectionbackground.html" class="source">AltSectionBackground</a></span><span class="source_name">'GUI2K4.StreamPlayer.sbPlayList'</span>
+<a name="1207"></a>
+<a name="1208"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../gui2k4/altsectionbackground.html" class="source">AltSectionBackground</a></span> <span class="source_type">Name</span>=sbManagement
+<a name="1209"></a>         bFillClient=True
+<a name="1210"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Play List Manager"</span>
+<a name="1211"></a>         LeftPadding=<span class="source_int">0.000000</span>
+<a name="1212"></a>         RightPadding=<span class="source_int">0.000000</span>
+<a name="1213"></a>         WinTop=<span class="source_int">0.200000</span>
+<a name="1214"></a>         WinLeft=<span class="source_int">0.200000</span>
+<a name="1215"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="1216"></a>         WinHeight=<span class="source_int">0.200000</span>
+<a name="1217"></a>         bVisible=False
+<a name="1218"></a>         OnPreDraw=sbManagement.InternalPreDraw
+<a name="1219"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1220"></a>     sb_Management=<span class="source_type"><a href="../gui2k4/altsectionbackground.html" class="source">AltSectionBackground</a></span><span class="source_name">'GUI2K4.StreamPlayer.sbManagement'</span>
+<a name="1221"></a>
+<a name="1222"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span> <span class="source_type">Name</span>=SongInfoBox
+<a name="1223"></a>         bNoTeletype=True
+<a name="1224"></a>         OnCreateComponent=SongInfoBox.InternalOnCreateComponent
+<a name="1225"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="1226"></a>         WinHeight=<span class="source_int">0.200000</span>
+<a name="1227"></a>         bTabStop=False
+<a name="1228"></a>         bAcceptsInput=False
+<a name="1229"></a>         bNeverFocus=True
+<a name="1230"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1231"></a>     lb_SongInfo=<span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span><span class="source_name">'GUI2K4.StreamPlayer.SongInfoBox'</span>
+<a name="1232"></a>
+<a name="1233"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span> <span class="source_type">Name</span>=SongTime
+<a name="1234"></a>         <span class="source_type">Caption</span>=<span class="source_string">"0:00"</span>
+<a name="1235"></a>         TextAlign=TXTA_Center
+<a name="1236"></a>         VertAlign=TXTA_Center
+<a name="1237"></a>         FontScale=FNS_Large
+<a name="1238"></a>         StyleName=<span class="source_string">"TextLabel"</span>
+<a name="1239"></a>         WinTop=-<span class="source_int">0.200000</span>
+<a name="1240"></a>         WinLeft=<span class="source_int">0.200000</span>
+<a name="1241"></a>         WinWidth=<span class="source_int">0.241172</span>
+<a name="1242"></a>         WinHeight=<span class="source_int">0.550191</span>
+<a name="1243"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1244"></a>     l_Time=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span><span class="source_name">'GUI2K4.StreamPlayer.SongTime'</span>
+<a name="1245"></a>
+<a name="1246"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guilistbox.html" class="source">GUIListBox</a></span> <span class="source_type">Name</span>=PlaylistListBox
+<a name="1247"></a>         bVisibleWhenEmpty=True
+<a name="1248"></a>         OnCreateComponent=PlaylistListBox.InternalOnCreateComponent
+<a name="1249"></a>         Hint=<span class="source_string">"Current Playlist"</span>
+<a name="1250"></a>         WinTop=<span class="source_int">0.300000</span>
+<a name="1251"></a>         WinLeft=<span class="source_int">0.010859</span>
+<a name="1252"></a>         WinWidth=<span class="source_int">0.977425</span>
+<a name="1253"></a>         WinHeight=<span class="source_int">0.588941</span>
+<a name="1254"></a>         RenderWeight=<span class="source_int">0.503000</span>
+<a name="1255"></a>         TabOrder=<span class="source_int">6</span>
+<a name="1256"></a>         bVisible=False
+<a name="1257"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1258"></a>     lb_Playlist=<span class="source_type"><a href="../xinterface/guilistbox.html" class="source">GUIListBox</a></span><span class="source_name">'GUI2K4.StreamPlayer.PlaylistListBox'</span>
+<a name="1259"></a>
+<a name="1260"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guilistbox.html" class="source">GUIListBox</a></span> <span class="source_type">Name</span>=SelectPlaylistListBox
+<a name="1261"></a>         bVisibleWhenEmpty=True
+<a name="1262"></a>         OnCreateComponent=SelectPlaylistListBox.InternalOnCreateComponent
+<a name="1263"></a>         Hint=<span class="source_string">"Select A Playlist"</span>
+<a name="1264"></a>         WinTop=<span class="source_int">0.235000</span>
+<a name="1265"></a>         WinLeft=<span class="source_int">0.010859</span>
+<a name="1266"></a>         WinWidth=<span class="source_int">0.977425</span>
+<a name="1267"></a>         WinHeight=<span class="source_int">0.717500</span>
+<a name="1268"></a>         TabOrder=<span class="source_int">1</span>
+<a name="1269"></a>         bBoundToParent=True
+<a name="1270"></a>         bVisible=False
+<a name="1271"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1272"></a>     lb_AllPlaylists=<span class="source_type"><a href="../xinterface/guilistbox.html" class="source">GUIListBox</a></span><span class="source_name">'GUI2K4.StreamPlayer.SelectPlaylistListBox'</span>
+<a name="1273"></a>
+<a name="1274"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=bBotA
+<a name="1275"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Add"</span>
+<a name="1276"></a>         StyleName=<span class="source_string">"FooterButton"</span>
+<a name="1277"></a>         Tag=<span class="source_int">1</span>
+<a name="1278"></a>         bVisible=False
+<a name="1279"></a>         OnClick=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnClick
+<a name="1280"></a>         OnKeyEvent=bBotA.InternalOnKeyEvent
+<a name="1281"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1282"></a>     b_BotA=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.bBotA'</span>
+<a name="1283"></a>
+<a name="1284"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=bBotB
+<a name="1285"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Remove"</span>
+<a name="1286"></a>         StyleName=<span class="source_string">"FooterButton"</span>
+<a name="1287"></a>         Tag=<span class="source_int">1</span>
+<a name="1288"></a>         bVisible=False
+<a name="1289"></a>         OnClick=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnClick
+<a name="1290"></a>         OnKeyEvent=bBotB.InternalOnKeyEvent
+<a name="1291"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1292"></a>     b_BotB=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.bBotB'</span>
+<a name="1293"></a>
+<a name="1294"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=bBotC
+<a name="1295"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Clear"</span>
+<a name="1296"></a>         StyleName=<span class="source_string">"FooterButton"</span>
+<a name="1297"></a>         Tag=<span class="source_int">1</span>
+<a name="1298"></a>         bVisible=False
+<a name="1299"></a>         OnClick=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnClick
+<a name="1300"></a>         OnKeyEvent=bBotC.InternalOnKeyEvent
+<a name="1301"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1302"></a>     b_BotC=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.bBotC'</span>
+<a name="1303"></a>
+<a name="1304"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guislider.html" class="source">GUISlider</a></span> <span class="source_type">Name</span>=StreamVolume
+<a name="1305"></a>         MaxValue=<span class="source_int">1.000000</span>
+<a name="1306"></a>         Hint=<span class="source_string">"Volume"</span>
+<a name="1307"></a>         WinWidth=<span class="source_int">0.544922</span>
+<a name="1308"></a>         WinHeight=<span class="source_int">1.000000</span>
+<a name="1309"></a>         TabOrder=<span class="source_int">0</span>
+<a name="1310"></a>         OnClick=StreamVolume.InternalOnClick
+<a name="1311"></a>         OnMousePressed=StreamVolume.InternalOnMousePressed
+<a name="1312"></a>         OnMouseRelease=StreamVolume.InternalOnMouseRelease
+<a name="1313"></a>         OnChange=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnChange
+<a name="1314"></a>         OnKeyEvent=StreamVolume.InternalOnKeyEvent
+<a name="1315"></a>         OnCapturedMouseMove=StreamVolume.InternalCapturedMouseMove
+<a name="1316"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1317"></a>     sl_Volume=<span class="source_type"><a href="../xinterface/guislider.html" class="source">GUISlider</a></span><span class="source_name">'GUI2K4.StreamPlayer.StreamVolume'</span>
+<a name="1318"></a>
+<a name="1319"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span> <span class="source_type">Name</span>=PlayButton
+<a name="1320"></a>         Graphic=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1321"></a>         <span class="source_type">Position</span>=ICP_Scaled
+<a name="1322"></a>         StyleName=<span class="source_string">"TextLabel"</span>
+<a name="1323"></a>         WinLeft=<span class="source_int">0.717110</span>
+<a name="1324"></a>         WinWidth=<span class="source_int">0.040000</span>
+<a name="1325"></a>         TabOrder=<span class="source_int">4</span>
+<a name="1326"></a>         bTabStop=True
+<a name="1327"></a>         OnClick=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnClick
+<a name="1328"></a>         OnKeyEvent=PlayButton.InternalOnKeyEvent
+<a name="1329"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1330"></a>     b_Play=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.PlayButton'</span>
+<a name="1331"></a>
+<a name="1332"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span> <span class="source_type">Name</span>=StopButton
+<a name="1333"></a>         Graphic=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1334"></a>         <span class="source_type">Position</span>=ICP_Scaled
+<a name="1335"></a>         StyleName=<span class="source_string">"TextLabel"</span>
+<a name="1336"></a>         Hint=<span class="source_string">"Stop"</span>
+<a name="1337"></a>         WinLeft=<span class="source_int">0.605859</span>
+<a name="1338"></a>         WinWidth=<span class="source_int">0.040000</span>
+<a name="1339"></a>         TabOrder=<span class="source_int">2</span>
+<a name="1340"></a>         bTabStop=True
+<a name="1341"></a>         OnClick=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnClick
+<a name="1342"></a>         OnKeyEvent=StopButton.InternalOnKeyEvent
+<a name="1343"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1344"></a>     b_Stop=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.StopButton'</span>
+<a name="1345"></a>
+<a name="1346"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span> <span class="source_type">Name</span>=NextTrackButton
+<a name="1347"></a>         Graphic=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1348"></a>         <span class="source_type">Position</span>=ICP_Scaled
+<a name="1349"></a>         StyleName=<span class="source_string">"TextLabel"</span>
+<a name="1350"></a>         Hint=<span class="source_string">"Next"</span>
+<a name="1351"></a>         WinLeft=<span class="source_int">0.660860</span>
+<a name="1352"></a>         WinWidth=<span class="source_int">0.040000</span>
+<a name="1353"></a>         TabOrder=<span class="source_int">3</span>
+<a name="1354"></a>         bTabStop=True
+<a name="1355"></a>         OnClick=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnClick
+<a name="1356"></a>         OnKeyEvent=NextTrackButton.InternalOnKeyEvent
+<a name="1357"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1358"></a>     b_NextTrack=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.NextTrackButton'</span>
+<a name="1359"></a>
+<a name="1360"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span> <span class="source_type">Name</span>=PrevTrackButton
+<a name="1361"></a>         Graphic=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1362"></a>         <span class="source_type">Position</span>=ICP_Scaled
+<a name="1363"></a>         StyleName=<span class="source_string">"TextLabel"</span>
+<a name="1364"></a>         Hint=<span class="source_string">"Previous"</span>
+<a name="1365"></a>         WinLeft=<span class="source_int">0.542109</span>
+<a name="1366"></a>         WinWidth=<span class="source_int">0.040000</span>
+<a name="1367"></a>         TabOrder=<span class="source_int">1</span>
+<a name="1368"></a>         bTabStop=True
+<a name="1369"></a>         OnClick=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnClick
+<a name="1370"></a>         OnKeyEvent=PrevTrackButton.InternalOnKeyEvent
+<a name="1371"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1372"></a>     b_PrevTrack=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.PrevTrackButton'</span>
+<a name="1373"></a>
+<a name="1374"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span> <span class="source_type">Name</span>=ShowPlaylistButton
+<a name="1375"></a>         Graphic=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1376"></a>         StyleName=<span class="source_string">"RoundScaledButton"</span>
+<a name="1377"></a>         WinLeft=<span class="source_int">0.825470</span>
+<a name="1378"></a>         WinWidth=<span class="source_int">0.052422</span>
+<a name="1379"></a>         WinHeight=<span class="source_int">0.925000</span>
+<a name="1380"></a>         TabOrder=<span class="source_int">5</span>
+<a name="1381"></a>         bTabStop=True
+<a name="1382"></a>         OnClick=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnClick
+<a name="1383"></a>         OnKeyEvent=ShowPlaylistButton.InternalOnKeyEvent
+<a name="1384"></a>         OnDragOver=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.ManageDragOver
+<a name="1385"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1386"></a>     b_Playlist=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.ShowPlaylistButton'</span>
+<a name="1387"></a>
+<a name="1388"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span> <span class="source_type">Name</span>=ManagePlaylistsButton
+<a name="1389"></a>         Graphic=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1390"></a>         StyleName=<span class="source_string">"RoundScaledButton"</span>
+<a name="1391"></a>         Hint=<span class="source_string">"Manage Playlists"</span>
+<a name="1392"></a>         WinLeft=<span class="source_int">0.883360</span>
+<a name="1393"></a>         WinWidth=<span class="source_int">0.052422</span>
+<a name="1394"></a>         WinHeight=<span class="source_int">0.925000</span>
+<a name="1395"></a>         TabOrder=<span class="source_int">6</span>
+<a name="1396"></a>         bTabStop=True
+<a name="1397"></a>         OnClick=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnClick
+<a name="1398"></a>         OnKeyEvent=ManagePlaylistsButton.InternalOnKeyEvent
+<a name="1399"></a>         OnDragOver=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.ManageDragOver
+<a name="1400"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1401"></a>     b_Management=<span class="source_type"><a href="../xinterface/guigfxbutton.html" class="source">GUIGFXButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.ManagePlaylistsButton'</span>
+<a name="1402"></a>
+<a name="1403"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guicheckboxbutton.html" class="source">GUICheckBoxButton</a></span> <span class="source_type">Name</span>=ShuffleCheck
+<a name="1404"></a>         CheckedOverlay(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1405"></a>         CheckedOverlay(<span class="source_int">1</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1406"></a>         CheckedOverlay(<span class="source_int">2</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1407"></a>         CheckedOverlay(<span class="source_int">3</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1408"></a>         CheckedOverlay(<span class="source_int">4</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1409"></a>         CheckedOverlay(<span class="source_int">5</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1410"></a>         CheckedOverlay(<span class="source_int">6</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1411"></a>         CheckedOverlay(<span class="source_int">7</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1412"></a>         CheckedOverlay(<span class="source_int">8</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1413"></a>         CheckedOverlay(<span class="source_int">9</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1414"></a>         bAllOverlay=True
+<a name="1415"></a>         Hint=<span class="source_string">"Shuffle"</span>
+<a name="1416"></a>         WinTop=<span class="source_int">0.666667</span>
+<a name="1417"></a>         WinLeft=<span class="source_int">0.840000</span>
+<a name="1418"></a>         WinWidth=<span class="source_int">0.040000</span>
+<a name="1419"></a>         TabOrder=<span class="source_int">2</span>
+<a name="1420"></a>         OnChange=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnChange
+<a name="1421"></a>         OnKeyEvent=ShuffleCheck.InternalOnKeyEvent
+<a name="1422"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1423"></a>     ch_Shuffle=<span class="source_type"><a href="../xinterface/guicheckboxbutton.html" class="source">GUICheckBoxButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.ShuffleCheck'</span>
+<a name="1424"></a>
+<a name="1425"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guicheckboxbutton.html" class="source">GUICheckBoxButton</a></span> <span class="source_type">Name</span>=ShuffleAllCheck
+<a name="1426"></a>         CheckedOverlay(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1427"></a>         CheckedOverlay(<span class="source_int">1</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1428"></a>         CheckedOverlay(<span class="source_int">2</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1429"></a>         CheckedOverlay(<span class="source_int">3</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1430"></a>         CheckedOverlay(<span class="source_int">4</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1431"></a>         CheckedOverlay(<span class="source_int">5</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1432"></a>         CheckedOverlay(<span class="source_int">6</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1433"></a>         CheckedOverlay(<span class="source_int">7</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1434"></a>         CheckedOverlay(<span class="source_int">8</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1435"></a>         CheckedOverlay(<span class="source_int">9</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1436"></a>         bAllOverlay=True
+<a name="1437"></a>         Hint=<span class="source_string">"Shuffle All"</span>
+<a name="1438"></a>         WinTop=<span class="source_int">0.666667</span>
+<a name="1439"></a>         WinLeft=<span class="source_int">0.880000</span>
+<a name="1440"></a>         WinWidth=<span class="source_int">0.040000</span>
+<a name="1441"></a>         TabOrder=<span class="source_int">3</span>
+<a name="1442"></a>         OnChange=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnChange
+<a name="1443"></a>         OnKeyEvent=ShuffleAllCheck.InternalOnKeyEvent
+<a name="1444"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1445"></a>     ch_ShuffleAll=<span class="source_type"><a href="../xinterface/guicheckboxbutton.html" class="source">GUICheckBoxButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.ShuffleAllCheck'</span>
+<a name="1446"></a>
+<a name="1447"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guicheckboxbutton.html" class="source">GUICheckBoxButton</a></span> <span class="source_type">Name</span>=RepeatCheck
+<a name="1448"></a>         CheckedOverlay(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1449"></a>         CheckedOverlay(<span class="source_int">1</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1450"></a>         CheckedOverlay(<span class="source_int">2</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1451"></a>         CheckedOverlay(<span class="source_int">3</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1452"></a>         CheckedOverlay(<span class="source_int">4</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1453"></a>         CheckedOverlay(<span class="source_int">5</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1454"></a>         CheckedOverlay(<span class="source_int">6</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1455"></a>         CheckedOverlay(<span class="source_int">7</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1456"></a>         CheckedOverlay(<span class="source_int">8</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1457"></a>         CheckedOverlay(<span class="source_int">9</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1458"></a>         bAllOverlay=True
+<a name="1459"></a>         Hint=<span class="source_string">"Repeat"</span>
+<a name="1460"></a>         WinTop=<span class="source_int">0.666667</span>
+<a name="1461"></a>         WinLeft=<span class="source_int">0.760000</span>
+<a name="1462"></a>         WinWidth=<span class="source_int">0.040000</span>
+<a name="1463"></a>         TabOrder=<span class="source_int">0</span>
+<a name="1464"></a>         OnChange=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnChange
+<a name="1465"></a>         OnKeyEvent=RepeatCheck.InternalOnKeyEvent
+<a name="1466"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1467"></a>     ch_Repeat=<span class="source_type"><a href="../xinterface/guicheckboxbutton.html" class="source">GUICheckBoxButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.RepeatCheck'</span>
+<a name="1468"></a>
+<a name="1469"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guicheckboxbutton.html" class="source">GUICheckBoxButton</a></span> <span class="source_type">Name</span>=RepeatAllCheck
+<a name="1470"></a>         CheckedOverlay(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1471"></a>         CheckedOverlay(<span class="source_int">1</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1472"></a>         CheckedOverlay(<span class="source_int">2</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1473"></a>         CheckedOverlay(<span class="source_int">3</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1474"></a>         CheckedOverlay(<span class="source_int">4</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1475"></a>         CheckedOverlay(<span class="source_int">5</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1476"></a>         CheckedOverlay(<span class="source_int">6</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1477"></a>         CheckedOverlay(<span class="source_int">7</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1478"></a>         CheckedOverlay(<span class="source_int">8</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1479"></a>         CheckedOverlay(<span class="source_int">9</span>)=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1480"></a>         bAllOverlay=True
+<a name="1481"></a>         Hint=<span class="source_string">"Repeat All"</span>
+<a name="1482"></a>         WinTop=<span class="source_int">0.666667</span>
+<a name="1483"></a>         WinLeft=<span class="source_int">0.800000</span>
+<a name="1484"></a>         WinWidth=<span class="source_int">0.040000</span>
+<a name="1485"></a>         TabOrder=<span class="source_int">1</span>
+<a name="1486"></a>         OnChange=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.InternalOnChange
+<a name="1487"></a>         OnKeyEvent=RepeatAllCheck.InternalOnKeyEvent
+<a name="1488"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1489"></a>     ch_RepeatAll=<span class="source_type"><a href="../xinterface/guicheckboxbutton.html" class="source">GUICheckBoxButton</a></span><span class="source_name">'GUI2K4.StreamPlayer.RepeatAllCheck'</span>
+<a name="1490"></a>
+<a name="1491"></a>     ID3TagEditorMenu=<span class="source_string">"GUI2K4.ID3TagEditor"</span>
+<a name="1492"></a>     PlaylistEditorMenu=<span class="source_string">"GUI2K4.StreamPlaylistEditor"</span>
+<a name="1493"></a>     ExpandedHeight=<span class="source_int">0.500000</span>
+<a name="1494"></a>     ConstrictedHeight=<span class="source_int">0.320000</span>
+<a name="1495"></a>     PauseImage=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1496"></a>     PlayImage=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1497"></a>     OpenFolder=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1498"></a>     ClosedFolder=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="1499"></a>     CollapsePlaylistHint=<span class="source_string">"Hide Current Playlist"</span>
+<a name="1500"></a>     ExpandPlaylistHint=<span class="source_string">"Show Current Playlist"</span>
+<a name="1501"></a>     PlayHint=<span class="source_string">"Play"</span>
+<a name="1502"></a>     PauseHint=<span class="source_string">"Pause"</span>
+<a name="1503"></a>     CollapseManagementHint=<span class="source_string">"Hide Playlist Options"</span>
+<a name="1504"></a>     ExpandManagementHint=<span class="source_string">"Show Playlist Options"</span>
+<a name="1505"></a>     RenameCaption=<span class="source_string">"Rename Playlist"</span>
+<a name="1506"></a>     <span class="source_type">NewCaption</span>=<span class="source_string">"Create New Playlist"</span>
+<a name="1507"></a>     PlaylistNameCaption=<span class="source_string">"Name: "</span>
+<a name="1508"></a>     PLAdd=<span class="source_string">"Add"</span>
+<a name="1509"></a>     PLRemove=<span class="source_string">"Remove"</span>
+<a name="1510"></a>     PLClear=<span class="source_string">"Clear"</span>
+<a name="1511"></a>     MGNew=<span class="source_string">"New"</span>
+<a name="1512"></a>     MGRemove=<span class="source_string">"Remove"</span>
+<a name="1513"></a>     MGRename=<span class="source_string">"Rename"</span>
+<a name="1514"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span> <span class="source_type">Name</span>=SongRCMenu
+<a name="1515"></a>         ContextItems(<span class="source_int">0</span>)=<span class="source_string">"Play Selected"</span>
+<a name="1516"></a>         ContextItems(<span class="source_int">1</span>)=<span class="source_string">"Open Playlist Editor"</span>
+<a name="1517"></a>         ContextItems(<span class="source_int">2</span>)=<span class="source_string">"-"</span>
+<a name="1518"></a>         ContextItems(<span class="source_int">3</span>)=<span class="source_string">"Remove From Playlist"</span>
+<a name="1519"></a>         ContextItems(<span class="source_int">4</span>)=<span class="source_string">"Clear Playlist"</span>
+<a name="1520"></a>         OnSelect=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.SongMenuClick
+<a name="1521"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1522"></a>     cm_Playlist=<span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span><span class="source_name">'GUI2K4.StreamPlayer.SongRCMenu'</span>
+<a name="1523"></a>
+<a name="1524"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span> <span class="source_type">Name</span>=PlaylistRCMenu
+<a name="1525"></a>         ContextItems(<span class="source_int">0</span>)=<span class="source_string">"Activate Playlist"</span>
+<a name="1526"></a>         ContextItems(<span class="source_int">1</span>)=<span class="source_string">"Rename Playlist"</span>
+<a name="1527"></a>         ContextItems(<span class="source_int">2</span>)=<span class="source_string">"Create new Playlist"</span>
+<a name="1528"></a>         ContextItems(<span class="source_int">3</span>)=<span class="source_string">"-"</span>
+<a name="1529"></a>         ContextItems(<span class="source_int">4</span>)=<span class="source_string">"Delete Playlist"</span>
+<a name="1530"></a>         ContextItems(<span class="source_int">5</span>)=<span class="source_string">"Clear Playlist"</span>
+<a name="1531"></a>         OnSelect=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.PlaylistMenuClick
+<a name="1532"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1533"></a>     cm_AllLists=<span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span><span class="source_name">'GUI2K4.StreamPlayer.PlaylistRCMenu'</span>
+<a name="1534"></a>
+<a name="1535"></a>     WindowName=<span class="source_string">"Music Player"</span>
+<a name="1536"></a>     MinPageWidth=<span class="source_int">0.750000</span>
+<a name="1537"></a>     MinPageHeight=<span class="source_int">0.320000</span>
+<a name="1538"></a>     MaxPageWidth=<span class="source_int">0.900000</span>
+<a name="1539"></a>     bResizeHeightAllowed=False
+<a name="1540"></a>     bPersistent=True
+<a name="1541"></a>     bAllowedAsLast=True
+<a name="1542"></a>     WinHeight=<span class="source_int">0.320000</span>
+<a name="1543"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span> <span class="source_type">Name</span>=PlayerRCMenu
+<a name="1544"></a>         ContextItems(<span class="source_int">0</span>)=<span class="source_string">"Change Settings"</span>
+<a name="1545"></a>         OnSelect=<span class="source_type"><a href="../gui2k4/streamplayer.html" class="source">StreamPlayer</a></span>.PlayerMenuClick
+<a name="1546"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="1547"></a>     ContextMenu=<span class="source_type"><a href="../xinterface/guicontextmenu.html" class="source">GUIContextMenu</a></span><span class="source_name">'GUI2K4.StreamPlayer.PlayerRCMenu'</span>
+<a name="1548"></a>
+<a name="1549"></a>}
+<a name="1550"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/streamplayer.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#StreamPlayer">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/streamdirectorynode.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/streamplaylisteditor.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:09.047 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

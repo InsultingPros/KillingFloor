@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.KFVetCommando</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfvetcommando.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFVetCommando">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfvetberserker.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfvetdemolitions.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/kfvetcommando.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/kfvetcommando.html">KFVetCommando</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/kfvetcommando.html" class="source">KFVetCommando</a></span> extends <span class="source_type"><a href="../kfmod/kfveterancytypes.html" class="source">KFVeterancyTypes</a></span>
+<a name="2"></a>	abstract;
+<a name="3"></a>
+<a name="4"></a><span class="source_comment">// Display enemy health bars
+</span><a name="5"></a>static function SpecialHUDInfo(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI, <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>)
+<a name="6"></a>{
+<a name="7"></a>	local <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span> KFEnemy;
+<a name="8"></a>	local <span class="source_type"><a href="../kfmod/hudkillingfloor.html" class="source">HUDKillingFloor</a></span> HKF;
+<a name="9"></a>	local <span class="source_type">float</span> MaxDistanceSquared;
+<a name="10"></a>
+<a name="11"></a>	if ( KFPRI.ClientVeteranSkillLevel &gt; <span class="source_int">0</span> )
+<a name="12"></a>	{
+<a name="13"></a>		HKF = <span class="source_type"><a href="../kfmod/hudkillingfloor.html" class="source">HUDKillingFloor</a></span>(<span class="source_type">C</span>.<span class="source_type">ViewPort</span>.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.myHUD);
+<a name="14"></a>
+<a name="15"></a>		if ( HKF == none || <span class="source_type">C</span>.<span class="source_type">ViewPort</span>.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == none )
+<a name="16"></a>		{
+<a name="17"></a>			return;
+<a name="18"></a>		}
+<a name="19"></a>
+<a name="20"></a>		<span class="source_type">switch</span> ( KFPRI.ClientVeteranSkillLevel )
+<a name="21"></a>		{
+<a name="22"></a>			case <span class="source_int">1</span>:
+<a name="23"></a>				MaxDistanceSquared = <span class="source_int">25600</span>; <span class="source_comment">// 20% (160 units)
+</span><a name="24"></a>				break;
+<a name="25"></a>			case <span class="source_int">2</span>:
+<a name="26"></a>				MaxDistanceSquared = <span class="source_int">102400</span>; <span class="source_comment">// 40% (320 units)
+</span><a name="27"></a>				break;
+<a name="28"></a>			case <span class="source_int">3</span>:
+<a name="29"></a>				MaxDistanceSquared = <span class="source_int">230400</span>; <span class="source_comment">// 60% (480 units)
+</span><a name="30"></a>				break;
+<a name="31"></a>			case <span class="source_int">4</span>:
+<a name="32"></a>				MaxDistanceSquared = <span class="source_int">409600</span>; <span class="source_comment">// 80% (640 units)
+</span><a name="33"></a>				break;
+<a name="34"></a>			case <span class="source_int">5</span>:
+<a name="35"></a>			case <span class="source_int">6</span>:
+<a name="36"></a>				MaxDistanceSquared = <span class="source_int">640000</span>; <span class="source_comment">// 100% (800 units)
+</span><a name="37"></a>				break;
+<a name="38"></a>		}
+<a name="39"></a>
+<a name="40"></a>		foreach <span class="source_type">C</span>.<span class="source_type">ViewPort</span>.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.DynamicActors(<span class="source_type">class</span><span class="source_name">'KFMonster'</span>,KFEnemy)
+<a name="41"></a>		{
+<a name="42"></a>			if ( KFEnemy.Health &gt; <span class="source_int">0</span> && (!KFEnemy.Cloaked() || KFEnemy.bZapped || KFEnemy.bSpotted) && VSizeSquared(KFEnemy.Location - <span class="source_type">C</span>.<span class="source_type">ViewPort</span>.<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location) &lt; MaxDistanceSquared )
+<a name="43"></a>			{
+<a name="44"></a>				HKF.DrawHealthBar(<span class="source_type">C</span>, KFEnemy, KFEnemy.Health, KFEnemy.HealthMax , <span class="source_int">50.0</span>);
+<a name="45"></a>			}
+<a name="46"></a>		}
+<a name="47"></a>	}
+<a name="48"></a>}
+<a name="49"></a>
+<a name="50"></a>static function <span class="source_type">bool</span> ShowStalkers(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI)
+<a name="51"></a>{
+<a name="52"></a>	return true;
+<a name="53"></a>}
+<a name="54"></a>
+<a name="55"></a>static function <span class="source_type">float</span> GetStalkerViewDistanceMulti(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI)
+<a name="56"></a>{
+<a name="57"></a>	<span class="source_type">switch</span> ( KFPRI.ClientVeteranSkillLevel )
+<a name="58"></a>	{
+<a name="59"></a>		case <span class="source_int">0</span>:
+<a name="60"></a>			return <span class="source_int">0.0625</span>; <span class="source_comment">// 25%
+</span><a name="61"></a>		case <span class="source_int">1</span>:
+<a name="62"></a>			return <span class="source_int">0.25</span>; <span class="source_comment">// 50%
+</span><a name="63"></a>		case <span class="source_int">2</span>:
+<a name="64"></a>			return <span class="source_int">0.36</span>; <span class="source_comment">// 60%
+</span><a name="65"></a>		case <span class="source_int">3</span>:
+<a name="66"></a>			return <span class="source_int">0.49</span>; <span class="source_comment">// 70%
+</span><a name="67"></a>		case <span class="source_int">4</span>:
+<a name="68"></a>			return <span class="source_int">0.64</span>; <span class="source_comment">// 80%
+</span><a name="69"></a>	}
+<a name="70"></a>
+<a name="71"></a>	return <span class="source_int">1.0</span>; <span class="source_comment">// 100% of Standard Distance(800 units or 16 meters)
+</span><a name="72"></a>}
+<a name="73"></a>
+<a name="74"></a>static function <span class="source_type">float</span> GetMagCapacityMod(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI, <span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span> <span class="source_type">Other</span>)
+<a name="75"></a>{
+<a name="76"></a>	if ( (<span class="source_type"><a href="../kfmod/bullpup.html" class="source">Bullpup</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/ak47assaultrifle.html" class="source">AK47AssaultRifle</a></span>(<span class="source_type">Other</span>) != none ||
+<a name="77"></a>        <span class="source_type"><a href="../kfmod/scarmk17assaultrifle.html" class="source">SCARMK17AssaultRifle</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/m4assaultrifle.html" class="source">M4AssaultRifle</a></span>(<span class="source_type">Other</span>) != none
+<a name="78"></a>        || <span class="source_type"><a href="../kfmod/fnfal_acog_assaultrifle.html" class="source">FNFAL_ACOG_AssaultRifle</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/mkb42assaultrifle.html" class="source">MKb42AssaultRifle</a></span>(<span class="source_type">Other</span>) != none
+<a name="79"></a>        || <span class="source_type"><a href="../kfmod/thompsonsmg.html" class="source">ThompsonSMG</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/thompsondrumsmg.html" class="source">ThompsonDrumSMG</a></span>(<span class="source_type">Other</span>) != none
+<a name="80"></a>        || <span class="source_type"><a href="../kfmod/spthompsonsmg.html" class="source">SPThompsonSMG</a></span>(<span class="source_type">Other</span>) != none) &&
+<a name="81"></a>        KFPRI.ClientVeteranSkillLevel &gt; <span class="source_int">0</span> )
+<a name="82"></a>	{
+<a name="83"></a>		if ( KFPRI.ClientVeteranSkillLevel == <span class="source_int">1</span> )
+<a name="84"></a>		{
+<a name="85"></a>			return <span class="source_int">1.10</span>;
+<a name="86"></a>		}
+<a name="87"></a>		else if ( KFPRI.ClientVeteranSkillLevel == <span class="source_int">2</span> )
+<a name="88"></a>		{
+<a name="89"></a>			return <span class="source_int">1.20</span>;
+<a name="90"></a>		}
+<a name="91"></a>
+<a name="92"></a>		return <span class="source_int">1.25</span>; <span class="source_comment">// 25% increase in assault rifle ammo carry
+</span><a name="93"></a>	}
+<a name="94"></a>
+<a name="95"></a>	return <span class="source_int">1.0</span>;
+<a name="96"></a>}
+<a name="97"></a>
+<a name="98"></a>static function <span class="source_type">float</span> GetAmmoPickupMod(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI, <span class="source_type"><a href="../kfmod/kfammunition.html" class="source">KFAmmunition</a></span> <span class="source_type">Other</span>)
+<a name="99"></a>{
+<a name="100"></a>	if ( (<span class="source_type"><a href="../kfmod/bullpupammo.html" class="source">BullpupAmmo</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/ak47ammo.html" class="source">AK47Ammo</a></span>(<span class="source_type">Other</span>) != none ||
+<a name="101"></a>        <span class="source_type"><a href="../kfmod/scarmk17ammo.html" class="source">SCARMK17Ammo</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/m4ammo.html" class="source">M4Ammo</a></span>(<span class="source_type">Other</span>) != none
+<a name="102"></a>        || <span class="source_type"><a href="../kfmod/fnfalammo.html" class="source">FNFALAmmo</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/mkb42ammo.html" class="source">MKb42Ammo</a></span>(<span class="source_type">Other</span>) != none
+<a name="103"></a>        || <span class="source_type"><a href="../kfmod/thompsonammo.html" class="source">ThompsonAmmo</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/goldenak47ammo.html" class="source">GoldenAK47Ammo</a></span>(<span class="source_type">Other</span>) != none
+<a name="104"></a>        || <span class="source_type"><a href="../kfmod/thompsondrumammo.html" class="source">ThompsonDrumAmmo</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/spthompsonammo.html" class="source">SPThompsonAmmo</a></span>(<span class="source_type">Other</span>) != none
+<a name="105"></a>        || <span class="source_type"><a href="../kfmod/camom4ammo.html" class="source">CamoM4Ammo</a></span>(<span class="source_type">Other</span>) != none || <span class="source_type"><a href="../kfmod/neonak47ammo.html" class="source">NeonAK47Ammo</a></span>(<span class="source_type">Other</span>) != none ) &&
+<a name="106"></a>        KFPRI.ClientVeteranSkillLevel &gt; <span class="source_int">0</span> )
+<a name="107"></a>	{
+<a name="108"></a>		if ( KFPRI.ClientVeteranSkillLevel == <span class="source_int">1</span> )
+<a name="109"></a>		{
+<a name="110"></a>			return <span class="source_int">1.10</span>;
+<a name="111"></a>		}
+<a name="112"></a>		else if ( KFPRI.ClientVeteranSkillLevel == <span class="source_int">2</span> )
+<a name="113"></a>		{
+<a name="114"></a>			return <span class="source_int">1.20</span>;
+<a name="115"></a>		}
+<a name="116"></a>
+<a name="117"></a>		return <span class="source_int">1.25</span>; <span class="source_comment">// 25% increase in assault rifle ammo carry
+</span><a name="118"></a>	}
+<a name="119"></a>
+<a name="120"></a>	return <span class="source_int">1.0</span>;
+<a name="121"></a>}
+<a name="122"></a>
+<a name="123"></a>static function <span class="source_type">float</span> AddExtraAmmoFor(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI, <span class="source_type">Class</span>&lt;<span class="source_type"><a href="../engine/ammunition.html" class="source">Ammunition</a></span>&gt; AmmoType)
+<a name="124"></a>{
+<a name="125"></a>	if ( (AmmoType == <span class="source_type">class</span><span class="source_name">'BullpupAmmo'</span> || AmmoType == <span class="source_type">class</span><span class="source_name">'AK47Ammo'</span> ||
+<a name="126"></a>        AmmoType == <span class="source_type">class</span><span class="source_name">'SCARMK17Ammo'</span> || AmmoType == <span class="source_type">class</span><span class="source_name">'M4Ammo'</span>
+<a name="127"></a>        || AmmoType == <span class="source_type">class</span><span class="source_name">'FNFALAmmo'</span> || AmmoType == <span class="source_type">class</span><span class="source_name">'MKb42Ammo'</span>
+<a name="128"></a>        || AmmoType == <span class="source_type">class</span><span class="source_name">'ThompsonAmmo'</span> || AmmoType == <span class="source_type">class</span><span class="source_name">'GoldenAK47Ammo'</span>
+<a name="129"></a>        || AmmoType == <span class="source_type">class</span><span class="source_name">'ThompsonDrumAmmo'</span> || AmmoType == <span class="source_type">class</span><span class="source_name">'SPThompsonAmmo'</span>
+<a name="130"></a>        || AmmoType == <span class="source_type">class</span><span class="source_name">'CamoM4Ammo'</span> || AmmoType == <span class="source_type">class</span><span class="source_name">'NeonAK47Ammo'</span>
+<a name="131"></a>        || AmmoType == <span class="source_type">class</span><span class="source_name">'NeonSCARMK17Ammo'</span> )
+<a name="132"></a>        && KFPRI.ClientVeteranSkillLevel &gt; <span class="source_int">0</span> )
+<a name="133"></a>	{
+<a name="134"></a>		if ( KFPRI.ClientVeteranSkillLevel == <span class="source_int">1</span> )
+<a name="135"></a>		{
+<a name="136"></a>			return <span class="source_int">1.10</span>;
+<a name="137"></a>		}
+<a name="138"></a>		else if ( KFPRI.ClientVeteranSkillLevel == <span class="source_int">2</span> )
+<a name="139"></a>		{
+<a name="140"></a>			return <span class="source_int">1.20</span>;
+<a name="141"></a>		}
+<a name="142"></a>
+<a name="143"></a>		return <span class="source_int">1.25</span>; <span class="source_comment">// 25% increase in assault rifle ammo carry
+</span><a name="144"></a>	}
+<a name="145"></a>
+<a name="146"></a>	return <span class="source_int">1.0</span>;
+<a name="147"></a>}
+<a name="148"></a>
+<a name="149"></a>static function <span class="source_type">int</span> AddDamage(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI, <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span> Injured, <span class="source_type"><a href="../kfmod/kfpawn.html" class="source">KFPawn</a></span> <span class="source_type">Instigator</span>, <span class="source_type">int</span> InDamage, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; DmgType)
+<a name="150"></a>{
+<a name="151"></a>	if ( DmgType == <span class="source_type">class</span><span class="source_name">'DamTypeBullpup'</span> || DmgType == <span class="source_type">class</span><span class="source_name">'DamTypeAK47AssaultRifle'</span> ||
+<a name="152"></a>        DmgType == <span class="source_type">class</span><span class="source_name">'DamTypeSCARMK17AssaultRifle'</span> || DmgType == <span class="source_type">class</span><span class="source_name">'DamTypeM4AssaultRifle'</span>
+<a name="153"></a>        || DmgType == <span class="source_type">class</span><span class="source_name">'DamTypeFNFALAssaultRifle'</span> || DmgType == <span class="source_type">class</span><span class="source_name">'DamTypeMKb42AssaultRifle'</span>
+<a name="154"></a>        || DmgType == <span class="source_type">class</span><span class="source_name">'DamTypeThompson'</span> || DmgType == <span class="source_type">class</span><span class="source_name">'DamTypeThompsonDrum'</span>
+<a name="155"></a>        || DmgType == <span class="source_type">class</span><span class="source_name">'DamTypeSPThompson'</span> )
+<a name="156"></a>	{
+<a name="157"></a>		if ( KFPRI.ClientVeteranSkillLevel == <span class="source_int">0</span> )
+<a name="158"></a>		{
+<a name="159"></a>			return <span class="source_type">float</span>(InDamage) * <span class="source_int">1.05</span>;
+<a name="160"></a>		}
+<a name="161"></a>
+<a name="162"></a>		return <span class="source_type">float</span>(InDamage) * (<span class="source_int">1.00</span> + (<span class="source_int">0.10</span> * <span class="source_type">float</span>(Min(KFPRI.ClientVeteranSkillLevel, <span class="source_int">5</span>)))); <span class="source_comment">// Up to 50% increase in Damage with Bullpup
+</span><a name="163"></a>	}
+<a name="164"></a>
+<a name="165"></a>	return InDamage;
+<a name="166"></a>}
+<a name="167"></a>
+<a name="168"></a>static function <span class="source_type">float</span> ModifyRecoilSpread(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI, <span class="source_type"><a href="../engine/weaponfire.html" class="source">WeaponFire</a></span> <span class="source_type">Other</span>, out <span class="source_type">float</span> Recoil)
+<a name="169"></a>{
+<a name="170"></a>	if ( <span class="source_type"><a href="../kfmod/bullpup.html" class="source">Bullpup</a></span>(<span class="source_type">Other</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>) != none || <span class="source_type"><a href="../kfmod/ak47assaultrifle.html" class="source">AK47AssaultRifle</a></span>(<span class="source_type">Other</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>) != none ||
+<a name="171"></a>        <span class="source_type"><a href="../kfmod/scarmk17assaultrifle.html" class="source">SCARMK17AssaultRifle</a></span>(<span class="source_type">Other</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>) != none || <span class="source_type"><a href="../kfmod/m4assaultrifle.html" class="source">M4AssaultRifle</a></span>(<span class="source_type">Other</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>) != none
+<a name="172"></a>        || <span class="source_type"><a href="../kfmod/fnfal_acog_assaultrifle.html" class="source">FNFAL_ACOG_AssaultRifle</a></span>(<span class="source_type">Other</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>) != none || <span class="source_type"><a href="../kfmod/mkb42assaultrifle.html" class="source">MKb42AssaultRifle</a></span>(<span class="source_type">Other</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>) != none
+<a name="173"></a>        || <span class="source_type"><a href="../kfmod/thompsonsmg.html" class="source">ThompsonSMG</a></span>(<span class="source_type">Other</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>) != none || <span class="source_type"><a href="../kfmod/thompsondrumsmg.html" class="source">ThompsonDrumSMG</a></span>(<span class="source_type">Other</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>) != none
+<a name="174"></a>        || <span class="source_type"><a href="../kfmod/spthompsonsmg.html" class="source">SPThompsonSMG</a></span>(<span class="source_type">Other</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>) != none )
+<a name="175"></a>	{
+<a name="176"></a>		if ( KFPRI.ClientVeteranSkillLevel &lt;= <span class="source_int">3</span> )
+<a name="177"></a>		{
+<a name="178"></a>			Recoil = <span class="source_int">0.95</span> - (<span class="source_int">0.05</span> * <span class="source_type">float</span>(KFPRI.ClientVeteranSkillLevel));
+<a name="179"></a>		}
+<a name="180"></a>		else if ( KFPRI.ClientVeteranSkillLevel &lt;= <span class="source_int">5</span> )
+<a name="181"></a>		{
+<a name="182"></a>			Recoil = <span class="source_int">0.70</span>;
+<a name="183"></a>		}
+<a name="184"></a>		else
+<a name="185"></a>		{
+<a name="186"></a>			Recoil = <span class="source_int">0.60</span>; <span class="source_comment">// Level 6 - 40% recoil reduction
+</span><a name="187"></a>		}
+<a name="188"></a>
+<a name="189"></a>		return Recoil;
+<a name="190"></a>	}
+<a name="191"></a>
+<a name="192"></a>	Recoil = <span class="source_int">1.0</span>;
+<a name="193"></a>	return Recoil;
+<a name="194"></a>}
+<a name="195"></a>
+<a name="196"></a>static function <span class="source_type">float</span> GetReloadSpeedModifier(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI, <span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span> <span class="source_type">Other</span>)
+<a name="197"></a>{
+<a name="198"></a>	return <span class="source_int">1.05</span> + (<span class="source_int">0.05</span> * <span class="source_type">float</span>(KFPRI.ClientVeteranSkillLevel)); <span class="source_comment">// Up to 35% faster reload speed
+</span><a name="199"></a>}
+<a name="200"></a>
+<a name="201"></a><span class="source_comment">// Set number times Zed Time can be extended
+</span><a name="202"></a>static function <span class="source_type">int</span> ZedTimeExtensions(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI)
+<a name="203"></a>{
+<a name="204"></a>	if ( KFPRI.ClientVeteranSkillLevel &gt;= <span class="source_int">3</span> )
+<a name="205"></a>	{
+<a name="206"></a>		return KFPRI.ClientVeteranSkillLevel - <span class="source_int">2</span>; <span class="source_comment">// Up to 4 Zed Time Extensions
+</span><a name="207"></a>	}
+<a name="208"></a>
+<a name="209"></a>	return <span class="source_int">0</span>;
+<a name="210"></a>}
+<a name="211"></a>
+<a name="212"></a><span class="source_comment">// Change the cost of particular items
+</span><a name="213"></a>static function <span class="source_type">float</span> GetCostScaling(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>&gt; <span class="source_type">Item</span>)
+<a name="214"></a>{
+<a name="215"></a>	if ( <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'BullpupPickup'</span> || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'AK47Pickup'</span> ||
+<a name="216"></a>        <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'SCARMK17Pickup'</span> || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'M4Pickup'</span>
+<a name="217"></a>        || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'FNFAL_ACOG_Pickup'</span> || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'MKb42Pickup'</span>
+<a name="218"></a>        || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'ThompsonPickup'</span> || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'GoldenAK47Pickup'</span>
+<a name="219"></a>        || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'ThompsonDrumPickup'</span> || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'SPThompsonPickup'</span>
+<a name="220"></a>        || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'CamoM4Pickup'</span> || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'NeonAK47Pickup'</span>
+<a name="221"></a>        || <span class="source_type">Item</span> == <span class="source_type">class</span><span class="source_name">'NeonSCARMK17Pickup'</span> )
+<a name="222"></a>	{
+<a name="223"></a>		return <span class="source_int">0.9</span> - (<span class="source_int">0.10</span> * <span class="source_type">float</span>(KFPRI.ClientVeteranSkillLevel)); <span class="source_comment">// Up to 70% discount on Assault Rifles
+</span><a name="224"></a>	}
+<a name="225"></a>
+<a name="226"></a>	return <span class="source_int">1.0</span>;
+<a name="227"></a>}
+<a name="228"></a>
+<a name="229"></a><span class="source_comment">// Give Extra Items as default
+</span><a name="230"></a>static function AddDefaultInventory(<span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> KFPRI, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">P</span>)
+<a name="231"></a>{
+<a name="232"></a>	<span class="source_comment">// If Level 5, give them Bullpup
+</span><a name="233"></a>	if ( KFPRI.ClientVeteranSkillLevel == <span class="source_int">5</span> )
+<a name="234"></a>	{
+<a name="235"></a>		<span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">P</span>).CreateInventoryVeterancy(<span class="source_string">"KFMod.Bullpup"</span>, default.StartingWeaponSellPriceLevel5);
+<a name="236"></a>	}
+<a name="237"></a>
+<a name="238"></a>	<span class="source_comment">// If Level 6, give them an AK47
+</span><a name="239"></a>	if ( KFPRI.ClientVeteranSkillLevel == <span class="source_int">6</span> )
+<a name="240"></a>	{
+<a name="241"></a>		<span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span>(<span class="source_type">P</span>).CreateInventoryVeterancy(<span class="source_string">"KFMod.AK47AssaultRifle"</span>, default.StartingWeaponSellPriceLevel6);
+<a name="242"></a>	}
+<a name="243"></a>}
+<a name="244"></a>
+<a name="245"></a>defaultproperties
+<a name="246"></a>{
+<a name="247"></a>     PerkIndex=<span class="source_int">3</span>
+<a name="248"></a>     OnHUDIcon=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KillingFloorHUD.Perks.Perk_Commando'</span>
+<a name="249"></a>     OnHUDGoldIcon=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KillingFloor2HUD.Perk_Icons.Perk_Commando_Gold'</span>
+<a name="250"></a>     VeterancyName=<span class="source_string">"Commando"</span>
+<a name="251"></a>     Requirements(<span class="source_int">0</span>)=<span class="source_string">"Kill %x stalkers with Assault/Battle Rifles"</span>
+<a name="252"></a>     Requirements(<span class="source_int">1</span>)=<span class="source_string">"Deal %x damage with Assault/Battle Rifles"</span>
+<a name="253"></a>     LevelEffects(<span class="source_int">0</span>)=<span class="source_string">"5% more damage with Assault/Battle Rifles|5% less recoil with Assault/Battle Rifles|5% faster reload with all weapons|10% discount on Assault/Battle Rifles|Can see cloaked Stalkers from 4 meters"</span>
+<a name="254"></a>     LevelEffects(<span class="source_int">1</span>)=<span class="source_string">"10% more damage with Assault/Battle Rifles|10% less recoil with Assault/Battle Rifles|10% larger Assault/Battle Rifles clip|10% faster reload with all weapons|20% discount on Assault/Battle Rifles|Can see cloaked Stalkers from 8m|Can see enemy health from 4m"</span>
+<a name="255"></a>     LevelEffects(<span class="source_int">2</span>)=<span class="source_string">"20% more damage with Assault/Battle Rifles|15% less recoil with Assault/Battle Rifles|20% larger Assault/Battle Rifles clip|15% faster reload with all weapons|30% discount on Assault/Battle Rifles|Can see cloaked Stalkers from 10m|Can see enemy health from 7m"</span>
+<a name="256"></a>     LevelEffects(<span class="source_int">3</span>)=<span class="source_string">"30% more damage with Assault/Battle Rifles|20% less recoil with Assault/Battle Rifles|25% larger Assault/Battle Rifles clip|20% faster reload with all weapons|40% discount on Assault/Battle Rifles|Can see cloaked Stalkers from 12m|Can see enemy health from 10m|Zed-Time can be extended by killing an enemy while in slow motion"</span>
+<a name="257"></a>     LevelEffects(<span class="source_int">4</span>)=<span class="source_string">"40% more damage with Assault/Battle Rifles|30% less recoil with Assault/Battle Rifles|25% larger Assault/Battle Rifles clip|25% faster reload with all weapons|50% discount on Assault/Battle Rifles|Can see cloaked Stalkers from 14m|Can see enemy health from 13m|Up to 2 Zed-Time Extensions"</span>
+<a name="258"></a>     LevelEffects(<span class="source_int">5</span>)=<span class="source_string">"50% more damage with Assault/Battle Rifles|30% less recoil with Assault/Battle Rifles|25% larger Assault/Battle Rifles clip|30% faster reload with all weapons|60% discount on Assault/Battle Rifles|Spawn with a Bullpup|Can see cloaked Stalkers from 16m|Can see enemy health from 16m|Up to 3 Zed-Time Extensions"</span>
+<a name="259"></a>     LevelEffects(<span class="source_int">6</span>)=<span class="source_string">"50% more damage with Assault/Battle Rifles|40% less recoil with Assault/Battle Rifles|25% larger Assault/Battle Rifles clip|35% faster reload with all weapons|70% discount on Assault/Battle Rifles|Spawn with an AK47|Can see cloaked Stalkers from 16m|Can see enemy health from 16m|Up to 4 Zed-Time Extensions"</span>
+<a name="260"></a>}
+<a name="261"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfvetcommando.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFVetCommando">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfvetberserker.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfvetdemolitions.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.390 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

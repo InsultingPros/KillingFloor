@@ -1,0 +1,1119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.KFCheatManager</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfcheatmanager.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFCheatManager">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfbulletwhipattachment.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfcinematiccamera.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/kfcheatmanager.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/kfcheatmanager.html">KFCheatManager</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/kfcheatmanager.html" class="source">KFCheatManager</a></span> extends <span class="source_type"><a href="../engine/cheatmanager.html" class="source">CheatManager</a></span>;
+<a name="2"></a>
+<a name="3"></a>var	localized <span class="source_type">string</span>	CheatsNotEnabled;
+<a name="4"></a>var	localized <span class="source_type">string</span>	EnablingCheatsKillsPerks;
+<a name="5"></a>var	localized <span class="source_type">string</span>	CheatsEnabled;
+<a name="6"></a>
+<a name="7"></a><span class="source_comment">/** check if cheats are enabled, if not playing a SP game always return true */</span>
+<a name="8"></a>function <span class="source_type">bool</span> areCheatsEnabled()
+<a name="9"></a>{
+<a name="10"></a>	if ( <span class="source_type">class</span><span class="source_name">'ROEngine.ROLevelInfo'</span>.static.RODebugMode() )
+<a name="11"></a>	{
+<a name="12"></a>		return true;
+<a name="13"></a>	}
+<a name="14"></a>
+<a name="15"></a>	if ( <span class="source_type">Level</span>.NetMode != NM_Standalone )
+<a name="16"></a>	{
+<a name="17"></a>		return true;
+<a name="18"></a>	}
+<a name="19"></a>
+<a name="20"></a>	if ( !bCheatsEnabled )
+<a name="21"></a>	{
+<a name="22"></a>		ClientMessage(CheatsNotEnabled$<span class="source_string">": EnableCheats"</span>);
+<a name="23"></a>		ClientMessage(EnablingCheatsKillsPerks);
+<a name="24"></a>		return false;
+<a name="25"></a>	}
+<a name="26"></a>
+<a name="27"></a>	return true;
+<a name="28"></a>}
+<a name="29"></a>
+<a name="30"></a>exec function EnableCheats()
+<a name="31"></a>{
+<a name="32"></a>	if ( <span class="source_type">Level</span>.NetMode == NM_Standalone )
+<a name="33"></a>	{
+<a name="34"></a>		if ( <span class="source_type">Level</span>.GetLocalPlayerController().SteamStatsAndAchievements != none )
+<a name="35"></a>		{
+<a name="36"></a>			<span class="source_type">Level</span>.GetLocalPlayerController().SteamStatsAndAchievements.bUsedCheats = true;
+<a name="37"></a>		}
+<a name="38"></a>
+<a name="39"></a>		bCheatsEnabled = true;
+<a name="40"></a>		ClientMessage(CheatsEnabled);
+<a name="41"></a>	}
+<a name="42"></a>}
+<a name="43"></a>
+<a name="44"></a>exec function ToggleZeds()
+<a name="45"></a>{
+<a name="46"></a>    <span class="source_type"><a href="../kfmod/kfgametype.html" class="source">KFGameType</a></span>(<span class="source_type">Level</span>.Game).bDisableZedSpawning = !<span class="source_type"><a href="../kfmod/kfgametype.html" class="source">KFGameType</a></span>(<span class="source_type">Level</span>.Game).bDisableZedSpawning;
+<a name="47"></a>    <span class="source_type">Level</span>.Game.SaveConfig();
+<a name="48"></a>}
+<a name="49"></a>
+<a name="50"></a>exec function FragZeds()
+<a name="51"></a>{
+<a name="52"></a>    local <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span> <span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>;
+<a name="53"></a>
+<a name="54"></a>    if ( areCheatsEnabled() )
+<a name="55"></a>    {
+<a name="56"></a>        foreach DynamicActors(<span class="source_type">class</span> <span class="source_name">'KFMonster'</span>, <span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>)
+<a name="57"></a>        {
+<a name="58"></a>            if(<span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>.Health &gt; <span class="source_int">0</span> && !<span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>.bDeleteMe)
+<a name="59"></a>            {
+<a name="60"></a>                <span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>.TakeDamage(<span class="source_int">10000</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>, <span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>.Location, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Velocity * <span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>.Mass, <span class="source_type">class</span><span class="source_name">'DamTypeFrag'</span>);
+<a name="61"></a>            }
+<a name="62"></a>        }
+<a name="63"></a>    }
+<a name="64"></a>}
+<a name="65"></a>
+<a name="66"></a>exec function ShowPaths()
+<a name="67"></a>{
+<a name="68"></a>	local <span class="source_type"><a href="../engine/navigationpoint.html" class="source">NavigationPoint</a></span> <span class="source_type">P</span>;
+<a name="69"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="70"></a>	local <span class="source_type"><a href="../engine/reachspec.html" class="source">ReachSpec</a></span> Spec;
+<a name="71"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> SpecColor;
+<a name="72"></a>
+<a name="73"></a>	for( <span class="source_type">P</span> = <span class="source_type">Level</span>.NavigationPointList; <span class="source_type">P</span> != none; <span class="source_type">P</span> = <span class="source_type">P</span>.NextNavigationPoint )
+<a name="74"></a>	{
+<a name="75"></a>		log( <span class="source_string">"Checking "</span>$<span class="source_type">P</span>$<span class="source_string">" with pathlist length "</span>$<span class="source_type">P</span>.Pathlist.Length );
+<a name="76"></a>		for( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">P</span>.PathList.Length; <span class="source_type">i</span>++ )
+<a name="77"></a>		{
+<a name="78"></a>			Spec = <span class="source_type">P</span>.PathList[ <span class="source_type">i</span> ];
+<a name="79"></a>			SpecColor = vect( <span class="source_int">0</span>,<span class="source_int">255</span>,<span class="source_int">0</span> );
+<a name="80"></a>			<span class="source_comment">// 260 = MAXVEHICLERADIUS 80 = MINCOMMONHEIGHT
+</span><a name="81"></a>			if (( Spec.CollisionRadius &gt;= <span class="source_int">260</span> ) && (Spec.CollisionHeight &gt;= <span class="source_int">80</span>))
+<a name="82"></a>			{
+<a name="83"></a>				SpecColor = vect( <span class="source_int">255</span>,<span class="source_int">255</span>,<span class="source_int">255</span> );
+<a name="84"></a>			}
+<a name="85"></a>			<span class="source_comment">// Jump spec
+</span><a name="86"></a>			else if( ( Spec.reachFlags & <span class="source_int">8</span> ) == Spec.reachFlags )
+<a name="87"></a>			{
+<a name="88"></a>				SpecColor = vect( <span class="source_int">191</span>, <span class="source_int">165</span>, <span class="source_int">99</span> );
+<a name="89"></a>			}
+<a name="90"></a>			<span class="source_comment">// Proscribed
+</span><a name="91"></a>			else if( ( Spec.reachFlags & <span class="source_int">128</span> ) == Spec.reachFlags )
+<a name="92"></a>			{
+<a name="93"></a>				SpecColor = vect( <span class="source_int">255</span>, <span class="source_int">0</span>, <span class="source_int">0</span> );
+<a name="94"></a>			}
+<a name="95"></a>			<span class="source_comment">// Forced
+</span><a name="96"></a>			else if( ( Spec.reachFlags & <span class="source_int">256</span> ) == Spec.reachFlags )
+<a name="97"></a>			{
+<a name="98"></a>				SpecColor = vect( <span class="source_int">255</span>, <span class="source_int">255</span>, <span class="source_int">0</span> );
+<a name="99"></a>			}
+<a name="100"></a>			<span class="source_comment">// Blue (narrow)
+</span><a name="101"></a>			else if( ( Spec.CollisionRadius &lt; <span class="source_int">72</span> || Spec.CollisionHeight &lt; <span class="source_int">80</span> ) )
+<a name="102"></a>			{
+<a name="103"></a>				SpecColor = vect( <span class="source_int">0</span>, <span class="source_int">0</span>, <span class="source_int">255</span> );
+<a name="104"></a>			}
+<a name="105"></a>
+<a name="106"></a>			DrawStayingDebugLine( <span class="source_type">P</span>.PathList[ <span class="source_type">i</span> ].Start.Location, <span class="source_type">P</span>.PathList[ <span class="source_type">i</span> ].End.Location, SpecColor.<span class="source_type">X</span>, SpecColor.<span class="source_type">Y</span>, SpecColor.<span class="source_type">Z</span> );
+<a name="107"></a>		}
+<a name="108"></a>	}
+<a name="109"></a>}
+<a name="110"></a>
+<a name="111"></a>exec function ReviewJumpSpots(<span class="source_type">name</span> TestLabel)
+<a name="112"></a>{
+<a name="113"></a>	if ( areCheatsEnabled() )
+<a name="114"></a>	{
+<a name="115"></a>		super.ReviewJumpSpots(TestLabel);
+<a name="116"></a>	}
+<a name="117"></a>}
+<a name="118"></a>
+<a name="119"></a>exec function ListDynamicActors()
+<a name="120"></a>{
+<a name="121"></a>	if ( areCheatsEnabled() )
+<a name="122"></a>	{
+<a name="123"></a>		super.ListDynamicActors();
+<a name="124"></a>	}
+<a name="125"></a>}
+<a name="126"></a>
+<a name="127"></a>exec function FreezeFrame(<span class="source_type">float</span> delay)
+<a name="128"></a>{
+<a name="129"></a>	if ( areCheatsEnabled() )
+<a name="130"></a>	{
+<a name="131"></a>		super.FreezeFrame(delay);
+<a name="132"></a>	}
+<a name="133"></a>}
+<a name="134"></a>
+<a name="135"></a>exec function SetFlash(<span class="source_type">float</span> <span class="source_type">F</span>)
+<a name="136"></a>{
+<a name="137"></a>	if ( areCheatsEnabled() )
+<a name="138"></a>	{
+<a name="139"></a>		super.SetFlash(<span class="source_type">F</span>);
+<a name="140"></a>	}
+<a name="141"></a>}
+<a name="142"></a>
+<a name="143"></a>exec function SetFogR(<span class="source_type">float</span> <span class="source_type">F</span>)
+<a name="144"></a>{
+<a name="145"></a>	if ( areCheatsEnabled() )
+<a name="146"></a>	{
+<a name="147"></a>		super.SetFogR(<span class="source_type">F</span>);
+<a name="148"></a>	}
+<a name="149"></a>}
+<a name="150"></a>
+<a name="151"></a>exec function SetFogG(<span class="source_type">float</span> <span class="source_type">F</span>)
+<a name="152"></a>{
+<a name="153"></a>	if ( areCheatsEnabled() )
+<a name="154"></a>	{
+<a name="155"></a>		super.SetFogG(<span class="source_type">F</span>);
+<a name="156"></a>	}
+<a name="157"></a>}
+<a name="158"></a>
+<a name="159"></a>exec function SetFogB(<span class="source_type">float</span> <span class="source_type">F</span>)
+<a name="160"></a>{
+<a name="161"></a>	if ( areCheatsEnabled() )
+<a name="162"></a>	{
+<a name="163"></a>		super.SetFogB(<span class="source_type">F</span>);
+<a name="164"></a>	}
+<a name="165"></a>}
+<a name="166"></a>
+<a name="167"></a>exec function KillViewedActor()
+<a name="168"></a>{
+<a name="169"></a>	if ( areCheatsEnabled() )
+<a name="170"></a>	{
+<a name="171"></a>		super.KillViewedActor();
+<a name="172"></a>	}
+<a name="173"></a>}
+<a name="174"></a>
+<a name="175"></a>exec function ChangeSize(<span class="source_type">float</span> <span class="source_type">F</span>)
+<a name="176"></a>{
+<a name="177"></a>	if ( areCheatsEnabled() )
+<a name="178"></a>	{
+<a name="179"></a>		super.ChangeSize(<span class="source_type">F</span>);
+<a name="180"></a>	}
+<a name="181"></a>}
+<a name="182"></a>
+<a name="183"></a>exec function LockCamera()
+<a name="184"></a>{
+<a name="185"></a>	if ( areCheatsEnabled() )
+<a name="186"></a>	{
+<a name="187"></a>		super.LockCamera();
+<a name="188"></a>	}
+<a name="189"></a>}
+<a name="190"></a>
+<a name="191"></a>exec function SetCameraDist(<span class="source_type">float</span> <span class="source_type">F</span>)
+<a name="192"></a>{
+<a name="193"></a>	if ( areCheatsEnabled() )
+<a name="194"></a>	{
+<a name="195"></a>		super.SetCameraDist(<span class="source_type">F</span>);
+<a name="196"></a>	}
+<a name="197"></a>}
+<a name="198"></a>
+<a name="199"></a>exec function FreeCamera(<span class="source_type">bool</span> <span class="source_type">B</span>)
+<a name="200"></a>{
+<a name="201"></a>	if ( areCheatsEnabled() )
+<a name="202"></a>	{
+<a name="203"></a>		super.FreeCamera(<span class="source_type">B</span>);
+<a name="204"></a>	}
+<a name="205"></a>}
+<a name="206"></a>
+<a name="207"></a>exec function CauseEvent(<span class="source_type">name</span> <span class="source_type">EventName</span>)
+<a name="208"></a>{
+<a name="209"></a>	if ( areCheatsEnabled() )
+<a name="210"></a>	{
+<a name="211"></a>		super.CauseEvent(<span class="source_type">EventName</span>);
+<a name="212"></a>	}
+<a name="213"></a>}
+<a name="214"></a>
+<a name="215"></a>exec function Walk()
+<a name="216"></a>{
+<a name="217"></a>	if ( areCheatsEnabled() )
+<a name="218"></a>	{
+<a name="219"></a>		super.Walk();
+<a name="220"></a>	}
+<a name="221"></a>}
+<a name="222"></a>
+<a name="223"></a>exec function Avatar(<span class="source_type">string</span> <span class="source_type">ClassName</span>)
+<a name="224"></a>{
+<a name="225"></a>	if ( areCheatsEnabled() )
+<a name="226"></a>	{
+<a name="227"></a>		super.Avatar(<span class="source_type">ClassName</span>);
+<a name="228"></a>	}
+<a name="229"></a>}
+<a name="230"></a>
+<a name="231"></a>exec function CheatView(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span>&gt; <span class="source_type">aClass</span>, optional <span class="source_type">bool</span> <span class="source_type">bQuiet</span>)
+<a name="232"></a>{
+<a name="233"></a>	if ( areCheatsEnabled() )
+<a name="234"></a>	{
+<a name="235"></a>		super.CheatView(<span class="source_type">aClass</span>, <span class="source_type">bQuiet</span>);
+<a name="236"></a>	}
+<a name="237"></a>}
+<a name="238"></a>
+<a name="239"></a>exec function RememberSpot()
+<a name="240"></a>{
+<a name="241"></a>	if ( areCheatsEnabled() )
+<a name="242"></a>	{
+<a name="243"></a>		super.RememberSpot();
+<a name="244"></a>	}
+<a name="245"></a>}
+<a name="246"></a>
+<a name="247"></a>exec function ViewSelf(optional <span class="source_type">bool</span> <span class="source_type">bQuiet</span>)
+<a name="248"></a>{
+<a name="249"></a>	if ( areCheatsEnabled() )
+<a name="250"></a>	{
+<a name="251"></a>		super.ViewSelf(<span class="source_type">bQuiet</span>);
+<a name="252"></a>	}
+<a name="253"></a>}
+<a name="254"></a>
+<a name="255"></a>exec function ViewPlayer(<span class="source_type">string</span> <span class="source_type">S</span>)
+<a name="256"></a>{
+<a name="257"></a>	if ( areCheatsEnabled() )
+<a name="258"></a>	{
+<a name="259"></a>		super.ViewPlayer(<span class="source_type">S</span>);
+<a name="260"></a>	}
+<a name="261"></a>}
+<a name="262"></a>
+<a name="263"></a>exec function ViewActor(<span class="source_type">name</span> ActorName)
+<a name="264"></a>{
+<a name="265"></a>	if ( areCheatsEnabled() )
+<a name="266"></a>	{
+<a name="267"></a>		super.ViewActor(ActorName);
+<a name="268"></a>	}
+<a name="269"></a>}
+<a name="270"></a>
+<a name="271"></a>exec function ViewFlag()
+<a name="272"></a>{
+<a name="273"></a>	if ( areCheatsEnabled() )
+<a name="274"></a>	{
+<a name="275"></a>		super.ViewFlag();
+<a name="276"></a>	}
+<a name="277"></a>}
+<a name="278"></a>
+<a name="279"></a>exec function ViewBot()
+<a name="280"></a>{
+<a name="281"></a>	if ( areCheatsEnabled() )
+<a name="282"></a>	{
+<a name="283"></a>		super.ViewBot();
+<a name="284"></a>	}
+<a name="285"></a>}
+<a name="286"></a>
+<a name="287"></a>exec function ViewTurret()
+<a name="288"></a>{
+<a name="289"></a>	if ( areCheatsEnabled() )
+<a name="290"></a>	{
+<a name="291"></a>		super.ViewTurret();
+<a name="292"></a>	}
+<a name="293"></a>}
+<a name="294"></a>
+<a name="295"></a>exec function ViewClass(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span>&gt; <span class="source_type">aClass</span>, optional <span class="source_type">bool</span> <span class="source_type">bQuiet</span>, optional <span class="source_type">bool</span> <span class="source_type">bCheat</span>)
+<a name="296"></a>{
+<a name="297"></a>	if ( areCheatsEnabled() )
+<a name="298"></a>	{
+<a name="299"></a>		super.ViewClass(<span class="source_type">aClass</span>, <span class="source_type">bQuiet</span>, <span class="source_type">bCheat</span>);
+<a name="300"></a>	}
+<a name="301"></a>}
+<a name="302"></a>
+<a name="303"></a>exec function ruler()
+<a name="304"></a>{
+<a name="305"></a>	if ( areCheatsEnabled() )
+<a name="306"></a>	{
+<a name="307"></a>		super.ruler();
+<a name="308"></a>	}
+<a name="309"></a>}
+<a name="310"></a>
+<a name="311"></a>exec function LaidLaw()
+<a name="312"></a>{
+<a name="313"></a>	if(!areCheatsEnabled()) return;
+<a name="314"></a>	if(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None)
+<a name="315"></a>	{
+<a name="316"></a>		ClientMessage(<span class="source_string">"Lay down the LAW!"</span>);
+<a name="317"></a>		ReportCheat(<span class="source_string">"LAW"</span>);
+<a name="318"></a>		<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.LAW"</span>);
+<a name="319"></a>	}
+<a name="320"></a>}
+<a name="321"></a>
+<a name="322"></a>exec function ImRich()
+<a name="323"></a>{
+<a name="324"></a>	if (!areCheatsEnabled()) return;
+<a name="325"></a>	if( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="326"></a>		return;
+<a name="327"></a>
+<a name="328"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Score</span> += <span class="source_int">10000</span>;
+<a name="329"></a>
+<a name="330"></a>	ReportCheat(<span class="source_string">"I'm Rich"</span>);
+<a name="331"></a>	ClientMessage(<span class="source_string">"You won the lottery."</span>);
+<a name="332"></a>}
+<a name="333"></a>
+<a name="334"></a>exec function HugeGnome()
+<a name="335"></a>{
+<a name="336"></a>	local <span class="source_type"><a href="../kfmod/kf_gnomesmashable.html" class="source">KF_GnomeSmashable</a></span> Gnome;
+<a name="337"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> NewScale;
+<a name="338"></a>
+<a name="339"></a>	NewScale.<span class="source_type">X</span> = <span class="source_int">20</span>;
+<a name="340"></a>	NewScale.<span class="source_type">Y</span> = <span class="source_int">20</span>;
+<a name="341"></a>	NewScale.<span class="source_type">Z</span> = <span class="source_int">20</span>;
+<a name="342"></a>
+<a name="343"></a>	ForEach DynamicActors( <span class="source_type">class</span> <span class="source_name">'KF_GnomeSmashable'</span>, Gnome)
+<a name="344"></a>	{
+<a name="345"></a>    	Gnome.SetDrawScale3D(NewScale);
+<a name="346"></a>	}
+<a name="347"></a>}
+<a name="348"></a>
+<a name="349"></a>exec function FrightPack(optional <span class="source_type">bool</span> bMaxAmmo)
+<a name="350"></a>{
+<a name="351"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="352"></a>
+<a name="353"></a>	if (!areCheatsEnabled()) return;
+<a name="354"></a>	if( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="355"></a>		return;
+<a name="356"></a>
+<a name="357"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.BlowerThrower"</span>);
+<a name="358"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SealSquealHarpoonBomber"</span>);
+<a name="359"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.SeekerSixRocketLauncher"</span>);
+<a name="360"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.ZEDMKIIWeapon"</span>);
+<a name="361"></a>
+<a name="362"></a>    if( bMaxAmmo )
+<a name="363"></a>    {
+<a name="364"></a>    	for( Inv=<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; Inv!=None; Inv=Inv.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="365"></a>    	{
+<a name="366"></a>    		if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv)!=None )
+<a name="367"></a>    			<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv).SuperMaxOutAmmo();
+<a name="368"></a>    	}
+<a name="369"></a>	}
+<a name="370"></a>
+<a name="371"></a>	ReportCheat(<span class="source_string">"Fright Pack"</span>);
+<a name="372"></a>	ClientMessage(<span class="source_string">"Give Fright Yard Weapon Pack Weapons."</span>);
+<a name="373"></a>}
+<a name="374"></a>
+<a name="375"></a>exec function FlameUp(optional <span class="source_type">bool</span> bMaxAmmo)
+<a name="376"></a>{
+<a name="377"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="378"></a>
+<a name="379"></a>	if (!areCheatsEnabled()) return;
+<a name="380"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="381"></a>		return;
+<a name="382"></a>
+<a name="383"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.FlameThrower"</span>);
+<a name="384"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Trenchgun"</span>);
+<a name="385"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.HuskGun"</span>);
+<a name="386"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.FlareRevolver"</span>);
+<a name="387"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.DualFlareRevolver"</span>);
+<a name="388"></a>
+<a name="389"></a>    if( bMaxAmmo )
+<a name="390"></a>    {
+<a name="391"></a>    	for( Inv=<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; Inv!=None; Inv=Inv.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="392"></a>    	{
+<a name="393"></a>    		if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv)!=None )
+<a name="394"></a>    			<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv).SuperMaxOutAmmo();
+<a name="395"></a>    	}
+<a name="396"></a>	}
+<a name="397"></a>
+<a name="398"></a>	ReportCheat(<span class="source_string">"Flame Up"</span>);
+<a name="399"></a>	ClientMessage(<span class="source_string">"Give Flame Weapons."</span>);
+<a name="400"></a>}
+<a name="401"></a>
+<a name="402"></a>exec function Flare(optional <span class="source_type">bool</span> bMaxAmmo)
+<a name="403"></a>{
+<a name="404"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="405"></a>
+<a name="406"></a>	if (!areCheatsEnabled()) return;
+<a name="407"></a>	if( <span class="source_comment">/*(Level.Netmode!=NM_Standalone) ||*/</span> (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="408"></a>		return;
+<a name="409"></a>
+<a name="410"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.FlareRevolver"</span>);
+<a name="411"></a>
+<a name="412"></a>    if( bMaxAmmo )
+<a name="413"></a>    {
+<a name="414"></a>    	for( Inv=<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; Inv!=None; Inv=Inv.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="415"></a>    	{
+<a name="416"></a>    		if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv)!=None )
+<a name="417"></a>    			<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv).SuperMaxOutAmmo();
+<a name="418"></a>    	}
+<a name="419"></a>	}
+<a name="420"></a>
+<a name="421"></a>	ReportCheat(<span class="source_string">"Flare"</span>);
+<a name="422"></a>	ClientMessage(<span class="source_string">"Give Flare Gun."</span>);
+<a name="423"></a>}
+<a name="424"></a>
+<a name="425"></a>exec function Flares(optional <span class="source_type">bool</span> bMaxAmmo)
+<a name="426"></a>{
+<a name="427"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="428"></a>
+<a name="429"></a>	if (!areCheatsEnabled()) return;
+<a name="430"></a>	if( <span class="source_comment">/*(Level.Netmode!=NM_Standalone) ||*/</span> (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="431"></a>		return;
+<a name="432"></a>
+<a name="433"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.FlareRevolver"</span>);
+<a name="434"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.DualFlareRevolver"</span>);
+<a name="435"></a>
+<a name="436"></a>    if( bMaxAmmo )
+<a name="437"></a>    {
+<a name="438"></a>    	for( Inv=<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; Inv!=None; Inv=Inv.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="439"></a>    	{
+<a name="440"></a>    		if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv)!=None )
+<a name="441"></a>    			<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv).SuperMaxOutAmmo();
+<a name="442"></a>    	}
+<a name="443"></a>	}
+<a name="444"></a>
+<a name="445"></a>	ReportCheat(<span class="source_string">"Flares"</span>);
+<a name="446"></a>	ClientMessage(<span class="source_string">"Give Flare Guns."</span>);
+<a name="447"></a>}
+<a name="448"></a>
+<a name="449"></a>exec function Arsenal(optional <span class="source_type">bool</span> bMaxAmmo)
+<a name="450"></a>{
+<a name="451"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="452"></a>
+<a name="453"></a>	if (!areCheatsEnabled()) return;
+<a name="454"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="455"></a>		return;
+<a name="456"></a>
+<a name="457"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M32GrenadeLauncher"</span>);
+<a name="458"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M79GrenadeLauncher"</span>);
+<a name="459"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.PipeBombExplosive"</span>);
+<a name="460"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SPGrenadeLauncher"</span>);
+<a name="461"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MP7MMedicGun"</span>);
+<a name="462"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MP5MMedicGun"</span>);
+<a name="463"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M7A3MMedicGun"</span>);
+<a name="464"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.AK47AssaultRifle"</span>);
+<a name="465"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MKb42AssaultRifle"</span>);
+<a name="466"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SCARMK17AssaultRifle"</span>);
+<a name="467"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M14EBRBattleRifle"</span>);
+<a name="468"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.AA12AutoShotgun"</span>);
+<a name="469"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.KSGShotgun"</span>);
+<a name="470"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.BenelliShotgun"</span>);
+<a name="471"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Bullpup"</span>);
+<a name="472"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Winchester"</span>);
+<a name="473"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Crossbow"</span>);
+<a name="474"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M99SniperRifle"</span>);
+<a name="475"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.DualDeagle"</span>);
+<a name="476"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Deagle"</span>);
+<a name="477"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Dualies"</span>);
+<a name="478"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Single"</span>);
+<a name="479"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Magnum44Pistol"</span>);
+<a name="480"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Dual44Magnum"</span>);
+<a name="481"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MK23Pistol"</span>);
+<a name="482"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.DualMK23Pistol"</span>);
+<a name="483"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Axe"</span>);
+<a name="484"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Machete"</span>);
+<a name="485"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Knife"</span>);
+<a name="486"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Chainsaw"</span>);
+<a name="487"></a><span class="source_comment">//	Pawn.GiveWeapon("KFmod.PlaceMineWeapon");
+</span><a name="488"></a><span class="source_comment">//	Pawn.GiveWeapon("KFmod.PlaceCalWeapon");
+</span><a name="489"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.LAW"</span>);
+<a name="490"></a><span class="source_comment">//	Pawn.GiveWeapon("KFmod.Frag");
+</span><a name="491"></a><span class="source_comment">//	Pawn.GiveWeapon("KFmod.StunNade");
+</span><a name="492"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Shotgun"</span>);
+<a name="493"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Trenchgun"</span>);
+<a name="494"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.BoomStick"</span>);
+<a name="495"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.FlameThrower"</span>);
+<a name="496"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.Katana"</span>);
+<a name="497"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.MAC10MP"</span>);
+<a name="498"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.ClaymoreSword"</span>);
+<a name="499"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.DwarfAxe"</span>);
+<a name="500"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.M4AssaultRifle"</span>);
+<a name="501"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.M4203AssaultRifle"</span>);
+<a name="502"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.HuskGun"</span>);
+<a name="503"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.FNFAL_ACOG_AssaultRifle"</span>);
+<a name="504"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.NailGun"</span>);
+<a name="505"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.FlareRevolver"</span>);
+<a name="506"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.ThompsonSMG"</span>);
+<a name="507"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.SPThompsonSMG"</span>);
+<a name="508"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.ThompsonDrumSMG"</span>);
+<a name="509"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Scythe"</span>);
+<a name="510"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Crossbuzzsaw"</span>);
+<a name="511"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.KrissMMedicGun"</span>);
+<a name="512"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SPAutoShotgun"</span>);
+<a name="513"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SPSniperRifle"</span>);
+<a name="514"></a>
+<a name="515"></a>    if( bMaxAmmo )
+<a name="516"></a>    {
+<a name="517"></a>    	for( Inv=<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; Inv!=None; Inv=Inv.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="518"></a>    	{
+<a name="519"></a>    		if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv)!=None )
+<a name="520"></a>    			<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv).SuperMaxOutAmmo();
+<a name="521"></a>    	}
+<a name="522"></a>	}
+<a name="523"></a>
+<a name="524"></a>	ReportCheat(<span class="source_string">"Arsenal"</span>);
+<a name="525"></a>	ClientMessage(<span class="source_string">"All KF Weapons."</span>);
+<a name="526"></a>}
+<a name="527"></a>
+<a name="528"></a>exec function RifleMe()
+<a name="529"></a>{
+<a name="530"></a>	if (!areCheatsEnabled()) return;
+<a name="531"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="532"></a>		return;
+<a name="533"></a>
+<a name="534"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.AK47AssaultRifle"</span>);
+<a name="535"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MKb42AssaultRifle"</span>);
+<a name="536"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SCARMK17AssaultRifle"</span>);
+<a name="537"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M14EBRBattleRifle"</span>);
+<a name="538"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Bullpup"</span>);
+<a name="539"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Winchester"</span>);
+<a name="540"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Crossbow"</span>);
+<a name="541"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M4AssaultRifle"</span>);
+<a name="542"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.FNFAL_ACOG_AssaultRifle"</span>);
+<a name="543"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SPSniperRifle"</span>);
+<a name="544"></a>
+<a name="545"></a>	ReportCheat(<span class="source_string">"RifleMe"</span>);
+<a name="546"></a>	ClientMessage(<span class="source_string">"Rifle Weapons."</span>);
+<a name="547"></a>}
+<a name="548"></a>
+<a name="549"></a>exec function Sniper()
+<a name="550"></a>{
+<a name="551"></a>	if (!areCheatsEnabled()) return;
+<a name="552"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="553"></a>		return;
+<a name="554"></a>
+<a name="555"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M14EBRBattleRifle"</span>);
+<a name="556"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Winchester"</span>);
+<a name="557"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Crossbow"</span>);
+<a name="558"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M99SniperRifle"</span>);
+<a name="559"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SPSniperRifle"</span>);
+<a name="560"></a>
+<a name="561"></a>	ReportCheat(<span class="source_string">"Sniper"</span>);
+<a name="562"></a>	ClientMessage(<span class="source_string">"Sniper Weapons."</span>);
+<a name="563"></a>}
+<a name="564"></a>
+<a name="565"></a>exec function AssaultMe()
+<a name="566"></a>{
+<a name="567"></a>	if (!areCheatsEnabled()) return;
+<a name="568"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="569"></a>		return;
+<a name="570"></a>
+<a name="571"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.AK47AssaultRifle"</span>);
+<a name="572"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MKb42AssaultRifle"</span>);
+<a name="573"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SCARMK17AssaultRifle"</span>);
+<a name="574"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Bullpup"</span>);
+<a name="575"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M4AssaultRifle"</span>);
+<a name="576"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.FNFAL_ACOG_AssaultRifle"</span>);
+<a name="577"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M7A3MMedicGun"</span>);
+<a name="578"></a>
+<a name="579"></a>	ReportCheat(<span class="source_string">"RifleMe"</span>);
+<a name="580"></a>	ClientMessage(<span class="source_string">"Rifle Weapons."</span>);
+<a name="581"></a>}
+<a name="582"></a>
+<a name="583"></a>exec function SMG()
+<a name="584"></a>{
+<a name="585"></a>	if (!areCheatsEnabled()) return;
+<a name="586"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="587"></a>		return;
+<a name="588"></a>
+<a name="589"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MP7MMedicGun"</span>);
+<a name="590"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MP5MMedicGun"</span>);
+<a name="591"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.MAC10MP"</span>);
+<a name="592"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.ThompsonSMG"</span>);
+<a name="593"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.KrissMMedicGun"</span>);
+<a name="594"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.SPThompsonSMG"</span>);
+<a name="595"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.ThompsonDrumSMG"</span>);
+<a name="596"></a>
+<a name="597"></a>	ReportCheat(<span class="source_string">"SMG"</span>);
+<a name="598"></a>	ClientMessage(<span class="source_string">"SMG Weapons."</span>);
+<a name="599"></a>}
+<a name="600"></a>
+<a name="601"></a>
+<a name="602"></a>exec function Meds()
+<a name="603"></a>{
+<a name="604"></a>	if (!areCheatsEnabled()) return;
+<a name="605"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="606"></a>		return;
+<a name="607"></a>
+<a name="608"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MP7MMedicGun"</span>);
+<a name="609"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MP5MMedicGun"</span>);
+<a name="610"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M7A3MMedicGun"</span>);
+<a name="611"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.KrissMMedicGun"</span>);
+<a name="612"></a>
+<a name="613"></a>	ReportCheat(<span class="source_string">"Meds"</span>);
+<a name="614"></a>	ClientMessage(<span class="source_string">"Medic Weapons."</span>);
+<a name="615"></a>}
+<a name="616"></a>
+<a name="617"></a>exec function ZED()
+<a name="618"></a>{
+<a name="619"></a>	if (!areCheatsEnabled()) return;
+<a name="620"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="621"></a>		return;
+<a name="622"></a>
+<a name="623"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.ZEDGun"</span>);
+<a name="624"></a>
+<a name="625"></a>	ReportCheat(<span class="source_string">"ZED"</span>);
+<a name="626"></a>	ClientMessage(<span class="source_string">"ZEDGun."</span>);
+<a name="627"></a>}
+<a name="628"></a>
+<a name="629"></a>exec function Pistols()
+<a name="630"></a>{
+<a name="631"></a>	if (!areCheatsEnabled()) return;
+<a name="632"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="633"></a>		return;
+<a name="634"></a>
+<a name="635"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Deagle"</span>);
+<a name="636"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Dualies"</span>);
+<a name="637"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.DualDeagle"</span>);
+<a name="638"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Single"</span>);
+<a name="639"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Magnum44Pistol"</span>);
+<a name="640"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Dual44Magnum"</span>);
+<a name="641"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.MK23Pistol"</span>);
+<a name="642"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.DualMK23Pistol"</span>);
+<a name="643"></a>
+<a name="644"></a>	ReportCheat(<span class="source_string">"Pistols"</span>);
+<a name="645"></a>	ClientMessage(<span class="source_string">"Pistols."</span>);
+<a name="646"></a>}
+<a name="647"></a>
+<a name="648"></a>
+<a name="649"></a>exec function Shotty()
+<a name="650"></a>{
+<a name="651"></a>	if (!areCheatsEnabled()) return;
+<a name="652"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="653"></a>		return;
+<a name="654"></a>
+<a name="655"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Shotgun"</span>);
+<a name="656"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Trenchgun"</span>);
+<a name="657"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.BoomStick"</span>);
+<a name="658"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.AA12AutoShotgun"</span>);
+<a name="659"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.BenelliShotgun"</span>);
+<a name="660"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.KSGShotgun"</span>);
+<a name="661"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SPAutoShotgun"</span>);
+<a name="662"></a>
+<a name="663"></a>	ReportCheat(<span class="source_string">"Shotty"</span>);
+<a name="664"></a>	ClientMessage(<span class="source_string">"Shotguns."</span>);
+<a name="665"></a>}
+<a name="666"></a>
+<a name="667"></a>exec function MeleeMe(optional <span class="source_type">bool</span> bMaxAmmo)
+<a name="668"></a>{
+<a name="669"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="670"></a>
+<a name="671"></a>	if (!areCheatsEnabled()) return;
+<a name="672"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="673"></a>		return;
+<a name="674"></a>
+<a name="675"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Single"</span>);
+<a name="676"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Axe"</span>);
+<a name="677"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Machete"</span>);
+<a name="678"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Knife"</span>);
+<a name="679"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Chainsaw"</span>);
+<a name="680"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.Katana"</span>);
+<a name="681"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.ClaymoreSword"</span>);
+<a name="682"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Crossbuzzsaw"</span>);
+<a name="683"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Scythe"</span>);
+<a name="684"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFMod.DwarfAxe"</span>);
+<a name="685"></a>
+<a name="686"></a>    if( bMaxAmmo )
+<a name="687"></a>    {
+<a name="688"></a>    	for( Inv=<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; Inv!=None; Inv=Inv.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="689"></a>    	{
+<a name="690"></a>    		if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv)!=None )
+<a name="691"></a>    			<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv).SuperMaxOutAmmo();
+<a name="692"></a>    	}
+<a name="693"></a>	}
+<a name="694"></a>
+<a name="695"></a>	ReportCheat(<span class="source_string">"MeleeMe"</span>);
+<a name="696"></a>	ClientMessage(<span class="source_string">"All KF Melee sWeapons."</span>);
+<a name="697"></a>}
+<a name="698"></a>
+<a name="699"></a>exec function Bombs(optional <span class="source_type">bool</span> bMaxAmmo)
+<a name="700"></a>{
+<a name="701"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> Inv;
+<a name="702"></a>
+<a name="703"></a>	if (!areCheatsEnabled()) return;
+<a name="704"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="705"></a>		return;
+<a name="706"></a>
+<a name="707"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.PipeBombExplosive"</span>);
+<a name="708"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M79GrenadeLauncher"</span>);
+<a name="709"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M32GrenadeLauncher"</span>);
+<a name="710"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.M4203AssaultRifle"</span>);
+<a name="711"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.SPGrenadeLauncher"</span>);
+<a name="712"></a>
+<a name="713"></a>    if( bMaxAmmo )
+<a name="714"></a>    {
+<a name="715"></a>    	for( Inv=<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; Inv!=None; Inv=Inv.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="716"></a>    	{
+<a name="717"></a>    		if ( <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv)!=None )
+<a name="718"></a>    			<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(Inv).SuperMaxOutAmmo();
+<a name="719"></a>    	}
+<a name="720"></a>	}
+<a name="721"></a>
+<a name="722"></a>	ReportCheat(<span class="source_string">"Bombs"</span>);
+<a name="723"></a>	ClientMessage(<span class="source_string">"You threw down tha bomb."</span>);
+<a name="724"></a>}
+<a name="725"></a>
+<a name="726"></a>exec function Nails()
+<a name="727"></a>{
+<a name="728"></a>	if (!areCheatsEnabled()) return;
+<a name="729"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="730"></a>		return;
+<a name="731"></a>
+<a name="732"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.NailGun"</span>);
+<a name="733"></a>}
+<a name="734"></a>
+<a name="735"></a>exec function IJC()
+<a name="736"></a>{
+<a name="737"></a>	if (!areCheatsEnabled()) return;
+<a name="738"></a>	if( <span class="source_comment">/*(Level.Netmode!=NM_Standalone) ||*/</span> (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="739"></a>		return;
+<a name="740"></a>
+<a name="741"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Scythe"</span>);
+<a name="742"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.Crossbuzzsaw"</span>);
+<a name="743"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.ThompsonSMG"</span>);
+<a name="744"></a>}
+<a name="745"></a>
+<a name="746"></a>exec function Backup()
+<a name="747"></a>{
+<a name="748"></a>	local <span class="source_type"><a href="../kfmod/kfsoldierfriendly.html" class="source">KFSoldierFriendly</a></span> Soldier;
+<a name="749"></a>
+<a name="750"></a>	if (!areCheatsEnabled()) return;
+<a name="751"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="752"></a>		return;
+<a name="753"></a>
+<a name="754"></a>	Soldier = Spawn(<span class="source_type">class</span><span class="source_name">'KFmod.KFSoldierFriendly'</span>);
+<a name="755"></a>	Soldier.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex = <span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex;
+<a name="756"></a>
+<a name="757"></a>	ReportCheat(<span class="source_string">"Backup"</span>);
+<a name="758"></a>	ClientMessage(<span class="source_string">"Reinforcements are here!"</span>);
+<a name="759"></a>}
+<a name="760"></a>
+<a name="761"></a>exec function Horde()
+<a name="762"></a>{
+<a name="763"></a>	local <span class="source_type">float</span> RandomZombieNum;
+<a name="764"></a>	local <span class="source_type">String</span> ZombieName;
+<a name="765"></a>
+<a name="766"></a>	if (!areCheatsEnabled()) return;
+<a name="767"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="768"></a>		return;
+<a name="769"></a>
+<a name="770"></a>	RandomZombieNum = rand(<span class="source_int">7</span>);
+<a name="771"></a>
+<a name="772"></a>	if (RandomZombieNum == <span class="source_int">0</span>)
+<a name="773"></a>	 ZombieName = <span class="source_string">"Clot"</span>;
+<a name="774"></a>	else
+<a name="775"></a>	if (RandomZombieNum == <span class="source_int">1</span>)
+<a name="776"></a>	 ZombieName = <span class="source_string">"Crawler"</span>;
+<a name="777"></a>	else
+<a name="778"></a>	if (RandomZombieNum == <span class="source_int">2</span>)
+<a name="779"></a>	 ZombieName = <span class="source_string">"Stalker"</span>;
+<a name="780"></a>	else
+<a name="781"></a>	if (RandomZombieNum == <span class="source_int">3</span>)
+<a name="782"></a>	 ZombieName = <span class="source_string">"Bloat"</span>;
+<a name="783"></a>	else
+<a name="784"></a>	if (RandomZombieNum == <span class="source_int">4</span>)
+<a name="785"></a>	 ZombieName = <span class="source_string">"Gorefast"</span>;
+<a name="786"></a>	else
+<a name="787"></a>	if (RandomZombieNum == <span class="source_int">5</span>)
+<a name="788"></a>	 ZombieName = <span class="source_string">"Scrake"</span>;
+<a name="789"></a>	else
+<a name="790"></a>	if (RandomZombieNum == <span class="source_int">6</span>)
+<a name="791"></a>	 ZombieName = <span class="source_string">"FleshPound"</span>;
+<a name="792"></a>
+<a name="793"></a>
+<a name="794"></a>   if (ZombieName != <span class="source_string">""</span>)
+<a name="795"></a>	ConsoleCommand(<span class="source_string">"Summon KFChar.Zombie"</span>$ZombieName);
+<a name="796"></a>
+<a name="797"></a>	ReportCheat(<span class="source_string">"Horde"</span>);
+<a name="798"></a>	ClientMessage(<span class="source_string">"You've got company!"</span>);
+<a name="799"></a>}
+<a name="800"></a>
+<a name="801"></a>exec function MopUp()
+<a name="802"></a>{
+<a name="803"></a>	local <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span> LevelMonster;
+<a name="804"></a>	local <span class="source_type">int</span> LevelMonsterTotal;
+<a name="805"></a>
+<a name="806"></a>	if (!areCheatsEnabled()) return;
+<a name="807"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="808"></a>		return;
+<a name="809"></a>
+<a name="810"></a>	forEach AllActors(<span class="source_type">class</span> <span class="source_name">'KFMonster'</span>,LevelMonster)
+<a name="811"></a>	{
+<a name="812"></a>		LevelMonsterTotal++;
+<a name="813"></a>		LevelMonster.KilledBy(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>);
+<a name="814"></a>	}
+<a name="815"></a>
+<a name="816"></a>	ReportCheat(<span class="source_string">"MopUp"</span>);
+<a name="817"></a>	ClientMessage(<span class="source_string">"The number of zombies in this map was : "</span>$LevelMonsterTotal);
+<a name="818"></a>}
+<a name="819"></a>
+<a name="820"></a><span class="source_comment">// Removed - the reference to ZombieBossBass caused the patriach content to be
+</span><a name="821"></a><span class="source_comment">// always loaded.  For some reason we have lots of content refs in this class
+</span><a name="822"></a><span class="source_comment">/*
+<a name="823"></a>exec function PatRage()
+<a name="824"></a>{
+<a name="825"></a>	local ZombieBossBase LevelMonster;
+<a name="826"></a>
+<a name="827"></a>	if (!areCheatsEnabled()) return;
+<a name="828"></a>	if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+<a name="829"></a>		return;
+<a name="830"></a>
+<a name="831"></a>	forEach AllActors(class'ZombieBossBase',LevelMonster)
+<a name="832"></a>	{
+<a name="833"></a>		LevelMonster.GotoState('RadialAttack');
+<a name="834"></a>	}
+<a name="835"></a>
+<a name="836"></a>	ReportCheat("PatRage");
+<a name="837"></a>	ClientMessage("Forcing the Patriarch to do his radial attack");
+<a name="838"></a>}
+<a name="839"></a>*/</span>
+<a name="840"></a>
+<a name="841"></a>exec function BurnEm()
+<a name="842"></a>{
+<a name="843"></a>	local <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span> LevelMonster;
+<a name="844"></a>
+<a name="845"></a>	if (!areCheatsEnabled()) return;
+<a name="846"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="847"></a>		return;
+<a name="848"></a>
+<a name="849"></a>	forEach AllActors(<span class="source_type">class</span><span class="source_name">'KFMonster'</span>,LevelMonster)
+<a name="850"></a>	{
+<a name="851"></a>		LevelMonster.bBurnified = true;
+<a name="852"></a>		LevelMonster.ZombieCrispUp();
+<a name="853"></a>
+<a name="854"></a>		LevelMonster.LastBurnDamage = <span class="source_int">15</span>;
+<a name="855"></a>		LevelMonster.FireDamageClass = <span class="source_type">class</span><span class="source_name">'DamTypeFlamethrower'</span>;
+<a name="856"></a>
+<a name="857"></a>		LevelMonster.BurnDown = <span class="source_int">10</span>; <span class="source_comment">// Inits burn tick count to 10
+</span><a name="858"></a>		LevelMonster.GroundSpeed *= <span class="source_int">0.80</span>; <span class="source_comment">// Lowers movement speed by 20%
+</span><a name="859"></a>		LevelMonster.BurnInstigator = <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>;
+<a name="860"></a>		LevelMonster.SetTimer(<span class="source_int">1.0</span>,false); <span class="source_comment">// Sets timer function to be executed each second
+</span><a name="861"></a>	}
+<a name="862"></a>
+<a name="863"></a>	ReportCheat(<span class="source_string">"BurnEm"</span>);
+<a name="864"></a>	ClientMessage(<span class="source_string">"Forcing Zeds to Burn!!!"</span>);
+<a name="865"></a>}
+<a name="866"></a>
+<a name="867"></a>exec function ArmorUp()
+<a name="868"></a>{
+<a name="869"></a>	local <span class="source_type"><a href="../kfmod/kfhumanpawn.html" class="source">KFHumanPawn</a></span> <span class="source_type">P</span>;
+<a name="870"></a>
+<a name="871"></a>	if (!areCheatsEnabled()) return;
+<a name="872"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="873"></a>		return;
+<a name="874"></a>
+<a name="875"></a>    forEach AllActors(<span class="source_type">class</span><span class="source_name">'KFHumanPawn'</span>,<span class="source_type">P</span>)
+<a name="876"></a>    {
+<a name="877"></a>        <span class="source_type">P</span>.ShieldStrength = <span class="source_int">100</span>;
+<a name="878"></a>    }
+<a name="879"></a>
+<a name="880"></a>	ReportCheat(<span class="source_string">"ArmorUp"</span>);
+<a name="881"></a>	ClientMessage(<span class="source_string">"Everyone has full armor"</span>);
+<a name="882"></a>}
+<a name="883"></a>
+<a name="884"></a>exec function Heal()
+<a name="885"></a>{
+<a name="886"></a>
+<a name="887"></a>	if (!areCheatsEnabled()) return;
+<a name="888"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="889"></a>		return;
+<a name="890"></a>
+<a name="891"></a>	<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveHealth(<span class="source_int">100</span>,<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.HealthMax);
+<a name="892"></a>
+<a name="893"></a>	ReportCheat(<span class="source_string">"Heal"</span>);
+<a name="894"></a>	ClientMessage(<span class="source_string">"Much better."</span>);
+<a name="895"></a>}
+<a name="896"></a>
+<a name="897"></a>
+<a name="898"></a><span class="source_comment">/*
+<a name="899"></a>	exec function TimeIsATeacher()
+<a name="900"></a>{
+<a name="901"></a>
+<a name="902"></a>  //  if (!areCheatsEnabled()) return;
+<a name="903"></a>  //  if( (Level.Netmode!=NM_Standalone) || (Pawn == None) || (Vehicle(Pawn) != None) )
+<a name="904"></a>  //	  return;
+<a name="905"></a>
+<a name="906"></a>	KFPlayerReplicationInfo(PlayerReplicationInfo).ExperienceLevel += 1.0 ;
+<a name="907"></a>
+<a name="908"></a>	ReportCheat("TimeIsATeacher");
+<a name="909"></a>	ClientMessage("+ 1 Experience level");
+<a name="910"></a>
+<a name="911"></a>}
+<a name="912"></a>*/</span>
+<a name="913"></a>
+<a name="914"></a>exec function ViewZombie()
+<a name="915"></a>{
+<a name="916"></a>	local <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> first;
+<a name="917"></a>	local <span class="source_type">bool</span> bFound;
+<a name="918"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="919"></a>
+<a name="920"></a>	if (!areCheatsEnabled()) return;
+<a name="921"></a>
+<a name="922"></a>	bViewBot = true;
+<a name="923"></a>
+<a name="924"></a>	for ( <span class="source_type">C</span>=<span class="source_type">Level</span>.ControllerList; <span class="source_type">C</span>!=None; <span class="source_type">C</span>=<span class="source_type">C</span>.NextController )
+<a name="925"></a>	{
+<a name="926"></a>		if ( <span class="source_type">C</span>.IsA(<span class="source_name">'KFMonsterController'</span>) && (<span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> != None) )
+<a name="927"></a>		{
+<a name="928"></a>			if ( bFound || (first == None) )
+<a name="929"></a>			{
+<a name="930"></a>				first = <span class="source_type">C</span>;
+<a name="931"></a>				if ( bFound )
+<a name="932"></a>					break;
+<a name="933"></a>			}
+<a name="934"></a>			if ( <span class="source_type">C</span> == RealViewTarget )
+<a name="935"></a>				bFound = true;
+<a name="936"></a>		}
+<a name="937"></a>	}
+<a name="938"></a>
+<a name="939"></a>	if ( first != None )
+<a name="940"></a>	{
+<a name="941"></a>		SetViewTarget(first);
+<a name="942"></a>		bBehindView = true;
+<a name="943"></a>		<span class="source_type">ViewTarget</span>.BecomeViewTarget();
+<a name="944"></a>		FixFOV();
+<a name="945"></a>	}
+<a name="946"></a>	else
+<a name="947"></a>		ViewSelf(true);
+<a name="948"></a>}
+<a name="949"></a>
+<a name="950"></a>exec function Bond()
+<a name="951"></a>{
+<a name="952"></a>	if (!areCheatsEnabled()) return;
+<a name="953"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="954"></a>		return;
+<a name="955"></a>
+<a name="956"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.GoldenBenelliShotgun"</span>);
+<a name="957"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.GoldenKatana"</span>);
+<a name="958"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.GoldenM79GrenadeLauncher"</span>);
+<a name="959"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.GoldenAK47AssaultRifle"</span>);
+<a name="960"></a>}
+<a name="961"></a>
+<a name="962"></a>exec function Bond2()
+<a name="963"></a>{
+<a name="964"></a>    if (!areCheatsEnabled()) return;
+<a name="965"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="966"></a>		return;
+<a name="967"></a>
+<a name="968"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.GoldenAA12AutoShotgun"</span>);
+<a name="969"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.GoldenDeagle"</span>);
+<a name="970"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.GoldenChainsaw"</span>);
+<a name="971"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.GoldenFlamethrower"</span>);
+<a name="972"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.GoldenDualDeagle"</span>);
+<a name="973"></a>}
+<a name="974"></a>
+<a name="975"></a>exec function Camo()
+<a name="976"></a>{
+<a name="977"></a>	if (!areCheatsEnabled()) return;
+<a name="978"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="979"></a>		return;
+<a name="980"></a>
+<a name="981"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.CamoM4AssaultRifle"</span>);
+<a name="982"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.CamoMP5MMedicGun"</span>);
+<a name="983"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.CamoM32GrenadeLauncher"</span>);
+<a name="984"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.CamoShotgun"</span>);
+<a name="985"></a>}
+<a name="986"></a>
+<a name="987"></a>exec function Tron()
+<a name="988"></a>{
+<a name="989"></a>    if (!areCheatsEnabled()) return;
+<a name="990"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="991"></a>		return;
+<a name="992"></a>
+<a name="993"></a>    <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.GiveWeapon(<span class="source_string">"KFmod.NeonAK47AssaultRifle"</span>);
+<a name="994"></a>}
+<a name="995"></a>
+<a name="996"></a>exec function GrantAchievement(<span class="source_type">int</span> achievement)
+<a name="997"></a>{
+<a name="998"></a>	if (!areCheatsEnabled()) return;
+<a name="999"></a>	if( (<span class="source_type">Level</span>.Netmode!=NM_Standalone) || (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>) != None) )
+<a name="1000"></a>		return;
+<a name="1001"></a>
+<a name="1002"></a>    <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(SteamStatsAndAchievements).Achievements[achievement].bCompleted = <span class="source_int">1</span>;
+<a name="1003"></a>}
+<a name="1004"></a>
+<a name="1005"></a>defaultproperties
+<a name="1006"></a>{
+<a name="1007"></a>     CheatsNotEnabled=<span class="source_string">"Cheats are NOT enabled, to enable cheats type"</span>
+<a name="1008"></a>     EnablingCheatsKillsPerks=<span class="source_string">"Enabling cheats prevents you from obtaining Perks and Achievements"</span>
+<a name="1009"></a>     CheatsEnabled=<span class="source_string">"Cheats enabled, you are no longer able to obtain Perks and Achievements until the map changes"</span>
+<a name="1010"></a>}
+<a name="1011"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfcheatmanager.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFCheatManager">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfbulletwhipattachment.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfcinematiccamera.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:03.192 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

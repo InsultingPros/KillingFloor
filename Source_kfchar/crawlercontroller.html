@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFChar.CrawlerController</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfchar/kfchar-overview.html">Package</a></td>
+	<td class="header"><a href="../kfchar/crawlercontroller.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#CrawlerController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfchar/braindeadzombie.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfchar/fleshpoundzombiecontroller.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfchar/crawlercontroller.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfchar/kfchar-overview.html">KFChar</a>.<a href="../kfchar/crawlercontroller.html">CrawlerController</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfchar/crawlercontroller.html" class="source">CrawlerController</a></span> extends <span class="source_type"><a href="../kfmod/kfmonstercontroller.html" class="source">KFMonsterController</a></span>;
+<a name="2"></a>
+<a name="3"></a>var	<span class="source_type">float</span>	LastPounceTime;
+<a name="4"></a>var	<span class="source_type">bool</span>	bDoneSpottedCheck;
+<a name="5"></a>
+<a name="6"></a><span class="source_type">state</span> ZombieHunt
+<a name="7"></a>{
+<a name="8"></a>	event SeePlayer(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> SeenPlayer)
+<a name="9"></a>	{
+<a name="10"></a>		if ( !bDoneSpottedCheck && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(SeenPlayer.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none )
+<a name="11"></a>		{
+<a name="12"></a>			<span class="source_comment">// 25% chance of first player to see this Crawler saying something
+</span><a name="13"></a>			if ( !<span class="source_type"><a href="../kfmod/kfgametype.html" class="source">KFGameType</a></span>(<span class="source_type">Level</span>.Game).bDidSpottedCrawlerMessage && FRand() &lt; <span class="source_int">0.25</span> )
+<a name="14"></a>			{
+<a name="15"></a>				<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(SeenPlayer.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).Speech(<span class="source_name">'AUTO'</span>, <span class="source_int">18</span>, <span class="source_string">""</span>);
+<a name="16"></a>				<span class="source_type"><a href="../kfmod/kfgametype.html" class="source">KFGameType</a></span>(<span class="source_type">Level</span>.Game).bDidSpottedCrawlerMessage = true;
+<a name="17"></a>			}
+<a name="18"></a>
+<a name="19"></a>			bDoneSpottedCheck = true;
+<a name="20"></a>		}
+<a name="21"></a>
+<a name="22"></a>		super.SeePlayer(SeenPlayer);
+<a name="23"></a>	}
+<a name="24"></a>}
+<a name="25"></a>
+<a name="26"></a>function <span class="source_type">bool</span> IsInPounceDist(<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> PTarget)
+<a name="27"></a>{
+<a name="28"></a>  local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> DistVec;
+<a name="29"></a>  local <span class="source_type">float</span> <span class="source_type"><a href="../core/time.html" class="source">time</a></span>;
+<a name="30"></a>
+<a name="31"></a>  local <span class="source_type">float</span> HeightMoved;
+<a name="32"></a>  local <span class="source_type">float</span> EndHeight;
+<a name="33"></a>
+<a name="34"></a>  <span class="source_comment">//work out time needed to reach target
+</span><a name="35"></a>
+<a name="36"></a>  DistVec = <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>.location - PTarget.location;
+<a name="37"></a>  DistVec.<span class="source_type">Z</span>=<span class="source_int">0</span>;
+<a name="38"></a>
+<a name="39"></a>  <span class="source_type"><a href="../core/time.html" class="source">time</a></span> = vsize(DistVec)/<span class="source_type"><a href="../kfchar/zombiecrawler.html" class="source">ZombieCrawler</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>).PounceSpeed;
+<a name="40"></a>
+<a name="41"></a>  <span class="source_comment">// vertical change in that time
+</span><a name="42"></a>
+<a name="43"></a>  <span class="source_comment">//assumes downward grav only
+</span><a name="44"></a>  HeightMoved = <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.JumpZ*<span class="source_type"><a href="../core/time.html" class="source">time</a></span> + <span class="source_int">0.5</span>*<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>.<span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span>.Gravity.<span class="source_type">z</span>*<span class="source_type"><a href="../core/time.html" class="source">time</a></span>*<span class="source_type"><a href="../core/time.html" class="source">time</a></span>;
+<a name="45"></a>
+<a name="46"></a>  EndHeight = <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>.Location.<span class="source_type">z</span> +HeightMoved;
+<a name="47"></a>
+<a name="48"></a>  <span class="source_comment">//log(Vsize(Pawn.Location - PTarget.Location));
+</span><a name="49"></a>
+<a name="50"></a>
+<a name="51"></a>  if((abs(EndHeight - PTarget.Location.<span class="source_type">Z</span>) &lt; <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.CollisionHeight + PTarget.CollisionHeight) &&
+<a name="52"></a>  VSize(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>.Location - PTarget.Location) &lt; <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>).MeleeRange * <span class="source_int">5</span>)
+<a name="53"></a>    return true;
+<a name="54"></a>  else
+<a name="55"></a>    return false;
+<a name="56"></a>}
+<a name="57"></a>
+<a name="58"></a>function <span class="source_type">bool</span> FireWeaponAt(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">A</span>)
+<a name="59"></a>{
+<a name="60"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> aFacing,aToB;
+<a name="61"></a>	local <span class="source_type">float</span> RelativeDir;
+<a name="62"></a>
+<a name="63"></a>    if ( <span class="source_type">A</span> == None )
+<a name="64"></a>		<span class="source_type">A</span> = Enemy;
+<a name="65"></a>	if ( (<span class="source_type">A</span> == None) || (Focus != <span class="source_type">A</span>) )
+<a name="66"></a>		return false;
+<a name="67"></a>
+<a name="68"></a>	if(CanAttack(<span class="source_type">A</span>))
+<a name="69"></a>    {
+<a name="70"></a>	  <span class="source_type">Target</span> = <span class="source_type">A</span>;
+<a name="71"></a>	  <span class="source_type"><a href="../old2k4/monster.html" class="source">Monster</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).RangedAttack(<span class="source_type">Target</span>);
+<a name="72"></a>    }
+<a name="73"></a>    else
+<a name="74"></a>    {
+<a name="75"></a>        <span class="source_comment">//TODO - base off land time rather than launch time?
+</span><a name="76"></a>        if((LastPounceTime + (<span class="source_int">4.5</span> - (FRand() * <span class="source_int">3.0</span>))) &lt; <span class="source_type">Level</span>.TimeSeconds )
+<a name="77"></a>        {
+<a name="78"></a>            aFacing=Normal(<span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.<span class="source_type">Rotation</span>));
+<a name="79"></a>            <span class="source_comment">// Get the vector from A to B
+</span><a name="80"></a>            aToB=<span class="source_type">A</span>.Location-<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location;
+<a name="81"></a>
+<a name="82"></a>            RelativeDir = aFacing dot aToB;
+<a name="83"></a>            if ( RelativeDir &gt; <span class="source_int">0.85</span> )
+<a name="84"></a>            {
+<a name="85"></a>                <span class="source_comment">//Facing enemy
+</span><a name="86"></a>                if(IsInPounceDist(<span class="source_type">A</span>) )
+<a name="87"></a>                {
+<a name="88"></a>                    if(<span class="source_type"><a href="../kfchar/zombiecrawler.html" class="source">ZombieCrawler</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>).DoPounce()==true )
+<a name="89"></a>                        LastPounceTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="90"></a>                }
+<a name="91"></a>            }
+<a name="92"></a>        }
+<a name="93"></a>    }
+<a name="94"></a>    return false;
+<a name="95"></a>}
+<a name="96"></a>
+<a name="97"></a>function <span class="source_type">bool</span> NotifyLanded(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>)
+<a name="98"></a>{
+<a name="99"></a>  if( <span class="source_type"><a href="../kfchar/zombiecrawler.html" class="source">zombiecrawler</a></span>(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>).bPouncing )
+<a name="100"></a>  {
+<a name="101"></a>     <span class="source_comment">// restart pathfinding from landing location
+</span><a name="102"></a>     GotoState(<span class="source_name">'hunting'</span>);
+<a name="103"></a>     return false;
+<a name="104"></a>  }
+<a name="105"></a>  else
+<a name="106"></a>    return super.NotifyLanded(<span class="source_type">HitNormal</span>);
+<a name="107"></a>}
+<a name="108"></a>
+<a name="109"></a>defaultproperties
+<a name="110"></a>{
+<a name="111"></a>}
+<a name="112"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfchar/kfchar-overview.html">Package</a></td>
+	<td class="header"><a href="../kfchar/crawlercontroller.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#CrawlerController">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfchar/braindeadzombie.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfchar/fleshpoundzombiecontroller.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:00.850 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

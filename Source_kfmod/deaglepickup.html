@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.DeaglePickup</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/deaglepickup.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#DeaglePickup">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/deaglefire.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/deaglesuperammopickup.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/deaglepickup.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/deaglepickup.html">DeaglePickup</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// Deagle Pickup.
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/deaglepickup.html" class="source">DeaglePickup</a></span> extends <span class="source_type"><a href="../kfmod/kfweaponpickup.html" class="source">KFWeaponPickup</a></span>;
+<a name="5"></a>
+<a name="6"></a><span class="source_comment">/*
+<a name="7"></a>function ShowDeagleInfo(Canvas C)
+<a name="8"></a>{
+<a name="9"></a>  C.SetPos((C.SizeX - C.SizeY) / 2,0);
+<a name="10"></a>  C.DrawTile( Texture'KillingfloorHUD.ClassMenu.Deagle', C.SizeY, C.SizeY, 0.0, 0.0, 256, 256);
+<a name="11"></a>}
+<a name="12"></a>*/</span>
+<a name="13"></a>
+<a name="14"></a>function <span class="source_type"><a href="../engine/inventory.html" class="source">inventory</a></span> SpawnCopy(<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">Other</span>)
+<a name="15"></a>{
+<a name="16"></a>	local <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> <span class="source_type">I</span>;
+<a name="17"></a>
+<a name="18"></a>	for ( <span class="source_type">I</span> = <span class="source_type">Other</span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>; <span class="source_type">I</span> != none; <span class="source_type">I</span> = <span class="source_type">I</span>.<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> )
+<a name="19"></a>	{
+<a name="20"></a>        <span class="source_comment">// can't just cast to Deagle to check, because golden deagle is a deagle
+</span><a name="21"></a>        <span class="source_comment">// but we don't want to take your golden deagle and give you dual
+</span><a name="22"></a>        <span class="source_comment">// normal deagles
+</span><a name="23"></a>		if( <span class="source_type">I</span>.<span class="source_type">Class</span> == <span class="source_type">class</span><span class="source_name">'Deagle'</span> )
+<a name="24"></a>		{
+<a name="25"></a>			if( <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> != none )
+<a name="26"></a>				<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>.Destroy();
+<a name="27"></a>			InventoryType = <span class="source_type">Class</span><span class="source_name">'DualDeagle'</span>;
+<a name="28"></a>            AmmoAmount[<span class="source_int">0</span>] += <span class="source_type"><a href="../kfmod/deagle.html" class="source">Deagle</a></span>(<span class="source_type">I</span>).AmmoAmount(<span class="source_int">0</span>);
+<a name="29"></a>            MagAmmoRemaining += <span class="source_type"><a href="../kfmod/deagle.html" class="source">Deagle</a></span>(<span class="source_type">I</span>).MagAmmoRemaining;
+<a name="30"></a>			<span class="source_type">I</span>.Destroyed();
+<a name="31"></a>			<span class="source_type">I</span>.Destroy();
+<a name="32"></a>			Return Super.SpawnCopy(<span class="source_type">Other</span>);
+<a name="33"></a>		}
+<a name="34"></a>	}
+<a name="35"></a>
+<a name="36"></a>	InventoryType = Default.InventoryType;
+<a name="37"></a>	Return Super.SpawnCopy(<span class="source_type">Other</span>);
+<a name="38"></a>}
+<a name="39"></a>
+<a name="40"></a>defaultproperties
+<a name="41"></a>{
+<a name="42"></a>     <span class="source_type">Weight</span>=<span class="source_int">2.000000</span>
+<a name="43"></a>     cost=<span class="source_int">500</span>
+<a name="44"></a>     AmmoCost=<span class="source_int">15</span>
+<a name="45"></a>     BuyClipSize=<span class="source_int">7</span>
+<a name="46"></a>     PowerValue=<span class="source_int">65</span>
+<a name="47"></a>     SpeedValue=<span class="source_int">35</span>
+<a name="48"></a>     RangeValue=<span class="source_int">60</span>
+<a name="49"></a>     Description=<span class="source_string">"50 Cal AE handgun. A powerful personal choice for personal defense."</span>
+<a name="50"></a>     ItemName=<span class="source_string">"Handcannon"</span>
+<a name="51"></a>     ItemShortName=<span class="source_string">"Handcannon"</span>
+<a name="52"></a>     AmmoItemName=<span class="source_string">".300 JHP Ammo"</span>
+<a name="53"></a>     CorrespondingPerkIndex=<span class="source_int">2</span>
+<a name="54"></a>     EquipmentCategoryID=<span class="source_int">1</span>
+<a name="55"></a>     VariantClasses(<span class="source_int">0</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.GoldenDeaglePickup'</span>
+<a name="56"></a>     InventoryType=<span class="source_type">Class</span><span class="source_name">'KFMod.Deagle'</span>
+<a name="57"></a>     PickupMessage=<span class="source_string">"You got the Handcannon"</span>
+<a name="58"></a>     PickupSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'KF_HandcannonSnd.50AE_Pickup'</span>
+<a name="59"></a>     PickupForce=<span class="source_string">"AssaultRiflePickup"</span>
+<a name="60"></a>     <span class="source_type">StaticMesh</span>=<span class="source_type">StaticMesh</span><span class="source_name">'KF_pickups_Trip.pistol.deagle_pickup'</span>
+<a name="61"></a>     CollisionHeight=<span class="source_int">5.000000</span>
+<a name="62"></a>}
+<a name="63"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/deaglepickup.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#DeaglePickup">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/deaglefire.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/deaglesuperammopickup.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:01.182 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

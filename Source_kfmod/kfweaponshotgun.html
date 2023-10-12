@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.KFWeaponShotgun</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfweaponshotgun.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFWeaponShotgun">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfweaponpickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfwelderhiteffect.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/kfweaponshotgun.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/kfweaponshotgun.html">KFWeaponShotgun</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/kfweaponshotgun.html" class="source">KFWeaponShotgun</a></span> extends <span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span>
+<a name="2"></a>    abstract;
+<a name="3"></a>
+<a name="4"></a>simulated function AddReloadedAmmo()
+<a name="5"></a>{
+<a name="6"></a>    if(AmmoAmount(<span class="source_int">0</span>) &gt; <span class="source_int">0</span>)
+<a name="7"></a>        ++MagAmmoRemaining;
+<a name="8"></a>
+<a name="9"></a>    <span class="source_comment">// Don't do this on a "Hold to reload" weapon, as it can update too quick actually and cause issues maybe - Ramm
+</span><a name="10"></a>    if( !bHoldToReload )
+<a name="11"></a>    {
+<a name="12"></a>        ClientForceKFAmmoUpdate(MagAmmoRemaining,AmmoAmount(<span class="source_int">0</span>));
+<a name="13"></a>    }
+<a name="14"></a>
+<a name="15"></a>	if ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none && <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).SteamStatsAndAchievements) != none )
+<a name="16"></a>	{
+<a name="17"></a>		<span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).SteamStatsAndAchievements).OnWeaponReloaded();
+<a name="18"></a>	}
+<a name="19"></a>}
+<a name="20"></a>
+<a name="21"></a><span class="source_comment">//I'll just copy and paste the damn things if you want them
+</span><a name="22"></a><span class="source_comment">//so badly.
+</span><a name="23"></a><span class="source_comment">// AI Interface
+</span><a name="24"></a>function <span class="source_type">float</span> GetAIRating()
+<a name="25"></a>{
+<a name="26"></a>	local <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span> <span class="source_type">B</span>;
+<a name="27"></a>	local <span class="source_type">float</span> EnemyDist;
+<a name="28"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> EnemyDir;
+<a name="29"></a>
+<a name="30"></a>	<span class="source_type">B</span> = <span class="source_type"><a href="../unrealgame/bot.html" class="source">Bot</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="31"></a>	if ( <span class="source_type">B</span> == None )
+<a name="32"></a>		return AIRating;
+<a name="33"></a>
+<a name="34"></a>	if ( (<span class="source_type">B</span>.<span class="source_type">Target</span> != None) && (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">B</span>.<span class="source_type">Target</span>) == None) && (VSize(<span class="source_type">B</span>.<span class="source_type">Target</span>.Location - <span class="source_type">Instigator</span>.Location) &lt; <span class="source_int">1250</span>) )
+<a name="35"></a>		return <span class="source_int">0.9</span>;
+<a name="36"></a>
+<a name="37"></a>	if ( <span class="source_type">B</span>.Enemy == None )
+<a name="38"></a>	{
+<a name="39"></a>		if ( (<span class="source_type">B</span>.<span class="source_type">Target</span> != None) && VSize(<span class="source_type">B</span>.<span class="source_type">Target</span>.Location - <span class="source_type">B</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Location) &gt; <span class="source_int">3500</span> )
+<a name="40"></a>			return <span class="source_int">0.2</span>;
+<a name="41"></a>		return AIRating;
+<a name="42"></a>	}
+<a name="43"></a>
+<a name="44"></a>	EnemyDir = <span class="source_type">B</span>.Enemy.Location - <span class="source_type">Instigator</span>.Location;
+<a name="45"></a>	EnemyDist = VSize(EnemyDir);
+<a name="46"></a>	if ( EnemyDist &gt; <span class="source_int">750</span> )
+<a name="47"></a>	{
+<a name="48"></a>		if ( EnemyDist &gt; <span class="source_int">2000</span> )
+<a name="49"></a>		{
+<a name="50"></a>			if ( EnemyDist &gt; <span class="source_int">3500</span> )
+<a name="51"></a>				return <span class="source_int">0.2</span>;
+<a name="52"></a>			return (AIRating - <span class="source_int">0.3</span>);
+<a name="53"></a>		}
+<a name="54"></a>		if ( EnemyDir.<span class="source_type">Z</span> &lt; -<span class="source_int">0.5</span> * EnemyDist )
+<a name="55"></a>			return (AIRating - <span class="source_int">0.3</span>);
+<a name="56"></a>	}
+<a name="57"></a>	else if ( (<span class="source_type">B</span>.Enemy.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> != None) && <span class="source_type">B</span>.Enemy.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.bMeleeWeapon )
+<a name="58"></a>		return (AIRating + <span class="source_int">0.35</span>);
+<a name="59"></a>	else if ( EnemyDist &lt; <span class="source_int">400</span> )
+<a name="60"></a>		return (AIRating + <span class="source_int">0.2</span>);
+<a name="61"></a>	return FMax(AIRating + <span class="source_int">0.2</span> - (EnemyDist - <span class="source_int">400</span>) * <span class="source_int">0.0008</span>, <span class="source_int">0.2</span>);
+<a name="62"></a>}
+<a name="63"></a>
+<a name="64"></a>function <span class="source_type">float</span> SuggestAttackStyle()
+<a name="65"></a>{
+<a name="66"></a>	if ( (<span class="source_type"><a href="../engine/aicontroller.html" class="source">AIController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None)
+<a name="67"></a>		&& (<span class="source_type"><a href="../engine/aicontroller.html" class="source">AIController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).Skill &lt; <span class="source_int">3</span>) )
+<a name="68"></a>		return <span class="source_int">0.4</span>;
+<a name="69"></a>    return <span class="source_int">0.8</span>;
+<a name="70"></a>}
+<a name="71"></a>
+<a name="72"></a>defaultproperties
+<a name="73"></a>{
+<a name="74"></a>     bHoldToReload=True
+<a name="75"></a>}
+<a name="76"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfweaponshotgun.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFWeaponShotgun">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfweaponpickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfwelderhiteffect.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:04.489 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

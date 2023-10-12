@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: ROEffects.ROBulletHitMetalEffect</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roeffects/roeffects-overview.html">Package</a></td>
+	<td class="header"><a href="../roeffects/robullethitmetaleffect.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROBulletHitMetalEffect">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_roeffects/robullethitmetalarmoreffect_simple.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_roeffects/robullethitmetaleffect_simple.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_roeffects/robullethitmetaleffect.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../roeffects/roeffects-overview.html">ROEffects</a>.<a href="../roeffects/robullethitmetaleffect.html">ROBulletHitMetalEffect</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// ROBulletHitMetalEffect
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_comment">// Hit effect emitter for bullets hitting metal
+</span><a name="5"></a><span class="source_comment">//=============================================================================
+</span><a name="6"></a><span class="source_comment">// Red Orchestra Source
+</span><a name="7"></a><span class="source_comment">// Copyright (C) 2005 John Ramm-Jaeger" Gibson
+</span><a name="8"></a><span class="source_comment">//=============================================================================
+</span><a name="9"></a>
+<a name="10"></a><span class="source_type">class</span> <span class="source_type"><a href="../roeffects/robullethitmetaleffect.html" class="source">ROBulletHitMetalEffect</a></span> extends <span class="source_type"><a href="../engine/emitter.html" class="source">emitter</a></span>;
+<a name="11"></a>
+<a name="12"></a>defaultproperties
+<a name="13"></a>{
+<a name="14"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span> <span class="source_type">Name</span>=SpriteEmitter0
+<a name="15"></a>         FadeOut=True
+<a name="16"></a>         FadeIn=True
+<a name="17"></a>         RespawnDeadParticles=False
+<a name="18"></a>         SpinParticles=True
+<a name="19"></a>         UseSizeScale=True
+<a name="20"></a>         UseRegularSizeScale=False
+<a name="21"></a>         UniformSize=True
+<a name="22"></a>         AutomaticInitialSpawning=False
+<a name="23"></a>         BlendBetweenSubdivisions=True
+<a name="24"></a>         UseRandomSubdivision=True
+<a name="25"></a>         ColorScale(<span class="source_int">0</span>)=(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="26"></a>         ColorScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="27"></a>         Opacity=<span class="source_int">0.500000</span>
+<a name="28"></a>         MaxParticles=<span class="source_int">2</span>
+<a name="29"></a>         UseRotationFrom=PTRS_Actor
+<a name="30"></a>         StartSpinRange=(<span class="source_type">X</span>=(Min=-<span class="source_int">0.500000</span>,<span class="source_type">Max</span>=<span class="source_int">0.500000</span>),<span class="source_type">Y</span>=(Min=-<span class="source_int">0.500000</span>,<span class="source_type">Max</span>=<span class="source_int">0.500000</span>),<span class="source_type">Z</span>=(Min=-<span class="source_int">0.500000</span>,<span class="source_type">Max</span>=<span class="source_int">0.500000</span>))
+<a name="31"></a>         SizeScale(<span class="source_int">0</span>)=(RelativeSize=<span class="source_int">1.000000</span>)
+<a name="32"></a>         SizeScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,RelativeSize=<span class="source_int">2.300000</span>)
+<a name="33"></a>         StartSizeRange=(<span class="source_type">X</span>=(Min=<span class="source_int">5.000000</span>,<span class="source_type">Max</span>=<span class="source_int">10.000000</span>))
+<a name="34"></a>         InitialParticlesPerSecond=<span class="source_int">100.000000</span>
+<a name="35"></a>         DrawStyle=PTDS_AlphaBlend
+<a name="36"></a>         <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Effects_Tex.BulletHits.metalsmokefinal'</span>
+<a name="37"></a>         TextureUSubdivisions=<span class="source_int">2</span>
+<a name="38"></a>         TextureVSubdivisions=<span class="source_int">2</span>
+<a name="39"></a>         LifetimeRange=(Min=<span class="source_int">0.750000</span>,<span class="source_type">Max</span>=<span class="source_int">0.750000</span>)
+<a name="40"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="41"></a>     Emitters(<span class="source_int">0</span>)=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span><span class="source_name">'ROEffects.ROBulletHitMetalEffect.SpriteEmitter0'</span>
+<a name="42"></a>
+<a name="43"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span> <span class="source_type">Name</span>=SpriteEmitter1
+<a name="44"></a>         FadeOut=True
+<a name="45"></a>         FadeIn=True
+<a name="46"></a>         RespawnDeadParticles=False
+<a name="47"></a>         SpinParticles=True
+<a name="48"></a>         UseSizeScale=True
+<a name="49"></a>         UseRegularSizeScale=False
+<a name="50"></a>         UniformSize=True
+<a name="51"></a>         AutomaticInitialSpawning=False
+<a name="52"></a>         BlendBetweenSubdivisions=True
+<a name="53"></a>         UseRandomSubdivision=True
+<a name="54"></a>         UseVelocityScale=True
+<a name="55"></a>         ColorScale(<span class="source_int">0</span>)=(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="56"></a>         ColorScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="57"></a>         Opacity=<span class="source_int">0.500000</span>
+<a name="58"></a>         MaxParticles=<span class="source_int">3</span>
+<a name="59"></a>         UseRotationFrom=PTRS_Actor
+<a name="60"></a>         SpinsPerSecondRange=(<span class="source_type">X</span>=(Min=<span class="source_int">0.150000</span>,<span class="source_type">Max</span>=<span class="source_int">0.150000</span>))
+<a name="61"></a>         SizeScale(<span class="source_int">0</span>)=(RelativeSize=<span class="source_int">0.500000</span>)
+<a name="62"></a>         SizeScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,RelativeSize=<span class="source_int">1.000000</span>)
+<a name="63"></a>         StartSizeRange=(<span class="source_type">X</span>=(Min=<span class="source_int">15.000000</span>,<span class="source_type">Max</span>=<span class="source_int">25.000000</span>))
+<a name="64"></a>         InitialParticlesPerSecond=<span class="source_int">100.000000</span>
+<a name="65"></a>         DrawStyle=PTDS_AlphaBlend
+<a name="66"></a>         <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Effects_Tex.BulletHits.metalsmokefinal'</span>
+<a name="67"></a>         TextureUSubdivisions=<span class="source_int">2</span>
+<a name="68"></a>         TextureVSubdivisions=<span class="source_int">2</span>
+<a name="69"></a>         LifetimeRange=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>)
+<a name="70"></a>         StartVelocityRange=(<span class="source_type">X</span>=(Min=<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">100.000000</span>),<span class="source_type">Y</span>=(Min=-<span class="source_int">10.000000</span>,<span class="source_type">Max</span>=<span class="source_int">10.000000</span>),<span class="source_type">Z</span>=(Min=-<span class="source_int">10.000000</span>,<span class="source_type">Max</span>=<span class="source_int">10.000000</span>))
+<a name="71"></a>         VelocityScale(<span class="source_int">0</span>)=(RelativeVelocity=(<span class="source_type">X</span>=<span class="source_int">1.000000</span>,<span class="source_type">Y</span>=<span class="source_int">1.000000</span>,<span class="source_type">Z</span>=<span class="source_int">1.000000</span>))
+<a name="72"></a>         VelocityScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">0.475000</span>,RelativeVelocity=(<span class="source_type">X</span>=<span class="source_int">0.100000</span>,<span class="source_type">Y</span>=<span class="source_int">0.200000</span>,<span class="source_type">Z</span>=<span class="source_int">0.200000</span>))
+<a name="73"></a>         VelocityScale(<span class="source_int">2</span>)=(RelativeTime=<span class="source_int">1.000000</span>)
+<a name="74"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="75"></a>     Emitters(<span class="source_int">1</span>)=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span><span class="source_name">'ROEffects.ROBulletHitMetalEffect.SpriteEmitter1'</span>
+<a name="76"></a>
+<a name="77"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span> <span class="source_type">Name</span>=SpriteEmitter2
+<a name="78"></a>         FadeOut=True
+<a name="79"></a>         RespawnDeadParticles=False
+<a name="80"></a>         SpinParticles=True
+<a name="81"></a>         UseSizeScale=True
+<a name="82"></a>         UseRegularSizeScale=False
+<a name="83"></a>         UniformSize=True
+<a name="84"></a>         AutomaticInitialSpawning=False
+<a name="85"></a>         BlendBetweenSubdivisions=True
+<a name="86"></a>         UseRandomSubdivision=True
+<a name="87"></a>         UseVelocityScale=True
+<a name="88"></a>         ColorScale(<span class="source_int">0</span>)=(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="89"></a>         ColorScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="90"></a>         Opacity=<span class="source_int">0.500000</span>
+<a name="91"></a>         MaxParticles=<span class="source_int">4</span>
+<a name="92"></a>         UseRotationFrom=PTRS_Actor
+<a name="93"></a>         SpinsPerSecondRange=(<span class="source_type">X</span>=(Min=<span class="source_int">0.150000</span>,<span class="source_type">Max</span>=<span class="source_int">0.150000</span>))
+<a name="94"></a>         SizeScale(<span class="source_int">0</span>)=(RelativeSize=<span class="source_int">0.500000</span>)
+<a name="95"></a>         SizeScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,RelativeSize=<span class="source_int">2.000000</span>)
+<a name="96"></a>         StartSizeRange=(<span class="source_type">X</span>=(Min=<span class="source_int">5.000000</span>,<span class="source_type">Max</span>=<span class="source_int">5.000000</span>))
+<a name="97"></a>         InitialParticlesPerSecond=<span class="source_int">100.000000</span>
+<a name="98"></a>         DrawStyle=PTDS_AlphaBlend
+<a name="99"></a>         <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Effects_Tex.BulletHits.metalsmokefinal'</span>
+<a name="100"></a>         TextureUSubdivisions=<span class="source_int">2</span>
+<a name="101"></a>         TextureVSubdivisions=<span class="source_int">2</span>
+<a name="102"></a>         LifetimeRange=(Min=<span class="source_int">0.500000</span>,<span class="source_type">Max</span>=<span class="source_int">0.500000</span>)
+<a name="103"></a>         StartVelocityRange=(<span class="source_type">X</span>=(Min=<span class="source_int">5.000000</span>,<span class="source_type">Max</span>=<span class="source_int">10.000000</span>),<span class="source_type">Y</span>=(Min=-<span class="source_int">100.000000</span>,<span class="source_type">Max</span>=<span class="source_int">100.000000</span>),<span class="source_type">Z</span>=(Min=-<span class="source_int">100.000000</span>,<span class="source_type">Max</span>=<span class="source_int">100.000000</span>))
+<a name="104"></a>         VelocityScale(<span class="source_int">0</span>)=(RelativeVelocity=(<span class="source_type">X</span>=<span class="source_int">1.000000</span>,<span class="source_type">Y</span>=<span class="source_int">1.000000</span>,<span class="source_type">Z</span>=<span class="source_int">1.000000</span>))
+<a name="105"></a>         VelocityScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">0.475000</span>,RelativeVelocity=(<span class="source_type">X</span>=<span class="source_int">0.100000</span>,<span class="source_type">Y</span>=<span class="source_int">0.200000</span>,<span class="source_type">Z</span>=<span class="source_int">0.200000</span>))
+<a name="106"></a>         VelocityScale(<span class="source_int">2</span>)=(RelativeTime=<span class="source_int">1.000000</span>)
+<a name="107"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="108"></a>     Emitters(<span class="source_int">2</span>)=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span><span class="source_name">'ROEffects.ROBulletHitMetalEffect.SpriteEmitter2'</span>
+<a name="109"></a>
+<a name="110"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../engine/sparkemitter.html" class="source">SparkEmitter</a></span> <span class="source_type">Name</span>=SparkEmitter3
+<a name="111"></a>         LineSegmentsRange=(Min=<span class="source_int">0.000000</span>,<span class="source_type">Max</span>=<span class="source_int">0.000000</span>)
+<a name="112"></a>         TimeBetweenSegmentsRange=(Min=<span class="source_int">0.100000</span>,<span class="source_type">Max</span>=<span class="source_int">0.100000</span>)
+<a name="113"></a>         FadeOut=True
+<a name="114"></a>         RespawnDeadParticles=False
+<a name="115"></a>         AutomaticInitialSpawning=False
+<a name="116"></a>         ColorScale(<span class="source_int">0</span>)=(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="117"></a>         ColorScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="118"></a>         FadeOutStartTime=<span class="source_int">0.250000</span>
+<a name="119"></a>         FadeInEndTime=<span class="source_int">0.250000</span>
+<a name="120"></a>         MaxParticles=<span class="source_int">2</span>
+<a name="121"></a>         StartLocationShape=PTLS_Sphere
+<a name="122"></a>         SphereRadiusRange=(<span class="source_type">Max</span>=<span class="source_int">1.000000</span>)
+<a name="123"></a>         UseRotationFrom=PTRS_Actor
+<a name="124"></a>         StartSizeRange=(<span class="source_type">X</span>=(Min=<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>),<span class="source_type">Y</span>=(Min=<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>),<span class="source_type">Z</span>=(Min=<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>))
+<a name="125"></a>         InitialParticlesPerSecond=<span class="source_int">5000.000000</span>
+<a name="126"></a>         <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Effects_Tex.BulletHits.sparkfinal2'</span>
+<a name="127"></a>         LifetimeRange=(Min=<span class="source_int">0.200000</span>,<span class="source_type">Max</span>=<span class="source_int">0.200000</span>)
+<a name="128"></a>         StartVelocityRange=(<span class="source_type">X</span>=(Min=<span class="source_int">100.000000</span>,<span class="source_type">Max</span>=<span class="source_int">250.000000</span>),<span class="source_type">Y</span>=(Min=-<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>),<span class="source_type">Z</span>=(Min=-<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>))
+<a name="129"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="130"></a>     Emitters(<span class="source_int">3</span>)=<span class="source_type"><a href="../engine/sparkemitter.html" class="source">SparkEmitter</a></span><span class="source_name">'ROEffects.ROBulletHitMetalEffect.SparkEmitter3'</span>
+<a name="131"></a>
+<a name="132"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span> <span class="source_type">Name</span>=SpriteEmitter4
+<a name="133"></a>         UseCollision=True
+<a name="134"></a>         FadeOut=True
+<a name="135"></a>         FadeIn=True
+<a name="136"></a>         RespawnDeadParticles=False
+<a name="137"></a>         UniformSize=True
+<a name="138"></a>         AutomaticInitialSpawning=False
+<a name="139"></a>         UseRandomSubdivision=True
+<a name="140"></a>         Acceleration=(<span class="source_type">Z</span>=-<span class="source_int">1300.000000</span>)
+<a name="141"></a>         ColorScale(<span class="source_int">0</span>)=(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="142"></a>         ColorScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="143"></a>         FadeOutStartTime=<span class="source_int">0.400000</span>
+<a name="144"></a>         MaxParticles=<span class="source_int">2</span>
+<a name="145"></a>         UseRotationFrom=PTRS_Actor
+<a name="146"></a>         StartSizeRange=(<span class="source_type">X</span>=(Min=<span class="source_int">0.250000</span>,<span class="source_type">Max</span>=<span class="source_int">0.500000</span>))
+<a name="147"></a>         InitialParticlesPerSecond=<span class="source_int">300.000000</span>
+<a name="148"></a>         DrawStyle=PTDS_Brighten
+<a name="149"></a>         <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Effects_Tex.Smoke.Sparks'</span>
+<a name="150"></a>         TextureUSubdivisions=<span class="source_int">2</span>
+<a name="151"></a>         TextureVSubdivisions=<span class="source_int">2</span>
+<a name="152"></a>         LifetimeRange=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">1.000000</span>)
+<a name="153"></a>         StartVelocityRange=(<span class="source_type">X</span>=(Min=<span class="source_int">150.000000</span>,<span class="source_type">Max</span>=<span class="source_int">250.000000</span>),<span class="source_type">Y</span>=(Min=-<span class="source_int">150.000000</span>,<span class="source_type">Max</span>=<span class="source_int">150.000000</span>),<span class="source_type">Z</span>=(Min=-<span class="source_int">150.000000</span>,<span class="source_type">Max</span>=<span class="source_int">150.000000</span>))
+<a name="154"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="155"></a>     Emitters(<span class="source_int">4</span>)=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span><span class="source_name">'ROEffects.ROBulletHitMetalEffect.SpriteEmitter4'</span>
+<a name="156"></a>
+<a name="157"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span> <span class="source_type">Name</span>=SpriteEmitter5
+<a name="158"></a>         RespawnDeadParticles=False
+<a name="159"></a>         UseSizeScale=True
+<a name="160"></a>         UseRegularSizeScale=False
+<a name="161"></a>         UniformSize=True
+<a name="162"></a>         AutomaticInitialSpawning=False
+<a name="163"></a>         ColorScale(<span class="source_int">0</span>)=(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="164"></a>         ColorScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="165"></a>         MaxParticles=<span class="source_int">1</span>
+<a name="166"></a>         SizeScale(<span class="source_int">0</span>)=(RelativeSize=<span class="source_int">0.100000</span>)
+<a name="167"></a>         SizeScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,RelativeSize=<span class="source_int">1.000000</span>)
+<a name="168"></a>         StartSizeRange=(<span class="source_type">X</span>=(Min=<span class="source_int">1.000000</span>,<span class="source_type">Max</span>=<span class="source_int">5.000000</span>))
+<a name="169"></a>         InitialParticlesPerSecond=<span class="source_int">500.000000</span>
+<a name="170"></a>         DrawStyle=PTDS_Brighten
+<a name="171"></a>         <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Effects_Tex.Weapons.muzzle_4frame3rd'</span>
+<a name="172"></a>         TextureUSubdivisions=<span class="source_int">2</span>
+<a name="173"></a>         TextureVSubdivisions=<span class="source_int">2</span>
+<a name="174"></a>         LifetimeRange=(Min=<span class="source_int">0.100000</span>,<span class="source_type">Max</span>=<span class="source_int">0.100000</span>)
+<a name="175"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="176"></a>     Emitters(<span class="source_int">5</span>)=<span class="source_type"><a href="../engine/spriteemitter.html" class="source">SpriteEmitter</a></span><span class="source_name">'ROEffects.ROBulletHitMetalEffect.SpriteEmitter5'</span>
+<a name="177"></a>
+<a name="178"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../engine/sparkemitter.html" class="source">SparkEmitter</a></span> <span class="source_type">Name</span>=SparkEmitter6
+<a name="179"></a>         LineSegmentsRange=(Min=<span class="source_int">0.000000</span>,<span class="source_type">Max</span>=<span class="source_int">0.000000</span>)
+<a name="180"></a>         TimeBetweenSegmentsRange=(Min=<span class="source_int">0.100000</span>,<span class="source_type">Max</span>=<span class="source_int">0.100000</span>)
+<a name="181"></a>         FadeOut=True
+<a name="182"></a>         RespawnDeadParticles=False
+<a name="183"></a>         AutomaticInitialSpawning=False
+<a name="184"></a>         ColorScale(<span class="source_int">0</span>)=(<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="185"></a>         ColorScale(<span class="source_int">1</span>)=(RelativeTime=<span class="source_int">1.000000</span>,<span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span>=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>))
+<a name="186"></a>         FadeOutStartTime=<span class="source_int">0.250000</span>
+<a name="187"></a>         FadeInEndTime=<span class="source_int">0.250000</span>
+<a name="188"></a>         MaxParticles=<span class="source_int">2</span>
+<a name="189"></a>         StartLocationShape=PTLS_Sphere
+<a name="190"></a>         SphereRadiusRange=(<span class="source_type">Max</span>=<span class="source_int">1.000000</span>)
+<a name="191"></a>         UseRotationFrom=PTRS_Actor
+<a name="192"></a>         StartSizeRange=(<span class="source_type">X</span>=(Min=<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>),<span class="source_type">Y</span>=(Min=<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>),<span class="source_type">Z</span>=(Min=<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>))
+<a name="193"></a>         InitialParticlesPerSecond=<span class="source_int">5000.000000</span>
+<a name="194"></a>         <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Effects_Tex.BulletHits.sparkfinal2'</span>
+<a name="195"></a>         LifetimeRange=(Min=<span class="source_int">0.200000</span>,<span class="source_type">Max</span>=<span class="source_int">0.200000</span>)
+<a name="196"></a>         StartVelocityRange=(<span class="source_type">X</span>=(Min=<span class="source_int">200.000000</span>,<span class="source_type">Max</span>=<span class="source_int">350.000000</span>),<span class="source_type">Y</span>=(Min=-<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>),<span class="source_type">Z</span>=(Min=-<span class="source_int">50.000000</span>,<span class="source_type">Max</span>=<span class="source_int">50.000000</span>))
+<a name="197"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="198"></a>     Emitters(<span class="source_int">6</span>)=<span class="source_type"><a href="../engine/sparkemitter.html" class="source">SparkEmitter</a></span><span class="source_name">'ROEffects.ROBulletHitMetalEffect.SparkEmitter6'</span>
+<a name="199"></a>
+<a name="200"></a>     AutoDestroy=True
+<a name="201"></a>     bNoDelete=False
+<a name="202"></a>}
+<a name="203"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../roeffects/roeffects-overview.html">Package</a></td>
+	<td class="header"><a href="../roeffects/robullethitmetaleffect.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ROBulletHitMetalEffect">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_roeffects/robullethitmetalarmoreffect_simple.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_roeffects/robullethitmetaleffect_simple.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:06.740 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

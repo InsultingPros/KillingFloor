@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFStoryGame.ACTION_OpenRandomTrader</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfstorygame/kfstorygame-overview.html">Package</a></td>
+	<td class="header"><a href="../kfstorygame/action_openrandomtrader.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ACTION_OpenRandomTrader">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfstorygame/action_givewaveendcash.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfstorygame/action_resetplayerperkselection.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfstorygame/action_openrandomtrader.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfstorygame/kfstorygame-overview.html">KFStoryGame</a>.<a href="../kfstorygame/action_openrandomtrader.html">ACTION_OpenRandomTrader</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfstorygame/action_openrandomtrader.html" class="source">ACTION_OpenRandomTrader</a></span> extends <span class="source_type"><a href="../gameplay/scriptedaction.html" class="source">ScriptedAction</a></span>;
+<a name="2"></a>
+<a name="3"></a>var ()  <span class="source_type">bool</span>                  bCloseOtherShops;
+<a name="4"></a>var ()  <span class="source_type">bool</span>                  bOpenDoor;
+<a name="5"></a>var ()  <span class="source_type">bool</span>                  bUseExistingShop;
+<a name="6"></a>var     <span class="source_type"><a href="../kfmod/shopvolume.html" class="source">ShopVolume</a></span>            CurrentShop;
+<a name="7"></a>
+<a name="8"></a>var array&lt;<span class="source_type"><a href="../kfmod/shopvolume.html" class="source">ShopVolume</a></span>&gt;         Shops;
+<a name="9"></a>
+<a name="10"></a>function CacheShops()
+<a name="11"></a>{
+<a name="12"></a>    local <span class="source_type"><a href="../kfmod/shopvolume.html" class="source">ShopVolume</a></span> Shop;
+<a name="13"></a>
+<a name="14"></a>    Shops.length = <span class="source_int">0</span> ;
+<a name="15"></a>    foreach AllObjects(<span class="source_type">class</span> <span class="source_name">'ShopVolume'</span>,  Shop)
+<a name="16"></a>    {
+<a name="17"></a>        Shops[Shops.length] = Shop ;
+<a name="18"></a>    }
+<a name="19"></a>}
+<a name="20"></a>
+<a name="21"></a>function <span class="source_type">bool</span> InitActionFor(<span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span> <span class="source_type">C</span>)
+<a name="22"></a>{
+<a name="23"></a>    CacheShops();
+<a name="24"></a>    CurrentShop = GetCurrentShop(<span class="source_type">C</span>);
+<a name="25"></a>
+<a name="26"></a>    if(!bUseExistingShop || CurrentShop == none)
+<a name="27"></a>    {
+<a name="28"></a>        FindNewShop(<span class="source_type">C</span>);
+<a name="29"></a>    }
+<a name="30"></a>
+<a name="31"></a>    HandleShops();
+<a name="32"></a>
+<a name="33"></a>    return true;
+<a name="34"></a>}
+<a name="35"></a>
+<a name="36"></a>function FindNewShop(<span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span> <span class="source_type">C</span>)
+<a name="37"></a>{
+<a name="38"></a>    local <span class="source_type"><a href="../kfmod/shopvolume.html" class="source">ShopVolume</a></span> NewShop;
+<a name="39"></a>    local <span class="source_type"><a href="../kfmod/kfgamereplicationinfo.html" class="source">KFGameReplicationInfo</a></span> KFGRI;
+<a name="40"></a>
+<a name="41"></a>    NewShop = Shops[Rand(Shops.length)] ;
+<a name="42"></a>    KFGRI = <span class="source_type"><a href="../kfmod/kfgamereplicationinfo.html" class="source">KFGameReplicationInfo</a></span>(<span class="source_type">C</span>.<span class="source_type">Level</span>.game.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>) ;
+<a name="43"></a>    if(KFGRI != none)
+<a name="44"></a>    {
+<a name="45"></a>        KFGRI.CurrentShop = NewShop;
+<a name="46"></a>    }
+<a name="47"></a>    CurrentShop = KFGRi.CurrentShop ;
+<a name="48"></a>    HandleShops();
+<a name="49"></a>}
+<a name="50"></a>
+<a name="51"></a>function HandleShops()
+<a name="52"></a>{
+<a name="53"></a>    if(CurrentShop != none)
+<a name="54"></a>    {
+<a name="55"></a>        if(bOpenDoor && !CurrentShop.bCurrentlyOpen)
+<a name="56"></a>        {
+<a name="57"></a>            OpenSelectedShop();
+<a name="58"></a>        }
+<a name="59"></a>
+<a name="60"></a>        CloseOtherShops();
+<a name="61"></a>    }
+<a name="62"></a>}
+<a name="63"></a>
+<a name="64"></a>function CloseOtherShops()
+<a name="65"></a>{
+<a name="66"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="67"></a>
+<a name="68"></a>    if(bCloseOtherShops)
+<a name="69"></a>    {
+<a name="70"></a>        for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; Shops.length ; <span class="source_type">i</span> ++)
+<a name="71"></a>        {
+<a name="72"></a>            if(Shops[<span class="source_type">i</span>].bCurrentlyOpen)
+<a name="73"></a>            {
+<a name="74"></a>                Shops[<span class="source_type">i</span>].BootPlayers();
+<a name="75"></a>                Shops[<span class="source_type">i</span>].CloseShop();
+<a name="76"></a>            }
+<a name="77"></a>        }
+<a name="78"></a>    }
+<a name="79"></a>}
+<a name="80"></a>
+<a name="81"></a>function <span class="source_type"><a href="../kfmod/shopvolume.html" class="source">ShopVolume</a></span> GetCurrentShop(<span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span> <span class="source_type">C</span>)
+<a name="82"></a>{
+<a name="83"></a>    local <span class="source_type"><a href="../kfmod/kfgamereplicationinfo.html" class="source">KFGameReplicationInfo</a></span> KFGRI;
+<a name="84"></a>
+<a name="85"></a>    KFGRI = <span class="source_type"><a href="../kfmod/kfgamereplicationinfo.html" class="source">KFGameReplicationInfo</a></span>(<span class="source_type">C</span>.<span class="source_type">Level</span>.game.<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span>) ;
+<a name="86"></a>    if(KFGRI != none)
+<a name="87"></a>    {
+<a name="88"></a>        return KFGRi.CurrentShop ;
+<a name="89"></a>    }
+<a name="90"></a>}
+<a name="91"></a>
+<a name="92"></a>function OpenSelectedShop()
+<a name="93"></a>{
+<a name="94"></a>    CurrentShop.InitTeleports();
+<a name="95"></a>    CurrentShop.OpenShop();
+<a name="96"></a>}
+<a name="97"></a>
+<a name="98"></a>function <span class="source_type">string</span> GetActionString()
+<a name="99"></a>{
+<a name="100"></a>	return ActionString;
+<a name="101"></a>}
+<a name="102"></a>
+<a name="103"></a>defaultproperties
+<a name="104"></a>{
+<a name="105"></a>     bCloseOtherShops=True
+<a name="106"></a>     ActionString=<span class="source_string">"Open Random Trader Shop"</span>
+<a name="107"></a>}
+<a name="108"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfstorygame/kfstorygame-overview.html">Package</a></td>
+	<td class="header"><a href="../kfstorygame/action_openrandomtrader.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ACTION_OpenRandomTrader">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfstorygame/action_givewaveendcash.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfstorygame/action_resetplayerperkselection.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:18:59.821 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

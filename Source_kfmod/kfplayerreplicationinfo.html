@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.KFPlayerReplicationInfo</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfplayerreplicationinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFPlayerReplicationInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfplayerinput.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfprojectileweapondamagetype.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/kfplayerreplicationinfo.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/kfplayerreplicationinfo.html">KFPlayerReplicationInfo</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// Custom KF Player Rep info. Now including experience levels.
+</span><a name="2"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/kfplayerreplicationinfo.html" class="source">KFPlayerReplicationInfo</a></span> extends <span class="source_type"><a href="../xgame/xplayerreplicationinfo.html" class="source">xPlayerReplicationInfo</a></span>;
+<a name="3"></a>
+<a name="4"></a><span class="source_comment">//var float CurrentExperience, ExperienceLevel, ExpThreshold,
+</span><a name="5"></a>var <span class="source_type">float</span> MGAmmo; <span class="source_comment">//, CurrentWeight;
+</span><a name="6"></a>var <span class="source_type">bool</span> bBuyingStuff, bStartingEquipmentChosen;
+<a name="7"></a>var <span class="source_type">int</span> ThreeSecondScore; <span class="source_comment">// Total of the points accrued in the last 3 seconds.  Cleared every 3 seconds.
+</span><a name="8"></a>var <span class="source_type">int</span> PlayerHealth; <span class="source_comment">// How much heal the player has. Used by the KFscoreboard.
+</span><a name="9"></a>var <span class="source_type">bool</span> bViewingMatineeCinematic;
+<a name="10"></a>var <span class="source_type">string</span> SubTitle[<span class="source_int">5</span>];
+<a name="11"></a>var <span class="source_type">bool</span> bWideScreenOverlay;
+<a name="12"></a>
+<a name="13"></a>var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfveterancytypes.html" class="source">KFVeterancyTypes</a></span>&gt; ClientVeteranSkill;
+<a name="14"></a>var	<span class="source_type">int</span>						ClientVeteranSkillLevel;
+<a name="15"></a>
+<a name="16"></a>var <span class="source_type">int</span> CashThrowAmount; <span class="source_comment">// Amount of cash a player throws per keypress.   Set in the player settings menu
+</span><a name="17"></a>
+<a name="18"></a>var <span class="source_type"><a href="../kfmod/fakeplayerpawn.html" class="source">FakePlayerPawn</a></span> BlamePawn;
+<a name="19"></a>
+<a name="20"></a>var <span class="source_type">int</span> KillAssists;
+<a name="21"></a>
+<a name="22"></a>replication
+<a name="23"></a>{
+<a name="24"></a>	<span class="source_comment">// Things the server should send to the client.
+</span><a name="25"></a>	reliable if ( bNetDirty && (Role == Role_Authority) )
+<a name="26"></a>		bWideScreenOverlay,SubTitle,PlayerHealth,bBuyingStuff,bStartingEquipmentChosen,
+<a name="27"></a>		ThreeSecondScore,bViewingMatineeCinematic,ClientVeteranSkill,ClientVeteranSkillLevel,
+<a name="28"></a>		KillAssists;
+<a name="29"></a>}
+<a name="30"></a>
+<a name="31"></a><span class="source_comment">/*
+<a name="32"></a>// KFTODO: Removed this hack for now, since it was making VOIP not work. Not sure what it did
+<a name="33"></a>// in the first place - Ramm
+<a name="34"></a>simulated function PostNetBeginPlay()
+<a name="35"></a>{
+<a name="36"></a>	local VoiceChatReplicationInfo VRI;
+<a name="37"></a>
+<a name="38"></a>	VoiceType = class&lt;VoicePack&gt;(DynamicLoadObject(VoiceTypeName,class'Class'));
+<a name="39"></a>
+<a name="40"></a>	if ( Level.GRI != None )
+<a name="41"></a>		Level.GRI.AddPRI(self);
+<a name="42"></a>	foreach DynamicActors(class'VoiceChatReplicationInfo', VRI)
+<a name="43"></a>	{
+<a name="44"></a>		VoiceInfo = VRI;
+<a name="45"></a>		break;
+<a name="46"></a>	}
+<a name="47"></a>}*/</span>
+<a name="48"></a>
+<a name="49"></a>simulated function SetGRI(<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span> GRI)
+<a name="50"></a>{
+<a name="51"></a>	GRI.AddPRI(self);
+<a name="52"></a>}
+<a name="53"></a>function Timer()
+<a name="54"></a>{
+<a name="55"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="56"></a>
+<a name="57"></a>	SetTimer(<span class="source_int">0.5</span> + FRand(), False);
+<a name="58"></a>	UpdatePlayerLocation();
+<a name="59"></a>	<span class="source_type">C</span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>(<span class="source_type">Owner</span>);
+<a name="60"></a>	if( <span class="source_type">C</span>==None )
+<a name="61"></a>		Return;
+<a name="62"></a>	if( <span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>==None )
+<a name="63"></a>		PlayerHealth = <span class="source_int">0</span>;
+<a name="64"></a>	else PlayerHealth = <span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Health;
+<a name="65"></a>
+<a name="66"></a>	if( !bBot )
+<a name="67"></a>	{
+<a name="68"></a>		if ( !bReceivedPing )
+<a name="69"></a>			Ping = Min(<span class="source_type">int</span>(<span class="source_int">0.25</span> * <span class="source_type">float</span>(<span class="source_type">C</span>.ConsoleCommand(<span class="source_string">"GETPING"</span>))),<span class="source_int">255</span>);
+<a name="70"></a>	}
+<a name="71"></a>}
+<a name="72"></a>function Reset()
+<a name="73"></a>{
+<a name="74"></a>	if( <span class="source_type"><a href="../kfmod/kfgametype.html" class="source">KFGameType</a></span>(<span class="source_type">Level</span>.Game)!=None )
+<a name="75"></a>	{
+<a name="76"></a>		<span class="source_type">Score</span> = <span class="source_type"><a href="../kfmod/kfgametype.html" class="source">KFGameType</a></span>(<span class="source_type">Level</span>.Game).StartingCash;
+<a name="77"></a>		Deaths = <span class="source_int">0</span>;
+<a name="78"></a>		HasFlag = None;
+<a name="79"></a>		bReadyToPlay = false;
+<a name="80"></a>		NumLives = <span class="source_int">1</span>;
+<a name="81"></a>		bOutOfLives = True;
+<a name="82"></a>	}
+<a name="83"></a>	else Super.Reset();
+<a name="84"></a>}
+<a name="85"></a>simulated function Destroyed()
+<a name="86"></a>{
+<a name="87"></a>	if( BlamePawn!=None )
+<a name="88"></a>		BlamePawn.Destroy();
+<a name="89"></a>	Super.Destroyed();
+<a name="90"></a>}
+<a name="91"></a>function <span class="source_type"><a href="../kfmod/fakeplayerpawn.html" class="source">FakePlayerPawn</a></span> GetBlamePawn()
+<a name="92"></a>{
+<a name="93"></a>	if( BlamePawn!=None )
+<a name="94"></a>		Return BlamePawn;
+<a name="95"></a>	BlamePawn = Spawn(<span class="source_type">Class</span><span class="source_name">'FakePlayerPawn'</span>,,,vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>));
+<a name="96"></a>	if( BlamePawn==None )
+<a name="97"></a>		Return None;
+<a name="98"></a>	BlamePawn.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> = Self;
+<a name="99"></a>	BlamePawn.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>(<span class="source_type">Owner</span>);
+<a name="100"></a>}
+<a name="101"></a>
+<a name="102"></a>function ReceiveRewardForHealing( <span class="source_type">int</span> <span class="source_type">MedicReward</span>, <span class="source_type"><a href="../kfmod/kfpawn.html" class="source">KFPawn</a></span> <span class="source_type">Healee</span> )
+<a name="103"></a>{
+<a name="104"></a>    <span class="source_comment">// only give reward if healee is not Ringmaster
+</span><a name="105"></a>    if( !<span class="source_type">Healee</span>.IsA(<span class="source_name">'KF_RingMasterNPC'</span>) )
+<a name="106"></a>    {
+<a name="107"></a>        <span class="source_type">Score</span> += <span class="source_type">MedicReward</span>;
+<a name="108"></a>    	ThreeSecondScore += <span class="source_type">MedicReward</span>;
+<a name="109"></a>    	<span class="source_type">Team</span>.<span class="source_type">Score</span> += <span class="source_type">MedicReward</span>;
+<a name="110"></a>    }
+<a name="111"></a>}
+<a name="112"></a>
+<a name="113"></a>defaultproperties
+<a name="114"></a>{
+<a name="115"></a>     PlayerHealth=<span class="source_int">100</span>
+<a name="116"></a>     <span class="source_type">PlayerName</span>=<span class="source_string">"Fresh Meat"</span>
+<a name="117"></a>     VoiceTypeName=<span class="source_string">"KFCoreVoicePack.AussieVoice"</span>
+<a name="118"></a>}
+<a name="119"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/kfplayerreplicationinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFPlayerReplicationInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/kfplayerinput.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/kfprojectileweapondamagetype.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:03.955 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

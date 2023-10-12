@@ -1,0 +1,2273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.Weapon</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/weapon.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Weapon">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/warpzonemarker.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/weaponattachment.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/weapon.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/weapon.html">Weapon</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022<br />01023<br />01024<br />01025<br />01026<br />01027<br />01028<br />01029<br />01030<br />01031<br />01032<br />01033<br />01034<br />01035<br />01036<br />01037<br />01038<br />01039<br />01040<br />
+01041<br />01042<br />01043<br />01044<br />01045<br />01046<br />01047<br />01048<br />01049<br />01050<br />01051<br />01052<br />01053<br />01054<br />01055<br />01056<br />01057<br />01058<br />01059<br />01060<br />
+01061<br />01062<br />01063<br />01064<br />01065<br />01066<br />01067<br />01068<br />01069<br />01070<br />01071<br />01072<br />01073<br />01074<br />01075<br />01076<br />01077<br />01078<br />01079<br />01080<br />
+01081<br />01082<br />01083<br />01084<br />01085<br />01086<br />01087<br />01088<br />01089<br />01090<br />01091<br />01092<br />01093<br />01094<br />01095<br />01096<br />01097<br />01098<br />01099<br />01100<br />
+01101<br />01102<br />01103<br />01104<br />01105<br />01106<br />01107<br />01108<br />01109<br />01110<br />01111<br />01112<br />01113<br />01114<br />01115<br />01116<br />01117<br />01118<br />01119<br />01120<br />
+01121<br />01122<br />01123<br />01124<br />01125<br />01126<br />01127<br />01128<br />01129<br />01130<br />01131<br />01132<br />01133<br />01134<br />01135<br />01136<br />01137<br />01138<br />01139<br />01140<br />
+01141<br />01142<br />01143<br />01144<br />01145<br />01146<br />01147<br />01148<br />01149<br />01150<br />01151<br />01152<br />01153<br />01154<br />01155<br />01156<br />01157<br />01158<br />01159<br />01160<br />
+01161<br />01162<br />01163<br />01164<br />01165<br />01166<br />01167<br />01168<br />01169<br />01170<br />01171<br />01172<br />01173<br />01174<br />01175<br />01176<br />01177<br />01178<br />01179<br />01180<br />
+01181<br />01182<br />01183<br />01184<br />01185<br />01186<br />01187<br />01188<br />01189<br />01190<br />01191<br />01192<br />01193<br />01194<br />01195<br />01196<br />01197<br />01198<br />01199<br />01200<br />
+01201<br />01202<br />01203<br />01204<br />01205<br />01206<br />01207<br />01208<br />01209<br />01210<br />01211<br />01212<br />01213<br />01214<br />01215<br />01216<br />01217<br />01218<br />01219<br />01220<br />
+01221<br />01222<br />01223<br />01224<br />01225<br />01226<br />01227<br />01228<br />01229<br />01230<br />01231<br />01232<br />01233<br />01234<br />01235<br />01236<br />01237<br />01238<br />01239<br />01240<br />
+01241<br />01242<br />01243<br />01244<br />01245<br />01246<br />01247<br />01248<br />01249<br />01250<br />01251<br />01252<br />01253<br />01254<br />01255<br />01256<br />01257<br />01258<br />01259<br />01260<br />
+01261<br />01262<br />01263<br />01264<br />01265<br />01266<br />01267<br />01268<br />01269<br />01270<br />01271<br />01272<br />01273<br />01274<br />01275<br />01276<br />01277<br />01278<br />01279<br />01280<br />
+01281<br />01282<br />01283<br />01284<br />01285<br />01286<br />01287<br />01288<br />01289<br />01290<br />01291<br />01292<br />01293<br />01294<br />01295<br />01296<br />01297<br />01298<br />01299<br />01300<br />
+01301<br />01302<br />01303<br />01304<br />01305<br />01306<br />01307<br />01308<br />01309<br />01310<br />01311<br />01312<br />01313<br />01314<br />01315<br />01316<br />01317<br />01318<br />01319<br />01320<br />
+01321<br />01322<br />01323<br />01324<br />01325<br />01326<br />01327<br />01328<br />01329<br />01330<br />01331<br />01332<br />01333<br />01334<br />01335<br />01336<br />01337<br />01338<br />01339<br />01340<br />
+01341<br />01342<br />01343<br />01344<br />01345<br />01346<br />01347<br />01348<br />01349<br />01350<br />01351<br />01352<br />01353<br />01354<br />01355<br />01356<br />01357<br />01358<br />01359<br />01360<br />
+01361<br />01362<br />01363<br />01364<br />01365<br />01366<br />01367<br />01368<br />01369<br />01370<br />01371<br />01372<br />01373<br />01374<br />01375<br />01376<br />01377<br />01378<br />01379<br />01380<br />
+01381<br />01382<br />01383<br />01384<br />01385<br />01386<br />01387<br />01388<br />01389<br />01390<br />01391<br />01392<br />01393<br />01394<br />01395<br />01396<br />01397<br />01398<br />01399<br />01400<br />
+01401<br />01402<br />01403<br />01404<br />01405<br />01406<br />01407<br />01408<br />01409<br />01410<br />01411<br />01412<br />01413<br />01414<br />01415<br />01416<br />01417<br />01418<br />01419<br />01420<br />
+01421<br />01422<br />01423<br />01424<br />01425<br />01426<br />01427<br />01428<br />01429<br />01430<br />01431<br />01432<br />01433<br />01434<br />01435<br />01436<br />01437<br />01438<br />01439<br />01440<br />
+01441<br />01442<br />01443<br />01444<br />01445<br />01446<br />01447<br />01448<br />01449<br />01450<br />01451<br />01452<br />01453<br />01454<br />01455<br />01456<br />01457<br />01458<br />01459<br />01460<br />
+01461<br />01462<br />01463<br />01464<br />01465<br />01466<br />01467<br />01468<br />01469<br />01470<br />01471<br />01472<br />01473<br />01474<br />01475<br />01476<br />01477<br />01478<br />01479<br />01480<br />
+01481<br />01482<br />01483<br />01484<br />01485<br />01486<br />01487<br />01488<br />01489<br />01490<br />01491<br />01492<br />01493<br />01494<br />01495<br />01496<br />01497<br />01498<br />01499<br />01500<br />
+01501<br />01502<br />01503<br />01504<br />01505<br />01506<br />01507<br />01508<br />01509<br />01510<br />01511<br />01512<br />01513<br />01514<br />01515<br />01516<br />01517<br />01518<br />01519<br />01520<br />
+01521<br />01522<br />01523<br />01524<br />01525<br />01526<br />01527<br />01528<br />01529<br />01530<br />01531<br />01532<br />01533<br />01534<br />01535<br />01536<br />01537<br />01538<br />01539<br />01540<br />
+01541<br />01542<br />01543<br />01544<br />01545<br />01546<br />01547<br />01548<br />01549<br />01550<br />01551<br />01552<br />01553<br />01554<br />01555<br />01556<br />01557<br />01558<br />01559<br />01560<br />
+01561<br />01562<br />01563<br />01564<br />01565<br />01566<br />01567<br />01568<br />01569<br />01570<br />01571<br />01572<br />01573<br />01574<br />01575<br />01576<br />01577<br />01578<br />01579<br />01580<br />
+01581<br />01582<br />01583<br />01584<br />01585<br />01586<br />01587<br />01588<br />01589<br />01590<br />01591<br />01592<br />01593<br />01594<br />01595<br />01596<br />01597<br />01598<br />01599<br />01600<br />
+01601<br />01602<br />01603<br />01604<br />01605<br />01606<br />01607<br />01608<br />01609<br />01610<br />01611<br />01612<br />01613<br />01614<br />01615<br />01616<br />01617<br />01618<br />01619<br />01620<br />
+01621<br />01622<br />01623<br />01624<br />01625<br />01626<br />01627<br />01628<br />01629<br />01630<br />01631<br />01632<br />01633<br />01634<br />01635<br />01636<br />01637<br />01638<br />01639<br />01640<br />
+01641<br />01642<br />01643<br />01644<br />01645<br />01646<br />01647<br />01648<br />01649<br />01650<br />01651<br />01652<br />01653<br />01654<br />01655<br />01656<br />01657<br />01658<br />01659<br />01660<br />
+01661<br />01662<br />01663<br />01664<br />01665<br />01666<br />01667<br />01668<br />01669<br />01670<br />01671<br />01672<br />01673<br />01674<br />01675<br />01676<br />01677<br />01678<br />01679<br />01680<br />
+01681<br />01682<br />01683<br />01684<br />01685<br />01686<br />01687<br />01688<br />01689<br />01690<br />01691<br />01692<br />01693<br />01694<br />01695<br />01696<br />01697<br />01698<br />01699<br />01700<br />
+01701<br />01702<br />01703<br />01704<br />01705<br />01706<br />01707<br />01708<br />01709<br />01710<br />01711<br />01712<br />01713<br />01714<br />01715<br />01716<br />01717<br />01718<br />01719<br />01720<br />
+01721<br />01722<br />01723<br />01724<br />01725<br />01726<br />01727<br />01728<br />01729<br />01730<br />01731<br />01732<br />01733<br />01734<br />01735<br />01736<br />01737<br />01738<br />01739<br />01740<br />
+01741<br />01742<br />01743<br />01744<br />01745<br />01746<br />01747<br />01748<br />01749<br />01750<br />01751<br />01752<br />01753<br />01754<br />01755<br />01756<br />01757<br />01758<br />01759<br />01760<br />
+01761<br />01762<br />01763<br />01764<br />01765<br />01766<br />01767<br />01768<br />01769<br />01770<br />01771<br />01772<br />01773<br />01774<br />01775<br />01776<br />01777<br />01778<br />01779<br />01780<br />
+01781<br />01782<br />01783<br />01784<br />01785<br />01786<br />01787<br />01788<br />01789<br />01790<br />01791<br />01792<br />01793<br />01794<br />01795<br />01796<br />01797<br />01798<br />01799<br />01800<br />
+01801<br />01802<br />01803<br />01804<br />01805<br />01806<br />01807<br />01808<br />01809<br />01810<br />01811<br />01812<br />01813<br />01814<br />01815<br />01816<br />01817<br />01818<br />01819<br />01820<br />
+01821<br />01822<br />01823<br />01824<br />01825<br />01826<br />01827<br />01828<br />01829<br />01830<br />01831<br />01832<br />01833<br />01834<br />01835<br />01836<br />01837<br />01838<br />01839<br />01840<br />
+01841<br />01842<br />01843<br />01844<br />01845<br />01846<br />01847<br />01848<br />01849<br />01850<br />01851<br />01852<br />01853<br />01854<br />01855<br />01856<br />01857<br />01858<br />01859<br />01860<br />
+01861<br />01862<br />01863<br />01864<br />01865<br />01866<br />01867<br />01868<br />01869<br />01870<br />01871<br />01872<br />01873<br />01874<br />01875<br />01876<br />01877<br />01878<br />01879<br />01880<br />
+01881<br />01882<br />01883<br />01884<br />01885<br />01886<br />01887<br />01888<br />01889<br />01890<br />01891<br />01892<br />01893<br />01894<br />01895<br />01896<br />01897<br />01898<br />01899<br />01900<br />
+01901<br />01902<br />01903<br />01904<br />01905<br />01906<br />01907<br />01908<br />01909<br />01910<br />01911<br />01912<br />01913<br />01914<br />01915<br />01916<br />01917<br />01918<br />01919<br />01920<br />
+01921<br />01922<br />01923<br />01924<br />01925<br />01926<br />01927<br />01928<br />01929<br />01930<br />01931<br />01932<br />01933<br />01934<br />01935<br />01936<br />01937<br />01938<br />01939<br />01940<br />
+01941<br />01942<br />01943<br />01944<br />01945<br />01946<br />01947<br />01948<br />01949<br />01950<br />01951<br />01952<br />01953<br />01954<br />01955<br />01956<br />01957<br />01958<br />01959<br />01960<br />
+01961<br />01962<br />01963<br />01964<br />01965<br />01966<br />01967<br />01968<br />01969<br />01970<br />01971<br />01972<br />01973<br />01974<br />01975<br />01976<br />01977<br />01978<br />01979<br />01980<br />
+01981<br />01982<br />01983<br />01984<br />01985<br />01986<br />01987<br />01988<br />01989<br />01990<br />01991<br />01992<br />01993<br />01994<br />01995<br />01996<br />01997<br />01998<br />01999<br />02000<br />
+02001<br />02002<br />02003<br />02004<br />02005<br />02006<br />02007<br />02008<br />02009<br />02010<br />02011<br />02012<br />02013<br />02014<br />02015<br />02016<br />02017<br />02018<br />02019<br />02020<br />
+02021<br />02022<br />02023<br />02024<br />02025<br />02026<br />02027<br />02028<br />02029<br />02030<br />02031<br />02032<br />02033<br />02034<br />02035<br />02036<br />02037<br />02038<br />02039<br />02040<br />
+02041<br />02042<br />02043<br />02044<br />02045<br />02046<br />02047<br />02048<br />02049<br />02050<br />02051<br />02052<br />02053<br />02054<br />02055<br />02056<br />02057<br />02058<br />02059<br />02060<br />
+02061<br />02062<br />02063<br />02064<br />02065<br />02066<br />02067<br />02068<br />02069<br />02070<br />02071<br />02072<br />02073<br />02074<br />02075<br />02076<br />02077<br />02078<br />02079<br />02080<br />
+02081<br />02082<br />02083<br />02084<br />02085<br />02086<br />02087<br />02088<br />02089<br />02090<br />02091<br />02092<br />02093<br />02094<br />02095<br />02096<br />02097<br />02098<br />02099<br />02100<br />
+02101<br />02102<br />02103<br />02104<br />02105<br />02106<br />02107<br />02108<br />02109<br />02110</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> extends <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>
+<a name="2"></a>    abstract
+<a name="3"></a>    native
+<a name="4"></a>    nativereplication
+<a name="5"></a>    HideDropDown
+<a name="6"></a>	CacheExempt;
+<a name="7"></a>
+<a name="8"></a><span class="source_macro">#exec Texture Import File=Textures\Weapon.tga Name=S_Weapon Mips=Off Alpha=1
+</span><a name="9"></a>
+<a name="10"></a>replication
+<a name="11"></a>{
+<a name="12"></a>    <span class="source_comment">// Things the server should send to the client.
+</span><a name="13"></a>    reliable if( Role==ROLE_Authority )
+<a name="14"></a>        <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>, AmmoCharge;
+<a name="15"></a>
+<a name="16"></a><span class="source_comment">//if _RO_
+</span><a name="17"></a>    <span class="source_comment">// Things the server should send to the client.
+</span><a name="18"></a>    reliable if( bNetDirty && Role==ROLE_Authority )
+<a name="19"></a>        bBayonetMounted, bUsingSights;
+<a name="20"></a><span class="source_comment">// end _RO_
+</span><a name="21"></a>
+<a name="22"></a>    <span class="source_comment">// Functions called by server on client
+</span><a name="23"></a>    reliable if( Role==ROLE_Authority )
+<a name="24"></a>        ClientWeaponSet, ClientWeaponThrown, ClientForceAmmoUpdate, ClientWriteStats, ClientWriteFire;
+<a name="25"></a>
+<a name="26"></a>    <span class="source_comment">// functions called by client on server
+</span><a name="27"></a>    reliable if( Role&lt;ROLE_Authority )
+<a name="28"></a>        ServerStartFire, ServerStopFire;
+<a name="29"></a>}
+<a name="30"></a>
+<a name="31"></a>const NUM_FIRE_MODES = <span class="source_int">2</span>;
+<a name="32"></a>
+<a name="33"></a>var() <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/weaponfire.html" class="source">WeaponFire</a></span>&gt; FireModeClass[NUM_FIRE_MODES];
+<a name="34"></a>var() protected <span class="source_type"><a href="../engine/weaponfire.html" class="source">WeaponFire</a></span> FireMode[NUM_FIRE_MODES];
+<a name="35"></a>var() protected <span class="source_type"><a href="../engine/ammunition.html" class="source">Ammunition</a></span> <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[NUM_FIRE_MODES];
+<a name="36"></a>
+<a name="37"></a><span class="source_comment">// animation //
+</span><a name="38"></a>var() <span class="source_type">Name</span> IdleAnim;
+<a name="39"></a>var() <span class="source_type">Name</span> RestAnim;
+<a name="40"></a>var() <span class="source_type">Name</span> AimAnim;
+<a name="41"></a>var() <span class="source_type">Name</span> RunAnim;
+<a name="42"></a>var() <span class="source_type">Name</span> SelectAnim;
+<a name="43"></a>var() <span class="source_type">Name</span> PutDownAnim;
+<a name="44"></a>
+<a name="45"></a>var() <span class="source_type">float</span> IdleAnimRate;
+<a name="46"></a>var() <span class="source_type">float</span> RestAnimRate;
+<a name="47"></a>var() <span class="source_type">float</span> AimAnimRate;
+<a name="48"></a>var() <span class="source_type">float</span> RunAnimRate;
+<a name="49"></a>var() <span class="source_type">float</span> SelectAnimRate;
+<a name="50"></a>var() <span class="source_type">float</span> PutDownAnimRate;
+<a name="51"></a>var <span class="source_type">float</span> PutDownTime;
+<a name="52"></a>var <span class="source_type">float</span> BringUpTime;
+<a name="53"></a>
+<a name="54"></a>var() <span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span> SelectSound;
+<a name="55"></a>var() <span class="source_type">String</span> SelectForce;  <span class="source_comment">// jdf
+</span><a name="56"></a>
+<a name="57"></a><span class="source_comment">// AI //
+</span><a name="58"></a>var()	<span class="source_type">int</span>		BotMode; <span class="source_comment">// the fire Mode currently being used for bots
+</span><a name="59"></a>var()	<span class="source_type">float</span>	AIRating;
+<a name="60"></a>var		<span class="source_type">float</span>	CurrentRating;	<span class="source_comment">// rating result from most recent RateSelf()
+</span><a name="61"></a>var()	<span class="source_type">bool</span>	bMeleeWeapon;
+<a name="62"></a>var()	<span class="source_type">bool</span>	bSniping;
+<a name="63"></a>
+<a name="64"></a><span class="source_comment">// other useful stuff //
+</span><a name="65"></a>var	  <span class="source_type">bool</span> bShowChargingBar;
+<a name="66"></a>var	  <span class="source_type">bool</span> bMatchWeapons;	<span class="source_comment">// OBSOLETE - see WeaponAttachment
+</span><a name="67"></a>var() <span class="source_type">bool</span> bCanThrow;
+<a name="68"></a>var() <span class="source_type">bool</span> bForceSwitch; <span class="source_comment">// if true, this weapon will prevent any other weapon from delaying the switch to it (bomb launcher)
+</span><a name="69"></a>var() deprecated <span class="source_type">bool</span> bNotInPriorityList; <span class="source_comment">// Should be displayed in a GUI weapon list	-	refer to 'Description' documentation
+</span><a name="70"></a>var	  <span class="source_type">bool</span> bNotInDemo;
+<a name="71"></a>var	  <span class="source_type">bool</span> bNoVoluntarySwitch;
+<a name="72"></a>var	  <span class="source_type">bool</span> bSpectated;
+<a name="73"></a>var	  <span class="source_type">bool</span> bDebugging;
+<a name="74"></a>var	  <span class="source_type">bool</span> bNoInstagibReplace;
+<a name="75"></a>var	  <span class="source_type">bool</span> bInitOldMesh;
+<a name="76"></a>var config <span class="source_type">bool</span> bUseOldWeaponMesh;
+<a name="77"></a>var   <span class="source_type">bool</span>	bEndOfRound;	<span class="source_comment">// don't allow firing
+</span><a name="78"></a>var <span class="source_type">bool</span> bNoAmmoInstances;	<span class="source_comment">// if true, replicated ammocount using the Weapons AmmoCharge property - true by default, included to allow mod authors to fallback to old style
+</span><a name="79"></a>var <span class="source_type">bool</span> bBerserk;
+<a name="80"></a>
+<a name="81"></a><span class="source_comment">// properties needed if no instantiated ammunition
+</span><a name="82"></a>var <span class="source_type">int</span> AmmoCharge[<span class="source_int">2</span>];
+<a name="83"></a>var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/ammunition.html" class="source">Ammunition</a></span>&gt; AmmoClass[<span class="source_int">2</span>];
+<a name="84"></a>
+<a name="85"></a>var <span class="source_type">Mesh</span> OldMesh;
+<a name="86"></a>var <span class="source_type">string</span> OldPickup;
+<a name="87"></a>var(OldFirstPerson) <span class="source_type">float</span> OldDrawScale, OldCenteredOffsetY;
+<a name="88"></a>var(OldFirstPerson) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> OldPlayerViewOffset, OldSmallViewOffset;
+<a name="89"></a>var(OldFirstPerson) <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> OldPlayerViewPivot;
+<a name="90"></a>var(OldFirstPerson) <span class="source_type">int</span>	OldCenteredRoll, OldCenteredYaw;
+<a name="91"></a>
+<a name="92"></a><span class="source_comment">/*
+<a name="93"></a>	A note about weapons & the caching system:
+<a name="94"></a>	You must now perform two commands on your mod's final package file:
+<a name="95"></a>
+<a name="96"></a>	'ucc dumpint &lt;PackageFileName.u&gt;' - this exports the localized text to a localization file, which is used by the caching system to load the ItemName and Description
+<a name="97"></a>	'ucc exportcache &lt;PackageName.u&gt;' - this exports the information that will be used to load the weapon into the caching system.  Type 'ucc help exportcache' at the command-line for more info.
+<a name="98"></a>
+<a name="99"></a>	Ex: (ACoolWeaponMod.u)
+<a name="100"></a>
+<a name="101"></a>	ucc dumpint ACoolWeaponMod.u
+<a name="102"></a>	- creates 'ACoolWeaponMod.int' file, (file extension will vary if a different language is specified in the UT2004.ini file)
+<a name="103"></a>
+<a name="104"></a>	ucc exportcache ACoolWeaponMod.u
+<a name="105"></a>	- creates an entry in the 'CacheRecords.ucl' file, containing caching information for your package
+<a name="106"></a>
+<a name="107"></a>	Weapons must have values for both ItemName & Description in order to appear in the game.  The caching system will not recognize inherited values for these properties.
+<a name="108"></a>	If creating a custom crosshair for your weapon, it will FIXME
+<a name="109"></a>	-- rjp
+<a name="110"></a>*/</span>
+<a name="111"></a>var() localized cache <span class="source_type">string</span> Description;
+<a name="112"></a>
+<a name="113"></a>var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>&gt; DemoReplacement;
+<a name="114"></a>var transient <span class="source_type">bool</span> bPendingSwitch;
+<a name="115"></a>var(FirstPerson) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> EffectOffset; <span class="source_comment">// where muzzle flashes and smoke appear. replace by bone reference eventually
+</span><a name="116"></a>var() Localized <span class="source_type">string</span> MessageNoAmmo;
+<a name="117"></a>var(FirstPerson) <span class="source_type">float</span> DisplayFOV;
+<a name="118"></a>var() enum <span class="source_type"><a href="../engine/weapon.html#EWeaponClientState" class="source">EWeaponClientState</a></span>
+<a name="119"></a>{
+<a name="120"></a>    WS_None,
+<a name="121"></a>    WS_Hidden,
+<a name="122"></a>    WS_BringUp,
+<a name="123"></a>    WS_PutDown,
+<a name="124"></a>    WS_ReadyToFire
+<a name="125"></a>} ClientState; <span class="source_comment">// this will always be None on the server
+</span><a name="126"></a>
+<a name="127"></a>var() config <span class="source_type">byte</span> ExchangeFireModes;
+<a name="128"></a>var() config <span class="source_type">byte</span> Priority;
+<a name="129"></a>
+<a name="130"></a>var() deprecated <span class="source_type">byte</span> DefaultPriority;
+<a name="131"></a>
+<a name="132"></a>var <span class="source_type">float</span> Hand;
+<a name="133"></a>var <span class="source_type">float</span> RenderedHand;
+<a name="134"></a>var <span class="source_type"><a href="../core/object.html#Color" class="source">Color</a></span> HudColor;
+<a name="135"></a>var <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> OldWeapon;
+<a name="136"></a>var(FirstPerson)	<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>      SmallViewOffset;   <span class="source_comment">// Offset from view center with small weapons option.
+</span><a name="137"></a>var(FirstPerson) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> SmallEffectOffset;
+<a name="138"></a>var(FirstPerson) <span class="source_type">float</span> CenteredOffsetY;
+<a name="139"></a>var(FirstPerson) <span class="source_type">int</span> CenteredRoll, CenteredYaw;
+<a name="140"></a>var config <span class="source_type">int</span> CustomCrosshair;
+<a name="141"></a>var config <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> CustomCrossHairColor;
+<a name="142"></a>var config <span class="source_type">float</span> CustomCrossHairScale;
+<a name="143"></a>var config <span class="source_type">string</span> CustomCrossHairTextureName;
+<a name="144"></a>var <span class="source_type"><a href="../engine/texture.html" class="source">texture</a></span> CustomCrossHairTexture;
+<a name="145"></a>
+<a name="146"></a>var <span class="source_type">float</span> DownDelay, MinReloadPct;		<span class="source_comment">// Used to delay putting down weapons which have jsut been fired
+</span><a name="147"></a>
+<a name="148"></a><span class="source_comment">// ROVariables - put here to avoid casting
+</span><a name="149"></a><span class="source_comment">// if _RO_
+</span><a name="150"></a>var	<span class="source_type">bool</span> bBayonetMounted; <span class="source_comment">// If true this weapon has a bayonet mounted
+</span><a name="151"></a>var <span class="source_type">bool</span> bCanAttachOnBack;<span class="source_comment">// True if this weapon can be placed on the pawns back
+</span><a name="152"></a>var <span class="source_type">bool</span> bCanRestDeploy;<span class="source_comment">// True if this weapon can be deployed by resting it on something
+</span><a name="153"></a>var <span class="source_type">bool</span> bCanBipodDeploy;<span class="source_comment">// True if this weapon can be deployed using a bipod
+</span><a name="154"></a>var	<span class="source_type">bool</span> bBipodDeployed; <span class="source_comment">// True if the weapon is deployed on its bipod
+</span><a name="155"></a>var	<span class="source_type">float</span> LastStartCrawlingTime; <span class="source_comment">// Used in smoothing out transitions to/from crawling forward/back
+</span><a name="156"></a>var	<span class="source_type">bool</span> bUsingSights; <span class="source_comment">// True if the weapon is zoomed in using the sights
+</span><a name="157"></a>var	<span class="source_type">bool</span> bUsesFreeAim; <span class="source_comment">// Whether or not this weapon uses free-aim
+</span><a name="158"></a>var	<span class="source_type">bool</span> bCanSway; <span class="source_comment">// This weapon can sway in ironsights (false for binocs)
+</span><a name="159"></a><span class="source_comment">// end _RO_
+</span><a name="160"></a>
+<a name="161"></a>native final function InitWeaponFires();
+<a name="162"></a>
+<a name="163"></a>simulated function <span class="source_type">float</span> ChargeBar();
+<a name="164"></a>
+<a name="165"></a><span class="source_comment">// ROFunctions - put here to avoid casting
+</span><a name="166"></a><span class="source_comment">// if _RO_
+</span><a name="167"></a>simulated function <span class="source_type">bool</span> WeaponCanSwitch() {return true;}
+<a name="168"></a>simulated function <span class="source_type">bool</span> WeaponCanBusySwitch() {return false;}
+<a name="169"></a>simulated function <span class="source_type">bool</span> WeaponAllowSprint() {return true;}
+<a name="170"></a>simulated function <span class="source_type">bool</span> WeaponAllowProneChange() {return true;}
+<a name="171"></a>simulated function <span class="source_type">bool</span> WeaponAllowCrouchChange() {return true;}
+<a name="172"></a>simulated function <span class="source_type">bool</span> IsMounted() {return false;}
+<a name="173"></a>simulated function <span class="source_type">bool</span> IsCrawling() {return false;}
+<a name="174"></a>simulated function ROIronSights();
+<a name="175"></a>simulated function <span class="source_type">int</span> GetHudAmmoCount();
+<a name="176"></a>simulated function NotifyOwnerJumped();
+<a name="177"></a>function SetServerOrientation(<span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">NewRotation</span>);
+<a name="178"></a>function <span class="source_type"><a href="../core/object.html#Coords" class="source">coords</a></span> GetMuzzleCoords();
+<a name="179"></a>simulated function <span class="source_type">bool</span> ShouldUseFreeAim() {return false;}
+<a name="180"></a>simulated function PostFire();
+<a name="181"></a><span class="source_comment">// end _RO_
+</span><a name="182"></a>
+<a name="183"></a><span class="source_comment">// Called by physics when the player is crawling
+</span><a name="184"></a>simulated event NotifyCrawlMoving();
+<a name="185"></a>simulated event NotifyStopCrawlMoving();
+<a name="186"></a>
+<a name="187"></a><span class="source_comment">//=========================================================================
+</span><a name="188"></a><span class="source_comment">// Ammunition Interface (to remove the need for instantiated ammunition)
+</span><a name="189"></a>
+<a name="190"></a>simulated function <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/ammunition.html" class="source">Ammunition</a></span>&gt; GetAmmoClass(<span class="source_type">int</span> <span class="source_type">mode</span>)
+<a name="191"></a>{
+<a name="192"></a>	return AmmoClass[<span class="source_type">mode</span>];
+<a name="193"></a>}
+<a name="194"></a>
+<a name="195"></a>simulated function MaxOutAmmo()
+<a name="196"></a>{
+<a name="197"></a>	if ( bNoAmmoInstances )
+<a name="198"></a>	{
+<a name="199"></a>		if ( AmmoClass[<span class="source_int">0</span>] != None )
+<a name="200"></a>			AmmoCharge[<span class="source_int">0</span>] = MaxAmmo(<span class="source_int">0</span>);
+<a name="201"></a>		if ( (AmmoClass[<span class="source_int">1</span>] != None) && (AmmoClass[<span class="source_int">0</span>] != AmmoClass[<span class="source_int">1</span>]) )
+<a name="202"></a>			AmmoCharge[<span class="source_int">1</span>] = MaxAmmo(<span class="source_int">1</span>);
+<a name="203"></a>		return;
+<a name="204"></a>	}
+<a name="205"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>] != None )
+<a name="206"></a>		<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].AmmoAmount = <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].MaxAmmo;
+<a name="207"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>] != None )
+<a name="208"></a>		<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>].AmmoAmount = <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>].MaxAmmo;
+<a name="209"></a>}
+<a name="210"></a>
+<a name="211"></a>simulated function SuperMaxOutAmmo()
+<a name="212"></a>{
+<a name="213"></a>	if ( bNoAmmoInstances )
+<a name="214"></a>	{
+<a name="215"></a>		if ( AmmoClass[<span class="source_int">0</span>] != None )
+<a name="216"></a>			AmmoCharge[<span class="source_int">0</span>] = <span class="source_int">999</span>;
+<a name="217"></a>		if ( (AmmoClass[<span class="source_int">1</span>] != None) && (AmmoClass[<span class="source_int">0</span>] != AmmoClass[<span class="source_int">1</span>]) )
+<a name="218"></a>			AmmoCharge[<span class="source_int">1</span>] = <span class="source_int">999</span>;
+<a name="219"></a>		return;
+<a name="220"></a>	}
+<a name="221"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>] != None )
+<a name="222"></a>		<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].AmmoAmount = <span class="source_int">999</span>;
+<a name="223"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>] != None )
+<a name="224"></a>		<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>].AmmoAmount = <span class="source_int">999</span>;
+<a name="225"></a>}
+<a name="226"></a>simulated function <span class="source_type">int</span> MaxAmmo(<span class="source_type">int</span> <span class="source_type">mode</span>)
+<a name="227"></a>{
+<a name="228"></a>	if ( AmmoClass[<span class="source_type">mode</span>] != None )
+<a name="229"></a>		return AmmoClass[<span class="source_type">mode</span>].Default.MaxAmmo;
+<a name="230"></a>
+<a name="231"></a>	return <span class="source_int">0</span>;
+<a name="232"></a>}
+<a name="233"></a>
+<a name="234"></a>simulated function FillToInitialAmmo()
+<a name="235"></a>{
+<a name="236"></a>	if ( bNoAmmoInstances )
+<a name="237"></a>	{
+<a name="238"></a>		if ( AmmoClass[<span class="source_int">0</span>] != None )
+<a name="239"></a>			AmmoCharge[<span class="source_int">0</span>] = <span class="source_type">Max</span>(AmmoCharge[<span class="source_int">0</span>], AmmoClass[<span class="source_int">0</span>].Default.InitialAmount);
+<a name="240"></a>		if ( (AmmoClass[<span class="source_int">1</span>] != None) && (AmmoClass[<span class="source_int">0</span>] != AmmoClass[<span class="source_int">1</span>]) )
+<a name="241"></a>			AmmoCharge[<span class="source_int">1</span>] = <span class="source_type">Max</span>(AmmoCharge[<span class="source_int">1</span>], AmmoClass[<span class="source_int">1</span>].Default.InitialAmount);
+<a name="242"></a>		return;
+<a name="243"></a>	}
+<a name="244"></a>
+<a name="245"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>] != None )
+<a name="246"></a>		<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].AmmoAmount = <span class="source_type">Max</span>(<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].AmmoAmount,<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].InitialAmount);
+<a name="247"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>] != None )
+<a name="248"></a>		<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>].AmmoAmount = <span class="source_type">Max</span>(<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>].AmmoAmount,<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>].InitialAmount);
+<a name="249"></a>}
+<a name="250"></a>
+<a name="251"></a>simulated function <span class="source_type">int</span> AmmoAmount(<span class="source_type">int</span> <span class="source_type">mode</span>)
+<a name="252"></a>{
+<a name="253"></a>	if ( bNoAmmoInstances )
+<a name="254"></a>	{
+<a name="255"></a>		if ( AmmoClass[<span class="source_int">0</span>] == AmmoClass[<span class="source_type">mode</span>] )
+<a name="256"></a>			return AmmoCharge[<span class="source_int">0</span>];
+<a name="257"></a>		return AmmoCharge[<span class="source_type">mode</span>];
+<a name="258"></a>	}
+<a name="259"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">mode</span>] != None )
+<a name="260"></a>		return <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">mode</span>].AmmoAmount;
+<a name="261"></a>
+<a name="262"></a>	return <span class="source_int">0</span>;
+<a name="263"></a>}
+<a name="264"></a>
+<a name="265"></a>simulated function <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>&gt; AmmoPickupClass(<span class="source_type">int</span> <span class="source_type">mode</span>)
+<a name="266"></a>{
+<a name="267"></a>	if ( AmmoClass[<span class="source_type">mode</span>] != None )
+<a name="268"></a>		return FireMode[<span class="source_type">mode</span>].AmmoClass.Default.PickupClass;
+<a name="269"></a>
+<a name="270"></a>	return None;
+<a name="271"></a>}
+<a name="272"></a>
+<a name="273"></a>simulated function <span class="source_type">bool</span> AmmoMaxed(<span class="source_type">int</span> <span class="source_type">mode</span>)
+<a name="274"></a>{
+<a name="275"></a>	if ( AmmoClass[<span class="source_type">mode</span>] == None )
+<a name="276"></a>		return false;
+<a name="277"></a>
+<a name="278"></a>	if ( bNoAmmoInstances )
+<a name="279"></a>	{
+<a name="280"></a>		if ( AmmoClass[<span class="source_int">0</span>] == AmmoClass[<span class="source_type">mode</span>] )
+<a name="281"></a>			<span class="source_type">mode</span> = <span class="source_int">0</span>;
+<a name="282"></a>		return AmmoCharge[<span class="source_type">mode</span>] &gt;= MaxAmmo(<span class="source_type">mode</span>);
+<a name="283"></a>	}
+<a name="284"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">mode</span>] == None )
+<a name="285"></a>		return false;
+<a name="286"></a>	return (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">mode</span>].AmmoAmount &gt;= MaxAmmo(<span class="source_type">mode</span>));
+<a name="287"></a>}
+<a name="288"></a>
+<a name="289"></a>simulated function GetAmmoCount(out <span class="source_type">float</span> MaxAmmoPrimary, out <span class="source_type">float</span> CurAmmoPrimary)
+<a name="290"></a>{
+<a name="291"></a>	if ( AmmoClass[<span class="source_int">0</span>] == None )
+<a name="292"></a>		return;
+<a name="293"></a>
+<a name="294"></a>	if ( bNoAmmoInstances )
+<a name="295"></a>	{
+<a name="296"></a>		MaxAmmoPrimary = MaxAmmo(<span class="source_int">0</span>);
+<a name="297"></a>		CurAmmoPrimary = AmmoCharge[<span class="source_int">0</span>];
+<a name="298"></a>		return;
+<a name="299"></a>	}
+<a name="300"></a>
+<a name="301"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>] == None )
+<a name="302"></a>		return;
+<a name="303"></a>	MaxAmmoPrimary = <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].MaxAmmo;
+<a name="304"></a>	CurAmmoPrimary = <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].AmmoAmount;
+<a name="305"></a>}
+<a name="306"></a>
+<a name="307"></a>simulated function <span class="source_type">float</span> AmmoStatus(optional <span class="source_type">int</span> <span class="source_type">Mode</span>) <span class="source_comment">// returns float value for ammo amount
+</span><a name="308"></a>{
+<a name="309"></a>	if ( bNoAmmoInstances )
+<a name="310"></a>	{
+<a name="311"></a>		if ( AmmoClass[<span class="source_type">Mode</span>] == None )
+<a name="312"></a>			return <span class="source_int">0</span>;
+<a name="313"></a>		if ( AmmoClass[<span class="source_int">0</span>] == AmmoClass[<span class="source_type">mode</span>] )
+<a name="314"></a>			<span class="source_type">mode</span> = <span class="source_int">0</span>;
+<a name="315"></a>
+<a name="316"></a>		return <span class="source_type">float</span>(AmmoCharge[<span class="source_type">Mode</span>])/<span class="source_type">float</span>(MaxAmmo(<span class="source_type">Mode</span>));
+<a name="317"></a>	}
+<a name="318"></a>    if (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">Mode</span>] == None)
+<a name="319"></a>        return <span class="source_int">0.0</span>;
+<a name="320"></a>    else
+<a name="321"></a>	    return <span class="source_type">float</span>(<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">Mode</span>].AmmoAmount) / <span class="source_type">float</span>(<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">Mode</span>].MaxAmmo);
+<a name="322"></a>}
+<a name="323"></a>
+<a name="324"></a>simulated function <span class="source_type">bool</span> ConsumeAmmo(<span class="source_type">int</span> <span class="source_type">Mode</span>, <span class="source_type">float</span> load, optional <span class="source_type">bool</span> <span class="source_type">bAmountNeededIsMax</span>)
+<a name="325"></a>{
+<a name="326"></a>	local <span class="source_type">int</span> AmountNeeded;
+<a name="327"></a>
+<a name="328"></a>	if ( bNoAmmoInstances )
+<a name="329"></a>	{
+<a name="330"></a>		if ( AmmoClass[<span class="source_int">0</span>] == AmmoClass[<span class="source_type">mode</span>] )
+<a name="331"></a>			<span class="source_type">mode</span> = <span class="source_int">0</span>;
+<a name="332"></a>		AmountNeeded = <span class="source_type">int</span>(load);
+<a name="333"></a>		if (<span class="source_type">bAmountNeededIsMax</span> && AmmoCharge[<span class="source_type">mode</span>] &lt; AmountNeeded)
+<a name="334"></a>			AmountNeeded = AmmoCharge[<span class="source_type">mode</span>];
+<a name="335"></a>
+<a name="336"></a>		if (AmmoCharge[<span class="source_type">mode</span>] &lt; AmountNeeded)
+<a name="337"></a>		{
+<a name="338"></a>			CheckOutOfAmmo();
+<a name="339"></a>			return false;   <span class="source_comment">// Can't do it
+</span><a name="340"></a>		}
+<a name="341"></a>
+<a name="342"></a>		AmmoCharge[<span class="source_type">mode</span>] -= AmountNeeded;
+<a name="343"></a>		NetUpdateTime = <span class="source_type">Level</span>.TimeSeconds - <span class="source_int">1</span>;
+<a name="344"></a>
+<a name="345"></a>		if (<span class="source_type">Level</span>.NetMode == NM_StandAlone || <span class="source_type">Level</span>.NetMode == NM_ListenServer)
+<a name="346"></a>			CheckOutOfAmmo();
+<a name="347"></a>
+<a name="348"></a>		return true;
+<a name="349"></a>	}
+<a name="350"></a>    if (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">Mode</span>] != None)
+<a name="351"></a>        return <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">Mode</span>].UseAmmo(<span class="source_type">int</span>(load), <span class="source_type">bAmountNeededIsMax</span>);
+<a name="352"></a>
+<a name="353"></a>    return true;
+<a name="354"></a>}
+<a name="355"></a>
+<a name="356"></a>function <span class="source_type">bool</span> AddAmmo(<span class="source_type">int</span> AmmoToAdd, <span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="357"></a>{
+<a name="358"></a>	if ( bNoAmmoInstances )
+<a name="359"></a>	{
+<a name="360"></a>		if ( AmmoClass[<span class="source_int">0</span>] == AmmoClass[<span class="source_type">mode</span>] )
+<a name="361"></a>			<span class="source_type">mode</span> = <span class="source_int">0</span>;
+<a name="362"></a>		if ( <span class="source_type">Level</span>.GRI.WeaponBerserk &gt; <span class="source_int">1.0</span> )
+<a name="363"></a>			AmmoCharge[<span class="source_type">mode</span>] = MaxAmmo(<span class="source_type">Mode</span>);
+<a name="364"></a>		else if ( AmmoCharge[<span class="source_type">mode</span>] &lt; MaxAmmo(<span class="source_type">mode</span>) )
+<a name="365"></a>			AmmoCharge[<span class="source_type">mode</span>] = Min(MaxAmmo(<span class="source_type">mode</span>), AmmoCharge[<span class="source_type">mode</span>]+AmmoToAdd);
+<a name="366"></a>		NetUpdateTime = <span class="source_type">Level</span>.TimeSeconds - <span class="source_int">1</span>;
+<a name="367"></a>		return true;
+<a name="368"></a>	}
+<a name="369"></a>    if (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">Mode</span>] != None)
+<a name="370"></a>		return <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">Mode</span>].AddAmmo(AmmoToAdd);
+<a name="371"></a>}
+<a name="372"></a>
+<a name="373"></a>simulated function <span class="source_type">bool</span> HasAmmo()
+<a name="374"></a>{
+<a name="375"></a>	if ( bNoAmmoInstances )
+<a name="376"></a>	{
+<a name="377"></a>		if ( AmmoClass[<span class="source_int">0</span>] == AmmoClass[<span class="source_int">1</span>] )
+<a name="378"></a>			return ( (AmmoClass[<span class="source_int">0</span>] != None && FireMode[<span class="source_int">0</span>] != None && AmmoCharge[<span class="source_int">0</span>] &gt;= FireMode[<span class="source_int">0</span>].AmmoPerFire) );
+<a name="379"></a>
+<a name="380"></a>		return ( (AmmoClass[<span class="source_int">0</span>] != None && FireMode[<span class="source_int">0</span>] != None && AmmoCharge[<span class="source_int">0</span>] &gt;= FireMode[<span class="source_int">0</span>].AmmoPerFire)
+<a name="381"></a>			|| (AmmoClass[<span class="source_int">1</span>] != None && FireMode[<span class="source_int">1</span>] != None && AmmoCharge[<span class="source_int">1</span>] &gt;= FireMode[<span class="source_int">1</span>].AmmoPerFire) );
+<a name="382"></a>	}
+<a name="383"></a>    return ( (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>] != None && FireMode[<span class="source_int">0</span>] != None && <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].AmmoAmount &gt;= FireMode[<span class="source_int">0</span>].AmmoPerFire)
+<a name="384"></a>          || (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>] != None && FireMode[<span class="source_int">1</span>] != None && <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>].AmmoAmount &gt;= FireMode[<span class="source_int">1</span>].AmmoPerFire) );
+<a name="385"></a>}
+<a name="386"></a>
+<a name="387"></a><span class="source_comment">// for AI
+</span><a name="388"></a>simulated function <span class="source_type">bool</span> NeedAmmo(<span class="source_type">int</span> <span class="source_type">mode</span>)
+<a name="389"></a>{
+<a name="390"></a>	if ( bNoAmmoInstances )
+<a name="391"></a>	{
+<a name="392"></a>		if ( AmmoClass[<span class="source_int">0</span>] == AmmoClass[<span class="source_type">mode</span>] )
+<a name="393"></a>			<span class="source_type">mode</span> = <span class="source_int">0</span>;
+<a name="394"></a>		if ( AmmoClass[<span class="source_type">mode</span>] == None )
+<a name="395"></a>			return false;
+<a name="396"></a>
+<a name="397"></a>		return ( AmmoCharge[<span class="source_type">Mode</span>] &lt; AmmoClass[<span class="source_type">mode</span>].default.InitialAmount );
+<a name="398"></a>	}
+<a name="399"></a>	if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">mode</span>] != None )
+<a name="400"></a>		 return (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">mode</span>].AmmoAmount &lt; <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">mode</span>].InitialAmount);
+<a name="401"></a>
+<a name="402"></a>	return false;
+<a name="403"></a>}
+<a name="404"></a>
+<a name="405"></a>simulated function <span class="source_type">float</span> DesireAmmo(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>&gt; NewAmmoClass, <span class="source_type">bool</span> bDetour)
+<a name="406"></a>{
+<a name="407"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="408"></a>	local <span class="source_type">float</span> curr, <span class="source_type">max</span>;
+<a name="409"></a>
+<a name="410"></a>	for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">2</span>; <span class="source_type">i</span>++ )
+<a name="411"></a>		if ( NewAmmoClass == AmmoClass[<span class="source_type">i</span>] )
+<a name="412"></a>		{
+<a name="413"></a>			if ( AmmoMaxed(<span class="source_type">i</span>) )
+<a name="414"></a>				return -<span class="source_int">100</span>;
+<a name="415"></a>			curr = AmmoAmount(<span class="source_type">i</span>);
+<a name="416"></a>			if ( curr == <span class="source_int">0</span> )
+<a name="417"></a>				return <span class="source_int">1</span>;
+<a name="418"></a>			<span class="source_type">max</span> = MaxAmmo(<span class="source_type">i</span>);
+<a name="419"></a>
+<a name="420"></a>			return ( FMin(<span class="source_int">0.5</span>*(<span class="source_type">max</span>-curr),AmmoClass[<span class="source_type">i</span>].Default.AmmoAmount)/<span class="source_type">max</span> );
+<a name="421"></a>		}
+<a name="422"></a>	return <span class="source_int">0</span>;
+<a name="423"></a>}
+<a name="424"></a>
+<a name="425"></a>simulated function CheckOutOfAmmo()
+<a name="426"></a>{
+<a name="427"></a>	if (<span class="source_type">Instigator</span> != None && <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> == self)
+<a name="428"></a>	{
+<a name="429"></a>		if ( bNoAmmoInstances )
+<a name="430"></a>		{
+<a name="431"></a>			if ( (AmmoCharge[<span class="source_int">0</span>] &lt;= <span class="source_int">0</span>) && (AmmoCharge[<span class="source_int">1</span>] &lt;= <span class="source_int">0</span>) )
+<a name="432"></a>				OutOfAmmo();
+<a name="433"></a>			return;
+<a name="434"></a>		}
+<a name="435"></a>
+<a name="436"></a>		if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>] != None )
+<a name="437"></a>			<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">0</span>].CheckOutOfAmmo();
+<a name="438"></a>		if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>] != None )
+<a name="439"></a>			<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_int">1</span>].CheckOutOfAmmo();
+<a name="440"></a>	}
+<a name="441"></a>}
+<a name="442"></a>
+<a name="443"></a>simulated function PostNetReceive()
+<a name="444"></a>{
+<a name="445"></a>    CheckOutOfAmmo();
+<a name="446"></a>}
+<a name="447"></a>
+<a name="448"></a><span class="source_comment">//=========================================================================
+</span><a name="449"></a>
+<a name="450"></a>simulated function DrawWeaponInfo(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>);
+<a name="451"></a>simulated function NewDrawWeaponInfo(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type">C</span>, <span class="source_type">float</span> YPos);
+<a name="452"></a>
+<a name="453"></a>function StartDebugging()
+<a name="454"></a>{
+<a name="455"></a>}
+<a name="456"></a>
+<a name="457"></a>simulated function ClientWriteStats(<span class="source_type">byte</span> <span class="source_type">Mode</span>, <span class="source_type">bool</span> bMatch, <span class="source_type">bool</span> bAllowFire, <span class="source_type">bool</span> bDelay, <span class="source_type">bool</span> bAlt, <span class="source_type">float</span> wait)
+<a name="458"></a>{
+<a name="459"></a>	log(self$<span class="source_string">" Same weapon "</span>$bMatch$<span class="source_string">" Mode "</span>$<span class="source_type">Mode</span>$<span class="source_string">" Allow fire "</span>$bAllowFire$<span class="source_string">" delay start fire "</span>$bDelay$<span class="source_string">" alt firing "</span>$bAlt$<span class="source_string">" next fire wait "</span>$wait);
+<a name="460"></a>}
+<a name="461"></a>
+<a name="462"></a>function <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; GetDamageType();
+<a name="463"></a>
+<a name="464"></a>function HackPlayFireSound()
+<a name="465"></a>{
+<a name="466"></a>	if ( (FireMode[<span class="source_int">0</span>] != None) && (FireMode[<span class="source_int">0</span>].FireSound != None) )
+<a name="467"></a>		PlaySound(FireMode[<span class="source_int">0</span>].FireSound, SLOT_None, <span class="source_int">1.0</span>);
+<a name="468"></a>}
+<a name="469"></a>
+<a name="470"></a><span class="source_comment">//=================================================================
+</span><a name="471"></a><span class="source_comment">// AI functions
+</span><a name="472"></a>
+<a name="473"></a>function <span class="source_type">float</span> RangedAttackTime()
+<a name="474"></a>{
+<a name="475"></a>	return <span class="source_int">0</span>;
+<a name="476"></a>}
+<a name="477"></a>
+<a name="478"></a>function <span class="source_type">bool</span> RecommendRangedAttack()
+<a name="479"></a>{
+<a name="480"></a>	return false;
+<a name="481"></a>}
+<a name="482"></a>
+<a name="483"></a>function <span class="source_type">bool</span> RecommendLongRangedAttack()
+<a name="484"></a>{
+<a name="485"></a>	return false;
+<a name="486"></a>}
+<a name="487"></a>
+<a name="488"></a>function <span class="source_type">bool</span> FocusOnLeader(<span class="source_type">bool</span> bLeaderFiring)
+<a name="489"></a>{
+<a name="490"></a>	return false;
+<a name="491"></a>}
+<a name="492"></a>
+<a name="493"></a>function FireHack(<span class="source_type">byte</span> <span class="source_type">Mode</span>);
+<a name="494"></a>
+<a name="495"></a><span class="source_comment">// return true if weapon effect has splash damage (if significant)
+</span><a name="496"></a><span class="source_comment">// use by bot to avoid hurting self
+</span><a name="497"></a><span class="source_comment">// should be based on current firing Mode if active
+</span><a name="498"></a>function <span class="source_type">bool</span> SplashDamage()
+<a name="499"></a>{
+<a name="500"></a>    return FireMode[BotMode].bSplashDamage;
+<a name="501"></a>}
+<a name="502"></a>
+<a name="503"></a><span class="source_comment">// return true if weapon should be fired to take advantage of splash damage
+</span><a name="504"></a><span class="source_comment">// For example, rockets should be fired at enemy feet
+</span><a name="505"></a>function <span class="source_type">bool</span> RecommendSplashDamage()
+<a name="506"></a>{
+<a name="507"></a>    return FireMode[BotMode].bRecommendSplashDamage;
+<a name="508"></a>}
+<a name="509"></a>
+<a name="510"></a>function <span class="source_type">float</span> GetDamageRadius()
+<a name="511"></a>{
+<a name="512"></a>    if (FireMode[BotMode].ProjectileClass == None)
+<a name="513"></a>        return <span class="source_int">0</span>;
+<a name="514"></a>    else
+<a name="515"></a>        return FireMode[BotMode].ProjectileClass.default.DamageRadius;
+<a name="516"></a>}
+<a name="517"></a>
+<a name="518"></a><span class="source_comment">// Repeater weapons like minigun should be 0.99, other weapons based on likelihood
+</span><a name="519"></a><span class="source_comment">// of firing again right away
+</span><a name="520"></a>function <span class="source_type">float</span> RefireRate()
+<a name="521"></a>{
+<a name="522"></a>    return FireMode[BotMode].BotRefireRate;
+<a name="523"></a>}
+<a name="524"></a>
+<a name="525"></a><span class="source_comment">// tells AI that it needs to release the fire button for this weapon to do anything
+</span><a name="526"></a>function <span class="source_type">bool</span> FireOnRelease()
+<a name="527"></a>{
+<a name="528"></a>	return FireMode[BotMode].bFireOnRelease;
+<a name="529"></a>}
+<a name="530"></a>
+<a name="531"></a>simulated function Loaded();
+<a name="532"></a>
+<a name="533"></a>simulated function DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, out <span class="source_type">float</span> <span class="source_type">YL</span>, out <span class="source_type">float</span> YPos)
+<a name="534"></a>{
+<a name="535"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="536"></a>    local <span class="source_type">string</span> <span class="source_type">T</span>;
+<a name="537"></a>    local <span class="source_type">name</span> Anim;
+<a name="538"></a>    local <span class="source_type">float</span> frame,rate;
+<a name="539"></a>
+<a name="540"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">0</span>,<span class="source_int">255</span>,<span class="source_int">0</span>);
+<a name="541"></a>    if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Owner</span>) != None) && (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> != None) )
+<a name="542"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"WEAPON "</span>$GetItemName(<span class="source_type">string</span>(self))$<span class="source_string">" Owner "</span>$<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">PlayerName</span>);
+<a name="543"></a>    else
+<a name="544"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"WEAPON "</span>$GetItemName(<span class="source_type">string</span>(self))$<span class="source_string">" Owner "</span>$<span class="source_type">Owner</span>);
+<a name="545"></a>    YPos += <span class="source_type">YL</span>;
+<a name="546"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="547"></a>
+<a name="548"></a>    <span class="source_type">T</span> = <span class="source_string">"     STATE: "</span>$GetStateName()$<span class="source_string">" Timer: "</span>$TimerCounter$<span class="source_string">" Client State "</span>;
+<a name="549"></a>
+<a name="550"></a>	<span class="source_type">Switch</span>( ClientState )
+<a name="551"></a>	{
+<a name="552"></a>		case WS_None: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"None"</span>; break;
+<a name="553"></a>		case WS_Hidden: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"Hidden"</span>; break;
+<a name="554"></a>		case WS_BringUp: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"BringUp"</span>; break;
+<a name="555"></a>		case WS_PutDown: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"PutDown"</span>; break;
+<a name="556"></a>		case WS_ReadyToFire: <span class="source_type">T</span>=<span class="source_type">T</span>$<span class="source_string">"ReadyToFire"</span>; break;
+<a name="557"></a>	}
+<a name="558"></a>
+<a name="559"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">T</span>, false);
+<a name="560"></a>    YPos += <span class="source_type">YL</span>;
+<a name="561"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="562"></a>
+<a name="563"></a>    if ( DrawType == DT_StaticMesh )
+<a name="564"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"     StaticMesh "</span>$GetItemName(<span class="source_type">string</span>(<span class="source_type">StaticMesh</span>))$<span class="source_string">" AmbientSound "</span>$<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span>, false);
+<a name="565"></a>    else
+<a name="566"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"     Mesh "</span>$GetItemName(<span class="source_type">string</span>(<span class="source_type">Mesh</span>))$<span class="source_string">" AmbientSound "</span>$<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span>, false);
+<a name="567"></a>    YPos += <span class="source_type">YL</span>;
+<a name="568"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="569"></a>    if ( <span class="source_type">Mesh</span> != None )
+<a name="570"></a>    {
+<a name="571"></a>        <span class="source_comment">// mesh animation
+</span><a name="572"></a>        GetAnimParams(<span class="source_int">0</span>,Anim,frame,rate);
+<a name="573"></a>        <span class="source_type">T</span> = <span class="source_string">"     AnimSequence "</span>$Anim$<span class="source_string">" Frame "</span>$frame$<span class="source_string">" Rate "</span>$rate;
+<a name="574"></a>        if ( bAnimByOwner )
+<a name="575"></a>            <span class="source_type">T</span>= <span class="source_type">T</span>$<span class="source_string">" Anim by Owner"</span>;
+<a name="576"></a>
+<a name="577"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">T</span>, false);
+<a name="578"></a>        YPos += <span class="source_type">YL</span>;
+<a name="579"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="580"></a>
+<a name="581"></a>		<span class="source_type">T</span> = <span class="source_string">"Eyeheight "</span>$<span class="source_type">Instigator</span>.EyeHeight$<span class="source_string">" base "</span>$<span class="source_type">Instigator</span>.BaseEyeheight$<span class="source_string">" landbob "</span>$<span class="source_type">Instigator</span>.Landbob$<span class="source_string">" just landed "</span>$<span class="source_type">Instigator</span>.bJustLanded$<span class="source_string">" land recover "</span>$<span class="source_type">Instigator</span>.bLandRecovery;
+<a name="582"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_type">T</span>, false);
+<a name="583"></a>        YPos += <span class="source_type">YL</span>;
+<a name="584"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="585"></a>    }
+<a name="586"></a>
+<a name="587"></a>    for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;NUM_FIRE_MODES; <span class="source_type">i</span>++ )
+<a name="588"></a>    {
+<a name="589"></a>        if ( FireMode[<span class="source_type">i</span>] == None )
+<a name="590"></a>        {
+<a name="591"></a>            <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"NO FIREMODE "</span>$<span class="source_type">i</span>);
+<a name="592"></a>            YPos += <span class="source_type">YL</span>;
+<a name="593"></a>            <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="594"></a>        }
+<a name="595"></a>        else
+<a name="596"></a>            FireMode[<span class="source_type">i</span>].DisplayDebug(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>,<span class="source_type">YL</span>,YPos);
+<a name="597"></a>
+<a name="598"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawText(<span class="source_string">"Ammunition "</span>$<span class="source_type">i</span>$<span class="source_string">" amount "</span>$AmmoAmount(<span class="source_type">i</span>));
+<a name="599"></a>		YPos += <span class="source_type">YL</span>;
+<a name="600"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">4</span>,YPos);
+<a name="601"></a>    }
+<a name="602"></a>}
+<a name="603"></a>
+<a name="604"></a>simulated function <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> RecommendWeapon( out <span class="source_type">float</span> <span class="source_type">rating</span> )
+<a name="605"></a>{
+<a name="606"></a>    local <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> Recommended;
+<a name="607"></a>    local <span class="source_type">float</span> oldRating;
+<a name="608"></a>
+<a name="609"></a>    if ( (<span class="source_type">Instigator</span> == None) || (<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None) )
+<a name="610"></a>        <span class="source_type">rating</span> = -<span class="source_int">2</span>;
+<a name="611"></a>    else
+<a name="612"></a>        <span class="source_type">rating</span> = RateSelf() + <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.WeaponPreference(self);
+<a name="613"></a>
+<a name="614"></a>    if ( <span class="source_type"><a href="../engine/inventory.html" class="source">inventory</a></span> != None )
+<a name="615"></a>    {
+<a name="616"></a>        Recommended = <span class="source_type"><a href="../engine/inventory.html" class="source">inventory</a></span>.RecommendWeapon(oldRating);
+<a name="617"></a>        if ( (Recommended != None) && (oldRating &gt; <span class="source_type">rating</span>) )
+<a name="618"></a>        {
+<a name="619"></a>            <span class="source_type">rating</span> = oldRating;
+<a name="620"></a>            return Recommended;
+<a name="621"></a>        }
+<a name="622"></a>    }
+<a name="623"></a>    return self;
+<a name="624"></a>}
+<a name="625"></a>
+<a name="626"></a>function SetAITarget(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">T</span>);
+<a name="627"></a>
+<a name="628"></a><span class="source_comment">/* BestMode()
+<a name="629"></a>choose between regular or alt-fire
+<a name="630"></a>*/</span>
+<a name="631"></a>function <span class="source_type">byte</span> BestMode()
+<a name="632"></a>{
+<a name="633"></a>	if ( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bFire != <span class="source_int">0</span> )
+<a name="634"></a>		return <span class="source_int">0</span>;
+<a name="635"></a>	else if ( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bAltFire != <span class="source_int">0</span> )
+<a name="636"></a>		return <span class="source_int">1</span>;
+<a name="637"></a>	if ( FRand() &lt; <span class="source_int">0.5</span> )
+<a name="638"></a>		return <span class="source_int">1</span>;
+<a name="639"></a>	return <span class="source_int">0</span>;
+<a name="640"></a>}
+<a name="641"></a>
+<a name="642"></a><span class="source_comment">/* BotFire()
+<a name="643"></a>called by NPC firing weapon. Weapon chooses appropriate firing Mode to use (typically no change)
+<a name="644"></a>bFinished should only be true if called from the Finished() function
+<a name="645"></a>FiringMode can be passed in to specify a firing Mode (used by scripted sequences)
+<a name="646"></a>*/</span>
+<a name="647"></a>function <span class="source_type">bool</span> BotFire(<span class="source_type">bool</span> bFinished, optional <span class="source_type">name</span> FiringMode)
+<a name="648"></a>{
+<a name="649"></a>    local <span class="source_type">int</span> <span class="source_type">newmode</span>;
+<a name="650"></a>    local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="651"></a>
+<a name="652"></a>    <span class="source_type">C</span> = <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>;
+<a name="653"></a>	<span class="source_type">newMode</span> = BestMode();
+<a name="654"></a>
+<a name="655"></a>	if ( <span class="source_type">newMode</span> == <span class="source_int">0</span> )
+<a name="656"></a>	{
+<a name="657"></a>		<span class="source_type">C</span>.bFire = <span class="source_int">1</span>;
+<a name="658"></a>		<span class="source_type">C</span>.bAltFire = <span class="source_int">0</span>;
+<a name="659"></a>	}
+<a name="660"></a>	else
+<a name="661"></a>	{
+<a name="662"></a>		<span class="source_type">C</span>.bFire = <span class="source_int">0</span>;
+<a name="663"></a>		<span class="source_type">C</span>.bAltFire = <span class="source_int">1</span>;
+<a name="664"></a>	}
+<a name="665"></a>
+<a name="666"></a>	if ( bFinished )
+<a name="667"></a>		return true;
+<a name="668"></a>
+<a name="669"></a>    if ( FireMode[BotMode].IsFiring() )
+<a name="670"></a>    {
+<a name="671"></a>    	if (BotMode == <span class="source_type">newMode</span>)
+<a name="672"></a>    		return true;
+<a name="673"></a>    	else
+<a name="674"></a>			StopFire(BotMode);
+<a name="675"></a>    }
+<a name="676"></a>
+<a name="677"></a>    if ( !ReadyToFire(<span class="source_type">newMode</span>) || ClientState != WS_ReadyToFire )
+<a name="678"></a>		return false;
+<a name="679"></a>
+<a name="680"></a>    BotMode = <span class="source_type">NewMode</span>;
+<a name="681"></a>    StartFire(<span class="source_type">NewMode</span>);
+<a name="682"></a>    return true;
+<a name="683"></a>}
+<a name="684"></a>
+<a name="685"></a><span class="source_comment">// this returns the actual projectile spawn location or trace start
+</span><a name="686"></a>simulated function <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> GetFireStart(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">X</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Y</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Z</span>)
+<a name="687"></a>{
+<a name="688"></a>    return FireMode[BotMode].GetFireStart(<span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>);
+<a name="689"></a>}
+<a name="690"></a>
+<a name="691"></a><span class="source_comment">// need to figure out modified rating based on enemy/tactical situation
+</span><a name="692"></a>simulated function <span class="source_type">float</span> RateSelf()
+<a name="693"></a>{
+<a name="694"></a>    if ( !HasAmmo() )
+<a name="695"></a>        CurrentRating = -<span class="source_int">2</span>;
+<a name="696"></a>	else if ( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None )
+<a name="697"></a>		return <span class="source_int">0</span>;
+<a name="698"></a>	else
+<a name="699"></a>		CurrentRating = <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.RateWeapon(self);
+<a name="700"></a>	return CurrentRating;
+<a name="701"></a>}
+<a name="702"></a>
+<a name="703"></a>function <span class="source_type">float</span> GetAIRating()
+<a name="704"></a>{
+<a name="705"></a>	return AIRating;
+<a name="706"></a>}
+<a name="707"></a>
+<a name="708"></a><span class="source_comment">// tells bot whether to charge or back off while using this weapon
+</span><a name="709"></a>function <span class="source_type">float</span> SuggestAttackStyle()
+<a name="710"></a>{
+<a name="711"></a>    return <span class="source_int">0.0</span>;
+<a name="712"></a>}
+<a name="713"></a>
+<a name="714"></a><span class="source_comment">// tells bot whether to charge or back off while defending against this weapon
+</span><a name="715"></a>function <span class="source_type">float</span> SuggestDefenseStyle()
+<a name="716"></a>{
+<a name="717"></a>    return <span class="source_int">0.0</span>;
+<a name="718"></a>}
+<a name="719"></a>
+<a name="720"></a><span class="source_comment">// return true if recommend jumping while firing to improve splash damage (by shooting at feet)
+</span><a name="721"></a><span class="source_comment">// true for R.L., for example
+</span><a name="722"></a>function <span class="source_type">bool</span> SplashJump()
+<a name="723"></a>{
+<a name="724"></a>    return FireMode[BotMode].bSplashJump;
+<a name="725"></a>}
+<a name="726"></a>
+<a name="727"></a><span class="source_comment">// return false if out of range, can't see target, etc.
+</span><a name="728"></a>function <span class="source_type">bool</span> CanAttack(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>)
+<a name="729"></a>{
+<a name="730"></a>    local <span class="source_type">float</span> <span class="source_type">Dist</span>, CheckDist;
+<a name="731"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type">HitNormal</span>,<span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>, projStart;
+<a name="732"></a>    local <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">HitActor</span>;
+<a name="733"></a>    local <span class="source_type">int</span> <span class="source_type">m</span>;
+<a name="734"></a>	local <span class="source_type">bool</span> bInstantHit;
+<a name="735"></a>	local <span class="source_type">bool</span> bShouldAttack;
+<a name="736"></a>
+<a name="737"></a>	<span class="source_comment">// if _RO_
+</span><a name="738"></a>	<span class="source_comment">// Extra friendly fire checking
+</span><a name="739"></a>	local <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> Victims;
+<a name="740"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">dir</span>, lookdir;
+<a name="741"></a>	local <span class="source_type">float</span> DiffAngle, FriendlyDist, MinAngle;
+<a name="742"></a>	<span class="source_comment">// end _RO_
+</span><a name="743"></a>
+<a name="744"></a>    if ( (<span class="source_type">Instigator</span> == None) || (<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None) )
+<a name="745"></a>        return false;
+<a name="746"></a>
+<a name="747"></a>    <span class="source_comment">// check that target is within range
+</span><a name="748"></a>    <span class="source_type">Dist</span> = VSize(<span class="source_type">Instigator</span>.Location - <span class="source_type">Other</span>.Location);
+<a name="749"></a>    if ( (<span class="source_type">Dist</span> &gt; FireMode[<span class="source_int">0</span>].MaxRange()) && (<span class="source_type">Dist</span> &gt; FireMode[<span class="source_int">1</span>].MaxRange()) )
+<a name="750"></a>        return false;
+<a name="751"></a>
+<a name="752"></a>    <span class="source_comment">// check that can see target
+</span><a name="753"></a>    if ( !<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.LineOfSightTo(<span class="source_type">Other</span>) )
+<a name="754"></a>        return false;
+<a name="755"></a>
+<a name="756"></a>    for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="757"></a>    {
+<a name="758"></a>		if ( FireMode[<span class="source_type">m</span>].bInstantHit )
+<a name="759"></a>			bInstantHit = true;
+<a name="760"></a>		else
+<a name="761"></a>		{
+<a name="762"></a>			CheckDist = FMax(CheckDist, <span class="source_int">0.5</span> * FireMode[<span class="source_type">m</span>].ProjectileClass.Default.Speed);
+<a name="763"></a>	        CheckDist = FMax(CheckDist, <span class="source_int">300</span>);
+<a name="764"></a>	        CheckDist = FMin(CheckDist, VSize(<span class="source_type">Other</span>.Location - Location));
+<a name="765"></a>		}
+<a name="766"></a>	}
+<a name="767"></a>    <span class="source_comment">// check that would hit target, and not a friendly
+</span><a name="768"></a>    GetAxes(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.<span class="source_type">Rotation</span>, <span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>);
+<a name="769"></a>    projStart = GetFireStart(<span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>);
+<a name="770"></a>    if ( bInstantHit )
+<a name="771"></a>        <span class="source_type">HitActor</span> = <span class="source_type">Instigator</span>.Trace(<span class="source_type">HitLocation</span>, <span class="source_type">HitNormal</span>, <span class="source_type">Other</span>.Location + <span class="source_type">Other</span>.CollisionHeight * vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0.8</span>), projStart, true);
+<a name="772"></a>    else
+<a name="773"></a>    {
+<a name="774"></a>        <span class="source_comment">// for non-instant hit, only check partial path (since others may move out of the way)
+</span><a name="775"></a>        <span class="source_type">HitActor</span> = <span class="source_type">Instigator</span>.Trace(<span class="source_type">HitLocation</span>, <span class="source_type">HitNormal</span>,
+<a name="776"></a>                projStart + CheckDist * Normal(<span class="source_type">Other</span>.Location + <span class="source_type">Other</span>.CollisionHeight * vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0.8</span>) - Location),
+<a name="777"></a>                projStart, true);
+<a name="778"></a>    }
+<a name="779"></a>
+<a name="780"></a><span class="source_comment">//    if( (HitActor != None) && HitActor.IsA('ROCollisionAttachment'))
+</span><a name="781"></a><span class="source_comment">//    {
+</span><a name="782"></a><span class="source_comment">//    	log(self$"'s trace hit "$HitActor.Base$" Collision attachment");
+</span><a name="783"></a><span class="source_comment">//    }
+</span><a name="784"></a>
+<a name="785"></a>	<span class="source_comment">// if _RO_
+</span><a name="786"></a>	<span class="source_comment">// Extra friendly fire checking
+</span><a name="787"></a>	if (!<span class="source_type">Instigator</span>.IsHumanControlled() )
+<a name="788"></a>	{
+<a name="789"></a>		foreach VisibleCollidingActors( <span class="source_type">class</span> <span class="source_name">'Pawn'</span>, Victims, <span class="source_int">3000</span> ) <span class="source_comment">//, RadiusHitLocation
+</span><a name="790"></a>		{
+<a name="791"></a>			if( Victims != <span class="source_type">Instigator</span> && <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.SameTeamAs(Victims.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>))
+<a name="792"></a>			{
+<a name="793"></a>				FriendlyDist = VSizeSquared(<span class="source_type">Instigator</span>.Location - Victims.Location);
+<a name="794"></a>
+<a name="795"></a>				if( FriendlyDist &lt; <span class="source_int">22500</span> ) <span class="source_comment">//2.5 meters
+</span><a name="796"></a>				{
+<a name="797"></a>					MinAngle = <span class="source_int">0.85</span>;
+<a name="798"></a>				}
+<a name="799"></a>				else if( FriendlyDist &lt; <span class="source_int">90000</span> ) <span class="source_comment">//5.0 meters
+</span><a name="800"></a>				{
+<a name="801"></a>					MinAngle = <span class="source_int">0.95</span>;
+<a name="802"></a>				}
+<a name="803"></a>				else if( FriendlyDist &lt; <span class="source_int">360000</span> ) <span class="source_comment">//10.0 meters
+</span><a name="804"></a>				{
+<a name="805"></a>					MinAngle = <span class="source_int">0.98</span>;
+<a name="806"></a>				}
+<a name="807"></a>				else
+<a name="808"></a>				{
+<a name="809"></a>					MinAngle = <span class="source_int">0.99</span>;
+<a name="810"></a>				}
+<a name="811"></a>
+<a name="812"></a>	  			lookdir = Normal((<span class="source_type">Other</span>.Location + <span class="source_type">Other</span>.CollisionHeight * vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0.8</span>))-projStart);
+<a name="813"></a>				<span class="source_type">dir</span> = Normal(Victims.Location - <span class="source_type">Instigator</span>.Location);
+<a name="814"></a>
+<a name="815"></a>	           	DiffAngle = lookdir dot <span class="source_type">dir</span>;
+<a name="816"></a>
+<a name="817"></a>	           	if(  DiffAngle &gt; MinAngle )
+<a name="818"></a>	           	{
+<a name="819"></a>	           		<span class="source_comment">//log("Not firing because we might hit a friendly with a DiffAngle of "$DiffAngle);
+</span><a name="820"></a>	           		return false;
+<a name="821"></a>	           	}
+<a name="822"></a>
+<a name="823"></a>			}
+<a name="824"></a>		}
+<a name="825"></a>	}
+<a name="826"></a>
+<a name="827"></a>    if ( (<span class="source_type">HitActor</span> == None) || (<span class="source_type">HitActor</span> == <span class="source_type">Other</span>) )
+<a name="828"></a>		bShouldAttack = true;<span class="source_comment">//return true;
+</span><a name="829"></a>	else if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">HitActor</span>) == None )
+<a name="830"></a>		bShouldAttack = !<span class="source_type">HitActor</span>.BlocksShotAt(<span class="source_type">Other</span>);<span class="source_comment">//return !HitActor.BlocksShotAt(Other);
+</span><a name="831"></a>	else if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">HitActor</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None) || !<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.SameTeamAs(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">HitActor</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) )
+<a name="832"></a>        bShouldAttack = true;<span class="source_comment">//return true;
+</span><a name="833"></a>
+<a name="834"></a><span class="source_comment">//	if( Pawn(HitActor) != none && Instigator.Controller.SameTeamAs(Pawn(HitActor).Controller))
+</span><a name="835"></a><span class="source_comment">//	{
+</span><a name="836"></a><span class="source_comment">//		log("Weapon "$Instigator$"'s shot would hit "$Other$" who is on the same team and should attack is "$bShouldAttack);
+</span><a name="837"></a><span class="source_comment">//	}
+</span><a name="838"></a>
+<a name="839"></a>    return bShouldAttack;<span class="source_comment">//false;
+</span><a name="840"></a>}
+<a name="841"></a>
+<a name="842"></a>
+<a name="843"></a><span class="source_comment">//=================================================================
+</span><a name="844"></a>
+<a name="845"></a>simulated function PostBeginPlay()
+<a name="846"></a>{
+<a name="847"></a>    local <span class="source_type">int</span> <span class="source_type">m</span>;
+<a name="848"></a>    Super.PostBeginPlay();
+<a name="849"></a>    for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="850"></a>    {
+<a name="851"></a>        if (FireModeClass[<span class="source_type">m</span>] != None)
+<a name="852"></a>        {
+<a name="853"></a>            FireMode[<span class="source_type">m</span>] = new(self) FireModeClass[<span class="source_type">m</span>];
+<a name="854"></a>            if ( FireMode[<span class="source_type">m</span>] != None )
+<a name="855"></a>				AmmoClass[<span class="source_type">m</span>] = FireMode[<span class="source_type">m</span>].AmmoClass;
+<a name="856"></a>        }
+<a name="857"></a>     }
+<a name="858"></a>     InitWeaponFires();
+<a name="859"></a>
+<a name="860"></a>     for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="861"></a>    {
+<a name="862"></a>        if (FireMode[<span class="source_type">m</span>] != None)
+<a name="863"></a>        {
+<a name="864"></a>            FireMode[<span class="source_type">m</span>].ThisModeNum = <span class="source_type">m</span>;
+<a name="865"></a>            FireMode[<span class="source_type">m</span>].<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> = self;
+<a name="866"></a>            FireMode[<span class="source_type">m</span>].<span class="source_type">Instigator</span> = <span class="source_type">Instigator</span>;
+<a name="867"></a>            FireMode[<span class="source_type">m</span>].<span class="source_type">Level</span> = <span class="source_type">Level</span>;
+<a name="868"></a>            FireMode[<span class="source_type">m</span>].<span class="source_type">Owner</span> = self;
+<a name="869"></a>			FireMode[<span class="source_type">m</span>].PreBeginPlay();
+<a name="870"></a>			FireMode[<span class="source_type">m</span>].BeginPlay();
+<a name="871"></a>			FireMode[<span class="source_type">m</span>].PostBeginPlay();
+<a name="872"></a>			FireMode[<span class="source_type">m</span>].SetInitialState();
+<a name="873"></a>			FireMode[<span class="source_type">m</span>].PostNetBeginPlay();
+<a name="874"></a>		}
+<a name="875"></a>    }
+<a name="876"></a>
+<a name="877"></a>	if ( <span class="source_type">Level</span>.bDropDetail || (<span class="source_type">Level</span>.DetailMode == DM_Low) )
+<a name="878"></a>		MaxLights = Min(<span class="source_int">4</span>,MaxLights);
+<a name="879"></a>
+<a name="880"></a>	if ( SmallViewOffset == vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>) )
+<a name="881"></a>		SmallViewOffset = Default.PlayerviewOffset;
+<a name="882"></a>
+<a name="883"></a>	if ( SmallEffectOffset == vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>) )
+<a name="884"></a>		SmallEffectOffset = EffectOffset + Default.PlayerViewOffset - SmallViewOffset;
+<a name="885"></a>
+<a name="886"></a>	if ( bUseOldWeaponMesh && (OldMesh != None) )
+<a name="887"></a>	{
+<a name="888"></a>		bInitOldMesh = true;
+<a name="889"></a>		LinkMesh(OldMesh);
+<a name="890"></a>	}
+<a name="891"></a>	if ( <span class="source_type">Level</span>.GRI != None )
+<a name="892"></a>		CheckSuperBerserk();
+<a name="893"></a>}
+<a name="894"></a>
+<a name="895"></a>simulated function SetGRI(<span class="source_type"><a href="../engine/gamereplicationinfo.html" class="source">GameReplicationInfo</a></span> G)
+<a name="896"></a>{
+<a name="897"></a>	CheckSuperBerserk();
+<a name="898"></a>}
+<a name="899"></a>
+<a name="900"></a>simulated function Destroyed()
+<a name="901"></a>{
+<a name="902"></a>    local <span class="source_type">int</span> <span class="source_type">m</span>;
+<a name="903"></a>
+<a name="904"></a>    <span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = None;
+<a name="905"></a>
+<a name="906"></a>    for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="907"></a>    {
+<a name="908"></a>		if ( FireMode[<span class="source_type">m</span>] != None )
+<a name="909"></a>			FireMode[<span class="source_type">m</span>].DestroyEffects();
+<a name="910"></a>        if (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>] != None)
+<a name="911"></a>        {
+<a name="912"></a>            <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>].Destroy();
+<a name="913"></a>            <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>] = None;
+<a name="914"></a>        }
+<a name="915"></a>    }
+<a name="916"></a>    Super.Destroyed();
+<a name="917"></a>}
+<a name="918"></a>
+<a name="919"></a>simulated function Reselect()
+<a name="920"></a>{
+<a name="921"></a>}
+<a name="922"></a>
+<a name="923"></a>simulated function <span class="source_type">bool</span> WeaponCentered()
+<a name="924"></a>{
+<a name="925"></a>	return ( bSpectated || (Hand &gt; <span class="source_int">1</span>) );
+<a name="926"></a>}
+<a name="927"></a>
+<a name="928"></a>simulated event RenderOverlays( <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> )
+<a name="929"></a>{
+<a name="930"></a>    local <span class="source_type">int</span> <span class="source_type">m</span>;
+<a name="931"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> NewScale3D;
+<a name="932"></a>	local <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> CenteredRotation;
+<a name="933"></a>	local <span class="source_type">name</span> AnimSeq;
+<a name="934"></a>	local <span class="source_type">float</span> frame,rate;
+<a name="935"></a>
+<a name="936"></a>    if (<span class="source_type">Instigator</span> == None)
+<a name="937"></a>        return;
+<a name="938"></a>
+<a name="939"></a>	if ( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> != None )
+<a name="940"></a>		Hand = <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.Handedness;
+<a name="941"></a>
+<a name="942"></a>    if ((Hand &lt; -<span class="source_int">1.0</span>) || (Hand &gt; <span class="source_int">1.0</span>))
+<a name="943"></a>        return;
+<a name="944"></a>
+<a name="945"></a>    <span class="source_comment">// draw muzzleflashes/smoke for all fire modes so idle state won't
+</span><a name="946"></a>    <span class="source_comment">// cause emitters to just disappear
+</span><a name="947"></a>    for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="948"></a>    {
+<a name="949"></a>        if (FireMode[<span class="source_type">m</span>] != None)
+<a name="950"></a>        {
+<a name="951"></a>            FireMode[<span class="source_type">m</span>].DrawMuzzleFlash(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>);
+<a name="952"></a>        }
+<a name="953"></a>    }
+<a name="954"></a>
+<a name="955"></a>	if ( (OldMesh != None) && (bUseOldWeaponMesh != (OldMesh == <span class="source_type">Mesh</span>)) )
+<a name="956"></a>	{
+<a name="957"></a>		GetAnimParams(<span class="source_int">0</span>,AnimSeq,frame,rate);
+<a name="958"></a>		bInitOldMesh = true;
+<a name="959"></a>		if ( bUseOldWeaponMesh )
+<a name="960"></a>			LinkMesh(OldMesh);
+<a name="961"></a>		else
+<a name="962"></a>			LinkMesh(Default.<span class="source_type">Mesh</span>);
+<a name="963"></a>		PlayAnim(AnimSeq,rate,<span class="source_int">0.0</span>);
+<a name="964"></a>	}
+<a name="965"></a>
+<a name="966"></a>    if ( (Hand != RenderedHand) || bInitOldMesh )
+<a name="967"></a>    {
+<a name="968"></a>		newScale3D = Default.DrawScale3D;
+<a name="969"></a>		if ( Hand != <span class="source_int">0</span> )
+<a name="970"></a>			newScale3D.<span class="source_type">Y</span> *= Hand;
+<a name="971"></a>		SetDrawScale3D(newScale3D);
+<a name="972"></a>		SetDrawScale(Default.DrawScale);
+<a name="973"></a>		CenteredRoll = Default.CenteredRoll;
+<a name="974"></a>		CenteredYaw = Default.CenteredYaw;
+<a name="975"></a>		CenteredOffsetY = Default.CenteredOffsetY;
+<a name="976"></a>		PlayerViewPivot = Default.PlayerViewPivot;
+<a name="977"></a>		SmallViewOffset = Default.SmallViewOffset;
+<a name="978"></a>		if ( SmallViewOffset == vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>) )
+<a name="979"></a>			SmallViewOffset = Default.PlayerviewOffset;
+<a name="980"></a>		bInitOldMesh = false;
+<a name="981"></a>		if ( Default.SmallEffectOffset == vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>) )
+<a name="982"></a>			SmallEffectOffset = EffectOffset + Default.PlayerViewOffset - SmallViewOffset;
+<a name="983"></a>		else
+<a name="984"></a>			SmallEffectOffset = Default.SmallEffectOffset;
+<a name="985"></a>		if ( <span class="source_type">Mesh</span> == OldMesh )
+<a name="986"></a>		{
+<a name="987"></a>			SmallEffectOffset = EffectOffset + OldPlayerViewOffset - OldSmallViewOffset;
+<a name="988"></a>			PlayerViewPivot = OldPlayerViewPivot;
+<a name="989"></a>			SmallViewOffset = OldSmallViewOffset;
+<a name="990"></a>			if ( Hand != <span class="source_int">0</span> )
+<a name="991"></a>			{
+<a name="992"></a>				PlayerViewPivot.Roll *= Hand;
+<a name="993"></a>				PlayerViewPivot.Yaw *= Hand;
+<a name="994"></a>			}
+<a name="995"></a>			CenteredRoll = OldCenteredRoll;
+<a name="996"></a>			CenteredYaw = OldCenteredYaw;
+<a name="997"></a>			CenteredOffsetY = OldCenteredOffsetY;
+<a name="998"></a>			SetDrawScale(OldDrawScale);
+<a name="999"></a>		}
+<a name="1000"></a>		else if ( Hand == <span class="source_int">0</span> )
+<a name="1001"></a>		{
+<a name="1002"></a>			PlayerViewPivot.Roll = Default.PlayerViewPivot.Roll;
+<a name="1003"></a>			PlayerViewPivot.Yaw = Default.PlayerViewPivot.Yaw;
+<a name="1004"></a>		}
+<a name="1005"></a>		else
+<a name="1006"></a>		{
+<a name="1007"></a>			PlayerViewPivot.Roll = Default.PlayerViewPivot.Roll * Hand;
+<a name="1008"></a>			PlayerViewPivot.Yaw = Default.PlayerViewPivot.Yaw * Hand;
+<a name="1009"></a>		}
+<a name="1010"></a>		RenderedHand = Hand;
+<a name="1011"></a>	}
+<a name="1012"></a>	if ( <span class="source_type">class</span><span class="source_name">'PlayerController'</span>.Default.bSmallWeapons )
+<a name="1013"></a>		PlayerViewOffset = SmallViewOffset;
+<a name="1014"></a>	else if ( <span class="source_type">Mesh</span> == OldMesh )
+<a name="1015"></a>		PlayerViewOffset = OldPlayerViewOffset;
+<a name="1016"></a>	else
+<a name="1017"></a>		PlayerViewOffset = Default.PlayerViewOffset;
+<a name="1018"></a>	if ( Hand == <span class="source_int">0</span> )
+<a name="1019"></a>		PlayerViewOffset.<span class="source_type">Y</span> = CenteredOffsetY;
+<a name="1020"></a>	else
+<a name="1021"></a>		PlayerViewOffset.<span class="source_type">Y</span> *= Hand;
+<a name="1022"></a>
+<a name="1023"></a>    SetLocation( <span class="source_type">Instigator</span>.Location + <span class="source_type">Instigator</span>.CalcDrawOffset(self) );
+<a name="1024"></a>    if ( Hand == <span class="source_int">0</span> )
+<a name="1025"></a>    {
+<a name="1026"></a>		CenteredRotation = <span class="source_type">Instigator</span>.GetViewRotation();
+<a name="1027"></a>		CenteredRotation.Yaw += CenteredYaw;
+<a name="1028"></a>		CenteredRotation.Roll = CenteredRoll;
+<a name="1029"></a>	    SetRotation(CenteredRotation);
+<a name="1030"></a>    }
+<a name="1031"></a>    else
+<a name="1032"></a>	    SetRotation( <span class="source_type">Instigator</span>.GetViewRotation() );
+<a name="1033"></a>
+<a name="1034"></a>	PreDrawFPWeapon();	<span class="source_comment">// Laurent -- Hook to override things before render (like rotation if using a staticmesh)
+</span><a name="1035"></a>
+<a name="1036"></a>    bDrawingFirstPerson = true;
+<a name="1037"></a>    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawActor(self, false, false, DisplayFOV);
+<a name="1038"></a>    bDrawingFirstPerson = false;
+<a name="1039"></a>	if ( Hand == <span class="source_int">0</span> )
+<a name="1040"></a>		PlayerViewOffset.<span class="source_type">Y</span> = <span class="source_int">0</span>;
+<a name="1041"></a>}
+<a name="1042"></a>
+<a name="1043"></a>simulated function PreDrawFPWeapon();
+<a name="1044"></a>
+<a name="1045"></a>simulated function SetHand(<span class="source_type">float</span> InHand)
+<a name="1046"></a>{
+<a name="1047"></a>    Hand = InHand;
+<a name="1048"></a>}
+<a name="1049"></a>
+<a name="1050"></a>simulated function GetViewAxes( out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> xaxis, out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> yaxis, out <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">zaxis</span> )
+<a name="1051"></a>{
+<a name="1052"></a>    if ( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> == None )
+<a name="1053"></a>        GetAxes( <span class="source_type">Instigator</span>.<span class="source_type">Rotation</span>, xaxis, yaxis, <span class="source_type">zaxis</span> );
+<a name="1054"></a>    else
+<a name="1055"></a>        GetAxes( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.<span class="source_type">Rotation</span>, xaxis, yaxis, <span class="source_type">zaxis</span> );
+<a name="1056"></a>}
+<a name="1057"></a>
+<a name="1058"></a>simulated function <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> CenteredEffectStart()
+<a name="1059"></a>{
+<a name="1060"></a>	return <span class="source_type">Instigator</span>.Location;
+<a name="1061"></a>}
+<a name="1062"></a>
+<a name="1063"></a>simulated function <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> GetEffectStart()
+<a name="1064"></a>{
+<a name="1065"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">X</span>,<span class="source_type">Y</span>,<span class="source_type">Z</span>;
+<a name="1066"></a>
+<a name="1067"></a>    <span class="source_comment">// jjs - this function should actually never be called in third person views
+</span><a name="1068"></a>    <span class="source_comment">// any effect that needs a 3rdp weapon offset should figure it out itself
+</span><a name="1069"></a>
+<a name="1070"></a>    <span class="source_comment">// 1st person
+</span><a name="1071"></a>    if (<span class="source_type">Instigator</span>.IsFirstPerson())
+<a name="1072"></a>    {
+<a name="1073"></a>        if ( WeaponCentered() )
+<a name="1074"></a>			return CenteredEffectStart();
+<a name="1075"></a>
+<a name="1076"></a>        GetViewAxes(<span class="source_type">X</span>, <span class="source_type">Y</span>, <span class="source_type">Z</span>);
+<a name="1077"></a>        if ( <span class="source_type">class</span><span class="source_name">'PlayerController'</span>.Default.bSmallWeapons )
+<a name="1078"></a>			return (<span class="source_type">Instigator</span>.Location +
+<a name="1079"></a>				<span class="source_type">Instigator</span>.CalcDrawOffset(self) +
+<a name="1080"></a>				SmallEffectOffset.<span class="source_type">X</span> * <span class="source_type">X</span>  +
+<a name="1081"></a>				SmallEffectOffset.<span class="source_type">Y</span> * <span class="source_type">Y</span> * Hand +
+<a name="1082"></a>				SmallEffectOffset.<span class="source_type">Z</span> * <span class="source_type">Z</span>);
+<a name="1083"></a>        else
+<a name="1084"></a>			return (<span class="source_type">Instigator</span>.Location +
+<a name="1085"></a>				<span class="source_type">Instigator</span>.CalcDrawOffset(self) +
+<a name="1086"></a>				EffectOffset.<span class="source_type">X</span> * <span class="source_type">X</span> +
+<a name="1087"></a>				EffectOffset.<span class="source_type">Y</span> * <span class="source_type">Y</span> * Hand +
+<a name="1088"></a>				EffectOffset.<span class="source_type">Z</span> * <span class="source_type">Z</span>);
+<a name="1089"></a>    }
+<a name="1090"></a>    <span class="source_comment">// 3rd person
+</span><a name="1091"></a>    else
+<a name="1092"></a>    {
+<a name="1093"></a>        return (<span class="source_type">Instigator</span>.Location +
+<a name="1094"></a>            <span class="source_type">Instigator</span>.EyeHeight*Vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0.5</span>) +
+<a name="1095"></a>            <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type">Instigator</span>.<span class="source_type">Rotation</span>) * <span class="source_int">40.0</span>);
+<a name="1096"></a>    }
+<a name="1097"></a>}
+<a name="1098"></a>
+<a name="1099"></a>simulated function IncrementFlashCount(<span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="1100"></a>{
+<a name="1101"></a>    if ( <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor) != None )
+<a name="1102"></a>    {
+<a name="1103"></a>        if (<span class="source_type">Mode</span> == <span class="source_int">0</span>)
+<a name="1104"></a>            <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor).FiringMode = <span class="source_int">0</span>;
+<a name="1105"></a>        else
+<a name="1106"></a>            <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor).FiringMode = <span class="source_int">1</span>;
+<a name="1107"></a>        ThirdPersonActor.NetUpdateTime = <span class="source_type">Level</span>.TimeSeconds - <span class="source_int">1</span>;
+<a name="1108"></a>        <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor).FlashCount++;
+<a name="1109"></a>        <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor).ThirdPersonEffects();
+<a name="1110"></a>    }
+<a name="1111"></a>}
+<a name="1112"></a>
+<a name="1113"></a>simulated function ZeroFlashCount(<span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="1114"></a>{
+<a name="1115"></a>    if ( <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor) != None )
+<a name="1116"></a>    {
+<a name="1117"></a>        if (<span class="source_type">Mode</span> == <span class="source_int">0</span>)
+<a name="1118"></a>            <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor).FiringMode = <span class="source_int">0</span>;
+<a name="1119"></a>        else
+<a name="1120"></a>            <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor).FiringMode = <span class="source_int">1</span>;
+<a name="1121"></a>        ThirdPersonActor.NetUpdateTime = <span class="source_type">Level</span>.TimeSeconds - <span class="source_int">1</span>;
+<a name="1122"></a>        <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor).FlashCount = <span class="source_int">0</span>;
+<a name="1123"></a>        <span class="source_type"><a href="../engine/weaponattachment.html" class="source">WeaponAttachment</a></span>(ThirdPersonActor).ThirdPersonEffects();
+<a name="1124"></a>    }
+<a name="1125"></a>}
+<a name="1126"></a>
+<a name="1127"></a>simulated function <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> WeaponChange( <span class="source_type">byte</span> <span class="source_type">F</span>, <span class="source_type">bool</span> <span class="source_type">bSilent</span> )
+<a name="1128"></a>{
+<a name="1129"></a>    local <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> newWeapon;
+<a name="1130"></a>
+<a name="1131"></a>    if ( InventoryGroup == <span class="source_type">F</span> )
+<a name="1132"></a>    {
+<a name="1133"></a>        if ( !HasAmmo() )
+<a name="1134"></a>        {
+<a name="1135"></a>            if ( <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> == None )
+<a name="1136"></a>                newWeapon = None;
+<a name="1137"></a>            else
+<a name="1138"></a>                newWeapon = <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>.WeaponChange(<span class="source_type">F</span>,<span class="source_type">bSilent</span>);
+<a name="1139"></a>
+<a name="1140"></a>            if ( !<span class="source_type">bSilent</span> && (newWeapon == None) && <span class="source_type">Instigator</span>.IsHumanControlled() )
+<a name="1141"></a>                <span class="source_type">Instigator</span>.ClientMessage( ItemName$MessageNoAmmo );
+<a name="1142"></a>
+<a name="1143"></a>            return newWeapon;
+<a name="1144"></a>        }
+<a name="1145"></a>        else
+<a name="1146"></a>            return self;
+<a name="1147"></a>    }
+<a name="1148"></a>    else if ( <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> == None )
+<a name="1149"></a>        return None;
+<a name="1150"></a>    else
+<a name="1151"></a>        return <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>.WeaponChange(<span class="source_type">F</span>,<span class="source_type">bSilent</span>);
+<a name="1152"></a>}
+<a name="1153"></a>
+<a name="1154"></a>simulated function <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> PrevWeapon(<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> CurrentChoice, <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> CurrentWeapon)
+<a name="1155"></a>{
+<a name="1156"></a>    if ( HasAmmo() )
+<a name="1157"></a>    {
+<a name="1158"></a>        if ( (CurrentChoice == None) )
+<a name="1159"></a>        {
+<a name="1160"></a>            if ( CurrentWeapon != self )
+<a name="1161"></a>                CurrentChoice = self;
+<a name="1162"></a>        }
+<a name="1163"></a>        else if ( InventoryGroup == CurrentWeapon.InventoryGroup )
+<a name="1164"></a>        {
+<a name="1165"></a>            if ( (GroupOffset &lt; CurrentWeapon.GroupOffset)
+<a name="1166"></a>                && ((CurrentChoice.InventoryGroup != InventoryGroup) || (GroupOffset &gt; CurrentChoice.GroupOffset)) )
+<a name="1167"></a>                CurrentChoice = self;
+<a name="1168"></a>		}
+<a name="1169"></a>        else if ( InventoryGroup == CurrentChoice.InventoryGroup )
+<a name="1170"></a>        {
+<a name="1171"></a>            if ( GroupOffset &gt; CurrentChoice.GroupOffset )
+<a name="1172"></a>                CurrentChoice = self;
+<a name="1173"></a>        }
+<a name="1174"></a>        else if ( InventoryGroup &gt; CurrentChoice.InventoryGroup )
+<a name="1175"></a>        {
+<a name="1176"></a>			if ( (InventoryGroup &lt; CurrentWeapon.InventoryGroup)
+<a name="1177"></a>                || (CurrentChoice.InventoryGroup &gt; CurrentWeapon.InventoryGroup) )
+<a name="1178"></a>                CurrentChoice = self;
+<a name="1179"></a>        }
+<a name="1180"></a>        else if ( (CurrentChoice.InventoryGroup &gt; CurrentWeapon.InventoryGroup)
+<a name="1181"></a>                && (InventoryGroup &lt; CurrentWeapon.InventoryGroup) )
+<a name="1182"></a>            CurrentChoice = self;
+<a name="1183"></a>    }
+<a name="1184"></a>    if ( <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> == None )
+<a name="1185"></a>        return CurrentChoice;
+<a name="1186"></a>    else
+<a name="1187"></a>        return <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>.PrevWeapon(CurrentChoice,CurrentWeapon);
+<a name="1188"></a>}
+<a name="1189"></a>
+<a name="1190"></a>simulated function <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> NextWeapon(<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> CurrentChoice, <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> CurrentWeapon)
+<a name="1191"></a>{
+<a name="1192"></a>    if ( HasAmmo() )
+<a name="1193"></a>    {
+<a name="1194"></a>        if ( (CurrentChoice == None) )
+<a name="1195"></a>        {
+<a name="1196"></a>            if ( CurrentWeapon != self )
+<a name="1197"></a>                CurrentChoice = self;
+<a name="1198"></a>        }
+<a name="1199"></a>        else if ( InventoryGroup == CurrentWeapon.InventoryGroup )
+<a name="1200"></a>        {
+<a name="1201"></a>            if ( (GroupOffset &gt; CurrentWeapon.GroupOffset)
+<a name="1202"></a>                && ((CurrentChoice.InventoryGroup != InventoryGroup) || (GroupOffset &lt; CurrentChoice.GroupOffset)) )
+<a name="1203"></a>                CurrentChoice = self;
+<a name="1204"></a>        }
+<a name="1205"></a>        else if ( InventoryGroup == CurrentChoice.InventoryGroup )
+<a name="1206"></a>        {
+<a name="1207"></a>			if ( GroupOffset &lt; CurrentChoice.GroupOffset )
+<a name="1208"></a>                CurrentChoice = self;
+<a name="1209"></a>        }
+<a name="1210"></a>
+<a name="1211"></a>        else if ( InventoryGroup &lt; CurrentChoice.InventoryGroup )
+<a name="1212"></a>        {
+<a name="1213"></a>            if ( (InventoryGroup &gt; CurrentWeapon.InventoryGroup)
+<a name="1214"></a>                || (CurrentChoice.InventoryGroup &lt; CurrentWeapon.InventoryGroup) )
+<a name="1215"></a>                CurrentChoice = self;
+<a name="1216"></a>        }
+<a name="1217"></a>        else if ( (CurrentChoice.InventoryGroup &lt; CurrentWeapon.InventoryGroup)
+<a name="1218"></a>                && (InventoryGroup &gt; CurrentWeapon.InventoryGroup) )
+<a name="1219"></a>            CurrentChoice = self;
+<a name="1220"></a>    }
+<a name="1221"></a>    if ( <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> == None )
+<a name="1222"></a>        return CurrentChoice;
+<a name="1223"></a>    else
+<a name="1224"></a>        return <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>.NextWeapon(CurrentChoice,CurrentWeapon);
+<a name="1225"></a>}
+<a name="1226"></a>
+<a name="1227"></a>
+<a name="1228"></a>function HolderDied()
+<a name="1229"></a>{
+<a name="1230"></a>    local <span class="source_type">int</span> <span class="source_type">m</span>;
+<a name="1231"></a>
+<a name="1232"></a>    for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="1233"></a>    {
+<a name="1234"></a>		<span class="source_comment">// if _RO_
+</span><a name="1235"></a>		if( FireMode[<span class="source_type">m</span>] == none )
+<a name="1236"></a>			continue;
+<a name="1237"></a>		<span class="source_comment">// End _RO_
+</span><a name="1238"></a>
+<a name="1239"></a>        if (FireMode[<span class="source_type">m</span>].bIsFiring)
+<a name="1240"></a>        {
+<a name="1241"></a>            StopFire(<span class="source_type">m</span>);
+<a name="1242"></a>            if (FireMode[<span class="source_type">m</span>].bFireOnRelease)
+<a name="1243"></a>                FireMode[<span class="source_type">m</span>].ModeDoFire();
+<a name="1244"></a>        }
+<a name="1245"></a>    }
+<a name="1246"></a>}
+<a name="1247"></a>
+<a name="1248"></a>simulated function <span class="source_type">bool</span> CanThrow()
+<a name="1249"></a>{
+<a name="1250"></a>	local <span class="source_type">int</span> <span class="source_type">Mode</span>;
+<a name="1251"></a>
+<a name="1252"></a>    for (<span class="source_type">Mode</span> = <span class="source_int">0</span>; <span class="source_type">Mode</span> &lt; NUM_FIRE_MODES; <span class="source_type">Mode</span>++)
+<a name="1253"></a>    {
+<a name="1254"></a>    	<span class="source_comment">// if _RO_
+</span><a name="1255"></a>		if( FireMode[<span class="source_type">Mode</span>] == none )
+<a name="1256"></a>			continue;
+<a name="1257"></a>		<span class="source_comment">// End _RO_
+</span><a name="1258"></a>
+<a name="1259"></a>	    if ( FireMode[<span class="source_type">Mode</span>].bFireOnRelease && FireMode[<span class="source_type">Mode</span>].bIsFiring )
+<a name="1260"></a>            return false;
+<a name="1261"></a>        if ( FireMode[<span class="source_type">Mode</span>].NextFireTime &gt; <span class="source_type">Level</span>.TimeSeconds)
+<a name="1262"></a>			return false;
+<a name="1263"></a>    }
+<a name="1264"></a>    return (bCanThrow && (ClientState == WS_ReadyToFire || (<span class="source_type">Level</span>.NetMode == NM_DedicatedServer) || (<span class="source_type">Level</span>.NetMode == NM_ListenServer))
+<a name="1265"></a>			&& HasAmmo() );
+<a name="1266"></a>}
+<a name="1267"></a>
+<a name="1268"></a>function DropFrom(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> StartLocation)
+<a name="1269"></a>{
+<a name="1270"></a>    local <span class="source_type">int</span> <span class="source_type">m</span>;
+<a name="1271"></a>	local <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span> <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>;
+<a name="1272"></a>
+<a name="1273"></a>    if (!bCanThrow || !HasAmmo())
+<a name="1274"></a>        return;
+<a name="1275"></a>
+<a name="1276"></a>    ClientWeaponThrown();
+<a name="1277"></a>
+<a name="1278"></a>    for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="1279"></a>    {
+<a name="1280"></a>    	<span class="source_comment">// if _RO_
+</span><a name="1281"></a>		if( FireMode[<span class="source_type">m</span>] == none )
+<a name="1282"></a>			continue;
+<a name="1283"></a>		<span class="source_comment">// End _RO_
+</span><a name="1284"></a>
+<a name="1285"></a>        if (FireMode[<span class="source_type">m</span>].bIsFiring)
+<a name="1286"></a>            StopFire(<span class="source_type">m</span>);
+<a name="1287"></a>    }
+<a name="1288"></a>
+<a name="1289"></a>	if ( <span class="source_type">Instigator</span> != None )
+<a name="1290"></a>	{
+<a name="1291"></a>		DetachFromPawn(<span class="source_type">Instigator</span>);
+<a name="1292"></a>	}
+<a name="1293"></a>
+<a name="1294"></a>	<span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span> = Spawn(PickupClass,,, StartLocation);
+<a name="1295"></a>	if ( <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span> != None )
+<a name="1296"></a>	{
+<a name="1297"></a>    	<span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>.InitDroppedPickupFor(self);
+<a name="1298"></a>	    <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>.Velocity = Velocity;
+<a name="1299"></a>        if (<span class="source_type">Instigator</span>.Health &gt; <span class="source_int">0</span>)
+<a name="1300"></a>            <span class="source_type"><a href="../engine/weaponpickup.html" class="source">WeaponPickup</a></span>(<span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>).bThrown = true;
+<a name="1301"></a>    }
+<a name="1302"></a>
+<a name="1303"></a>    Destroy();
+<a name="1304"></a>}
+<a name="1305"></a>
+<a name="1306"></a>simulated function DetachFromPawn(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">P</span>)
+<a name="1307"></a>{
+<a name="1308"></a>	Super.DetachFromPawn(<span class="source_type">P</span>);
+<a name="1309"></a>	<span class="source_type">P</span>.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = None;
+<a name="1310"></a>}
+<a name="1311"></a>
+<a name="1312"></a>simulated function ClientWeaponThrown()
+<a name="1313"></a>{
+<a name="1314"></a>    local <span class="source_type">int</span> <span class="source_type">m</span>;
+<a name="1315"></a>
+<a name="1316"></a>    <span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = None;
+<a name="1317"></a>    <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = None;
+<a name="1318"></a>
+<a name="1319"></a>    if( <span class="source_type">Level</span>.NetMode != NM_Client )
+<a name="1320"></a>        return;
+<a name="1321"></a>
+<a name="1322"></a>    <span class="source_type">Instigator</span>.DeleteInventory(self);
+<a name="1323"></a>    for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="1324"></a>    {
+<a name="1325"></a>        if (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>] != None)
+<a name="1326"></a>            <span class="source_type">Instigator</span>.DeleteInventory(<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>]);
+<a name="1327"></a>    }
+<a name="1328"></a>}
+<a name="1329"></a>
+<a name="1330"></a>function GiveTo(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">Other</span>, optional <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span> <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>)
+<a name="1331"></a>{
+<a name="1332"></a>    local <span class="source_type">int</span> <span class="source_type">m</span>;
+<a name="1333"></a>    local <span class="source_type"><a href="../engine/weapon.html" class="source">weapon</a></span> w;
+<a name="1334"></a>    local <span class="source_type">bool</span> bPossiblySwitch, bJustSpawned;
+<a name="1335"></a>
+<a name="1336"></a>    <span class="source_type">Instigator</span> = <span class="source_type">Other</span>;
+<a name="1337"></a>    W = <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>(<span class="source_type">Instigator</span>.FindInventoryType(<span class="source_type">class</span>));
+<a name="1338"></a>    if ( W == None || W.<span class="source_type">Class</span> != <span class="source_type">Class</span> ) <span class="source_comment">// added class check because somebody made FindInventoryType() return subclasses for some reason
+</span><a name="1339"></a>    {
+<a name="1340"></a>		bJustSpawned = true;
+<a name="1341"></a>        Super.GiveTo(<span class="source_type">Other</span>);
+<a name="1342"></a>        bPossiblySwitch = true;
+<a name="1343"></a>        W = self;
+<a name="1344"></a>    }
+<a name="1345"></a>    else if ( !W.HasAmmo() )
+<a name="1346"></a>	    bPossiblySwitch = true;
+<a name="1347"></a>
+<a name="1348"></a>    if ( <span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span> == None )
+<a name="1349"></a>        bPossiblySwitch = true;
+<a name="1350"></a>
+<a name="1351"></a>    for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="1352"></a>    {
+<a name="1353"></a>        if ( FireMode[<span class="source_type">m</span>] != None )
+<a name="1354"></a>        {
+<a name="1355"></a>            FireMode[<span class="source_type">m</span>].<span class="source_type">Instigator</span> = <span class="source_type">Instigator</span>;
+<a name="1356"></a>            W.GiveAmmo(<span class="source_type">m</span>,<span class="source_type"><a href="../engine/weaponpickup.html" class="source">WeaponPickup</a></span>(<span class="source_type"><a href="../engine/pickup.html" class="source">Pickup</a></span>),bJustSpawned);
+<a name="1357"></a>        }
+<a name="1358"></a>    }
+<a name="1359"></a>
+<a name="1360"></a>	if ( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> != W )
+<a name="1361"></a>		W.ClientWeaponSet(bPossiblySwitch);
+<a name="1362"></a>
+<a name="1363"></a>    if ( !bJustSpawned )
+<a name="1364"></a>	{
+<a name="1365"></a>        for (<span class="source_type">m</span> = <span class="source_int">0</span>; <span class="source_type">m</span> &lt; NUM_FIRE_MODES; <span class="source_type">m</span>++)
+<a name="1366"></a>            <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>] = None;
+<a name="1367"></a>		Destroy();
+<a name="1368"></a>	}
+<a name="1369"></a>}
+<a name="1370"></a>
+<a name="1371"></a>function GiveAmmo(<span class="source_type">int</span> <span class="source_type">m</span>, <span class="source_type"><a href="../engine/weaponpickup.html" class="source">WeaponPickup</a></span> WP, <span class="source_type">bool</span> bJustSpawned)
+<a name="1372"></a>{
+<a name="1373"></a>    local <span class="source_type">bool</span> bJustSpawnedAmmo;
+<a name="1374"></a>    local <span class="source_type">int</span> addAmount, InitialAmount;
+<a name="1375"></a>
+<a name="1376"></a>    if ( FireMode[<span class="source_type">m</span>] != None && FireMode[<span class="source_type">m</span>].AmmoClass != None )
+<a name="1377"></a>    {
+<a name="1378"></a>        <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>] = <span class="source_type"><a href="../engine/ammunition.html" class="source">Ammunition</a></span>(<span class="source_type">Instigator</span>.FindInventoryType(FireMode[<span class="source_type">m</span>].AmmoClass));
+<a name="1379"></a>		bJustSpawnedAmmo = false;
+<a name="1380"></a>
+<a name="1381"></a>		if ( bNoAmmoInstances )
+<a name="1382"></a>		{
+<a name="1383"></a>			if ( (FireMode[<span class="source_type">m</span>].AmmoClass == None) || ((<span class="source_type">m</span> != <span class="source_int">0</span>) && (FireMode[<span class="source_type">m</span>].AmmoClass == FireMode[<span class="source_int">0</span>].AmmoClass)) )
+<a name="1384"></a>				return;
+<a name="1385"></a>
+<a name="1386"></a>			InitialAmount = FireMode[<span class="source_type">m</span>].AmmoClass.Default.InitialAmount;
+<a name="1387"></a>			if ( (WP != None) && ((WP.AmmoAmount[<span class="source_int">0</span>] &gt; <span class="source_int">0</span>) || (WP.AmmoAmount[<span class="source_int">1</span>] &gt; <span class="source_int">0</span>))  )
+<a name="1388"></a>			{
+<a name="1389"></a>				InitialAmount = WP.AmmoAmount[<span class="source_type">m</span>];
+<a name="1390"></a>			}
+<a name="1391"></a>
+<a name="1392"></a>			if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>] != None )
+<a name="1393"></a>			{
+<a name="1394"></a>				addamount = InitialAmount + <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>].AmmoAmount;
+<a name="1395"></a>				<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>].Destroy();
+<a name="1396"></a>			}
+<a name="1397"></a>			else
+<a name="1398"></a>				addAmount = InitialAmount;
+<a name="1399"></a>
+<a name="1400"></a>			AddAmmo(addAmount,<span class="source_type">m</span>);
+<a name="1401"></a>		}
+<a name="1402"></a>		else
+<a name="1403"></a>		{
+<a name="1404"></a>			if ( (<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>] == None) && (FireMode[<span class="source_type">m</span>].AmmoClass != None) )
+<a name="1405"></a>			{
+<a name="1406"></a>				<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>] = Spawn(FireMode[<span class="source_type">m</span>].AmmoClass, <span class="source_type">Instigator</span>);
+<a name="1407"></a>				<span class="source_type">Instigator</span>.AddInventory(<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>]);
+<a name="1408"></a>				bJustSpawnedAmmo = true;
+<a name="1409"></a>			}
+<a name="1410"></a>			else if ( (<span class="source_type">m</span> == <span class="source_int">0</span>) || (FireMode[<span class="source_type">m</span>].AmmoClass != FireMode[<span class="source_int">0</span>].AmmoClass) )
+<a name="1411"></a>				bJustSpawnedAmmo = ( bJustSpawned || ((WP != None) && !WP.bWeaponStay) );
+<a name="1412"></a>
+<a name="1413"></a>			if ( (WP != None) && ((WP.AmmoAmount[<span class="source_int">0</span>] &gt; <span class="source_int">0</span>) || (WP.AmmoAmount[<span class="source_int">1</span>] &gt; <span class="source_int">0</span>))  )
+<a name="1414"></a>			{
+<a name="1415"></a>				addAmount = WP.AmmoAmount[<span class="source_type">m</span>];
+<a name="1416"></a>			}
+<a name="1417"></a>			else if ( bJustSpawnedAmmo )
+<a name="1418"></a>			{
+<a name="1419"></a>				addAmount = <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>].InitialAmount;
+<a name="1420"></a>			}
+<a name="1421"></a>
+<a name="1422"></a>			<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>].AddAmmo(addAmount);
+<a name="1423"></a>			<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">m</span>].GotoState(<span class="source_name">''</span>);
+<a name="1424"></a>		}
+<a name="1425"></a>    }
+<a name="1426"></a>}
+<a name="1427"></a>
+<a name="1428"></a>simulated function ClientWeaponSet(<span class="source_type">bool</span> bPossiblySwitch)
+<a name="1429"></a>{
+<a name="1430"></a>    local <span class="source_type">int</span> <span class="source_type">Mode</span>;
+<a name="1431"></a>
+<a name="1432"></a>    <span class="source_type">Instigator</span> = <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Owner</span>);
+<a name="1433"></a>
+<a name="1434"></a>    bPendingSwitch = bPossiblySwitch;
+<a name="1435"></a>
+<a name="1436"></a>    if( <span class="source_type">Instigator</span> == None )
+<a name="1437"></a>    {
+<a name="1438"></a>        GotoState(<span class="source_name">'PendingClientWeaponSet'</span>);
+<a name="1439"></a>        return;
+<a name="1440"></a>    }
+<a name="1441"></a>
+<a name="1442"></a>    for( <span class="source_type">Mode</span> = <span class="source_int">0</span>; <span class="source_type">Mode</span> &lt; NUM_FIRE_MODES; <span class="source_type">Mode</span>++ )
+<a name="1443"></a>    {
+<a name="1444"></a>        if( FireModeClass[<span class="source_type">Mode</span>] != None )
+<a name="1445"></a>        {
+<a name="1446"></a>			<span class="source_comment">// laurent -- added check for vehicles (ammo not replicated but unlimited)
+</span><a name="1447"></a>            if( ( FireMode[<span class="source_type">Mode</span>] == None ) || ( FireMode[<span class="source_type">Mode</span>].AmmoClass != None ) && !bNoAmmoInstances && <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">Mode</span>] == None && FireMode[<span class="source_type">Mode</span>].AmmoPerFire &gt; <span class="source_int">0</span> )
+<a name="1448"></a>            {
+<a name="1449"></a>                GotoState(<span class="source_name">'PendingClientWeaponSet'</span>);
+<a name="1450"></a>                return;
+<a name="1451"></a>            }
+<a name="1452"></a>        }
+<a name="1453"></a>
+<a name="1454"></a>        FireMode[<span class="source_type">Mode</span>].<span class="source_type">Instigator</span> = <span class="source_type">Instigator</span>;
+<a name="1455"></a>        FireMode[<span class="source_type">Mode</span>].<span class="source_type">Level</span> = <span class="source_type">Level</span>;
+<a name="1456"></a>    }
+<a name="1457"></a>
+<a name="1458"></a>    ClientState = WS_Hidden;
+<a name="1459"></a>    GotoState(<span class="source_name">'Hidden'</span>);
+<a name="1460"></a>
+<a name="1461"></a>    if( <span class="source_type">Level</span>.NetMode == NM_DedicatedServer || !<span class="source_type">Instigator</span>.IsHumanControlled() )
+<a name="1462"></a>        return;
+<a name="1463"></a>
+<a name="1464"></a>    if( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> == self || <span class="source_type">Instigator</span>.PendingWeapon == self ) <span class="source_comment">// this weapon was switched to while waiting for replication, switch to it now
+</span><a name="1465"></a>    {
+<a name="1466"></a>		if (<span class="source_type">Instigator</span>.PendingWeapon != None)
+<a name="1467"></a>            <span class="source_type">Instigator</span>.ChangedWeapon();
+<a name="1468"></a>        else
+<a name="1469"></a>            BringUp();
+<a name="1470"></a>        return;
+<a name="1471"></a>    }
+<a name="1472"></a>
+<a name="1473"></a>    if( <span class="source_type">Instigator</span>.PendingWeapon != None && <span class="source_type">Instigator</span>.PendingWeapon.bForceSwitch )
+<a name="1474"></a>        return;
+<a name="1475"></a>
+<a name="1476"></a>    if( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> == None )
+<a name="1477"></a>    {
+<a name="1478"></a>        <span class="source_type">Instigator</span>.PendingWeapon = self;
+<a name="1479"></a>        <span class="source_type">Instigator</span>.ChangedWeapon();
+<a name="1480"></a>    }
+<a name="1481"></a>    else if ( bPossiblySwitch && !<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.IsFiring() )
+<a name="1482"></a>    {
+<a name="1483"></a>		if ( <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != None && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).bNeverSwitchOnPickup )
+<a name="1484"></a>			return;
+<a name="1485"></a>        if ( <span class="source_type">Instigator</span>.PendingWeapon != None )
+<a name="1486"></a>        {
+<a name="1487"></a>            if ( RateSelf() &gt; <span class="source_type">Instigator</span>.PendingWeapon.RateSelf() )
+<a name="1488"></a>            {
+<a name="1489"></a>                <span class="source_type">Instigator</span>.PendingWeapon = self;
+<a name="1490"></a>                <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PutDown();
+<a name="1491"></a>            }
+<a name="1492"></a>        }
+<a name="1493"></a>        else if ( RateSelf() &gt; <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.RateSelf() )
+<a name="1494"></a>        {
+<a name="1495"></a>            <span class="source_type">Instigator</span>.PendingWeapon = self;
+<a name="1496"></a>            <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.PutDown();
+<a name="1497"></a>        }
+<a name="1498"></a>    }
+<a name="1499"></a>}
+<a name="1500"></a>
+<a name="1501"></a><span class="source_comment">// jdf ---
+</span><a name="1502"></a>simulated function ClientPlayForceFeedback( <span class="source_type">String</span> <span class="source_type">EffectName</span> )
+<a name="1503"></a>{
+<a name="1504"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="1505"></a>
+<a name="1506"></a>    <span class="source_type">PC</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="1507"></a>    if ( <span class="source_type">PC</span> != None && <span class="source_type">PC</span>.bEnableWeaponForceFeedback )
+<a name="1508"></a>    {
+<a name="1509"></a>        <span class="source_type">PC</span>.ClientPlayForceFeedback( <span class="source_type">EffectName</span> );
+<a name="1510"></a>    }
+<a name="1511"></a>}
+<a name="1512"></a>
+<a name="1513"></a>simulated function StopForceFeedback( <span class="source_type">String</span> <span class="source_type">EffectName</span> )
+<a name="1514"></a>{
+<a name="1515"></a>    local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="1516"></a>
+<a name="1517"></a>    <span class="source_type">PC</span> = <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="1518"></a>    if ( <span class="source_type">PC</span> != None && <span class="source_type">PC</span>.bEnableWeaponForceFeedback )
+<a name="1519"></a>    {
+<a name="1520"></a>        <span class="source_type">PC</span>.StopForceFeedback( <span class="source_type">EffectName</span> );
+<a name="1521"></a>    }
+<a name="1522"></a>}
+<a name="1523"></a><span class="source_comment">// --- jdf
+</span><a name="1524"></a>
+<a name="1525"></a>simulated function BringUp(optional <span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> PrevWeapon)
+<a name="1526"></a>{
+<a name="1527"></a>   local <span class="source_type">int</span> <span class="source_type">Mode</span>;
+<a name="1528"></a>
+<a name="1529"></a>    if ( ClientState == WS_Hidden )
+<a name="1530"></a>    {
+<a name="1531"></a>        PlayOwnedSound(SelectSound, SLOT_Interact,,,,, false);
+<a name="1532"></a>		ClientPlayForceFeedback(SelectForce);  <span class="source_comment">// jdf
+</span><a name="1533"></a>
+<a name="1534"></a>        if ( <span class="source_type">Instigator</span>.IsLocallyControlled() )
+<a name="1535"></a>        {
+<a name="1536"></a>            if ( (<span class="source_type">Mesh</span>!=None) && HasAnim(SelectAnim) )
+<a name="1537"></a>                PlayAnim(SelectAnim, SelectAnimRate, <span class="source_int">0.0</span>);
+<a name="1538"></a>        }
+<a name="1539"></a>
+<a name="1540"></a>        ClientState = WS_BringUp;
+<a name="1541"></a>        SetTimer(BringUpTime, false);
+<a name="1542"></a>    }
+<a name="1543"></a>    for (<span class="source_type">Mode</span> = <span class="source_int">0</span>; <span class="source_type">Mode</span> &lt; NUM_FIRE_MODES; <span class="source_type">Mode</span>++)
+<a name="1544"></a>	{
+<a name="1545"></a>		FireMode[<span class="source_type">Mode</span>].bIsFiring = false;
+<a name="1546"></a>		FireMode[<span class="source_type">Mode</span>].HoldTime = <span class="source_int">0.0</span>;
+<a name="1547"></a>		FireMode[<span class="source_type">Mode</span>].bServerDelayStartFire = false;
+<a name="1548"></a>		FireMode[<span class="source_type">Mode</span>].bServerDelayStopFire = false;
+<a name="1549"></a>		FireMode[<span class="source_type">Mode</span>].bInstantStop = false;
+<a name="1550"></a>	}
+<a name="1551"></a>	   if ( (PrevWeapon != None) && PrevWeapon.HasAmmo() && !PrevWeapon.bNoVoluntarySwitch )
+<a name="1552"></a>		OldWeapon = PrevWeapon;
+<a name="1553"></a>	else
+<a name="1554"></a>		OldWeapon = None;
+<a name="1555"></a>
+<a name="1556"></a>}
+<a name="1557"></a>
+<a name="1558"></a>simulated function <span class="source_type">bool</span> PutDown()
+<a name="1559"></a>{
+<a name="1560"></a>    local <span class="source_type">int</span> <span class="source_type">Mode</span>;
+<a name="1561"></a>
+<a name="1562"></a>    if (ClientState == WS_BringUp || ClientState == WS_ReadyToFire)
+<a name="1563"></a>    {
+<a name="1564"></a>        if ( (<span class="source_type">Instigator</span>.PendingWeapon != None) && !<span class="source_type">Instigator</span>.PendingWeapon.bForceSwitch )
+<a name="1565"></a>        {
+<a name="1566"></a>            for (<span class="source_type">Mode</span> = <span class="source_int">0</span>; <span class="source_type">Mode</span> &lt; NUM_FIRE_MODES; <span class="source_type">Mode</span>++)
+<a name="1567"></a>            {
+<a name="1568"></a>		    	<span class="source_comment">// if _RO_
+</span><a name="1569"></a>				if( FireMode[<span class="source_type">Mode</span>] == none )
+<a name="1570"></a>					continue;
+<a name="1571"></a>				<span class="source_comment">// End _RO_
+</span><a name="1572"></a>
+<a name="1573"></a>                if ( FireMode[<span class="source_type">Mode</span>].bFireOnRelease && FireMode[<span class="source_type">Mode</span>].bIsFiring )
+<a name="1574"></a>                    return false;
+<a name="1575"></a>                if ( FireMode[<span class="source_type">Mode</span>].NextFireTime &gt; <span class="source_type">Level</span>.TimeSeconds + FireMode[<span class="source_type">Mode</span>].FireRate*(<span class="source_int">1.f</span> - MinReloadPct))
+<a name="1576"></a>					DownDelay = FMax(DownDelay, FireMode[<span class="source_type">Mode</span>].NextFireTime - <span class="source_type">Level</span>.TimeSeconds - FireMode[<span class="source_type">Mode</span>].FireRate*(<span class="source_int">1.f</span> - MinReloadPct));
+<a name="1577"></a>            }
+<a name="1578"></a>        }
+<a name="1579"></a>
+<a name="1580"></a>        if (<span class="source_type">Instigator</span>.IsLocallyControlled())
+<a name="1581"></a>        {
+<a name="1582"></a>            for (<span class="source_type">Mode</span> = <span class="source_int">0</span>; <span class="source_type">Mode</span> &lt; NUM_FIRE_MODES; <span class="source_type">Mode</span>++)
+<a name="1583"></a>            {
+<a name="1584"></a>		    	<span class="source_comment">// if _RO_
+</span><a name="1585"></a>				if( FireMode[<span class="source_type">Mode</span>] == none )
+<a name="1586"></a>					continue;
+<a name="1587"></a>				<span class="source_comment">// End _RO_
+</span><a name="1588"></a>
+<a name="1589"></a>                if ( FireMode[<span class="source_type">Mode</span>].bIsFiring )
+<a name="1590"></a>                    ClientStopFire(<span class="source_type">Mode</span>);
+<a name="1591"></a>            }
+<a name="1592"></a>
+<a name="1593"></a>            if (  DownDelay &lt;= <span class="source_int">0</span> )
+<a name="1594"></a>            {
+<a name="1595"></a>				if ( ClientState == WS_BringUp )
+<a name="1596"></a>					TweenAnim(SelectAnim,PutDownTime);
+<a name="1597"></a>				else if ( HasAnim(PutDownAnim) )
+<a name="1598"></a>					PlayAnim(PutDownAnim, PutDownAnimRate, <span class="source_int">0.0</span>);
+<a name="1599"></a>			}
+<a name="1600"></a>        }
+<a name="1601"></a>        ClientState = WS_PutDown;
+<a name="1602"></a>        if ( <span class="source_type">Level</span>.GRI.bFastWeaponSwitching )
+<a name="1603"></a>			DownDelay = <span class="source_int">0</span>;
+<a name="1604"></a>        if ( DownDelay &gt; <span class="source_int">0</span> )
+<a name="1605"></a>			SetTimer(DownDelay, false);
+<a name="1606"></a>		else
+<a name="1607"></a>			SetTimer(PutDownTime, false);
+<a name="1608"></a>    }
+<a name="1609"></a>    for (<span class="source_type">Mode</span> = <span class="source_int">0</span>; <span class="source_type">Mode</span> &lt; NUM_FIRE_MODES; <span class="source_type">Mode</span>++)
+<a name="1610"></a>    {
+<a name="1611"></a>    	<span class="source_comment">// if _RO_
+</span><a name="1612"></a>		if( FireMode[<span class="source_type">Mode</span>] == none )
+<a name="1613"></a>			continue;
+<a name="1614"></a>		<span class="source_comment">// End _RO_
+</span><a name="1615"></a>
+<a name="1616"></a>		FireMode[<span class="source_type">Mode</span>].bServerDelayStartFire = false;
+<a name="1617"></a>		FireMode[<span class="source_type">Mode</span>].bServerDelayStopFire = false;
+<a name="1618"></a>	}
+<a name="1619"></a>    <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/ambientsound.html" class="source">AmbientSound</a></span> = None;
+<a name="1620"></a>    OldWeapon = None;
+<a name="1621"></a>    return true; <span class="source_comment">// return false if preventing weapon switch
+</span><a name="1622"></a>}
+<a name="1623"></a>
+<a name="1624"></a>simulated function Fire(<span class="source_type">float</span> <span class="source_type">F</span>)
+<a name="1625"></a>{
+<a name="1626"></a>}
+<a name="1627"></a>
+<a name="1628"></a>simulated function AltFire(<span class="source_type">float</span> <span class="source_type">F</span>)
+<a name="1629"></a>{
+<a name="1630"></a>}
+<a name="1631"></a>
+<a name="1632"></a>simulated event WeaponTick(<span class="source_type">float</span> <span class="source_type">dt</span>); <span class="source_comment">// only called on currently held weapon
+</span><a name="1633"></a>
+<a name="1634"></a>simulated function OutOfAmmo()
+<a name="1635"></a>{
+<a name="1636"></a>    if ( <span class="source_type">Instigator</span> == None || !<span class="source_type">Instigator</span>.IsLocallyControlled() || HasAmmo() )
+<a name="1637"></a>        return;
+<a name="1638"></a>
+<a name="1639"></a>    DoAutoSwitch();
+<a name="1640"></a>}
+<a name="1641"></a>
+<a name="1642"></a>simulated function DoAutoSwitch()
+<a name="1643"></a>{
+<a name="1644"></a>    <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.SwitchToBestWeapon();
+<a name="1645"></a>}
+<a name="1646"></a>
+<a name="1647"></a><span class="source_comment">//// client only ////
+</span><a name="1648"></a>simulated event ClientStartFire(<span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="1649"></a>{
+<a name="1650"></a>    if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.IsInState(<span class="source_name">'GameEnded'</span>) || <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Owner</span>).<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.IsInState(<span class="source_name">'RoundEnded'</span>) )
+<a name="1651"></a>        return;
+<a name="1652"></a>    if (Role &lt; ROLE_Authority)
+<a name="1653"></a>    {
+<a name="1654"></a>        if (StartFire(<span class="source_type">Mode</span>))
+<a name="1655"></a>        {
+<a name="1656"></a>            ServerStartFire(<span class="source_type">Mode</span>);
+<a name="1657"></a>        }
+<a name="1658"></a>    }
+<a name="1659"></a>    else
+<a name="1660"></a>    {
+<a name="1661"></a>        StartFire(<span class="source_type">Mode</span>);
+<a name="1662"></a>    }
+<a name="1663"></a>}
+<a name="1664"></a>
+<a name="1665"></a>simulated event ClientStopFire(<span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="1666"></a>{
+<a name="1667"></a>    if (Role &lt; ROLE_Authority)
+<a name="1668"></a>    {
+<a name="1669"></a>        <span class="source_comment">//Log("ClientStopFire"@Level.TimeSeconds);
+</span><a name="1670"></a>        StopFire(<span class="source_type">Mode</span>);
+<a name="1671"></a>    }
+<a name="1672"></a>    ServerStopFire(<span class="source_type">Mode</span>);
+<a name="1673"></a>}
+<a name="1674"></a>
+<a name="1675"></a>simulated function ClientWriteFire(<span class="source_type">string</span> <span class="source_type">Result</span>)
+<a name="1676"></a>{
+<a name="1677"></a>	log(self$<span class="source_string">" ServerStartFire! "</span>$<span class="source_type">Result</span>);
+<a name="1678"></a>}
+<a name="1679"></a>
+<a name="1680"></a><span class="source_comment">//// server only ////
+</span><a name="1681"></a>event ServerStartFire(<span class="source_type">byte</span> <span class="source_type">Mode</span>)
+<a name="1682"></a>{
+<a name="1683"></a>	if ( (<span class="source_type">Instigator</span> != None) && (<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> != self) )
+<a name="1684"></a>	{
+<a name="1685"></a>		if ( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> == None )
+<a name="1686"></a>			<span class="source_type">Instigator</span>.ServerChangedWeapon(None,self);
+<a name="1687"></a>		else
+<a name="1688"></a>			<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>.SynchronizeWeapon(self);
+<a name="1689"></a>		return;
+<a name="1690"></a>	}
+<a name="1691"></a>
+<a name="1692"></a>    if ( (FireMode[<span class="source_type">Mode</span>].NextFireTime &lt;= <span class="source_type">Level</span>.TimeSeconds + FireMode[<span class="source_type">Mode</span>].PreFireTime)
+<a name="1693"></a>		&& StartFire(<span class="source_type">Mode</span>) )
+<a name="1694"></a>    {
+<a name="1695"></a>        FireMode[<span class="source_type">Mode</span>].ServerStartFireTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="1696"></a>        FireMode[<span class="source_type">Mode</span>].bServerDelayStartFire = false;
+<a name="1697"></a>    }
+<a name="1698"></a>    else if ( FireMode[<span class="source_type">Mode</span>].AllowFire() )
+<a name="1699"></a>    {
+<a name="1700"></a>        FireMode[<span class="source_type">Mode</span>].bServerDelayStartFire = true;
+<a name="1701"></a>	}
+<a name="1702"></a>	else
+<a name="1703"></a>		ClientForceAmmoUpdate(<span class="source_type">Mode</span>, AmmoAmount(<span class="source_type">Mode</span>));
+<a name="1704"></a>}
+<a name="1705"></a>
+<a name="1706"></a>simulated function ClientForceAmmoUpdate(<span class="source_type">int</span> <span class="source_type">Mode</span>, <span class="source_type">int</span> NewAmount)
+<a name="1707"></a>{
+<a name="1708"></a>	<span class="source_comment">//log(self$" ClientForceAmmoUpdate mode "$Mode$" newamount "$NewAmount);
+</span><a name="1709"></a>	if ( bNoAmmoInstances )
+<a name="1710"></a>		AmmoCharge[<span class="source_type">Mode</span>] = NewAmount;
+<a name="1711"></a>	else if ( <span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">mode</span>] != None )
+<a name="1712"></a>		<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>[<span class="source_type">mode</span>].AmmoAmount = NewAmount;
+<a name="1713"></a>}
+<a name="1714"></a>
+<a name="1715"></a>function SynchronizeWeapon(<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> ClientWeapon)
+<a name="1716"></a>{
+<a name="1717"></a>	<span class="source_type">Instigator</span>.ServerChangedWeapon(self,ClientWeapon);
+<a name="1718"></a>}
+<a name="1719"></a>
+<a name="1720"></a>function ServerStopFire(<span class="source_type">byte</span> <span class="source_type">Mode</span>)
+<a name="1721"></a>{
+<a name="1722"></a>    <span class="source_comment">// if a stop was received on the same frame as a start then we need to delay the stop for one frame
+</span><a name="1723"></a>    if (FireMode[<span class="source_type">Mode</span>].bServerDelayStartFire || FireMode[<span class="source_type">Mode</span>].ServerStartFireTime == <span class="source_type">Level</span>.TimeSeconds)
+<a name="1724"></a>    {
+<a name="1725"></a>        <span class="source_comment">//log("Stop Delayed");
+</span><a name="1726"></a>        FireMode[<span class="source_type">Mode</span>].bServerDelayStopFire = true;
+<a name="1727"></a>    }
+<a name="1728"></a>    else
+<a name="1729"></a>    {
+<a name="1730"></a>        <span class="source_comment">//Log("ServerStopFire"@Level.TimeSeconds);
+</span><a name="1731"></a>        StopFire(<span class="source_type">Mode</span>);
+<a name="1732"></a>    }
+<a name="1733"></a>}
+<a name="1734"></a>
+<a name="1735"></a>simulated function <span class="source_type">bool</span> ReadyToFire(<span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="1736"></a>{
+<a name="1737"></a>    local <span class="source_type">int</span> alt;
+<a name="1738"></a>
+<a name="1739"></a>    if ( <span class="source_type">Mode</span> == <span class="source_int">0</span> )
+<a name="1740"></a>        alt = <span class="source_int">1</span>;
+<a name="1741"></a>    else
+<a name="1742"></a>        alt = <span class="source_int">0</span>;
+<a name="1743"></a>
+<a name="1744"></a>    if ( ((FireMode[alt] != FireMode[<span class="source_type">Mode</span>]) && FireMode[alt].bModeExclusive && FireMode[alt].bIsFiring)
+<a name="1745"></a>		|| !FireMode[<span class="source_type">Mode</span>].AllowFire()
+<a name="1746"></a>		|| (FireMode[<span class="source_type">Mode</span>].NextFireTime &gt; <span class="source_type">Level</span>.TimeSeconds + FireMode[<span class="source_type">Mode</span>].PreFireTime) )
+<a name="1747"></a>    {
+<a name="1748"></a>        return false;
+<a name="1749"></a>    }
+<a name="1750"></a>
+<a name="1751"></a>	return true;
+<a name="1752"></a>}
+<a name="1753"></a>
+<a name="1754"></a><span class="source_comment">//// client & server ////
+</span><a name="1755"></a>simulated function <span class="source_type">bool</span> StartFire(<span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="1756"></a>{
+<a name="1757"></a>    local <span class="source_type">int</span> alt;
+<a name="1758"></a>
+<a name="1759"></a>    if (!ReadyToFire(<span class="source_type">Mode</span>))
+<a name="1760"></a>        return false;
+<a name="1761"></a>
+<a name="1762"></a>    if (<span class="source_type">Mode</span> == <span class="source_int">0</span>)
+<a name="1763"></a>        alt = <span class="source_int">1</span>;
+<a name="1764"></a>    else
+<a name="1765"></a>        alt = <span class="source_int">0</span>;
+<a name="1766"></a>
+<a name="1767"></a>    FireMode[<span class="source_type">Mode</span>].bIsFiring = true;
+<a name="1768"></a>    FireMode[<span class="source_type">Mode</span>].NextFireTime = <span class="source_type">Level</span>.TimeSeconds + FireMode[<span class="source_type">Mode</span>].PreFireTime;
+<a name="1769"></a>
+<a name="1770"></a>    if (FireMode[alt].bModeExclusive)
+<a name="1771"></a>    {
+<a name="1772"></a>        <span class="source_comment">// prevents rapidly alternating fire modes
+</span><a name="1773"></a>        FireMode[<span class="source_type">Mode</span>].NextFireTime = FMax(FireMode[<span class="source_type">Mode</span>].NextFireTime, FireMode[alt].NextFireTime);
+<a name="1774"></a>    }
+<a name="1775"></a>
+<a name="1776"></a>    if (<span class="source_type">Instigator</span>.IsLocallyControlled())
+<a name="1777"></a>    {
+<a name="1778"></a>        if (FireMode[<span class="source_type">Mode</span>].PreFireTime &gt; <span class="source_int">0.0</span> || FireMode[<span class="source_type">Mode</span>].bFireOnRelease)
+<a name="1779"></a>        {
+<a name="1780"></a>            FireMode[<span class="source_type">Mode</span>].PlayPreFire();
+<a name="1781"></a>        }
+<a name="1782"></a>        FireMode[<span class="source_type">Mode</span>].FireCount = <span class="source_int">0</span>;
+<a name="1783"></a>    }
+<a name="1784"></a>
+<a name="1785"></a>    return true;
+<a name="1786"></a>}
+<a name="1787"></a>
+<a name="1788"></a>simulated event StopFire(<span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="1789"></a>{
+<a name="1790"></a>	if ( FireMode[<span class="source_type">Mode</span>].bIsFiring )
+<a name="1791"></a>	    FireMode[<span class="source_type">Mode</span>].bInstantStop = true;
+<a name="1792"></a>    if (<span class="source_type">Instigator</span>.IsLocallyControlled() && !FireMode[<span class="source_type">Mode</span>].bFireOnRelease)
+<a name="1793"></a>        FireMode[<span class="source_type">Mode</span>].PlayFireEnd();
+<a name="1794"></a>
+<a name="1795"></a>    FireMode[<span class="source_type">Mode</span>].bIsFiring = false;
+<a name="1796"></a>    FireMode[<span class="source_type">Mode</span>].StopFiring();
+<a name="1797"></a>    if (!FireMode[<span class="source_type">Mode</span>].bFireOnRelease)
+<a name="1798"></a>        ZeroFlashCount(<span class="source_type">Mode</span>);
+<a name="1799"></a>}
+<a name="1800"></a>
+<a name="1801"></a><span class="source_comment">//hack to stop all firing and release any charging firemodes RIGHT THIS INSTANT
+</span><a name="1802"></a><span class="source_comment">//used when getting into vehicles
+</span><a name="1803"></a>simulated function ImmediateStopFire()
+<a name="1804"></a>{
+<a name="1805"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1806"></a>
+<a name="1807"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; NUM_FIRE_MODES; <span class="source_type">i</span>++)
+<a name="1808"></a>	{
+<a name="1809"></a>		ClientStopFire(<span class="source_type">i</span>);
+<a name="1810"></a>		if (FireMode[<span class="source_type">i</span>].bFireOnRelease)
+<a name="1811"></a>		{
+<a name="1812"></a>        		if (<span class="source_type">Level</span>.TimeSeconds &gt; FireMode[<span class="source_type">i</span>].NextFireTime && (FireMode[<span class="source_type">i</span>].bInstantStop || !FireMode[<span class="source_type">i</span>].bNowWaiting))
+<a name="1813"></a>				FireMode[<span class="source_type">i</span>].ModeDoFire();
+<a name="1814"></a>			if (FireMode[<span class="source_type">i</span>].bWaitForRelease)
+<a name="1815"></a>				FireMode[<span class="source_type">i</span>].bNowWaiting = true;
+<a name="1816"></a>		}
+<a name="1817"></a>	}
+<a name="1818"></a>}
+<a name="1819"></a>
+<a name="1820"></a>simulated function Timer()
+<a name="1821"></a>{
+<a name="1822"></a>	local <span class="source_type">int</span> <span class="source_type">Mode</span>;
+<a name="1823"></a>	local <span class="source_type">float</span> OldDownDelay;
+<a name="1824"></a>
+<a name="1825"></a>	OldDownDelay = DownDelay;
+<a name="1826"></a>	DownDelay = <span class="source_int">0</span>;
+<a name="1827"></a>
+<a name="1828"></a>    if (ClientState == WS_BringUp)
+<a name="1829"></a>    {
+<a name="1830"></a>		for( <span class="source_type">Mode</span> = <span class="source_int">0</span>; <span class="source_type">Mode</span> &lt; NUM_FIRE_MODES; <span class="source_type">Mode</span>++ )
+<a name="1831"></a>	       FireMode[<span class="source_type">Mode</span>].InitEffects();
+<a name="1832"></a>        PlayIdle();
+<a name="1833"></a>        ClientState = WS_ReadyToFire;
+<a name="1834"></a>    }
+<a name="1835"></a>    else if (ClientState == WS_PutDown)
+<a name="1836"></a>    {
+<a name="1837"></a>        if ( OldDownDelay &gt; <span class="source_int">0</span> )
+<a name="1838"></a>        {
+<a name="1839"></a>            if ( HasAnim(PutDownAnim) )
+<a name="1840"></a>                PlayAnim(PutDownAnim, PutDownAnimRate, <span class="source_int">0.0</span>);
+<a name="1841"></a>			SetTimer(PutDownTime, false);
+<a name="1842"></a>			return;
+<a name="1843"></a>		}
+<a name="1844"></a>		if ( <span class="source_type">Instigator</span>.PendingWeapon == None )
+<a name="1845"></a>		{
+<a name="1846"></a>			PlayIdle();
+<a name="1847"></a>			ClientState = WS_ReadyToFire;
+<a name="1848"></a>		}
+<a name="1849"></a>		else
+<a name="1850"></a>		{
+<a name="1851"></a>			ClientState = WS_Hidden;
+<a name="1852"></a>			<span class="source_type">Instigator</span>.ChangedWeapon();
+<a name="1853"></a>			if ( <span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> == self )
+<a name="1854"></a>			{
+<a name="1855"></a>				PlayIdle();
+<a name="1856"></a>				ClientState = WS_ReadyToFire;
+<a name="1857"></a>			}
+<a name="1858"></a>			else
+<a name="1859"></a>			{
+<a name="1860"></a>				for( <span class="source_type">Mode</span> = <span class="source_int">0</span>; <span class="source_type">Mode</span> &lt; NUM_FIRE_MODES; <span class="source_type">Mode</span>++ )
+<a name="1861"></a>					FireMode[<span class="source_type">Mode</span>].DestroyEffects();
+<a name="1862"></a>			}
+<a name="1863"></a>		}
+<a name="1864"></a>    }
+<a name="1865"></a>}
+<a name="1866"></a>
+<a name="1867"></a>
+<a name="1868"></a>simulated function <span class="source_type">bool</span> IsFiring() <span class="source_comment">// called by pawn animation, mostly
+</span><a name="1869"></a>{
+<a name="1870"></a>    if (<span class="source_type">Level</span>.NetMode == NM_DedicatedServer || <span class="source_type">Level</span>.NetMode == NM_ListenServer)
+<a name="1871"></a>        return (FireMode[<span class="source_int">0</span>].IsFiring() || FireMode[<span class="source_int">1</span>].IsFiring());
+<a name="1872"></a>
+<a name="1873"></a>    return  ( ClientState == WS_ReadyToFire && (FireMode[<span class="source_int">0</span>].IsFiring() || FireMode[<span class="source_int">1</span>].IsFiring()) );
+<a name="1874"></a>}
+<a name="1875"></a>
+<a name="1876"></a>function <span class="source_type">bool</span> IsRapidFire() <span class="source_comment">// called by pawn animation
+</span><a name="1877"></a>{
+<a name="1878"></a>    if (FireMode[<span class="source_int">1</span>] != None && FireMode[<span class="source_int">1</span>].bIsFiring)
+<a name="1879"></a>        return FireMode[<span class="source_int">1</span>].bPawnRapidFireAnim;
+<a name="1880"></a>    else if (FireMode[<span class="source_int">0</span>] != None)
+<a name="1881"></a>        return FireMode[<span class="source_int">0</span>].bPawnRapidFireAnim;
+<a name="1882"></a>    else
+<a name="1883"></a>        return false;
+<a name="1884"></a>}
+<a name="1885"></a>
+<a name="1886"></a><span class="source_comment">// called every time owner takes damage while holding this weapon - used by shield gun
+</span><a name="1887"></a>function AdjustPlayerDamage( out <span class="source_type">int</span> <span class="source_type">Damage</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> InstigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">HitLocation</span>,
+<a name="1888"></a>                             out <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">Momentum</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>)
+<a name="1889"></a>{
+<a name="1890"></a>}
+<a name="1891"></a>
+<a name="1892"></a>
+<a name="1893"></a>simulated function CheckSuperBerserk()
+<a name="1894"></a>{
+<a name="1895"></a>	if ( <span class="source_type">Level</span>.GRI.WeaponBerserk &gt; <span class="source_int">1.0</span> )
+<a name="1896"></a>	{
+<a name="1897"></a>		if (FireMode[<span class="source_int">0</span>] != None)
+<a name="1898"></a>			FireMode[<span class="source_int">0</span>].StartSuperBerserk();
+<a name="1899"></a>		if (FireMode[<span class="source_int">1</span>] != None)
+<a name="1900"></a>			FireMode[<span class="source_int">1</span>].StartSuperBerserk();
+<a name="1901"></a>	}
+<a name="1902"></a>}
+<a name="1903"></a>simulated function StartBerserk()
+<a name="1904"></a>{
+<a name="1905"></a>	if ( (<span class="source_type">Level</span>.GRI != None) && <span class="source_type">Level</span>.GRI.WeaponBerserk &gt; <span class="source_int">1.0</span> )
+<a name="1906"></a>		return;
+<a name="1907"></a>	bBerserk = true;
+<a name="1908"></a>    if (FireMode[<span class="source_int">0</span>] != None)
+<a name="1909"></a>        FireMode[<span class="source_int">0</span>].StartBerserk();
+<a name="1910"></a>    if (FireMode[<span class="source_int">1</span>] != None)
+<a name="1911"></a>        FireMode[<span class="source_int">1</span>].StartBerserk();
+<a name="1912"></a>}
+<a name="1913"></a>
+<a name="1914"></a>simulated function StopBerserk()
+<a name="1915"></a>{
+<a name="1916"></a>	bBerserk = false;
+<a name="1917"></a>	if ( (<span class="source_type">Level</span>.GRI != None) && <span class="source_type">Level</span>.GRI.WeaponBerserk &gt; <span class="source_int">1.0</span> )
+<a name="1918"></a>		return;
+<a name="1919"></a>    if (FireMode[<span class="source_int">0</span>] != None)
+<a name="1920"></a>        FireMode[<span class="source_int">0</span>].StopBerserk();
+<a name="1921"></a>    if (FireMode[<span class="source_int">1</span>] != None)
+<a name="1922"></a>        FireMode[<span class="source_int">1</span>].StopBerserk();
+<a name="1923"></a>}
+<a name="1924"></a>
+<a name="1925"></a>simulated function AnimEnd(<span class="source_type">int</span> <span class="source_type">channel</span>)
+<a name="1926"></a>{
+<a name="1927"></a>    local <span class="source_type">name</span> anim;
+<a name="1928"></a>    local <span class="source_type">float</span> frame, rate;
+<a name="1929"></a>
+<a name="1930"></a>    GetAnimParams(<span class="source_int">0</span>, anim, frame, rate);
+<a name="1931"></a>
+<a name="1932"></a>    if (ClientState == WS_ReadyToFire)
+<a name="1933"></a>    {
+<a name="1934"></a>        if (anim == FireMode[<span class="source_int">0</span>].FireAnim && HasAnim(FireMode[<span class="source_int">0</span>].FireEndAnim)) <span class="source_comment">// rocket hack
+</span><a name="1935"></a>        {
+<a name="1936"></a>            PlayAnim(FireMode[<span class="source_int">0</span>].FireEndAnim, FireMode[<span class="source_int">0</span>].FireEndAnimRate, <span class="source_int">0.0</span>);
+<a name="1937"></a>        }
+<a name="1938"></a>        else if (anim== FireMode[<span class="source_int">1</span>].FireAnim && HasAnim(FireMode[<span class="source_int">1</span>].FireEndAnim))
+<a name="1939"></a>        {
+<a name="1940"></a>            PlayAnim(FireMode[<span class="source_int">1</span>].FireEndAnim, FireMode[<span class="source_int">1</span>].FireEndAnimRate, <span class="source_int">0.0</span>);
+<a name="1941"></a>        }
+<a name="1942"></a>        else if ((FireMode[<span class="source_int">0</span>] == None || !FireMode[<span class="source_int">0</span>].bIsFiring) && (FireMode[<span class="source_int">1</span>] == None || !FireMode[<span class="source_int">1</span>].bIsFiring))
+<a name="1943"></a>        {
+<a name="1944"></a>            PlayIdle();
+<a name="1945"></a>        }
+<a name="1946"></a>    }
+<a name="1947"></a>}
+<a name="1948"></a>
+<a name="1949"></a>simulated function PlayIdle()
+<a name="1950"></a>{
+<a name="1951"></a>    LoopAnim(IdleAnim, IdleAnimRate, <span class="source_int">0.2</span>);
+<a name="1952"></a>}
+<a name="1953"></a>
+<a name="1954"></a><span class="source_type">state</span> PendingClientWeaponSet
+<a name="1955"></a>{
+<a name="1956"></a>    simulated function Timer()
+<a name="1957"></a>    {
+<a name="1958"></a>        if ( <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Owner</span>) != None )
+<a name="1959"></a>            ClientWeaponSet(bPendingSwitch);
+<a name="1960"></a>        if ( IsInState(<span class="source_name">'PendingClientWeaponSet'</span>) )
+<a name="1961"></a>			SetTimer(<span class="source_int">0.05</span>, false);
+<a name="1962"></a>    }
+<a name="1963"></a>
+<a name="1964"></a>    simulated function BeginState()
+<a name="1965"></a>    {
+<a name="1966"></a>        SetTimer(<span class="source_int">0.05</span>, false);
+<a name="1967"></a>    }
+<a name="1968"></a>
+<a name="1969"></a>    simulated function EndState()
+<a name="1970"></a>    {
+<a name="1971"></a>    }
+<a name="1972"></a>}
+<a name="1973"></a>
+<a name="1974"></a><span class="source_type">state</span> Hidden
+<a name="1975"></a>{
+<a name="1976"></a>}
+<a name="1977"></a>
+<a name="1978"></a>function <span class="source_type">bool</span> CheckReflect( <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">HitLocation</span>, out <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> RefNormal, <span class="source_type">int</span> <span class="source_type">AmmoDrain</span> )
+<a name="1979"></a>{
+<a name="1980"></a>    return false;
+<a name="1981"></a>}
+<a name="1982"></a>
+<a name="1983"></a>function DoReflectEffect(<span class="source_type">int</span> Drain)
+<a name="1984"></a>{
+<a name="1985"></a>
+<a name="1986"></a>}
+<a name="1987"></a>
+<a name="1988"></a>function <span class="source_type">bool</span> HandlePickupQuery( <span class="source_type"><a href="../engine/pickup.html" class="source">pickup</a></span> <span class="source_type">Item</span> )
+<a name="1989"></a>{
+<a name="1990"></a>    local <span class="source_type"><a href="../engine/weaponpickup.html" class="source">WeaponPickup</a></span> wpu;
+<a name="1991"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="1992"></a>
+<a name="1993"></a>	if ( bNoAmmoInstances )
+<a name="1994"></a>	{
+<a name="1995"></a>		<span class="source_comment">// handle ammo pickups
+</span><a name="1996"></a>		for ( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;<span class="source_int">2</span>; <span class="source_type">i</span>++ )
+<a name="1997"></a>		{
+<a name="1998"></a>			if ( (<span class="source_type">item</span>.inventorytype == AmmoClass[<span class="source_type">i</span>]) && (AmmoClass[<span class="source_type">i</span>] != None) )
+<a name="1999"></a>			{
+<a name="2000"></a>				if ( AmmoCharge[<span class="source_type">i</span>] &gt;= MaxAmmo(<span class="source_type">i</span>) )
+<a name="2001"></a>					return true;
+<a name="2002"></a>				<span class="source_type">item</span>.AnnouncePickup(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Owner</span>));
+<a name="2003"></a>				AddAmmo(<span class="source_type"><a href="../engine/ammo.html" class="source">Ammo</a></span>(<span class="source_type">item</span>).AmmoAmount, <span class="source_type">i</span>);
+<a name="2004"></a>				<span class="source_type">item</span>.SetRespawn();
+<a name="2005"></a>				return true;
+<a name="2006"></a>			}
+<a name="2007"></a>		}
+<a name="2008"></a>	}
+<a name="2009"></a>
+<a name="2010"></a>	if (<span class="source_type">class</span> == <span class="source_type">Item</span>.InventoryType)
+<a name="2011"></a>    {
+<a name="2012"></a>        wpu = <span class="source_type"><a href="../engine/weaponpickup.html" class="source">WeaponPickup</a></span>(<span class="source_type">Item</span>);
+<a name="2013"></a>        if (wpu != None)
+<a name="2014"></a>            return !wpu.AllowRepeatPickup();
+<a name="2015"></a>        else
+<a name="2016"></a>            return false;
+<a name="2017"></a>    }
+<a name="2018"></a>
+<a name="2019"></a>    if ( <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span> == None )
+<a name="2020"></a>		return false;
+<a name="2021"></a>
+<a name="2022"></a>	return <span class="source_type"><a href="../engine/inventory.html" class="source">Inventory</a></span>.HandlePickupQuery(<span class="source_type">Item</span>);
+<a name="2023"></a>}
+<a name="2024"></a>
+<a name="2025"></a>simulated function <span class="source_type">bool</span> WantsZoomFade()
+<a name="2026"></a>{
+<a name="2027"></a>	return false;
+<a name="2028"></a>}
+<a name="2029"></a>
+<a name="2030"></a><span class="source_comment">/* CanHeal()
+<a name="2031"></a>used by bot AI
+<a name="2032"></a>should return true if this weapon is able to heal Other
+<a name="2033"></a>*/</span>
+<a name="2034"></a>function <span class="source_type">bool</span> CanHeal(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>)
+<a name="2035"></a>{
+<a name="2036"></a>	return false;
+<a name="2037"></a>}
+<a name="2038"></a>
+<a name="2039"></a><span class="source_comment">//called by AI when camping/defending
+</span><a name="2040"></a><span class="source_comment">//return true if it is useful to fire this weapon even though bot doesn't have a target
+</span><a name="2041"></a><span class="source_comment">//for example, a weapon that launches turrets or mines
+</span><a name="2042"></a>function <span class="source_type">bool</span> ShouldFireWithoutTarget()
+<a name="2043"></a>{
+<a name="2044"></a>	return false;
+<a name="2045"></a>}
+<a name="2046"></a>
+<a name="2047"></a><span class="source_comment">// ugly hack for tutorial
+</span><a name="2048"></a>function <span class="source_type">bool</span> ShootHoop(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">B</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> ShootLoc)
+<a name="2049"></a>{
+<a name="2050"></a>	return false;
+<a name="2051"></a>}
+<a name="2052"></a>
+<a name="2053"></a>simulated function PawnUnpossessed();
+<a name="2054"></a>
+<a name="2055"></a>
+<a name="2056"></a><span class="source_comment">// FIXME - hack to get classes building again after fixing the bug that was allowing all protected variables to
+</span><a name="2057"></a><span class="source_comment">// be referenced in other classes - maybe there's already an accessor that does this and I just don't know about it
+</span><a name="2058"></a><span class="source_comment">// ...in that case, just remove this function -- rjp
+</span><a name="2059"></a>simulated function <span class="source_type"><a href="../engine/weaponfire.html" class="source">WeaponFire</a></span> GetFireMode( <span class="source_type">byte</span> <span class="source_type">Mode</span> )
+<a name="2060"></a>{
+<a name="2061"></a>	if ( <span class="source_type">Mode</span> &lt; NUM_FIRE_MODES )
+<a name="2062"></a>		return FireMode[<span class="source_type">Mode</span>];
+<a name="2063"></a>
+<a name="2064"></a>	return None;
+<a name="2065"></a>}
+<a name="2066"></a>
+<a name="2067"></a>defaultproperties
+<a name="2068"></a>{
+<a name="2069"></a>     IdleAnim=<span class="source_string">"Idle"</span>
+<a name="2070"></a>     RestAnim=<span class="source_string">"rest"</span>
+<a name="2071"></a>     AimAnim=<span class="source_string">"Aim"</span>
+<a name="2072"></a>     RunAnim=<span class="source_string">"Run"</span>
+<a name="2073"></a>     SelectAnim=<span class="source_string">"Select"</span>
+<a name="2074"></a>     PutDownAnim=<span class="source_string">"Down"</span>
+<a name="2075"></a>     IdleAnimRate=<span class="source_int">1.000000</span>
+<a name="2076"></a>     RestAnimRate=<span class="source_int">1.000000</span>
+<a name="2077"></a>     AimAnimRate=<span class="source_int">1.000000</span>
+<a name="2078"></a>     RunAnimRate=<span class="source_int">1.000000</span>
+<a name="2079"></a>     SelectAnimRate=<span class="source_int">1.363600</span>
+<a name="2080"></a>     PutDownAnimRate=<span class="source_int">1.363600</span>
+<a name="2081"></a>     PutDownTime=<span class="source_int">0.330000</span>
+<a name="2082"></a>     BringUpTime=<span class="source_int">0.330000</span>
+<a name="2083"></a>     AIRating=<span class="source_int">0.500000</span>
+<a name="2084"></a>     CurrentRating=<span class="source_int">0.500000</span>
+<a name="2085"></a>     bCanThrow=True
+<a name="2086"></a>     bNoAmmoInstances=True
+<a name="2087"></a>     OldDrawScale=<span class="source_int">1.000000</span>
+<a name="2088"></a>     OldCenteredOffsetY=-<span class="source_int">10.000000</span>
+<a name="2089"></a>     OldCenteredRoll=<span class="source_int">2000</span>
+<a name="2090"></a>     MessageNoAmmo=<span class="source_string">" has no ammo"</span>
+<a name="2091"></a>     DisplayFOV=<span class="source_int">90.000000</span>
+<a name="2092"></a>     HudColor=(G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="2093"></a>     CenteredOffsetY=-<span class="source_int">10.000000</span>
+<a name="2094"></a>     CenteredRoll=<span class="source_int">2000</span>
+<a name="2095"></a>     CustomCrossHairColor=(<span class="source_type">B</span>=<span class="source_int">255</span>,G=<span class="source_int">255</span>,<span class="source_type">R</span>=<span class="source_int">255</span>,<span class="source_type">A</span>=<span class="source_int">255</span>)
+<a name="2096"></a>     CustomCrossHairScale=<span class="source_int">1.000000</span>
+<a name="2097"></a>     CustomCrossHairTextureName=<span class="source_string">"InterfaceArt_tex.Cursors.Crosshair_Cross2"</span>
+<a name="2098"></a>     MinReloadPct=<span class="source_int">0.500000</span>
+<a name="2099"></a>     InventoryGroup=<span class="source_int">1</span>
+<a name="2100"></a>     AttachmentClass=<span class="source_type">Class</span><span class="source_name">'Engine.WeaponAttachment'</span>
+<a name="2101"></a>     DrawType=DT_Mesh
+<a name="2102"></a>     NetUpdateFrequency=<span class="source_int">2.000000</span>
+<a name="2103"></a>     NetPriority=<span class="source_int">3.000000</span>
+<a name="2104"></a>     AmbientGlow=<span class="source_int">20</span>
+<a name="2105"></a>     MaxLights=<span class="source_int">6</span>
+<a name="2106"></a>     ScaleGlow=<span class="source_int">1.500000</span>
+<a name="2107"></a>     SoundVolume=<span class="source_int">255</span>
+<a name="2108"></a>     bNetNotify=True
+<a name="2109"></a>}
+<a name="2110"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/weapon.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Weapon">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/warpzonemarker.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/weaponattachment.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.642 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

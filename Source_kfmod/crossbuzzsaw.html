@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFMod.Crossbuzzsaw</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/crossbuzzsaw.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Crossbuzzsaw">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/crossbowsuperammopickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/crossbuzzsawammo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfmod/crossbuzzsaw.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfmod/kfmod-overview.html">KFMod</a>.<a href="../kfmod/crossbuzzsaw.html">Crossbuzzsaw</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfmod/crossbuzzsaw.html" class="source">Crossbuzzsaw</a></span> extends <span class="source_type"><a href="../kfmod/kfweapon.html" class="source">KFWeapon</a></span>;
+<a name="2"></a>
+<a name="3"></a>var <span class="source_type">float</span> <span class="source_type"><a href="../core/object.html#Range" class="source">Range</a></span>;
+<a name="4"></a>var <span class="source_type">float</span> LastRangingTime;
+<a name="5"></a>
+<a name="6"></a>var <span class="source_type">bool</span> bInPose;
+<a name="7"></a>var ()      <span class="source_type">float</span>       RotateRate;
+<a name="8"></a>var         <span class="source_type">float</span>       RegenTimer;     <span class="source_comment">// Tracks regeneration
+</span><a name="9"></a>var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> Gearrot1;
+<a name="10"></a>var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> Gearrot2;
+<a name="11"></a>var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> Bladerot;
+<a name="12"></a>
+<a name="13"></a>var() <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> ZoomSound;
+<a name="14"></a>var <span class="source_type">bool</span> bArrowRemoved;
+<a name="15"></a>
+<a name="16"></a>simulated function WeaponTick(<span class="source_type">float</span> <span class="source_type">dt</span>)
+<a name="17"></a>{
+<a name="18"></a>    super.WeaponTick(<span class="source_type">dt</span>);
+<a name="19"></a>
+<a name="20"></a>	if ( <span class="source_type">Level</span>.NetMode!=NM_DedicatedServer && RegenTimer&lt;<span class="source_type">Level</span>.TimeSeconds )
+<a name="21"></a>	{
+<a name="22"></a>        RegenTimer = <span class="source_type">Level</span>.TimeSeconds + <span class="source_int">0.008</span>;
+<a name="23"></a>        Gearrot1.Yaw += RotateRate;
+<a name="24"></a>        SetBoneRotation(<span class="source_name">'Gear1'</span>,Gearrot1,<span class="source_int">1.0</span>);
+<a name="25"></a>        Gearrot2.Yaw -= RotateRate;
+<a name="26"></a>        SetBoneRotation(<span class="source_name">'Gear2'</span>,Gearrot2,<span class="source_int">1.0</span>);
+<a name="27"></a>
+<a name="28"></a>        if( FireMode[<span class="source_int">0</span>].NextFireTime &lt;= <span class="source_type">Level</span>.TimeSeconds )
+<a name="29"></a>        {
+<a name="30"></a>            Bladerot.Yaw -= RotateRate;
+<a name="31"></a>            SetBoneRotation(<span class="source_name">'Blade'</span>,Bladerot,<span class="source_int">1.0</span>);
+<a name="32"></a>        }
+<a name="33"></a> 	}
+<a name="34"></a>
+<a name="35"></a><span class="source_comment">//    if( ForceZoomOutTime &gt; 0 )
+</span><a name="36"></a><span class="source_comment">//    {
+</span><a name="37"></a><span class="source_comment">//        if( bAimingRifle )
+</span><a name="38"></a><span class="source_comment">//        {
+</span><a name="39"></a><span class="source_comment">//    	    if( Level.TimeSeconds - ForceZoomOutTime &gt; 0 )
+</span><a name="40"></a><span class="source_comment">//    	    {
+</span><a name="41"></a><span class="source_comment">//                ForceZoomOutTime = 0;
+</span><a name="42"></a><span class="source_comment">//
+</span><a name="43"></a><span class="source_comment">//            	ZoomOut(false);
+</span><a name="44"></a><span class="source_comment">//
+</span><a name="45"></a><span class="source_comment">//            	if( Role &lt; ROLE_Authority)
+</span><a name="46"></a><span class="source_comment">//        			ServerZoomOut(false);
+</span><a name="47"></a><span class="source_comment">//    		}
+</span><a name="48"></a><span class="source_comment">//		}
+</span><a name="49"></a><span class="source_comment">//		else
+</span><a name="50"></a><span class="source_comment">//		{
+</span><a name="51"></a><span class="source_comment">//            ForceZoomOutTime = 0;
+</span><a name="52"></a><span class="source_comment">//		}
+</span><a name="53"></a><span class="source_comment">//	}
+</span><a name="54"></a>}
+<a name="55"></a>
+<a name="56"></a><span class="source_comment">// Force the weapon out of iron sights shortly after firing so reloading looks right
+</span><a name="57"></a>simulated function <span class="source_type">bool</span> StartFire(<span class="source_type">int</span> <span class="source_type">Mode</span>)
+<a name="58"></a>{
+<a name="59"></a>    if ( super.StartFire(<span class="source_type">Mode</span>) )
+<a name="60"></a>    {
+<a name="61"></a>        <span class="source_comment">//ForceZoomOutTime = Level.TimeSeconds + 0.4;
+</span><a name="62"></a>
+<a name="63"></a>        if ( <span class="source_type">Instigator</span> != none && <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none &&
+<a name="64"></a>			  <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).SteamStatsAndAchievements) != none )
+<a name="65"></a>		{
+<a name="66"></a>			<span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(<span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).SteamStatsAndAchievements).OneShotBuzzOrM99();
+<a name="67"></a>		}
+<a name="68"></a>
+<a name="69"></a>        return true;
+<a name="70"></a>    }
+<a name="71"></a>
+<a name="72"></a>    return false;
+<a name="73"></a>}
+<a name="74"></a>
+<a name="75"></a>function <span class="source_type">float</span> GetAIRating()
+<a name="76"></a>{
+<a name="77"></a>	local <span class="source_type"><a href="../engine/aicontroller.html" class="source">AIController</a></span> <span class="source_type">B</span>;
+<a name="78"></a>
+<a name="79"></a>	<span class="source_type">B</span> = <span class="source_type"><a href="../engine/aicontroller.html" class="source">AIController</a></span>(<span class="source_type">Instigator</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>);
+<a name="80"></a>	if ( (<span class="source_type">B</span> == None) || (<span class="source_type">B</span>.Enemy == None) )
+<a name="81"></a>		return AIRating;
+<a name="82"></a>
+<a name="83"></a>	return (AIRating + <span class="source_int">0.0003</span> * FClamp(<span class="source_int">1500</span> - VSize(<span class="source_type">B</span>.Enemy.Location - <span class="source_type">Instigator</span>.Location),<span class="source_int">0</span>,<span class="source_int">1000</span>));
+<a name="84"></a>}
+<a name="85"></a>
+<a name="86"></a>function <span class="source_type">byte</span> BestMode()
+<a name="87"></a>{
+<a name="88"></a>	return <span class="source_int">0</span>;
+<a name="89"></a>}
+<a name="90"></a>
+<a name="91"></a>function <span class="source_type">bool</span> RecommendRangedAttack()
+<a name="92"></a>{
+<a name="93"></a>	return true;
+<a name="94"></a>}
+<a name="95"></a>
+<a name="96"></a>function <span class="source_type">float</span> SuggestAttackStyle()
+<a name="97"></a>{
+<a name="98"></a>	return -<span class="source_int">1.0</span>;
+<a name="99"></a>}
+<a name="100"></a>
+<a name="101"></a>simulated function <span class="source_type">bool</span> CanZoomNow()
+<a name="102"></a>{
+<a name="103"></a>	return (!FireMode[<span class="source_int">0</span>].bIsFiring);
+<a name="104"></a>}
+<a name="105"></a>
+<a name="106"></a>defaultproperties
+<a name="107"></a>{
+<a name="108"></a>     bInPose=True
+<a name="109"></a>     RotateRate=<span class="source_int">5000.000000</span>
+<a name="110"></a>     ForceZoomOutOnFireTime=<span class="source_int">0.400000</span>
+<a name="111"></a>     MagCapacity=<span class="source_int">1</span>
+<a name="112"></a>     ReloadRate=<span class="source_int">0.010000</span>
+<a name="113"></a>     WeaponReloadAnim=<span class="source_string">"Reload_Cheetah"</span>
+<a name="114"></a>     <span class="source_type">Weight</span>=<span class="source_int">7.000000</span>
+<a name="115"></a>     bHasAimingMode=True
+<a name="116"></a>     IdleAimAnim=<span class="source_string">"Idle_Iron"</span>
+<a name="117"></a>     StandardDisplayFOV=<span class="source_int">65.000000</span>
+<a name="118"></a>     SleeveNum=<span class="source_int">2</span>
+<a name="119"></a>     TraderInfoTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_IJC_HUD.Trader_Weapon_Icons.Trader_Cheetah'</span>
+<a name="120"></a>     bIsTier3Weapon=True
+<a name="121"></a>     MeshRef=<span class="source_string">"KF_IJC_Halloween_Weps3.Cheetah"</span>
+<a name="122"></a>     SkinRefs(<span class="source_int">0</span>)=<span class="source_string">"KF_IJC_Halloween_Weapons.Cheetah.cheetah_cmb"</span>
+<a name="123"></a>     SkinRefs(<span class="source_int">1</span>)=<span class="source_string">"KF_IJC_Halloween_Weapons.Cheetah.cheetah_sight_shader"</span>
+<a name="124"></a>     SelectSoundRef=<span class="source_string">"KF_XbowSnd.Xbow_Select"</span>
+<a name="125"></a>     HudImageRef=<span class="source_string">"KF_IJC_HUD.WeaponSelect.Cheetah_unselected"</span>
+<a name="126"></a>     SelectedHudImageRef=<span class="source_string">"KF_IJC_HUD.WeaponSelect.Cheetah"</span>
+<a name="127"></a>     AppID=<span class="source_int">210934</span>
+<a name="128"></a>     PlayerIronSightFOV=<span class="source_int">65.000000</span>
+<a name="129"></a>     ZoomedDisplayFOV=<span class="source_int">45.000000</span>
+<a name="130"></a>     FireModeClass(<span class="source_int">0</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.CrossbuzzsawFire'</span>
+<a name="131"></a>     FireModeClass(<span class="source_int">1</span>)=<span class="source_type">Class</span><span class="source_name">'KFMod.NoFire'</span>
+<a name="132"></a>     PutDownAnim=<span class="source_string">"PutDown"</span>
+<a name="133"></a>     SelectForce=<span class="source_string">"SwitchToAssaultRifle"</span>
+<a name="134"></a>     AIRating=<span class="source_int">0.650000</span>
+<a name="135"></a>     CurrentRating=<span class="source_int">0.650000</span>
+<a name="136"></a>     Description=<span class="source_string">"The Buzzsaw Bow is no ordinary crossbow. Why shoot little bolts when you can send a circular sawblade spinning instead?"</span>
+<a name="137"></a>     DisplayFOV=<span class="source_int">65.000000</span>
+<a name="138"></a>     Priority=<span class="source_int">175</span>
+<a name="139"></a>     CustomCrosshair=<span class="source_int">11</span>
+<a name="140"></a>     CustomCrossHairTextureName=<span class="source_string">"Crosshairs.HUD.Crosshair_Cross5"</span>
+<a name="141"></a>     InventoryGroup=<span class="source_int">4</span>
+<a name="142"></a>     GroupOffset=<span class="source_int">15</span>
+<a name="143"></a>     PickupClass=<span class="source_type">Class</span><span class="source_name">'KFMod.CrossbuzzsawPickup'</span>
+<a name="144"></a>     PlayerViewOffset=(<span class="source_type">X</span>=<span class="source_int">20.000000</span>,<span class="source_type">Y</span>=<span class="source_int">18.000000</span>,<span class="source_type">Z</span>=-<span class="source_int">8.000000</span>)
+<a name="145"></a>     BobDamping=<span class="source_int">6.000000</span>
+<a name="146"></a>     AttachmentClass=<span class="source_type">Class</span><span class="source_name">'KFMod.CrossbuzzsawAttachment'</span>
+<a name="147"></a>     IconCoords=(X1=<span class="source_int">253</span>,Y1=<span class="source_int">146</span>,X2=<span class="source_int">333</span>,Y2=<span class="source_int">181</span>)
+<a name="148"></a>     ItemName=<span class="source_string">"Buzzsaw Bow"</span>
+<a name="149"></a>     LightType=LT_None
+<a name="150"></a>     LightBrightness=<span class="source_int">0.000000</span>
+<a name="151"></a>     LightRadius=<span class="source_int">0.000000</span>
+<a name="152"></a>}
+<a name="153"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfmod/kfmod-overview.html">Package</a></td>
+	<td class="header"><a href="../kfmod/crossbuzzsaw.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Crossbuzzsaw">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfmod/crossbowsuperammopickup.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfmod/crossbuzzsawammo.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:00.886 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

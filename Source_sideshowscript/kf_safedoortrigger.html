@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: SideshowScript.KF_SafeDoorTrigger</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../sideshowscript/sideshowscript-overview.html">Package</a></td>
+	<td class="header"><a href="../sideshowscript/kf_safedoortrigger.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KF_SafeDoorTrigger">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_sideshowscript/kf_rotatingmeshactor.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_sideshowscript/msg_goldbarnotification.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_sideshowscript/kf_safedoortrigger.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../sideshowscript/sideshowscript-overview.html">SideshowScript</a>.<a href="../sideshowscript/kf_safedoortrigger.html">KF_SafeDoorTrigger</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_comment">/*
+<a name="2"></a>	--------------------------------------------------------------
+<a name="3"></a>	KF_SafeDoorTrigger
+<a name="4"></a>	--------------------------------------------------------------
+<a name="5"></a>
+<a name="6"></a>	Activates the doors to Lockheart's safe in the Summer Steamland map.
+<a name="7"></a>
+<a name="8"></a>	only allow players who can carry the Gold bar inside the safe to
+<a name="9"></a>	activate the door!
+<a name="10"></a>
+<a name="11"></a>	Author :  Alex Quick
+<a name="12"></a>
+<a name="13"></a>	--------------------------------------------------------------
+<a name="14"></a>*/</span>
+<a name="15"></a>
+<a name="16"></a>
+<a name="17"></a><span class="source_type">class</span> <span class="source_type"><a href="../sideshowscript/kf_safedoortrigger.html" class="source">KF_SafeDoorTrigger</a></span> extends <span class="source_type"><a href="../kfstorygame/kfusetrigger_story.html" class="source">KFUseTrigger_Story</a></span>;
+<a name="18"></a>
+<a name="19"></a><span class="source_comment">/* True if the player successfully interacted with the safe */</span>
+<a name="20"></a>var <span class="source_type">bool</span> bSafeDoorOpened;
+<a name="21"></a>
+<a name="22"></a>function UsedBy(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">user</span>)
+<a name="23"></a>{
+<a name="24"></a>    if(AllowOpenSafe(<span class="source_type">user</span>))
+<a name="25"></a>    {
+<a name="26"></a>        bSafeDoorOpened = true;
+<a name="27"></a>        Super.UsedBy(<span class="source_type">user</span>);
+<a name="28"></a>    }
+<a name="29"></a>    else    <span class="source_comment">// can't pick it up.
+</span><a name="30"></a>    {
+<a name="31"></a>        if(!bSafeDoorOpened &&
+<a name="32"></a>        <span class="source_type">User</span> != none &&
+<a name="33"></a>        <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">User</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>) != none)
+<a name="34"></a>        {
+<a name="35"></a>            <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span>(<span class="source_type">User</span>.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>).ReceiveLocalizedMessage(<span class="source_type">class</span><span class="source_name">'Msg_GoldSafe'</span>);
+<a name="36"></a>        }
+<a name="37"></a>    }
+<a name="38"></a>}
+<a name="39"></a>
+<a name="40"></a>function <span class="source_type">bool</span> AllowOpenSafe(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">User</span>)
+<a name="41"></a>{
+<a name="42"></a>	if ( <span class="source_type">User</span> == None ||
+<a name="43"></a>    !<span class="source_type">User</span>.bCanPickupInventory ||
+<a name="44"></a>    <span class="source_type">User</span>.FindInventoryType(<span class="source_type">class</span> <span class="source_name">'Inv_GoldBar'</span>) != none )
+<a name="45"></a>		return false;
+<a name="46"></a>
+<a name="47"></a>    return true;
+<a name="48"></a>}
+<a name="49"></a>
+<a name="50"></a>defaultproperties
+<a name="51"></a>{
+<a name="52"></a>}
+<a name="53"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../sideshowscript/sideshowscript-overview.html">Package</a></td>
+	<td class="header"><a href="../sideshowscript/kf_safedoortrigger.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KF_SafeDoorTrigger">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_sideshowscript/kf_rotatingmeshactor.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_sideshowscript/msg_goldbarnotification.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:04.591 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.UT2K4Tab_OnslaughtMap</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4tab_onslaughtmap.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Tab_OnslaughtMap">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4tab_mutatorsp.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4tab_playerlogincontrols.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/ut2k4tab_onslaughtmap.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/ut2k4tab_onslaughtmap.html">UT2K4Tab_OnslaughtMap</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// ====================================================================
+</span><a name="2"></a><span class="source_comment">// Onslaught minimap tab
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">// Written by Matt Oelfke
+</span><a name="5"></a><span class="source_comment">// (C) 2003, Epic Games, Inc. All Rights Reserved
+</span><a name="6"></a><span class="source_comment">// ====================================================================
+</span><a name="7"></a>
+<a name="8"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/ut2k4tab_onslaughtmap.html" class="source">UT2K4Tab_OnslaughtMap</a></span> extends <span class="source_type"><a href="../gui2k4/midgamepanel.html" class="source">MidGamePanel</a></span>;
+<a name="9"></a>
+<a name="10"></a><span class="source_comment">// Commented out UT2k4Merge - Ramm
+</span><a name="11"></a><span class="source_comment">/*
+<a name="12"></a>var() float OnslaughtMapCenterX, OnslaughtMapCenterY, OnslaughtMapRadius;
+<a name="13"></a>
+<a name="14"></a>var automated GUIFooter f_Legend;
+<a name="15"></a>
+<a name="16"></a>var automated GUILabel l_HelpText, l_HintText, l_TeamText;
+<a name="17"></a>var automated GUIButton b_Designer;	//calls up the link designer
+<a name="18"></a>var automated moComboBox co_MenuOptions;
+<a name="19"></a>
+<a name="20"></a>var automated GUIImage i_Background, i_HintImage, i_Team;
+<a name="21"></a>
+<a name="22"></a>var() localized string MapPreferenceStrings[3];
+<a name="23"></a>var() localized string NodeTeleportHelpText,
+<a name="24"></a>                     SetDefaultText,
+<a name="25"></a>                     ChooseSpawnText,
+<a name="26"></a>					 ClearDefaultText,
+<a name="27"></a>					 SetDefaultHint,
+<a name="28"></a>					 ClearDefaultHint,
+<a name="29"></a>					 SpawnText,
+<a name="30"></a>					 TeleportText,
+<a name="31"></a>					 SpawnHint,
+<a name="32"></a>					 TeleportHint,
+<a name="33"></a>					 SelectedHint,
+<a name="34"></a>					 UnderAttackHint,
+<a name="35"></a>					 CoreHint,
+<a name="36"></a>					 NodeHint,
+<a name="37"></a>					 UnclaimedHint,
+<a name="38"></a>					 LockedHint;
+<a name="39"></a>
+<a name="40"></a>var() localized string Titles[6];
+<a name="41"></a>var() localized string NewSelectedHint, NewTeleportHint, EnemyCoreHint;
+<a name="42"></a>var   localized string DefendMsg;
+<a name="43"></a>
+<a name="44"></a>var color TColor[2];
+<a name="45"></a>
+<a name="46"></a>
+<a name="47"></a>var() material NodeImage;
+<a name="48"></a>
+<a name="49"></a>var() color SelectionColor;
+<a name="50"></a>var() bool bNodeTeleporting; //this page is open because the player wants to node teleport
+<a name="51"></a>
+<a name="52"></a>// Actor references - these must be cleared at level change
+<a name="53"></a>var ONSPlayerReplicationInfo PRI;
+<a name="54"></a>var ONSPowerCore SelectedCore;
+<a name="55"></a>
+<a name="56"></a>function InitComponent(GUIController MyController, GUIComponent MyOwner)
+<a name="57"></a>{
+<a name="58"></a>	local int x;
+<a name="59"></a>
+<a name="60"></a>	Super.InitComponent(MyController, MyOwner);
+<a name="61"></a>
+<a name="62"></a>	for (x = 0; x &lt; 3; x++)
+<a name="63"></a>		co_MenuOptions.AddItem(MapPreferenceStrings[x]);
+<a name="64"></a>}
+<a name="65"></a>
+<a name="66"></a>event Opened( GUIComponent Sender )
+<a name="67"></a>{
+<a name="68"></a>	Super.Opened(Sender);
+<a name="69"></a>	bNodeTeleporting = false;
+<a name="70"></a>}
+<a name="71"></a>
+<a name="72"></a>//called to inform tab that it should be in Node Teleport mode instead of Select Spawn Point mode
+<a name="73"></a>function NodeTeleporting()
+<a name="74"></a>{
+<a name="75"></a>	bNodeTeleporting = true;
+<a name="76"></a>}
+<a name="77"></a>
+<a name="78"></a>function ShowPanel(bool bShow)
+<a name="79"></a>{
+<a name="80"></a>	local string colorname,t;
+<a name="81"></a>	Super.ShowPanel(bShow);
+<a name="82"></a>
+<a name="83"></a>	if ( bShow )
+<a name="84"></a>	{
+<a name="85"></a>		if ( (PRI != None) && (PRI.Team != None) )
+<a name="86"></a>		{
+<a name="87"></a>    		colorname = PRI.Team.ColorNames[PRI.Team.TeamIndex];
+<a name="88"></a>			t = Repl(DefendMsg, "%t", colorname, false);
+<a name="89"></a>			l_TeamText.Caption = t;
+<a name="90"></a>
+<a name="91"></a>			i_Team.Image = PRI.Level.GRI.TeamSymbols[PRI.Team.TeamIndex];
+<a name="92"></a>			i_Team.ImageColor = TColor[PRI.Team.TeamIndex];
+<a name="93"></a>		}
+<a name="94"></a>		if (PRI != None && (PRI.Level.NetMode == NM_Standalone || (PRI.bAdmin && PRI.Level.GRI != None && !PRI.Level.GRI.bMatchHasBegun)))
+<a name="95"></a>			b_Designer.Show();
+<a name="96"></a>		else
+<a name="97"></a>			b_Designer.Hide();
+<a name="98"></a>	}
+<a name="99"></a>
+<a name="100"></a>}
+<a name="101"></a>
+<a name="102"></a>function bool InternalOnPreDraw( Canvas C )
+<a name="103"></a>{
+<a name="104"></a>	local ONSPowerCore Core;
+<a name="105"></a>	local ONSHudOnslaught ONSHUD;
+<a name="106"></a>
+<a name="107"></a>	ONSHUD = ONSHudOnslaught(PlayerOwner().myHud);
+<a name="108"></a>	Core = ONSHUD.LocatePowerCore(Controller.MouseX - OnslaughtMapCenterX, Controller.MouseY - OnslaughtMapCenterY, OnslaughtMapRadius);
+<a name="109"></a>
+<a name="110"></a>	if ( Core == None || Core.CoreStage == 255 || Core.PowerLinks.Length == 0 )
+<a name="111"></a>	{
+<a name="112"></a>		l_HintText.Caption = "";
+<a name="113"></a>		l_HelpText.Caption = "";
+<a name="114"></a>		i_HintImage.Image = None;
+<a name="115"></a>
+<a name="116"></a>		l_TeamText.SetVisibility(true);
+<a name="117"></a>
+<a name="118"></a>	}
+<a name="119"></a>
+<a name="120"></a>	else
+<a name="121"></a>	{
+<a name="122"></a>		l_TeamText.SetVisibility(false);
+<a name="123"></a>
+<a name="124"></a>		if ( Core.bUnderAttack || (Core.CoreStage == 0 && Core.bSevered) )
+<a name="125"></a>			DrawAttackHint();
+<a name="126"></a>		else if ( PRI != None && Core == PRI.StartCore )
+<a name="127"></a>			DrawSpawnHint();
+<a name="128"></a>		else if (Core.bFinalCore)
+<a name="129"></a>		{
+<a name="130"></a>			if (Core.DefenderTeamIndex == PlayerOwner().PlayerReplicationInfo.Team.TeamIndex)
+<a name="131"></a>				DrawCoreHint(true);
+<a name="132"></a>			else
+<a name="133"></a>				DrawCoreHint(false);
+<a name="134"></a>		}
+<a name="135"></a>		else DrawNodeHint( ONSHUD, Core );
+<a name="136"></a>	}
+<a name="137"></a>
+<a name="138"></a>	return false;
+<a name="139"></a>}
+<a name="140"></a>
+<a name="141"></a>function DrawAttackHint()
+<a name="142"></a>{
+<a name="143"></a>	l_HintText.Caption = UnderAttackHint;
+<a name="144"></a>	SetHintImage(NodeImage,0,64,64,64);
+<a name="145"></a>	l_HelpText.Caption=Titles[0];
+<a name="146"></a>}
+<a name="147"></a>
+<a name="148"></a>function DrawSpawnHint()
+<a name="149"></a>{
+<a name="150"></a>	l_HintText.Caption = SelectedHint;
+<a name="151"></a>	SetHintImage( NodeImage, 64, 64, 64, 64);
+<a name="152"></a>	l_HelpText.Caption=Titles[1];
+<a name="153"></a>}
+<a name="154"></a>
+<a name="155"></a>function DrawCoreHint(bool HomeTeam)
+<a name="156"></a>{
+<a name="157"></a>	if (!HomeTeam)
+<a name="158"></a>	{
+<a name="159"></a>		l_HintText.Caption = EnemyCoreHint;
+<a name="160"></a>		SetHintImage( NodeImage, 65, 0, 62, 64 );
+<a name="161"></a>		return;
+<a name="162"></a>	}
+<a name="163"></a>
+<a name="164"></a>	l_HintText.Caption = CoreHint;
+<a name="165"></a>	SetHintImage( NodeImage, 65, 0, 62, 64 );
+<a name="166"></a>	l_HelpText.Caption=Titles[2];
+<a name="167"></a>
+<a name="168"></a>	if (bNodeTeleporting)
+<a name="169"></a>		L_HintText.Caption = l_HintText.Caption$NewTeleportHint;
+<a name="170"></a>
+<a name="171"></a>	l_HintText.Caption = l_HintText.Caption$NewSelectedHint;
+<a name="172"></a>}
+<a name="173"></a>
+<a name="174"></a>function DrawNodeHint( ONSHudOnslaught HUD, ONSPowerCore Core )
+<a name="175"></a>{
+<a name="176"></a>	if ( HUD == None || Core == None )
+<a name="177"></a>		return;
+<a name="178"></a>
+<a name="179"></a>    if (Core.CoreStage == 4)
+<a name="180"></a>    {
+<a name="181"></a>        if (HUD.PowerCoreAttackable(Core))
+<a name="182"></a>        {
+<a name="183"></a>			l_HintText.Caption = UnclaimedHint;
+<a name="184"></a>			SetHintImage( NodeImage,0,0,31,32);
+<a name="185"></a>			l_HelpText.Caption=Titles[3];
+<a name="186"></a>        }
+<a name="187"></a>        else
+<a name="188"></a>        {
+<a name="189"></a>        	l_HintText.Caption = LockedHint;
+<a name="190"></a>        	SetHintImage( NodeImage,0,32,31,32);
+<a name="191"></a>        	l_HelpText.Caption=Titles[4];
+<a name="192"></a>        }
+<a name="193"></a>    }
+<a name="194"></a>    else if (HUD.PowerCoreAttackable(Core))
+<a name="195"></a>    {
+<a name="196"></a>    	l_HintText.Caption = NodeHint;
+<a name="197"></a>    	SetHintImage( NodeImage, 32,0,32,31);
+<a name="198"></a>    	l_HelpText.Caption=Titles[5];
+<a name="199"></a>    }
+<a name="200"></a>    else
+<a name="201"></a>    {
+<a name="202"></a>    	l_HintText.Caption = LockedHint;
+<a name="203"></a>    	SetHintImage( NodeImage,0,32,31,32);
+<a name="204"></a>    	l_HelpText.Caption=Titles[4];
+<a name="205"></a>    }
+<a name="206"></a>
+<a name="207"></a>	if (PlayerOwner().PlayerReplicationInfo.Team != None && Core.DefenderTeamIndex == PlayerOwner().PlayerReplicationInfo.Team.TeamIndex)
+<a name="208"></a>	{
+<a name="209"></a>		if (bNodeTeleporting)
+<a name="210"></a>			L_HintText.Caption = l_HintText.Caption$NewTeleportHint;
+<a name="211"></a>
+<a name="212"></a>		if (!HUD.PowerCoreAttackable(Core) )
+<a name="213"></a>			l_HintText.Caption = l_HintText.Caption$NewSelectedHint;
+<a name="214"></a>	}
+<a name="215"></a>}
+<a name="216"></a>
+<a name="217"></a>function SetHintImage( Material NewImage, int X1, int Y1, int X2, int Y2 )
+<a name="218"></a>{
+<a name="219"></a>	i_HintImage.Image = NewImage;
+<a name="220"></a>	i_HintImage.X1 = X1;
+<a name="221"></a>	i_HintImage.X2 = X1 + X2;
+<a name="222"></a>	i_HintImage.Y1 = Y1;
+<a name="223"></a>	i_HintImage.Y2 = Y1 + Y2;
+<a name="224"></a>}
+<a name="225"></a>
+<a name="226"></a>function bool PreDrawMap(Canvas C)
+<a name="227"></a>{
+<a name="228"></a>	local float L,T,W,H;
+<a name="229"></a>	OnslaughtMapRadius = fmin( i_Background.ActualHeight(),i_Background.ActualWidth() ) / 2;
+<a name="230"></a>	OnslaughtMapCenterX = i_Background.Bounds[0] + OnslaughtMapRadius;
+<a name="231"></a>	OnslaughtMapCenterY = i_Background.Bounds[1] + i_Background.ActualHeight() / 2;
+<a name="232"></a>
+<a name="233"></a>	l_HelpText.bBoundToParent=false;
+<a name="234"></a>	l_HelpText.bScaleToParent=false;
+<a name="235"></a>
+<a name="236"></a>	l_HintText.bScaleToParent=false;
+<a name="237"></a>	l_HintText.bBoundToParent=false;
+<a name="238"></a>
+<a name="239"></a>	i_HintImage.bScaleToParent=false;
+<a name="240"></a>	i_HintImage.bBoundToParent=false;
+<a name="241"></a>
+<a name="242"></a>	l_TeamText.bScaleToParent=false;
+<a name="243"></a>	l_TeamText.bBoundToParent=false;
+<a name="244"></a>
+<a name="245"></a>	i_Team.bScaleToParent=false;
+<a name="246"></a>	i_Team.bBoundToParent=false;
+<a name="247"></a>
+<a name="248"></a>	L = OnslaughtMapCenterX + OnslaughtMapRadius + (ActualWidth()*0.05);
+<a name="249"></a>	T = OnslaughtMapCenterY - OnslaughtMapRadius;
+<a name="250"></a>
+<a name="251"></a>	W = ActualLeft() + ActualWidth() - L;
+<a name="252"></a>	H = ActualTop() + ActualHeight() - T;
+<a name="253"></a>
+<a name="254"></a>	i_HintImage.WinLeft = L;
+<a name="255"></a>	i_HintImage.WinTop = T;
+<a name="256"></a>
+<a name="257"></a>	l_HelpText.WinLeft = i_HintImage.ActualLeft() + i_HintImage.ActualWidth() + 8;
+<a name="258"></a>	l_HelpText.WinTop = t;
+<a name="259"></a>	l_HelpText.WinHeight = i_HintImage.ActualHeight();
+<a name="260"></a>	l_HelpTExt.WinWidth = W - i_HintImage.ActualWidth() - 8;
+<a name="261"></a>
+<a name="262"></a>	t += i_HintImage.ActualHeight()+8;
+<a name="263"></a>	l_HintText.WinLeft = l;
+<a name="264"></a>	l_HintText.WinTop= t;
+<a name="265"></a>	l_HintText.WinWidth = w;
+<a name="266"></a>	l_HintText.WinHeight = H - i_HintImage.ActualHeight() - 8;
+<a name="267"></a>
+<a name="268"></a>	L = OnslaughtMapCenterX + OnslaughtMapRadius;
+<a name="269"></a>	W = ActualLeft() + ActualWidth() - L;
+<a name="270"></a>
+<a name="271"></a>	i_Team.WinLeft = L;
+<a name="272"></a>	i_Team.WinWidth = W;
+<a name="273"></a>	i_Team.WinHeight = W;
+<a name="274"></a>	i_Team.WinTop = i_Background.ActualTop() + i_Background.ActualHeight() - i_Team.ActualHeight();
+<a name="275"></a>
+<a name="276"></a>
+<a name="277"></a>	l_TeamText.WinLeft = L;
+<a name="278"></a>	l_TeamText.WinWidth = W;
+<a name="279"></a>	l_TeamText.WinTop = i_Team.ActualTop() - l_TeamText.ActualHeight();
+<a name="280"></a>
+<a name="281"></a>	return false;
+<a name="282"></a>}
+<a name="283"></a>
+<a name="284"></a>function bool DrawMap(Canvas C)
+<a name="285"></a>{
+<a name="286"></a>	local ONSPowerCore Core;
+<a name="287"></a>	local ONSHudOnslaught ONSHUD;
+<a name="288"></a>	local float HS;
+<a name="289"></a>
+<a name="290"></a>	if ( PRI != None )
+<a name="291"></a>		Core = PRI.StartCore;
+<a name="292"></a>
+<a name="293"></a>
+<a name="294"></a>	ONSHUD = ONSHudOnslaught(PlayerOwner().myHud);
+<a name="295"></a>	HS = ONSHUD.HudScale;
+<a name="296"></a>	ONSHUD.HudScale=1.0;
+<a name="297"></a>	ONSHUD.DrawRadarMap(C, OnslaughtMapCenterX, OnslaughtMapCenterY, OnslaughtMapRadius, false);
+<a name="298"></a>	ONSHUD.HudScale=HS;
+<a name="299"></a>
+<a name="300"></a>	if ( Core != None )
+<a name="301"></a>		ONSHUD.DrawSpawnIcon(C, Core.HUDLocation, Core.bFinalCore, ONSHUD.IconScale, ONSHUD.HUDScale);
+<a name="302"></a>
+<a name="303"></a>	return true;
+<a name="304"></a>}
+<a name="305"></a>
+<a name="306"></a>function InternalOnPostDraw(Canvas Canvas)
+<a name="307"></a>{
+<a name="308"></a>	PRI = ONSPlayerReplicationInfo(PlayerOwner().PlayerReplicationInfo);
+<a name="309"></a>	if (PRI != None)
+<a name="310"></a>	{
+<a name="311"></a>		bInit = False;
+<a name="312"></a>		co_MenuOptions.SetIndex(PRI.ShowMapOnDeath);
+<a name="313"></a>		OnRendered = None;
+<a name="314"></a>		ShowPanel(true);
+<a name="315"></a>	}
+<a name="316"></a>}
+<a name="317"></a>
+<a name="318"></a>function SetSelectedCore()
+<a name="319"></a>{
+<a name="320"></a>	local ONSPowerCore Core;
+<a name="321"></a>
+<a name="322"></a>	Core = ONSHudOnslaught(PlayerOwner().myHUD).LocatePowerCore(Controller.MouseX - OnslaughtMapCenterX, Controller.MouseY - OnslaughtMapCenterY, OnslaughtMapRadius);
+<a name="323"></a>	if ( ValidSpawnPoint(Core) )
+<a name="324"></a>		SelectedCore = Core;
+<a name="325"></a>	else SelectedCore = None;
+<a name="326"></a>}
+<a name="327"></a>
+<a name="328"></a>function bool SelectClick( GUIComponent Sender )
+<a name="329"></a>{
+<a name="330"></a>	local PlayerController PC;
+<a name="331"></a>
+<a name="332"></a>	if (bInit || PRI == None || PRI.bOnlySpectator)
+<a name="333"></a>		return true;
+<a name="334"></a>
+<a name="335"></a>	PC = PlayerOwner();
+<a name="336"></a>	SetSelectedCore();
+<a name="337"></a>	if ( SelectedCore == None )
+<a name="338"></a>		return True;
+<a name="339"></a>
+<a name="340"></a>	if ( SelectedCore == PRI.StartCore )
+<a name="341"></a>		PRI.SetStartCore( None, false );
+<a name="342"></a>	else PRI.SetStartCore( SelectedCore, false );
+<a name="343"></a>}
+<a name="344"></a>
+<a name="345"></a>function bool SpawnClick(GUIComponent Sender)
+<a name="346"></a>{
+<a name="347"></a>	local PlayerController PC;
+<a name="348"></a>
+<a name="349"></a>	if (bInit || PRI == None || PRI.bOnlySpectator)
+<a name="350"></a>		return true;
+<a name="351"></a>
+<a name="352"></a>	PC = PlayerOwner();
+<a name="353"></a>	SetSelectedCore();
+<a name="354"></a>
+<a name="355"></a>	if ( SelectedCore == None )
+<a name="356"></a>		return True;
+<a name="357"></a>
+<a name="358"></a>	if ( bNodeTeleporting )
+<a name="359"></a>	{
+<a name="360"></a>		if ( SelectedCore != None )
+<a name="361"></a>		{
+<a name="362"></a>			Controller.CloseMenu(false);
+<a name="363"></a>			PRI.TeleportTo(SelectedCore);
+<a name="364"></a>		}
+<a name="365"></a>	}
+<a name="366"></a>	else
+<a name="367"></a>	{
+<a name="368"></a>		Controller.CloseMenu(false);
+<a name="369"></a>		PRI.SetStartCore( SelectedCore, true );
+<a name="370"></a>		PC.ServerRestartPlayer();
+<a name="371"></a>	}
+<a name="372"></a>}
+<a name="373"></a>
+<a name="374"></a>function bool InternalOnClick(GUIComponent Sender)
+<a name="375"></a>{
+<a name="376"></a>	if (bInit || PRI == None)
+<a name="377"></a>		return true;
+<a name="378"></a>
+<a name="379"></a>	PRI.RequestLinkDesigner();
+<a name="380"></a>	return true;
+<a name="381"></a>}
+<a name="382"></a>
+<a name="383"></a>function Timer()
+<a name="384"></a>{
+<a name="385"></a>	local PlayerController PC;
+<a name="386"></a>
+<a name="387"></a>	PC = PlayerOwner();
+<a name="388"></a>	PC.ServerRestartPlayer();
+<a name="389"></a>	PC.bFire = 0;
+<a name="390"></a>	PC.bAltFire = 0;
+<a name="391"></a>	Controller.CloseMenu(false);
+<a name="392"></a>}
+<a name="393"></a>
+<a name="394"></a>function bool ValidSpawnPoint(ONSPowerCore Core)
+<a name="395"></a>{
+<a name="396"></a>	if ( Core == None )
+<a name="397"></a>		return false;
+<a name="398"></a>
+<a name="399"></a>	if (Core.DefenderTeamIndex == PRI.Team.TeamIndex && Core.CoreStage == 0 && (!Core.bUnderAttack || Core.bFinalCore) && Core.PowerLinks.Length &gt; 0)
+<a name="400"></a>		return true;
+<a name="401"></a>
+<a name="402"></a>	return false;
+<a name="403"></a>}
+<a name="404"></a>
+<a name="405"></a>function Closed(GUIComponent Sender, bool bCancelled)
+<a name="406"></a>{
+<a name="407"></a>	local ONSPlayerReplicationInfo.EMapPreference Pref;
+<a name="408"></a>
+<a name="409"></a>	if (PRI != None)
+<a name="410"></a>	{
+<a name="411"></a>		Pref = EMapPreference(co_MenuOptions.GetIndex());
+<a name="412"></a>		if ( Pref != PRI.ShowMapOnDeath )
+<a name="413"></a>		{
+<a name="414"></a>			PRI.ShowMapOnDeath = Pref;
+<a name="415"></a>			PRI.SaveConfig();
+<a name="416"></a>		}
+<a name="417"></a>	}
+<a name="418"></a>
+<a name="419"></a>	Super.Closed(Sender,bCancelled);
+<a name="420"></a>}
+<a name="421"></a>
+<a name="422"></a>function Free()
+<a name="423"></a>{
+<a name="424"></a>	Super.Free();
+<a name="425"></a>
+<a name="426"></a>	PRI = None;
+<a name="427"></a>	SelectedCore = None;
+<a name="428"></a>}
+<a name="429"></a>
+<a name="430"></a>function LevelChanged()
+<a name="431"></a>{
+<a name="432"></a>	Super.LevelChanged();
+<a name="433"></a>
+<a name="434"></a>	PRI = None;
+<a name="435"></a>	SelectedCore = None;
+<a name="436"></a>}
+<a name="437"></a>
+<a name="438"></a>defaultproperties
+<a name="439"></a>{
+<a name="440"></a>	NodeImage=Material'NewHUDIcons'
+<a name="441"></a>
+<a name="442"></a>	SelectionColor=(R=255,G=255,B=255,A=255)
+<a name="443"></a>	OnslaughtMapCenterX = 0.65
+<a name="444"></a>	OnslaughtMapCenterY = 0.40
+<a name="445"></a>	OnslaughtMapRadius = 0.30
+<a name="446"></a>
+<a name="447"></a>	MapPreferenceStrings(0)="Never"
+<a name="448"></a>	MapPreferenceStrings(1)="When Body is Still"
+<a name="449"></a>	MapPreferenceStrings(2)="Immediately"
+<a name="450"></a>
+<a name="451"></a>	ChooseSpawnText="Choose Your Spawn Point"
+<a name="452"></a>	NodeTeleportHelpText="Choose Node Teleport Destination"
+<a name="453"></a>
+<a name="454"></a>	SetDefaultText="Set Default"
+<a name="455"></a>	ClearDefaultText="Clear Default"
+<a name="456"></a>
+<a name="457"></a>	SetDefaultHint="Set the currently selected node as your preferred spawn location"
+<a name="458"></a>	ClearDefaultHint="Allow the game to choose the most appropriate spawn location"
+<a name="459"></a>
+<a name="460"></a>	SpawnText="Spawn Here"
+<a name="461"></a>	TeleportText="Teleport Here"
+<a name="462"></a>
+<a name="463"></a>	SpawnHint="Spawn at the currently selected node"
+<a name="464"></a>	TeleportHint="Teleport to the currently selected node"
+<a name="465"></a>
+<a name="466"></a>    Begin Object Class=GUILabel Name=HelpText
+<a name="467"></a>        TextAlign=TXTA_Left
+<a name="468"></a>        TextColor=(B=255,G=255,R=255)
+<a name="469"></a>        Caption=""
+<a name="470"></a>//        FontScale=FNS_Small
+<a name="471"></a>        StyleName="TextLabel"
+<a name="472"></a>		WinWidth=0.274188
+<a name="473"></a>		WinLeft=0.719388
+<a name="474"></a>		WinTop=0.035141
+<a name="475"></a>        bBoundToParent=false
+<a name="476"></a>        bScaleToParent=false
+<a name="477"></a>    End Object
+<a name="478"></a>	l_HelpText=HelpText
+<a name="479"></a>
+<a name="480"></a>	Begin Object Class=GUIImage Name=BackgroundImage
+<a name="481"></a>		Image=Material'2K4Menus.Controls.OutlineSquare'
+<a name="482"></a>		ImageStyle=ISTY_Stretched
+<a name="483"></a>		OnPreDraw=PreDrawMap
+<a name="484"></a>		OnDraw=DrawMap
+<a name="485"></a>		WinWidth=0.634989
+<a name="486"></a>		WinHeight=0.747156
+<a name="487"></a>		WinLeft=0.029188
+<a name="488"></a>		WinTop=0.070134
+<a name="489"></a>		bAcceptsInput=True
+<a name="490"></a>		OnClick=SpawnClick
+<a name="491"></a>		OnRightClick=SelectClick
+<a name="492"></a>	End Object
+<a name="493"></a>	i_Background=BackgroundImage
+<a name="494"></a>
+<a name="495"></a>    Begin Object Class=GUIImage Name=IconHintImage
+<a name="496"></a>        ImageStyle=ISTY_Scaled
+<a name="497"></a>        Image=Material'NewHUDIcons'
+<a name="498"></a>		WinWidth=0.043667
+<a name="499"></a>		WinHeight=0.049502
+<a name="500"></a>		WinLeft=0.671639
+<a name="501"></a>		WinTop=0.033996
+<a name="502"></a>		RenderWeight=0.51
+<a name="503"></a>        bBoundToParent=false
+<a name="504"></a>        bScaleToParent=false
+<a name="505"></a>    End Object
+<a name="506"></a>    i_HintImage=IconHintImage
+<a name="507"></a>
+<a name="508"></a>    Begin Object Class=GUILabel Name=HintLabel
+<a name="509"></a>    	StyleName="TextLabel"
+<a name="510"></a>    	FontScale=FNS_Small
+<a name="511"></a>		WinWidth=0.323888
+<a name="512"></a>		WinHeight=0.742797
+<a name="513"></a>		WinLeft=0.669020
+<a name="514"></a>		WinTop=0.117390
+<a name="515"></a>		RenderWeight=0.52
+<a name="516"></a>		bMultiline=true
+<a name="517"></a>        bBoundToParent=false
+<a name="518"></a>        bScaleToParent=false
+<a name="519"></a>    End Object
+<a name="520"></a>    l_HintText=HintLabel
+<a name="521"></a>
+<a name="522"></a>	Begin Object Class=moComboBox Name=MapComboBox
+<a name="523"></a>		WinWidth=0.628008
+<a name="524"></a>		WinHeight=0.038462
+<a name="525"></a>		WinLeft=0.032347
+<a name="526"></a>		WinTop=0.866668
+<a name="527"></a>		CaptionWidth=0.3
+<a name="528"></a>		Caption="Show Map:"
+<a name="529"></a>		TabOrder=2
+<a name="530"></a>		bReadOnly=true
+<a name="531"></a>	End Object
+<a name="532"></a>	co_MenuOptions=MapComboBox
+<a name="533"></a>
+<a name="534"></a>	Begin Object Class=GUIButton Name=LinkDesignButton
+<a name="535"></a>		WinWidth=0.187876
+<a name="536"></a>		WinHeight=0.047400
+<a name="537"></a>		WinLeft=0.760387
+<a name="538"></a>		WinTop=0.863674
+<a name="539"></a>		Caption="Link Designer"
+<a name="540"></a>		OnClick=InternalOnClick
+<a name="541"></a>		TabOrder=3
+<a name="542"></a>		bAutosize=true
+<a name="543"></a>		RenderWeight=0.52
+<a name="544"></a>	End Object
+<a name="545"></a>	b_Designer=LinkDesignButton
+<a name="546"></a>
+<a name="547"></a>	Begin Object Class=GUIImage Name=iTeam
+<a name="548"></a>		WinWidth=0.338338
+<a name="549"></a>		WinHeight=0.405539
+<a name="550"></a>		WinLeft=0.619446
+<a name="551"></a>		WinTop=0.400000
+<a name="552"></a>		ImageStyle=ISTY_Scaled
+<a name="553"></a>		ImageColor=(R=0,G=128,B=255,A=90)
+<a name="554"></a>		TabOrder=10
+<a name="555"></a>	End Object
+<a name="556"></a>	i_Team=iTeam
+<a name="557"></a>
+<a name="558"></a>    Begin Object Class=GUILabel Name=TeamLabel
+<a name="559"></a>    	StyleName="TextLabel"
+<a name="560"></a>    	Caption="Defend the Red Core"
+<a name="561"></a>    	FontScale=FNS_Small
+<a name="562"></a>		WinWidth=0.385550
+<a name="563"></a>		WinHeight=0.043963
+<a name="564"></a>		WinLeft=0.597081
+<a name="565"></a>		WinTop=0.391063
+<a name="566"></a>		RenderWeight=0.52
+<a name="567"></a>		bMultiline=true
+<a name="568"></a>		TextAlign=TXTA_Center
+<a name="569"></a>    End Object
+<a name="570"></a>    l_TeamText=TeamLabel
+<a name="571"></a>
+<a name="572"></a>
+<a name="573"></a>
+<a name="574"></a>	 SelectedHint="Preferred spawn location"
+<a name="575"></a>	 UnderAttackHint="Node is currently under attack"
+<a name="576"></a>	 CoreHint="Main power core"
+<a name="577"></a>	 NodeHint="Node is currently vulnerable to enemy attack"
+<a name="578"></a>	 UnclaimedHint="Node is currently neutral and may be taken by either team"
+<a name="579"></a>	 LockedHint="Node is currently unlinked and may not be attacked by the enemy"
+<a name="580"></a>
+<a name="581"></a>	Titles(0)="Core (Under Attack)"
+<a name="582"></a>	Titles(1)="Preferred Node"
+<a name="583"></a>	Titles(2)="Core"
+<a name="584"></a>	Titles(3)="Node (Unclaimed)"
+<a name="585"></a>	Titles(4)="Node (Locked)"
+<a name="586"></a>	Titles(5)="Node (Attackable)"
+<a name="587"></a>
+<a name="588"></a>	NewSelectedHint="||Right-Click on this node to select it as the preferred spawn location."
+<a name="589"></a>	NewTeleportHint="||Left-Click on this node to teleport to it"
+<a name="590"></a>	EnemyCoreHint="Enemy Core||Connect the nodes until you can reach this core"
+<a name="591"></a>
+<a name="592"></a>	OnPreDraw=InternalOnPreDraw
+<a name="593"></a>	OnRendered=InternalOnPostDraw
+<a name="594"></a>
+<a name="595"></a>	DefendMsg="Defend the %t core";
+<a name="596"></a>	TColor(0)=(R=255,G=100,B=100,A=128)
+<a name="597"></a>	TColor(1)=(R=0,G=128,B=255,A=128)
+<a name="598"></a>
+<a name="599"></a>}
+<a name="600"></a>*/</span>
+<a name="601"></a>
+<a name="602"></a>defaultproperties
+<a name="603"></a>{
+<a name="604"></a>}
+<a name="605"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4tab_onslaughtmap.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Tab_OnslaughtMap">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4tab_mutatorsp.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4tab_playerlogincontrols.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.269 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

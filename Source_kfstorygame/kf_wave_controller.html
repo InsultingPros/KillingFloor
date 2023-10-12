@@ -1,0 +1,1134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFStoryGame.KF_Wave_Controller</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfstorygame/kfstorygame-overview.html">Package</a></td>
+	<td class="header"><a href="../kfstorygame/kf_wave_controller.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KF_Wave_Controller">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfstorygame/kf_useablemover.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfstorygame/msg_cashreward.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfstorygame/kf_wave_controller.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfstorygame/kfstorygame-overview.html">KFStoryGame</a>.<a href="../kfstorygame/kf_wave_controller.html">KF_Wave_Controller</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012<br />01013<br />01014<br />01015<br />01016<br />01017<br />01018<br />01019<br />01020<br />
+01021<br />01022<br />01023<br />01024<br />01025</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_comment">/*
+<a name="2"></a>	--------------------------------------------------------------
+<a name="3"></a>	KF_Wave_Controller
+<a name="4"></a>	--------------------------------------------------------------
+<a name="5"></a>
+<a name="6"></a>    This actor does all the dirty work for the Wave Designer. It
+<a name="7"></a>    handles Timing for wave spawns, tracks the number of monsters
+<a name="8"></a>    in each wave and the wave spawn cycle.
+<a name="9"></a>
+<a name="10"></a>    The Progression of a Wave goes something like :
+<a name="11"></a>
+<a name="12"></a>    New Wave --&gt;   New Cycle ---&gt;  Pick a Squad ---&gt; Spawn Squad
+<a name="13"></a>
+<a name="14"></a>    this repeats until the total number of ZEDs is equal to the
+<a name="15"></a>    Max monsters value set in the cycle.  Then we move on to the
+<a name="16"></a>    next cycle and repeat.
+<a name="17"></a>
+<a name="18"></a>    It's worth noting that 'standard' KF  Waves would only have a
+<a name="19"></a>    single Spawn cycle per wave. Multiple cycles are only really
+<a name="20"></a>    needed for setting up complex waves where you want lots of
+<a name="21"></a>    variation in the frequency or type of monsters being spawned.
+<a name="22"></a>
+<a name="23"></a>	Author :  Alex Quick
+<a name="24"></a>
+<a name="25"></a>	--------------------------------------------------------------
+<a name="26"></a>*/</span>
+<a name="27"></a>
+<a name="28"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfstorygame/kf_wave_controller.html" class="source">KF_Wave_Controller</a></span> extends <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>
+<a name="29"></a>dependsOn(<span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>);
+<a name="30"></a>
+<a name="31"></a><span class="source_comment">/*  we've spawned everything we can possibly spawn.  Tell the next controller to start doing its thing .. */</span>
+<a name="32"></a>var         <span class="source_type">bool</span>                                        bSpawningComplete;
+<a name="33"></a>
+<a name="34"></a>var         <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>                             StoryGI;
+<a name="35"></a>
+<a name="36"></a>var array &lt; <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>&gt; &gt;                          NextSpawnSquad;
+<a name="37"></a>
+<a name="38"></a><span class="source_comment">/*===========================================================================================================
+<a name="39"></a>Wave Vars
+<a name="40"></a>============================================================================================================*/</span>
+<a name="41"></a>
+<a name="42"></a><span class="source_comment">/* array of all Zombie Volumes which will spawn ZEDs for this wave */</span>
+<a name="43"></a>var         array&lt;<span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span>&gt;                         WaveVols;
+<a name="44"></a>
+<a name="45"></a><span class="source_comment">/* Set by the Designer - reference to tag of volumes used in this wave */</span>
+<a name="46"></a>var         array&lt;<span class="source_type">name</span>&gt;                                 Wave_VolumeTags;
+<a name="47"></a>
+<a name="48"></a><span class="source_comment">/* Total number of ZEDs which will be spawned for this wave */</span>
+<a name="49"></a>var         <span class="source_type">int</span>                                         Wave_ZEDTotal;
+<a name="50"></a>
+<a name="51"></a><span class="source_comment">/* Total number of ZEDs remaining in this wave (sum of the total spawn count from all cycles)   */</span>
+<a name="52"></a>var         <span class="source_type">int</span>                                         Wave_RemainingZEDs;
+<a name="53"></a>
+<a name="54"></a><span class="source_comment">/* Reference to the index of this Controller in it's owning Designer's Wave array */</span>
+<a name="55"></a>var         <span class="source_type">int</span>                                         WaveIndex;
+<a name="56"></a>
+<a name="57"></a><span class="source_comment">/* number of ZEDs which were spawned by this Controller in the current wave */</span>
+<a name="58"></a>var         <span class="source_type">int</span>                                         RunningSpawnTotal;
+<a name="59"></a>
+<a name="60"></a><span class="source_comment">/* Number of ZEDs left in the map after this wave ended */</span>
+<a name="61"></a>var         <span class="source_type">int</span>                                         NumStragglers;
+<a name="62"></a>
+<a name="63"></a><span class="source_comment">/*==========================================================================================================
+<a name="64"></a>Spawn Cycle Vars
+<a name="65"></a>============================================================================================================*/</span>
+<a name="66"></a>
+<a name="67"></a><span class="source_comment">/*  index of the current SpawnGroup in this wave */</span>
+<a name="68"></a>var         <span class="source_type">int</span>                                         CurrentCycleIdx;
+<a name="69"></a>
+<a name="70"></a>var         <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>.<span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#SZEDSquadType" class="source">SZEDSquadType</a></span>               CurrentSquad;
+<a name="71"></a>
+<a name="72"></a>var         array&lt;<span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html" class="source">KF_StoryWaveDesigner</a></span>.<span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html#SWaveSpawn" class="source">SWaveSpawn</a></span>&gt;      AllSpawnCycles;
+<a name="73"></a>
+<a name="74"></a>var         <span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html" class="source">KF_StoryWaveDesigner</a></span>.<span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html#SWaveSpawn" class="source">SWaveSpawn</a></span>             CurrentSpawnCycle;
+<a name="75"></a>
+<a name="76"></a><span class="source_comment">/* Wave Designer actor which this Controller belongs to */</span>
+<a name="77"></a>var         private <span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html" class="source">KF_StoryWaveDesigner</a></span>                OwningManager;
+<a name="78"></a>
+<a name="79"></a><span class="source_comment">/* Should we be spitting out ZEDs ? */</span>
+<a name="80"></a>var         <span class="source_type">bool</span>                                        bActive;
+<a name="81"></a>
+<a name="82"></a><span class="source_comment">/* number of Spawn Cycles left to spawn for this wave */</span>
+<a name="83"></a>var         <span class="source_type">int</span>                                         RemainingSpawnCycles;
+<a name="84"></a>
+<a name="85"></a><span class="source_comment">/* Number of ZEDs left in the current spawn cycle */</span>
+<a name="86"></a>var         <span class="source_type">int</span>                                         CycleRemainingZEDs;
+<a name="87"></a>
+<a name="88"></a>var         <span class="source_type">int</span>                                         Cycle_ZEDTotal;
+<a name="89"></a>
+<a name="90"></a>var         <span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span>                                LastSpawningVolume;
+<a name="91"></a>
+<a name="92"></a>var         <span class="source_type">int</span>                                         NumFailedFindVolumeAttempts,MaxFailedFindVolumeAttempts;
+<a name="93"></a>var         <span class="source_type">int</span>                                         NumFailedSquadSpawnAttempts,MaxFailedSquadSpawnAttempts;
+<a name="94"></a>
+<a name="95"></a>var         <span class="source_type">float</span>                                       WaveTimeElapsed, LastWaveSpawnTime;
+<a name="96"></a>
+<a name="97"></a>var         <span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html" class="source">KF_StoryWaveDesigner</a></span>.<span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html#ESineWavePatternUsage" class="source">ESineWavePatternUsage</a></span>  CurrentSineWavePatternUsage;
+<a name="98"></a>
+<a name="99"></a><span class="source_comment">/* We have finished spawning all the zeds in the current Squad we're trying to spawn */</span>
+<a name="100"></a>var         <span class="source_type">bool</span>                                        bFinishedLastSquadSpawn;
+<a name="101"></a>
+<a name="102"></a><span class="source_comment">/* The name of the last squad we tried to spawn */</span>
+<a name="103"></a>var         <span class="source_type">string</span>                                      LastSpawnSquadName;
+<a name="104"></a>
+<a name="105"></a>
+<a name="106"></a><span class="source_comment">/*============================================================================================================= */</span>
+<a name="107"></a>
+<a name="108"></a>function Initialize()
+<a name="109"></a>{
+<a name="110"></a>	StoryGI = <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>(<span class="source_type">level</span>.Game);
+<a name="111"></a>    Tag = GetOwningManager().Waves[WaveIndex].Wave_ActivationTag ;
+<a name="112"></a>
+<a name="113"></a>    <span class="source_comment">/* Figure out which volumes will be used for s pawning in this wave */</span>
+<a name="114"></a>    Wave_VolumeTags = GetOwningManager().Waves[WaveIndex].Wave_VolumeTags ;
+<a name="115"></a>    FindControlledVolumes();
+<a name="116"></a>}
+<a name="117"></a>
+<a name="118"></a>
+<a name="119"></a><span class="source_comment">/* Figure out which volumes will be used to spawn ZEDs for this wave */</span>
+<a name="120"></a>function FindControlledVolumes()
+<a name="121"></a>{
+<a name="122"></a>    local <span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span> <span class="source_type">V</span>;
+<a name="123"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="124"></a>
+<a name="125"></a>    foreach AllActors(<span class="source_type">class</span> <span class="source_name">'ZombieVolume'</span> , <span class="source_type">V</span>)
+<a name="126"></a>    {
+<a name="127"></a>        for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt; Wave_VolumeTags.length ; <span class="source_type">i</span> ++)
+<a name="128"></a>        {
+<a name="129"></a>            if(<span class="source_type">V</span>.Tag == Wave_VolumeTags[<span class="source_type">i</span>])
+<a name="130"></a>            {
+<a name="131"></a>                <span class="source_type">V</span>.SetOwner(OwningManager);
+<a name="132"></a>                WaveVols[WaveVols.length] = <span class="source_type">V</span>;
+<a name="133"></a>            }
+<a name="134"></a>        }
+<a name="135"></a>    }
+<a name="136"></a>}
+<a name="137"></a>
+<a name="138"></a>function Reset()
+<a name="139"></a>{
+<a name="140"></a>    bSpawningComplete = false;
+<a name="141"></a>    bActive = false;
+<a name="142"></a>    Wave_ZEDTotal = <span class="source_int">0</span>;
+<a name="143"></a>    Cycle_ZEDTotal = <span class="source_int">0</span>;
+<a name="144"></a>    CycleRemainingZEDS = <span class="source_int">0</span>;
+<a name="145"></a>    Wave_RemainingZEDs = <span class="source_int">0</span>;
+<a name="146"></a>    CurrentCycleIdx = default.CurrentCycleIdx;
+<a name="147"></a>    RemainingSpawnCycles = <span class="source_int">0</span>;
+<a name="148"></a>    RunningSpawnTotal = <span class="source_int">0</span>;
+<a name="149"></a>    NumStragglers=<span class="source_int">0</span>;
+<a name="150"></a>}
+<a name="151"></a>
+<a name="152"></a>
+<a name="153"></a>function SetOwningManager()
+<a name="154"></a>{
+<a name="155"></a>    OwningManager     =  <span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html" class="source">KF_StoryWaveDesigner</a></span>(<span class="source_type">Owner</span>);
+<a name="156"></a>}
+<a name="157"></a>
+<a name="158"></a>function <span class="source_type"><a href="../kfstorygame/kf_storywavedesigner.html" class="source">KF_StoryWaveDesigner</a></span>   GetOwningManager()
+<a name="159"></a>{
+<a name="160"></a>    return OwningManager;
+<a name="161"></a>}
+<a name="162"></a>
+<a name="163"></a>function InitSpawns()
+<a name="164"></a>{
+<a name="165"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>,<span class="source_type">idx</span>;
+<a name="166"></a>    local <span class="source_type">int</span> NewTotalZEDs;
+<a name="167"></a>
+<a name="168"></a>    AllSpawnCycles          = GetOwningManager().Waves[WaveIndex].Wave_Spawns;
+<a name="169"></a>    RemainingSpawnCycles    = AllSpawnCycles.length;
+<a name="170"></a>    LastWaveSpawnTime = <span class="source_int">0</span>;
+<a name="171"></a>    CurrentSineWavePatternUsage = GetOwningManager().Waves[WaveIndex].SineWavePatternUsage;
+<a name="172"></a>    bFinishedLastSquadSpawn=true;
+<a name="173"></a>
+<a name="174"></a>    <span class="source_comment">// Scale the WaveTimeElapsed to modify where we start in the sine wave pattern
+</span><a name="175"></a>    if( CurrentSineWavePatternUsage == SWP_StartAtMinRate || CurrentSineWavePatternUsage == SWP_AlwaysFullSpeed )
+<a name="176"></a>    {
+<a name="177"></a>        WaveTimeElapsed = <span class="source_int">0</span>;
+<a name="178"></a>    }
+<a name="179"></a>    else if( CurrentSineWavePatternUsage == SWP_StartAtMaxRate )
+<a name="180"></a>    {
+<a name="181"></a>        WaveTimeElapsed = <span class="source_int">40</span>;
+<a name="182"></a>    }
+<a name="183"></a>
+<a name="184"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; RemainingSpawnCycles ; <span class="source_type">i</span> ++)
+<a name="185"></a>    {
+<a name="186"></a>        for(<span class="source_type">idx</span> = <span class="source_int">0</span> ; <span class="source_type">idx</span> &lt; AllSpawnCycles[<span class="source_type">i</span>].SquadList.length ; <span class="source_type">idx</span> ++)
+<a name="187"></a>        {
+<a name="188"></a>            AllSpawnCycles[<span class="source_type">i</span>].AllSquads[<span class="source_type">idx</span>] = StoryGI.FindSquadByName(AllSpawnCycles[<span class="source_type">i</span>].SquadList[<span class="source_type">idx</span>]);
+<a name="189"></a>        }
+<a name="190"></a>
+<a name="191"></a>        NewTotalZEDs += GetCycleMaxZEDs(<span class="source_type">i</span>);
+<a name="192"></a>    }
+<a name="193"></a>
+<a name="194"></a>    Wave_ZEDTotal      = NewTotalZEDs;
+<a name="195"></a>    Wave_RemainingZEDs = Wave_ZEDTotal;
+<a name="196"></a>
+<a name="197"></a>    if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="198"></a>    {
+<a name="199"></a>        log(<span class="source_string">"Init spawns for wave : "</span>@WaveIndex@<span class="source_string">" - Total Enemies for this wave will be : "</span>@Wave_ZEDTotal,<span class="source_name">'Story_Debug'</span>);
+<a name="200"></a>    }
+<a name="201"></a>}
+<a name="202"></a>
+<a name="203"></a>
+<a name="204"></a><span class="source_comment">/* Updates Zombie Volume Events & Tags to match the settings for the current spawn cycle */</span>
+<a name="205"></a>function UpdateVolumeTags(<span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span> <span class="source_type">V</span>)
+<a name="206"></a>{
+<a name="207"></a>    <span class="source_type">V</span>.ZombieDeathEvent = CurrentSpawnCycle.ZombieDeathEvent;
+<a name="208"></a>    <span class="source_type">V</span>.ZombieSpawnTag   = CurrentSpawnCycle.ZombieSpawnTag;
+<a name="209"></a>    <span class="source_type">V</span>.ZombieSpawnEvent = CurrentSpawnCycle.ZombieSpawnEvent;
+<a name="210"></a>}
+<a name="211"></a>
+<a name="212"></a><span class="source_comment">/* Returns true if this wave spawns endless enemies */</span>
+<a name="213"></a>function <span class="source_type">bool</span> InfiniteSpawns()
+<a name="214"></a>{
+<a name="215"></a>    return GetMaxMonsters() == <span class="source_int">0</span> || GetCycleMaxZEDs(CurrentCycleIdx) == <span class="source_int">0</span> ;
+<a name="216"></a>}
+<a name="217"></a>
+<a name="218"></a>
+<a name="219"></a>function AllSpawningFinished()
+<a name="220"></a>{
+<a name="221"></a>    bSpawningComplete = true;
+<a name="222"></a>
+<a name="223"></a>    if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="224"></a>    {
+<a name="225"></a>        log(<span class="source_string">"========================================================="</span>,<span class="source_name">'Story_Debug'</span>);
+<a name="226"></a>        log(self@<span class="source_string">"  - Wave : "</span>@WaveIndex@<span class="source_string">" has spawned all ("</span>@RunningSpawnTotal@<span class="source_string">") its ZEDs. "</span>,<span class="source_name">'Story_Debug'</span>);
+<a name="227"></a>    }
+<a name="228"></a>
+<a name="229"></a>    NumStragglers = StoryGi.NumMonsters;
+<a name="230"></a>    <span class="source_comment">//log("Number of stragglers at the time this Wave ended was : "@NumStragglers,'Story_Debug');
+</span><a name="231"></a>}
+<a name="232"></a>
+<a name="233"></a>
+<a name="234"></a>function <span class="source_type">bool</span> IsDirectingSpawnsFor( <span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span> TestVol)
+<a name="235"></a>{
+<a name="236"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="237"></a>
+<a name="238"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; WaveVols.length ; <span class="source_type">i</span> ++)
+<a name="239"></a>    {
+<a name="240"></a>       if(WaveVols[<span class="source_type">i</span>] == TestVol)
+<a name="241"></a>       {
+<a name="242"></a>           return true;
+<a name="243"></a>       }
+<a name="244"></a>    }
+<a name="245"></a>
+<a name="246"></a>    return false;
+<a name="247"></a>}
+<a name="248"></a>
+<a name="249"></a>
+<a name="250"></a><span class="source_comment">/* Triggering an active wave aborts it.  Triggering an inactive wave starts it up */</span>
+<a name="251"></a>function <span class="source_type"><a href="../engine/trigger.html" class="source">Trigger</a></span>( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> <span class="source_type">EventInstigator</span> )
+<a name="252"></a>{
+<a name="253"></a>   if(!bActive)
+<a name="254"></a>   {
+<a name="255"></a>      StartWave(<span class="source_type">Other</span>);
+<a name="256"></a>   }
+<a name="257"></a>   else
+<a name="258"></a>   {
+<a name="259"></a>      AbortWave(<span class="source_type">Other</span>);
+<a name="260"></a>   }
+<a name="261"></a>}
+<a name="262"></a>
+<a name="263"></a>
+<a name="264"></a>function StartWave(optional <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> TriggeringActor)
+<a name="265"></a>{
+<a name="266"></a>    if(bSpawningComplete)
+<a name="267"></a>    {
+<a name="268"></a>        Reset();
+<a name="269"></a>    }
+<a name="270"></a>
+<a name="271"></a>    if(!bSpawningComplete)
+<a name="272"></a>    {
+<a name="273"></a>        bActive = true;
+<a name="274"></a>
+<a name="275"></a>        if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="276"></a>        {
+<a name="277"></a>            log(<span class="source_string">"======================================================================"</span>,<span class="source_name">'Story_Debug'</span>);
+<a name="278"></a>            log(<span class="source_string">"Starting  :"</span>@Tag@<span class="source_string">" for Wave Designer : "</span>@GetOwningManager()@<span class="source_string">" - Instigator : "</span>@TriggeringActor,<span class="source_name">'Story_Debug'</span>);
+<a name="279"></a>        }
+<a name="280"></a>
+<a name="281"></a>        <span class="source_comment">/* Set up the Spawn Cycles & Calculate the ZED totals */</span>
+<a name="282"></a>        InitSpawns();
+<a name="283"></a>        StartNextSpawnCycle();
+<a name="284"></a>        GetOwningManager().GoToWave(tag);
+<a name="285"></a>
+<a name="286"></a>        SetTimer(GetSpawninterval(),false);
+<a name="287"></a>        DoSquadSpawn();
+<a name="288"></a>    }
+<a name="289"></a>}
+<a name="290"></a>function AbortWave(optional <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> TriggeringActor)
+<a name="291"></a>{
+<a name="292"></a>    bActive = false;
+<a name="293"></a>
+<a name="294"></a>    if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="295"></a>    {
+<a name="296"></a>        log(<span class="source_string">"======================================================================"</span>,<span class="source_name">'Story_Debug'</span>);
+<a name="297"></a>        log(<span class="source_string">"Stopping :"</span>@Tag@<span class="source_string">" for Wave Designer : "</span>@GetOwningManager()@<span class="source_string">" - Instigator : "</span>@TriggeringActor,<span class="source_name">'Story_Debug'</span>);
+<a name="298"></a>    }
+<a name="299"></a>
+<a name="300"></a>   <span class="source_comment">/* We're trying to end this wave but the spawning hasn't yet finished. Cut it off */</span>
+<a name="301"></a>    AllSpawningFinished();
+<a name="302"></a>
+<a name="303"></a><span class="source_comment">/*    if(GetOwningManager().Waves[WaveIndex].bKillStragglers)
+<a name="304"></a>    {
+<a name="305"></a>        KillStragglers();
+<a name="306"></a>    }
+<a name="307"></a>*/</span>
+<a name="308"></a>}
+<a name="309"></a>
+<a name="310"></a><span class="source_comment">/* Timed ZED spawning*/</span>
+<a name="311"></a>function Timer()
+<a name="312"></a>{
+<a name="313"></a>    if(!bSpawningComplete && bActive)
+<a name="314"></a>    {
+<a name="315"></a>        <span class="source_comment">// Increment the wave time counter
+</span><a name="316"></a>        if( LastWaveSpawnTime &gt; <span class="source_int">0</span> )
+<a name="317"></a>        {
+<a name="318"></a>            WaveTimeElapsed += (<span class="source_type">Level</span>.TimeSeconds - LastWaveSpawnTime);
+<a name="319"></a>        }
+<a name="320"></a>
+<a name="321"></a>        DoSquadSpawn();
+<a name="322"></a>        SetTimer(GetSpawninterval(),false);
+<a name="323"></a>    }
+<a name="324"></a>}
+<a name="325"></a>
+<a name="326"></a><span class="source_comment">/* We're moving to another wave - Kill off the remaining zeds as elegantly as possible ... */</span>
+<a name="327"></a>function KillStragglers()
+<a name="328"></a>{
+<a name="329"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="330"></a>    local <span class="source_type">int</span> <span class="source_type">idx</span>;
+<a name="331"></a>    local <span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span> Straggler;
+<a name="332"></a>    local array&lt;<span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>&gt;  MarkedForDeath;
+<a name="333"></a>
+<a name="334"></a>    <span class="source_comment">// - need to set this before we start killing zeds off or the array size will change while we're iterating it ...
+</span><a name="335"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; WaveVols.length ; <span class="source_type">i</span> ++)
+<a name="336"></a>    {
+<a name="337"></a>        for(<span class="source_type">idx</span> = <span class="source_int">0</span> ; <span class="source_type">idx</span> &lt; WaveVols[<span class="source_type">i</span>].ZEDList.length ; <span class="source_type">idx</span> ++)
+<a name="338"></a>        {
+<a name="339"></a>            Straggler = WaveVols[<span class="source_type">i</span>].ZEDList[<span class="source_type">idx</span>] ;
+<a name="340"></a>            if(Straggler != none && Straggler.Event == CurrentSpawnCycle.ZombieDeathEvent &&
+<a name="341"></a>             !IsVisibleToAnyone(Straggler) )
+<a name="342"></a>            {
+<a name="343"></a>                Straggler.Event = <span class="source_name">''</span>;
+<a name="344"></a>                MarkedForDeath[MarkedForDeath.length] = Straggler;
+<a name="345"></a>            }
+<a name="346"></a>        }
+<a name="347"></a>    }
+<a name="348"></a>
+<a name="349"></a>    <span class="source_type">i</span>= <span class="source_int">0</span>;
+<a name="350"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; MarkedForDeath.length ; <span class="source_type">i</span> ++)
+<a name="351"></a>    {
+<a name="352"></a>        Straggler = MarkedForDeath[<span class="source_type">i</span>];
+<a name="353"></a>        if(Straggler != none)
+<a name="354"></a>        {
+<a name="355"></a>            Straggler.Died(Straggler.<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>, <span class="source_type">class</span><span class="source_name">'Gibbed'</span>, Straggler.Location );
+<a name="356"></a>        }
+<a name="357"></a>    }
+<a name="358"></a>}
+<a name="359"></a>
+<a name="360"></a><span class="source_comment">/* Returns true if the supplied actor is visible to any player on the server */</span>
+<a name="361"></a>function   <span class="source_type">bool</span> IsVisibleToAnyone(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> <span class="source_type">A</span>)
+<a name="362"></a>{
+<a name="363"></a>    local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="364"></a>    local <span class="source_type"><a href="../kfstorygame/kfplayercontroller_story.html" class="source">KFPlayerController_Story</a></span> <span class="source_type">PC</span>;
+<a name="365"></a>    local <span class="source_type">float</span> MinKillDistSq;
+<a name="366"></a>
+<a name="367"></a>    MinKillDistSq = <span class="source_int">1000</span> * <span class="source_int">1000</span>;
+<a name="368"></a>
+<a name="369"></a>	for( <span class="source_type">C</span>=<span class="source_type">Level</span>.ControllerList; <span class="source_type">C</span>!=None; <span class="source_type">C</span>=<span class="source_type">C</span>.NextController )
+<a name="370"></a>	{
+<a name="371"></a>        <span class="source_type">PC</span> = <span class="source_type"><a href="../kfstorygame/kfplayercontroller_story.html" class="source">KFPlayerController_Story</a></span>(<span class="source_type">C</span>);
+<a name="372"></a>        if(<span class="source_type">PC</span> != none)
+<a name="373"></a>        {
+<a name="374"></a>            if(<span class="source_type">PC</span>.HasLineOfSightTo(<span class="source_type">A</span>.Location + (vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">1</span>) * (<span class="source_type">A</span>.CollisionHeight/<span class="source_int">2</span>))) &&
+<a name="375"></a>            VSizeSquared(<span class="source_type">A</span>.Location - <span class="source_type">PC</span>.CalcViewLocation) &lt; MinKillDistSq)
+<a name="376"></a>            {
+<a name="377"></a>                return true;
+<a name="378"></a>            }
+<a name="379"></a>        }
+<a name="380"></a>	}
+<a name="381"></a>
+<a name="382"></a>    return false;
+<a name="383"></a>}
+<a name="384"></a>
+<a name="385"></a><span class="source_comment">/* Returns true if the number of monsters currently in play exceeds the total limit as defined in the Level Rules.
+<a name="386"></a>This is primarily for performance reasons ... */</span>
+<a name="387"></a>
+<a name="388"></a>function <span class="source_type">bool</span>  MaxMonstersAtOnce(<span class="source_type">int</span> NewMonsters, optional out <span class="source_type">Int</span> ClampedNewMonsters)
+<a name="389"></a>{
+<a name="390"></a>    local <span class="source_type">bool</span> bReachedMax;
+<a name="391"></a>
+<a name="392"></a>    if(StoryGI != none)
+<a name="393"></a>    {
+<a name="394"></a>        bReachedMax = <span class="source_type">Max</span>(StoryGI.NumMonsters,<span class="source_int">0</span>) + NewMonsters &gt; StoryGI.StoryRules.MaxEnemiesAtOnce ;
+<a name="395"></a>
+<a name="396"></a>        if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="397"></a>        {
+<a name="398"></a>            log(<span class="source_string">"Current Monsters : "</span>@<span class="source_type">Max</span>(StoryGI.NumMonsters,<span class="source_int">0</span>)@<span class="source_string">"Wave Max : "</span>@GetMaxMonsters()@<span class="source_string">" Level Max : "</span>@StoryGI.StoryRules.MaxEnemiesAtOnce,<span class="source_name">'Story_Debug'</span>);
+<a name="399"></a>        }
+<a name="400"></a>
+<a name="401"></a>        if(bReachedMax)
+<a name="402"></a>        {
+<a name="403"></a>            ClampedNewMonsters = Min(NewMonsters,StoryGI.StoryRules.MaxEnemiesAtOnce - <span class="source_type">Max</span>(StoryGI.NumMonsters,<span class="source_int">0</span>));
+<a name="404"></a>            return true ;
+<a name="405"></a>        }
+<a name="406"></a>    }
+<a name="407"></a>
+<a name="408"></a>    return false;
+<a name="409"></a>}
+<a name="410"></a>
+<a name="411"></a><span class="source_comment">/* Builds a squad and passes it to SpawnASquad() */</span>
+<a name="412"></a>function DoSquadSpawn()
+<a name="413"></a>{
+<a name="414"></a>    local <span class="source_type">int</span> NumToSpawn,ClampedMonsters;
+<a name="415"></a>    local <span class="source_type">int</span> IgnoreZEDLimit;
+<a name="416"></a>    local <span class="source_type">string</span> SquadName;
+<a name="417"></a>    local <span class="source_type">int</span> <span class="source_type">I</span>;
+<a name="418"></a>
+<a name="419"></a>    if(bSpawningComplete)
+<a name="420"></a>    {
+<a name="421"></a>        return;
+<a name="422"></a>    }
+<a name="423"></a>
+<a name="424"></a>    LastWaveSpawnTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="425"></a>
+<a name="426"></a>    if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="427"></a>    {
+<a name="428"></a>        log(<span class="source_string">"**** DO SQUAD SPAWN *******************************************************"</span>,<span class="source_name">'Story_Debug'</span>);
+<a name="429"></a>    }
+<a name="430"></a>
+<a name="431"></a>    if( NextSpawnSquad.length &gt; <span class="source_int">0</span> && !bFinishedLastSquadSpawn )
+<a name="432"></a>    {
+<a name="433"></a>        <span class="source_comment">// NextSpawnSquad needs to finish spawning the last spawn squad we tried!
+</span><a name="434"></a>        SquadName = LastSpawnSquadName;
+<a name="435"></a>    }
+<a name="436"></a>    else
+<a name="437"></a>    {
+<a name="438"></a>        NextSpawnSquad = BuildNextSpawnSquad(IgnoreZedLimit,SquadName);
+<a name="439"></a>        LastSpawnSquadName = SquadName;
+<a name="440"></a>        bFinishedLastSquadSpawn=false;
+<a name="441"></a>    }
+<a name="442"></a>    NumToSpawn = NextSpawnSquad.length;
+<a name="443"></a>
+<a name="444"></a>    <span class="source_comment">/* Make sure the squad size never exceeds the number of guys remaining to spawn */</span>
+<a name="445"></a>    if(!InfiniteSpawns())
+<a name="446"></a>    {
+<a name="447"></a>        NumToSpawn = Min(NumToSpawn, GetRemainingMonstersInCycle());
+<a name="448"></a>    }
+<a name="449"></a>
+<a name="450"></a>    <span class="source_comment">/* Make sure the squad size never exceeds the total max enemies value in the level rules */</span>
+<a name="451"></a>    if(IgnoreZEDLimit == <span class="source_int">0</span> && MaxMonstersAtOnce(NumToSpawn,ClampedMonsters))
+<a name="452"></a>    {
+<a name="453"></a>        <span class="source_comment">//log("DoSquadSpawn want to spawn "$NumToSpawn$" can only spawn "$ClampedMonsters,'Story_Debug');
+</span><a name="454"></a>        for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt; NextSpawnSquad.length ; <span class="source_type">i</span> ++)
+<a name="455"></a>        {
+<a name="456"></a>            if( <span class="source_type">i</span> &lt; ClampedMonsters )
+<a name="457"></a>            {
+<a name="458"></a>                <span class="source_comment">//log("DoSquadSpawn wants to spawn "$NextSpawnSquad[i],'Story_Debug');
+</span><a name="459"></a>            }
+<a name="460"></a>            else
+<a name="461"></a>            {
+<a name="462"></a>                <span class="source_comment">//log("DoSquadSpawn wants to spawn "$NextSpawnSquad[i]$" but can't because there are too many monsters already",'Story_Debug');
+</span><a name="463"></a>            }
+<a name="464"></a>        }
+<a name="465"></a>        NumToSpawn = ClampedMonsters;
+<a name="466"></a>    }
+<a name="467"></a>    else
+<a name="468"></a>    {
+<a name="469"></a>        for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt; NextSpawnSquad.length ; <span class="source_type">i</span> ++)
+<a name="470"></a>        {
+<a name="471"></a>            <span class="source_comment">//log("DoSquadSpawn wants to spawn "$NextSpawnSquad[i],'Story_Debug');
+</span><a name="472"></a>        }
+<a name="473"></a>    }
+<a name="474"></a>
+<a name="475"></a>    if(NumToSpawn &gt; <span class="source_int">0</span>)
+<a name="476"></a>    {
+<a name="477"></a>       SpawnASquad(NumToSpawn,SquadName);
+<a name="478"></a>    }
+<a name="479"></a>}
+<a name="480"></a>
+<a name="481"></a>function <span class="source_type">bool</span> SpawnASquad(<span class="source_type">int</span> NumDesired, optional <span class="source_type">string</span> SquadName)
+<a name="482"></a>{
+<a name="483"></a>    local <span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span>   SpawnVol;
+<a name="484"></a>    local <span class="source_type">int</span> NumSpawned;
+<a name="485"></a>    local <span class="source_type">int</span> Diff;
+<a name="486"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="487"></a>
+<a name="488"></a>
+<a name="489"></a>    <span class="source_comment">// Log what the squad is going to be when we spawn it
+</span><a name="490"></a>
+<a name="491"></a>    for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span> &lt; NextSpawnSquad.length ; <span class="source_type">i</span> ++)
+<a name="492"></a>    {
+<a name="493"></a>        <span class="source_comment">//log("SpawnASquad wants to spawn "$NextSpawnSquad[i],'Story_Debug');
+</span><a name="494"></a>    }
+<a name="495"></a>
+<a name="496"></a>    StoryGI.NextSpawnSquad = NextSpawnSquad;         <span class="source_comment">// needs to be set *before* we look for a Zombie Volume, as RateZombieVolume() checks this array
+</span><a name="497"></a>
+<a name="498"></a>    SpawnVol = GetASpawnVolume();
+<a name="499"></a>    if(SpawnVol != none )
+<a name="500"></a>    {
+<a name="501"></a>        NumFailedFindVolumeAttempts = <span class="source_int">0</span>;
+<a name="502"></a>        LastSpawningVolume = SpawnVol ;
+<a name="503"></a>        UpdateVolumeTags(SpawnVol);
+<a name="504"></a>
+<a name="505"></a>        <span class="source_comment">/* Perform the actual spawn */</span>
+<a name="506"></a>        StoryGI.SpawnZEDsInVolume(SpawnVol,NumDesired,NumSpawned,true);
+<a name="507"></a>
+<a name="508"></a>        if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="509"></a>        {
+<a name="510"></a>            log(<span class="source_string">"*** Spawned : "</span>@NumSpawned@<span class="source_string">" ZEDs for Squad : "</span>@SquadName,<span class="source_name">'Story_Debug'</span>);
+<a name="511"></a>        }
+<a name="512"></a>
+<a name="513"></a>        RunningSpawnTotal += NumSpawned ;
+<a name="514"></a>        UpdateRemainingZEDs(NumSpawned);
+<a name="515"></a>
+<a name="516"></a>        Diff = <span class="source_type">Max</span>(NumDesired - NumSpawned,<span class="source_int">0</span>);
+<a name="517"></a>
+<a name="518"></a>        if(Diff == <span class="source_int">0</span> )
+<a name="519"></a>        {
+<a name="520"></a>            <span class="source_comment">// Only say the squad spawn is complete if all zeds from the squad have spawned
+</span><a name="521"></a>            if( StoryGI.NextSpawnSquad.length == <span class="source_int">0</span> )
+<a name="522"></a>            {
+<a name="523"></a>                OnSquadSpawnComplete(SquadName);
+<a name="524"></a>            }
+<a name="525"></a>            else
+<a name="526"></a>            {
+<a name="527"></a>                <span class="source_comment">// Make sure you use the squad from the Story GI before you recurse
+</span><a name="528"></a>                <span class="source_comment">// as it has had the zeds you already spawned removed
+</span><a name="529"></a>                NextSpawnSquad  = StoryGI.NextSpawnSquad;
+<a name="530"></a>            }
+<a name="531"></a>            NumFailedFindVolumeAttempts = <span class="source_int">0</span>;
+<a name="532"></a>            return true;
+<a name="533"></a>        }
+<a name="534"></a>        else
+<a name="535"></a>        {
+<a name="536"></a>            if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="537"></a>            {
+<a name="538"></a>                log(<span class="source_string">"Wanted to spawn"</span>@NumDesired@<span class="source_string">" zeds, but could only spawn : "</span>@NumSpawned,<span class="source_name">'Story_Debug'</span>);
+<a name="539"></a>                log(<span class="source_string">" Trying again with : "</span>@Diff@<span class="source_string">" Zeds ... "</span>, <span class="source_name">'Story_Debug'</span>);
+<a name="540"></a>            }
+<a name="541"></a>
+<a name="542"></a>            <span class="source_comment">// Make sure you use the squad from the Story GI before you recurse
+</span><a name="543"></a>            <span class="source_comment">// as it has had the zeds you already spawned removed
+</span><a name="544"></a>            NextSpawnSquad  = StoryGI.NextSpawnSquad;
+<a name="545"></a>
+<a name="546"></a>            <span class="source_comment">// Don't let this infinitely recurse and crash the game, give up
+</span><a name="547"></a>            <span class="source_comment">// if it can't spawn.
+</span><a name="548"></a>            if(NumFailedSquadSpawnAttempts &lt; MaxFailedSquadSpawnAttempts)
+<a name="549"></a>            {
+<a name="550"></a>                SpawnASquad(Diff,SquadName);  <span class="source_comment">// recurse.
+</span><a name="551"></a>            }
+<a name="552"></a>            else
+<a name="553"></a>            {
+<a name="554"></a>                if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="555"></a>                {
+<a name="556"></a>                    Log(<span class="source_string">" *** CRITICAL SPAWNING FAILURE.   could not spawn : "</span>@SquadName@<span class="source_string">"in,  after : "</span>@NumFailedSquadSpawnAttempts@<span class="source_string">" attempts!"</span>,<span class="source_name">'Story_Debug'</span>);
+<a name="557"></a>                }
+<a name="558"></a>            }
+<a name="559"></a>        }
+<a name="560"></a>    }
+<a name="561"></a>    else
+<a name="562"></a>    {
+<a name="563"></a>        NumFailedFindVolumeAttempts ++;
+<a name="564"></a>        if(NumFailedFindVolumeAttempts &lt; MaxFailedFindVolumeAttempts)
+<a name="565"></a>        {
+<a name="566"></a>            SpawnASquad(NumDesired,SquadName);  <span class="source_comment">// recurse.
+</span><a name="567"></a>        }
+<a name="568"></a>        else
+<a name="569"></a>        {
+<a name="570"></a>            if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="571"></a>            {
+<a name="572"></a>                Log(<span class="source_string">" *** CRITICAL SPAWNING FAILURE.   could not find a volume to spawn : "</span>@SquadName@<span class="source_string">"in,  after : "</span>@NumFailedFindVolumeAttempts@<span class="source_string">" attempts!"</span>,<span class="source_name">'Story_Debug'</span>);
+<a name="573"></a>            }
+<a name="574"></a>        }
+<a name="575"></a>    }
+<a name="576"></a>
+<a name="577"></a>    return false;
+<a name="578"></a>}
+<a name="579"></a>
+<a name="580"></a>function UpdateRemainingZEDs(<span class="source_type">int</span> NumSpawned)
+<a name="581"></a>{
+<a name="582"></a>    CycleRemainingZEDs = <span class="source_type">Max</span>(CycleRemainingZEDs - NumSpawned,<span class="source_int">0</span>);
+<a name="583"></a>    Wave_RemainingZEDs = <span class="source_type">Max</span>(Wave_RemainingZEDs - NumSpawned,<span class="source_int">0</span>);
+<a name="584"></a>}
+<a name="585"></a>
+<a name="586"></a><span class="source_comment">/* A ZED Squad was just spawned successfully . Increment the appropriate values
+<a name="587"></a>to keep the spawn cycle moving */</span>
+<a name="588"></a>
+<a name="589"></a>function OnSquadSpawnComplete(optional <span class="source_type">string</span> SquadName)
+<a name="590"></a>{
+<a name="591"></a>    local <span class="source_type">int</span> SquadIdx;
+<a name="592"></a>
+<a name="593"></a>    <span class="source_comment">//log(SquadName@" just spawned successfully!", 'Story_Debug');
+</span><a name="594"></a>
+<a name="595"></a>    bFinishedLastSquadSpawn=true;
+<a name="596"></a>
+<a name="597"></a>    if(SquadName != <span class="source_string">""</span>)
+<a name="598"></a>    {
+<a name="599"></a>        FindSquadByName(SquadName,SquadIdx);
+<a name="600"></a>        CurrentSpawnCycle.AllSquads[SquadIdx].LastSquadSpawnTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="601"></a>    }
+<a name="602"></a>
+<a name="603"></a>    if(GetRemainingMonstersInCycle() == <span class="source_int">0</span> )
+<a name="604"></a>    {
+<a name="605"></a>        StartNextSpawnCycle();
+<a name="606"></a>    }
+<a name="607"></a>}
+<a name="608"></a>
+<a name="609"></a>function StartNextSpawnCycle()
+<a name="610"></a>{
+<a name="611"></a>    local <span class="source_type">int</span> NumSpawnCycles;
+<a name="612"></a>
+<a name="613"></a>    NumSpawnCycles = AllSpawnCycles.length ;
+<a name="614"></a>    if(RemainingSpawnCycles &gt; <span class="source_int">0</span> )
+<a name="615"></a>    {
+<a name="616"></a>        CurrentCycleIdx                 = Min(CurrentCycleIdx + <span class="source_int">1</span> , NumSpawnCycles-<span class="source_int">1</span>);
+<a name="617"></a>        CurrentSpawnCycle               = AllSpawnCycles[CurrentCycleIdx] ;
+<a name="618"></a>        RemainingSpawnCycles            = <span class="source_type">Max</span>(RemainingSpawnCycles - <span class="source_int">1</span>,<span class="source_int">0</span>) ;
+<a name="619"></a>        Cycle_ZEDTotal                  = GetCycleMaxZEDs(CurrentCycleIdx);
+<a name="620"></a>        CycleRemainingZEDs              = Cycle_ZEDTotal;
+<a name="621"></a>        CurrentSpawnCycle.SpawnedSquads.Length = <span class="source_int">0</span>;
+<a name="622"></a>    }
+<a name="623"></a>    else
+<a name="624"></a>    {
+<a name="625"></a>        if(GetRemainingMonsters() == <span class="source_int">0</span> &&
+<a name="626"></a>        !InfiniteSpawns() )
+<a name="627"></a>        {
+<a name="628"></a>            AllSpawningFinished();
+<a name="629"></a>        }
+<a name="630"></a>    }
+<a name="631"></a>}
+<a name="632"></a>
+<a name="633"></a><span class="source_comment">/* Find a volume to spawn the next squad of ZEDs in */</span>
+<a name="634"></a>function <span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span>   GetASpawnVolume()
+<a name="635"></a>{
+<a name="636"></a>    local <span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span>  SpawnVol;
+<a name="637"></a>    local <span class="source_type">bool</span> bSpawningPatriarch;
+<a name="638"></a>
+<a name="639"></a>    bSpawningPatriarch     = SquadContainsZED(NextSpawnSquad,<span class="source_type">class</span> <span class="source_name">'ZombieBoss'</span>);
+<a name="640"></a>    SpawnVol               = RateVolumes(,bSpawningPatriarch);
+<a name="641"></a>
+<a name="642"></a>    if(SpawnVol == none)
+<a name="643"></a>    {
+<a name="644"></a>        if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="645"></a>        {
+<a name="646"></a>            log(<span class="source_string">"== WARNING : "</span>@self@<span class="source_string">" could not find a suitable spawn volume for : "</span>@CurrentSquad.Squad_Name,<span class="source_name">'Story_Debug'</span>);
+<a name="647"></a>        }
+<a name="648"></a>    }
+<a name="649"></a>
+<a name="650"></a>    return SpawnVol ;
+<a name="651"></a>}
+<a name="652"></a>
+<a name="653"></a>
+<a name="654"></a>function <span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span> RateVolumes(optional <span class="source_type">bool</span> bIgnoreFailedSpawnTime, optional <span class="source_type">bool</span> bBossSpawning)
+<a name="655"></a>{
+<a name="656"></a>	local <span class="source_type"><a href="../kfmod/zombievolume.html" class="source">ZombieVolume</a></span> BestZ;
+<a name="657"></a>	local <span class="source_type">float</span> BestScore,tScore;
+<a name="658"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>,l;
+<a name="659"></a>	local <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span> <span class="source_type">C</span>;
+<a name="660"></a>	local array&lt;<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>&gt; CL;
+<a name="661"></a>	local <span class="source_type">int</span> NumInvalidvols;
+<a name="662"></a>
+<a name="663"></a>	<span class="source_comment">// First pass, pick a random player.
+</span><a name="664"></a>	for( <span class="source_type">C</span>=<span class="source_type">Level</span>.ControllerList; <span class="source_type">C</span>!=None; <span class="source_type">C</span>=<span class="source_type">C</span>.NextController )
+<a name="665"></a>	{
+<a name="666"></a>		if( <span class="source_type">C</span>.bIsPlayer && <span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>!=None && <span class="source_type">C</span>.<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>.Health&gt;<span class="source_int">0</span> )
+<a name="667"></a>			CL[CL.Length] = <span class="source_type">C</span>;
+<a name="668"></a>	}
+<a name="669"></a>	if( CL.Length&gt;<span class="source_int">0</span> )
+<a name="670"></a>		<span class="source_type">C</span> = CL[Rand(CL.Length)];
+<a name="671"></a>	else if( <span class="source_type">C</span>==None )
+<a name="672"></a>		return None; <span class="source_comment">// Shouldnt get to this case, but just to be sure...
+</span><a name="673"></a>
+<a name="674"></a>	<span class="source_comment">// Second pass, figure out best spawning point.
+</span><a name="675"></a>	l = WaveVols.length ;
+<a name="676"></a><span class="source_comment">//	log(self@" RateVolumes :: Number of volumes to choose from : "@l);
+</span><a name="677"></a>	if(l == <span class="source_int">0</span>)
+<a name="678"></a>	{
+<a name="679"></a>        if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="680"></a>        {
+<a name="681"></a>	       log(<span class="source_string">" WARNING -  NO ZOMBIE VOLUMES ASSOCIATED WITH WAVE : "</span>@WaveIndex@<span class="source_string">" OF :"</span>@GetOwningManager(),<span class="source_name">'Story_Debug'</span>);
+<a name="682"></a>        }
+<a name="683"></a>
+<a name="684"></a>        return none;
+<a name="685"></a>	}
+<a name="686"></a>	for( <span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;l; <span class="source_type">i</span>++ )
+<a name="687"></a>	{
+<a name="688"></a>        tScore = WaveVols[<span class="source_type">i</span>].RateZombieVolume(StoryGI,LastSpawningVolume,<span class="source_type">C</span>,bIgnoreFailedSpawnTime, bBossSpawning);
+<a name="689"></a>
+<a name="690"></a>		if( tScore&lt;<span class="source_int">0</span> )
+<a name="691"></a>		{
+<a name="692"></a>            NumInvalidVols ++;
+<a name="693"></a>			continue;
+<a name="694"></a>		}
+<a name="695"></a>
+<a name="696"></a>        if( BestZ==None || (tScore&gt;BestScore) )
+<a name="697"></a>		{
+<a name="698"></a>			BestScore = tScore;
+<a name="699"></a>			BestZ = WaveVols[<span class="source_type">i</span>];
+<a name="700"></a>		}
+<a name="701"></a>	}
+<a name="702"></a>
+<a name="703"></a><span class="source_comment">//	log(self@" RateVolumes :: Number of invalid volumes : "@NumInvalidVols);
+</span><a name="704"></a>
+<a name="705"></a>
+<a name="706"></a>	return BestZ;
+<a name="707"></a>}
+<a name="708"></a>
+<a name="709"></a><span class="source_comment">/* Returns true if the supplied monster squad has a monster of the specified type in it */</span>
+<a name="710"></a>function <span class="source_type">bool</span> SquadContainsZED(array &lt; <span class="source_type">class</span>&lt;<span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>&gt; &gt; CheckSquad, <span class="source_type">class</span> &lt;<span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>&gt; <span class="source_type">ClassType</span>)
+<a name="711"></a>{
+<a name="712"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="713"></a>
+<a name="714"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; CheckSquad.length ; <span class="source_type">i</span> ++)
+<a name="715"></a>    {
+<a name="716"></a>       if(ClassisChildOf(CheckSquad[<span class="source_type">i</span>],<span class="source_type">ClassType</span>))
+<a name="717"></a>       {
+<a name="718"></a>           return true;
+<a name="719"></a>       }
+<a name="720"></a>    }
+<a name="721"></a>
+<a name="722"></a>    return false;
+<a name="723"></a>}
+<a name="724"></a>
+<a name="725"></a><span class="source_comment">/* looks up a squad of the supplied name in the Current Spawn Cycle's cached Squads list */</span>
+<a name="726"></a>
+<a name="727"></a>function <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>.<span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#SZEDSquadType" class="source">SZEDSquadType</a></span>     FindSquadByName(<span class="source_type">string</span> SquadName, optional out <span class="source_type">int</span> <span class="source_type">Index</span>)
+<a name="728"></a>{
+<a name="729"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="730"></a>    local <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>.<span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#SZEDSquadType" class="source">SZEDSquadType</a></span> ExportSquad;
+<a name="731"></a>
+<a name="732"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; CurrentSpawnCycle.AllSquads.length ; <span class="source_type">i</span> ++)
+<a name="733"></a>    {
+<a name="734"></a>        if(CurrentSpawnCycle.AllSquads[<span class="source_type">i</span>].Squad_Name == SquadName)
+<a name="735"></a>        {
+<a name="736"></a>            <span class="source_type">Index</span> = <span class="source_type">i</span>;
+<a name="737"></a>            ExportSquad = CurrentSpawnCycle.AllSquads[<span class="source_type">i</span>] ;
+<a name="738"></a>            break;
+<a name="739"></a>        }
+<a name="740"></a>    }
+<a name="741"></a>
+<a name="742"></a>    if(ExportSquad.Squad_Name == <span class="source_string">""</span>)
+<a name="743"></a>    {
+<a name="744"></a>       <span class="source_comment">//log("Warning - could not find a suitable struct for Squad of Name : "@SquadName);
+</span><a name="745"></a>    }
+<a name="746"></a>
+<a name="747"></a>    return ExportSquad;
+<a name="748"></a>}
+<a name="749"></a>
+<a name="750"></a>
+<a name="751"></a>function <span class="source_type">float</span> GetSpawnInterval()
+<a name="752"></a>{
+<a name="753"></a>    local <span class="source_type">float</span> AdjustedInterval;
+<a name="754"></a>    local <span class="source_type">bool</span> bFullSpeedSpawning;
+<a name="755"></a>
+<a name="756"></a>    <span class="source_comment">// Set full speed spawning if we want that
+</span><a name="757"></a>    if( CurrentSineWavePatternUsage == SWP_AlwaysFullSpeed )
+<a name="758"></a>    {
+<a name="759"></a>        bFullSpeedSpawning = true;
+<a name="760"></a>    }
+<a name="761"></a>
+<a name="762"></a>    if(StoryGI != none)
+<a name="763"></a>    {
+<a name="764"></a>        AdjustedInterval = StoryGI.GetAdjustedSpawnInterval(CurrentSpawnCycle.SpawnInterval, WaveTimeElapsed, bFullSpeedSpawning) ;
+<a name="765"></a>    }
+<a name="766"></a>
+<a name="767"></a>    if(GetOwningManager() != none &&
+<a name="768"></a>    GetOwningManager().bPrintDebugLogs)
+<a name="769"></a>    {
+<a name="770"></a>    	log(tag@<span class="source_string">"--&gt; Next ZED Spawn will occur in : "</span>@AdjustedInterval@<span class="source_string">" Seconds ... "</span>,<span class="source_name">'Story_Debug'</span>);
+<a name="771"></a>    }
+<a name="772"></a>
+<a name="773"></a>    return AdjustedInterval;
+<a name="774"></a>}
+<a name="775"></a>
+<a name="776"></a><span class="source_comment">/* Returns the total number of ZEDs that will spawn in this wave*/</span>
+<a name="777"></a>function   <span class="source_type">int</span> GetMaxMonsters()
+<a name="778"></a>{
+<a name="779"></a>    return Wave_ZEDTotal;
+<a name="780"></a>}
+<a name="781"></a>
+<a name="782"></a>
+<a name="783"></a><span class="source_comment">/* Returns the total number of ZEDs to spawn in a given cycle,  taking into account player & game difficulty scaling */</span>
+<a name="784"></a>function <span class="source_type">int</span> GetCycleMaxZEDs(<span class="source_type">int</span> CycleIndex)
+<a name="785"></a>{
+<a name="786"></a>    local <span class="source_type">int</span> AdjustedMaxZEDs;
+<a name="787"></a>
+<a name="788"></a>    AdjustedMaxZEDs = AllSpawnCycles[CycleIndex].MaxZEDs;
+<a name="789"></a>
+<a name="790"></a>    <span class="source_comment">/* Infinite spawns, dont bother applying difficulty scaling */</span>
+<a name="791"></a>    if(AdjustedMaxZEDs == <span class="source_int">0</span>)
+<a name="792"></a>    {
+<a name="793"></a>        return <span class="source_int">0</span>;
+<a name="794"></a>    }
+<a name="795"></a>
+<a name="796"></a>    if(!AllSpawnCycles[CycleIndex].bNoDifficultyScaling)
+<a name="797"></a>    {
+<a name="798"></a>        AdjustedMaxZEDs *= StoryGI.GetZEDCountModifier() ;
+<a name="799"></a>    }
+<a name="800"></a>
+<a name="801"></a>    AdjustedMaxZEDs = <span class="source_type">Max</span>(AdjustedMaxZEDs,<span class="source_int">1</span>);
+<a name="802"></a>
+<a name="803"></a>    return AdjustedMaxZEDs;
+<a name="804"></a>}
+<a name="805"></a>
+<a name="806"></a>function   <span class="source_type">int</span> GetRemainingMonsters()
+<a name="807"></a>{
+<a name="808"></a>    return Wave_RemainingZEDs;
+<a name="809"></a>}
+<a name="810"></a>
+<a name="811"></a>function   <span class="source_type">int</span> GetRemainingMonstersInCycle()
+<a name="812"></a>{
+<a name="813"></a>    return CycleRemainingZEDs;
+<a name="814"></a>}
+<a name="815"></a>
+<a name="816"></a><span class="source_comment">/* Since the priority enums aren't ordered from low to high ... */</span>
+<a name="817"></a>function    <span class="source_type">int</span> GetOrderedPriority(<span class="source_type">int</span> PriorityVal)
+<a name="818"></a>{
+<a name="819"></a>    <span class="source_type">switch</span>(PriorityVal)
+<a name="820"></a>    {
+<a name="821"></a>        case <span class="source_int">0</span> :  return <span class="source_int">2</span>;     <span class="source_comment">// Normal
+</span><a name="822"></a>        case <span class="source_int">1</span> :  return <span class="source_int">1</span>;     <span class="source_comment">// Low
+</span><a name="823"></a>        case <span class="source_int">2</span> :  return <span class="source_int">0</span>;     <span class="source_comment">// VeryLow
+</span><a name="824"></a>        case <span class="source_int">3</span> :  return <span class="source_int">3</span>;     <span class="source_comment">// High
+</span><a name="825"></a>        case <span class="source_int">4</span> :  return <span class="source_int">4</span>;     <span class="source_comment">// VeryHigh
+</span><a name="826"></a>    }
+<a name="827"></a>
+<a name="828"></a>    return -<span class="source_int">1</span>;
+<a name="829"></a>}
+<a name="830"></a>
+<a name="831"></a>function array&lt;<span class="source_type">class</span> &lt;<span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>&gt; &gt; BuildNextSpawnSquad(optional out <span class="source_type">int</span> bIgnoreZEDLimit, optional out <span class="source_type">string</span> ChosenSquadName)
+<a name="832"></a>{
+<a name="833"></a>    local array&lt;<span class="source_type">class</span> &lt;<span class="source_type"><a href="../kfmod/kfmonster.html" class="source">KFMonster</a></span>&gt; &gt;  ExportSquad;
+<a name="834"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>,<span class="source_type">idx</span>,RandIdx,BestIdx;
+<a name="835"></a>    local <span class="source_type">int</span> NumZEDs;
+<a name="836"></a>    local <span class="source_type">float</span> BestRating;
+<a name="837"></a>    local array&lt;<span class="source_type">Float</span>&gt; SquadRatings;
+<a name="838"></a>    local <span class="source_type">int</span> PriorityVal;
+<a name="839"></a>    local <span class="source_type">float</span> RandMin,RandMax;
+<a name="840"></a>    local array&lt;<span class="source_type">string</span>&gt; VeryLowSquads,LowSquads,NormalSquads,HighSquads,VeryHighSquads,SquadsToRate;
+<a name="841"></a>    local <span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html" class="source">KFStoryGameInfo</a></span>.<span class="source_type"><a href="../kfstorygame/kfstorygameinfo.html#SZEDSquadType" class="source">SZEDSquadType</a></span> ZSquad;
+<a name="842"></a>    local <span class="source_type">int</span> j;
+<a name="843"></a>    local <span class="source_type">bool</span> bSkipThisSquad;
+<a name="844"></a>    local array&lt;<span class="source_type">int</span>&gt; SquadIndexes;
+<a name="845"></a>
+<a name="846"></a>    if(GetOwningManager() != none && GetOwningManager().bPrintDebugLogs)
+<a name="847"></a>    {
+<a name="848"></a>        log(<span class="source_string">"**** BUILD NEXT SQUAD *******************************************************"</span>,<span class="source_name">'Story_Debug'</span>);
+<a name="849"></a>    }
+<a name="850"></a>
+<a name="851"></a>    if( CurrentSpawnCycle.bRandomSquadsWithoutRepeats )
+<a name="852"></a>    {
+<a name="853"></a>        if( CurrentSpawnCycle.SquadList.length == CurrentSpawnCycle.SpawnedSquads.Length )
+<a name="854"></a>        {
+<a name="855"></a>            CurrentSpawnCycle.SpawnedSquads.Length = <span class="source_int">0</span>;
+<a name="856"></a>            <span class="source_comment">//log("Resetting SpawnedSquad list as we've already been through every squad",'Story_Debug');
+</span><a name="857"></a>        }
+<a name="858"></a>
+<a name="859"></a>        for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; CurrentSpawnCycle.SquadList.length ; <span class="source_type">i</span> ++)
+<a name="860"></a>        {
+<a name="861"></a>            bSkipThisSquad = false;
+<a name="862"></a>
+<a name="863"></a>            <span class="source_comment">// see if we should skip this squad because its already been used
+</span><a name="864"></a>            for(j = <span class="source_int">0</span> ; j &lt; CurrentSpawnCycle.SpawnedSquads.length ; j ++)
+<a name="865"></a>            {
+<a name="866"></a>                if( CurrentSpawnCycle.SpawnedSquads[j] == <span class="source_type">i</span> )
+<a name="867"></a>                {
+<a name="868"></a>                    bSkipThisSquad = true;
+<a name="869"></a>                }
+<a name="870"></a>            }
+<a name="871"></a>
+<a name="872"></a>            if( !bSkipThisSquad )
+<a name="873"></a>            {
+<a name="874"></a>                SquadsToRate[SquadsToRate.length] = CurrentSpawnCycle.SquadList[<span class="source_type">i</span>];
+<a name="875"></a>                SquadIndexes[SquadsToRate.length - <span class="source_int">1</span>] = <span class="source_type">i</span>;
+<a name="876"></a>                <span class="source_comment">//log("&gt;&gt; Adding Squad to Randomly Cycle Through :: "@CurrentSpawnCycle.SquadList[i],'Story_Debug');
+</span><a name="877"></a>            }
+<a name="878"></a>            else
+<a name="879"></a>            {
+<a name="880"></a>                <span class="source_comment">//log("&lt;&lt; Skipping already used Squad :: "@CurrentSpawnCycle.SquadList[i],'Story_Debug');
+</span><a name="881"></a>            }
+<a name="882"></a>        }
+<a name="883"></a>
+<a name="884"></a>        BestIdx = Rand(SquadsToRate.length);
+<a name="885"></a>        <span class="source_comment">// Add this squad to the list of squads that already have been used
+</span><a name="886"></a>        CurrentSpawnCycle.SpawnedSquads[CurrentSpawnCycle.SpawnedSquads.length] = SquadIndexes[BestIdx];
+<a name="887"></a>        <span class="source_comment">//log("** Used Squad :: "@SquadsToRate[BestIdx],'Story_Debug');
+</span><a name="888"></a>    }
+<a name="889"></a>    else
+<a name="890"></a>    {
+<a name="891"></a>        <span class="source_comment">/* We only want to rate one squad from each Priority pool, if we allow multiple squads from the same
+<a name="892"></a>        pool to be rated, it'll throw off the rating system */</span>
+<a name="893"></a>
+<a name="894"></a>        <span class="source_comment">/* First of all, let's break the squadlist up by priority group */</span>
+<a name="895"></a>
+<a name="896"></a>        for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; CurrentSpawnCycle.SquadList.length ; <span class="source_type">i</span> ++)
+<a name="897"></a>        {
+<a name="898"></a>            ZSquad = FindSquadByName(CurrentSpawnCycle.SquadList[<span class="source_type">i</span>]);
+<a name="899"></a><span class="source_comment">//            log(CurrentSpawnCycle.SquadList[i]@" Last Spawned time : "@ZSquad.LastSquadSpawnTime@" :: MinSpawnInterval : "@ZSquad.MinTimeBetweenSpawns);
+</span><a name="900"></a>
+<a name="901"></a>            <span class="source_comment">/* Has enough time passed between spawns of this squad? */</span>
+<a name="902"></a>            if(ZSquad.LastSquadSpawnTime &gt; <span class="source_int">0</span> && <span class="source_type">Level</span>.TimeSeconds - ZSquad.LastSquadSpawnTime &lt; ZSquad.MinTimeBetweenSpawns)
+<a name="903"></a>            {
+<a name="904"></a><span class="source_comment">//                log("Rejected Spawn of : "@CurrentSpawnCycle.SquadList[i]@" because it spawned : "@Level.TimeSeconds-ZSquad.LastSquadSpawnTime@" seconds ago.  Next Allowed Spawn in : "@ZSquad.MinTimeBetweenSpawns - (Level.TimeSeconds - ZSquad.LastSquadSpawnTime));
+</span><a name="905"></a>                continue;   <span class="source_comment">// not long enough, skip this one.
+</span><a name="906"></a>            }
+<a name="907"></a>
+<a name="908"></a>            PriorityVal = FindSquadByName(CurrentSpawnCycle.SquadList[<span class="source_type">i</span>]).Squad_Priority;
+<a name="909"></a>            <span class="source_type">switch</span>(PriorityVal)
+<a name="910"></a>            {
+<a name="911"></a>                case <span class="source_int">0</span>  :   NormalSquads[NormalSquads.length] = CurrentSpawnCycle.SquadList[<span class="source_type">i</span>];               <span class="source_comment">// Normal
+</span><a name="912"></a>                            break;
+<a name="913"></a>
+<a name="914"></a>                case <span class="source_int">1</span>  :   LowSquads[LowSquads.length] = CurrentSpawnCycle.SquadList[<span class="source_type">i</span>];                     <span class="source_comment">// Low
+</span><a name="915"></a>                            break;
+<a name="916"></a>
+<a name="917"></a>                case <span class="source_int">2</span>  :   VeryLowSquads[VeryLowSquads.length] = CurrentSpawnCycle.SquadList[<span class="source_type">i</span>];             <span class="source_comment">// VeryLow
+</span><a name="918"></a>                            break;
+<a name="919"></a>
+<a name="920"></a>                case <span class="source_int">3</span>  :   HighSquads[HighSquads.length] = CurrentSpawnCycle.SquadList[<span class="source_type">i</span>];                   <span class="source_comment">// High
+</span><a name="921"></a>                            break;
+<a name="922"></a>
+<a name="923"></a>                case <span class="source_int">4</span>  :   VeryHighSquads[VeryHighSquads.length] = CurrentSpawnCycle.SquadList[<span class="source_type">i</span>];           <span class="source_comment">// VeryHigh
+</span><a name="924"></a>                            break;
+<a name="925"></a>            }
+<a name="926"></a>        }
+<a name="927"></a>
+<a name="928"></a>        <span class="source_comment">/* Add one squad from each priority group to the Squads to rate array. */</span>
+<a name="929"></a>
+<a name="930"></a>        if(VeryLowSquads.length &gt; <span class="source_int">0</span>)
+<a name="931"></a>        {
+<a name="932"></a>            SquadsToRate[SquadsToRate.length]= VeryLowSquads[Rand(VeryLowSquads.length)] ;
+<a name="933"></a>        }
+<a name="934"></a>        if(LowSquads.length &gt; <span class="source_int">0</span>)
+<a name="935"></a>        {
+<a name="936"></a>            SquadsToRate[SquadsToRate.length] = LowSquads[Rand(LowSquads.length)] ;
+<a name="937"></a>        }
+<a name="938"></a>        if(NormalSquads.length &gt; <span class="source_int">0</span>)
+<a name="939"></a>        {
+<a name="940"></a>            SquadsToRate[SquadsToRate.length] = NormalSquads[Rand(NormalSquads.length)] ;
+<a name="941"></a>        }
+<a name="942"></a>        if(HighSquads.length &gt; <span class="source_int">0</span>)
+<a name="943"></a>        {
+<a name="944"></a>            SquadsToRate[SquadsToRate.length] = HighSquads[Rand(HighSquads.length)] ;
+<a name="945"></a>        }
+<a name="946"></a>        if(VeryHighSquads.length &gt; <span class="source_int">0</span>)
+<a name="947"></a>        {
+<a name="948"></a>            SquadsToRate[SquadsToRate.length] = VeryHighSquads[Rand(VeryHighSquads.length)] ;
+<a name="949"></a>        }
+<a name="950"></a>
+<a name="951"></a>        <span class="source_comment">/* Now we're gonna calculate the rating values for each Squad */</span>
+<a name="952"></a>        for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; SquadsToRate.length ; <span class="source_type">i</span> ++)
+<a name="953"></a>        {
+<a name="954"></a>            PriorityVal = FindSquadByName(SquadsToRate[<span class="source_type">i</span>]).Squad_Priority;
+<a name="955"></a>
+<a name="956"></a>            <span class="source_type">switch</span>(PriorityVal)
+<a name="957"></a>            {
+<a name="958"></a>                case <span class="source_int">0</span>  :   RandMin = <span class="source_int">0.5</span>;                  <span class="source_comment">// Normal
+</span><a name="959"></a>                            RandMax = <span class="source_int">1</span>;
+<a name="960"></a>                            break;
+<a name="961"></a>
+<a name="962"></a>                case <span class="source_int">1</span>  :   RandMin = <span class="source_int">0.25</span>;                 <span class="source_comment">// Low
+</span><a name="963"></a>                            RandMax = <span class="source_int">1</span>;
+<a name="964"></a>                            break;
+<a name="965"></a>
+<a name="966"></a>                case <span class="source_int">2</span>  :   RandMin = <span class="source_int">0.1</span>;                 <span class="source_comment">// VeryLow
+</span><a name="967"></a>                            RandMax = <span class="source_int">1</span>;
+<a name="968"></a>                            break;
+<a name="969"></a>
+<a name="970"></a>                case <span class="source_int">3</span>  :   RandMin = <span class="source_int">0.75</span>;                 <span class="source_comment">// High
+</span><a name="971"></a>                            RandMax = <span class="source_int">1</span>;
+<a name="972"></a>                            break;
+<a name="973"></a>
+<a name="974"></a>                case <span class="source_int">4</span>  :   RandMin = <span class="source_int">0.9</span>;                 <span class="source_comment">// VeryHigh
+</span><a name="975"></a>                            RandMax = <span class="source_int">1</span>;
+<a name="976"></a>                            break;
+<a name="977"></a>            }
+<a name="978"></a>
+<a name="979"></a>            SquadRatings[<span class="source_type">i</span>] = RandRange(RandMin,RandMax);
+<a name="980"></a>        }
+<a name="981"></a>
+<a name="982"></a>        <span class="source_comment">/* Iterate the squad ratings and pick the highest one.  We'll be spawning that */</span>
+<a name="983"></a>        for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; SquadRatings.length ; <span class="source_type">i</span> ++)
+<a name="984"></a>        {
+<a name="985"></a>            <span class="source_comment">//log("GetNextSquad ::: "@SquadsToRate[i]@" rolled a : "@SquadRatings[i],'Story_Debug');
+</span><a name="986"></a>
+<a name="987"></a>            if(<span class="source_type">i</span> == <span class="source_int">0</span> ||
+<a name="988"></a>            SquadRatings[<span class="source_type">i</span>] &gt; BestRating)
+<a name="989"></a>            {
+<a name="990"></a>                BestRating = SquadRatings[<span class="source_type">i</span>];
+<a name="991"></a>                BestIdx = <span class="source_type">i</span>;
+<a name="992"></a>            }
+<a name="993"></a>        }
+<a name="994"></a>
+<a name="995"></a>        <span class="source_comment">//log("GetNextSquad ::: "@"Selected -&gt; "@SquadsToRate[BestIdx]@" to spawn.  It's priority is : "@string(GetEnum(Enum 'KFStoryGameInfo.EZEDSpawnPriority',FindSquadByName(SquadsToRate[BestIdx]).Squad_Priority)),'Story_Debug');
+</span><a name="996"></a>    }
+<a name="997"></a>
+<a name="998"></a>    RandIdx = BestIdx;
+<a name="999"></a>    ZSquad = FindSquadByName(SquadsToRate[RandIdx]);
+<a name="1000"></a>    CurrentSquad = ZSquad;
+<a name="1001"></a>    ChosenSquadName = CurrentSquad.Squad_Name;
+<a name="1002"></a>    bIgnoreZEDLimit = <span class="source_type">int</span>(CurrentSquad.bIgnoreLevelMaxZEDs) ;
+<a name="1003"></a>
+<a name="1004"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span> ; <span class="source_type">i</span> &lt; CurrentSquad.Squad_ZEDs.Length ; <span class="source_type">i</span> ++)
+<a name="1005"></a>    {
+<a name="1006"></a>        NumZEDs = CurrentSquad.Squad_ZEDS[<span class="source_type">i</span>].NumToSpawn;
+<a name="1007"></a>        for(<span class="source_type">idx</span> = <span class="source_int">0</span> ; <span class="source_type">idx</span> &lt; NumZEDs ; <span class="source_type">idx</span> ++)
+<a name="1008"></a>        {
+<a name="1009"></a>            ExportSquad[ExportSquad.length] = CurrentSquad.Squad_ZEDs[<span class="source_type">i</span>].ZEDClass ;
+<a name="1010"></a>        }
+<a name="1011"></a>    }
+<a name="1012"></a>
+<a name="1013"></a>    return ExportSquad ;
+<a name="1014"></a>}
+<a name="1015"></a>
+<a name="1016"></a>defaultproperties
+<a name="1017"></a>{
+<a name="1018"></a>     CurrentCycleIdx=-<span class="source_int">1</span>
+<a name="1019"></a>     MaxFailedFindVolumeAttempts=<span class="source_int">10</span>
+<a name="1020"></a>     MaxFailedSquadSpawnAttempts=<span class="source_int">25</span>
+<a name="1021"></a>     bFinishedLastSquadSpawn=True
+<a name="1022"></a>     bHidden=True
+<a name="1023"></a>     RemoteRole=ROLE_None
+<a name="1024"></a>}
+<a name="1025"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfstorygame/kfstorygame-overview.html">Package</a></td>
+	<td class="header"><a href="../kfstorygame/kf_wave_controller.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KF_Wave_Controller">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfstorygame/kf_useablemover.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfstorygame/msg_cashreward.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:04.703 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

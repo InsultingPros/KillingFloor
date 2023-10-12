@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Old2K4.Grenade</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../old2k4/old2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../old2k4/grenade.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Grenade">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_old2k4/giborganicredupperarm.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_old2k4/hitflame.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_old2k4/grenade.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../old2k4/old2k4-overview.html">Old2K4</a>.<a href="../old2k4/grenade.html">Grenade</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180
+</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//=============================================================================
+</span><a name="2"></a><span class="source_comment">// Grenade.
+</span><a name="3"></a><span class="source_comment">//=============================================================================
+</span><a name="4"></a><span class="source_type">class</span> <span class="source_type"><a href="../old2k4/grenade.html" class="source">Grenade</a></span> extends <span class="source_type"><a href="../engine/projectile.html" class="source">Projectile</a></span>;
+<a name="5"></a>
+<a name="6"></a>var <span class="source_type">float</span> ExplodeTimer;
+<a name="7"></a>var <span class="source_type">bool</span> bCanHitOwner, bHitWater;
+<a name="8"></a>var <span class="source_type"><a href="../engine/xemitter.html" class="source">xEmitter</a></span> Trail;
+<a name="9"></a>var() <span class="source_type">float</span> DampenFactor, DampenFactorParallel;
+<a name="10"></a>var <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/xemitter.html" class="source">xEmitter</a></span>&gt; HitEffectClass;
+<a name="11"></a>var <span class="source_type">float</span> LastSparkTime;
+<a name="12"></a>var <span class="source_type">bool</span> bTimerSet;
+<a name="13"></a>
+<a name="14"></a>replication
+<a name="15"></a>{
+<a name="16"></a>    reliable if (Role==ROLE_Authority)
+<a name="17"></a>        ExplodeTimer;
+<a name="18"></a>}
+<a name="19"></a>
+<a name="20"></a>simulated function Destroyed()
+<a name="21"></a>{
+<a name="22"></a>    if ( Trail != None )
+<a name="23"></a>        Trail.mRegen = false; <span class="source_comment">// stop the emitter from regenerating
+</span><a name="24"></a>	Super.Destroyed();
+<a name="25"></a>}
+<a name="26"></a>
+<a name="27"></a>simulated function PostBeginPlay()
+<a name="28"></a>{
+<a name="29"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="30"></a>
+<a name="31"></a>    Super.PostBeginPlay();
+<a name="32"></a>
+<a name="33"></a>    if ( <span class="source_type">Level</span>.NetMode != NM_DedicatedServer)
+<a name="34"></a>    {
+<a name="35"></a>		<span class="source_type">PC</span> = <span class="source_type">Level</span>.GetLocalPlayerController();
+<a name="36"></a>		<span class="source_comment">//if ( (PC.ViewTarget != None) && VSize(PC.ViewTarget.Location - Location) &lt; 5500 )
+</span><a name="37"></a>		<span class="source_comment">//	Trail = Spawn(class'GrenadeSmokeTrail', self,, Location, Rotation);
+</span><a name="38"></a>    }
+<a name="39"></a>
+<a name="40"></a>    if ( Role == ROLE_Authority )
+<a name="41"></a>    {
+<a name="42"></a>        Velocity = Speed * <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span>(<span class="source_type">Rotation</span>);
+<a name="43"></a>        RandSpin(<span class="source_int">25000</span>);
+<a name="44"></a>        bCanHitOwner = false;
+<a name="45"></a>        if (<span class="source_type">Instigator</span>.HeadVolume.bWaterVolume)
+<a name="46"></a>        {
+<a name="47"></a>            bHitWater = true;
+<a name="48"></a>            Velocity = <span class="source_int">0.6</span>*Velocity;
+<a name="49"></a>        }
+<a name="50"></a>    }
+<a name="51"></a>}
+<a name="52"></a>
+<a name="53"></a>simulated function PostNetBeginPlay()
+<a name="54"></a>{
+<a name="55"></a>	if ( Physics == PHYS_None )
+<a name="56"></a>    {
+<a name="57"></a>        SetTimer(ExplodeTimer, false);
+<a name="58"></a>        bTimerSet = true;
+<a name="59"></a>    }
+<a name="60"></a>}
+<a name="61"></a>
+<a name="62"></a>simulated function Timer()
+<a name="63"></a>{
+<a name="64"></a>    Explode(Location, vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">1</span>));
+<a name="65"></a>}
+<a name="66"></a>
+<a name="67"></a>simulated function Landed( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span> )
+<a name="68"></a>{
+<a name="69"></a>    <span class="source_type">HitWall</span>( <span class="source_type">HitNormal</span>, None );
+<a name="70"></a>}
+<a name="71"></a>
+<a name="72"></a>simulated function ProcessTouch( <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Other</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span> )
+<a name="73"></a>{
+<a name="74"></a>    if ( !<span class="source_type">Other</span>.bWorldGeometry && (<span class="source_type">Other</span> != <span class="source_type">Instigator</span> || bCanHitOwner) )
+<a name="75"></a>    {
+<a name="76"></a>		Explode(<span class="source_type">HitLocation</span>, Normal(<span class="source_type">HitLocation</span>-<span class="source_type">Other</span>.Location));
+<a name="77"></a>    }
+<a name="78"></a>}
+<a name="79"></a>
+<a name="80"></a>simulated function <span class="source_type">HitWall</span>( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>, <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">Wall</span> )
+<a name="81"></a>{
+<a name="82"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> VNorm;
+<a name="83"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="84"></a>
+<a name="85"></a>	if ( (<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Wall</span>) != None) || (<span class="source_type"><a href="../unrealgame/gameobjective.html" class="source">GameObjective</a></span>(<span class="source_type">Wall</span>) != None) )
+<a name="86"></a>	{
+<a name="87"></a>		Explode(Location, <span class="source_type">HitNormal</span>);
+<a name="88"></a>		return;
+<a name="89"></a>	}
+<a name="90"></a>
+<a name="91"></a>    if (!bTimerSet)
+<a name="92"></a>    {
+<a name="93"></a>        SetTimer(ExplodeTimer, false);
+<a name="94"></a>        bTimerSet = true;
+<a name="95"></a>    }
+<a name="96"></a>
+<a name="97"></a>    <span class="source_comment">// Reflect off Wall w/damping
+</span><a name="98"></a>    VNorm = (Velocity dot <span class="source_type">HitNormal</span>) * <span class="source_type">HitNormal</span>;
+<a name="99"></a>    Velocity = -VNorm * DampenFactor + (Velocity - VNorm) * DampenFactorParallel;
+<a name="100"></a>
+<a name="101"></a>    RandSpin(<span class="source_int">100000</span>);
+<a name="102"></a>    DesiredRotation.Roll = <span class="source_int">0</span>;
+<a name="103"></a>    RotationRate.Roll = <span class="source_int">0</span>;
+<a name="104"></a>    Speed = VSize(Velocity);
+<a name="105"></a>
+<a name="106"></a>    if ( Speed &lt; <span class="source_int">20</span> )
+<a name="107"></a>    {
+<a name="108"></a>        bBounce = False;
+<a name="109"></a>        PrePivot.<span class="source_type">Z</span> = -<span class="source_int">1.5</span>;
+<a name="110"></a>			SetPhysics(PHYS_None);
+<a name="111"></a>		DesiredRotation = <span class="source_type">Rotation</span>;
+<a name="112"></a>		DesiredRotation.Roll = <span class="source_int">0</span>;
+<a name="113"></a>		DesiredRotation.Pitch = <span class="source_int">0</span>;
+<a name="114"></a>		SetRotation(DesiredRotation);
+<a name="115"></a>        if ( Trail != None )
+<a name="116"></a>            Trail.mRegen = false; <span class="source_comment">// stop the emitter from regenerating
+</span><a name="117"></a>    }
+<a name="118"></a>    else
+<a name="119"></a>    {
+<a name="120"></a>		if ( (<span class="source_type">Level</span>.NetMode != NM_DedicatedServer) && (Speed &gt; <span class="source_int">250</span>) )
+<a name="121"></a>			PlaySound(ImpactSound, SLOT_Misc );
+<a name="122"></a>		else
+<a name="123"></a>		{
+<a name="124"></a>			bFixedRotationDir = false;
+<a name="125"></a>			bRotateToDesired = true;
+<a name="126"></a>			DesiredRotation.Pitch = <span class="source_int">0</span>;
+<a name="127"></a>			RotationRate.Pitch = <span class="source_int">50000</span>;
+<a name="128"></a>		}
+<a name="129"></a>        if ( !<span class="source_type">Level</span>.bDropDetail && (<span class="source_type">Level</span>.DetailMode != DM_Low) && (<span class="source_type">Level</span>.TimeSeconds - LastSparkTime &gt; <span class="source_int">0.5</span>) && EffectIsRelevant(Location,false) )
+<a name="130"></a>        {
+<a name="131"></a>			<span class="source_type">PC</span> = <span class="source_type">Level</span>.GetLocalPlayerController();
+<a name="132"></a>			if ( (<span class="source_type">PC</span>.<span class="source_type">ViewTarget</span> != None) && VSize(<span class="source_type">PC</span>.<span class="source_type">ViewTarget</span>.Location - Location) &lt; <span class="source_int">6000</span> )
+<a name="133"></a>				Spawn(HitEffectClass,,, Location, <span class="source_type"><a href="../core/object.html#Rotator" class="source">Rotator</a></span>(<span class="source_type">HitNormal</span>));
+<a name="134"></a>            LastSparkTime = <span class="source_type">Level</span>.TimeSeconds;
+<a name="135"></a>        }
+<a name="136"></a>    }
+<a name="137"></a>}
+<a name="138"></a>
+<a name="139"></a>simulated function BlowUp(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>)
+<a name="140"></a>{
+<a name="141"></a>	DelayedHurtRadius(<span class="source_type">Damage</span>,DamageRadius, MyDamageType, MomentumTransfer, <span class="source_type">HitLocation</span> );
+<a name="142"></a>	if ( Role == ROLE_Authority )
+<a name="143"></a>		MakeNoise(<span class="source_int">1.0</span>);
+<a name="144"></a>}
+<a name="145"></a>
+<a name="146"></a>simulated function Explode(<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitLocation</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">HitNormal</span>)
+<a name="147"></a>{
+<a name="148"></a>    BlowUp(<span class="source_type">HitLocation</span>);
+<a name="149"></a><span class="source_comment">//	PlaySound(sound'WeaponSounds.BExplosion3',,2.5*TransientSoundVolume);
+</span><a name="150"></a><span class="source_comment">//    if ( EffectIsRelevant(Location,false) )
+</span><a name="151"></a><span class="source_comment">//    {
+</span><a name="152"></a><span class="source_comment">//        Spawn(class'NewExplosionB',,, HitLocation, rotator(vect(0,0,1)));
+</span><a name="153"></a><span class="source_comment">//		Spawn(ExplosionDecal,self,,HitLocation, rotator(-HitNormal));
+</span><a name="154"></a><span class="source_comment">//    }
+</span><a name="155"></a>    Destroy();
+<a name="156"></a>}
+<a name="157"></a>
+<a name="158"></a>defaultproperties
+<a name="159"></a>{
+<a name="160"></a>     ExplodeTimer=<span class="source_int">2.000000</span>
+<a name="161"></a>     DampenFactor=<span class="source_int">0.500000</span>
+<a name="162"></a>     DampenFactorParallel=<span class="source_int">0.800000</span>
+<a name="163"></a>     Speed=<span class="source_int">1000.000000</span>
+<a name="164"></a>     MaxSpeed=<span class="source_int">1500.000000</span>
+<a name="165"></a>     TossZ=<span class="source_int">0.000000</span>
+<a name="166"></a>     <span class="source_type">Damage</span>=<span class="source_int">70.000000</span>
+<a name="167"></a>     MomentumTransfer=<span class="source_int">75000.000000</span>
+<a name="168"></a>     MyDamageType=None
+<a name="169"></a>     ImpactSound=<span class="source_type"><a href="../engine/soundgroup.html" class="source">SoundGroup</a></span><span class="source_name">'Inf_Weapons_Foley.Grenade.grenadeland'</span>
+<a name="170"></a>     ExplosionDecal=<span class="source_type">Class</span><span class="source_name">'Old2k4.RocketMark'</span>
+<a name="171"></a>     DrawType=DT_StaticMesh
+<a name="172"></a>     Physics=PHYS_Falling
+<a name="173"></a>     DrawScale=<span class="source_int">3.000000</span>
+<a name="174"></a>     AmbientGlow=<span class="source_int">100</span>
+<a name="175"></a>     FluidSurfaceShootStrengthMod=<span class="source_int">3.000000</span>
+<a name="176"></a>     bBounce=True
+<a name="177"></a>     bFixedRotationDir=True
+<a name="178"></a>     DesiredRotation=(Pitch=<span class="source_int">12000</span>,Yaw=<span class="source_int">5666</span>,Roll=<span class="source_int">2334</span>)
+<a name="179"></a>}
+<a name="180"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../old2k4/old2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../old2k4/grenade.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#Grenade">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_old2k4/giborganicredupperarm.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_old2k4/hitflame.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:02.221 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

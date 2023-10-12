@@ -1,0 +1,829 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GoodKarma.NetKActor</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../goodkarma/goodkarma-overview.html">Package</a></td>
+	<td class="header"><a href="../goodkarma/netkactor.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#NetKActor">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_goodkarma/gk_as_roundreset.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_goodkarma/shadownetkactor.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_goodkarma/netkactor.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../goodkarma/goodkarma-overview.html">GoodKarma</a>.<a href="../goodkarma/netkactor.html">NetKActor</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//NetKActor as part of the GoodKarma package
+</span><a name="2"></a><span class="source_comment">//Build 134 Beta 4.5 Release
+</span><a name="3"></a><span class="source_comment">//By: Jonathan Zepp
+</span><a name="4"></a><span class="source_comment">//Original code based of the LawDogsKActor code available from unreal wiki (Thank You!)
+</span><a name="5"></a><span class="source_comment">//Though the current version has been SEVERELY modified, and modified some more.
+</span><a name="6"></a><span class="source_comment">//This is intended to add full server playability, and make karma a universal tool.
+</span><a name="7"></a><span class="source_comment">//Changes to bot pathing have also been made to put some sense into their empty heads...
+</span><a name="8"></a>
+<a name="9"></a><span class="source_type">class</span> <span class="source_type"><a href="../goodkarma/netkactor.html" class="source">NetKActor</a></span> extends <span class="source_type"><a href="../engine/kactor.html" class="source">KActor</a></span>
+<a name="10"></a>	placeable;
+<a name="11"></a>
+<a name="12"></a><span class="source_macro">#exec OBJ LOAD FILE="..\Sounds\WeaponSounds.uax"
+</span><a name="13"></a>
+<a name="14"></a><span class="source_comment">//Edit in default properties in UnrealEd
+</span><a name="15"></a>
+<a name="16"></a>var() <span class="source_type">bool</span> bBlockedPath ;                   <span class="source_comment">//Enables Basic bot-pathing
+</span><a name="17"></a>var() <span class="source_type">bool</span> bCriticalObject ;                <span class="source_comment">//Will Always function despite server physics detail (not fully functional)
+</span><a name="18"></a>var() <span class="source_type">float</span> moveDistance ;                  <span class="source_comment">//associated with bBlockedPath, how far the object must move for the bots to pass it
+</span><a name="19"></a>var() array&lt;<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span>&gt; HitSounds ;              <span class="source_comment">//A sound to play on impact
+</span><a name="20"></a>var() <span class="source_type">byte</span> RelativeImpactVolume ;           <span class="source_comment">//The relative sound volume of the hit sound
+</span><a name="21"></a>var() <span class="source_type">bool</span> bShoveable ;                     <span class="source_comment">//Can the object be shoved by a player?
+</span><a name="22"></a>var() <span class="source_type">name</span> <span class="source_type"><a href="../gameplay/blockedpath.html" class="source">BlockedPath</a></span> ;                    <span class="source_comment">//The name of the associated blocked path
+</span><a name="23"></a>var() <span class="source_type">float</span> ShoveModifier;                  <span class="source_comment">//A multiplier to change how hard the object is shoved
+</span><a name="24"></a>var() <span class="source_type">bool</span> bPuntable ;                      <span class="source_comment">//Allows a NetKActor to be punted
+</span><a name="25"></a>var() <span class="source_type">int</span> requiredPuntStrength ;            <span class="source_comment">//A value which must be met by the actor calling the DeclarePunt function for a punt to be accepted
+</span><a name="26"></a>var() <span class="source_type">bool</span> bEnableSpinProtection ;          <span class="source_comment">//Overrides standard karma features to make shoving the object always work properly, not reccomended on all objects, especially long ones, unless they have trouble.
+</span><a name="27"></a>var() <span class="source_type">float</span> hitSoundRepeatModifier ;        <span class="source_comment">//How much more often will hit sounds play?
+</span><a name="28"></a>
+<a name="29"></a>var(<span class="source_type">Damage</span>) <span class="source_type">bool</span> bCollisionDamage ;               <span class="source_comment">//Enables damage when colliding with a player/vehicle/thing with health
+</span><a name="30"></a>var(<span class="source_type">Damage</span>) <span class="source_type">float</span> DamageSpeed ;                   <span class="source_comment">//Minimum speed to deal damage
+</span><a name="31"></a>var(<span class="source_type">Damage</span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; HitDamageType ;     <span class="source_comment">//Damage type associated with bCollisionDamage
+</span><a name="32"></a>var(<span class="source_type">Damage</span>) <span class="source_type">float</span> HitDamageScale ;                <span class="source_comment">//Relative impact damage modifier
+</span><a name="33"></a>var(<span class="source_type">Damage</span>) <span class="source_type">int</span> initialHealth ;                   <span class="source_comment">//The starting health of an object
+</span><a name="34"></a>var(<span class="source_type">Damage</span>) <span class="source_type">int</span> damageAbsorbtionAmount ;          <span class="source_comment">//Absorbs this much damage off each hit.
+</span><a name="35"></a>var(<span class="source_type">Damage</span>) <span class="source_type">bool</span> limitDamagingClass ;             <span class="source_comment">//Only allows the constrained class to deal damage (and push it around)
+</span><a name="36"></a>var(<span class="source_type">Damage</span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span>&gt; DamageConstraintClass ; <span class="source_comment">//The constraint class (only allowed class to damage it)
+</span><a name="37"></a>
+<a name="38"></a>var(Destruction) <span class="source_type">int</span> explodeDamage ;                   <span class="source_comment">//When dieing, how much damage does it deal to its fragments/people near it
+</span><a name="39"></a>var(Destruction) <span class="source_type">float</span> explodeRadius ;                 <span class="source_comment">//How close does something have to be to be damaged when dieing
+</span><a name="40"></a>var(Destruction) <span class="source_type">int</span> explodeForce ;                    <span class="source_comment">//How hard does it push fragments and other objects when dieing
+</span><a name="41"></a>var(Destruction) <span class="source_type">bool</span> bDestroyable ;                   <span class="source_comment">//Does health and damage apply to this object?
+</span><a name="42"></a>var(Destruction) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> DestructionSound ;              <span class="source_comment">//Sound played when the object is destroyed
+</span><a name="43"></a>var(Destruction) <span class="source_type">byte</span> DestructionVolume ;              <span class="source_comment">//Volume of the destruction sound
+</span><a name="44"></a>var(Destruction) <span class="source_type">class</span> &lt;<span class="source_type"><a href="../engine/emitter.html" class="source">Emitter</a></span>&gt; DestroyedEffect ;      <span class="source_comment">//The effect created when the object is destroyed
+</span><a name="45"></a>var(Destruction) <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> EffectOffset ;                 <span class="source_comment">//Where the effect is in relation to the object when destroyed
+</span><a name="46"></a>var(Destruction) <span class="source_type">bool</span> bOrientDestructionEffect ;       <span class="source_comment">//Does the destruction effect have the same orientation as the hit which killed it?
+</span><a name="47"></a>var(Destruction) <span class="source_type">float</span> DestroyedMass ;                 <span class="source_comment">//What the mass is when destroyed
+</span><a name="48"></a>var(Destruction) <span class="source_type">float</span> DestroyedDamping ;              <span class="source_comment">//What the damping is when destroyed
+</span><a name="49"></a>var(Destruction) <span class="source_type">float</span> DestroyedFriction ;             <span class="source_comment">//What the friction is when destroyed
+</span><a name="50"></a>var(Destruction) <span class="source_type">float</span> DestroyedBuoyancy ;             <span class="source_comment">//What the buoyancy is when destroyed
+</span><a name="51"></a>var(Destruction) <span class="source_type">float</span> DestroyedRestitution ;          <span class="source_comment">//What the restitution is when destroyed
+</span><a name="52"></a>var(Destruction) <span class="source_type">StaticMesh</span> DestroyedStaticMesh ;      <span class="source_comment">//The static mesh used for the object after it is destroyed (anything but none enables the 5 destroyed karma changing values)
+</span><a name="53"></a>
+<a name="54"></a>var(Respawning) <span class="source_type">float</span> PreRespawnEffectTime ;          <span class="source_comment">//How long before the object respawns will the respawn effect play?
+</span><a name="55"></a>var(Respawning) <span class="source_type">bool</span> bRespawnEffect ;                 <span class="source_comment">//Will a respawn effect play?
+</span><a name="56"></a>var(Respawning) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/emitter.html" class="source">emitter</a></span>&gt; RespawnEffect ;        <span class="source_comment">//The effect spawned when the object respawns
+</span><a name="57"></a>var(Respawning) <span class="source_type">bool</span> bInactivityReset ;               <span class="source_comment">//Will the object reset automatically if moved and then idle?
+</span><a name="58"></a>var(Respawning) <span class="source_type">float</span> inactivityTimeout ;             <span class="source_comment">//How long of idleness will trigger an inactivity Reset?
+</span><a name="59"></a>var(Respawning) <span class="source_type"><a href="../engine/sound.html" class="source">sound</a></span> RespawnSound ;                  <span class="source_comment">//Sound played when the object is respawned
+</span><a name="60"></a>var(Respawning) <span class="source_type">byte</span> RespawnVolume ;                  <span class="source_comment">//Volume of the respawning sound
+</span><a name="61"></a>var(Respawning) <span class="source_type">float</span> AutoRespawnTime ;               <span class="source_comment">//How long after it is destroyed does it wait to respawn on its own (-1 means it dosen't respawn)
+</span><a name="62"></a>
+<a name="63"></a><span class="source_comment">//Internal
+</span><a name="64"></a>
+<a name="65"></a>var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> startLocation ;
+<a name="66"></a>var <span class="source_type"><a href="../engine/actor.html#KRigidBodyState" class="source">KRigidBodyState</a></span> KState, KRepState, initialKState;
+<a name="67"></a>var <span class="source_type">bool</span> bPendingPunt, bPendingRespawn, bRespawnEffectPlayed, bInactive, bWaitTillMove, notifyPlayHit, bDead ;
+<a name="68"></a>var <span class="source_type">int</span> StateCount, LastStateCount, Health ;
+<a name="69"></a>var <span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> Punter ;
+<a name="70"></a>var <span class="source_type">float</span> PuntTimeout, respawnClock, inactiveClock, lastShoveTimer, replaySoundClock ;
+<a name="71"></a>var <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> startRotation, hitDirection ;
+<a name="72"></a>var <span class="source_type">float</span> initialRest, initialFric, initialMass, initialDampLin, initialDampAng, initialBuoy ;
+<a name="73"></a>var <span class="source_type">StaticMesh</span> initialMesh ;
+<a name="74"></a>var <span class="source_type">byte</span> clientPlay ;                                 <span class="source_comment">//0 for nothing, 1 for death emitters, 2 for respawn emitter
+</span><a name="75"></a>
+<a name="76"></a><span class="source_comment">// shadow variables
+</span><a name="77"></a>var <span class="source_type"><a href="../engine/projector.html" class="source">Projector</a></span> Shadow;
+<a name="78"></a>var <span class="source_type"><a href="../engine/shadowprojector.html" class="source">ShadowProjector</a></span> PlayerShadow;
+<a name="79"></a>var globalconfig <span class="source_type">bool</span> bBlobShadow;
+<a name="80"></a>var () <span class="source_type">bool</span> bKActorShadows;
+<a name="81"></a>
+<a name="82"></a><span class="source_comment">// ZOMG paint stains!
+</span><a name="83"></a><span class="source_comment">/*
+<a name="84"></a>var (Stains) bool bLeaveStains;
+<a name="85"></a>var (Stains) float StainStreakInterval;
+<a name="86"></a>var transient float LastStreakTime;
+<a name="87"></a>var (Stains) float StainSpeedThreshold;
+<a name="88"></a>*/</span>
+<a name="89"></a><span class="source_comment">//var Actor LastTouchedActor;
+</span><a name="90"></a>
+<a name="91"></a>
+<a name="92"></a>var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> DieVect;
+<a name="93"></a>var <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> lasthitlocation;
+<a name="94"></a>var <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> lastinstigatedby,LastStander;
+<a name="95"></a>
+<a name="96"></a>
+<a name="97"></a>
+<a name="98"></a>replication
+<a name="99"></a>{
+<a name="100"></a>    reliable if(Role == ROLE_Authority)
+<a name="101"></a>        KRepState, StateCount, bDead, Health, hitDirection, clientPlay ;
+<a name="102"></a>    reliable if(Role == ROLE_Authority)
+<a name="103"></a>        clientDeathEmitters, clientRespawnEmitter ,DestroyedEffect;
+<a name="104"></a>    reliable if(bNetInitial)
+<a name="105"></a>        startRotation, startLocation ;
+<a name="106"></a>}
+<a name="107"></a>
+<a name="108"></a>function PreBeginPlay()
+<a name="109"></a>{
+<a name="110"></a>    startLocation = Location ;
+<a name="111"></a>    startRotation = <span class="source_type">Rotation</span> ;
+<a name="112"></a>    KGetRigidBodyState(initialKState) ;
+<a name="113"></a>    if(!bCriticalObject && <span class="source_type">Level</span>.PhysicsDetailLevel == PDL_Low)
+<a name="114"></a>        SetPhysics(PHYS_None) ;
+<a name="115"></a>    initialRest = KParams.KRestitution ;
+<a name="116"></a>    initialFric = KParams.KFriction ;
+<a name="117"></a>    initialMass = (<span class="source_type"><a href="../engine/karmaparams.html" class="source">KarmaParams</a></span>(KParams)).KMass ;
+<a name="118"></a>    initialDampLin = (<span class="source_type"><a href="../engine/karmaparams.html" class="source">KarmaParams</a></span>(KParams)).KLinearDamping ;
+<a name="119"></a>    initialDampAng = (<span class="source_type"><a href="../engine/karmaparams.html" class="source">KarmaParams</a></span>(KParams)).KAngularDamping ;
+<a name="120"></a>    initialBuoy = (<span class="source_type"><a href="../engine/karmaparams.html" class="source">KarmaParams</a></span>(KParams)).KBuoyancy ;
+<a name="121"></a>    initialMesh = getObject(<span class="source_type">StaticMesh</span>) ;
+<a name="122"></a>    respawn() ;
+<a name="123"></a>}
+<a name="124"></a>
+<a name="125"></a>simulated function PostNetBeginPlay()
+<a name="126"></a>{
+<a name="127"></a>
+<a name="128"></a> if ( bKActorShadows == true)
+<a name="129"></a> {
+<a name="130"></a>
+<a name="131"></a>    PlayerShadow = Spawn(<span class="source_type">class</span><span class="source_name">'ShadowProjector'</span>,Self,<span class="source_name">''</span>,Location);
+<a name="132"></a>    PlayerShadow.ShadowActor = self;
+<a name="133"></a>    PlayerShadow.bBlobShadow = bBlobShadow;
+<a name="134"></a>    PlayerShadow.LightDirection = Normal(vect(<span class="source_int">1</span>,<span class="source_int">1</span>,<span class="source_int">3</span>));
+<a name="135"></a>    PlayerShadow.LightDistance = <span class="source_int">320</span>;
+<a name="136"></a>    PlayerShadow.MaxTraceDistance = <span class="source_int">350</span>;
+<a name="137"></a>    PlayerShadow.InitShadow();
+<a name="138"></a>
+<a name="139"></a>    PlayerShadow.bShadowActive = true;
+<a name="140"></a> }
+<a name="141"></a>
+<a name="142"></a> <span class="source_comment">// hardcode destruction effect to Material
+</span><a name="143"></a>
+<a name="144"></a> <span class="source_comment">/*
+<a name="145"></a>
+<a name="146"></a> if (SurfaceType == EST_Metal)
+<a name="147"></a> {
+<a name="148"></a>  DestroyedEffect = class'DoorExplodeMetalStandard';
+<a name="149"></a>  DestructionSound = Sound'PatchSounds.MetalCrash';
+<a name="150"></a> }
+<a name="151"></a> else
+<a name="152"></a> if (SurfaceType == EST_Wood)
+<a name="153"></a>  DestroyedEffect = class'DoorExplodeWoodStandard';
+<a name="154"></a> else
+<a name="155"></a>  DestroyedEffect = none;
+<a name="156"></a>  */</span>
+<a name="157"></a>
+<a name="158"></a>
+<a name="159"></a>}
+<a name="160"></a>
+<a name="161"></a>function respawn()
+<a name="162"></a>{
+<a name="163"></a>    setPhysics(PHYS_None) ;
+<a name="164"></a>    setLocation(StartLocation) ;
+<a name="165"></a>    setRotation(startRotation) ;
+<a name="166"></a>    SetStaticMesh(initialMesh) ;
+<a name="167"></a>    SetPhysics(PHYS_Karma) ;
+<a name="168"></a>    SetCollision(true, true, true) ;
+<a name="169"></a>    KSetMass(initialMass) ;
+<a name="170"></a>    KSetRestitution(initialRest) ;
+<a name="171"></a>    KSetDampingProps(initialDampLin, initialDampAng) ;
+<a name="172"></a>    KSetFriction(initialFric) ;
+<a name="173"></a>    (<span class="source_type"><a href="../engine/karmaparams.html" class="source">KarmaParams</a></span>(KParams)).KBuoyancy = initialBuoy ;
+<a name="174"></a>    KRepState = initialKState ;
+<a name="175"></a>    Health = initialHealth ;
+<a name="176"></a>    bBlockedPath = default.bBlockedPath ;
+<a name="177"></a>    bPendingPunt = false ;
+<a name="178"></a>    bHidden = false ;
+<a name="179"></a>    bPendingRespawn = false ;
+<a name="180"></a>    if(bRespawnEffect && !bRespawnEffectPlayed)
+<a name="181"></a>        clientPlay = <span class="source_int">2</span> ;
+<a name="182"></a>    bRespawnEffectPlayed = false ;
+<a name="183"></a>    bWaitTillMove = true ;
+<a name="184"></a>    inactiveClock = -<span class="source_int">999.0</span> ;
+<a name="185"></a>    bDead = false ;
+<a name="186"></a>    lastShoveTimer = <span class="source_int">0.0</span> ;
+<a name="187"></a>    if(!((<span class="source_type"><a href="../engine/karmaparams.html" class="source">KarmaParams</a></span>(KParams)).KStartEnabled))
+<a name="188"></a>    {
+<a name="189"></a>        KRepState.linVel = KRBVecFromVector(Vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>)) ;
+<a name="190"></a>        KRepState.angVel = KRBVecFromVector(Vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>)) ;
+<a name="191"></a>    }
+<a name="192"></a>    lastStateCount = StateCount ;
+<a name="193"></a>    <span class="source_comment">//DEBUG
+</span><a name="194"></a>    <span class="source_comment">//log("Respawn at "$Location$" Karma: "$KRBVecToVector(KRepState.Position)) ;
+</span><a name="195"></a>    <span class="source_comment">//log(tag$" respawned at "$location$" and should be at "$startLocation) ;
+</span><a name="196"></a>}
+<a name="197"></a>
+<a name="198"></a>function <span class="source_type">bool</span> declarePunt(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> newPunter, <span class="source_type">float</span> maxTimeTo, <span class="source_type">bool</span> bPriority, <span class="source_type">int</span> Strength)
+<a name="199"></a>{
+<a name="200"></a>    if(!bPuntable)
+<a name="201"></a>        return false ;
+<a name="202"></a>    if(((Punter != none && PuntTimeout &lt;= <span class="source_type">level</span>.timeSeconds) || Punter == none  || bPriority) && Strength &gt; RequiredPuntStrength)
+<a name="203"></a>    {
+<a name="204"></a>        Punter = newPunter ;
+<a name="205"></a>        PuntTimeout = <span class="source_type">level</span>.timeSeconds + maxTimeTo ;
+<a name="206"></a>        bInactive = false ;
+<a name="207"></a>        return true ;
+<a name="208"></a>    }
+<a name="209"></a>    return false ;
+<a name="210"></a>}
+<a name="211"></a>
+<a name="212"></a>simulated event Bump(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>)
+<a name="213"></a>{
+<a name="214"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Shove;
+<a name="215"></a>    local <span class="source_type">int</span> <span class="source_type">damage</span> ;
+<a name="216"></a>    local <span class="source_type">float</span> Speed;
+<a name="217"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>&gt; damageTypeClass ;
+<a name="218"></a>  <span class="source_comment">//  local KFBloodSplatter Streak;
+</span><a name="219"></a>   <span class="source_comment">// local vector WallHit, WallNormal;
+</span><a name="220"></a>  <span class="source_comment">//  local Actor WallActor;
+</span><a name="221"></a>
+<a name="222"></a>
+<a name="223"></a>    if(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>) == None || <span class="source_type">Other</span>.role != ROLE_Authority)
+<a name="224"></a>        return ;
+<a name="225"></a>    if(limitDamagingClass && (<span class="source_type">Other</span> != DamageConstraintClass))
+<a name="226"></a>        return ;
+<a name="227"></a>    if(bShoveable == false)
+<a name="228"></a>        return ;
+<a name="229"></a>    if(lastShoveTimer &gt; <span class="source_type">level</span>.timeSeconds)
+<a name="230"></a>        return ;
+<a name="231"></a>
+<a name="232"></a>
+<a name="233"></a>
+<a name="234"></a>
+<a name="235"></a>    <span class="source_comment">// no spinning wildly when people stand on you!
+</span><a name="236"></a>    if (<span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>(<span class="source_type">Other</span>) != none && <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>(<span class="source_type">Other</span>).Base == self)
+<a name="237"></a>    {
+<a name="238"></a>     LastStander = <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span>(<span class="source_type">Other</span>);
+<a name="239"></a>     return;
+<a name="240"></a>    }
+<a name="241"></a>
+<a name="242"></a>
+<a name="243"></a>    if(!KIsAwake())
+<a name="244"></a>        KWake() ;
+<a name="245"></a>
+<a name="246"></a>
+<a name="247"></a>
+<a name="248"></a>    damageTypeClass = <span class="source_type">class</span><span class="source_name">'DamTypeKick'</span> ;
+<a name="249"></a>    <span class="source_type">damage</span> = <span class="source_int">3</span> ;
+<a name="250"></a>
+<a name="251"></a>
+<a name="252"></a>
+<a name="253"></a>  <span class="source_comment">/*
+<a name="254"></a>   if (bLeaveStains && Speed &gt; StainSpeedThreshold)
+<a name="255"></a>        {
+<a name="256"></a>         StainStreakInterval -= (0.001 * VSize(Velocity));
+<a name="257"></a>
+<a name="258"></a>        if (Other != none && Other.bWorldGeometry)
+<a name="259"></a>         WallActor = Trace(WallHit, WallNormal, Location + 50 * Velocity, Location, false);
+<a name="260"></a>
+<a name="261"></a>         //Log(WallActor);
+<a name="262"></a>
+<a name="263"></a>          if ( WallActor != None && Level.TimeSeconds &gt; LastStreakTime + StainStreakInterval)
+<a name="264"></a>          {
+<a name="265"></a>             Streak= spawn(class 'KFMod.KFBloodSplatter',,,WallHit * (WallNormal + VRand()), rotator(-WallNormal));
+<a name="266"></a>            if (Streak != none)
+<a name="267"></a>             Streak.SetRotation(Rotator(Velocity));
+<a name="268"></a>
+<a name="269"></a>             LastStreakTime = Level.TimeSeconds;
+<a name="270"></a>          }
+<a name="271"></a>        }
+<a name="272"></a>     */</span>
+<a name="273"></a>
+<a name="274"></a>    <span class="source_comment">/*
+<a name="275"></a>    if (Other.IsA('KFHumanPawn'))
+<a name="276"></a>    {
+<a name="277"></a>     SetPhysics(PHYS_None);
+<a name="278"></a>     Other.attachtobone(self,'Bone_weapon');
+<a name="279"></a>    }
+<a name="280"></a>    */</span>
+<a name="281"></a>
+<a name="282"></a>    if(PuntTimeout &gt;= <span class="source_type">level</span>.timeSeconds && bPuntable)
+<a name="283"></a>    {
+<a name="284"></a>        if(Punter == <span class="source_type">Other</span>)
+<a name="285"></a>        {
+<a name="286"></a>            damageTypeClass = <span class="source_type">class</span><span class="source_name">'DamTypePunt'</span> ;
+<a name="287"></a>            <span class="source_type">damage</span> = <span class="source_int">9</span> ;
+<a name="288"></a>        }
+<a name="289"></a>    }
+<a name="290"></a>    else
+<a name="291"></a>        Punter = None ;
+<a name="292"></a>
+<a name="293"></a>    Speed = VSize(<span class="source_type">Other</span>.Velocity);
+<a name="294"></a>    Shove = (Normal(<span class="source_type">Other</span>.Velocity) / (Mass * <span class="source_int">0.4</span>)) * ShoveModifier ;
+<a name="295"></a>    if(<span class="source_type">Other</span>.Velocity.<span class="source_type">Z</span> &lt; -<span class="source_int">90.0</span>)
+<a name="296"></a>        {
+<a name="297"></a>        Shove.<span class="source_type">Z</span> *= <span class="source_int">0.5</span> ;
+<a name="298"></a>        Shove.<span class="source_type">X</span> *= <span class="source_int">0.8</span> ;
+<a name="299"></a>        Shove.<span class="source_type">Y</span> *= <span class="source_int">0.8</span> ;
+<a name="300"></a>        }
+<a name="301"></a>    if(IsInWater(<span class="source_type">Other</span>))
+<a name="302"></a>        {
+<a name="303"></a>        Shove.<span class="source_type">Z</span> *= <span class="source_int">0.75</span> ;
+<a name="304"></a>        Shove.<span class="source_type">X</span> *= <span class="source_int">0.5</span> ;
+<a name="305"></a>        Shove.<span class="source_type">Y</span> *= <span class="source_int">0.5</span> ;
+<a name="306"></a>        }
+<a name="307"></a>    if(shove.<span class="source_type">z</span> == <span class="source_int">0.0</span>)
+<a name="308"></a>        shove.<span class="source_type">z</span> = (<span class="source_int">1.6</span> / Mass) * <span class="source_int">0.4</span> * ShoveModifier;
+<a name="309"></a>    if(bEnableSpinProtection)
+<a name="310"></a>        TakeDamage(<span class="source_type">damage</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>), vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>), Shove, damageTypeClass) ;
+<a name="311"></a>    else
+<a name="312"></a>        TakeDamage(<span class="source_type">damage</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>), location, Shove, damageTypeClass) ;
+<a name="313"></a>
+<a name="314"></a>
+<a name="315"></a>
+<a name="316"></a>    lastShoveTimer = <span class="source_type">level</span>.timeSeconds + <span class="source_int">0.1</span> ;
+<a name="317"></a>}
+<a name="318"></a>
+<a name="319"></a>simulated event RanInto(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>)
+<a name="320"></a>{
+<a name="321"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">Momentum</span>;
+<a name="322"></a>    local <span class="source_type">float</span> Speed;
+<a name="323"></a>
+<a name="324"></a>   <span class="source_comment">// if (Other.bWorldGeometry)
+</span><a name="325"></a>   <span class="source_comment">//  LastTouchedActor = Other;
+</span><a name="326"></a>
+<a name="327"></a>    if(bCollisionDamage && <span class="source_type">Other</span> != None && lastShoveTimer &lt;= <span class="source_type">level</span>.timeSeconds)
+<a name="328"></a>    {
+<a name="329"></a>
+<a name="330"></a>       if ((<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>) == None) || (<span class="source_type"><a href="../engine/vehicle.html" class="source">Vehicle</a></span>(<span class="source_type">Other</span>) != None) || <span class="source_type">Other</span> == <span class="source_type">Instigator</span> || <span class="source_type">Other</span>.Role != ROLE_Authority)
+<a name="331"></a>            return;
+<a name="332"></a>
+<a name="333"></a>        Speed = VSize(Velocity) ;
+<a name="334"></a>
+<a name="335"></a>             <span class="source_comment">//log(Velocity) ;
+</span><a name="336"></a>
+<a name="337"></a>        if (Speed &gt; DamageSpeed)
+<a name="338"></a>        {
+<a name="339"></a>            <span class="source_type">Momentum</span> += Speed * <span class="source_int">0.25</span> * <span class="source_type">Other</span>.Mass * Normal(Velocity cross vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">1</span>));
+<a name="340"></a>            <span class="source_type">Other</span>.TakeDamage(<span class="source_type">int</span>(Speed * <span class="source_int">0.045</span> * HitDamageScale), <span class="source_type">Instigator</span>, <span class="source_type">Other</span>.Location, <span class="source_type">Momentum</span>, HitDamageType);
+<a name="341"></a>            if(HitSounds.length != <span class="source_int">0</span>)
+<a name="342"></a>                notifyPlayHit = true ;
+<a name="343"></a>            <span class="source_comment">//DEBUG
+</span><a name="344"></a>            <span class="source_comment">//log(Tag$" injured "$Other.Tag$" dealing "$(int(Speed * 0.048 * HitDamageScale))$" Damage!") ;
+</span><a name="345"></a>            Velocity.<span class="source_type">z</span> = Velocity.<span class="source_type">z</span> * <span class="source_int">0.45</span> ;
+<a name="346"></a>            if((Speed * <span class="source_int">0.045</span> * HitDamageScale) &gt;= <span class="source_int">70</span>)
+<a name="347"></a>                TakeDamage(<span class="source_int">3</span>, <span class="source_type">instigator</span>, Location, ((Velocity * -<span class="source_int">0.85</span>) / (Mass + <span class="source_int">1</span>)), <span class="source_type">class</span><span class="source_name">'GoodKarma.DamTypeKick'</span>) ;
+<a name="348"></a>            else
+<a name="349"></a>                TakeDamage(<span class="source_int">7</span>, <span class="source_type">instigator</span>, Location, ((Velocity * -<span class="source_int">0.65</span>) / (Mass + <span class="source_int">1</span>)), <span class="source_type">class</span><span class="source_name">'GoodKarma.DamTypeKick'</span>) ;
+<a name="350"></a>        }
+<a name="351"></a>        else if(<span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span>(<span class="source_type">Other</span>) != None)
+<a name="352"></a>                TakeDamage(<span class="source_int">4</span>, <span class="source_type">instigator</span>, Location, (Velocity * -<span class="source_int">1.03</span>), <span class="source_type">class</span><span class="source_name">'GoodKarma.DamTypeKick'</span>) ;
+<a name="353"></a>        lastShoveTimer = <span class="source_type">level</span>.TimeSeconds + <span class="source_int">0.07</span> ;
+<a name="354"></a>
+<a name="355"></a>        <span class="source_comment">//log(Velocity) ;
+</span><a name="356"></a>    }
+<a name="357"></a>
+<a name="358"></a>    <span class="source_comment">//DEBUG
+</span><a name="359"></a>    <span class="source_comment">//log(Tag$" is now moving at "$Velocity) ;
+</span><a name="360"></a>}
+<a name="361"></a>
+<a name="362"></a>function TakeDamage( <span class="source_type">int</span> <span class="source_type">Damage</span>, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> InstigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">Hitlocation</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">Momentum</span>, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, optional <span class="source_type">int</span> <span class="source_type">HitIndex</span>)
+<a name="363"></a>{
+<a name="364"></a>    local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> ApplyImpulse;
+<a name="365"></a>    local <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">A</span>;
+<a name="366"></a>
+<a name="367"></a>
+<a name="368"></a>    if(limitDamagingClass && (instigatedBy.<span class="source_type"><a href="../engine/weapon.html" class="source">Weapon</a></span> != DamageConstraintClass))
+<a name="369"></a>        return ;
+<a name="370"></a>
+<a name="371"></a>    lasthitlocation = <span class="source_type">hitlocation</span>;
+<a name="372"></a>    lastinstigatedby = instigatedBy;
+<a name="373"></a>
+<a name="374"></a>    <span class="source_comment">// When shot, trigger self.
+</span><a name="375"></a>    TriggerEvent(Event, <span class="source_type">A</span>, instigatedBy);
+<a name="376"></a>
+<a name="377"></a>    <span class="source_type">Damage</span> = <span class="source_type">Damage</span> - DamageAbsorbtionAmount ;
+<a name="378"></a>
+<a name="379"></a>    if(<span class="source_type">Damage</span> &lt; <span class="source_int">0</span>)
+<a name="380"></a>        <span class="source_type">Damage</span> = <span class="source_int">0</span> ;
+<a name="381"></a>
+<a name="382"></a>    Health = Health - <span class="source_type">Damage</span> ;
+<a name="383"></a>
+<a name="384"></a>    if(Health &lt;= <span class="source_int">0</span> && bDestroyable && !bPendingRespawn)
+<a name="385"></a>        die() ;
+<a name="386"></a>
+<a name="387"></a>
+<a name="388"></a>
+<a name="389"></a>
+<a name="390"></a>    if(<span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>.default.KDamageImpulse &gt; <span class="source_int">0</span>)
+<a name="391"></a>    {
+<a name="392"></a>	if(VSize(<span class="source_type">momentum</span>) &lt; <span class="source_int">0.001</span>)
+<a name="393"></a>	{
+<a name="394"></a>	    return;
+<a name="395"></a>	}
+<a name="396"></a>	ApplyImpulse = Normal(<span class="source_type">momentum</span>) * <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>.default.KDamageImpulse;
+<a name="397"></a>	<span class="source_comment">//DEBUG
+</span><a name="398"></a>	<span class="source_comment">//log("********************") ;
+</span><a name="399"></a>	<span class="source_comment">//log(ApplyImpulse) ;
+</span><a name="400"></a>	KAddImpulse(ApplyImpulse, <span class="source_type">hitlocation</span>) ;
+<a name="401"></a>    }
+<a name="402"></a>    hitDirection = <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>(<span class="source_type">momentum</span>) ;
+<a name="403"></a>    <span class="source_comment">//DEBUG
+</span><a name="404"></a>    <span class="source_comment">//log("TakeDamage") ;
+</span><a name="405"></a>}
+<a name="406"></a>
+<a name="407"></a>function <span class="source_type">bool</span> IsInWater(<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>)
+<a name="408"></a>{
+<a name="409"></a>    local <span class="source_type"><a href="../engine/physicsvolume.html" class="source">PhysicsVolume</a></span> <span class="source_type">V</span>;
+<a name="410"></a>
+<a name="411"></a>    ForEach <span class="source_type">Other</span>.TouchingActors(<span class="source_type">class</span><span class="source_name">'PhysicsVolume'</span>,<span class="source_type">V</span>)
+<a name="412"></a>    {
+<a name="413"></a>        if(<span class="source_type">V</span>.bWaterVolume == true)
+<a name="414"></a>            return true ;
+<a name="415"></a>    }
+<a name="416"></a>    return false;
+<a name="417"></a>}
+<a name="418"></a>
+<a name="419"></a>
+<a name="420"></a>
+<a name="421"></a>simulated function KImpact(<span class="source_type"><a href="../engine/actor.html" class="source">actor</a></span> <span class="source_type">other</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> <span class="source_type">pos</span>, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> impactVel, <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> impactNorm)
+<a name="422"></a>{
+<a name="423"></a>  Super.KImpact(<span class="source_type">Other</span>,<span class="source_type">pos</span>,impactVel,impactNorm);
+<a name="424"></a>
+<a name="425"></a>  if (VSize(Velocity) != <span class="source_int">0</span>)
+<a name="426"></a>  {
+<a name="427"></a>   if(HitSounds.length != <span class="source_int">0</span> )
+<a name="428"></a>    playServerHit();
+<a name="429"></a>  }
+<a name="430"></a>}
+<a name="431"></a>
+<a name="432"></a>
+<a name="433"></a>
+<a name="434"></a>
+<a name="435"></a>simulated function Tick(<span class="source_type">float</span> <span class="source_type">Delta</span>)
+<a name="436"></a>{
+<a name="437"></a>   local <span class="source_type"><a href="../engine/pawn.html" class="source">pawn</a></span> Stander;
+<a name="438"></a>
+<a name="439"></a>    if(clientPlay != <span class="source_int">0</span>)
+<a name="440"></a>    {
+<a name="441"></a>        <span class="source_type">switch</span>(clientPlay)
+<a name="442"></a>        {
+<a name="443"></a>            case <span class="source_int">1</span>: clientDeathEmitters() ;
+<a name="444"></a>                    break ;
+<a name="445"></a>            case <span class="source_int">2</span>: clientRespawnEmitter() ;
+<a name="446"></a>                    break ;
+<a name="447"></a>            default:log(<span class="source_string">"clientPlay invalid value"</span>) ;
+<a name="448"></a>        }
+<a name="449"></a>        clientPlay = <span class="source_int">0</span> ;
+<a name="450"></a>    }
+<a name="451"></a>    PackState();
+<a name="452"></a>    if(bPendingRespawn && respawnClock &lt;= <span class="source_type">level</span>.timeSeconds)
+<a name="453"></a>        respawn() ;
+<a name="454"></a>    if(bPendingRespawn && bRespawnEffect && !bRespawnEffectPlayed && (<span class="source_type">level</span>.timeSeconds &gt;= (respawnClock - PreRespawnEffectTime)))
+<a name="455"></a>    {
+<a name="456"></a>        clientPlay = <span class="source_int">2</span> ;
+<a name="457"></a>        playServerSoundRespawn() ;
+<a name="458"></a>        bRespawnEffectPlayed = true ;
+<a name="459"></a>    }
+<a name="460"></a>    if(bPendingDelete)
+<a name="461"></a>    {
+<a name="462"></a>        die() ;
+<a name="463"></a>        bPendingDelete = false ;
+<a name="464"></a>    }
+<a name="465"></a>    if(bInactive && bInactivityReset && !bWaitTillMove)
+<a name="466"></a>    {
+<a name="467"></a>        if(inactiveClock == -<span class="source_int">999.0</span>)
+<a name="468"></a>            inactiveClock = inactivityTimeout + <span class="source_type">level</span>.timeSeconds ;
+<a name="469"></a>        else if(inactiveClock &lt;= <span class="source_type">level</span>.timeSeconds)
+<a name="470"></a>        {
+<a name="471"></a>            <span class="source_comment">//DEBUG
+</span><a name="472"></a>            <span class="source_comment">//log(tag$" is pending inactivity respawn") ;
+</span><a name="473"></a>            bPendingRespawn = true ;
+<a name="474"></a>            respawnClock = <span class="source_type">level</span>.TimeSeconds + <span class="source_int">1.5</span> ;
+<a name="475"></a>            inactiveClock = -<span class="source_int">999.0</span> ;
+<a name="476"></a>        }
+<a name="477"></a>    }
+<a name="478"></a>
+<a name="479"></a>    <span class="source_comment">// If someone's standing on me, i can't go flying.
+</span><a name="480"></a>
+<a name="481"></a>   if (VSize(Velocity) != <span class="source_int">0</span>)
+<a name="482"></a>   {
+<a name="483"></a>     foreach BasedActors( <span class="source_type">class</span> <span class="source_name">'pawn'</span>,Stander)
+<a name="484"></a>     {
+<a name="485"></a>       if (Stander != none)
+<a name="486"></a>       {
+<a name="487"></a>        <span class="source_comment">//Log("I'm being stood on.  Halting movement");
+</span><a name="488"></a>        Velocity = vect(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>);
+<a name="489"></a>       }
+<a name="490"></a>     }
+<a name="491"></a>   }
+<a name="492"></a>
+<a name="493"></a>   <span class="source_comment">// No super speeding objects
+</span><a name="494"></a>
+<a name="495"></a>   if (Mass &gt;= <span class="source_int">0.5</span> && VSize(Velocity) &gt; <span class="source_int">100</span>)
+<a name="496"></a>    Velocity *= <span class="source_int">0.5</span>;
+<a name="497"></a>
+<a name="498"></a>
+<a name="499"></a>
+<a name="500"></a>}
+<a name="501"></a>
+<a name="502"></a><span class="source_comment">//Pack current state to be replicated
+</span><a name="503"></a>function PackState()
+<a name="504"></a>{
+<a name="505"></a>    local <span class="source_type">bool</span> bChanged;
+<a name="506"></a>
+<a name="507"></a>    if(!KIsAwake())
+<a name="508"></a>    	return;
+<a name="509"></a>
+<a name="510"></a>    KGetRigidBodyState(KState);
+<a name="511"></a>
+<a name="512"></a>    bChanged = false ;
+<a name="513"></a>    bChanged = bChanged || VSize(KRBVecToVector(KState.<span class="source_type">Position</span>) - KRBVecToVector(KRepState.<span class="source_type">Position</span>)) &gt; <span class="source_int">2.5</span>;
+<a name="514"></a>    bChanged = bChanged || VSize(KRBVecToVector(KState.LinVel) - KRBVecToVector(KRepState.LinVel)) &gt; <span class="source_int">0.5</span>;
+<a name="515"></a>    bChanged = bChanged || VSize(KRBVecToVector(KState.AngVel) - KRBVecToVector(KRepState.AngVel)) &gt; <span class="source_int">0.5</span>;
+<a name="516"></a>
+<a name="517"></a>    if(bChanged)
+<a name="518"></a>    {
+<a name="519"></a>        KRepState = KState;
+<a name="520"></a>        StateCount++;
+<a name="521"></a>
+<a name="522"></a>        if(bBlockedPath && stateCount &gt; <span class="source_int">1</span>)                        <span class="source_comment">//Does it need to trigger the blocked path?
+</span><a name="523"></a>        {
+<a name="524"></a>            if(VSize(startLocation - KRBVecToVector(KRepState.<span class="source_type">Position</span>)) &gt; moveDistance)
+<a name="525"></a>            {
+<a name="526"></a>                bBlockedPath=false ;
+<a name="527"></a>                TriggerEvent(<span class="source_type"><a href="../gameplay/blockedpath.html" class="source">BlockedPath</a></span>, self, None) ;           <span class="source_comment">//DO IT!
+</span><a name="528"></a>                <span class="source_comment">//DEBUG
+</span><a name="529"></a>                log(Tag$<span class="source_string">" is "</span>$VSize(startLocation - KRBVecToVector(KRepState.<span class="source_type">Position</span>))$<span class="source_string">" units from its original position!"</span>) ;
+<a name="530"></a>            }
+<a name="531"></a>        }
+<a name="532"></a>        bInactive = false ;
+<a name="533"></a>        bWaitTillMove = false ;
+<a name="534"></a>    }
+<a name="535"></a>    else
+<a name="536"></a>    {
+<a name="537"></a>        bInactive = true ;
+<a name="538"></a>        return;
+<a name="539"></a>    }
+<a name="540"></a>}
+<a name="541"></a>
+<a name="542"></a>simulated event PostNetReceive()
+<a name="543"></a>{
+<a name="544"></a>    if(StateCount == LastStateCount)
+<a name="545"></a>        return;
+<a name="546"></a>}
+<a name="547"></a>
+<a name="548"></a>simulated event <span class="source_type">bool</span> KUpdateState(out <span class="source_type"><a href="../engine/actor.html#KRigidBodyState" class="source">KRigidBodyState</a></span> <span class="source_type">newState</span>)
+<a name="549"></a>{
+<a name="550"></a>    if(StateCount == LastStateCount)
+<a name="551"></a>        return false;
+<a name="552"></a>    <span class="source_type">newState</span> = KRepState;
+<a name="553"></a>    lastStateCount = StateCount ;
+<a name="554"></a>    return true;
+<a name="555"></a>}
+<a name="556"></a>
+<a name="557"></a><span class="source_comment">/*
+<a name="558"></a>simulated function UsedBy( Pawn user )
+<a name="559"></a>{
+<a name="560"></a>  Log("I was just used...and I liked it");
+<a name="561"></a>
+<a name="562"></a>  if (KFHumanPawn(user) != none)
+<a name="563"></a>  {
+<a name="564"></a>   SetPhysics(PHYS_None);
+<a name="565"></a>   user.AttachToBone( self, 'Bone_weapon' );
+<a name="566"></a>  }
+<a name="567"></a>}
+<a name="568"></a>*/</span>
+<a name="569"></a>
+<a name="570"></a>
+<a name="571"></a>simulated function Die()
+<a name="572"></a>{
+<a name="573"></a> DieVect = lasthitlocation-lastinstigatedBy.location;
+<a name="574"></a>
+<a name="575"></a>     <span class="source_comment">//DEBUG
+</span><a name="576"></a>    <span class="source_comment">//log("Die at "$location) ;
+</span><a name="577"></a>    bDead = true ;
+<a name="578"></a>    if(bDestroyable)
+<a name="579"></a>    {
+<a name="580"></a>        playServerSoundDestroy() ;
+<a name="581"></a>
+<a name="582"></a>        if ( EffectIsRelevant(Location,false) )
+<a name="583"></a>         spawn(DestroyedEffect,,,Location,<span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span>(DieVect) );
+<a name="584"></a>
+<a name="585"></a>        ClientDeathEmitters();
+<a name="586"></a>
+<a name="587"></a>        <span class="source_comment">//DestroyedFX();
+</span><a name="588"></a>        HurtRadius(explodeDamage ,explodeRadius, <span class="source_type">class</span><span class="source_name">'DamTypeKick'</span>, explodeForce, Location) ;
+<a name="589"></a>        if(DestroyedStaticMesh == none)
+<a name="590"></a>        {
+<a name="591"></a>            bHidden = true ;
+<a name="592"></a>            SetPhysics(PHYS_None) ;
+<a name="593"></a>            SetCollision(false, false, false) ;
+<a name="594"></a>            Health = <span class="source_int">0</span> ;
+<a name="595"></a>            Punter = none ;
+<a name="596"></a>            bPendingPunt = false ;
+<a name="597"></a>        }
+<a name="598"></a>        else
+<a name="599"></a>        {
+<a name="600"></a>             KWake() ;
+<a name="601"></a>             SetStaticMesh(DestroyedStaticMesh) ;
+<a name="602"></a>             KSetMass(DestroyedMass) ;
+<a name="603"></a>             KSetRestitution(DestroyedRestitution) ;
+<a name="604"></a>             KSetDampingProps(DestroyedDamping, DestroyedDamping) ;
+<a name="605"></a>             KSetFriction(DestroyedFriction) ;
+<a name="606"></a>             (<span class="source_type"><a href="../engine/karmaparams.html" class="source">KarmaParams</a></span>(KParams)).KBuoyancy = DestroyedBuoyancy ;
+<a name="607"></a>             Health = <span class="source_int">1</span> ;
+<a name="608"></a>        }
+<a name="609"></a>    }
+<a name="610"></a>    else
+<a name="611"></a>    {
+<a name="612"></a>        bHidden = true ;
+<a name="613"></a>        SetPhysics(PHYS_None) ;
+<a name="614"></a>        SetCollision(false, false, false) ;
+<a name="615"></a>        Health = <span class="source_int">0</span> ;
+<a name="616"></a>        Punter = none ;
+<a name="617"></a>        bPendingPunt = false ;
+<a name="618"></a>    }
+<a name="619"></a>    if(AutoRespawnTime != -<span class="source_int">1</span>)
+<a name="620"></a>    {
+<a name="621"></a>        bPendingRespawn = true ;
+<a name="622"></a>        respawnClock = <span class="source_type">level</span>.timeseconds + AutoRespawnTime ;
+<a name="623"></a>        bInactive = false ;
+<a name="624"></a>    }
+<a name="625"></a>    clientPlay = <span class="source_int">1</span> ;
+<a name="626"></a>}
+<a name="627"></a>
+<a name="628"></a>
+<a name="629"></a>
+<a name="630"></a>
+<a name="631"></a>function playServerSoundDestroy()
+<a name="632"></a>{
+<a name="633"></a>        PlaySound(DestructionSound, SLOT_None, DestructionVolume) ;
+<a name="634"></a>        <span class="source_comment">//log("Server-SoundDestroy") ;
+</span><a name="635"></a>}
+<a name="636"></a>
+<a name="637"></a>function playServerSoundRespawn()
+<a name="638"></a>{
+<a name="639"></a>        PlaySound(RespawnSound, SLOT_None, RespawnVolume) ;
+<a name="640"></a>        <span class="source_comment">//log("Server-SoundRespawn") ;
+</span><a name="641"></a>}
+<a name="642"></a>
+<a name="643"></a>function playServerHit()
+<a name="644"></a>{
+<a name="645"></a>        local <span class="source_type">int</span> <span class="source_type">a</span> ;
+<a name="646"></a>        local <span class="source_type">float</span> <span class="source_type">b</span> ;
+<a name="647"></a>
+<a name="648"></a>        if(replaySoundClock &lt;= <span class="source_type">level</span>.TimeSeconds)
+<a name="649"></a>        {
+<a name="650"></a>            <span class="source_type">a</span> = Rand(HitSounds.length) ;
+<a name="651"></a>            <span class="source_type">b</span> = rand(<span class="source_int">4</span>) * <span class="source_int">0.1</span> ;
+<a name="652"></a>            PlaySound(HitSounds[<span class="source_type">a</span>] , SLOT_None, RelativeImpactVolume);
+<a name="653"></a>            notifyPlayHit = false ;
+<a name="654"></a>            replaySoundClock = <span class="source_type">level</span>.timeSeconds + ((<span class="source_int">0.55</span> + <span class="source_type">b</span>) * hitSoundRepeatModifier) ;
+<a name="655"></a>        }
+<a name="656"></a>        <span class="source_comment">//log("Server-SoundHit") ;
+</span><a name="657"></a>}
+<a name="658"></a>
+<a name="659"></a>simulated event FellOutOfWorld(<span class="source_type"><a href="../engine/actor.html#eKillZType" class="source">eKillZType</a></span> KillType)
+<a name="660"></a>{Die() ;}
+<a name="661"></a>
+<a name="662"></a>function <span class="source_type">StaticMesh</span> getObject(<span class="source_type">StaticMesh</span> <span class="source_type">A</span>)
+<a name="663"></a>{ return <span class="source_type">A</span> ;}
+<a name="664"></a>
+<a name="665"></a>simulated function ClientDeathEmitters()
+<a name="666"></a>{
+<a name="667"></a>        if(<span class="source_type">level</span>.NetMode != NM_DedicatedServer)
+<a name="668"></a>            return ;
+<a name="669"></a>        if(bOrientDestructionEffect)
+<a name="670"></a>            Spawn(DestroyedEffect,,,Location + EffectOffset, hitDirection) ;
+<a name="671"></a>        else
+<a name="672"></a>            Spawn(DestroyedEffect,,,Location + EffectOffset) ;
+<a name="673"></a>        <span class="source_comment">//log("Client-EmittersDestroy") ;
+</span><a name="674"></a>}
+<a name="675"></a>
+<a name="676"></a>simulated function ClientRespawnEmitter()
+<a name="677"></a>{
+<a name="678"></a>    if(<span class="source_type">level</span>.NetMode != NM_DedicatedServer)
+<a name="679"></a>        return ;
+<a name="680"></a>    Spawn(RespawnEffect,,,startLocation + EffectOffset) ;
+<a name="681"></a>    <span class="source_comment">//log("Client-EmittersRespawn") ;
+</span><a name="682"></a>}
+<a name="683"></a>
+<a name="684"></a>defaultproperties
+<a name="685"></a>{
+<a name="686"></a>     bBlockedPath=True
+<a name="687"></a>     moveDistance=<span class="source_int">50.000000</span>
+<a name="688"></a>     RelativeImpactVolume=<span class="source_int">127</span>
+<a name="689"></a>     bShoveable=True
+<a name="690"></a>     ShoveModifier=<span class="source_int">1.500000</span>
+<a name="691"></a>     bEnableSpinProtection=True
+<a name="692"></a>     hitSoundRepeatModifier=<span class="source_int">1.000000</span>
+<a name="693"></a>     bCollisionDamage=True
+<a name="694"></a>     DamageSpeed=<span class="source_int">100.000000</span>
+<a name="695"></a>     HitDamageType=<span class="source_type">Class</span><span class="source_name">'GoodKarma.DamTypeBludgeon'</span>
+<a name="696"></a>     HitDamageScale=<span class="source_int">1.000000</span>
+<a name="697"></a>     initialHealth=<span class="source_int">100</span>
+<a name="698"></a>     damageAbsorbtionAmount=<span class="source_int">25</span>
+<a name="699"></a>     explodeRadius=<span class="source_int">15.000000</span>
+<a name="700"></a>     bDestroyable=True
+<a name="701"></a>     DestructionVolume=<span class="source_int">200</span>
+<a name="702"></a>     bOrientDestructionEffect=True
+<a name="703"></a>     DestroyedMass=<span class="source_int">0.500000</span>
+<a name="704"></a>     DestroyedDamping=<span class="source_int">1.000000</span>
+<a name="705"></a>     DestroyedFriction=<span class="source_int">0.700000</span>
+<a name="706"></a>     DestroyedBuoyancy=<span class="source_int">0.300000</span>
+<a name="707"></a>     DestroyedRestitution=<span class="source_int">0.100000</span>
+<a name="708"></a>     PreRespawnEffectTime=<span class="source_int">1.000000</span>
+<a name="709"></a>     inactivityTimeout=<span class="source_int">15.000000</span>
+<a name="710"></a>     RespawnVolume=<span class="source_int">180</span>
+<a name="711"></a>     AutoRespawnTime=-<span class="source_int">1.000000</span>
+<a name="712"></a>     bRespawnEffectPlayed=True
+<a name="713"></a>     bWaitTillMove=True
+<a name="714"></a>     bDead=True
+<a name="715"></a>     LastStateCount=-<span class="source_int">1</span>
+<a name="716"></a>     inactiveClock=-<span class="source_int">999.000000</span>
+<a name="717"></a>     bKActorShadows=True
+<a name="718"></a>     <span class="source_type">StaticMesh</span>=<span class="source_type">StaticMesh</span><span class="source_name">'GKStaticMeshes.basicShapes.BasicCube'</span>
+<a name="719"></a>     bUseDynamicLights=True
+<a name="720"></a>     bDetailAttachment=True
+<a name="721"></a>     RemoteRole=ROLE_SimulatedProxy
+<a name="722"></a>     bHardAttach=True
+<a name="723"></a>     bNetNotify=True
+<a name="724"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../engine/karmaparams.html" class="source">KarmaParams</a></span> <span class="source_type">Name</span>=KarmaParams0
+<a name="725"></a>         KMass=<span class="source_int">0.500000</span>
+<a name="726"></a>         bHighDetailOnly=False
+<a name="727"></a>         bClientOnly=False
+<a name="728"></a>         KFriction=<span class="source_int">0.500000</span>
+<a name="729"></a>         KRestitution=<span class="source_int">0.200000</span>
+<a name="730"></a>         KImpactThreshold=<span class="source_int">1.000000</span>
+<a name="731"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="732"></a>     KParams=<span class="source_type"><a href="../engine/karmaparams.html" class="source">KarmaParams</a></span><span class="source_name">'GoodKarma.NetKActor.KarmaParams0'</span>
+<a name="733"></a>
+<a name="734"></a>}
+<a name="735"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../goodkarma/goodkarma-overview.html">Package</a></td>
+	<td class="header"><a href="../goodkarma/netkactor.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#NetKActor">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_goodkarma/gk_as_roundreset.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_goodkarma/shadownetkactor.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:05.972 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

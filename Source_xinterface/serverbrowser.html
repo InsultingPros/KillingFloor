@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XInterface.ServerBrowser</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/serverbrowser.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ServerBrowser">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/scoreboardteamdeathmatch.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/spinnyweap.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xinterface/serverbrowser.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xinterface/xinterface-overview.html">XInterface</a>.<a href="../xinterface/serverbrowser.html">ServerBrowser</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300
+</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">// ====================================================================
+</span><a name="2"></a><span class="source_comment">//  Written by Jack Porter
+</span><a name="3"></a><span class="source_comment">//  (c) 2002, Epic Games, Inc.  All Rights Reserved
+</span><a name="4"></a><span class="source_comment">// ====================================================================
+</span><a name="5"></a>
+<a name="6"></a><span class="source_type">class</span> <span class="source_type"><a href="../xinterface/serverbrowser.html" class="source">ServerBrowser</a></span> extends <span class="source_type"><a href="../xinterface/ut2k3guipage.html" class="source">UT2K3GUIPage</a></span>;
+<a name="7"></a>
+<a name="8"></a><span class="source_comment">// if _RO_
+</span><a name="9"></a><span class="source_comment">// else
+</span><a name="10"></a><span class="source_comment">//#exec OBJ LOAD FILE=InterfaceContent.utx
+</span><a name="11"></a><span class="source_comment">// end if _RO_
+</span><a name="12"></a>
+<a name="13"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> MOTDPage;
+<a name="14"></a>
+<a name="15"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> DMServerListPage;
+<a name="16"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> TDMServerListPage;
+<a name="17"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> CTFServerListPage;
+<a name="18"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> BRServerListPage;
+<a name="19"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> DomServerListPage;
+<a name="20"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> CustomServerListPage;
+<a name="21"></a>
+<a name="22"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> FavoritesPage;
+<a name="23"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> LANPage;
+<a name="24"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> PrefsPage;
+<a name="25"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> BuddiesPage;
+<a name="26"></a>var <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> IRCPage;
+<a name="27"></a>
+<a name="28"></a>var <span class="source_type">bool</span> bCreatedQueryTabs;
+<a name="29"></a>var <span class="source_type">bool</span> bCreatedStandardTabs;
+<a name="30"></a>
+<a name="31"></a>var localized <span class="source_type">string</span> MutantTypeName, InvasionTypeName, LMSTypeName;
+<a name="32"></a>var localized <span class="source_type">string</span> MutantType, InvasionType, LMSType;
+<a name="33"></a>
+<a name="34"></a><span class="source_comment">// Filtering options
+</span><a name="35"></a>var() config <span class="source_type">bool</span> bOnlyShowStandard;
+<a name="36"></a>var() config <span class="source_type">bool</span> bOnlyShowNonPassword;
+<a name="37"></a>var() config <span class="source_type">bool</span> bDontShowFull;
+<a name="38"></a>var() config <span class="source_type">bool</span> bDontShowEmpty;
+<a name="39"></a>var() config <span class="source_type">bool</span> bDontShowWithBots;
+<a name="40"></a>var() config <span class="source_type">string</span> DesiredMutator;
+<a name="41"></a>var() config <span class="source_type">string</span> DesiredMutator2;
+<a name="42"></a>var() config <span class="source_type">string</span> CustomQuery;
+<a name="43"></a>var() config <span class="source_type">int</span>	MinGamespeed, MaxGamespeed;
+<a name="44"></a>
+<a name="45"></a>var() config enum <span class="source_type"><a href="../xinterface/serverbrowser.html#EViewMutatorMode" class="source">EViewMutatorMode</a></span>
+<a name="46"></a>{
+<a name="47"></a>	VMM_AnyMutators,
+<a name="48"></a>	VMM_NoMutators,
+<a name="49"></a>	VMM_ThisMutator,
+<a name="50"></a>	VMM_NotThisMutator
+<a name="51"></a>} ViewMutatorMode, ViewMutator2Mode;
+<a name="52"></a>
+<a name="53"></a>var() config enum <span class="source_type"><a href="../xinterface/serverbrowser.html#EStatsServerView" class="source">EStatsServerView</a></span>
+<a name="54"></a>{
+<a name="55"></a>	SSV_Any,
+<a name="56"></a>    SSV_OnlyStatsEnabled,
+<a name="57"></a>    SSV_NoStatsEnabled,
+<a name="58"></a>} StatsServerView;
+<a name="59"></a>
+<a name="60"></a>var() config enum <span class="source_type"><a href="../xinterface/serverbrowser.html#EWeaponStayServerView" class="source">EWeaponStayServerView</a></span>
+<a name="61"></a>{
+<a name="62"></a>	WSSV_Any,
+<a name="63"></a>    WSSV_OnlyWeaponStay,
+<a name="64"></a>    WSSV_NoWeaponStay,
+<a name="65"></a>} WeaponStayServerView;
+<a name="66"></a>
+<a name="67"></a>var() config enum <span class="source_type"><a href="../xinterface/serverbrowser.html#ETranslocServerView" class="source">ETranslocServerView</a></span>
+<a name="68"></a>{
+<a name="69"></a>	TSV_Any,
+<a name="70"></a>    TSV_OnlyTransloc,
+<a name="71"></a>    TSV_NoTransloc,
+<a name="72"></a>} TranslocServerView;
+<a name="73"></a>
+<a name="74"></a>
+<a name="75"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="76"></a>{
+<a name="77"></a>	Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="78"></a>	<span class="source_type"><a href="../xinterface/guititlebar.html" class="source">GUITitleBar</a></span>(Controls[<span class="source_int">0</span>]).DockedTabs = <span class="source_type"><a href="../xinterface/guitabcontrol.html" class="source">GUITabControl</a></span>(Controls[<span class="source_int">1</span>]);
+<a name="79"></a>
+<a name="80"></a>	<span class="source_comment">// delegates
+</span><a name="81"></a>	OnClose = InternalOnClose;
+<a name="82"></a>
+<a name="83"></a>	<span class="source_comment">// Add pages
+</span><a name="84"></a>	if(!bCreatedStandardTabs)
+<a name="85"></a>	{
+<a name="86"></a>		AddBrowserPage(MOTDPage);
+<a name="87"></a>		AddBrowserPage(PrefsPage);
+<a name="88"></a>		AddBrowserPage(IRCPage);
+<a name="89"></a>		AddBrowserPage(LANPage);
+<a name="90"></a>		AddBrowserPage(FavoritesPage);
+<a name="91"></a>
+<a name="92"></a>		bCreatedStandardTabs=true;
+<a name="93"></a>	}
+<a name="94"></a>}
+<a name="95"></a>
+<a name="96"></a><span class="source_comment">// Do we have the bonus pack installed?
+</span><a name="97"></a>function <span class="source_type">bool</span> HaveBonusPack()
+<a name="98"></a>{
+<a name="99"></a>	local <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Test</span>;
+<a name="100"></a>
+<a name="101"></a>	<span class="source_type">Test</span> = DynamicLoadObject(<span class="source_string">"BonusPack.xMutantGame"</span>, <span class="source_type">class</span><span class="source_name">'Class'</span>);
+<a name="102"></a>	if(<span class="source_type">Test</span> == None)
+<a name="103"></a>		return false;
+<a name="104"></a>
+<a name="105"></a>	<span class="source_type">Test</span> = DynamicLoadObject(<span class="source_string">"SkaarjPack.Invasion"</span>, <span class="source_type">class</span><span class="source_name">'Class'</span>);
+<a name="106"></a>	if(<span class="source_type">Test</span> == None)
+<a name="107"></a>		return false;
+<a name="108"></a>
+<a name="109"></a>	return true;
+<a name="110"></a>}
+<a name="111"></a>
+<a name="112"></a><span class="source_comment">// See if we have any custom game types (is this too slow?)
+</span><a name="113"></a>function <span class="source_type">bool</span> HaveCustomGameTypes()
+<a name="114"></a>{
+<a name="115"></a>	local <span class="source_type">string</span> Entry, Desc;
+<a name="116"></a>	local <span class="source_type">int</span> <span class="source_type">Index</span>;
+<a name="117"></a>
+<a name="118"></a>	<span class="source_comment">// Find other game types from .int files, and create tabs
+</span><a name="119"></a>	<span class="source_type">Index</span> = <span class="source_int">0</span>;
+<a name="120"></a>	PlayerOwner().GetNextIntDesc(<span class="source_string">"GameInfo"</span>,<span class="source_type">Index</span>,Entry,Desc);
+<a name="121"></a>	while (Entry != <span class="source_string">""</span>)
+<a name="122"></a>	{
+<a name="123"></a>		Desc = Entry$<span class="source_string">"|"</span>$Desc;
+<a name="124"></a>
+<a name="125"></a>		<span class="source_comment">// If its not a standard game type, we have a custom one.
+</span><a name="126"></a>		if ( !<span class="source_type">class</span><span class="source_name">'Browser_ServerListPageMSCustom'</span>.static.IsStandardGameType(Desc) )
+<a name="127"></a>			return true;
+<a name="128"></a>
+<a name="129"></a>		<span class="source_type">Index</span>++;
+<a name="130"></a>		PlayerOwner().GetNextIntDesc(<span class="source_string">"GameInfo"</span>, <span class="source_type">Index</span>, Entry, Desc);
+<a name="131"></a>	}
+<a name="132"></a>
+<a name="133"></a>	<span class="source_comment">// No custom game types found
+</span><a name="134"></a>	return false;
+<a name="135"></a>}
+<a name="136"></a>
+<a name="137"></a>function MOTDVerified(<span class="source_type">bool</span> bMSVerified)
+<a name="138"></a>{
+<a name="139"></a>	local <span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span> <span class="source_type">NewPage</span>;
+<a name="140"></a>
+<a name="141"></a>	if( bCreatedQueryTabs )
+<a name="142"></a>		return;
+<a name="143"></a>
+<a name="144"></a>	bCreatedQueryTabs = true;
+<a name="145"></a>
+<a name="146"></a>	AddBrowserPage(BuddiesPage);
+<a name="147"></a>
+<a name="148"></a>	<span class="source_comment">// Create tabs for 'standard' game types
+</span><a name="149"></a>	AddBrowserPage(DMServerListPage);
+<a name="150"></a>	AddBrowserPage(TDMServerListPage);
+<a name="151"></a>	if(!PlayerOwner().<span class="source_type">Level</span>.IsDemoBuild())
+<a name="152"></a>		AddBrowserPage(DomServerListPage);
+<a name="153"></a>	AddBrowserPage(CTFServerListPage);
+<a name="154"></a>	AddBrowserPage(BRServerListPage);
+<a name="155"></a>
+<a name="156"></a>	if( HaveBonusPack() )
+<a name="157"></a>	{
+<a name="158"></a>		<span class="source_type">NewPage</span> = new(None) <span class="source_type">class</span><span class="source_name">'Browser_ServerListPageMS'</span>;
+<a name="159"></a>		<span class="source_type">NewPage</span>.<span class="source_type">GameType</span> = InvasionType;
+<a name="160"></a>		<span class="source_type">NewPage</span>.PageCaption = InvasionTypeName;
+<a name="161"></a>		AddBrowserPage(<span class="source_type">NewPage</span>);
+<a name="162"></a>
+<a name="163"></a>		<span class="source_type">NewPage</span> = new(None) <span class="source_type">class</span><span class="source_name">'Browser_ServerListPageMS'</span>;
+<a name="164"></a>		<span class="source_type">NewPage</span>.<span class="source_type">GameType</span> = LMSType;
+<a name="165"></a>		<span class="source_type">NewPage</span>.PageCaption = LMSTypeName;
+<a name="166"></a>		AddBrowserPage(<span class="source_type">NewPage</span>);
+<a name="167"></a>
+<a name="168"></a>		<span class="source_type">NewPage</span> = new(None) <span class="source_type">class</span><span class="source_name">'Browser_ServerListPageMS'</span>;
+<a name="169"></a>		<span class="source_type">NewPage</span>.<span class="source_type">GameType</span> = MutantType;
+<a name="170"></a>		<span class="source_type">NewPage</span>.PageCaption = MutantTypeName;
+<a name="171"></a>		AddBrowserPage(<span class="source_type">NewPage</span>);
+<a name="172"></a>	}
+<a name="173"></a>
+<a name="174"></a>	if( HaveCustomGameTypes() )
+<a name="175"></a>		AddBrowserPage(CustomServerListPage);
+<a name="176"></a>}
+<a name="177"></a>
+<a name="178"></a>function AddBrowserPage( <span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span> <span class="source_type">NewPage</span> )
+<a name="179"></a>{
+<a name="180"></a>	local <span class="source_type"><a href="../xinterface/guitabcontrol.html" class="source">GUITabControl</a></span> TabC;
+<a name="181"></a>
+<a name="182"></a>	<span class="source_type">NewPage</span>.<span class="source_type">Browser</span> = Self;
+<a name="183"></a>	TabC = <span class="source_type"><a href="../xinterface/guitabcontrol.html" class="source">GUITabControl</a></span>(Controls[<span class="source_int">1</span>]);
+<a name="184"></a>	TabC.AddTab(<span class="source_type">NewPage</span>.PageCaption,<span class="source_string">""</span>, <span class="source_type">NewPage</span>);
+<a name="185"></a>}
+<a name="186"></a>
+<a name="187"></a>delegate OnAddFavorite( <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">Server</span> );
+<a name="188"></a>
+<a name="189"></a>function InternalOnClose(optional <span class="source_type">Bool</span> bCanceled)
+<a name="190"></a>{
+<a name="191"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="192"></a>	local <span class="source_type"><a href="../xinterface/guitabcontrol.html" class="source">GUITabControl</a></span> TabC;
+<a name="193"></a>
+<a name="194"></a>	TabC = <span class="source_type"><a href="../xinterface/guitabcontrol.html" class="source">GUITabControl</a></span>(Controls[<span class="source_int">1</span>]);
+<a name="195"></a>
+<a name="196"></a>	for( <span class="source_type">i</span>=<span class="source_int">0</span>;<span class="source_type">i</span>&lt;TabC.TabStack.Length;<span class="source_type">i</span>++ )
+<a name="197"></a>		<span class="source_type"><a href="../xinterface/browser_page.html" class="source">Browser_Page</a></span>(TabC.TabStack[<span class="source_type">i</span>].MyPanel).OnCloseBrowser();
+<a name="198"></a>
+<a name="199"></a>	Super.OnClose(bCanceled);
+<a name="200"></a>}
+<a name="201"></a>
+<a name="202"></a>defaultproperties
+<a name="203"></a>{
+<a name="204"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_motd.html" class="source">Browser_MOTD</a></span> <span class="source_type">Name</span>=MyMOTDPage
+<a name="205"></a>         PageCaption=<span class="source_string">"News"</span>
+<a name="206"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="207"></a>     MOTDPage=<span class="source_type"><a href="../xinterface/browser_motd.html" class="source">Browser_MOTD</a></span><span class="source_name">'XInterface.ServerBrowser.MyMOTDPage'</span>
+<a name="208"></a>
+<a name="209"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span> <span class="source_type">Name</span>=MyDMServerListPage
+<a name="210"></a>         <span class="source_type">GameType</span>=<span class="source_string">"xDeathMatch"</span>
+<a name="211"></a>         PageCaption=<span class="source_string">"DM"</span>
+<a name="212"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="213"></a>     DMServerListPage=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span><span class="source_name">'XInterface.ServerBrowser.MyDMServerListPage'</span>
+<a name="214"></a>
+<a name="215"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span> <span class="source_type">Name</span>=MyTDMServerListPage
+<a name="216"></a>         <span class="source_type">GameType</span>=<span class="source_string">"xTeamGame"</span>
+<a name="217"></a>         PageCaption=<span class="source_string">"Team DM"</span>
+<a name="218"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="219"></a>     TDMServerListPage=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span><span class="source_name">'XInterface.ServerBrowser.MyTDMServerListPage'</span>
+<a name="220"></a>
+<a name="221"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span> <span class="source_type">Name</span>=MyCTFServerListPage
+<a name="222"></a>         <span class="source_type">GameType</span>=<span class="source_string">"xCTFGame"</span>
+<a name="223"></a>         PageCaption=<span class="source_string">"CTF"</span>
+<a name="224"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="225"></a>     CTFServerListPage=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span><span class="source_name">'XInterface.ServerBrowser.MyCTFServerListPage'</span>
+<a name="226"></a>
+<a name="227"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span> <span class="source_type">Name</span>=MyBRServerListPage
+<a name="228"></a>         <span class="source_type">GameType</span>=<span class="source_string">"xBombingRun"</span>
+<a name="229"></a>         PageCaption=<span class="source_string">"Bombing Run"</span>
+<a name="230"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="231"></a>     BRServerListPage=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span><span class="source_name">'XInterface.ServerBrowser.MyBRServerListPage'</span>
+<a name="232"></a>
+<a name="233"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span> <span class="source_type">Name</span>=MyDomServerListPage
+<a name="234"></a>         <span class="source_type">GameType</span>=<span class="source_string">"xDoubleDom"</span>
+<a name="235"></a>         PageCaption=<span class="source_string">"Double Dom"</span>
+<a name="236"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="237"></a>     DomServerListPage=<span class="source_type"><a href="../xinterface/browser_serverlistpagems.html" class="source">Browser_ServerListPageMS</a></span><span class="source_name">'XInterface.ServerBrowser.MyDomServerListPage'</span>
+<a name="238"></a>
+<a name="239"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_serverlistpagemscustom.html" class="source">Browser_ServerListPageMSCustom</a></span> <span class="source_type">Name</span>=MyCustomServerListPage
+<a name="240"></a>         PageCaption=<span class="source_string">"Custom"</span>
+<a name="241"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="242"></a>     CustomServerListPage=<span class="source_type"><a href="../xinterface/browser_serverlistpagemscustom.html" class="source">Browser_ServerListPageMSCustom</a></span><span class="source_name">'XInterface.ServerBrowser.MyCustomServerListPage'</span>
+<a name="243"></a>
+<a name="244"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_serverlistpagefavorites.html" class="source">Browser_ServerListPageFavorites</a></span> <span class="source_type">Name</span>=MyFavoritesPage
+<a name="245"></a>         PageCaption=<span class="source_string">"Favorites"</span>
+<a name="246"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="247"></a>     FavoritesPage=<span class="source_type"><a href="../xinterface/browser_serverlistpagefavorites.html" class="source">Browser_ServerListPageFavorites</a></span><span class="source_name">'XInterface.ServerBrowser.MyFavoritesPage'</span>
+<a name="248"></a>
+<a name="249"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_serverlistpagelan.html" class="source">Browser_ServerListPageLAN</a></span> <span class="source_type">Name</span>=MyLANPage
+<a name="250"></a>         PageCaption=<span class="source_string">"LAN"</span>
+<a name="251"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="252"></a>     LANPage=<span class="source_type"><a href="../xinterface/browser_serverlistpagelan.html" class="source">Browser_ServerListPageLAN</a></span><span class="source_name">'XInterface.ServerBrowser.MyLANPage'</span>
+<a name="253"></a>
+<a name="254"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_prefs.html" class="source">Browser_Prefs</a></span> <span class="source_type">Name</span>=MyPrefsPage
+<a name="255"></a>         PageCaption=<span class="source_string">"Filter"</span>
+<a name="256"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="257"></a>     PrefsPage=<span class="source_type"><a href="../xinterface/browser_prefs.html" class="source">Browser_Prefs</a></span><span class="source_name">'XInterface.ServerBrowser.MyPrefsPage'</span>
+<a name="258"></a>
+<a name="259"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_serverlistpagebuddy.html" class="source">Browser_ServerListPageBuddy</a></span> <span class="source_type">Name</span>=MyBuddiesPage
+<a name="260"></a>         <span class="source_type">GameType</span>=<span class="source_string">"xBombingRun"</span>
+<a name="261"></a>         PageCaption=<span class="source_string">"Buddies"</span>
+<a name="262"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="263"></a>     BuddiesPage=<span class="source_type"><a href="../xinterface/browser_serverlistpagebuddy.html" class="source">Browser_ServerListPageBuddy</a></span><span class="source_name">'XInterface.ServerBrowser.MyBuddiesPage'</span>
+<a name="264"></a>
+<a name="265"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/browser_irc.html" class="source">Browser_IRC</a></span> <span class="source_type">Name</span>=MyIRCPage
+<a name="266"></a>         PageCaption=<span class="source_string">"Chat"</span>
+<a name="267"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="268"></a>     IRCPage=<span class="source_type"><a href="../xinterface/browser_irc.html" class="source">Browser_IRC</a></span><span class="source_name">'XInterface.ServerBrowser.MyIRCPage'</span>
+<a name="269"></a>
+<a name="270"></a>     MutantTypeName=<span class="source_string">"Mutant"</span>
+<a name="271"></a>     InvasionTypeName=<span class="source_string">"Invasion"</span>
+<a name="272"></a>     LMSTypeName=<span class="source_string">"Last Man Standing"</span>
+<a name="273"></a>     MutantType=<span class="source_string">"xMutantGame"</span>
+<a name="274"></a>     InvasionType=<span class="source_string">"Invasion"</span>
+<a name="275"></a>     LMSType=<span class="source_string">"xLastManStanding"</span>
+<a name="276"></a>     MaxGamespeed=<span class="source_int">200</span>
+<a name="277"></a>     bCheckResolution=True
+<a name="278"></a>     bPersistent=True
+<a name="279"></a>     Background=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="280"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guititlebar.html" class="source">GUITitleBar</a></span> <span class="source_type">Name</span>=ServerBrowserHeader
+<a name="281"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Server Browser"</span>
+<a name="282"></a>         StyleName=<span class="source_string">"Header"</span>
+<a name="283"></a>         WinTop=<span class="source_int">0.036406</span>
+<a name="284"></a>         WinHeight=<span class="source_int">46.000000</span>
+<a name="285"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="286"></a>     Controls(<span class="source_int">0</span>)=<span class="source_type"><a href="../xinterface/guititlebar.html" class="source">GUITitleBar</a></span><span class="source_name">'XInterface.ServerBrowser.ServerBrowserHeader'</span>
+<a name="287"></a>
+<a name="288"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guitabcontrol.html" class="source">GUITabControl</a></span> <span class="source_type">Name</span>=ServerBrowserTabs
+<a name="289"></a>         bDockPanels=True
+<a name="290"></a>         TabHeight=<span class="source_int">0.040000</span>
+<a name="291"></a>         WinTop=<span class="source_int">0.250000</span>
+<a name="292"></a>         WinHeight=<span class="source_int">48.000000</span>
+<a name="293"></a>         bAcceptsInput=True
+<a name="294"></a>         OnActivate=ServerBrowserTabs.InternalOnActivate
+<a name="295"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="296"></a>     Controls(<span class="source_int">1</span>)=<span class="source_type"><a href="../xinterface/guitabcontrol.html" class="source">GUITabControl</a></span><span class="source_name">'XInterface.ServerBrowser.ServerBrowserTabs'</span>
+<a name="297"></a>
+<a name="298"></a>     WinHeight=<span class="source_int">1.000000</span>
+<a name="299"></a>}
+<a name="300"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xinterface/xinterface-overview.html">Package</a></td>
+	<td class="header"><a href="../xinterface/serverbrowser.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ServerBrowser">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xinterface/scoreboardteamdeathmatch.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xinterface/spinnyweap.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:08.151 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.UT2K4QuickPlay</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4quickplay.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4QuickPlay">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4playinfopanel.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4quitpage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/ut2k4quickplay.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/ut2k4quickplay.html">UT2K4QuickPlay</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580
+</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//	Created on: 09/10/2003
+</span><a name="3"></a><span class="source_comment">//	Choose a difficulty level and gametype, and the player will be automatically
+</span><a name="4"></a><span class="source_comment">//  connected to the server with the best ping in that category.
+</span><a name="5"></a><span class="source_comment">//
+</span><a name="6"></a><span class="source_comment">//	Written by Ron Prestenback
+</span><a name="7"></a><span class="source_comment">//	© 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="8"></a><span class="source_comment">//==============================================================================
+</span><a name="9"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/ut2k4quickplay.html" class="source">UT2K4QuickPlay</a></span> extends <span class="source_type"><a href="../gui2k4/largewindow.html" class="source">LargeWindow</a></span>;
+<a name="10"></a>
+<a name="11"></a>var automated <span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>		i_Border;
+<a name="12"></a>var automated <span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span>      l_Status, l_ServerCount;
+<a name="13"></a>var automated <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>    co_Game,        co_Difficulty;
+<a name="14"></a>var automated <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>     b_QuickConnect, b_lClose;
+<a name="15"></a>
+<a name="16"></a>var <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span> MSC;
+<a name="17"></a>
+<a name="18"></a>var localized array&lt;<span class="source_type">string</span>&gt; DifficultyOptions;
+<a name="19"></a>
+<a name="20"></a><span class="source_comment">// Whether we are currently conducting a search for a good server
+</span><a name="21"></a>var <span class="source_type">bool</span> bPendingSearch;
+<a name="22"></a>
+<a name="23"></a><span class="source_comment">// Number of concurrent ping requests currently active - used to make sure we don't surpass MaxSimultaneousPing
+</span><a name="24"></a>var <span class="source_type">int</span> ThreadCount;
+<a name="25"></a>var array&lt;<span class="source_type">int</span>&gt; PingQueue;                        <span class="source_comment">// Indexes of servers still waiting to be pinged
+</span><a name="26"></a>var <span class="source_type">int</span> QuickConnectSeconds;                     <span class="source_comment">// Number of seconds since we began pinging for quick connect
+</span><a name="27"></a>var config <span class="source_type">int</span> MaxWaitSeconds;                   <span class="source_comment">// Maximum number of seconds to wait for pinging to be completed
+</span><a name="28"></a>
+<a name="29"></a><span class="source_comment">// List of servers received from the Master Server
+</span><a name="30"></a>var array&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span>&gt; Servers;
+<a name="31"></a>
+<a name="32"></a><span class="source_comment">// Quick Connect properties
+</span><a name="33"></a>var localized <span class="source_type">string</span> PlayText, SearchingText, ReadyText, ConnectText, CancelText, ConnectHint, CancelHint;
+<a name="34"></a>
+<a name="35"></a><span class="source_comment">// Localized status text
+</span><a name="36"></a>var localized <span class="source_type">string</span> BeginningSearchText;
+<a name="37"></a>var localized <span class="source_type">string</span> AuthFailedText;
+<a name="38"></a>var localized <span class="source_type">string</span> ServerCountText;
+<a name="39"></a>var localized <span class="source_type">string</span> SearchCancelledText;
+<a name="40"></a>var localized <span class="source_type">string</span> ConnectionFailedText;
+<a name="41"></a>var localized <span class="source_type">string</span> TimedOutText;
+<a name="42"></a>var localized <span class="source_type">string</span> NoServersReceivedText;
+<a name="43"></a>var localized <span class="source_type">string</span> NoValidText;
+<a name="44"></a>
+<a name="45"></a>delegate OnOpenConnection();
+<a name="46"></a>delegate OnCloseConnection();
+<a name="47"></a>
+<a name="48"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> MyComponent)
+<a name="49"></a>{
+<a name="50"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="51"></a>
+<a name="52"></a>	Super.InitComponent(MyController, MyComponent);
+<a name="53"></a>
+<a name="54"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; DifficultyOptions.Length; <span class="source_type">i</span>++ )
+<a name="55"></a>		co_Difficulty.AddItem(DifficultyOptions[<span class="source_type">i</span>]);
+<a name="56"></a>
+<a name="57"></a>	StatusTimer(None);
+<a name="58"></a>	ChangeQuickPlayStatus(False);
+<a name="59"></a>}
+<a name="60"></a>
+<a name="61"></a>event Opened(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="62"></a>{
+<a name="63"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="64"></a>	local array&lt;<span class="source_type"><a href="../engine/cachemanager.html" class="source">CacheManager</a></span>.<span class="source_type"><a href="../engine/cachemanager.html#GameRecord" class="source">GameRecord</a></span>&gt; Records;
+<a name="65"></a>
+<a name="66"></a>	Super.Opened(<span class="source_type">Sender</span>);
+<a name="67"></a>	<span class="source_type">class</span><span class="source_name">'CacheManager'</span>.static.GetGameTypeList(Records);
+<a name="68"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Records.Length; <span class="source_type">i</span>++ )
+<a name="69"></a>		co_Game.AddItem(Records[<span class="source_type">i</span>].GameName,,Records[<span class="source_type">i</span>].<span class="source_type">ClassName</span>);
+<a name="70"></a>}
+<a name="71"></a>
+<a name="72"></a>event Closed(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">bool</span> <span class="source_type">bCancelled</span>)
+<a name="73"></a>{
+<a name="74"></a>	Super.Closed(<span class="source_type">Sender</span>, <span class="source_type">bCancelled</span>);
+<a name="75"></a>	CloseMSConnection();
+<a name="76"></a>}
+<a name="77"></a>
+<a name="78"></a>event Free()
+<a name="79"></a>{
+<a name="80"></a>	Super.Free();
+<a name="81"></a>	CloseMSConnection();
+<a name="82"></a>}
+<a name="83"></a>
+<a name="84"></a>function <span class="source_type">bool</span> NotifyLevelChange()
+<a name="85"></a>{
+<a name="86"></a>	CloseMSConnection();
+<a name="87"></a>	return Super.NotifyLevelChange();
+<a name="88"></a>}
+<a name="89"></a>
+<a name="90"></a>function CloseMSConnection()
+<a name="91"></a>{
+<a name="92"></a>	KillTimer();
+<a name="93"></a>	if ( MSC != None )
+<a name="94"></a>	{
+<a name="95"></a>		MSC.CancelPings();
+<a name="96"></a>	    MSC.Stop();
+<a name="97"></a>	}
+<a name="98"></a>
+<a name="99"></a>	MSC = None;
+<a name="100"></a>}
+<a name="101"></a>
+<a name="102"></a><span class="source_comment">// Master Server Methods
+</span><a name="103"></a>function AddQueryTerm(coerce <span class="source_type">string</span> Key, coerce <span class="source_type">string</span> <span class="source_type">Value</span>, <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#EQueryType" class="source">EQueryType</a></span> QueryType)
+<a name="104"></a>{
+<a name="105"></a>	local <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#QueryData" class="source">QueryData</a></span> QD;
+<a name="106"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="107"></a>
+<a name="108"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; MSC.Query.Length; <span class="source_type">i</span>++ )
+<a name="109"></a>	{
+<a name="110"></a>		QD = MSC.Query[<span class="source_type">i</span>];
+<a name="111"></a>		if ( QD.Key ~= Key && QD.<span class="source_type">Value</span> ~= <span class="source_type">Value</span> && QD.QueryType == QueryType )
+<a name="112"></a>			return;
+<a name="113"></a>	}
+<a name="114"></a>
+<a name="115"></a>	QD.Key			= Key;
+<a name="116"></a>	QD.<span class="source_type">Value</span>		= <span class="source_type">Value</span>;
+<a name="117"></a>	QD.QueryType	= QueryType;
+<a name="118"></a>
+<a name="119"></a>	MSC.Query[<span class="source_type">i</span>] = QD;
+<a name="120"></a>}
+<a name="121"></a>
+<a name="122"></a>function HandleObject( <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Obj</span>, optional <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> OptionalObj_1, optional <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">OptionalObj_2</span> )
+<a name="123"></a>{
+<a name="124"></a>	MSC = <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>(<span class="source_type">Obj</span>);
+<a name="125"></a>}
+<a name="126"></a>
+<a name="127"></a>event Timer()
+<a name="128"></a>{
+<a name="129"></a>	if ( Playerowner() != None && PlayerOwner().<span class="source_type">Level</span>.TimeSeconds - QuickConnectSeconds &gt; MaxWaitSeconds )
+<a name="130"></a>	{
+<a name="131"></a>		SetStatusCaption( NoValidText );
+<a name="132"></a>		CancelQuickPlay();
+<a name="133"></a>	}
+<a name="134"></a>
+<a name="135"></a>	UpdateQueue();
+<a name="136"></a>}
+<a name="137"></a>
+<a name="138"></a>function <span class="source_type">bool</span> InternalOnClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="139"></a>{
+<a name="140"></a>	if ( <span class="source_type">Sender</span> == b_QuickConnect )
+<a name="141"></a>	{
+<a name="142"></a>		if ( QuickConnectPending() )
+<a name="143"></a>		{
+<a name="144"></a>			CancelQuickPlay();
+<a name="145"></a>			SetStatusCaption(SearchCancelledText);
+<a name="146"></a>		}
+<a name="147"></a>		else
+<a name="148"></a>		{
+<a name="149"></a>			SetStatusCaption( BeginningSearchText @ co_Game.GetText() );
+<a name="150"></a>			CreateQuickPlayQuery( co_Game.GetExtra(), co_Difficulty.GetIndex() );
+<a name="151"></a>		}
+<a name="152"></a>		return true;
+<a name="153"></a>	}
+<a name="154"></a>
+<a name="155"></a>	if ( <span class="source_type">Sender</span> == b_lClose )
+<a name="156"></a>	{
+<a name="157"></a>		<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseMenu(false);
+<a name="158"></a>		return true;
+<a name="159"></a>	}
+<a name="160"></a>
+<a name="161"></a>	return false;
+<a name="162"></a>}
+<a name="163"></a>
+<a name="164"></a>function CreateQuickPlayQuery( <span class="source_type">string</span> <span class="source_type">GameType</span>, <span class="source_type">int</span> <span class="source_type">Index</span> )
+<a name="165"></a>{
+<a name="166"></a>	local <span class="source_type">int</span> <span class="source_type">Pos</span>;
+<a name="167"></a>
+<a name="168"></a>	<span class="source_comment">// Reset any browser query in progress.
+</span><a name="169"></a>	ResetQueryClient(MSC);
+<a name="170"></a>
+<a name="171"></a>	<span class="source_comment">// Add all query parameters
+</span><a name="172"></a>	ChangeQuickPlayStatus(True);
+<a name="173"></a>
+<a name="174"></a>	<span class="source_comment">// Remove the package name, if it exists
+</span><a name="175"></a>	<span class="source_type">Pos</span> = InStr(<span class="source_type">GameType</span>, <span class="source_string">"."</span>);
+<a name="176"></a>	if ( <span class="source_type">Pos</span> != -<span class="source_int">1</span> )
+<a name="177"></a>		<span class="source_type">GameType</span> = Mid(<span class="source_type">GameType</span>, <span class="source_type">Pos</span> + <span class="source_int">1</span>);
+<a name="178"></a>
+<a name="179"></a>	<span class="source_comment">// Desired GameType
+</span><a name="180"></a>	AddQueryTerm( <span class="source_string">"gametype"</span>, <span class="source_type">GameType</span>, QT_Equals );
+<a name="181"></a>
+<a name="182"></a>	<span class="source_comment">// Desired Difficulty
+</span><a name="183"></a>	AddQueryTerm( <span class="source_string">"category"</span>, <span class="source_type">Index</span>, QT_Equals );
+<a name="184"></a>
+<a name="185"></a>	<span class="source_comment">// Must be standard server
+</span><a name="186"></a>	AddQueryTerm( <span class="source_string">"standard"</span>, <span class="source_string">"true"</span>, QT_Equals );
+<a name="187"></a>
+<a name="188"></a>	<span class="source_comment">// Must not be passworded
+</span><a name="189"></a>	AddQueryTerm( <span class="source_string">"password"</span>, <span class="source_string">"false"</span>, QT_Equals );
+<a name="190"></a>
+<a name="191"></a>	<span class="source_comment">// Cannot be empty or full
+</span><a name="192"></a>	AddQueryTerm( <span class="source_string">"currentplayers"</span>, <span class="source_string">"0"</span>, QT_GreaterThan );
+<a name="193"></a>	AddQueryTerm( <span class="source_string">"freespace"</span>, <span class="source_string">"0"</span>, QT_GreaterThan );
+<a name="194"></a>
+<a name="195"></a>	<span class="source_comment">// begin searching for an appropriate server (too bad objects don't support states)
+</span><a name="196"></a>	QuickConnectSeconds = PlayerOwner().<span class="source_type">Level</span>.TimeSeconds;
+<a name="197"></a>	MSC.StartQuery( CTM_Query );
+<a name="198"></a>}
+<a name="199"></a>
+<a name="200"></a>function QueryComplete( <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>.<span class="source_type"><a href="../ipdrv/masterserverclient.html#EResponseInfo" class="source">EResponseInfo</a></span> ResponseInfo, <span class="source_type">int</span> <span class="source_type"><a href="../engine/info.html" class="source">Info</a></span> )
+<a name="201"></a>{
+<a name="202"></a>	<span class="source_type">switch</span> ( ResponseInfo )
+<a name="203"></a>	{
+<a name="204"></a>	case RI_Success:
+<a name="205"></a>		SetTimer(<span class="source_int">0.1</span>, True);
+<a name="206"></a>		break;
+<a name="207"></a>
+<a name="208"></a>	case RI_AuthenticationFailed:
+<a name="209"></a>		SetStatusCaption( AuthFailedText );
+<a name="210"></a>		CancelQuickPlay();
+<a name="211"></a>		break;
+<a name="212"></a>
+<a name="213"></a>	case RI_ConnectionFailed:
+<a name="214"></a>		SetStatusCaption( ConnectionFailedText );
+<a name="215"></a>		CancelQuickPlay();
+<a name="216"></a>		break;
+<a name="217"></a>
+<a name="218"></a>	case RI_ConnectionTimeout:
+<a name="219"></a>		SetStatusCaption( TimedOutText );
+<a name="220"></a>		CancelQuickPlay();
+<a name="221"></a>		break;
+<a name="222"></a>	}
+<a name="223"></a>}
+<a name="224"></a>
+<a name="225"></a>function CancelQuickPlay()
+<a name="226"></a>{
+<a name="227"></a>	<span class="source_comment">// Cancel pings
+</span><a name="228"></a>	MSC.CancelPings();
+<a name="229"></a>
+<a name="230"></a>	ChangeQuickPlayStatus(False);
+<a name="231"></a>}
+<a name="232"></a>
+<a name="233"></a>function ChangeQuickPlayStatus(<span class="source_type">bool</span> bIsSearching)
+<a name="234"></a>{
+<a name="235"></a>	bPendingSearch = bIsSearching;
+<a name="236"></a>	if ( QuickConnectPending() )
+<a name="237"></a>	{
+<a name="238"></a>		<span class="source_comment">// Set the button text
+</span><a name="239"></a>		SetStatusCaption(SearchingText);
+<a name="240"></a>		b_QuickConnect.<span class="source_type">Caption</span> = CancelText;
+<a name="241"></a>		b_QuickConnect.SetHint(CancelHint);
+<a name="242"></a>	}
+<a name="243"></a>
+<a name="244"></a>	else
+<a name="245"></a>	{
+<a name="246"></a>		KillTimer();
+<a name="247"></a>		l_Status.SetTimer(<span class="source_int">2.5</span>, False);
+<a name="248"></a>		b_QuickConnect.<span class="source_type">Caption</span> = ConnectText;
+<a name="249"></a>		b_QuickConnect.SetHint(ConnectHint);
+<a name="250"></a>	}
+<a name="251"></a>}
+<a name="252"></a>
+<a name="253"></a>function ResetQueryClient(<span class="source_type"><a href="../ipdrv/serverqueryclient.html" class="source">ServerQueryClient</a></span> <span class="source_type">Client</span>)
+<a name="254"></a>{
+<a name="255"></a>	if ( <span class="source_type">Client</span> == None )
+<a name="256"></a>		return;
+<a name="257"></a>
+<a name="258"></a>	ThreadCount = <span class="source_int">0</span>;
+<a name="259"></a>	if ( PingQueue.Length &gt; <span class="source_int">0</span> )
+<a name="260"></a>		PingQueue.Remove(<span class="source_int">0</span>, PingQueue.Length);
+<a name="261"></a>
+<a name="262"></a>	if ( Servers.Length &gt; <span class="source_int">0</span> )
+<a name="263"></a>		Servers.Remove(<span class="source_int">0</span>, Servers.Length);
+<a name="264"></a>
+<a name="265"></a>	UpdateServerCount();
+<a name="266"></a>	<span class="source_type">Client</span>.OnReceivedPingInfo = ReceivedPingInfo;
+<a name="267"></a>	<span class="source_type">Client</span>.OnPingTimeout      = ReceivedPingTimeout;
+<a name="268"></a>	if ( <span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>(<span class="source_type">Client</span>) == None )
+<a name="269"></a>		return;
+<a name="270"></a>
+<a name="271"></a>	<span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>(<span class="source_type">Client</span>).OnReceivedServer   = ReceivedNewServer;
+<a name="272"></a>	<span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>(<span class="source_type">Client</span>).OnQueryFinished    = QueryComplete;
+<a name="273"></a>	<span class="source_type"><a href="../ipdrv/masterserverclient.html" class="source">MasterServerClient</a></span>(<span class="source_type">Client</span>).Query.Length       = <span class="source_int">0</span>;
+<a name="274"></a>}
+<a name="275"></a>
+<a name="276"></a>function ReceivedNewServer( <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">NewServer</span> )
+<a name="277"></a>{
+<a name="278"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="279"></a>
+<a name="280"></a><span class="source_comment">//	log("ReceivedNewServer:"$NewServer.ServerName@"IP:"$NewServer.IP);
+</span><a name="281"></a>	<span class="source_comment">// Just add this entry
+</span><a name="282"></a>	<span class="source_type">i</span> = Servers.Length;
+<a name="283"></a>	Servers[<span class="source_type">i</span>] = <span class="source_type">NewServer</span>;
+<a name="284"></a>
+<a name="285"></a>	<span class="source_comment">// If the response packet didn't include the ping, set it to the highest value
+</span><a name="286"></a>	if ( Servers[<span class="source_type">i</span>].Ping == <span class="source_int">0</span> )
+<a name="287"></a>		Servers[<span class="source_type">i</span>].Ping = <span class="source_int">9999</span>;
+<a name="288"></a>
+<a name="289"></a>	AddServerToPingQueue(<span class="source_type">i</span>);
+<a name="290"></a>}
+<a name="291"></a>
+<a name="292"></a>function AddServerToPingQueue(<span class="source_type">int</span> ServerIndex)
+<a name="293"></a>{
+<a name="294"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="295"></a>
+<a name="296"></a><span class="source_comment">//	log("AddServerToPingQueue ServerIndex:"$ServerIndex);
+</span><a name="297"></a>	<span class="source_type">i</span> = PingQueue.Length;
+<a name="298"></a>	PingQueue[<span class="source_type">i</span>] = ServerIndex;
+<a name="299"></a>
+<a name="300"></a>	UpdateServerCount();
+<a name="301"></a>	if ( ThreadCount &lt; <span class="source_type">class</span><span class="source_name">'UT2K4ServerBrowser'</span>.static.CalculateMaxConnections() )
+<a name="302"></a>		PingServer(<span class="source_type">i</span>);
+<a name="303"></a>}
+<a name="304"></a>
+<a name="305"></a><span class="source_comment">// go through our list of server received from the master server, and ping each one
+</span><a name="306"></a><span class="source_comment">// this search will only ping servers for which we have not received pings from
+</span><a name="307"></a><span class="source_comment">// this allows the ping to be stopped and restarted (such as when switching tabs)
+</span><a name="308"></a>function UpdateQueue()
+<a name="309"></a>{
+<a name="310"></a>	local <span class="source_type">int</span> maxcount;
+<a name="311"></a>
+<a name="312"></a>	maxcount = <span class="source_type">class</span><span class="source_name">'UT2K4ServerBrowser'</span>.static.CalculateMaxConnections();
+<a name="313"></a>
+<a name="314"></a><span class="source_comment">//	log("UpdateQueue cnt:"$maxcount@"ThreadCount:"$ThreadCount@"PingQueue.Length:"$PingQueue.Length);
+</span><a name="315"></a>	while ( ThreadCount &lt; maxcount && PingQueue.Length &gt; <span class="source_int">0</span> )
+<a name="316"></a>		PingServer(<span class="source_int">0</span>);
+<a name="317"></a>
+<a name="318"></a>	UpdateServerCount();
+<a name="319"></a>	if ( PingQueue.Length ==  <span class="source_int">0</span> && ThreadCount &lt;= <span class="source_int">0</span> )
+<a name="320"></a>		PingingComplete();
+<a name="321"></a>}
+<a name="322"></a>
+<a name="323"></a>function PingServer(<span class="source_type">int</span> QueueIndex)
+<a name="324"></a>{
+<a name="325"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="326"></a>
+<a name="327"></a>	if ( QueueIndex &lt; <span class="source_int">0</span> || QueueIndex &gt;= PingQueue.Length )
+<a name="328"></a>		return;
+<a name="329"></a>
+<a name="330"></a>	<span class="source_type">i</span> = PingQueue[QueueIndex];
+<a name="331"></a>	PingQueue.Remove(QueueIndex, <span class="source_int">1</span>);
+<a name="332"></a>
+<a name="333"></a>	ThreadCount++;
+<a name="334"></a>
+<a name="335"></a>	MSC.PingServer( <span class="source_type">i</span>, PC_AutoPing, Servers[<span class="source_type">i</span>].IP, Servers[<span class="source_type">i</span>].<span class="source_type">QueryPort</span>, QI_Ping, Servers[<span class="source_type">i</span>] );
+<a name="336"></a>	OnOpenConnection();
+<a name="337"></a>}
+<a name="338"></a>
+<a name="339"></a>function ReceivedPingInfo( <span class="source_type">int</span> ServerIndex, <span class="source_type"><a href="../ipdrv/serverqueryclient.html" class="source">ServerQueryClient</a></span>.<span class="source_type"><a href="../ipdrv/serverqueryclient.html#EPingCause" class="source">EPingCause</a></span> <span class="source_type">PingCause</span>, <span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>.<span class="source_type"><a href="../engine/gameinfo.html#ServerResponseLine" class="source">ServerResponseLine</a></span> <span class="source_type">ServerInfo</span> )
+<a name="340"></a>{
+<a name="341"></a><span class="source_comment">//	log("ReceivedPingInfo ServerIndex:"$ServerIndex@"EPingCause:"$GetEnum(enum'EPingCause', PingCause));
+</span><a name="342"></a>	<span class="source_comment">// Validation
+</span><a name="343"></a>	if ( ServerIndex &lt; <span class="source_int">0</span> || ServerIndex &gt;= Servers.Length )
+<a name="344"></a>		return;
+<a name="345"></a>
+<a name="346"></a>	<span class="source_comment">// Replace my copy with this copy
+</span><a name="347"></a>	OnCloseConnection();
+<a name="348"></a>	ThreadCount--;
+<a name="349"></a>	Servers[ServerIndex] = <span class="source_type">ServerInfo</span>;
+<a name="350"></a>	UpdateServerCount();
+<a name="351"></a>}
+<a name="352"></a>
+<a name="353"></a>function ReceivedPingTimeout( <span class="source_type">int</span> ServerIndex, <span class="source_type"><a href="../ipdrv/serverqueryclient.html" class="source">ServerQueryClient</a></span>.<span class="source_type"><a href="../ipdrv/serverqueryclient.html#EPingCause" class="source">EPingCause</a></span> <span class="source_type">PingCause</span> )
+<a name="354"></a>{
+<a name="355"></a><span class="source_comment">//	log("ReceivedPingTimeout ServerIndex:"$ServerIndex@"Servers.Length:"$Servers.Length);
+</span><a name="356"></a>	<span class="source_comment">// Validation
+</span><a name="357"></a>	if ( ServerIndex &lt; <span class="source_int">0</span> || ServerIndex &gt;= Servers.Length )
+<a name="358"></a>		return;
+<a name="359"></a>
+<a name="360"></a>	OnCloseConnection();
+<a name="361"></a>	ThreadCount--;
+<a name="362"></a>	UpdateServerCount();
+<a name="363"></a>}
+<a name="364"></a>
+<a name="365"></a>function PingingComplete()
+<a name="366"></a>{
+<a name="367"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, Best;
+<a name="368"></a>	local <span class="source_type">string</span> <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>;
+<a name="369"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="370"></a>
+<a name="371"></a><span class="source_comment">//	log("PingingComplete Servers.Length:"$Servers.Length);
+</span><a name="372"></a>
+<a name="373"></a>	if ( Servers.Length == <span class="source_int">0</span> )
+<a name="374"></a>	{
+<a name="375"></a>		SetStatusCaption(NoServersReceivedText);
+<a name="376"></a>		ChangeQuickPlayStatus(False);
+<a name="377"></a>		return;
+<a name="378"></a>	}
+<a name="379"></a>
+<a name="380"></a>	Best = -<span class="source_int">1</span>;
+<a name="381"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Servers.Length; <span class="source_type">i</span>++ )
+<a name="382"></a>	{
+<a name="383"></a>		if ( Best == -<span class="source_int">1</span> )
+<a name="384"></a>		{
+<a name="385"></a>			if ( Servers[<span class="source_type">i</span>].Ping &lt; <span class="source_int">9999</span> )
+<a name="386"></a>				Best = <span class="source_type">i</span>;
+<a name="387"></a>		}
+<a name="388"></a>
+<a name="389"></a>		else if ( Servers[<span class="source_type">i</span>].Ping &lt;= Servers[Best].Ping )
+<a name="390"></a>		{
+<a name="391"></a>			if ( Servers[<span class="source_type">i</span>].Ping &lt; Servers[Best].Ping )
+<a name="392"></a>			{
+<a name="393"></a>				Best = <span class="source_type">i</span>;
+<a name="394"></a>				continue;
+<a name="395"></a>			}
+<a name="396"></a>
+<a name="397"></a>			if ( Servers[<span class="source_type">i</span>].CurrentPlayers &gt; Servers[Best].CurrentPlayers )
+<a name="398"></a>			{
+<a name="399"></a>				Best = <span class="source_type">i</span>;
+<a name="400"></a>				continue;
+<a name="401"></a>			}
+<a name="402"></a>		}
+<a name="403"></a>	}
+<a name="404"></a>
+<a name="405"></a>	<span class="source_comment">// No valid servers found!!!!!
+</span><a name="406"></a>	if ( Best == -<span class="source_int">1</span> )
+<a name="407"></a>	{
+<a name="408"></a>		SetStatusCaption(NoValidText);
+<a name="409"></a>		ChangeQuickPlayStatus(False);
+<a name="410"></a>		return;
+<a name="411"></a>	}
+<a name="412"></a>
+<a name="413"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="414"></a>
+<a name="415"></a>	<span class="source_comment">// TODO: Possibly display chosen server, and offer to accept or reject choice
+</span><a name="416"></a>	<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span> = <span class="source_type">PC</span>.GetURLProtocol() $ <span class="source_string">"://"</span> $ Servers[Best].IP $ <span class="source_string">":"</span> $ Servers[Best].<span class="source_type">Port</span>;
+<a name="417"></a>
+<a name="418"></a>	log(<span class="source_string">"Performing ClientTravel URL:"</span>$<span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>);
+<a name="419"></a>	KillTimer();
+<a name="420"></a>
+<a name="421"></a>	CloseMSConnection();
+<a name="422"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseAll(False,True);
+<a name="423"></a>	<span class="source_type">PC</span>.ClientTravel( <span class="source_type"><a href="../engine/gameengine.html#URL" class="source">URL</a></span>, TRAVEL_Relative, False );
+<a name="424"></a>}
+<a name="425"></a>
+<a name="426"></a>function <span class="source_type">bool</span> QuickConnectPending()
+<a name="427"></a>{
+<a name="428"></a>	return bPendingSearch;
+<a name="429"></a>}
+<a name="430"></a>
+<a name="431"></a>function StatusTimer(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="432"></a>{
+<a name="433"></a>	SetStatusCaption(ReadyText);
+<a name="434"></a>}
+<a name="435"></a>
+<a name="436"></a>function SetStatusCaption(<span class="source_type">string</span> StatusMessage)
+<a name="437"></a>{
+<a name="438"></a>	l_Status.<span class="source_type">Caption</span> = StatusMessage;
+<a name="439"></a>}
+<a name="440"></a>
+<a name="441"></a>function UpdateServerCount()
+<a name="442"></a>{
+<a name="443"></a>	local <span class="source_type">string</span> <span class="source_type">s</span>;
+<a name="444"></a>
+<a name="445"></a>	<span class="source_type">s</span> = Repl(ServerCountText, <span class="source_string">"%NumReceived%"</span>, Servers.Length - PingQueue.Length);
+<a name="446"></a>	<span class="source_type">s</span> = Repl(<span class="source_type">s</span>, <span class="source_string">"%TotalServers%"</span>, Servers.Length);
+<a name="447"></a>
+<a name="448"></a>	l_ServerCount.<span class="source_type">Caption</span> = <span class="source_type">s</span>;
+<a name="449"></a>}
+<a name="450"></a>
+<a name="451"></a>defaultproperties
+<a name="452"></a>{
+<a name="453"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=IBorder
+<a name="454"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="455"></a>         ImageStyle=ISTY_Stretched
+<a name="456"></a>         WinTop=<span class="source_int">0.300283</span>
+<a name="457"></a>         WinLeft=<span class="source_int">0.060258</span>
+<a name="458"></a>         WinWidth=<span class="source_int">0.878815</span>
+<a name="459"></a>         WinHeight=<span class="source_int">0.460699</span>
+<a name="460"></a>         RenderWeight=<span class="source_int">0.001000</span>
+<a name="461"></a>         bBoundToParent=True
+<a name="462"></a>         bScaleToParent=True
+<a name="463"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="464"></a>     i_Border=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'GUI2K4.UT2K4QuickPlay.IBorder'</span>
+<a name="465"></a>
+<a name="466"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span> <span class="source_type">Name</span>=ConnectionStatus
+<a name="467"></a>         TextAlign=TXTA_Center
+<a name="468"></a>         StyleName=<span class="source_string">"TextLabel"</span>
+<a name="469"></a>         WinTop=<span class="source_int">0.323438</span>
+<a name="470"></a>         WinLeft=<span class="source_int">0.073594</span>
+<a name="471"></a>         WinWidth=<span class="source_int">0.849415</span>
+<a name="472"></a>         WinHeight=<span class="source_int">0.411678</span>
+<a name="473"></a>         RenderWeight=<span class="source_int">0.100000</span>
+<a name="474"></a>         bBoundToParent=True
+<a name="475"></a>         bScaleToParent=True
+<a name="476"></a>         OnTimer=<span class="source_type"><a href="../gui2k4/ut2k4quickplay.html" class="source">UT2K4QuickPlay</a></span>.StatusTimer
+<a name="477"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="478"></a>     l_Status=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span><span class="source_name">'GUI2K4.UT2K4QuickPlay.ConnectionStatus'</span>
+<a name="479"></a>
+<a name="480"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span> <span class="source_type">Name</span>=ServerCount
+<a name="481"></a>         TextAlign=TXTA_Center
+<a name="482"></a>         FontScale=FNS_Small
+<a name="483"></a>         StyleName=<span class="source_string">"TextLabel"</span>
+<a name="484"></a>         WinTop=<span class="source_int">0.604924</span>
+<a name="485"></a>         WinLeft=<span class="source_int">0.120469</span>
+<a name="486"></a>         WinWidth=<span class="source_int">0.761916</span>
+<a name="487"></a>         WinHeight=<span class="source_int">0.130428</span>
+<a name="488"></a>         RenderWeight=<span class="source_int">0.100000</span>
+<a name="489"></a>         bBoundToParent=True
+<a name="490"></a>         bScaleToParent=True
+<a name="491"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="492"></a>     l_ServerCount=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span><span class="source_name">'GUI2K4.UT2K4QuickPlay.ServerCount'</span>
+<a name="493"></a>
+<a name="494"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=<span class="source_type">GameType</span>
+<a name="495"></a>         bReadOnly=True
+<a name="496"></a>         CaptionWidth=<span class="source_int">0.300000</span>
+<a name="497"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Game Type"</span>
+<a name="498"></a>         OnCreateComponent=<span class="source_type">GameType</span>.InternalOnCreateComponent
+<a name="499"></a>         Hint=<span class="source_string">"Select the game type you would like to play."</span>
+<a name="500"></a>         WinTop=<span class="source_int">0.204219</span>
+<a name="501"></a>         WinLeft=<span class="source_int">0.059751</span>
+<a name="502"></a>         WinWidth=<span class="source_int">0.488417</span>
+<a name="503"></a>         WinHeight=<span class="source_int">0.087720</span>
+<a name="504"></a>         TabOrder=<span class="source_int">0</span>
+<a name="505"></a>         bBoundToParent=True
+<a name="506"></a>         bScaleToParent=True
+<a name="507"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="508"></a>     co_Game=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'GUI2K4.UT2K4QuickPlay.GameType'</span>
+<a name="509"></a>
+<a name="510"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=DifficultyLevel
+<a name="511"></a>         bReadOnly=True
+<a name="512"></a>         CaptionWidth=<span class="source_int">0.300000</span>
+<a name="513"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Difficulty"</span>
+<a name="514"></a>         OnCreateComponent=DifficultyLevel.InternalOnCreateComponent
+<a name="515"></a>         Hint=<span class="source_string">"Select the desired game difficulty level to search for.  If you are new to Killing Floor, it is recommended that you choose the "</span>Beginner<span class="source_string">" setting."</span>
+<a name="516"></a>         WinTop=<span class="source_int">0.200564</span>
+<a name="517"></a>         WinLeft=<span class="source_int">0.571664</span>
+<a name="518"></a>         WinWidth=<span class="source_int">0.367167</span>
+<a name="519"></a>         WinHeight=<span class="source_int">0.087720</span>
+<a name="520"></a>         TabOrder=<span class="source_int">1</span>
+<a name="521"></a>         bBoundToParent=True
+<a name="522"></a>         bScaleToParent=True
+<a name="523"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="524"></a>     co_Difficulty=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'GUI2K4.UT2K4QuickPlay.DifficultyLevel'</span>
+<a name="525"></a>
+<a name="526"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=QuickPlaySearch
+<a name="527"></a>         WinTop=<span class="source_int">0.767551</span>
+<a name="528"></a>         WinLeft=<span class="source_int">0.307992</span>
+<a name="529"></a>         WinWidth=<span class="source_int">0.120347</span>
+<a name="530"></a>         WinHeight=<span class="source_int">0.109137</span>
+<a name="531"></a>         TabOrder=<span class="source_int">2</span>
+<a name="532"></a>         bBoundToParent=True
+<a name="533"></a>         bScaleToParent=True
+<a name="534"></a>         bStandardized=True
+<a name="535"></a>         OnClick=<span class="source_type"><a href="../gui2k4/ut2k4quickplay.html" class="source">UT2K4QuickPlay</a></span>.InternalOnClick
+<a name="536"></a>         OnKeyEvent=QuickPlaySearch.InternalOnKeyEvent
+<a name="537"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="538"></a>     b_QuickConnect=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.UT2K4QuickPlay.QuickPlaySearch'</span>
+<a name="539"></a>
+<a name="540"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=QuickPlayClose
+<a name="541"></a>         <span class="source_type">Caption</span>=<span class="source_string">"CLOSE"</span>
+<a name="542"></a>         Hint=<span class="source_string">"Close this window"</span>
+<a name="543"></a>         WinTop=<span class="source_int">0.767551</span>
+<a name="544"></a>         WinLeft=<span class="source_int">0.600883</span>
+<a name="545"></a>         WinWidth=<span class="source_int">0.125690</span>
+<a name="546"></a>         WinHeight=<span class="source_int">0.109137</span>
+<a name="547"></a>         TabOrder=<span class="source_int">4</span>
+<a name="548"></a>         bBoundToParent=True
+<a name="549"></a>         bScaleToParent=True
+<a name="550"></a>         bStandardized=True
+<a name="551"></a>         OnClick=<span class="source_type"><a href="../gui2k4/ut2k4quickplay.html" class="source">UT2K4QuickPlay</a></span>.InternalOnClick
+<a name="552"></a>         OnKeyEvent=QuickPlayClose.InternalOnKeyEvent
+<a name="553"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="554"></a>     b_lClose=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.UT2K4QuickPlay.QuickPlayClose'</span>
+<a name="555"></a>
+<a name="556"></a>     DifficultyOptions(<span class="source_int">0</span>)=<span class="source_string">"Beginner"</span>
+<a name="557"></a>     DifficultyOptions(<span class="source_int">1</span>)=<span class="source_string">"Experienced"</span>
+<a name="558"></a>     DifficultyOptions(<span class="source_int">2</span>)=<span class="source_string">"Expert"</span>
+<a name="559"></a>     MaxWaitSeconds=<span class="source_int">20</span>
+<a name="560"></a>     SearchingText=<span class="source_string">"SEARCHING..."</span>
+<a name="561"></a>     ReadyText=<span class="source_string">"Ready"</span>
+<a name="562"></a>     ConnectText=<span class="source_string">"SEARCH"</span>
+<a name="563"></a>     CancelText=<span class="source_string">"CANCEL"</span>
+<a name="564"></a>     ConnectHint=<span class="source_string">"Once you've selected a gametype and difficulty level, click "</span>Search<span class="source_string">" to begin searching for a server in the category that has the lowest ping"</span>
+<a name="565"></a>     CancelHint=<span class="source_string">"Cancel the current "</span>Quick Join<span class="source_string">" search"</span>
+<a name="566"></a>     BeginningSearchText=<span class="source_string">"Please wait...requesting servers for gametype:"</span>
+<a name="567"></a>     AuthFailedText=<span class="source_string">"Authentication failed!  Please try again later..."</span>
+<a name="568"></a>     ServerCountText=<span class="source_string">"Received/Total - %NumReceived%/%TotalServers%"</span>
+<a name="569"></a>     SearchCancelledText=<span class="source_string">"Search cancelled!"</span>
+<a name="570"></a>     ConnectionFailedText=<span class="source_string">"Connection failed - unable to contact the master server.  Please check your network connection and try again!"</span>
+<a name="571"></a>     TimedOutText=<span class="source_string">"Master server took too long to respond to query.  Please try again later."</span>
+<a name="572"></a>     NoServersReceivedText=<span class="source_string">"Sorry, no valid servers found for this gametype!"</span>
+<a name="573"></a>     NoValidText=<span class="source_string">"Unknown error encountered while pinging servers! Please retry query..."</span>
+<a name="574"></a>     WindowName=<span class="source_string">"Quick Play"</span>
+<a name="575"></a>     WinTop=<span class="source_int">0.250000</span>
+<a name="576"></a>     WinLeft=<span class="source_int">0.000000</span>
+<a name="577"></a>     WinWidth=<span class="source_int">1.000000</span>
+<a name="578"></a>     WinHeight=<span class="source_int">0.370059</span>
+<a name="579"></a>}
+<a name="580"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4quickplay.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4QuickPlay">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4playinfopanel.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4quitpage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.088 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

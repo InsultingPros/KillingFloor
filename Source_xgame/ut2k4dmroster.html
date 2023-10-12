@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: XGame.UT2K4DMRoster</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xgame/xgame-overview.html">Package</a></td>
+	<td class="header"><a href="../xgame/ut2k4dmroster.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4DMRoster">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xgame/ut2003ladderinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xgame/ut2k4gameprofile.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_xgame/ut2k4dmroster.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../xgame/xgame-overview.html">XGame</a>.<a href="../xgame/ut2k4dmroster.html">UT2K4DMRoster</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">// Roster for single player DM games, Players are selected randomly 
+</span><a name="3"></a><span class="source_comment">// Roster consist from unknown players from: Juggs, Mercs and Egypt
+</span><a name="4"></a><span class="source_comment">//
+</span><a name="5"></a><span class="source_comment">// Written by Michiel Hendriks
+</span><a name="6"></a><span class="source_comment">// (c) 2003, Epic Games, Inc. All Rights Reserved
+</span><a name="7"></a><span class="source_comment">//==============================================================================
+</span><a name="8"></a>
+<a name="9"></a><span class="source_type">class</span> <span class="source_type"><a href="../xgame/ut2k4dmroster.html" class="source">UT2K4DMRoster</a></span> extends <span class="source_type"><a href="../xgame/xdmroster.html" class="source">xDMRoster</a></span> config;
+<a name="10"></a>
+<a name="11"></a><span class="source_comment">/** To create the same team in the loading screen and actual game */</span>
+<a name="12"></a>var config array&lt;<span class="source_type">string</span>&gt; UsedBots;
+<a name="13"></a>var array&lt;<span class="source_type">string</span>&gt; BotList;
+<a name="14"></a>
+<a name="15"></a>function PostBeginPlay()
+<a name="16"></a>{
+<a name="17"></a>	if (UsedBots.Length != <span class="source_int">0</span>) RosterNames = UsedBots;
+<a name="18"></a>	Super.PostBeginPlay();
+<a name="19"></a>}
+<a name="20"></a>
+<a name="21"></a>function PreInitialize(<span class="source_type">int</span> TeamBots)
+<a name="22"></a>{
+<a name="23"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="24"></a>	Roster.Length = <span class="source_int">0</span>;
+<a name="25"></a>	UsedBots.Length = <span class="source_int">0</span>;
+<a name="26"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; TeamBots; <span class="source_type">i</span>++)
+<a name="27"></a>	{
+<a name="28"></a>		AddPlayerFromList();
+<a name="29"></a>	}
+<a name="30"></a>	SaveConfig();
+<a name="31"></a>}
+<a name="32"></a>
+<a name="33"></a>function AddPlayerFromList()
+<a name="34"></a>{
+<a name="35"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, <span class="source_type">n</span>;
+<a name="36"></a>	rand(BotList.length); <span class="source_comment">// for randomness' sake
+</span><a name="37"></a>	<span class="source_type">i</span> = rand(BotList.length);
+<a name="38"></a>	<span class="source_type">n</span> = roster.length;
+<a name="39"></a>	Roster.Length = <span class="source_type">n</span>+<span class="source_int">1</span>;
+<a name="40"></a>	UsedBots.Length = <span class="source_type">n</span>+<span class="source_int">1</span>;
+<a name="41"></a>	Roster[<span class="source_type">n</span>] = <span class="source_type">class</span><span class="source_name">'xRosterEntry'</span>.static.CreateRosterEntryCharacter(BotList[<span class="source_type">i</span>]);
+<a name="42"></a>	Roster[<span class="source_type">n</span>].PrecacheRosterFor(self);
+<a name="43"></a>	UsedBots[<span class="source_type">n</span>] = BotList[<span class="source_type">i</span>];
+<a name="44"></a>	BotList.Remove(<span class="source_type">i</span>, <span class="source_int">1</span>);
+<a name="45"></a>}
+<a name="46"></a>
+<a name="47"></a>defaultproperties
+<a name="48"></a>{
+<a name="49"></a>     BotList(<span class="source_int">0</span>)=<span class="source_string">"Avalanche"</span>
+<a name="50"></a>     BotList(<span class="source_int">1</span>)=<span class="source_string">"Sorrow"</span>
+<a name="51"></a>     BotList(<span class="source_int">2</span>)=<span class="source_string">"Perdition"</span>
+<a name="52"></a>     BotList(<span class="source_int">3</span>)=<span class="source_string">"Vengeance"</span>
+<a name="53"></a>     BotList(<span class="source_int">4</span>)=<span class="source_string">"Stargazer"</span>
+<a name="54"></a>     BotList(<span class="source_int">5</span>)=<span class="source_string">"Phantom"</span>
+<a name="55"></a>     BotList(<span class="source_int">6</span>)=<span class="source_string">"Kain"</span>
+<a name="56"></a>     BotList(<span class="source_int">7</span>)=<span class="source_string">"Silhouette"</span>
+<a name="57"></a>     BotList(<span class="source_int">8</span>)=<span class="source_string">"Sphinx"</span>
+<a name="58"></a>     BotList(<span class="source_int">9</span>)=<span class="source_string">"Natron"</span>
+<a name="59"></a>     BotList(<span class="source_int">10</span>)=<span class="source_string">"Nafiret"</span>
+<a name="60"></a>     BotList(<span class="source_int">11</span>)=<span class="source_string">"Tranquility"</span>
+<a name="61"></a>     TeamName=<span class="source_string">"Death Match"</span>
+<a name="62"></a>}
+<a name="63"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../xgame/xgame-overview.html">Package</a></td>
+	<td class="header"><a href="../xgame/ut2k4dmroster.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4DMRoster">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_xgame/ut2003ladderinfo.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_xgame/ut2k4gameprofile.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:28.000 - Creation time: Fri 13-10-2023 03:19:09.893 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

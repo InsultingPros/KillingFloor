@@ -1,0 +1,1055 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GUI2K4.UT2K4Tab_PlayerSettings</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4tab_playersettings.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Tab_PlayerSettings">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4tab_playerlogincontrolsonslaught.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4tab_rulesbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gui2k4/ut2k4tab_playersettings.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gui2k4/gui2k4-overview.html">GUI2K4</a>.<a href="../gui2k4/ut2k4tab_playersettings.html">UT2K4Tab_PlayerSettings</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950</span></td>
+<td class="source"><pre class="source"><a name="1"></a><span class="source_comment">//==============================================================================
+</span><a name="2"></a><span class="source_comment">//	Description
+</span><a name="3"></a><span class="source_comment">//
+</span><a name="4"></a><span class="source_comment">//	Created by Ron Prestenback
+</span><a name="5"></a><span class="source_comment">//	© 2003, Epic Games, Inc.  All Rights Reserved
+</span><a name="6"></a><span class="source_comment">//==============================================================================
+</span><a name="7"></a><span class="source_type">class</span> <span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span> extends <span class="source_type"><a href="../gui2k4/settings_tabs.html" class="source">Settings_Tabs</a></span>;
+<a name="8"></a>
+<a name="9"></a>var localized <span class="source_type">string</span> HandNames[<span class="source_int">4</span>];
+<a name="10"></a>var localized <span class="source_type">string</span> TeamNames[<span class="source_int">3</span>];
+<a name="11"></a>var localized <span class="source_type">string</span> ClickInst;
+<a name="12"></a>var localized <span class="source_type">string</span> All;
+<a name="13"></a>var localized <span class="source_type">string</span> Previews[<span class="source_int">3</span>];
+<a name="14"></a>
+<a name="15"></a>var <span class="source_type">bool</span> bChanged;
+<a name="16"></a>
+<a name="17"></a><span class="source_comment">// Used for character (not just weapons!)
+</span><a name="18"></a>var() editinline editconst noexport <span class="source_type"><a href="../xinterface/spinnyweap.html" class="source">SpinnyWeap</a></span>		SpinnyDude; <span class="source_comment">// MUST be set to null when you leave the window
+</span><a name="19"></a>var() <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span>			SpinnyDudeOffset;
+<a name="20"></a>var() <span class="source_type">bool</span>				bRenderDude;
+<a name="21"></a>var localized <span class="source_type">string</span>	ShowBioCaption;
+<a name="22"></a>var localized <span class="source_type">string</span>	Show3DViewCaption;
+<a name="23"></a>var localized <span class="source_type">string</span>    DefaultText;
+<a name="24"></a>
+<a name="25"></a>var <span class="source_type">string</span> OriginalTeam;
+<a name="26"></a>var automated <span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> i_BG1, i_BG2, i_BG3;
+<a name="27"></a>var automated <span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>	i_Portrait;
+<a name="28"></a>var automated <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>	b_Left, b_Right, b_Pick, b_3DView, b_DropTarget;
+<a name="29"></a>var automated <span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span>	lb_Scroll;
+<a name="30"></a>var automated <span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span>		ed_Name;
+<a name="31"></a>var automated <span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span>	ch_SmallWeaps;
+<a name="32"></a>var automated <span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span>	co_Team, co_Hand, co_Voice;
+<a name="33"></a>var automated <span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span>	nu_FOV;
+<a name="34"></a>var automated <span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span> lbl_ModelName;
+<a name="35"></a>var automated <span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span> co_SkinPreview;
+<a name="36"></a>
+<a name="37"></a>var array&lt;<span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/xvoicepack.html" class="source">xVoicePack</a></span>&gt; &gt; VoiceClasses;
+<a name="38"></a>
+<a name="39"></a>
+<a name="40"></a>var() <span class="source_type">string</span>	sChar, sName, sNameD, sCharD, sVoice, sVoiceD;
+<a name="41"></a>var() <span class="source_type">int</span>		iTeam, iHand, iFOV, iTeamD, iHandD, iFOVD;
+<a name="42"></a>var() <span class="source_type">bool</span>	bWeaps, bWeapsD;
+<a name="43"></a>var() <span class="source_type">int</span>		nfov;
+<a name="44"></a>var() <span class="source_type"><a href="../xgame/xutil.html" class="source">xUtil</a></span>.<span class="source_type"><a href="../xgame/xutil.html#PlayerRecord" class="source">PlayerRecord</a></span> PlayerRec;
+<a name="45"></a>var() <span class="source_type">int</span> YawValue;
+<a name="46"></a>
+<a name="47"></a>delegate VoiceTypeChanged(<span class="source_type">string</span> NewVoiceType);
+<a name="48"></a>
+<a name="49"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="50"></a>{
+<a name="51"></a>	Super.Initcomponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="52"></a>
+<a name="53"></a>	co_Hand.AddItem(HandNames[<span class="source_int">0</span>]);
+<a name="54"></a>	co_Hand.AddItem(HandNames[<span class="source_int">1</span>]);
+<a name="55"></a>	co_Hand.AddItem(HandNames[<span class="source_int">2</span>]);
+<a name="56"></a>	co_Hand.AddItem(HandNames[<span class="source_int">3</span>]);
+<a name="57"></a>	co_Hand.ReadOnly(true);
+<a name="58"></a>
+<a name="59"></a>	co_Team.AddItem(TeamNames[<span class="source_int">0</span>]);
+<a name="60"></a>	co_Team.AddItem(TeamNames[<span class="source_int">1</span>]);
+<a name="61"></a>	co_Team.AddItem(TeamNames[<span class="source_int">2</span>]);
+<a name="62"></a>	co_Team.ReadOnly(true);
+<a name="63"></a>
+<a name="64"></a>	<span class="source_comment">// Spawn spinning character actor
+</span><a name="65"></a>	if ( SpinnyDude == None )
+<a name="66"></a>		SpinnyDude = PlayerOwner().spawn(<span class="source_type">class</span><span class="source_name">'XInterface.SpinnyWeap'</span>);
+<a name="67"></a>
+<a name="68"></a>	SpinnyDude.bPlayCrouches = false;
+<a name="69"></a>    SpinnyDude.bPlayRandomAnims = false;
+<a name="70"></a>
+<a name="71"></a>	SpinnyDude.SetDrawType(DT_Mesh);
+<a name="72"></a>	SpinnyDude.SetDrawScale(<span class="source_int">0.9</span>);
+<a name="73"></a>	SpinnyDude.SpinRate = <span class="source_int">0</span>;
+<a name="74"></a>
+<a name="75"></a>	b_3DView.<span class="source_type">Caption</span> = Show3DViewCaption;
+<a name="76"></a>
+<a name="77"></a>	ed_Name.MyEditBox.bConvertSpaces = true;
+<a name="78"></a>	ed_Name.MyEditBox.MaxWidth=<span class="source_int">16</span>;  <span class="source_comment">// as per polge, check UT2K4Tab_PlayerSettings if you change this
+</span><a name="79"></a>
+<a name="80"></a>	nu_FOV.MyNumericEdit.Step = <span class="source_int">5</span>;
+<a name="81"></a>
+<a name="82"></a>    co_SkinPreview.AddItem(Previews[<span class="source_int">0</span>]);
+<a name="83"></a>    co_SkinPreview.AddItem(Previews[<span class="source_int">1</span>]);
+<a name="84"></a>    co_SkinPreview.AddItem(Previews[<span class="source_int">2</span>]);
+<a name="85"></a>
+<a name="86"></a>	i_BG2.Managecomponent(ed_Name);
+<a name="87"></a>    i_BG2.Managecomponent(ch_SmallWeaps);
+<a name="88"></a>    i_BG2.Managecomponent(co_Team);
+<a name="89"></a>    i_BG2.Managecomponent(co_Hand);
+<a name="90"></a>    i_BG2.Managecomponent(co_Voice);
+<a name="91"></a>    i_BG2.Managecomponent(nu_FOV);
+<a name="92"></a>
+<a name="93"></a>    i_BG3.Managecomponent(lb_Scroll);
+<a name="94"></a>}
+<a name="95"></a>
+<a name="96"></a>function SetPlayerRec()
+<a name="97"></a>{
+<a name="98"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="99"></a>	local array&lt;<span class="source_type"><a href="../xgame/xutil.html" class="source">xUtil</a></span>.<span class="source_type"><a href="../xgame/xutil.html#PlayerRecord" class="source">PlayerRecord</a></span>&gt; PList;
+<a name="100"></a>
+<a name="101"></a>	<span class="source_type">class</span><span class="source_name">'xUtil'</span>.static.GetPlayerList(PList);
+<a name="102"></a>
+<a name="103"></a>	<span class="source_comment">// Filter out to only characters without the 's' menu setting
+</span><a name="104"></a>	for(<span class="source_type">i</span>=<span class="source_int">0</span>; <span class="source_type">i</span>&lt;PList.Length; <span class="source_type">i</span>++)
+<a name="105"></a>	{
+<a name="106"></a>    	if ( sChar ~= Plist[<span class="source_type">i</span>].DefaultName )
+<a name="107"></a>    	{
+<a name="108"></a>        	PlayerRec = PList[<span class="source_type">i</span>];
+<a name="109"></a>        	break;
+<a name="110"></a>        }
+<a name="111"></a>    }
+<a name="112"></a>
+<a name="113"></a>	UpdateVoiceOptions();
+<a name="114"></a>	UpdateScroll();
+<a name="115"></a>	ShowSpinnyDude();
+<a name="116"></a>}
+<a name="117"></a>
+<a name="118"></a>function ShowPanel(<span class="source_type">bool</span> <span class="source_type">bShow</span>)
+<a name="119"></a>{
+<a name="120"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="121"></a>    local array&lt;<span class="source_type">string</span>&gt; VoiceClassNames;
+<a name="122"></a>    local <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/xvoicepack.html" class="source">xVoicePack</a></span>&gt; VP;
+<a name="123"></a>
+<a name="124"></a>	Super.ShowPanel(<span class="source_type">bShow</span>);
+<a name="125"></a>	if ( <span class="source_type">bShow</span> )
+<a name="126"></a>	{
+<a name="127"></a>		if ( bInit )
+<a name="128"></a>		{
+<a name="129"></a>			bInit = False;
+<a name="130"></a>
+<a name="131"></a>		    PlayerOwner().GetAllInt(<span class="source_string">"XGame.xVoicePack"</span>, VoiceClassNames);
+<a name="132"></a>		    VoiceClasses.Remove(<span class="source_int">0</span>, VoiceClasses.Length);
+<a name="133"></a>
+<a name="134"></a>		    for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; VoiceClassNames.Length; <span class="source_type">i</span>++ )
+<a name="135"></a>		    {
+<a name="136"></a>		    	VP = <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/xvoicepack.html" class="source">xVoicePack</a></span>&gt;(DynamicLoadObject(VoiceClassNames[<span class="source_type">i</span>],<span class="source_type">class</span><span class="source_name">'Class'</span>));
+<a name="137"></a>		    	if ( VP != None )
+<a name="138"></a>		    		VoiceClasses[VoiceClasses.Length] = VP;
+<a name="139"></a>		    }
+<a name="140"></a>
+<a name="141"></a>		    bRenderDude = True;
+<a name="142"></a>		    SetPlayerRec();
+<a name="143"></a>			for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Components.Length; <span class="source_type">i</span>++)
+<a name="144"></a>				Components[<span class="source_type">i</span>].OnChange = InternalOnChange;
+<a name="145"></a>		}
+<a name="146"></a>	}
+<a name="147"></a>}
+<a name="148"></a>
+<a name="149"></a>function SaveSettings()
+<a name="150"></a>{
+<a name="151"></a>	local <span class="source_type">bool</span> bSave;
+<a name="152"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="153"></a>
+<a name="154"></a>	Super.SaveSettings();
+<a name="155"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="156"></a>
+<a name="157"></a>	if (sNameD != sName)
+<a name="158"></a>	{
+<a name="159"></a>		<span class="source_type">PC</span>.ReplaceText(sName, <span class="source_string">"\""</span>, <span class="source_string">""</span>);
+<a name="160"></a>		sNameD = sName;
+<a name="161"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"SetName"</span>@sName);
+<a name="162"></a>	}
+<a name="163"></a>
+<a name="164"></a>	if (iTeam == <span class="source_int">2</span>)
+<a name="165"></a>		iTeam = <span class="source_int">255</span>;
+<a name="166"></a>
+<a name="167"></a>	if (iTeamD != iTeam)
+<a name="168"></a>	{
+<a name="169"></a>		iTeamD = iTeam;
+<a name="170"></a>		<span class="source_type">PC</span>.UpdateUrl(<span class="source_string">"Team"</span>, <span class="source_type">string</span>(iTeam), True);
+<a name="171"></a>		<span class="source_type">PC</span>.ChangeTeam(iTeam);
+<a name="172"></a>	}
+<a name="173"></a>
+<a name="174"></a>	if (iTeam == <span class="source_int">255</span>)
+<a name="175"></a>		iTeam = <span class="source_int">2</span>;
+<a name="176"></a>
+<a name="177"></a>	if (bWeapsD != bWeaps)
+<a name="178"></a>	{
+<a name="179"></a>		bWeapsD = bWeaps;
+<a name="180"></a>		<span class="source_type">PC</span>.bSmallWeapons = bWeaps;
+<a name="181"></a>		bSave = True;
+<a name="182"></a>	}
+<a name="183"></a>
+<a name="184"></a>	if (iHandD != iHand)
+<a name="185"></a>	{
+<a name="186"></a>		iHandD = iHand;
+<a name="187"></a>		<span class="source_type">PC</span>.Handedness = iHand - <span class="source_int">1</span>;
+<a name="188"></a>		<span class="source_type">PC</span>.SetHand(iHand - <span class="source_int">1</span>);
+<a name="189"></a>		bSave = False;
+<a name="190"></a>	}
+<a name="191"></a>
+<a name="192"></a>	if (iFOVD != iFOV)
+<a name="193"></a>	{
+<a name="194"></a>		iFOVD = iFOV;
+<a name="195"></a>		<span class="source_type">PC</span>.FOV( <span class="source_type">float</span>(iFOV) );
+<a name="196"></a>		bSave = False;
+<a name="197"></a>	}
+<a name="198"></a>
+<a name="199"></a>	if (sChar != sCharD)
+<a name="200"></a>	{
+<a name="201"></a>		sCharD = sChar;
+<a name="202"></a>		<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"ChangeCharacter"</span>@sChar);
+<a name="203"></a>		if ( <span class="source_type">PC</span>.IsA(<span class="source_name">'xPlayer'</span>) )
+<a name="204"></a>			bSave = False;
+<a name="205"></a>		else <span class="source_type">PC</span>.UpdateURL(<span class="source_string">"Character"</span>, sChar, True);
+<a name="206"></a>
+<a name="207"></a>		if ( PlayerRec.Sex ~= <span class="source_string">"Female"</span> )
+<a name="208"></a>			<span class="source_type">PC</span>.UpdateURL(<span class="source_string">"Sex"</span>, <span class="source_string">"F"</span>, True);
+<a name="209"></a>		else
+<a name="210"></a>			<span class="source_type">PC</span>.UpdateURL(<span class="source_string">"Sex"</span>, <span class="source_string">"M"</span>, True);
+<a name="211"></a>	}
+<a name="212"></a>
+<a name="213"></a>	if (sVoice != sVoiceD)
+<a name="214"></a>	{
+<a name="215"></a>		sVoiceD = sVoice;
+<a name="216"></a>		<span class="source_type">PC</span>.SetVoice(sVoice);
+<a name="217"></a>	}
+<a name="218"></a>
+<a name="219"></a>	if (bSave)
+<a name="220"></a>		<span class="source_type">PC</span>.SaveConfig();
+<a name="221"></a>}
+<a name="222"></a>
+<a name="223"></a>function ResetClicked()
+<a name="224"></a>{
+<a name="225"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="226"></a>	local <span class="source_type">bool</span> bTemp;
+<a name="227"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="228"></a>
+<a name="229"></a>	Super.ResetClicked();
+<a name="230"></a>
+<a name="231"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="232"></a>	<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"ChangeCharacter Jakob"</span>);
+<a name="233"></a>	<span class="source_type">PC</span>.ConsoleCommand(<span class="source_string">"setname Player"</span>);
+<a name="234"></a>	<span class="source_type">PC</span>.ChangeTeam(<span class="source_int">255</span>);
+<a name="235"></a>
+<a name="236"></a>	<span class="source_type">PC</span>.UpdateURL(<span class="source_string">"Name"</span>, <span class="source_string">"Player"</span>, True);
+<a name="237"></a>	<span class="source_type">PC</span>.UpdateURL(<span class="source_string">"Character"</span>, <span class="source_string">"Jakob"</span>, True);
+<a name="238"></a>	<span class="source_type">PC</span>.UpdateURL(<span class="source_string">"Sex"</span>, <span class="source_string">"M"</span>, True);
+<a name="239"></a>	<span class="source_type">PC</span>.UpdateURL(<span class="source_string">"Team"</span>, <span class="source_string">"255"</span>, True);
+<a name="240"></a>
+<a name="241"></a>
+<a name="242"></a>	<span class="source_type">class</span><span class="source_name">'Controller'</span>.static.ResetConfig(<span class="source_string">"Handedness"</span>);
+<a name="243"></a>	<span class="source_type">class</span><span class="source_name">'PlayerController'</span>.static.ResetConfig(<span class="source_string">"bSmallWeapons"</span>);
+<a name="244"></a>	<span class="source_type">class</span><span class="source_name">'PlayerController'</span>.static.ResetConfig(<span class="source_string">"DefaultFOV"</span>);
+<a name="245"></a>
+<a name="246"></a>	bTemp = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized;
+<a name="247"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized = False;
+<a name="248"></a>
+<a name="249"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Controls.Length; <span class="source_type">i</span>++)
+<a name="250"></a>		Controls[<span class="source_type">i</span>].LoadINI();
+<a name="251"></a>
+<a name="252"></a>    bRenderDude = True;
+<a name="253"></a>    SetPlayerRec();
+<a name="254"></a>
+<a name="255"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized = bTemp;
+<a name="256"></a>}
+<a name="257"></a>
+<a name="258"></a>function InternalOnLoadINI(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">string</span> <span class="source_type">s</span>)
+<a name="259"></a>{
+<a name="260"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="261"></a>
+<a name="262"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="263"></a>	if (<span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>) != None)
+<a name="264"></a>	{
+<a name="265"></a>		<span class="source_type">switch</span> (<span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>))
+<a name="266"></a>		{
+<a name="267"></a>		case ed_Name:
+<a name="268"></a>			sName = <span class="source_type">PC</span>.GetUrlOption(<span class="source_string">"Name"</span>);
+<a name="269"></a>			sNameD = sName;
+<a name="270"></a>			ed_Name.SetText(sName);
+<a name="271"></a>			break;
+<a name="272"></a>
+<a name="273"></a>		case co_Team:
+<a name="274"></a>			if (<span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> == None || <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span> == None)
+<a name="275"></a>				iTeam = <span class="source_type">int</span>(<span class="source_type">PC</span>.GetUrlOption(<span class="source_string">"Team"</span>));
+<a name="276"></a>			else iTeam = <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.<span class="source_type">Team</span>.TeamIndex;
+<a name="277"></a>
+<a name="278"></a>			iTeamD = iTeam;
+<a name="279"></a>			if (iTeam &gt; <span class="source_int">1</span>)
+<a name="280"></a>				iTeam = <span class="source_int">2</span>;
+<a name="281"></a>
+<a name="282"></a>			co_Team.SetIndex(iTeam);
+<a name="283"></a>			break;
+<a name="284"></a>
+<a name="285"></a>		case co_Voice:
+<a name="286"></a>			if ( <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span> == None || <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.VoiceTypeName == <span class="source_string">""</span> )
+<a name="287"></a>				sVoice = <span class="source_type">PC</span>.GetUrlOption(<span class="source_string">"Voice"</span>);
+<a name="288"></a>			else sVoice = <span class="source_type">PC</span>.<span class="source_type"><a href="../engine/playerreplicationinfo.html" class="source">PlayerReplicationInfo</a></span>.VoiceTypeName;
+<a name="289"></a>			sVoiceD = sVoice;
+<a name="290"></a>			break;
+<a name="291"></a>
+<a name="292"></a>		case ch_SmallWeaps:
+<a name="293"></a>			bWeaps = <span class="source_type">PC</span>.bSmallWeapons;
+<a name="294"></a>			bWeapsD = bWeaps;
+<a name="295"></a>			ch_SmallWeaps.Checked(bWeaps);
+<a name="296"></a>			break;
+<a name="297"></a>
+<a name="298"></a>		case co_Hand:
+<a name="299"></a>			iHand = <span class="source_type">PC</span>.Handedness + <span class="source_int">1</span>;
+<a name="300"></a>			iHandD = iHand;
+<a name="301"></a>			co_Hand.SetIndex(iHand);
+<a name="302"></a>			break;
+<a name="303"></a>
+<a name="304"></a>		case nu_FOV:
+<a name="305"></a>			iFOV = <span class="source_type">PC</span>.DefaultFOV;
+<a name="306"></a>			iFOVD = iFOV;
+<a name="307"></a>			nu_FOV.SetValue(iFOV);
+<a name="308"></a>			break;
+<a name="309"></a>
+<a name="310"></a>		default:
+<a name="311"></a>			log(<span class="source_type">Name</span>@<span class="source_string">"Unknown component calling LoadINI:"</span>$ <span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>).<span class="source_type">Caption</span>);
+<a name="312"></a>			<span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>).SetComponentValue(<span class="source_type">s</span>,true);
+<a name="313"></a>		}
+<a name="314"></a>	}
+<a name="315"></a>
+<a name="316"></a>	else if ( <span class="source_type">Sender</span> == i_Portrait )
+<a name="317"></a>	{
+<a name="318"></a>		sChar = <span class="source_type">PC</span>.GetUrlOption(<span class="source_string">"Character"</span>);
+<a name="319"></a>		sCharD = sChar;
+<a name="320"></a>	}
+<a name="321"></a>}
+<a name="322"></a>
+<a name="323"></a>function InternalOnChange(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="324"></a>{
+<a name="325"></a>	local <span class="source_type"><a href="../engine/playercontroller.html" class="source">PlayerController</a></span> <span class="source_type">PC</span>;
+<a name="326"></a>
+<a name="327"></a>	<span class="source_type">PC</span> = PlayerOwner();
+<a name="328"></a>	Super.InternalOnChange(<span class="source_type">Sender</span>);
+<a name="329"></a>	if (<span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>) != None)
+<a name="330"></a>	{
+<a name="331"></a>		<span class="source_type">switch</span> (<span class="source_type"><a href="../xinterface/guimenuoption.html" class="source">GUIMenuOption</a></span>(<span class="source_type">Sender</span>))
+<a name="332"></a>		{
+<a name="333"></a>		case ed_Name:
+<a name="334"></a>			sName = ed_Name.GetText();
+<a name="335"></a>			break;
+<a name="336"></a>
+<a name="337"></a>		case co_Team:
+<a name="338"></a>			iTeam = co_Team.GetIndex();
+<a name="339"></a>			break;
+<a name="340"></a>
+<a name="341"></a>		case ch_SmallWeaps:
+<a name="342"></a>			bWeaps = ch_SmallWeaps.IsChecked();
+<a name="343"></a>			break;
+<a name="344"></a>
+<a name="345"></a>		case co_Hand:
+<a name="346"></a>			iHand = co_Hand.GetIndex();
+<a name="347"></a>			break;
+<a name="348"></a>
+<a name="349"></a>		case nu_FOV:
+<a name="350"></a>			iFOV = nu_FOV.GetValue();
+<a name="351"></a>			break;
+<a name="352"></a>
+<a name="353"></a>		case co_Voice:
+<a name="354"></a>			sVoice = co_Voice.GetExtra();
+<a name="355"></a>			PreviewVoice( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/xvoicepack.html" class="source">xVoicePack</a></span>&gt;(co_Voice.GetObject()) );
+<a name="356"></a>			VoiceTypeChanged(sVoice);
+<a name="357"></a>			break;
+<a name="358"></a>		}
+<a name="359"></a>	}
+<a name="360"></a>
+<a name="361"></a>	else if ( <span class="source_type">Sender</span> == co_SkinPreview )
+<a name="362"></a>		UpdateSpinnyDude();
+<a name="363"></a>}
+<a name="364"></a>
+<a name="365"></a>function PreviewVoice(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../xgame/xvoicepack.html" class="source">xVoicePack</a></span>&gt; NewVoiceClass)
+<a name="366"></a>{
+<a name="367"></a>	local <span class="source_type">int</span> <span class="source_type">Index</span>;
+<a name="368"></a>
+<a name="369"></a>	if ( NewVoiceClass == None )
+<a name="370"></a>		return;
+<a name="371"></a>
+<a name="372"></a>	<span class="source_type">Index</span> = NewVoiceClass.static.PickCustomTauntFor( PlayerOwner(), True, False, <span class="source_int">21</span> );
+<a name="373"></a>	PlayerOwner().ClientPlaySound(NewVoiceClass.default.TauntSound[<span class="source_type">Index</span>],,,SLOT_Interface);
+<a name="374"></a>}
+<a name="375"></a>function UpdateVoiceOptions()
+<a name="376"></a>{
+<a name="377"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="378"></a>	local <span class="source_type">bool</span> bTemp;
+<a name="379"></a>
+<a name="380"></a>	bTemp = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized;
+<a name="381"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized = False;
+<a name="382"></a>
+<a name="383"></a>	co_Voice.MyComboBox.<span class="source_type">List</span>.Clear();
+<a name="384"></a>	co_Voice.AddItem(DefaultText);
+<a name="385"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; VoiceClasses.Length; <span class="source_type">i</span>++ )
+<a name="386"></a>	{
+<a name="387"></a>		if ( <span class="source_type">class</span><span class="source_name">'TeamVoicePack'</span>.static.VoiceMatchesGender(VoiceClasses[<span class="source_type">i</span>].default.VoiceGender, PlayerRec.Sex) )
+<a name="388"></a>			co_Voice.AddItem(VoiceClasses[<span class="source_type">i</span>].default.VoicePackName,VoiceClasses[<span class="source_type">i</span>],<span class="source_type">string</span>(VoiceClasses[<span class="source_type">i</span>]));
+<a name="389"></a>	}
+<a name="390"></a>
+<a name="391"></a>	<span class="source_type">i</span> = co_Voice.FindIndex(sVoice,,True);
+<a name="392"></a>	if ( <span class="source_type">i</span> != -<span class="source_int">1</span> )
+<a name="393"></a>		co_Voice.SetIndex(<span class="source_type">i</span>);
+<a name="394"></a>	else co_Voice.SetIndex(<span class="source_int">0</span>);
+<a name="395"></a>
+<a name="396"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized = bTemp;
+<a name="397"></a>}
+<a name="398"></a>
+<a name="399"></a>function UpdateScroll()
+<a name="400"></a>{
+<a name="401"></a>	lb_Scroll.SetContent(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.LoadDecoText(<span class="source_string">""</span>,PlayerRec.TextName));
+<a name="402"></a>}
+<a name="403"></a>
+<a name="404"></a>function UpdateSpinnyDude()
+<a name="405"></a>{
+<a name="406"></a>	local <span class="source_type">Mesh</span> PlayerMesh;
+<a name="407"></a>	local <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span> BodySkin, HeadSkin;
+<a name="408"></a>    local <span class="source_type">string</span> BodySkinName, HeadSkinName, TeamSuffix;
+<a name="409"></a>    local <span class="source_type">bool</span> bBrightSkin;
+<a name="410"></a>
+<a name="411"></a>	i_Portrait.<span class="source_type">Image</span> = PlayerRec.Portrait;
+<a name="412"></a>	PlayerMesh = <span class="source_type">Mesh</span>(DynamicLoadObject(PlayerRec.MeshName, <span class="source_type">class</span><span class="source_name">'Mesh'</span>));
+<a name="413"></a>	if(PlayerMesh == None)
+<a name="414"></a>	{
+<a name="415"></a>		Log(<span class="source_string">"Could not load mesh: "</span>$PlayerRec.MeshName$<span class="source_string">" For player: "</span>$PlayerRec.DefaultName);
+<a name="416"></a>		return;
+<a name="417"></a>	}
+<a name="418"></a>
+<a name="419"></a>
+<a name="420"></a>	<span class="source_comment">// Setup options
+</span><a name="421"></a>	TeamSuffix = Eval( co_SkinPreview.GetIndex() &gt; <span class="source_int">0</span>, Eval(co_SkinPreview.GetIndex() == <span class="source_int">1</span>, <span class="source_string">"_0"</span>, <span class="source_string">"_1"</span>), <span class="source_string">""</span> );
+<a name="422"></a>
+<a name="423"></a>	<span class="source_comment">// Get the body skin
+</span><a name="424"></a>    BodySkinName = PlayerRec.BodySkinName $ TeamSuffix;
+<a name="425"></a>	bBrightSkin = <span class="source_type">class</span><span class="source_name">'DMMutator'</span>.default.bBrightSkins && Left(BodySkinName,<span class="source_int">12</span>) ~= <span class="source_string">"PlayerSkins."</span>;
+<a name="426"></a>
+<a name="427"></a>    if ( bBrightSkin && TeamSuffix != <span class="source_string">""</span> )
+<a name="428"></a>    	BodySkinName = <span class="source_string">"Bright"</span> $ BodySkinName $ <span class="source_string">"B"</span>;
+<a name="429"></a>
+<a name="430"></a>	<span class="source_comment">// Get the head skin
+</span><a name="431"></a>    HeadSkinName = PlayerRec.FaceSkinName;
+<a name="432"></a>    if ( PlayerRec.TeamFace )
+<a name="433"></a>    	HeadSkinName $= TeamSuffix;
+<a name="434"></a>
+<a name="435"></a>	BodySkin = <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>(DynamicLoadObject(BodySkinName, <span class="source_type">class</span><span class="source_name">'Material'</span>));
+<a name="436"></a>	if(BodySkin == None)
+<a name="437"></a>	{
+<a name="438"></a>		Log(<span class="source_string">"Could not load body material: "</span>$PlayerRec.BodySkinName$<span class="source_string">" For player: "</span>$PlayerRec.DefaultName);
+<a name="439"></a>		return;
+<a name="440"></a>	}
+<a name="441"></a>
+<a name="442"></a>	if ( bBrightSkin )
+<a name="443"></a>		SpinnyDude.AmbientGlow = SpinnyDude.default.AmbientGlow * <span class="source_int">0.8</span>;
+<a name="444"></a>	else SpinnyDude.AmbientGlow = SpinnyDude.default.AmbientGlow;
+<a name="445"></a>
+<a name="446"></a>
+<a name="447"></a>	HeadSkin = <span class="source_type"><a href="../engine/material.html" class="source">Material</a></span>(DynamicLoadObject(HeadSkinName, <span class="source_type">class</span><span class="source_name">'Material'</span>));
+<a name="448"></a>	if(HeadSkin == None)
+<a name="449"></a>	{
+<a name="450"></a>		Log(<span class="source_string">"Could not load head material: "</span>$HeadSkinName$<span class="source_string">" For player: "</span>$PlayerRec.DefaultName);
+<a name="451"></a>		return;
+<a name="452"></a>	}
+<a name="453"></a>
+<a name="454"></a>	SpinnyDude.LinkMesh(PlayerMesh);
+<a name="455"></a>	SpinnyDude.Skins[<span class="source_int">0</span>] = BodySkin;
+<a name="456"></a>	SpinnyDude.Skins[<span class="source_int">1</span>] = HeadSkin;
+<a name="457"></a>	SpinnyDude.LoopAnim( <span class="source_name">'Idle_Rest'</span>, <span class="source_int">1.0</span>/SpinnyDude.<span class="source_type">Level</span>.TimeDilation );
+<a name="458"></a>}
+<a name="459"></a>
+<a name="460"></a>function <span class="source_type">bool</span> InternalDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span>)
+<a name="461"></a>{
+<a name="462"></a>	local <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> CamPos, <span class="source_type">X</span>, <span class="source_type">Y</span>, <span class="source_type">Z</span>;
+<a name="463"></a>	local <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> CamRot;
+<a name="464"></a>	local <span class="source_type">float</span>   oOrgX, oOrgY;
+<a name="465"></a>	local <span class="source_type">float</span>   oClipX, oClipY;
+<a name="466"></a>
+<a name="467"></a>	if(bRenderDude)
+<a name="468"></a>	{
+<a name="469"></a>    	oOrgX = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.OrgX;
+<a name="470"></a>        oOrgY = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.OrgY;
+<a name="471"></a>        oClipX = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX;
+<a name="472"></a>        oClipY = <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY;
+<a name="473"></a>
+<a name="474"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.OrgX = b_DropTarget.ActualLeft();
+<a name="475"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.OrgY = b_DropTarget.ActualTop();
+<a name="476"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX = b_DropTarget.ActualWidth();
+<a name="477"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY = b_DropTarget.ActualHeight();
+<a name="478"></a>
+<a name="479"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span>.GetCameraLocation(CamPos, CamRot);
+<a name="480"></a>		GetAxes(CamRot, <span class="source_type">X</span>, <span class="source_type">Y</span>, <span class="source_type">Z</span>);
+<a name="481"></a>
+<a name="482"></a>		SpinnyDude.SetLocation(CamPos + (SpinnyDudeOffset.<span class="source_type">X</span> * <span class="source_type">X</span>) + (SpinnyDudeOffset.<span class="source_type">Y</span> * <span class="source_type">Y</span>) + (SpinnyDudeOffset.<span class="source_type">Z</span> * <span class="source_type">Z</span>));
+<a name="483"></a>		<span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span>.DrawActorClipped(SpinnyDude, false,  b_DropTarget.ActualLeft(), b_DropTarget.ActualTop(), b_DropTarget.ActualWidth(), b_DropTarget.ActualHeight(), true, nFov);
+<a name="484"></a>
+<a name="485"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.OrgX = oOrgX;
+<a name="486"></a>	    <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.OrgY = oOrgY;
+<a name="487"></a>    	<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipX = oClipX;
+<a name="488"></a>        <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.ClipY = oClipY;
+<a name="489"></a>	}
+<a name="490"></a>
+<a name="491"></a>	return bRenderDude;
+<a name="492"></a>}
+<a name="493"></a>
+<a name="494"></a>function <span class="source_type">bool</span> PickModel(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="495"></a>{
+<a name="496"></a>    if ( <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"GUI2K4.UT2K4ModelSelect"</span>,
+<a name="497"></a>                              PlayerRec.DefaultName,
+<a name="498"></a>		                      Eval(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CtrlPressed, PlayerRec.Race, <span class="source_string">""</span>)) )
+<a name="499"></a>    	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ActivePage.OnClose = ModelSelectClosed;
+<a name="500"></a>
+<a name="501"></a>    return true;
+<a name="502"></a>}
+<a name="503"></a>
+<a name="504"></a>function ModelSelectClosed( optional <span class="source_type">bool</span> <span class="source_type">bCancelled</span> )
+<a name="505"></a>{
+<a name="506"></a>	local <span class="source_type">string</span> <span class="source_type">str</span>;
+<a name="507"></a>
+<a name="508"></a>	if ( <span class="source_type">bCancelled</span> )
+<a name="509"></a>		return;
+<a name="510"></a>
+<a name="511"></a>	<span class="source_type">str</span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ActivePage.GetDataString();
+<a name="512"></a>	if ( <span class="source_type">str</span> != <span class="source_string">""</span> )
+<a name="513"></a>	{
+<a name="514"></a>		sChar = <span class="source_type">str</span>;
+<a name="515"></a>		SetPlayerRec();
+<a name="516"></a>	}
+<a name="517"></a>}
+<a name="518"></a>
+<a name="519"></a>function ShowSpinnyDude()
+<a name="520"></a>{
+<a name="521"></a>	if ( bRenderDude )
+<a name="522"></a>	{
+<a name="523"></a>		UpdateSpinnyDude(); <span class="source_comment">// Load current character
+</span><a name="524"></a>        co_SkinPreview.SetVisibility(true);
+<a name="525"></a>		b_3DView.<span class="source_type">Caption</span> = ShowBioCaption; <span class="source_comment">// Change button caption
+</span><a name="526"></a>		b_DropTarget.MouseCursorIndex = <span class="source_int">5</span>;
+<a name="527"></a>	}
+<a name="528"></a>	else
+<a name="529"></a>	{
+<a name="530"></a>		<span class="source_comment">// Put text back into box
+</span><a name="531"></a>		i_Portrait.<span class="source_type">Image</span> = PlayerRec.Portrait;
+<a name="532"></a>		b_3DView.<span class="source_type">Caption</span> = Show3DViewCaption;
+<a name="533"></a>        co_SkinPreview.SetVisibility(false);
+<a name="534"></a>		SpinnyDude.LinkMesh(None);
+<a name="535"></a>		b_DropTarget.MouseCursorIndex = <span class="source_int">0</span>;
+<a name="536"></a>	}
+<a name="537"></a>
+<a name="538"></a>}
+<a name="539"></a>
+<a name="540"></a>function <span class="source_type">bool</span> Toggle3DView(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="541"></a>{
+<a name="542"></a>	bRenderDude = !bRenderDude;
+<a name="543"></a>	ShowSpinnyDude();
+<a name="544"></a>
+<a name="545"></a>	return true;
+<a name="546"></a>}
+<a name="547"></a>
+<a name="548"></a>function <span class="source_type">bool</span> NextAnim(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="549"></a>{
+<a name="550"></a>	if(bRenderDude)
+<a name="551"></a>	{
+<a name="552"></a>		SpinnyDude.PlayNextAnim();
+<a name="553"></a>	}
+<a name="554"></a>
+<a name="555"></a>	return true;
+<a name="556"></a>}
+<a name="557"></a>
+<a name="558"></a>function <span class="source_type">bool</span> RaceCapturedMouseMove(<span class="source_type">float</span> deltaX, <span class="source_type">float</span> deltaY)
+<a name="559"></a>{
+<a name="560"></a>	local <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">r</span>;
+<a name="561"></a>  	<span class="source_type">r</span> = SpinnyDude.<span class="source_type">Rotation</span>;
+<a name="562"></a>    <span class="source_type">r</span>.Yaw -= (<span class="source_int">256</span> * DeltaX);
+<a name="563"></a>    SpinnyDude.SetRotation(<span class="source_type">r</span>);
+<a name="564"></a>    return true;
+<a name="565"></a>}
+<a name="566"></a>
+<a name="567"></a>event Opened(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="568"></a>{
+<a name="569"></a>	local <span class="source_type"><a href="../core/object.html#Rotator" class="source">rotator</a></span> <span class="source_type">R</span>;
+<a name="570"></a>
+<a name="571"></a>	Super.Opened(<span class="source_type">Sender</span>);
+<a name="572"></a>
+<a name="573"></a>	if ( SpinnyDude != None )
+<a name="574"></a>	{
+<a name="575"></a>		<span class="source_type">R</span>.Yaw = <span class="source_int">32768</span>;
+<a name="576"></a>		<span class="source_type">R</span>.Pitch = -<span class="source_int">1024</span>;
+<a name="577"></a>		SpinnyDude.SetRotation(<span class="source_type">R</span>+PlayerOwner().<span class="source_type">Rotation</span>);
+<a name="578"></a>		SpinnyDude.bHidden = false;
+<a name="579"></a>	}
+<a name="580"></a>}
+<a name="581"></a>
+<a name="582"></a>event Closed(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type">bool</span> <span class="source_type">bCancelled</span>)
+<a name="583"></a>{
+<a name="584"></a>	Super.Closed(<span class="source_type">Sender</span>, <span class="source_type">bCancelled</span>);
+<a name="585"></a>	if ( SpinnyDude != None )
+<a name="586"></a>		SpinnyDude.bHidden = true;
+<a name="587"></a>}
+<a name="588"></a>
+<a name="589"></a>function Free()
+<a name="590"></a>{
+<a name="591"></a>	Super.Free();
+<a name="592"></a>
+<a name="593"></a>	VoiceClasses.Remove(<span class="source_int">0</span>, VoiceClasses.Length);
+<a name="594"></a>	if ( co_Voice != None )
+<a name="595"></a>		co_Voice.MyComboBox.<span class="source_type">List</span>.Clear();
+<a name="596"></a>
+<a name="597"></a>	if ( SpinnyDude != None )
+<a name="598"></a>		SpinnyDude.Destroy();
+<a name="599"></a>
+<a name="600"></a>	SpinnyDude = None;
+<a name="601"></a>}
+<a name="602"></a><span class="source_comment">/*
+<a name="603"></a>function bool CoolOnKeyEvent(out byte Key, out byte State, float delta)
+<a name="604"></a>{
+<a name="605"></a>	local rotator r;
+<a name="606"></a>	local Interactions.EInputKey iKey;
+<a name="607"></a>
+<a name="608"></a>	iKey = EInputKey(Key);
+<a name="609"></a>
+<a name="610"></a>	if ( State != 1 )
+<a name="611"></a>		return false;
+<a name="612"></a>
+<a name="613"></a>	if ( iKey == IK_A || iKey == IK_Left )
+<a name="614"></a>	if (key==69 && state==1)
+<a name="615"></a>    {
+<a name="616"></a>    	SpinnyDudeOffset.X = SpinnyDudeOffset.X - 1;
+<a name="617"></a>    	logspinnydude();
+<a name="618"></a>        return true;
+<a name="619"></a>    }
+<a name="620"></a>
+<a name="621"></a>	if (key==67 && state==1)
+<a name="622"></a>    {
+<a name="623"></a>    	SpinnyDudeOffset.X = SpinnyDudeOffset.X + 1;
+<a name="624"></a>    	logspinnydude();
+<a name="625"></a>        return true;
+<a name="626"></a>    }
+<a name="627"></a>
+<a name="628"></a>	if (key==65 && state==1)
+<a name="629"></a>    {
+<a name="630"></a>    	SpinnyDudeOffset.Y = SpinnyDudeOffset.Y - 1;
+<a name="631"></a>    	logspinnydude();
+<a name="632"></a>        return true;
+<a name="633"></a>    }
+<a name="634"></a>
+<a name="635"></a>	if (key==68 && state==1)
+<a name="636"></a>    {
+<a name="637"></a>    	SpinnyDudeOffset.Y = SpinnyDudeOffset.Y + 1;
+<a name="638"></a>    	logspinnydude();
+<a name="639"></a>        return true;
+<a name="640"></a>    }
+<a name="641"></a>
+<a name="642"></a>	if (key==87 && state==1)
+<a name="643"></a>    {
+<a name="644"></a>    	SpinnyDudeOffset.Z = SpinnyDudeOffset.Z - 1;
+<a name="645"></a>    	logspinnydude();
+<a name="646"></a>        return true;
+<a name="647"></a>    }
+<a name="648"></a>
+<a name="649"></a>	if (key==88 && state==1)
+<a name="650"></a>    {
+<a name="651"></a>    	SpinnyDudeOffset.Z = SpinnyDudeOffset.Z + 1;
+<a name="652"></a>    	logspinnydude();
+<a name="653"></a>        return true;
+<a name="654"></a>    }
+<a name="655"></a>
+<a name="656"></a>	if (key==81 && state==1)
+<a name="657"></a>    {
+<a name="658"></a>    	r = SpinnyDude.Rotation;
+<a name="659"></a>        r.Yaw += 1024;
+<a name="660"></a>        SpinnyDude.SetRotation(r);
+<a name="661"></a>    	logspinnydude();
+<a name="662"></a>        return true;
+<a name="663"></a>    }
+<a name="664"></a>
+<a name="665"></a>	if (key==90 && state==1)
+<a name="666"></a>    {
+<a name="667"></a>    	r = SpinnyDude.Rotation;
+<a name="668"></a>        r.Yaw -= 1024;
+<a name="669"></a>        SpinnyDude.SetRotation(r);
+<a name="670"></a>    	logspinnydude();
+<a name="671"></a>        return true;
+<a name="672"></a>    }
+<a name="673"></a>
+<a name="674"></a>	if (key==82 && state==1)
+<a name="675"></a>    {
+<a name="676"></a>    	r = SpinnyDude.Rotation;
+<a name="677"></a>        r.Pitch += 1024;
+<a name="678"></a>        SpinnyDude.SetRotation(r);
+<a name="679"></a>    	logspinnydude();
+<a name="680"></a>        return true;
+<a name="681"></a>    }
+<a name="682"></a>
+<a name="683"></a>	if (key==86 && state==1)
+<a name="684"></a>    {
+<a name="685"></a>    	r = SpinnyDude.Rotation;
+<a name="686"></a>        r.Pitch -= 1024;
+<a name="687"></a>        SpinnyDude.SetRotation(r);
+<a name="688"></a>    	logspinnydude();
+<a name="689"></a>        return true;
+<a name="690"></a>    }
+<a name="691"></a>
+<a name="692"></a>	if (key==49 && state==1)
+<a name="693"></a>    {
+<a name="694"></a>        nFOV+=5;
+<a name="695"></a>    	logspinnydude();
+<a name="696"></a>        return true;
+<a name="697"></a>    }
+<a name="698"></a>
+<a name="699"></a>	if (key==50 && state==1)
+<a name="700"></a>    {
+<a name="701"></a>        nFOV-=5;
+<a name="702"></a>    	logspinnydude();
+<a name="703"></a>        return true;
+<a name="704"></a>    }
+<a name="705"></a>
+<a name="706"></a>
+<a name="707"></a>    return false;
+<a name="708"></a>}
+<a name="709"></a>*/</span>
+<a name="710"></a>function logspinnydude()
+<a name="711"></a>{
+<a name="712"></a>	log(<span class="source_string">"SpinnyDudeOffset X:"</span>$SpinnyDudeOffset.<span class="source_type">X</span>@<span class="source_string">"Y:"</span>$SpinnyDudeOffset.<span class="source_type">Y</span>@<span class="source_string">"Z:"</span>$SpinnyDudeOffset.<span class="source_type">Z</span>@<span class="source_string">"Roll:"</span>$SpinnyDude.<span class="source_type">Rotation</span>.Roll@<span class="source_string">"Pitch:"</span>$SpinnyDude.<span class="source_type">Rotation</span>.Pitch@<span class="source_string">"Yaw:"</span>$SpinnyDude.<span class="source_type">Rotation</span>.Yaw@<span class="source_string">"FOV:"</span>$nfov);
+<a name="713"></a>}
+<a name="714"></a>
+<a name="715"></a>defaultproperties
+<a name="716"></a>{
+<a name="717"></a>     HandNames(<span class="source_int">0</span>)=<span class="source_string">"Left"</span>
+<a name="718"></a>     HandNames(<span class="source_int">1</span>)=<span class="source_string">"Center"</span>
+<a name="719"></a>     HandNames(<span class="source_int">2</span>)=<span class="source_string">"Right"</span>
+<a name="720"></a>     HandNames(<span class="source_int">3</span>)=<span class="source_string">"Hidden"</span>
+<a name="721"></a>     TeamNames(<span class="source_int">0</span>)=<span class="source_string">"Red"</span>
+<a name="722"></a>     TeamNames(<span class="source_int">1</span>)=<span class="source_string">"Blue"</span>
+<a name="723"></a>     TeamNames(<span class="source_int">2</span>)=<span class="source_string">"None"</span>
+<a name="724"></a>     ClickInst=<span class="source_string">"Double-Click or drag to select"</span>
+<a name="725"></a>     All=<span class="source_string">"All"</span>
+<a name="726"></a>     Previews(<span class="source_int">0</span>)=<span class="source_string">"View Normal Skin"</span>
+<a name="727"></a>     Previews(<span class="source_int">1</span>)=<span class="source_string">"View Red Skin"</span>
+<a name="728"></a>     Previews(<span class="source_int">2</span>)=<span class="source_string">"View Blue Skin"</span>
+<a name="729"></a>     SpinnyDudeOffset=(<span class="source_type">X</span>=<span class="source_int">70.000000</span>)
+<a name="730"></a>     ShowBioCaption=<span class="source_string">"Portrait"</span>
+<a name="731"></a>     Show3DViewCaption=<span class="source_string">"3D View"</span>
+<a name="732"></a>     DefaultText=<span class="source_string">"Default"</span>
+<a name="733"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=PlayerBK1
+<a name="734"></a>         <span class="source_type">Caption</span>=<span class="source_string">"3D View"</span>
+<a name="735"></a>         WinTop=<span class="source_int">0.017969</span>
+<a name="736"></a>         WinLeft=<span class="source_int">0.004063</span>
+<a name="737"></a>         WinWidth=<span class="source_int">0.446758</span>
+<a name="738"></a>         WinHeight=<span class="source_int">0.963631</span>
+<a name="739"></a>         OnPreDraw=PlayerBK1.InternalPreDraw
+<a name="740"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="741"></a>     i_BG1=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerBK1'</span>
+<a name="742"></a>
+<a name="743"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=PlayerBK2
+<a name="744"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Misc."</span>
+<a name="745"></a>         WinTop=<span class="source_int">0.017969</span>
+<a name="746"></a>         WinLeft=<span class="source_int">0.463047</span>
+<a name="747"></a>         WinWidth=<span class="source_int">0.531719</span>
+<a name="748"></a>         WinHeight=<span class="source_int">0.573006</span>
+<a name="749"></a>         OnPreDraw=PlayerBK2.InternalPreDraw
+<a name="750"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="751"></a>     i_BG2=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerBK2'</span>
+<a name="752"></a>
+<a name="753"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span> <span class="source_type">Name</span>=PlayerBK3
+<a name="754"></a>         bFillClient=True
+<a name="755"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Biography"</span>
+<a name="756"></a>         LeftPadding=<span class="source_int">0.020000</span>
+<a name="757"></a>         RightPadding=<span class="source_int">0.020000</span>
+<a name="758"></a>         TopPadding=<span class="source_int">0.020000</span>
+<a name="759"></a>         BottomPadding=<span class="source_int">0.020000</span>
+<a name="760"></a>         WinTop=<span class="source_int">0.610417</span>
+<a name="761"></a>         WinLeft=<span class="source_int">0.463047</span>
+<a name="762"></a>         WinWidth=<span class="source_int">0.531719</span>
+<a name="763"></a>         WinHeight=<span class="source_int">0.372811</span>
+<a name="764"></a>         OnPreDraw=PlayerBK3.InternalPreDraw
+<a name="765"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="766"></a>     i_BG3=<span class="source_type"><a href="../xinterface/guisectionbackground.html" class="source">GUISectionBackground</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerBK3'</span>
+<a name="767"></a>
+<a name="768"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=PlayerPortrait
+<a name="769"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'InterfaceArt_tex.Menu.changeme_texture'</span>
+<a name="770"></a>         ImageStyle=ISTY_Scaled
+<a name="771"></a>         ImageRenderStyle=MSTY_Normal
+<a name="772"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="773"></a>         WinTop=<span class="source_int">0.094895</span>
+<a name="774"></a>         WinLeft=<span class="source_int">0.057016</span>
+<a name="775"></a>         WinWidth=<span class="source_int">0.334368</span>
+<a name="776"></a>         WinHeight=<span class="source_int">0.798132</span>
+<a name="777"></a>         RenderWeight=<span class="source_int">0.300000</span>
+<a name="778"></a>         OnDraw=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.InternalDraw
+<a name="779"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.InternalOnLoadINI
+<a name="780"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="781"></a>     i_Portrait=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerPortrait'</span>
+<a name="782"></a>
+<a name="783"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=bPickModel
+<a name="784"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Change Character"</span>
+<a name="785"></a>         Hint=<span class="source_string">"Select a new Character."</span>
+<a name="786"></a>         WinTop=<span class="source_int">0.901559</span>
+<a name="787"></a>         WinLeft=<span class="source_int">0.177174</span>
+<a name="788"></a>         WinWidth=<span class="source_int">0.233399</span>
+<a name="789"></a>         WinHeight=<span class="source_int">0.050000</span>
+<a name="790"></a>         TabOrder=<span class="source_int">2</span>
+<a name="791"></a>         OnClick=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.PickModel
+<a name="792"></a>         OnKeyEvent=bPickModel.InternalOnKeyEvent
+<a name="793"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="794"></a>     b_Pick=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.bPickModel'</span>
+<a name="795"></a>
+<a name="796"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=Player3DView
+<a name="797"></a>         <span class="source_type">Caption</span>=<span class="source_string">"3D View"</span>
+<a name="798"></a>         Hint=<span class="source_string">"Toggle between 3D view and portrait of character."</span>
+<a name="799"></a>         WinTop=<span class="source_int">0.901559</span>
+<a name="800"></a>         WinLeft=<span class="source_int">0.043685</span>
+<a name="801"></a>         WinWidth=<span class="source_int">0.130720</span>
+<a name="802"></a>         WinHeight=<span class="source_int">0.050000</span>
+<a name="803"></a>         TabOrder=<span class="source_int">1</span>
+<a name="804"></a>         OnClick=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.Toggle3DView
+<a name="805"></a>         OnKeyEvent=Player3DView.InternalOnKeyEvent
+<a name="806"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="807"></a>     b_3DView=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.Player3DView'</span>
+<a name="808"></a>
+<a name="809"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=DropTarget
+<a name="810"></a>         StyleName=<span class="source_string">"NoBackground"</span>
+<a name="811"></a>         WinTop=<span class="source_int">0.114426</span>
+<a name="812"></a>         WinLeft=<span class="source_int">0.013071</span>
+<a name="813"></a>         WinWidth=<span class="source_int">0.427141</span>
+<a name="814"></a>         WinHeight=<span class="source_int">0.798132</span>
+<a name="815"></a>         MouseCursorIndex=<span class="source_int">5</span>
+<a name="816"></a>         bTabStop=False
+<a name="817"></a>         bNeverFocus=True
+<a name="818"></a>         bDropTarget=True
+<a name="819"></a>         OnKeyEvent=DropTarget.InternalOnKeyEvent
+<a name="820"></a>         OnCapturedMouseMove=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.RaceCapturedMouseMove
+<a name="821"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="822"></a>     b_DropTarget=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.DropTarget'</span>
+<a name="823"></a>
+<a name="824"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span> <span class="source_type">Name</span>=PlayerScroll
+<a name="825"></a>         CharDelay=<span class="source_int">0.002500</span>
+<a name="826"></a>         EOLDelay=<span class="source_int">0.500000</span>
+<a name="827"></a>         OnCreateComponent=PlayerScroll.InternalOnCreateComponent
+<a name="828"></a>         WinTop=<span class="source_int">0.321365</span>
+<a name="829"></a>         WinLeft=<span class="source_int">0.291288</span>
+<a name="830"></a>         WinWidth=<span class="source_int">0.686915</span>
+<a name="831"></a>         WinHeight=<span class="source_int">0.260351</span>
+<a name="832"></a>         TabOrder=<span class="source_int">9</span>
+<a name="833"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="834"></a>     lb_Scroll=<span class="source_type"><a href="../xinterface/guiscrolltextbox.html" class="source">GUIScrollTextBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerScroll'</span>
+<a name="835"></a>
+<a name="836"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span> <span class="source_type">Name</span>=<span class="source_type">PlayerName</span>
+<a name="837"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Name"</span>
+<a name="838"></a>         OnCreateComponent=<span class="source_type">PlayerName</span>.InternalOnCreateComponent
+<a name="839"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="840"></a>         IniDefault=<span class="source_string">"Player"</span>
+<a name="841"></a>         Hint=<span class="source_string">"Changes the alias you play as."</span>
+<a name="842"></a>         WinTop=<span class="source_int">0.076042</span>
+<a name="843"></a>         WinLeft=<span class="source_int">0.301757</span>
+<a name="844"></a>         WinWidth=<span class="source_int">0.373242</span>
+<a name="845"></a>         TabOrder=<span class="source_int">3</span>
+<a name="846"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.InternalOnLoadINI
+<a name="847"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="848"></a>     ed_Name=<span class="source_type"><a href="../xinterface/moeditbox.html" class="source">moEditBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerName'</span>
+<a name="849"></a>
+<a name="850"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span> <span class="source_type">Name</span>=PlayerSmallWeap
+<a name="851"></a>         CaptionWidth=<span class="source_int">0.940000</span>
+<a name="852"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Small Weapons"</span>
+<a name="853"></a>         OnCreateComponent=PlayerSmallWeap.InternalOnCreateComponent
+<a name="854"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="855"></a>         IniDefault=<span class="source_string">"False"</span>
+<a name="856"></a>         Hint=<span class="source_string">"Makes your first person weapon smaller."</span>
+<a name="857"></a>         WinTop=<span class="source_int">0.150261</span>
+<a name="858"></a>         WinLeft=<span class="source_int">0.705430</span>
+<a name="859"></a>         WinWidth=<span class="source_int">0.266797</span>
+<a name="860"></a>         TabOrder=<span class="source_int">8</span>
+<a name="861"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.InternalOnLoadINI
+<a name="862"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="863"></a>     ch_SmallWeaps=<span class="source_type"><a href="../xinterface/mocheckbox.html" class="source">moCheckBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerSmallWeap'</span>
+<a name="864"></a>
+<a name="865"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=PlayerTeam
+<a name="866"></a>         bReadOnly=True
+<a name="867"></a>         ComponentJustification=TXTA_Left
+<a name="868"></a>         CaptionWidth=<span class="source_int">0.700000</span>
+<a name="869"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Preferred Team"</span>
+<a name="870"></a>         OnCreateComponent=PlayerTeam.InternalOnCreateComponent
+<a name="871"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="872"></a>         IniDefault=<span class="source_string">"Red"</span>
+<a name="873"></a>         Hint=<span class="source_string">"Changes the team you will play on by default."</span>
+<a name="874"></a>         WinTop=<span class="source_int">0.150261</span>
+<a name="875"></a>         WinLeft=<span class="source_int">0.301757</span>
+<a name="876"></a>         WinWidth=<span class="source_int">0.374219</span>
+<a name="877"></a>         TabOrder=<span class="source_int">6</span>
+<a name="878"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.InternalOnLoadINI
+<a name="879"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="880"></a>     co_Team=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerTeam'</span>
+<a name="881"></a>
+<a name="882"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=PlayerHand
+<a name="883"></a>         bReadOnly=True
+<a name="884"></a>         ComponentJustification=TXTA_Left
+<a name="885"></a>         CaptionWidth=<span class="source_int">0.700000</span>
+<a name="886"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Weapon Hand"</span>
+<a name="887"></a>         OnCreateComponent=PlayerHand.InternalOnCreateComponent
+<a name="888"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="889"></a>         IniDefault=<span class="source_string">"Right"</span>
+<a name="890"></a>         Hint=<span class="source_string">"Changes whether your weapon is visible."</span>
+<a name="891"></a>         WinTop=<span class="source_int">0.212761</span>
+<a name="892"></a>         WinLeft=<span class="source_int">0.705430</span>
+<a name="893"></a>         WinWidth=<span class="source_int">0.264766</span>
+<a name="894"></a>         TabOrder=<span class="source_int">7</span>
+<a name="895"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.InternalOnLoadINI
+<a name="896"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="897"></a>     co_Hand=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerHand'</span>
+<a name="898"></a>
+<a name="899"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span> <span class="source_type">Name</span>=VoiceType
+<a name="900"></a>         bReadOnly=True
+<a name="901"></a>         ComponentJustification=TXTA_Left
+<a name="902"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Voice Type"</span>
+<a name="903"></a>         OnCreateComponent=VoiceType.InternalOnCreateComponent
+<a name="904"></a>         IniOption=<span class="source_string">"@Internal"</span>
+<a name="905"></a>         Hint=<span class="source_string">"Choose how your character's voice will sound in the game."</span>
+<a name="906"></a>         WinTop=<span class="source_int">0.212761</span>
+<a name="907"></a>         WinLeft=<span class="source_int">0.301757</span>
+<a name="908"></a>         WinWidth=<span class="source_int">0.372266</span>
+<a name="909"></a>         TabOrder=<span class="source_int">4</span>
+<a name="910"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.InternalOnLoadINI
+<a name="911"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="912"></a>     co_Voice=<span class="source_type"><a href="../xinterface/mocombobox.html" class="source">moComboBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.VoiceType'</span>
+<a name="913"></a>
+<a name="914"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span> <span class="source_type">Name</span>=PlayerFOV
+<a name="915"></a>         MinValue=<span class="source_int">80</span>
+<a name="916"></a>         MaxValue=<span class="source_int">100</span>
+<a name="917"></a>         ComponentJustification=TXTA_Left
+<a name="918"></a>         CaptionWidth=<span class="source_int">0.700000</span>
+<a name="919"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Default FOV"</span>
+<a name="920"></a>         OnCreateComponent=PlayerFOV.InternalOnCreateComponent
+<a name="921"></a>         IniOption=<span class="source_string">"@INTERNAL"</span>
+<a name="922"></a>         IniDefault=<span class="source_string">"85"</span>
+<a name="923"></a>         Hint=<span class="source_string">"This value will change your field of view while playing."</span>
+<a name="924"></a>         WinTop=<span class="source_int">0.076042</span>
+<a name="925"></a>         WinLeft=<span class="source_int">0.705430</span>
+<a name="926"></a>         WinWidth=<span class="source_int">0.266797</span>
+<a name="927"></a>         TabOrder=<span class="source_int">5</span>
+<a name="928"></a>         OnLoadINI=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.InternalOnLoadINI
+<a name="929"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="930"></a>     nu_FOV=<span class="source_type"><a href="../xinterface/monumericedit.html" class="source">moNumericEdit</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.PlayerFOV'</span>
+<a name="931"></a>
+<a name="932"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span> <span class="source_type">Name</span>=SkinPreview
+<a name="933"></a>         bReadOnly=True
+<a name="934"></a>         Hint=<span class="source_string">"Show how the model looks using the selected skin."</span>
+<a name="935"></a>         WinTop=<span class="source_int">0.111470</span>
+<a name="936"></a>         WinLeft=<span class="source_int">0.053531</span>
+<a name="937"></a>         WinWidth=<span class="source_int">0.346258</span>
+<a name="938"></a>         WinHeight=<span class="source_int">0.030000</span>
+<a name="939"></a>         TabOrder=<span class="source_int">0</span>
+<a name="940"></a>         OnChange=<span class="source_type"><a href="../gui2k4/ut2k4tab_playersettings.html" class="source">UT2K4Tab_PlayerSettings</a></span>.InternalOnChange
+<a name="941"></a>         OnKeyEvent=SkinPreview.InternalOnKeyEvent
+<a name="942"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="943"></a>     co_SkinPreview=<span class="source_type"><a href="../xinterface/guicombobox.html" class="source">GUIComboBox</a></span><span class="source_name">'GUI2K4.UT2K4Tab_PlayerSettings.SkinPreview'</span>
+<a name="944"></a>
+<a name="945"></a>     nfov=<span class="source_int">65</span>
+<a name="946"></a>     PanelCaption=<span class="source_string">"Player"</span>
+<a name="947"></a>     WinTop=<span class="source_int">0.150000</span>
+<a name="948"></a>     WinHeight=<span class="source_int">0.720000</span>
+<a name="949"></a>}
+<a name="950"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gui2k4/gui2k4-overview.html">Package</a></td>
+	<td class="header"><a href="../gui2k4/ut2k4tab_playersettings.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#UT2K4Tab_PlayerSettings">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gui2k4/ut2k4tab_playerlogincontrolsonslaught.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gui2k4/ut2k4tab_rulesbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:10.296 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

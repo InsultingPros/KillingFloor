@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: Engine.PlayInfo</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/playinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#PlayInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/playerstart.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/playlistparserbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_engine/playinfo.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/playinfo.html">PlayInfo</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../engine/playinfo.html" class="source">PlayInfo</a></span> extends <span class="source_type"><a href="../core/object.html" class="source">object</a></span>
+<a name="2"></a>	native;
+<a name="3"></a>
+<a name="4"></a><span class="source_comment">// (cpptext)
+</span><a name="5"></a><span class="source_comment">// (cpptext)
+</span><a name="6"></a><span class="source_comment">// (cpptext)
+</span><a name="7"></a><span class="source_comment">// (cpptext)
+</span><a name="8"></a><span class="source_comment">// (cpptext)
+</span><a name="9"></a><span class="source_comment">// (cpptext)
+</span><a name="10"></a><span class="source_comment">// (cpptext)
+</span><a name="11"></a>
+<a name="12"></a>enum <span class="source_type"><a href="../engine/playinfo.html#EPlayInfoType" class="source">EPlayInfoType</a></span>
+<a name="13"></a>{
+<a name="14"></a>	PIT_Check,
+<a name="15"></a>	PIT_Select,
+<a name="16"></a>	PIT_Text,
+<a name="17"></a>	PIT_Custom
+<a name="18"></a>};
+<a name="19"></a>
+<a name="20"></a>struct native init <span class="source_type"><a href="../engine/playinfo.html#PlayInfoData" class="source">PlayInfoData</a></span>
+<a name="21"></a>{
+<a name="22"></a>	var const Property         ThisProp;    <span class="source_comment">// Pointer to property
+</span><a name="23"></a>	var const <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>&gt;      ClassFrom;   <span class="source_comment">// Which class was this Property from
+</span><a name="24"></a>	var const <span class="source_type">string</span>           SettingName; <span class="source_comment">// Name of the class member
+</span><a name="25"></a>	var const <span class="source_type">string</span>           DisplayName; <span class="source_comment">// Display Name of the control (from .INT/.INI File ?)
+</span><a name="26"></a>	var const <span class="source_type">string</span>           Description; <span class="source_comment">// Description of what the property does
+</span><a name="27"></a>	var const <span class="source_type">string</span>           Grouping;    <span class="source_comment">// Grouping for this parameter
+</span><a name="28"></a>	var const <span class="source_type">string</span>           <span class="source_type">Data</span>;        <span class="source_comment">// Extra Data (like Gore Level Texts)
+</span><a name="29"></a>	var const <span class="source_type">string</span>           ExtraPriv;   <span class="source_comment">// Extra Privileges Required to set this parameter
+</span><a name="30"></a>	var const <span class="source_type">string</span>           <span class="source_type">Value</span>;       <span class="source_comment">// Value of the setting
+</span><a name="31"></a>	var const <span class="source_type"><a href="../engine/playinfo.html#EPlayInfoType" class="source">EPlayInfoType</a></span>    RenderType;  <span class="source_comment">// Type of rendered control
+</span><a name="32"></a>	var const <span class="source_type">byte</span>             SecLevel;    <span class="source_comment">// Sec Level Required to set this param. (Read from Ini file afterwards)
+</span><a name="33"></a>	var const <span class="source_type">byte</span>             <span class="source_type">Weight</span>;      <span class="source_comment">// Importance of the setting compared to others in its group
+</span><a name="34"></a>	var const <span class="source_type">bool</span>             bMPOnly;     <span class="source_comment">// This setting should only appear in multi-player context
+</span><a name="35"></a>	var const <span class="source_type">bool</span>             bAdvanced;   <span class="source_comment">// This setting is an advanced property (only displayed when user sets bExpertMode in GUIController)
+</span><a name="36"></a>
+<a name="37"></a>	<span class="source_comment">// Internal flags (set natively)
+</span><a name="38"></a>	var const <span class="source_type">bool</span>             bGlobal;     <span class="source_comment">// globalconfig property
+</span><a name="39"></a>	var const <span class="source_type">bool</span>             bStruct;		<span class="source_comment">// Property is a struct
+</span><a name="40"></a>	var const <span class="source_type">int</span>              ArrayDim;    <span class="source_comment">// -1: Not array, 0: dynamic array,  &gt;1: Static array
+</span><a name="41"></a>};
+<a name="42"></a>
+<a name="43"></a>var const array&lt;<span class="source_type"><a href="../engine/playinfo.html#PlayInfoData" class="source">PlayInfoData</a></span>&gt;	Settings;
+<a name="44"></a>var const array&lt;<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>&gt; &gt;	<span class="source_type">InfoClasses</span>;
+<a name="45"></a>var const array&lt;<span class="source_type">int</span>&gt;			ClassStack;
+<a name="46"></a>var const array&lt;<span class="source_type">string</span>&gt;			Groups;
+<a name="47"></a>var const <span class="source_type">string</span>				LastError;
+<a name="48"></a>
+<a name="49"></a>native(<span class="source_int">700</span>) final function <span class="source_type">bool</span> Clear();
+<a name="50"></a>native(<span class="source_int">701</span>) final function <span class="source_type">bool</span> AddClass(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>&gt; AddingClass);
+<a name="51"></a>native(<span class="source_int">702</span>) final function <span class="source_type">bool</span> RemoveClass(<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>&gt; RemovingClass);
+<a name="52"></a>native(<span class="source_int">703</span>) final function <span class="source_type">bool</span> PopClass();
+<a name="53"></a>native(<span class="source_int">704</span>) final function <span class="source_type">bool</span> AddSetting(<span class="source_type">string</span> <span class="source_type">Group</span>, <span class="source_type">string</span> PropertyName, <span class="source_type">string</span> Description, <span class="source_type">byte</span> SecLevel, <span class="source_type">byte</span> <span class="source_type">Weight</span>, <span class="source_type">string</span> RenderType, optional <span class="source_type">string</span> Extras, optional <span class="source_type">string</span> ExtraPrivs, optional <span class="source_type">bool</span> bMultiPlayerOnly, optional <span class="source_type">bool</span> bAdvanced);
+<a name="54"></a>native(<span class="source_int">705</span>) final function <span class="source_type">bool</span> SaveSettings();	<span class="source_comment">// Saves stored settings to ini file
+</span><a name="55"></a>native(<span class="source_int">706</span>) final function <span class="source_type">bool</span> StoreSetting(<span class="source_type">int</span> <span class="source_type">index</span>, coerce <span class="source_type">string</span> NewVal, optional <span class="source_type">string</span> RangeData);	<span class="source_comment">// Only validates and sets Settins[index].Value to passed value
+</span><a name="56"></a>native(<span class="source_int">707</span>) final function <span class="source_type">bool</span> GetSettings(<span class="source_type">string</span> GroupName, out array&lt;<span class="source_type"><a href="../engine/playinfo.html#PlayInfoData" class="source">PlayInfoData</a></span>&gt; GroupSettings);	<span class="source_comment">// rjp
+</span><a name="57"></a>native(<span class="source_int">708</span>) final function <span class="source_type">int</span>  FindIndex(<span class="source_type">string</span> SettingName);
+<a name="58"></a>
+<a name="59"></a><span class="source_comment">// 0 = Grouping, 1 = Weight, 2 = RenderType, 3 = DisplayName, 4 = SettingName, 5 = SecLevel
+</span><a name="60"></a><span class="source_comment">// 6 = RevGroup, 1 = RevWeight, etc.
+</span><a name="61"></a><span class="source_comment">// Equal items will be sorted by the next highest type
+</span><a name="62"></a>native(<span class="source_int">709</span>) final function Sort(<span class="source_type">byte</span> SortingMethod);
+<a name="63"></a>
+<a name="64"></a>final function Dump( optional <span class="source_type">string</span> <span class="source_type">group</span> )
+<a name="65"></a>{
+<a name="66"></a>local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="67"></a>	log(<span class="source_string">"** Dumping settings array for PlayInfo object '"</span>$<span class="source_type">Name</span>$<span class="source_string">"' **"</span>);
+<a name="68"></a>
+<a name="69"></a>	log(<span class="source_string">"** Classes:"</span>@<span class="source_type">InfoClasses</span>.Length);
+<a name="70"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">InfoClasses</span>.Length; <span class="source_type">i</span>++ )
+<a name="71"></a>		log(<span class="source_string">"   "</span>$<span class="source_type">i</span>$<span class="source_string">")"</span>@<span class="source_type">InfoClasses</span>[<span class="source_type">i</span>].<span class="source_type">Name</span>);
+<a name="72"></a>	log(<span class="source_string">""</span>);
+<a name="73"></a>
+<a name="74"></a>	log(<span class="source_string">"** Groups:"</span>@Groups.Length);
+<a name="75"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Groups.Length; <span class="source_type">i</span>++)
+<a name="76"></a>		log(<span class="source_string">"   "</span>$<span class="source_type">i</span>$<span class="source_string">")"</span>@Groups[<span class="source_type">i</span>]);
+<a name="77"></a>	log(<span class="source_string">""</span>);
+<a name="78"></a>
+<a name="79"></a>	Log(<span class="source_string">"** Settings:"</span>@Settings.Length);
+<a name="80"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span>&lt;Settings.Length; <span class="source_type">i</span>++)
+<a name="81"></a>	{
+<a name="82"></a>		if ( <span class="source_type">group</span> == <span class="source_string">""</span> || <span class="source_type">group</span> ~= Settings[<span class="source_type">i</span>].Grouping )
+<a name="83"></a>		{
+<a name="84"></a>			Log(<span class="source_type">i</span>$<span class="source_string">")"</span>@Settings[<span class="source_type">i</span>].SettingName);
+<a name="85"></a>			log(<span class="source_string">"            DisplayName:"</span>@Settings[<span class="source_type">i</span>].DisplayName);
+<a name="86"></a>			log(<span class="source_string">"              ClassFrom:"</span>@Settings[<span class="source_type">i</span>].ClassFrom);
+<a name="87"></a>			log(<span class="source_string">"                  Group:"</span>@Settings[<span class="source_type">i</span>].Grouping);
+<a name="88"></a>			log(<span class="source_string">"                  Value:"</span>@Settings[<span class="source_type">i</span>].<span class="source_type">Value</span>);
+<a name="89"></a>			log(<span class="source_string">"                   Data:"</span>@Settings[<span class="source_type">i</span>].<span class="source_type">Data</span>);
+<a name="90"></a>			log(<span class="source_string">"                 Weight:"</span>@Settings[<span class="source_type">i</span>].<span class="source_type">Weight</span>);
+<a name="91"></a>			log(<span class="source_string">"                 Struct:"</span>@Settings[<span class="source_type">i</span>].bStruct);
+<a name="92"></a>			log(<span class="source_string">"                 Global:"</span>@Settings[<span class="source_type">i</span>].bGlobal);
+<a name="93"></a>			log(<span class="source_string">"                 MPOnly:"</span>@Settings[<span class="source_type">i</span>].bMPOnly);
+<a name="94"></a>			log(<span class="source_string">"               SecLevel:"</span>@Settings[<span class="source_type">i</span>].SecLevel);
+<a name="95"></a>			log(<span class="source_string">"               ArrayDim:"</span>@Settings[<span class="source_type">i</span>].ArrayDim);
+<a name="96"></a>			log(<span class="source_string">"              bAdvanced:"</span>@Settings[<span class="source_type">i</span>].bAdvanced);
+<a name="97"></a>			log(<span class="source_string">"              ExtraPriv:"</span>@Settings[<span class="source_type">i</span>].ExtraPriv);
+<a name="98"></a>			log(<span class="source_string">"             RenderType:"</span>@GetEnum(enum<span class="source_name">'EPlayInfoType'</span>,Settings[<span class="source_type">i</span>].RenderType));
+<a name="99"></a>			log(<span class="source_string">""</span>);
+<a name="100"></a>		}
+<a name="101"></a>	}
+<a name="102"></a>}
+<a name="103"></a>
+<a name="104"></a><span class="source_comment">// Specify bStrict to purge any secondary classes from the Classes stack
+</span><a name="105"></a>final function <span class="source_type">bool</span> Init(array&lt;<span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/info.html" class="source">Info</a></span>&gt; &gt; Classes, optional <span class="source_type">bool</span> bStrict)
+<a name="106"></a>{
+<a name="107"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>, j;
+<a name="108"></a>	local <span class="source_type">bool</span> <span class="source_type">b</span>;
+<a name="109"></a>
+<a name="110"></a>	if (Classes.Length == <span class="source_int">0</span>)
+<a name="111"></a>		return <span class="source_type">b</span>;
+<a name="112"></a>
+<a name="113"></a>	<span class="source_type">b</span> = True;
+<a name="114"></a>
+<a name="115"></a>	Clear();
+<a name="116"></a>	for (<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Classes.Length; <span class="source_type">i</span>++)
+<a name="117"></a>	{
+<a name="118"></a>		if (Classes[<span class="source_type">i</span>] == None)
+<a name="119"></a>		{
+<a name="120"></a>			log(<span class="source_string">"Call in PlayInfo.Init() with 'None' value for Class array member.  Index:"</span>$<span class="source_type">i</span>);
+<a name="121"></a>			Classes.Remove(<span class="source_type">i</span>--, <span class="source_int">1</span>);
+<a name="122"></a>			continue;
+<a name="123"></a>		}
+<a name="124"></a>		Classes[<span class="source_type">i</span>].static.FillPlayInfo(Self);
+<a name="125"></a>	}
+<a name="126"></a>
+<a name="127"></a>	if ( bStrict )
+<a name="128"></a>	{
+<a name="129"></a>		for ( <span class="source_type">i</span> = <span class="source_type">InfoClasses</span>.Length - <span class="source_int">1</span>; <span class="source_type">i</span> &gt;= <span class="source_int">0</span>; <span class="source_type">i</span>-- )
+<a name="130"></a>		{
+<a name="131"></a>			for (j = <span class="source_int">0</span>; j &lt; Classes.Length; j++)
+<a name="132"></a>				if (<span class="source_type">InfoClasses</span>[<span class="source_type">i</span>] == Classes[j])
+<a name="133"></a>					break;
+<a name="134"></a>
+<a name="135"></a>			if (j &lt; Classes.Length)
+<a name="136"></a>				continue;
+<a name="137"></a>
+<a name="138"></a>			<span class="source_type">b</span> = <span class="source_type">b</span> && RemoveClass(<span class="source_type">InfoClasses</span>[<span class="source_type">i</span>]);
+<a name="139"></a>		}
+<a name="140"></a>	}
+<a name="141"></a>
+<a name="142"></a>	return <span class="source_type">b</span>;
+<a name="143"></a>}
+<a name="144"></a>
+<a name="145"></a>final function <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt; GetGameInfo()
+<a name="146"></a>{
+<a name="147"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="148"></a>	for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">InfoClasses</span>.Length; <span class="source_type">i</span>++ )
+<a name="149"></a>		if ( <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;( <span class="source_type">InfoClasses</span>[<span class="source_type">i</span>] ) != None )
+<a name="150"></a>			return <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/gameinfo.html" class="source">GameInfo</a></span>&gt;(<span class="source_type">InfoClasses</span>[<span class="source_type">i</span>]);
+<a name="151"></a>
+<a name="152"></a>	return None;
+<a name="153"></a>}
+<a name="154"></a>
+<a name="155"></a>final function SplitStringToArray(out array&lt;<span class="source_type">string</span>&gt; Parts, <span class="source_type">string</span> <span class="source_type">Source</span>, <span class="source_type">string</span> Delim)
+<a name="156"></a>{
+<a name="157"></a>	Split(<span class="source_type">Source</span>, Delim, Parts);
+<a name="158"></a>}
+<a name="159"></a>
+<a name="160"></a>defaultproperties
+<a name="161"></a>{
+<a name="162"></a>}
+<a name="163"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header"><a href="../engine/playinfo.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#PlayInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_engine/playerstart.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_engine/playlistparserbase.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:06.427 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

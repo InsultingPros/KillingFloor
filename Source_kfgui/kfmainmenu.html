@@ -1,0 +1,1120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: KFGui.KFMainMenu</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kfmainmenu.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFMainMenu">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kflogincontrols.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kfmainpage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_kfgui/kfmainmenu.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../kfgui/kfgui-overview.html">KFGui</a>.<a href="../kfgui/kfmainmenu.html">KFMainMenu</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040<br />
+00041<br />00042<br />00043<br />00044<br />00045<br />00046<br />00047<br />00048<br />00049<br />00050<br />00051<br />00052<br />00053<br />00054<br />00055<br />00056<br />00057<br />00058<br />00059<br />00060<br />
+00061<br />00062<br />00063<br />00064<br />00065<br />00066<br />00067<br />00068<br />00069<br />00070<br />00071<br />00072<br />00073<br />00074<br />00075<br />00076<br />00077<br />00078<br />00079<br />00080<br />
+00081<br />00082<br />00083<br />00084<br />00085<br />00086<br />00087<br />00088<br />00089<br />00090<br />00091<br />00092<br />00093<br />00094<br />00095<br />00096<br />00097<br />00098<br />00099<br />00100<br />
+00101<br />00102<br />00103<br />00104<br />00105<br />00106<br />00107<br />00108<br />00109<br />00110<br />00111<br />00112<br />00113<br />00114<br />00115<br />00116<br />00117<br />00118<br />00119<br />00120<br />
+00121<br />00122<br />00123<br />00124<br />00125<br />00126<br />00127<br />00128<br />00129<br />00130<br />00131<br />00132<br />00133<br />00134<br />00135<br />00136<br />00137<br />00138<br />00139<br />00140<br />
+00141<br />00142<br />00143<br />00144<br />00145<br />00146<br />00147<br />00148<br />00149<br />00150<br />00151<br />00152<br />00153<br />00154<br />00155<br />00156<br />00157<br />00158<br />00159<br />00160<br />
+00161<br />00162<br />00163<br />00164<br />00165<br />00166<br />00167<br />00168<br />00169<br />00170<br />00171<br />00172<br />00173<br />00174<br />00175<br />00176<br />00177<br />00178<br />00179<br />00180<br />
+00181<br />00182<br />00183<br />00184<br />00185<br />00186<br />00187<br />00188<br />00189<br />00190<br />00191<br />00192<br />00193<br />00194<br />00195<br />00196<br />00197<br />00198<br />00199<br />00200<br />
+00201<br />00202<br />00203<br />00204<br />00205<br />00206<br />00207<br />00208<br />00209<br />00210<br />00211<br />00212<br />00213<br />00214<br />00215<br />00216<br />00217<br />00218<br />00219<br />00220<br />
+00221<br />00222<br />00223<br />00224<br />00225<br />00226<br />00227<br />00228<br />00229<br />00230<br />00231<br />00232<br />00233<br />00234<br />00235<br />00236<br />00237<br />00238<br />00239<br />00240<br />
+00241<br />00242<br />00243<br />00244<br />00245<br />00246<br />00247<br />00248<br />00249<br />00250<br />00251<br />00252<br />00253<br />00254<br />00255<br />00256<br />00257<br />00258<br />00259<br />00260<br />
+00261<br />00262<br />00263<br />00264<br />00265<br />00266<br />00267<br />00268<br />00269<br />00270<br />00271<br />00272<br />00273<br />00274<br />00275<br />00276<br />00277<br />00278<br />00279<br />00280<br />
+00281<br />00282<br />00283<br />00284<br />00285<br />00286<br />00287<br />00288<br />00289<br />00290<br />00291<br />00292<br />00293<br />00294<br />00295<br />00296<br />00297<br />00298<br />00299<br />00300<br />
+00301<br />00302<br />00303<br />00304<br />00305<br />00306<br />00307<br />00308<br />00309<br />00310<br />00311<br />00312<br />00313<br />00314<br />00315<br />00316<br />00317<br />00318<br />00319<br />00320<br />
+00321<br />00322<br />00323<br />00324<br />00325<br />00326<br />00327<br />00328<br />00329<br />00330<br />00331<br />00332<br />00333<br />00334<br />00335<br />00336<br />00337<br />00338<br />00339<br />00340<br />
+00341<br />00342<br />00343<br />00344<br />00345<br />00346<br />00347<br />00348<br />00349<br />00350<br />00351<br />00352<br />00353<br />00354<br />00355<br />00356<br />00357<br />00358<br />00359<br />00360<br />
+00361<br />00362<br />00363<br />00364<br />00365<br />00366<br />00367<br />00368<br />00369<br />00370<br />00371<br />00372<br />00373<br />00374<br />00375<br />00376<br />00377<br />00378<br />00379<br />00380<br />
+00381<br />00382<br />00383<br />00384<br />00385<br />00386<br />00387<br />00388<br />00389<br />00390<br />00391<br />00392<br />00393<br />00394<br />00395<br />00396<br />00397<br />00398<br />00399<br />00400<br />
+00401<br />00402<br />00403<br />00404<br />00405<br />00406<br />00407<br />00408<br />00409<br />00410<br />00411<br />00412<br />00413<br />00414<br />00415<br />00416<br />00417<br />00418<br />00419<br />00420<br />
+00421<br />00422<br />00423<br />00424<br />00425<br />00426<br />00427<br />00428<br />00429<br />00430<br />00431<br />00432<br />00433<br />00434<br />00435<br />00436<br />00437<br />00438<br />00439<br />00440<br />
+00441<br />00442<br />00443<br />00444<br />00445<br />00446<br />00447<br />00448<br />00449<br />00450<br />00451<br />00452<br />00453<br />00454<br />00455<br />00456<br />00457<br />00458<br />00459<br />00460<br />
+00461<br />00462<br />00463<br />00464<br />00465<br />00466<br />00467<br />00468<br />00469<br />00470<br />00471<br />00472<br />00473<br />00474<br />00475<br />00476<br />00477<br />00478<br />00479<br />00480<br />
+00481<br />00482<br />00483<br />00484<br />00485<br />00486<br />00487<br />00488<br />00489<br />00490<br />00491<br />00492<br />00493<br />00494<br />00495<br />00496<br />00497<br />00498<br />00499<br />00500<br />
+00501<br />00502<br />00503<br />00504<br />00505<br />00506<br />00507<br />00508<br />00509<br />00510<br />00511<br />00512<br />00513<br />00514<br />00515<br />00516<br />00517<br />00518<br />00519<br />00520<br />
+00521<br />00522<br />00523<br />00524<br />00525<br />00526<br />00527<br />00528<br />00529<br />00530<br />00531<br />00532<br />00533<br />00534<br />00535<br />00536<br />00537<br />00538<br />00539<br />00540<br />
+00541<br />00542<br />00543<br />00544<br />00545<br />00546<br />00547<br />00548<br />00549<br />00550<br />00551<br />00552<br />00553<br />00554<br />00555<br />00556<br />00557<br />00558<br />00559<br />00560<br />
+00561<br />00562<br />00563<br />00564<br />00565<br />00566<br />00567<br />00568<br />00569<br />00570<br />00571<br />00572<br />00573<br />00574<br />00575<br />00576<br />00577<br />00578<br />00579<br />00580<br />
+00581<br />00582<br />00583<br />00584<br />00585<br />00586<br />00587<br />00588<br />00589<br />00590<br />00591<br />00592<br />00593<br />00594<br />00595<br />00596<br />00597<br />00598<br />00599<br />00600<br />
+00601<br />00602<br />00603<br />00604<br />00605<br />00606<br />00607<br />00608<br />00609<br />00610<br />00611<br />00612<br />00613<br />00614<br />00615<br />00616<br />00617<br />00618<br />00619<br />00620<br />
+00621<br />00622<br />00623<br />00624<br />00625<br />00626<br />00627<br />00628<br />00629<br />00630<br />00631<br />00632<br />00633<br />00634<br />00635<br />00636<br />00637<br />00638<br />00639<br />00640<br />
+00641<br />00642<br />00643<br />00644<br />00645<br />00646<br />00647<br />00648<br />00649<br />00650<br />00651<br />00652<br />00653<br />00654<br />00655<br />00656<br />00657<br />00658<br />00659<br />00660<br />
+00661<br />00662<br />00663<br />00664<br />00665<br />00666<br />00667<br />00668<br />00669<br />00670<br />00671<br />00672<br />00673<br />00674<br />00675<br />00676<br />00677<br />00678<br />00679<br />00680<br />
+00681<br />00682<br />00683<br />00684<br />00685<br />00686<br />00687<br />00688<br />00689<br />00690<br />00691<br />00692<br />00693<br />00694<br />00695<br />00696<br />00697<br />00698<br />00699<br />00700<br />
+00701<br />00702<br />00703<br />00704<br />00705<br />00706<br />00707<br />00708<br />00709<br />00710<br />00711<br />00712<br />00713<br />00714<br />00715<br />00716<br />00717<br />00718<br />00719<br />00720<br />
+00721<br />00722<br />00723<br />00724<br />00725<br />00726<br />00727<br />00728<br />00729<br />00730<br />00731<br />00732<br />00733<br />00734<br />00735<br />00736<br />00737<br />00738<br />00739<br />00740<br />
+00741<br />00742<br />00743<br />00744<br />00745<br />00746<br />00747<br />00748<br />00749<br />00750<br />00751<br />00752<br />00753<br />00754<br />00755<br />00756<br />00757<br />00758<br />00759<br />00760<br />
+00761<br />00762<br />00763<br />00764<br />00765<br />00766<br />00767<br />00768<br />00769<br />00770<br />00771<br />00772<br />00773<br />00774<br />00775<br />00776<br />00777<br />00778<br />00779<br />00780<br />
+00781<br />00782<br />00783<br />00784<br />00785<br />00786<br />00787<br />00788<br />00789<br />00790<br />00791<br />00792<br />00793<br />00794<br />00795<br />00796<br />00797<br />00798<br />00799<br />00800<br />
+00801<br />00802<br />00803<br />00804<br />00805<br />00806<br />00807<br />00808<br />00809<br />00810<br />00811<br />00812<br />00813<br />00814<br />00815<br />00816<br />00817<br />00818<br />00819<br />00820<br />
+00821<br />00822<br />00823<br />00824<br />00825<br />00826<br />00827<br />00828<br />00829<br />00830<br />00831<br />00832<br />00833<br />00834<br />00835<br />00836<br />00837<br />00838<br />00839<br />00840<br />
+00841<br />00842<br />00843<br />00844<br />00845<br />00846<br />00847<br />00848<br />00849<br />00850<br />00851<br />00852<br />00853<br />00854<br />00855<br />00856<br />00857<br />00858<br />00859<br />00860<br />
+00861<br />00862<br />00863<br />00864<br />00865<br />00866<br />00867<br />00868<br />00869<br />00870<br />00871<br />00872<br />00873<br />00874<br />00875<br />00876<br />00877<br />00878<br />00879<br />00880<br />
+00881<br />00882<br />00883<br />00884<br />00885<br />00886<br />00887<br />00888<br />00889<br />00890<br />00891<br />00892<br />00893<br />00894<br />00895<br />00896<br />00897<br />00898<br />00899<br />00900<br />
+00901<br />00902<br />00903<br />00904<br />00905<br />00906<br />00907<br />00908<br />00909<br />00910<br />00911<br />00912<br />00913<br />00914<br />00915<br />00916<br />00917<br />00918<br />00919<br />00920<br />
+00921<br />00922<br />00923<br />00924<br />00925<br />00926<br />00927<br />00928<br />00929<br />00930<br />00931<br />00932<br />00933<br />00934<br />00935<br />00936<br />00937<br />00938<br />00939<br />00940<br />
+00941<br />00942<br />00943<br />00944<br />00945<br />00946<br />00947<br />00948<br />00949<br />00950<br />00951<br />00952<br />00953<br />00954<br />00955<br />00956<br />00957<br />00958<br />00959<br />00960<br />
+00961<br />00962<br />00963<br />00964<br />00965<br />00966<br />00967<br />00968<br />00969<br />00970<br />00971<br />00972<br />00973<br />00974<br />00975<br />00976<br />00977<br />00978<br />00979<br />00980<br />
+00981<br />00982<br />00983<br />00984<br />00985<br />00986<br />00987<br />00988<br />00989<br />00990<br />00991<br />00992<br />00993<br />00994<br />00995<br />00996<br />00997<br />00998<br />00999<br />01000<br />
+01001<br />01002<br />01003<br />01004<br />01005<br />01006<br />01007<br />01008<br />01009<br />01010<br />01011<br />01012</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span> extends <span class="source_type"><a href="../xinterface/ut2k4guipage.html" class="source">UT2K4GUIPage</a></span>;
+<a name="2"></a>
+<a name="3"></a><span class="source_comment">//var KFDataObject SPAmmo;
+</span><a name="4"></a>var             <span class="source_type">bool</span>        		bOpenAlready;
+<a name="5"></a>var             <span class="source_type">bool</span>        		bMovingOnTraining,
+<a name="6"></a>									bMovingOnResume,
+<a name="7"></a>									bMovingOnSP;
+<a name="8"></a>
+<a name="9"></a>var automated   <span class="source_type"><a href="../xinterface/floatingimage.html" class="source">FloatingImage</a></span>		KFBackground;
+<a name="10"></a>var automated   <span class="source_type"><a href="../xinterface/floatingimage.html" class="source">FloatingImage</a></span>		KFBackgroundOverlay;
+<a name="11"></a>var automated   <span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>    		KFLogoBit;
+<a name="12"></a>var automated   <span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span>    		KFVersionNum;   <span class="source_comment">// Keep track of updates from now on ! :D
+</span><a name="13"></a>var automated   <span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span>    		KFWorkshopDownload;
+<a name="14"></a>
+<a name="15"></a>var	transient	<span class="source_type">bool</span>				bOwnsWeaponDLC;
+<a name="16"></a>var transient   <span class="source_type">int</span>                 WeaponDLCID;
+<a name="17"></a>var             <span class="source_type">int</span>                 WeaponBundle;
+<a name="18"></a>var             array&lt;<span class="source_type">int</span>&gt;          WeaponDLCs;
+<a name="19"></a>var automated	<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>    		KFWeaponDLCImage;
+<a name="20"></a>var automated	<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>    		KFWeaponDLCOverlay;
+<a name="21"></a>var 			<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>				KFWeaponDLCOwnedTexture;
+<a name="22"></a>var 			<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>				KFWeaponDLCOverlayTexture;
+<a name="23"></a>var 			<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>				KFWeaponDLCHoverTexture;
+<a name="24"></a>
+<a name="25"></a>var	transient	<span class="source_type">bool</span>				bOwnsCharacterDLC;
+<a name="26"></a>var const       <span class="source_type">string</span>              CharacterDLCName;
+<a name="27"></a>var automated   <span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>    		KFCharacterDLCImage;
+<a name="28"></a>var automated   <span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>    		KFCharacterDLCOverlay;
+<a name="29"></a>var 			<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>				KFCharacterDLCOwnedTexture;
+<a name="30"></a>var 			<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>				KFCharacterDLCOverlayTexture;
+<a name="31"></a>var 			<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>				KFCharacterDLCHoverTexture;
+<a name="32"></a>
+<a name="33"></a><span class="source_macro">#exec OBJ LOAD FILE=InterfaceContent.utx
+</span><a name="34"></a><span class="source_macro">#exec OBJ LOAD FIlE=2K4Menus.utx
+</span><a name="35"></a><span class="source_macro">#exec OBJ LOAD FIlE=2K4MenuSounds.uax
+</span><a name="36"></a>
+<a name="37"></a><span class="source_macro">#exec OBJ LOAD FIlE=2K4Menus.utx
+</span><a name="38"></a><span class="source_macro">#exec OBJ LOAD FIlE=PatchTex.utx
+</span><a name="39"></a><span class="source_macro">#exec OBJ LOAD FIlE=KF_DLC.utx
+</span><a name="40"></a>
+<a name="41"></a><span class="source_macro">#exec OBJ LOAD FIlE=KillingFloorHUD_SUMMER.utx
+</span><a name="42"></a><span class="source_macro">#exec OBJ LOAD FIlE=KillingFloorHUD_HALLOWEEN.utx
+</span><a name="43"></a><span class="source_macro">#exec OBJ LOAD FIlE=KillingFloorHUD_XMAS.utx
+</span><a name="44"></a><span class="source_comment">/*
+<a name="45"></a>    Variable Name Legend
+<a name="46"></a>
+<a name="47"></a>    l_  GUILabel            lb_ GUIListBox
+<a name="48"></a>    i_  GUIImage            li_ GUIList
+<a name="49"></a>    b_  GUIButton           tp_ GUITabPanel
+<a name="50"></a>    t_  GUITitleBar         sp_ GUISplitter
+<a name="51"></a>    c_  GUITabControl
+<a name="52"></a>    p_  GUIPanel
+<a name="53"></a>
+<a name="54"></a>    ch_ moCheckBox
+<a name="55"></a>    co_ moComboBox
+<a name="56"></a>    nu_ moNumericEdit
+<a name="57"></a>    ed_ moEditBox
+<a name="58"></a>    fl_ moFloatEdit
+<a name="59"></a>    sl_ moSlider
+<a name="60"></a>*/</span>
+<a name="61"></a>
+<a name="62"></a>var automated   <span class="source_type"><a href="../xinterface/backgroundimage.html" class="source">BackgroundImage</a></span> 	i_BkChar,
+<a name="63"></a>                                	i_Background;
+<a name="64"></a>var automated	<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span>        	i_UT2Logo,
+<a name="65"></a>                                	i_PanHuge,
+<a name="66"></a>                                	i_PanBig,
+<a name="67"></a>                                	i_PanSmall,
+<a name="68"></a>                                	i_UT2Shader,
+<a name="69"></a>                                	i_TV;
+<a name="70"></a>var automated   <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>   		b_SinglePlayer,
+<a name="71"></a>									b_MultiPlayer, b_Host,
+<a name="72"></a>                            		b_InstantAction,
+<a name="73"></a>									b_ModsAndDemo,
+<a name="74"></a>									b_Profile,
+<a name="75"></a>									b_DLC,
+<a name="76"></a>									b_Workshop,
+<a name="77"></a>									b_Settings,
+<a name="78"></a>									b_Quit;
+<a name="79"></a>
+<a name="80"></a>var 			<span class="source_type">bool</span>    			bAllowClose;
+<a name="81"></a>
+<a name="82"></a>var 			array&lt;<span class="source_type"><a href="../engine/material.html" class="source">material</a></span>&gt; 	CharShots;
+<a name="83"></a>
+<a name="84"></a>var 			<span class="source_type">float</span> 				CharFade,
+<a name="85"></a>									DesiredCharFade,
+<a name="86"></a>									CharFadeTime;
+<a name="87"></a>
+<a name="88"></a>var 			<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> 			Selected;
+<a name="89"></a>var() 			<span class="source_type">bool</span> 				bNoInitDelay;
+<a name="90"></a>
+<a name="91"></a>var() config 	<span class="source_type">string</span> 				MenuSong;
+<a name="92"></a>
+<a name="93"></a>var 			<span class="source_type">bool</span> 				bNewNews;
+<a name="94"></a>var 			<span class="source_type">float</span> 				FadeTime;
+<a name="95"></a>var 			<span class="source_type">bool</span>				FadeOut;
+<a name="96"></a>
+<a name="97"></a>var localized 	<span class="source_type">string</span> 				NewNewsMsg,
+<a name="98"></a>									FireWallTitle,
+<a name="99"></a>									FireWallMsg,
+<a name="100"></a>									SteamMustBeRunningText,
+<a name="101"></a>									UnknownSteamErrorText,
+<a name="102"></a>									DownloadingText,
+<a name="103"></a>									DownloadedText;
+<a name="104"></a>
+<a name="105"></a>var globalconfig <span class="source_type">bool</span> AcceptedEULA;
+<a name="106"></a>
+<a name="107"></a>function <span class="source_type">int</span> GetDLCListTextureIndex()
+<a name="108"></a>{
+<a name="109"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="110"></a>    for(<span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">class</span><span class="source_name">'KFDLCList'</span>.default.WeaponAppIDs.Length;<span class="source_type">i</span>++)
+<a name="111"></a>    {
+<a name="112"></a>        if( WeaponDLCID == <span class="source_type">class</span><span class="source_name">'KFDLCList'</span>.default.WeaponAppIDs[<span class="source_type">i</span>] )
+<a name="113"></a>        {
+<a name="114"></a>            return <span class="source_type">i</span>;
+<a name="115"></a>        }
+<a name="116"></a>    }
+<a name="117"></a>}
+<a name="118"></a>
+<a name="119"></a>function InitComponent(<span class="source_type"><a href="../xinterface/guicontroller.html" class="source">GUIController</a></span> MyController, <span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">MyOwner</span>)
+<a name="120"></a>{
+<a name="121"></a>    local <span class="source_type">byte</span> SpecialEventType;
+<a name="122"></a>	Super.InitComponent(MyController, <span class="source_type">MyOwner</span>);
+<a name="123"></a>
+<a name="124"></a>   	Background = none;
+<a name="125"></a>    i_BkChar.<span class="source_type">Image</span> = CharShots[rand(CharShots.Length)];
+<a name="126"></a>
+<a name="127"></a>    WeaponDLCID = DetermineWeaponDLC();
+<a name="128"></a>    UpdateDLCOwnership();
+<a name="129"></a>
+<a name="130"></a>	SpecialEventType = <span class="source_type">class</span><span class="source_name">'KFGameType'</span>.static.GetSpecialEventType();
+<a name="131"></a>
+<a name="132"></a>    if( SpecialEventType == <span class="source_int">1</span> )
+<a name="133"></a>    {
+<a name="134"></a>        KFBackground.<span class="source_type">Image</span> = <span class="source_type"><a href="../engine/materialsequence.html" class="source">MaterialSequence</a></span><span class="source_name">'KillingFloorHUD_SUMMER.MainMenu.kf_menu_seq'</span>;
+<a name="135"></a>        KFLogoBit.<span class="source_type">Image</span> = <span class="source_type"><a href="../engine/finalblend.html" class="source">FinalBlend</a></span><span class="source_name">'KillingFloorHUD_SUMMER.KFLogoFB'</span>;
+<a name="136"></a>    }    
+<a name="137"></a>    else if( SpecialEventType == <span class="source_int">2</span> )
+<a name="138"></a>    {
+<a name="139"></a>        KFBackground.<span class="source_type">Image</span> = <span class="source_type"><a href="../engine/materialsequence.html" class="source">MaterialSequence</a></span><span class="source_name">'KillingFloorHUD_HALLOWEEN.MainMenu.kf_menu_seq_HALLOWEEN'</span>;
+<a name="140"></a>        KFLogoBit.<span class="source_type">Image</span> = <span class="source_type"><a href="../engine/finalblend.html" class="source">FinalBlend</a></span><span class="source_name">'KillingFloorHUD_HALLOWEEN.KFLogoFB_halloween'</span>;
+<a name="141"></a>    }
+<a name="142"></a>    else if( SpecialEventType == <span class="source_int">3</span> )
+<a name="143"></a>    {
+<a name="144"></a>        KFBackground.<span class="source_type">Image</span> = <span class="source_type"><a href="../engine/materialsequence.html" class="source">MaterialSequence</a></span><span class="source_name">'KillingFloorHUD_XMAS.MainMenu.kf_menu_seq_XMAS'</span>;
+<a name="145"></a>        KFLogoBit.<span class="source_type">Image</span> = <span class="source_type"><a href="../engine/finalblend.html" class="source">FinalBlend</a></span><span class="source_name">'KillingFloorHUD_XMAS.KFLogoFB_XMAS'</span>;
+<a name="146"></a>    }
+<a name="147"></a>}
+<a name="148"></a>
+<a name="149"></a>function <span class="source_type">int</span> DetermineWeaponDLC()
+<a name="150"></a>{
+<a name="151"></a>   local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="152"></a>   local array&lt;<span class="source_type">int</span>&gt; dlcsAvailable;
+<a name="153"></a>   if( WeaponDLCs.Length == <span class="source_int">1</span> )
+<a name="154"></a>   {
+<a name="155"></a>       return WeaponDLCs[<span class="source_int">0</span>];
+<a name="156"></a>   }
+<a name="157"></a>   for( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; WeaponDLCs.Length; <span class="source_type">i</span>++ )
+<a name="158"></a>   {
+<a name="159"></a>       if( !PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC(WeaponDLCs[<span class="source_type">i</span>]) )
+<a name="160"></a>       {
+<a name="161"></a>          dlcsAvailable.Insert(<span class="source_int">0</span>, <span class="source_int">1</span>);
+<a name="162"></a>          dlcsAvailable[<span class="source_int">0</span>] = WeaponDLCs[<span class="source_type">i</span>] ;
+<a name="163"></a>       }
+<a name="164"></a>   }
+<a name="165"></a>
+<a name="166"></a>
+<a name="167"></a>   if ( dlcsAvailable.Length == <span class="source_int">0</span> || ( WeaponDLCs.Length == dlcsAvailable.Length  && dlcsAvailable.Length != <span class="source_int">1</span>) )
+<a name="168"></a>   {
+<a name="169"></a>        return WeaponBundle;
+<a name="170"></a>   }
+<a name="171"></a>   else
+<a name="172"></a>   {
+<a name="173"></a>       return dlcsAvailable[ rand( dlcsAvailable.Length ) ];
+<a name="174"></a>   }
+<a name="175"></a>}
+<a name="176"></a>
+<a name="177"></a>function InternalOnOpen()
+<a name="178"></a>{
+<a name="179"></a>	if ( bNoInitDelay )
+<a name="180"></a>	{
+<a name="181"></a>		Timer();
+<a name="182"></a>	}
+<a name="183"></a>	else
+<a name="184"></a>	{
+<a name="185"></a>		SetTimer(<span class="source_int">4.5</span>, false);
+<a name="186"></a>	}
+<a name="187"></a>
+<a name="188"></a>	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.PerformRestore();
+<a name="189"></a>
+<a name="190"></a>	<span class="source_comment">/*if ( !PlayerOwner().level.game.IsA('KFCinematicGame') )
+<a name="191"></a>	{
+<a name="192"></a>		bOpenAlready = True;
+<a name="193"></a>		PlayerOwner().ConsoleCommand("OPEN Entry?Game=KFMod.KFCinematicGame");
+<a name="194"></a>		PlayerOwner().ClientSetInitialMusic(MenuSong,MTRAN_Segue);
+<a name="195"></a>	}*/</span>
+<a name="196"></a>
+<a name="197"></a>	PlayerOwner().ClientSetInitialMusic(MenuSong,MTRAN_Segue);
+<a name="198"></a>
+<a name="199"></a>	<span class="source_comment">// if this is the first time launching the game, show the EULA.
+</span><a name="200"></a>	if (!AcceptedEULA)
+<a name="201"></a>	{
+<a name="202"></a>	   <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"KFGui.KFEULA"</span>);
+<a name="203"></a>	}
+<a name="204"></a>
+<a name="205"></a>	<span class="source_comment">// Begin Syncing Subscribed Steam Workshop Files(if necessary)
+</span><a name="206"></a>	PlayerOwner().SyncSteamWorkshop();
+<a name="207"></a>}
+<a name="208"></a>
+<a name="209"></a>function <span class="source_type">bool</span> MyOnDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="210"></a>{
+<a name="211"></a>    local <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> FButton;
+<a name="212"></a>    local <span class="source_type">int</span> <span class="source_type">i</span>,x2;
+<a name="213"></a>    local <span class="source_type">float</span> XL,<span class="source_type">YL</span>;
+<a name="214"></a>    local <span class="source_type">float</span> <span class="source_type">DeltaTime</span>;
+<a name="215"></a>    local <span class="source_type">int</span> percentage;
+<a name="216"></a>
+<a name="217"></a>	if ( PlayerOwner().SubscribedFileDownloadTitle != <span class="source_string">""</span> )
+<a name="218"></a>	{
+<a name="219"></a>		if ( PlayerOwner().SubscribedFileDownloadIndex != -<span class="source_int">1</span> )
+<a name="220"></a>		{
+<a name="221"></a>		    percentage = <span class="source_type">int</span>(PlayerOwner().DownloadFileProgress * <span class="source_int">100</span>);
+<a name="222"></a>			KFWorkshopDownload.<span class="source_type">Caption</span> = DownloadingText @ <span class="source_string">"|"</span> @ PlayerOwner().SubscribedFileDownloadTitle @  <span class="source_string">"|"</span> @percentage $ <span class="source_string">"%"</span>;
+<a name="223"></a>		}
+<a name="224"></a>		else
+<a name="225"></a>		{
+<a name="226"></a>			KFWorkshopDownload.<span class="source_type">Caption</span> = PlayerOwner().SubscribedFileDownloadTitle @ <span class="source_string">"|"</span> @ DownloadedText;
+<a name="227"></a>		}
+<a name="228"></a>	}
+<a name="229"></a>
+<a name="230"></a>
+<a name="231"></a>    if ( bAnimating || !<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bCurMenuInitialized )
+<a name="232"></a>    {
+<a name="233"></a>	    return false;
+<a name="234"></a>	}
+<a name="235"></a>
+<a name="236"></a>    <span class="source_type">DeltaTime</span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.RenderDelta;
+<a name="237"></a>
+<a name="238"></a>    for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; Controls.Length; <span class="source_type">i</span>++ )
+<a name="239"></a>    {
+<a name="240"></a>        if ( <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(Controls[<span class="source_type">i</span>]) != None )
+<a name="241"></a>        {
+<a name="242"></a>            FButton = <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(Controls[<span class="source_type">i</span>]);
+<a name="243"></a>
+<a name="244"></a>			if ( FButton.Tag &gt; <span class="source_int">0</span> && FButton.MenuState != MSAT_Focused )
+<a name="245"></a>            {
+<a name="246"></a>                FButton.Tag -= <span class="source_int">784</span> * <span class="source_type">DeltaTime</span>;
+<a name="247"></a>
+<a name="248"></a>				if ( FButton.Tag &lt; <span class="source_int">0</span> )
+<a name="249"></a>				{
+<a name="250"></a>                    FButton.Tag = <span class="source_int">0</span>;
+<a name="251"></a>                }
+<a name="252"></a>            }
+<a name="253"></a>            else if ( FButton.MenuState == MSAT_Focused )
+<a name="254"></a>            {
+<a name="255"></a>                FButton.Tag = <span class="source_int">200</span>;
+<a name="256"></a>            }
+<a name="257"></a>
+<a name="258"></a>            if ( FButton.Tag &gt; <span class="source_int">0</span> )
+<a name="259"></a>            {
+<a name="260"></a>                fButton.Style.TextSize(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>, MSAT_Focused, FButton.<span class="source_type">Caption</span>, XL, <span class="source_type">YL</span>, FButton.FontScale);
+<a name="261"></a>                x2 = FButton.ActualLeft() + XL + <span class="source_int">16</span>;
+<a name="262"></a>                <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.Style = <span class="source_int">5</span>;
+<a name="263"></a>                <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetDrawColor(<span class="source_int">150</span>, <span class="source_int">25</span>, <span class="source_int">25</span>, FButton.Tag);
+<a name="264"></a>                <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.SetPos(<span class="source_int">0</span>, fButton.ActualTop());
+<a name="265"></a>                <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>.DrawTilePartialStretched(<span class="source_type"><a href="../engine/material.html" class="source">material</a></span><span class="source_name">'Highlight'</span>, x2, FButton.ActualHeight());
+<a name="266"></a>            }
+<a name="267"></a>        }
+<a name="268"></a>    }
+<a name="269"></a>
+<a name="270"></a>    return false;
+<a name="271"></a>}
+<a name="272"></a>
+<a name="273"></a>event Timer()
+<a name="274"></a>{
+<a name="275"></a>	if ( !bMovingOnTraining && !bMovingOnResume && !bMovingOnSP )
+<a name="276"></a>	{
+<a name="277"></a>		bNoInitDelay = true;
+<a name="278"></a>
+<a name="279"></a>		if ( !<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bQuietMenu )
+<a name="280"></a>		{
+<a name="281"></a>		    PlayerOwner().PlaySound(SlideInSound,SLOT_None);
+<a name="282"></a>		}
+<a name="283"></a>		i_TV.Animate(-<span class="source_int">0.000977</span>, <span class="source_int">0.332292</span>, <span class="source_int">0.35</span>);
+<a name="284"></a>		i_UT2Logo.Animate(<span class="source_int">0.007226</span>,<span class="source_int">0.016926</span>,<span class="source_int">0.35</span>);
+<a name="285"></a>		i_UT2Shader.Animate(<span class="source_int">0.249023</span>,<span class="source_int">0.180988</span>,<span class="source_int">0.35</span>);
+<a name="286"></a>		i_TV.OnEndAnimation = MenuIn_OnArrival;
+<a name="287"></a>		i_UT2Logo.OnEndAnimation = MenuIn_OnArrival;
+<a name="288"></a>		i_UT2Shader.OnEndAnimation = MenuIn_OnArrival;
+<a name="289"></a>	}
+<a name="290"></a>	else
+<a name="291"></a>	{
+<a name="292"></a>		if ( bMovingOnResume )
+<a name="293"></a>		{
+<a name="294"></a>			bMovingOnResume = false;
+<a name="295"></a>			<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ConsoleCommand(<span class="source_string">"OPEN KFS-RESUMEGAME?Game=KFmod.KFSPGameType"</span>);
+<a name="296"></a>		}
+<a name="297"></a>
+<a name="298"></a>		if (bMovingOnTraining)
+<a name="299"></a>		{
+<a name="300"></a>			bMovingOnTraining = false;
+<a name="301"></a>			<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ConsoleCommand(<span class="source_string">"OPEN KF-MANOR?Game=KFmod.KFGameType"</span>);
+<a name="302"></a>		}
+<a name="303"></a>
+<a name="304"></a>		if (bMovingOnSP)
+<a name="305"></a>		{
+<a name="306"></a>			bMovingOnSP = false;
+<a name="307"></a>			<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ConsoleCommand(<span class="source_string">"OPEN KF-G-BIOTICSLAB?Game=KFmod.KFGameType"</span>);
+<a name="308"></a>		}
+<a name="309"></a>	}
+<a name="310"></a>}
+<a name="311"></a>
+<a name="312"></a>event Opened(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="313"></a>{
+<a name="314"></a>    Super.Opened(<span class="source_type">Sender</span>);
+<a name="315"></a>
+<a name="316"></a>    if( !bOwnsWeaponDLC || !bOwnsCharacterDLC )
+<a name="317"></a>    {
+<a name="318"></a>        UpdateDLCOwnership();
+<a name="319"></a>    }
+<a name="320"></a>
+<a name="321"></a>	if ( bOwnsWeaponDLC )
+<a name="322"></a>	{
+<a name="323"></a>		KFWeaponDLCImage.<span class="source_type">Image</span> = KFWeaponDLCOwnedTexture;
+<a name="324"></a>		KFWeaponDLCOverlay.SetVisibility(false);
+<a name="325"></a>	}
+<a name="326"></a>	else
+<a name="327"></a>	{
+<a name="328"></a>	    if( WeaponDLCID != WeaponBundle )
+<a name="329"></a>	    {
+<a name="330"></a>	        KFWeaponDLCImage.<span class="source_type">Image</span> = <span class="source_type">class</span><span class="source_name">'KFDLCList'</span>.default.WeaponUnownedTextures[GetDLCListTextureIndex()];
+<a name="331"></a>	    }
+<a name="332"></a>
+<a name="333"></a>	    KFWeaponDLCOverlay.SetVisibility(true);
+<a name="334"></a>	}
+<a name="335"></a>
+<a name="336"></a>	if ( bOwnsCharacterDLC )
+<a name="337"></a>	{
+<a name="338"></a>		KFCharacterDLCImage.<span class="source_type">Image</span> = KFCharacterDLCOwnedTexture;
+<a name="339"></a>		KFCharacterDLCOverlay.SetVisibility(false);
+<a name="340"></a>	}
+<a name="341"></a>}
+<a name="342"></a>
+<a name="343"></a>function UpdateDLCOwnership()
+<a name="344"></a>{
+<a name="345"></a>    bOwnsWeaponDLC = PlayerOwner().SteamStatsAndAchievements.PlayerOwnsWeaponDLC( WeaponDLCID );
+<a name="346"></a>    bOwnsCharacterDLC = PlayerOwner().CharacterAvailable(CharacterDLCName);
+<a name="347"></a>}
+<a name="348"></a>
+<a name="349"></a>function MoveOn()
+<a name="350"></a>{
+<a name="351"></a>	local <span class="source_type">int</span> <span class="source_type">i</span>;
+<a name="352"></a>	local <span class="source_type">bool</span> bShowPerkInfo;
+<a name="353"></a>
+<a name="354"></a>    <span class="source_type">switch</span> (Selected)
+<a name="355"></a>    {
+<a name="356"></a>        case b_SinglePlayer:
+<a name="357"></a>            return;
+<a name="358"></a>
+<a name="359"></a>        case b_MultiPlayer:
+<a name="360"></a>           	if( !<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CheckSteam() )
+<a name="361"></a>        	{
+<a name="362"></a>            	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.QuestionMenuClass);
+<a name="363"></a>		    	<span class="source_type"><a href="../xinterface/guiquestionpage.html" class="source">GUIQuestionPage</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage()).SetupQuestion(SteamMustBeRunningText, QBTN_Ok, QBTN_Ok);
+<a name="364"></a>		    	return;
+<a name="365"></a>        	}
+<a name="366"></a>
+<a name="367"></a>            Profile(<span class="source_string">"ServerBrowser"</span>);
+<a name="368"></a>            <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"KFGUI.KFServerBrowser"</span>);
+<a name="369"></a>            Profile(<span class="source_string">"ServerBrowser"</span>);
+<a name="370"></a>            return;
+<a name="371"></a>
+<a name="372"></a>        case b_Host:
+<a name="373"></a>        	if( !<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CheckSteam() )
+<a name="374"></a>        	{
+<a name="375"></a>            	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.QuestionMenuClass);
+<a name="376"></a>		    	<span class="source_type"><a href="../xinterface/guiquestionpage.html" class="source">GUIQuestionPage</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage()).SetupQuestion(SteamMustBeRunningText, QBTN_Ok, QBTN_Ok);
+<a name="377"></a>		    	return;
+<a name="378"></a>        	}
+<a name="379"></a>
+<a name="380"></a>            Profile(<span class="source_string">"MPHost"</span>);
+<a name="381"></a>        	if ( PlayerOwner() != none )
+<a name="382"></a>        	{
+<a name="383"></a>	            PlayerOwner().OpenUPNPPorts();
+<a name="384"></a>	        }
+<a name="385"></a>            <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"KFGUI.KFGamePageMP"</span>);
+<a name="386"></a>            Profile(<span class="source_string">"MPHost"</span>);
+<a name="387"></a>            return;
+<a name="388"></a>
+<a name="389"></a>        case b_InstantAction:
+<a name="390"></a>             Profile(<span class="source_string">"InstantAction"</span>);
+<a name="391"></a>			 <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"KFGUI.KFGamePageSP"</span>);
+<a name="392"></a>             Profile(<span class="source_string">"InstantAction"</span>);
+<a name="393"></a>
+<a name="394"></a>            return;
+<a name="395"></a>
+<a name="396"></a>		case b_Profile:
+<a name="397"></a>        	if( !<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CheckSteam() )
+<a name="398"></a>        	{
+<a name="399"></a>            	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.QuestionMenuClass);
+<a name="400"></a>		    	<span class="source_type"><a href="../xinterface/guiquestionpage.html" class="source">GUIQuestionPage</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage()).SetupQuestion(SteamMustBeRunningText, QBTN_Ok, QBTN_Ok);
+<a name="401"></a>		    	return;
+<a name="402"></a>        	}
+<a name="403"></a>
+<a name="404"></a>        	if ( PlayerOwner() != none )
+<a name="405"></a>        	{
+<a name="406"></a>        		if ( PlayerOwner().SteamStatsAndAchievements == none )
+<a name="407"></a>        		{
+<a name="408"></a>        			PlayerOwner().SteamStatsAndAchievements = PlayerOwner().Spawn(PlayerOwner().default.SteamStatsAndAchievementsClass, PlayerOwner());
+<a name="409"></a>					if ( !PlayerOwner().SteamStatsAndAchievements.Initialize(PlayerOwner()) )
+<a name="410"></a>					{
+<a name="411"></a>		            	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.QuestionMenuClass);
+<a name="412"></a>				    	<span class="source_type"><a href="../xinterface/guiquestionpage.html" class="source">GUIQuestionPage</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage()).SetupQuestion(UnknownSteamErrorText, QBTN_Ok, QBTN_Ok);
+<a name="413"></a>						PlayerOwner().SteamStatsAndAchievements.Destroy();
+<a name="414"></a>						PlayerOwner().SteamStatsAndAchievements = none;
+<a name="415"></a>        			}
+<a name="416"></a>        			else
+<a name="417"></a>        			{
+<a name="418"></a>        				PlayerOwner().SteamStatsAndAchievements.OnDataInitialized = OnSteamStatsAndAchievementsReady;
+<a name="419"></a>        			}
+<a name="420"></a>
+<a name="421"></a>       				return;
+<a name="422"></a>        		}
+<a name="423"></a>	    		else if ( !PlayerOwner().SteamStatsAndAchievements.bInitialized )
+<a name="424"></a>	    		{
+<a name="425"></a>	   				PlayerOwner().SteamStatsAndAchievements.OnDataInitialized = OnSteamStatsAndAchievementsReady;
+<a name="426"></a>	   				PlayerOwner().SteamStatsAndAchievements.GetStatsAndAchievements();
+<a name="427"></a>	   				return;
+<a name="428"></a>	    		}
+<a name="429"></a>
+<a name="430"></a>	    		for ( <span class="source_type">i</span> = <span class="source_int">0</span>; <span class="source_type">i</span> &lt; <span class="source_type">class</span><span class="source_name">'KFGameType'</span>.default.LoadedSkills.Length; <span class="source_type">i</span>++ )
+<a name="431"></a>	    		{
+<a name="432"></a>	    			if ( <span class="source_type"><a href="../roengine/kfsteamstatsandachievements.html" class="source">KFSteamStatsAndAchievements</a></span>(PlayerOwner().SteamStatsAndAchievements).GetPerkProgress(<span class="source_type">i</span>) &lt; <span class="source_int">0.0</span> )
+<a name="433"></a>	    			{
+<a name="434"></a>		            	<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.QuestionMenuClass);
+<a name="435"></a>				    	<span class="source_type"><a href="../xinterface/guiquestionpage.html" class="source">GUIQuestionPage</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage()).SetupQuestion(<span class="source_type">class</span><span class="source_name">'KFMainMenu'</span>.default.UnknownSteamErrorText, QBTN_Ok, QBTN_Ok);
+<a name="436"></a>        				PlayerOwner().SteamStatsAndAchievements.OnDataInitialized = OnSteamStatsAndAchievementsReady;
+<a name="437"></a>	    				PlayerOwner().SteamStatsAndAchievements.GetStatsAndAchievements();
+<a name="438"></a>				    	return;
+<a name="439"></a>	    			}
+<a name="440"></a>	    		}
+<a name="441"></a>
+<a name="442"></a>	    		if ( <span class="source_type">class</span><span class="source_name">'KFPlayerController'</span>.default.SelectedVeterancy == none )
+<a name="443"></a>	    		{
+<a name="444"></a>	    			bShowPerkInfo = true;
+<a name="445"></a>	    		}
+<a name="446"></a>
+<a name="447"></a>	            Profile(<span class="source_string">"Profile"</span>);
+<a name="448"></a>	            <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"KFGUI.KFProfileAndAchievements"</span>);
+<a name="449"></a>	            Profile(<span class="source_string">"Profile"</span>);
+<a name="450"></a>
+<a name="451"></a>				if ( bShowPerkInfo )
+<a name="452"></a>				{
+<a name="453"></a>					<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.QuestionMenuClass);
+<a name="454"></a>					<span class="source_type"><a href="../xinterface/guiquestionpage.html" class="source">GUIQuestionPage</a></span>(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.TopPage()).SetupQuestion(<span class="source_type">class</span><span class="source_name">'LobbyMenu'</span>.default.SelectPerkInformationString, QBTN_Ok, QBTN_Ok);
+<a name="455"></a>				}
+<a name="456"></a>	        }
+<a name="457"></a>
+<a name="458"></a>			return;
+<a name="459"></a>
+<a name="460"></a>		case b_DLC:
+<a name="461"></a>            Profile(<span class="source_string">"DLC"</span>);
+<a name="462"></a>            <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"KFGUI.KFDLCPage"</span>);
+<a name="463"></a>            Profile(<span class="source_string">"DLC"</span>);
+<a name="464"></a>			return;
+<a name="465"></a>
+<a name="466"></a>		case b_Workshop:
+<a name="467"></a>			PlayerOwner().SteamStatsAndAchievements.ShowWorkshopContent();
+<a name="468"></a>			return;
+<a name="469"></a>
+<a name="470"></a>        case b_ModsAndDemo:
+<a name="471"></a>             Profile(<span class="source_string">"ModsandDemos"</span>);
+<a name="472"></a>
+<a name="473"></a>            <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.ViewportOwner.<span class="source_type"><a href="../engine/console.html" class="source">Console</a></span>.ConsoleCommand(<span class="source_string">"OPEN KF-Intro?Game=unrealgame.cinematicgame"</span>);
+<a name="474"></a>            <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.CloseAll(True);
+<a name="475"></a>
+<a name="476"></a>            SetTimer(<span class="source_int">0.5</span>,false);
+<a name="477"></a>            Profile(<span class="source_string">"ModsandDemos"</span>);
+<a name="478"></a>            return;
+<a name="479"></a>
+<a name="480"></a>        case b_Settings:
+<a name="481"></a>            Profile(<span class="source_string">"Settings"</span>);
+<a name="482"></a>            <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"KFGUI.KFSettingsPage"</span>);
+<a name="483"></a>            Profile(<span class="source_string">"Settings"</span>);
+<a name="484"></a>            return;
+<a name="485"></a>
+<a name="486"></a>        case b_Quit:
+<a name="487"></a>            Profile(<span class="source_string">"Quit"</span>);
+<a name="488"></a>            <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.GetQuitPage());
+<a name="489"></a>            Profile(<span class="source_string">"Quit"</span>);
+<a name="490"></a>            return;
+<a name="491"></a>
+<a name="492"></a>        default:
+<a name="493"></a>            StopWatch(True);
+<a name="494"></a>            break;
+<a name="495"></a>    }
+<a name="496"></a>}
+<a name="497"></a>
+<a name="498"></a>function MenuIn_OnArrival(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type"><a href="../xinterface/gui.html#EAnimationType" class="source">EAnimationType</a></span> <span class="source_type">Type</span>)
+<a name="499"></a>{
+<a name="500"></a>    <span class="source_type">Sender</span>.OnArrival = none;
+<a name="501"></a>    if ( bAnimating )
+<a name="502"></a>        return;
+<a name="503"></a>
+<a name="504"></a>    i_UT2Shader.OnDraw = MyOnDraw;
+<a name="505"></a>    DesiredCharFade=<span class="source_int">255</span>;
+<a name="506"></a>    CharFadeTime = <span class="source_int">0.75</span>;
+<a name="507"></a>
+<a name="508"></a>    if (!<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bQuietMenu)
+<a name="509"></a>        PlayerOwner().PlaySound(FadeInSound);
+<a name="510"></a>}
+<a name="511"></a>
+<a name="512"></a>function MainReopened()
+<a name="513"></a>{
+<a name="514"></a>    if ( !PlayerOwner().<span class="source_type">Level</span>.IsPendingConnection() )
+<a name="515"></a>    {
+<a name="516"></a>        i_BkChar.<span class="source_type">Image</span> = CharShots[rand(CharShots.Length)];
+<a name="517"></a>        Opened(none);
+<a name="518"></a>        Timer();
+<a name="519"></a>    }
+<a name="520"></a>}
+<a name="521"></a>
+<a name="522"></a>
+<a name="523"></a>function OnClose(optional <span class="source_type">Bool</span> <span class="source_type">bCancelled</span>)
+<a name="524"></a>{
+<a name="525"></a>}
+<a name="526"></a>
+<a name="527"></a>function <span class="source_type">bool</span> MyKeyEvent(out <span class="source_type">byte</span> Key,out <span class="source_type">byte</span> <span class="source_type">State</span>,<span class="source_type">float</span> <span class="source_type">delta</span>)
+<a name="528"></a>{
+<a name="529"></a>    if(Key == <span class="source_int">0x1B</span> && <span class="source_type">state</span> == <span class="source_int">1</span>)   <span class="source_comment">// Escape pressed
+</span><a name="530"></a>        bAllowClose = true;
+<a name="531"></a>
+<a name="532"></a>    return false;
+<a name="533"></a>}
+<a name="534"></a>
+<a name="535"></a>function <span class="source_type">bool</span> CanClose(optional <span class="source_type">bool</span> <span class="source_type">bCancelled</span>)
+<a name="536"></a>{
+<a name="537"></a>    if(bAllowClose)
+<a name="538"></a>        ButtonClick(b_Quit);
+<a name="539"></a>
+<a name="540"></a>    bAllowClose = False;
+<a name="541"></a>    return PlayerOwner().<span class="source_type">Level</span>.IsPendingConnection();
+<a name="542"></a>}
+<a name="543"></a>
+<a name="544"></a>function PlayPopSound(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type"><a href="../xinterface/gui.html#EAnimationType" class="source">EAnimationType</a></span> <span class="source_type">Type</span>)
+<a name="545"></a>{
+<a name="546"></a>    if (!<span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.bQuietMenu)
+<a name="547"></a>        PlayerOwner().PlaySound(PopInSound);
+<a name="548"></a>}
+<a name="549"></a>
+<a name="550"></a>function MenuIn_Done(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type"><a href="../xinterface/gui.html#EAnimationType" class="source">EAnimationType</a></span> <span class="source_type">Type</span>)
+<a name="551"></a>{
+<a name="552"></a>    <span class="source_type">Sender</span>.OnArrival = none;
+<a name="553"></a>    PlayPopSound(<span class="source_type">Sender</span>,<span class="source_type">Type</span>);
+<a name="554"></a>}
+<a name="555"></a>
+<a name="556"></a>
+<a name="557"></a>function <span class="source_type">bool</span> ButtonClick(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="558"></a>{
+<a name="559"></a>    Selected = <span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span>(<span class="source_type">Sender</span>);
+<a name="560"></a>    if (Selected==None)
+<a name="561"></a>        return false;
+<a name="562"></a>
+<a name="563"></a>    DesiredCharFade=<span class="source_int">0</span>;
+<a name="564"></a>    CharFadeTime = <span class="source_int">0.35</span>;
+<a name="565"></a>
+<a name="566"></a>    MoveOn();
+<a name="567"></a>
+<a name="568"></a>    return true;
+<a name="569"></a>}
+<a name="570"></a>
+<a name="571"></a>function MenuOut_Done(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>, <span class="source_type"><a href="../xinterface/gui.html#EAnimationType" class="source">EAnimationType</a></span> <span class="source_type">Type</span>)
+<a name="572"></a>{
+<a name="573"></a>    <span class="source_type">Sender</span>.OnArrival = none;
+<a name="574"></a>    if ( bAnimating )
+<a name="575"></a>        return;
+<a name="576"></a>
+<a name="577"></a>    MoveOn();
+<a name="578"></a>}
+<a name="579"></a>
+<a name="580"></a>event <span class="source_type">bool</span> NotifyLevelChange()
+<a name="581"></a>{
+<a name="582"></a>    if ( bDebugging )
+<a name="583"></a>        log(<span class="source_type">Name</span>@<span class="source_string">"NotifyLevelChange  PendingConnection:"</span>$PlayerOwner().<span class="source_type">Level</span>.IsPendingConnection());
+<a name="584"></a>
+<a name="585"></a>    return PlayerOwner().<span class="source_type">Level</span>.IsPendingConnection();
+<a name="586"></a>}
+<a name="587"></a>
+<a name="588"></a>
+<a name="589"></a>function <span class="source_type">bool</span> CommunityDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">canvas</a></span> <span class="source_type">c</span>)
+<a name="590"></a>{
+<a name="591"></a>    local <span class="source_type">float</span> <span class="source_type">x</span>,<span class="source_type">y</span>,xl,<span class="source_type">yl</span>,<span class="source_type">a</span>;
+<a name="592"></a>    if (bNewNews)
+<a name="593"></a>    {
+<a name="594"></a>
+<a name="595"></a>        <span class="source_type">a</span> = <span class="source_int">255.0</span> * (FadeTime/<span class="source_int">1.0</span>);
+<a name="596"></a>        if (FadeOut)
+<a name="597"></a>            <span class="source_type">a</span> = <span class="source_int">255</span> - <span class="source_type">a</span>;
+<a name="598"></a>
+<a name="599"></a>        FadeTime += <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.RenderDelta;
+<a name="600"></a>        if (FadeTime&gt;=<span class="source_int">1.0</span>)
+<a name="601"></a>        {
+<a name="602"></a>            FadeTime = <span class="source_int">0</span>;
+<a name="603"></a>            FadeOut = !FadeOut;
+<a name="604"></a>        }
+<a name="605"></a>
+<a name="606"></a>        <span class="source_type">a</span> = fclamp(<span class="source_type">a</span>,<span class="source_int">1.0</span>,<span class="source_int">254.0</span>);
+<a name="607"></a>        <span class="source_type">x</span> = b_ModsAndDemo.ActualLeft();
+<a name="608"></a>        <span class="source_type">y</span> = b_Settings.ActualTop();
+<a name="609"></a>        <span class="source_type">C</span>.<span class="source_type">Font</span> = <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.GetMenuFont(<span class="source_string">"UT2MenuFont"</span>).GetFont(<span class="source_type">C</span>.ClipX);
+<a name="610"></a>        <span class="source_type">C</span>.Strlen(<span class="source_string">"Qz,q"</span>,xl,<span class="source_type">yl</span>);
+<a name="611"></a>        <span class="source_type">y</span> -= <span class="source_type">yl</span> - <span class="source_int">5</span>;
+<a name="612"></a>        <span class="source_type">C</span>.Style=<span class="source_int">5</span>;
+<a name="613"></a>        <span class="source_type">C</span>.SetPos(<span class="source_type">x</span>+<span class="source_int">1</span>,<span class="source_type">y</span>+<span class="source_int">1</span>);
+<a name="614"></a>        <span class="source_type">C</span>.SetDrawColor(<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_int">0</span>,<span class="source_type">A</span>);
+<a name="615"></a>        <span class="source_type">C</span>.DrawText(NewNewsMsg);
+<a name="616"></a>
+<a name="617"></a>        <span class="source_type">C</span>.SetPos(<span class="source_type">x</span>,<span class="source_type">y</span>);
+<a name="618"></a>        <span class="source_type">C</span>.SetDrawColor(<span class="source_int">207</span>,<span class="source_int">185</span>,<span class="source_int">103</span>,<span class="source_type">A</span>);
+<a name="619"></a>        <span class="source_type">C</span>.DrawText(NewNewsMsg);
+<a name="620"></a>    }
+<a name="621"></a>
+<a name="622"></a>    return false;
+<a name="623"></a>}
+<a name="624"></a>
+<a name="625"></a>function OnSteamStatsAndAchievementsReady()
+<a name="626"></a>{
+<a name="627"></a>    Profile(<span class="source_string">"Profile"</span>);
+<a name="628"></a>    <span class="source_type"><a href="../engine/controller.html" class="source">Controller</a></span>.OpenMenu(<span class="source_string">"KFGUI.KFProfileAndAchievements"</span>);
+<a name="629"></a>    Profile(<span class="source_string">"Profile"</span>);
+<a name="630"></a>}
+<a name="631"></a>
+<a name="632"></a>function <span class="source_type">bool</span> DLCButtonDraw(<span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span> <span class="source_type"><a href="../engine/canvas.html" class="source">Canvas</a></span>)
+<a name="633"></a>{
+<a name="634"></a>    local <span class="source_type">int</span> <span class="source_type">index</span>;
+<a name="635"></a>    <span class="source_type">index</span> = GetDLCListTextureIndex();
+<a name="636"></a>	if ( !bOwnsWeaponDLC && KFWeaponDLCOverlayTexture != none && KFWeaponDLCHoverTexture != none )
+<a name="637"></a>	{
+<a name="638"></a>		if ( KFWeaponDLCImage.IsInBounds() )
+<a name="639"></a>		{
+<a name="640"></a>			if ( KFWeaponDLCOverlay.<span class="source_type">Image</span> != KFWeaponDLCHoverTexture )
+<a name="641"></a>			{
+<a name="642"></a>				KFWeaponDLCOverlay.<span class="source_type">Image</span> = KFWeaponDLCHoverTexture;
+<a name="643"></a>			}
+<a name="644"></a>		}
+<a name="645"></a>		else if ( KFWeaponDLCOverlay.<span class="source_type">Image</span> != KFWeaponDLCOverlayTexture )
+<a name="646"></a>		{
+<a name="647"></a>		    if( WeaponDLCID != WeaponBundle )
+<a name="648"></a>		    {
+<a name="649"></a>		        KFWeaponDLCOverlay.<span class="source_type">Image</span> = <span class="source_type">class</span><span class="source_name">'KFDLCList'</span>.default.WeaponUnownedTextures[<span class="source_type">index</span>];
+<a name="650"></a>		    }
+<a name="651"></a>			else
+<a name="652"></a>            {
+<a name="653"></a>                KFWeaponDLCOverlay.<span class="source_type">Image</span> = KFWeaponDLCOverlayTexture;
+<a name="654"></a>            }
+<a name="655"></a>		}
+<a name="656"></a>	}
+<a name="657"></a>
+<a name="658"></a>	if ( !bOwnsCharacterDLC && KFCharacterDLCOverlayTexture != none && KFCharacterDLCHoverTexture != none )
+<a name="659"></a>	{
+<a name="660"></a>		if ( KFCharacterDLCImage.IsInBounds() )
+<a name="661"></a>		{
+<a name="662"></a>			if ( KFCharacterDLCOverlay.<span class="source_type">Image</span> != KFCharacterDLCHoverTexture )
+<a name="663"></a>			{
+<a name="664"></a>				KFCharacterDLCOverlay.<span class="source_type">Image</span> = KFCharacterDLCHoverTexture;
+<a name="665"></a>			}
+<a name="666"></a>		}
+<a name="667"></a>		else if ( KFCharacterDLCOverlay.<span class="source_type">Image</span> != KFCharacterDLCOverlayTexture )
+<a name="668"></a>		{
+<a name="669"></a>			KFCharacterDLCOverlay.<span class="source_type">Image</span> = KFCharacterDLCOverlayTexture;
+<a name="670"></a>		}
+<a name="671"></a>	}
+<a name="672"></a>
+<a name="673"></a>	return false;
+<a name="674"></a>}
+<a name="675"></a>
+<a name="676"></a>function <span class="source_type">bool</span> WeaponDLCButtonClicked(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="677"></a>{
+<a name="678"></a>	if ( !bOwnsWeaponDLC )
+<a name="679"></a>	{
+<a name="680"></a>		PlayerOwner().SteamStatsAndAchievements.PurchaseWeaponDLC(WeaponDLCID);
+<a name="681"></a>		return true;
+<a name="682"></a>	}
+<a name="683"></a>
+<a name="684"></a>	return false;
+<a name="685"></a>}
+<a name="686"></a>
+<a name="687"></a>function <span class="source_type">bool</span> CharacterDLCButtonClicked(<span class="source_type"><a href="../xinterface/guicomponent.html" class="source">GUIComponent</a></span> <span class="source_type">Sender</span>)
+<a name="688"></a>{
+<a name="689"></a>	if ( !bOwnsCharacterDLC )
+<a name="690"></a>	{
+<a name="691"></a>		PlayerOwner().PurchaseCharacter(CharacterDLCName);
+<a name="692"></a>		return true;
+<a name="693"></a>	}
+<a name="694"></a>
+<a name="695"></a>	return false;
+<a name="696"></a>}
+<a name="697"></a>
+<a name="698"></a>defaultproperties
+<a name="699"></a>{
+<a name="700"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/floatingimage.html" class="source">FloatingImage</a></span> <span class="source_type">Name</span>=FloatingBackground
+<a name="701"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/materialsequence.html" class="source">MaterialSequence</a></span><span class="source_name">'KillingFloorHUD.MainMenu.kf_menu_seq'</span>
+<a name="702"></a>         DropShadow=None
+<a name="703"></a>         ImageStyle=ISTY_Scaled
+<a name="704"></a>         WinTop=<span class="source_int">0.136089</span>
+<a name="705"></a>         WinLeft=<span class="source_int">0.273078</span>
+<a name="706"></a>         WinWidth=<span class="source_int">0.802660</span>
+<a name="707"></a>         WinHeight=<span class="source_int">1.080918</span>
+<a name="708"></a>         RenderWeight=<span class="source_int">0.000003</span>
+<a name="709"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="710"></a>     KFBackground=<span class="source_type"><a href="../xinterface/floatingimage.html" class="source">FloatingImage</a></span><span class="source_name">'KFGui.KFMainMenu.FloatingBackground'</span>
+<a name="711"></a>
+<a name="712"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/floatingimage.html" class="source">FloatingImage</a></span> <span class="source_type">Name</span>=FloatingBackgroundOverlay
+<a name="713"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/finalblend.html" class="source">FinalBlend</a></span><span class="source_name">'InterfaceArt2_tex.filmgrain.FilmgrainOverlayFB'</span>
+<a name="714"></a>         DropShadow=None
+<a name="715"></a>         ImageStyle=ISTY_Scaled
+<a name="716"></a>         WinTop=<span class="source_int">0.000000</span>
+<a name="717"></a>         WinLeft=<span class="source_int">0.000000</span>
+<a name="718"></a>         WinWidth=<span class="source_int">1.000000</span>
+<a name="719"></a>         WinHeight=<span class="source_int">1.000000</span>
+<a name="720"></a>         RenderWeight=<span class="source_int">0.900000</span>
+<a name="721"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="722"></a>     KFBackgroundOverlay=<span class="source_type"><a href="../xinterface/floatingimage.html" class="source">FloatingImage</a></span><span class="source_name">'KFGui.KFMainMenu.FloatingBackgroundOverlay'</span>
+<a name="723"></a>
+<a name="724"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=KFMenuLogo
+<a name="725"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/finalblend.html" class="source">FinalBlend</a></span><span class="source_name">'KillingFloorHUD.KFLogoFB'</span>
+<a name="726"></a>         ImageStyle=ISTY_Scaled
+<a name="727"></a>         WinTop=<span class="source_int">0.012000</span>
+<a name="728"></a>         WinLeft=<span class="source_int">0.008000</span>
+<a name="729"></a>         WinWidth=<span class="source_int">0.620000</span>
+<a name="730"></a>         WinHeight=<span class="source_int">0.300000</span>
+<a name="731"></a>         RenderWeight=<span class="source_int">0.050000</span>
+<a name="732"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="733"></a>     KFLogoBit=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.KFMenuLogo'</span>
+<a name="734"></a>
+<a name="735"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span> <span class="source_type">Name</span>=WorkshopDownloadLabel
+<a name="736"></a>         TextAlign=TXTA_Right
+<a name="737"></a>         TextColor=(<span class="source_type">B</span>=<span class="source_int">200</span>,G=<span class="source_int">200</span>,<span class="source_type">R</span>=<span class="source_int">200</span>)
+<a name="738"></a>         bMultiLine=True
+<a name="739"></a>         FontScale=FNS_Small
+<a name="740"></a>         WinTop=<span class="source_int">0.050000</span>
+<a name="741"></a>         WinLeft=<span class="source_int">0.600000</span>
+<a name="742"></a>         WinWidth=<span class="source_int">0.390000</span>
+<a name="743"></a>         WinHeight=<span class="source_int">0.150000</span>
+<a name="744"></a>         RenderWeight=<span class="source_int">0.950000</span>
+<a name="745"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="746"></a>     KFWorkshopDownload=<span class="source_type"><a href="../xinterface/guilabel.html" class="source">GUILabel</a></span><span class="source_name">'KFGui.KFMainMenu.WorkshopDownloadLabel'</span>
+<a name="747"></a>
+<a name="748"></a>     WeaponBundle=<span class="source_int">326960</span>
+<a name="749"></a>     WeaponDLCs(<span class="source_int">0</span>)=<span class="source_int">326960</span>
+<a name="750"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=WeaponDLCImage
+<a name="751"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.UI_KFDLC_Characters_Desat_ToyMaster'</span>
+<a name="752"></a>         ImageStyle=ISTY_Scaled
+<a name="753"></a>         WinTop=<span class="source_int">0.651389</span>
+<a name="754"></a>         WinLeft=<span class="source_int">0.053125</span>
+<a name="755"></a>         WinWidth=<span class="source_int">0.168750</span>
+<a name="756"></a>         WinHeight=<span class="source_int">0.148611</span>
+<a name="757"></a>         RenderWeight=<span class="source_int">0.950000</span>
+<a name="758"></a>         bAcceptsInput=True
+<a name="759"></a>         bNeverFocus=True
+<a name="760"></a>         OnClickSound=CS_Click
+<a name="761"></a>         OnDraw=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.DLCButtonDraw
+<a name="762"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.WeaponDLCButtonClicked
+<a name="763"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="764"></a>     KFWeaponDLCImage=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.WeaponDLCImage'</span>
+<a name="765"></a>
+<a name="766"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=WeaponDLCOverlay
+<a name="767"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'</span>
+<a name="768"></a>         ImageStyle=ISTY_Scaled
+<a name="769"></a>         WinTop=<span class="source_int">0.651389</span>
+<a name="770"></a>         WinLeft=<span class="source_int">0.053125</span>
+<a name="771"></a>         WinWidth=<span class="source_int">0.168750</span>
+<a name="772"></a>         WinHeight=<span class="source_int">0.148611</span>
+<a name="773"></a>         RenderWeight=<span class="source_int">0.960000</span>
+<a name="774"></a>         bAcceptsInput=True
+<a name="775"></a>         bNeverFocus=True
+<a name="776"></a>         OnClickSound=CS_Click
+<a name="777"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.WeaponDLCButtonClicked
+<a name="778"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="779"></a>     KFWeaponDLCOverlay=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.WeaponDLCOverlay'</span>
+<a name="780"></a>
+<a name="781"></a>     KFWeaponDLCOwnedTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.UI_KFDLC_Characters_Owned_ToyMaster'</span>
+<a name="782"></a>     KFWeaponDLCOverlayTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.DLC_Capsules_DownloadClick'</span>
+<a name="783"></a>     KFWeaponDLCHoverTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.DLC_Capsules_DownloadNow'</span>
+<a name="784"></a>     CharacterDLCName=<span class="source_string">"New_Bundles"</span>
+<a name="785"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=CharacterDLCImage
+<a name="786"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.UI_KFDLC_Characters_Desat_NewBundles'</span>
+<a name="787"></a>         ImageStyle=ISTY_Scaled
+<a name="788"></a>         WinTop=<span class="source_int">0.811111</span>
+<a name="789"></a>         WinLeft=<span class="source_int">0.053125</span>
+<a name="790"></a>         WinWidth=<span class="source_int">0.168750</span>
+<a name="791"></a>         WinHeight=<span class="source_int">0.148611</span>
+<a name="792"></a>         RenderWeight=<span class="source_int">0.950000</span>
+<a name="793"></a>         bAcceptsInput=True
+<a name="794"></a>         bNeverFocus=True
+<a name="795"></a>         OnClickSound=CS_Click
+<a name="796"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.CharacterDLCButtonClicked
+<a name="797"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="798"></a>     KFCharacterDLCImage=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.CharacterDLCImage'</span>
+<a name="799"></a>
+<a name="800"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=CharacterDLCOverlay
+<a name="801"></a>         <span class="source_type">Image</span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'</span>
+<a name="802"></a>         ImageStyle=ISTY_Scaled
+<a name="803"></a>         WinTop=<span class="source_int">0.811111</span>
+<a name="804"></a>         WinLeft=<span class="source_int">0.053125</span>
+<a name="805"></a>         WinWidth=<span class="source_int">0.168750</span>
+<a name="806"></a>         WinHeight=<span class="source_int">0.148611</span>
+<a name="807"></a>         RenderWeight=<span class="source_int">0.960000</span>
+<a name="808"></a>         bAcceptsInput=True
+<a name="809"></a>         bNeverFocus=True
+<a name="810"></a>         OnClickSound=CS_Click
+<a name="811"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.CharacterDLCButtonClicked
+<a name="812"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="813"></a>     KFCharacterDLCOverlay=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.CharacterDLCOverlay'</span>
+<a name="814"></a>
+<a name="815"></a>     KFCharacterDLCOwnedTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.UI_KFDLC_Characters_Owned_NewBundles'</span>
+<a name="816"></a>     KFCharacterDLCOverlayTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.UI_KFDLC_Unselected_BuyNow'</span>
+<a name="817"></a>     KFCharacterDLCHoverTexture=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'KF_DLC.Characters.UI_KFDLC_MouseOver_BuyNow'</span>
+<a name="818"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/backgroundimage.html" class="source">BackgroundImage</a></span> <span class="source_type">Name</span>=ImgBkChar
+<a name="819"></a>         ImageColor=(<span class="source_type">A</span>=<span class="source_int">160</span>)
+<a name="820"></a>         ImageRenderStyle=MSTY_Alpha
+<a name="821"></a>         X1=<span class="source_int">0</span>
+<a name="822"></a>         Y1=<span class="source_int">0</span>
+<a name="823"></a>         X2=<span class="source_int">1024</span>
+<a name="824"></a>         Y2=<span class="source_int">768</span>
+<a name="825"></a>         RenderWeight=<span class="source_int">0.040000</span>
+<a name="826"></a>         Tag=<span class="source_int">0</span>
+<a name="827"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="828"></a>     i_bkChar=<span class="source_type"><a href="../xinterface/backgroundimage.html" class="source">BackgroundImage</a></span><span class="source_name">'KFGui.KFMainMenu.ImgBkChar'</span>
+<a name="829"></a>
+<a name="830"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/backgroundimage.html" class="source">BackgroundImage</a></span> <span class="source_type">Name</span>=PageBackground
+<a name="831"></a>         ImageStyle=ISTY_Scaled
+<a name="832"></a>         ImageRenderStyle=MSTY_Alpha
+<a name="833"></a>         X1=<span class="source_int">0</span>
+<a name="834"></a>         Y1=<span class="source_int">0</span>
+<a name="835"></a>         X2=<span class="source_int">1024</span>
+<a name="836"></a>         Y2=<span class="source_int">768</span>
+<a name="837"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="838"></a>     i_Background=<span class="source_type"><a href="../xinterface/backgroundimage.html" class="source">BackgroundImage</a></span><span class="source_name">'KFGui.KFMainMenu.PageBackground'</span>
+<a name="839"></a>
+<a name="840"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=ImgUT2Logo
+<a name="841"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="842"></a>     i_UT2Logo=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.ImgUT2Logo'</span>
+<a name="843"></a>
+<a name="844"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=iPanHuge
+<a name="845"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="846"></a>     i_PanHuge=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.iPanHuge'</span>
+<a name="847"></a>
+<a name="848"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=iPanBig
+<a name="849"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="850"></a>     i_PanBig=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.iPanBig'</span>
+<a name="851"></a>
+<a name="852"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=iPanSmall
+<a name="853"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="854"></a>     i_PanSmall=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.iPanSmall'</span>
+<a name="855"></a>
+<a name="856"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=ImgUT2Shader
+<a name="857"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="858"></a>     i_UT2Shader=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.ImgUT2Shader'</span>
+<a name="859"></a>
+<a name="860"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span> <span class="source_type">Name</span>=ImgTV
+<a name="861"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="862"></a>     i_TV=<span class="source_type"><a href="../xinterface/guiimage.html" class="source">GUIImage</a></span><span class="source_name">'KFGui.KFMainMenu.ImgTV'</span>
+<a name="863"></a>
+<a name="864"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=MultiplayerButton
+<a name="865"></a>         CaptionAlign=TXTA_Left
+<a name="866"></a>         CaptionEffectStyleName=<span class="source_string">"TextButtonEffect"</span>
+<a name="867"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Multiplayer"</span>
+<a name="868"></a>         StyleName=<span class="source_string">"ListSelection"</span>
+<a name="869"></a>         Hint=<span class="source_string">"All hell breaks loose..."</span>
+<a name="870"></a>         WinTop=<span class="source_int">0.290000</span>
+<a name="871"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="872"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="873"></a>         WinHeight=<span class="source_int">0.035000</span>
+<a name="874"></a>         TabOrder=<span class="source_int">1</span>
+<a name="875"></a>         bFocusOnWatch=True
+<a name="876"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.ButtonClick
+<a name="877"></a>         OnKeyEvent=MultiplayerButton.InternalOnKeyEvent
+<a name="878"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="879"></a>     b_MultiPlayer=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'KFGui.KFMainMenu.MultiplayerButton'</span>
+<a name="880"></a>
+<a name="881"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=HostButton
+<a name="882"></a>         CaptionAlign=TXTA_Left
+<a name="883"></a>         CaptionEffectStyleName=<span class="source_string">"TextButtonEffect"</span>
+<a name="884"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Host Game"</span>
+<a name="885"></a>         StyleName=<span class="source_string">"ListSelection"</span>
+<a name="886"></a>         Hint=<span class="source_string">"Start a server and invite others to join your game"</span>
+<a name="887"></a>         WinTop=<span class="source_int">0.325000</span>
+<a name="888"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="889"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="890"></a>         WinHeight=<span class="source_int">0.035000</span>
+<a name="891"></a>         TabOrder=<span class="source_int">2</span>
+<a name="892"></a>         bFocusOnWatch=True
+<a name="893"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.ButtonClick
+<a name="894"></a>         OnKeyEvent=HostButton.InternalOnKeyEvent
+<a name="895"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="896"></a>     b_Host=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'KFGui.KFMainMenu.HostButton'</span>
+<a name="897"></a>
+<a name="898"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=InstantActionButton
+<a name="899"></a>         CaptionAlign=TXTA_Left
+<a name="900"></a>         CaptionEffectStyleName=<span class="source_string">"TextButtonEffect"</span>
+<a name="901"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Solo"</span>
+<a name="902"></a>         StyleName=<span class="source_string">"ListSelection"</span>
+<a name="903"></a>         Hint=<span class="source_string">"Play Killing Floor Solo Mode"</span>
+<a name="904"></a>         WinTop=<span class="source_int">0.360000</span>
+<a name="905"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="906"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="907"></a>         TabOrder=<span class="source_int">3</span>
+<a name="908"></a>         bFocusOnWatch=True
+<a name="909"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.ButtonClick
+<a name="910"></a>         OnKeyEvent=InstantActionButton.InternalOnKeyEvent
+<a name="911"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="912"></a>     b_InstantAction=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'KFGui.KFMainMenu.InstantActionButton'</span>
+<a name="913"></a>
+<a name="914"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=ProfileButton
+<a name="915"></a>         CaptionAlign=TXTA_Left
+<a name="916"></a>         CaptionEffectStyleName=<span class="source_string">"TextButtonEffect"</span>
+<a name="917"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Profile and Achievements"</span>
+<a name="918"></a>         StyleName=<span class="source_string">"ListSelection"</span>
+<a name="919"></a>         Hint=<span class="source_string">"Your profile and achievements"</span>
+<a name="920"></a>         WinTop=<span class="source_int">0.420000</span>
+<a name="921"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="922"></a>         WinWidth=<span class="source_int">0.220000</span>
+<a name="923"></a>         TabOrder=<span class="source_int">4</span>
+<a name="924"></a>         bFocusOnWatch=True
+<a name="925"></a>         OnDraw=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.CommunityDraw
+<a name="926"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.ButtonClick
+<a name="927"></a>         OnKeyEvent=ModsAndDemosButton.InternalOnKeyEvent
+<a name="928"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="929"></a>     b_Profile=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'KFGui.KFMainMenu.ProfileButton'</span>
+<a name="930"></a>
+<a name="931"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=DLCButton
+<a name="932"></a>         CaptionAlign=TXTA_Left
+<a name="933"></a>         CaptionEffectStyleName=<span class="source_string">"TextButtonEffect"</span>
+<a name="934"></a>         <span class="source_type">Caption</span>=<span class="source_string">"DLC Content"</span>
+<a name="935"></a>         StyleName=<span class="source_string">"ListSelection"</span>
+<a name="936"></a>         Hint=<span class="source_string">"Weapon and Character DLC Packs"</span>
+<a name="937"></a>         WinTop=<span class="source_int">0.455000</span>
+<a name="938"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="939"></a>         WinWidth=<span class="source_int">0.220000</span>
+<a name="940"></a>         TabOrder=<span class="source_int">4</span>
+<a name="941"></a>         bFocusOnWatch=True
+<a name="942"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.ButtonClick
+<a name="943"></a>         OnKeyEvent=ModsAndDemosButton.InternalOnKeyEvent
+<a name="944"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="945"></a>     b_DLC=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'KFGui.KFMainMenu.DLCButton'</span>
+<a name="946"></a>
+<a name="947"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=WorkshopButton
+<a name="948"></a>         CaptionAlign=TXTA_Left
+<a name="949"></a>         CaptionEffectStyleName=<span class="source_string">"TextButtonEffect"</span>
+<a name="950"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Steam Workshop Content"</span>
+<a name="951"></a>         StyleName=<span class="source_string">"ListSelection"</span>
+<a name="952"></a>         Hint=<span class="source_string">"Custom Content in the Steam Workshop"</span>
+<a name="953"></a>         WinTop=<span class="source_int">0.490000</span>
+<a name="954"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="955"></a>         WinWidth=<span class="source_int">0.220000</span>
+<a name="956"></a>         TabOrder=<span class="source_int">4</span>
+<a name="957"></a>         bFocusOnWatch=True
+<a name="958"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.ButtonClick
+<a name="959"></a>         OnKeyEvent=ModsAndDemosButton.InternalOnKeyEvent
+<a name="960"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="961"></a>     b_Workshop=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'KFGui.KFMainMenu.WorkshopButton'</span>
+<a name="962"></a>
+<a name="963"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=SettingsButton
+<a name="964"></a>         CaptionAlign=TXTA_Left
+<a name="965"></a>         CaptionEffectStyleName=<span class="source_string">"TextButtonEffect"</span>
+<a name="966"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Settings"</span>
+<a name="967"></a>         StyleName=<span class="source_string">"ListSelection"</span>
+<a name="968"></a>         Hint=<span class="source_string">"Change your controls and settings"</span>
+<a name="969"></a>         WinTop=<span class="source_int">0.550000</span>
+<a name="970"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="971"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="972"></a>         WinHeight=<span class="source_int">0.035000</span>
+<a name="973"></a>         TabOrder=<span class="source_int">6</span>
+<a name="974"></a>         bFocusOnWatch=True
+<a name="975"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.ButtonClick
+<a name="976"></a>         OnKeyEvent=SettingsButton.InternalOnKeyEvent
+<a name="977"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="978"></a>     b_Settings=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'KFGui.KFMainMenu.SettingsButton'</span>
+<a name="979"></a>
+<a name="980"></a>     Begin <span class="source_type"><a href="../core/object.html" class="source">Object</a></span> <span class="source_type">Class</span>=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span> <span class="source_type">Name</span>=QuitButton
+<a name="981"></a>         CaptionAlign=TXTA_Left
+<a name="982"></a>         CaptionEffectStyleName=<span class="source_string">"TextButtonEffect"</span>
+<a name="983"></a>         <span class="source_type">Caption</span>=<span class="source_string">"Exit"</span>
+<a name="984"></a>         StyleName=<span class="source_string">"ListSelection"</span>
+<a name="985"></a>         Hint=<span class="source_string">"Leave the game"</span>
+<a name="986"></a>         WinTop=<span class="source_int">0.585000</span>
+<a name="987"></a>         WinLeft=<span class="source_int">0.050000</span>
+<a name="988"></a>         WinWidth=<span class="source_int">0.200000</span>
+<a name="989"></a>         WinHeight=<span class="source_int">0.035000</span>
+<a name="990"></a>         TabOrder=<span class="source_int">7</span>
+<a name="991"></a>         bFocusOnWatch=True
+<a name="992"></a>         OnClick=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.ButtonClick
+<a name="993"></a>         OnKeyEvent=QuitButton.InternalOnKeyEvent
+<a name="994"></a>     End <span class="source_type"><a href="../core/object.html" class="source">Object</a></span>
+<a name="995"></a>     b_Quit=<span class="source_type"><a href="../xinterface/guibutton.html" class="source">GUIButton</a></span><span class="source_name">'KFGui.KFMainMenu.QuitButton'</span>
+<a name="996"></a>
+<a name="997"></a>     MenuSong=<span class="source_string">"KFMenu"</span>
+<a name="998"></a>     SteamMustBeRunningText=<span class="source_string">"Steam must be running and you must have an active internet connection to access this"</span>
+<a name="999"></a>     UnknownSteamErrorText=<span class="source_string">"Unknown Steam error prevented access to this"</span>
+<a name="1000"></a>     PopInSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'PatchSounds.slide1-1'</span>
+<a name="1001"></a>     SlideInSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'PatchSounds.slide1-1'</span>
+<a name="1002"></a>     BeepSound=<span class="source_type"><a href="../engine/sound.html" class="source">Sound</a></span><span class="source_name">'KFWeaponSound.bullethitmetal3'</span>
+<a name="1003"></a>     bRenderWorld=True
+<a name="1004"></a>     bPersistent=True
+<a name="1005"></a>     OnOpen=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.InternalOnOpen
+<a name="1006"></a>     OnReOpen=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.MainReopened
+<a name="1007"></a>     OnCanClose=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.CanClose
+<a name="1008"></a>     WinTop=<span class="source_int">0.000000</span>
+<a name="1009"></a>     WinHeight=<span class="source_int">1.000000</span>
+<a name="1010"></a>     OnKeyEvent=<span class="source_type"><a href="../kfgui/kfmainmenu.html" class="source">KFMainMenu</a></span>.MyKeyEvent
+<a name="1011"></a>}
+<a name="1012"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../kfgui/kfgui-overview.html">Package</a></td>
+	<td class="header"><a href="../kfgui/kfmainmenu.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#KFMainMenu">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_kfgui/kflogincontrols.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_kfgui/kfmainpage.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:19:03.652 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

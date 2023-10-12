@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Source: GamePlay.ACTION_SetAlertness</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gameplay/gameplay-overview.html">Package</a></td>
+	<td class="header"><a href="../gameplay/action_setalertness.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ACTION_SetAlertness">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gameplay/action_run.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gameplay/action_setcorona.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#Source_gameplay/action_setalertness.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../gameplay/gameplay-overview.html">GamePlay</a>.<a href="../gameplay/action_setalertness.html">ACTION_SetAlertness</a></h1>
+<br />
+<div class="source"><table class="source"><tr><td class="source_lineno"><span class="source_lineno">00001<br />00002<br />00003<br />00004<br />00005<br />00006<br />00007<br />00008<br />00009<br />00010<br />00011<br />00012<br />00013<br />00014<br />00015<br />00016<br />00017<br />00018<br />00019<br />00020<br />
+00021<br />00022<br />00023<br />00024<br />00025<br />00026<br />00027<br />00028<br />00029<br />00030<br />00031<br />00032<br />00033<br />00034<br />00035<br />00036<br />00037<br />00038<br />00039<br />00040
+</span></td>
+<td class="source"><pre class="source"><a name="0"></a><span class="source_type">class</span> <span class="source_type"><a href="../gameplay/action_setalertness.html" class="source">ACTION_SetAlertness</a></span> extends <span class="source_type"><a href="../gameplay/scriptedaction.html" class="source">ScriptedAction</a></span>;
+<a name="2"></a>
+<a name="3"></a>enum <span class="source_type"><a href="../gameplay/action_setalertness.html#EAlertnessType" class="source">EAlertnessType</a></span>
+<a name="4"></a>{
+<a name="5"></a>	ALERTNESS_IgnoreAll,			<span class="source_comment">// ignore any damage, etc. (even the physics part)
+</span><a name="6"></a>	ALERTNESS_IgnoreEnemies,		<span class="source_comment">// react normally, but don't try to fight or anything
+</span><a name="7"></a>	ALERTNESS_StayOnScript,			<span class="source_comment">// stay on script, but fight when possible
+</span><a name="8"></a>	ALERTNESS_LeaveScriptForCombat	<span class="source_comment">// leave script when acquire enemy
+</span><a name="9"></a>};
+<a name="10"></a>
+<a name="11"></a>var(Action) <span class="source_type"><a href="../gameplay/action_setalertness.html#EAlertnessType" class="source">EAlertnessType</a></span> Alertness;
+<a name="12"></a>
+<a name="13"></a>function <span class="source_type">bool</span> InitActionFor(<span class="source_type"><a href="../gameplay/scriptedcontroller.html" class="source">ScriptedController</a></span> <span class="source_type">C</span>)
+<a name="14"></a>{
+<a name="15"></a>	<span class="source_type">C</span>.SetEnemyReaction(<span class="source_type">int</span>(Alertness));
+<a name="16"></a>	return false;	
+<a name="17"></a>}
+<a name="18"></a>
+<a name="19"></a>function <span class="source_type">string</span> GetActionString()
+<a name="20"></a>{
+<a name="21"></a>	local <span class="source_type">String</span> <span class="source_type">S</span>;
+<a name="22"></a>
+<a name="23"></a>	<span class="source_type">Switch</span>(Alertness)
+<a name="24"></a>	{
+<a name="25"></a>		case ALERTNESS_IgnoreAll: <span class="source_type">S</span>=<span class="source_string">"Ignore all"</span>; break;
+<a name="26"></a>		case ALERTNESS_IgnoreEnemies: <span class="source_type">S</span>=<span class="source_string">"Ignore enemies"</span>; break;
+<a name="27"></a>		case ALERTNESS_StayOnScript: <span class="source_type">S</span>=<span class="source_string">"Stay on script"</span>; break;
+<a name="28"></a>		case ALERTNESS_LeaveScriptForCombat: <span class="source_type">S</span>=<span class="source_string">"Leave script for combat"</span>; break;
+<a name="29"></a>	}
+<a name="30"></a>	return ActionString@<span class="source_type">S</span>;
+<a name="31"></a>}
+<a name="32"></a>
+<a name="33"></a>	
+<a name="34"></a>
+<a name="35"></a>defaultproperties
+<a name="36"></a>{
+<a name="37"></a>     ActionString=<span class="source_string">"set alertness"</span>
+<a name="38"></a>     bValidForTrigger=False
+<a name="39"></a>}
+<a name="40"></a></pre></td></tr></table></div>
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../gameplay/gameplay-overview.html">Package</a></td>
+	<td class="header"><a href="../gameplay/action_setalertness.html">Class</a></td>
+	<td class="header_hilight">Source</td>
+	<td class="header"><a class="header" href="../classtree.html#ACTION_SetAlertness">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../Source_gameplay/action_run.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Source_gameplay/action_setcorona.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Class file time: Fri 13-10-2023 03:17:26.000 - Creation time: Fri 13-10-2023 03:18:59.848 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>

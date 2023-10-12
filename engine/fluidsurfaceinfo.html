@@ -1,0 +1,644 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>UnCodeX - Engine.FluidSurfaceInfo</title>
+	<meta name="Generator" content="UnCodeX 241" />
+	<link rel="stylesheet" href="../DocStyle2.css" type="text/css" title="Original Purple" />
+	<link rel="alternative stylesheet" href="../DocStyle2-blue.css" type="text/css" title="Blue" />
+	<link rel="alternative stylesheet" href="../DocStyle2-red.css" type="text/css" title="Red" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="../DocStyle2-msie.css" type="text/css" />
+	<![endif]-->
+	<script src="../styleswitcher.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="header">
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/fluidsurfaceinfo.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#FluidSurfaceInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/finalblend.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/fluidsurfaceoscillator.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html#engine/fluidsurfaceinfo.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+</div>
+<div class="spacer"></div>
+
+<h1><a href="../engine/engine-overview.html">Engine</a>.FluidSurfaceInfo</h1>
+
+<dl>
+<dt>Extends</dt><dd><a href="../engine/info.html">Info</a></dd>
+<dt>Modifiers</dt><dd>showcategories ( Movement , Collision , Lighting , LightColor , Karma , Force ) native noexport placeable </dd>
+</dl>
+
+<p></p>
+
+<pre class="tree"><a href="../core/core-overview.html">Core</a>.<a href="../core/object.html">Object</a>
+|   
++-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a>
+   |   
+   +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/info.html">Info</a>
+      |   
+      +-- <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/fluidsurfaceinfo.html">FluidSurfaceInfo</a>
+</pre>
+
+
+
+<hr />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Constants Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Contants from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#MAINCOLLISIONINDEX">MAINCOLLISIONINDEX</a>, <a href="../engine/actor.html#MAXSTEPHEIGHT">MAXSTEPHEIGHT</a>, <a href="../engine/actor.html#MINFLOORZ">MINFLOORZ</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="2" class="title">Variables Summary</th>
+</tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bHasWarmedUp" name="bHasWarmedUp" title="go to the details">bHasWarmedUp</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;int&gt;</td><td width="66%"><a href="#_ClampBitmap" name="ClampBitmap" title="go to the details">ClampBitmap</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Box">box</a></td><td width="66%"><a href="#_FluidBoundingBox" name="FluidBoundingBox" title="go to the details">FluidBoundingBox</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Vector">vector</a></td><td width="66%"><a href="#_FluidOrigin" name="FluidOrigin" title="go to the details">FluidOrigin</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_LatestVerts" name="LatestVerts" title="go to the details">LatestVerts</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;<a href="../engine/fluidsurfaceoscillator.html">FluidSurfaceOscillator</a>&gt;</td><td width="66%"><a href="#_Oscillators" name="Oscillators" title="go to the details">Oscillators</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">FluidSurfacePrimitive</td><td width="66%"><a href="#_Primitive" name="Primitive" title="go to the details">Primitive</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TestRippleAng" name="TestRippleAng" title="go to the details">TestRippleAng</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TimeRollover" name="TimeRollover" title="go to the details">TimeRollover</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;byte&gt;</td><td width="66%"><a href="#_VertAlpha" name="VertAlpha" title="go to the details">VertAlpha</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;float&gt;</td><td width="66%"><a href="#_Verts0" name="Verts0" title="go to the details">Verts0</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">array&lt;float&gt;</td><td width="66%"><a href="#_Verts1" name="Verts1" title="go to the details">Verts1</a></td></tr>
+<tr><th colspan="2" class="small">FluidSurfaceInfo</th></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_AlphaCurveScale" name="AlphaCurveScale" title="go to the details">AlphaCurveScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_AlphaHeightScale" name="AlphaHeightScale" title="go to the details">AlphaHeightScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">byte</td><td width="66%"><a href="#_AlphaMax" name="AlphaMax" title="go to the details">AlphaMax</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bShowBoundingBox" name="bShowBoundingBox" title="go to the details">bShowBoundingBox</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_bUseNoRenderZ" name="bUseNoRenderZ" title="go to the details">bUseNoRenderZ</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/terraininfo.html">TerrainInfo</a></td><td width="66%"><a href="#_ClampTerrain" name="ClampTerrain" title="go to the details">ClampTerrain</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Color">color</a></td><td width="66%"><a href="#_FluidColor" name="FluidColor" title="go to the details">FluidColor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FluidDamping" name="FluidDamping" title="go to the details">FluidDamping</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FluidGridSpacing" name="FluidGridSpacing" title="go to the details">FluidGridSpacing</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../engine/fluidsurfaceinfo.html#EFluidGridType">EFluidGridType</a></td><td width="66%"><a href="#_FluidGridType" name="FluidGridType" title="go to the details">FluidGridType</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FluidHeightScale" name="FluidHeightScale" title="go to the details">FluidHeightScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FluidNoiseFrequency" name="FluidNoiseFrequency" title="go to the details">FluidNoiseFrequency</a></td></tr>
+<tr><td nowrap="nowrap" width="33%"><a href="../core/object.html#Range">range</a></td><td width="66%"><a href="#_FluidNoiseStrength" name="FluidNoiseStrength" title="go to the details">FluidNoiseStrength</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FluidSpeed" name="FluidSpeed" title="go to the details">FluidSpeed</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_FluidTimeScale" name="FluidTimeScale" title="go to the details">FluidTimeScale</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_FluidXSize" name="FluidXSize" title="go to the details">FluidXSize</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">int</td><td width="66%"><a href="#_FluidYSize" name="FluidYSize" title="go to the details">FluidYSize</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_NoRenderZ" name="NoRenderZ" title="go to the details">NoRenderZ</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_OrientShootEffect" name="OrientShootEffect" title="go to the details">OrientShootEffect</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_OrientTouchEffect" name="OrientTouchEffect" title="go to the details">OrientTouchEffect</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_RippleVelocityFactor" name="RippleVelocityFactor" title="go to the details">RippleVelocityFactor</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/actor.html">Actor</a>&gt;</td><td width="66%"><a href="#_ShootEffect" name="ShootEffect" title="go to the details">ShootEffect</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ShootRadius" name="ShootRadius" title="go to the details">ShootRadius</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_ShootStrength" name="ShootStrength" title="go to the details">ShootStrength</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">bool</td><td width="66%"><a href="#_TestRipple" name="TestRipple" title="go to the details">TestRipple</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TestRippleRadius" name="TestRippleRadius" title="go to the details">TestRippleRadius</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TestRippleSpeed" name="TestRippleSpeed" title="go to the details">TestRippleSpeed</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TestRippleStrength" name="TestRippleStrength" title="go to the details">TestRippleStrength</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">class&lt;<a href="../engine/actor.html">Actor</a>&gt;</td><td width="66%"><a href="#_TouchEffect" name="TouchEffect" title="go to the details">TouchEffect</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_TouchStrength" name="TouchStrength" title="go to the details">TouchStrength</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_UOffset" name="UOffset" title="go to the details">UOffset</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_UpdateRate" name="UpdateRate" title="go to the details">UpdateRate</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_UTiles" name="UTiles" title="go to the details">UTiles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_VOffset" name="VOffset" title="go to the details">VOffset</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_VTiles" name="VTiles" title="go to the details">VTiles</a></td></tr>
+<tr><td nowrap="nowrap" width="33%">float</td><td width="66%"><a href="#_WarmUpTime" name="WarmUpTime" title="go to the details">WarmUpTime</a></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/info.html">Info</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/info.html#BotsGroup">BotsGroup</a>, <a href="../engine/info.html#ChatGroup">ChatGroup</a>, <a href="../engine/info.html#GameGroup">GameGroup</a>, <a href="../engine/info.html#KickVoteGroup">KickVoteGroup</a>, <a href="../engine/info.html#MapVoteGroup">MapVoteGroup</a>, <a href="../engine/info.html#RulesGroup">RulesGroup</a>, <a href="../engine/info.html#ServerGroup">ServerGroup</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Variables from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#Acceleration">Acceleration</a>, <a href="../engine/actor.html#AccumKarmaAngleError">AccumKarmaAngleError</a>, <a href="../engine/actor.html#ActorRenderData">ActorRenderData</a>, <a href="../engine/actor.html#AmbientGlow">AmbientGlow</a>, <a href="../engine/actor.html#AmbientSound">AmbientSound</a>, <a href="../engine/actor.html#AntiPortal">AntiPortal</a>, <a href="../engine/actor.html#Attached">Attached</a>, <a href="../engine/actor.html#AttachmentBone">AttachmentBone</a>, <a href="../engine/actor.html#AttachTag">AttachTag</a>, <a href="../engine/actor.html#bAcceptsProjectors">bAcceptsProjectors</a>, <a href="../engine/actor.html#bActorShadows">bActorShadows</a>, <a href="../engine/actor.html#bAlreadyPrecachedMaterials">bAlreadyPrecachedMaterials</a>, <a href="../engine/actor.html#bAlreadyPrecachedMeshes">bAlreadyPrecachedMeshes</a>, <a href="../engine/actor.html#bAlwaysFaceCamera">bAlwaysFaceCamera</a>, <a href="../engine/actor.html#bAlwaysRelevant">bAlwaysRelevant</a>, <a href="../engine/actor.html#bAlwaysTick">bAlwaysTick</a>, <a href="../engine/actor.html#bAlwaysZeroBoneOffset">bAlwaysZeroBoneOffset</a>, <a href="../engine/actor.html#bAnimByOwner">bAnimByOwner</a>, <a href="../engine/actor.html#Base">Base</a>, <a href="../engine/actor.html#bAttenByLife">bAttenByLife</a>, <a href="../engine/actor.html#bAutoAlignToTerrain">bAutoAlignToTerrain</a>, <a href="../engine/actor.html#bAutoTraceNotify">bAutoTraceNotify</a>, <a href="../engine/actor.html#bBadStateCode">bBadStateCode</a>, <a href="../engine/actor.html#bBlockActors">bBlockActors</a>, <a href="../engine/actor.html#bBlockHitPointTraces">bBlockHitPointTraces</a>, <a href="../engine/actor.html#bBlockKarma">bBlockKarma</a>, <a href="../engine/actor.html#bBlockNonZeroExtentTraces">bBlockNonZeroExtentTraces</a>, <a href="../engine/actor.html#bBlockPlayers">bBlockPlayers</a>, <a href="../engine/actor.html#bBlockProjectiles">bBlockProjectiles</a>, <a href="../engine/actor.html#bBlocksTeleport">bBlocksTeleport</a>, <a href="../engine/actor.html#bBlockZeroExtentTraces">bBlockZeroExtentTraces</a>, <a href="../engine/actor.html#bBounce">bBounce</a>, <a href="../engine/actor.html#bCanAutoTraceSelect">bCanAutoTraceSelect</a>, <a href="../engine/actor.html#bCanBeDamaged">bCanBeDamaged</a>, <a href="../engine/actor.html#bCanTeleport">bCanTeleport</a>, <a href="../engine/actor.html#bClientAnim">bClientAnim</a>, <a href="../engine/actor.html#bClientAuthoritative">bClientAuthoritative</a>, <a href="../engine/actor.html#bClientDemoNetFunc">bClientDemoNetFunc</a>, <a href="../engine/actor.html#bClientDemoRecording">bClientDemoRecording</a>, <a href="../engine/actor.html#bClientTrigger">bClientTrigger</a>, <a href="../engine/actor.html#bCollideActors">bCollideActors</a>, <a href="../engine/actor.html#bCollideWhenPlacing">bCollideWhenPlacing</a>, <a href="../engine/actor.html#bCollideWorld">bCollideWorld</a>, <a href="../engine/actor.html#bCompressedPosition">bCompressedPosition</a>, <a href="../engine/actor.html#bCorona">bCorona</a>, <a href="../engine/actor.html#bDeferRendering">bDeferRendering</a>, <a href="../engine/actor.html#bDeleteMe">bDeleteMe</a>, <a href="../engine/actor.html#bDemoOwner">bDemoOwner</a>, <a href="../engine/actor.html#bDemoRecording">bDemoRecording</a>, <a href="../engine/actor.html#bDestroyInPainVolume">bDestroyInPainVolume</a>, <a href="../engine/actor.html#bDetailAttachment">bDetailAttachment</a>, <a href="../engine/actor.html#bDirectional">bDirectional</a>, <a href="../engine/actor.html#bDirectionalCorona">bDirectionalCorona</a>, <a href="../engine/actor.html#bDisableSorting">bDisableSorting</a>, <a href="../engine/actor.html#bDisturbFluidSurface">bDisturbFluidSurface</a>, <a href="../engine/actor.html#bDramaticLighting">bDramaticLighting</a>, <a href="../engine/actor.html#bDynamicLight">bDynamicLight</a>, <a href="../engine/actor.html#bEdShouldSnap">bEdShouldSnap</a>, <a href="../engine/actor.html#bEdSnap">bEdSnap</a>, <a href="../engine/actor.html#bFixedRotationDir">bFixedRotationDir</a>, <a href="../engine/actor.html#bForceSkelUpdate">bForceSkelUpdate</a>, <a href="../engine/actor.html#bFullVolume">bFullVolume</a>, <a href="../engine/actor.html#bGameRelevant">bGameRelevant</a>, <a href="../engine/actor.html#bHardAttach">bHardAttach</a>, <a href="../engine/actor.html#bHidden">bHidden</a>, <a href="../engine/actor.html#bHiddenEd">bHiddenEd</a>, <a href="../engine/actor.html#bHiddenEdGroup">bHiddenEdGroup</a>, <a href="../engine/actor.html#bHighDetail">bHighDetail</a>, <a href="../engine/actor.html#bHurtEntry">bHurtEntry</a>, <a href="../engine/actor.html#bIgnoreEncroachers">bIgnoreEncroachers</a>, <a href="../engine/actor.html#bIgnoreOutOfWorld">bIgnoreOutOfWorld</a>, <a href="../engine/actor.html#bIgnoreTerminalVelocity">bIgnoreTerminalVelocity</a>, <a href="../engine/actor.html#bIgnoreVehicles">bIgnoreVehicles</a>, <a href="../engine/actor.html#bInterpolating">bInterpolating</a>, <a href="../engine/actor.html#bJustTeleported">bJustTeleported</a>, <a href="../engine/actor.html#bLightChanged">bLightChanged</a>, <a href="../engine/actor.html#bLightingVisibility">bLightingVisibility</a>, <a href="../engine/actor.html#bLockLocation">bLockLocation</a>, <a href="../engine/actor.html#bMovable">bMovable</a>, <a href="../engine/actor.html#bNetDirty">bNetDirty</a>, <a href="../engine/actor.html#bNetInitial">bNetInitial</a>, <a href="../engine/actor.html#bNetInitialRotation">bNetInitialRotation</a>, <a href="../engine/actor.html#bNetNotify">bNetNotify</a>, <a href="../engine/actor.html#bNetOwner">bNetOwner</a>, <a href="../engine/actor.html#bNetRelevant">bNetRelevant</a>, <a href="../engine/actor.html#bNetTemporary">bNetTemporary</a>, <a href="../engine/actor.html#bNoDelete">bNoDelete</a>, <a href="../engine/actor.html#bNoRepMesh">bNoRepMesh</a>, <a href="../engine/actor.html#bNotifyLocalPlayerTeamReceived">bNotifyLocalPlayerTeamReceived</a>, <a href="../engine/actor.html#bNotOnDedServer">bNotOnDedServer</a>, <a href="../engine/actor.html#bObsolete">bObsolete</a>, <a href="../engine/actor.html#bOnlyAffectPawns">bOnlyAffectPawns</a>, <a href="../engine/actor.html#bOnlyDirtyReplication">bOnlyDirtyReplication</a>, <a href="../engine/actor.html#bOnlyDrawIfAttached">bOnlyDrawIfAttached</a>, <a href="../engine/actor.html#bOnlyOwnerSee">bOnlyOwnerSee</a>, <a href="../engine/actor.html#bOnlyRelevantToOwner">bOnlyRelevantToOwner</a>, <a href="../engine/actor.html#bOrientOnSlope">bOrientOnSlope</a>, <a href="../engine/actor.html#bOrientToVelocity">bOrientToVelocity</a>, <a href="../engine/actor.html#bOwnerNoSee">bOwnerNoSee</a>, <a href="../engine/actor.html#bPathColliding">bPathColliding</a>, <a href="../engine/actor.html#bPathTemp">bPathTemp</a>, <a href="../engine/actor.html#bPendingDelete">bPendingDelete</a>, <a href="../engine/actor.html#bProjTarget">bProjTarget</a>, <a href="../engine/actor.html#bRepClientDemo">bRepClientDemo</a>, <a href="../engine/actor.html#bReplicateAnimations">bReplicateAnimations</a>, <a href="../engine/actor.html#bReplicateInstigator">bReplicateInstigator</a>, <a href="../engine/actor.html#bReplicateMovement">bReplicateMovement</a>, <a href="../engine/actor.html#bRotateToDesired">bRotateToDesired</a>, <a href="../engine/actor.html#Brush">Brush</a>, <a href="../engine/actor.html#bScriptInitialized">bScriptInitialized</a>, <a href="../engine/actor.html#bSelected">bSelected</a>, <a href="../engine/actor.html#bShadowCast">bShadowCast</a>, <a href="../engine/actor.html#bShouldBaseAtStartup">bShouldBaseAtStartup</a>, <a href="../engine/actor.html#bShouldStopKarma">bShouldStopKarma</a>, <a href="../engine/actor.html#bShowOctreeNodes">bShowOctreeNodes</a>, <a href="../engine/actor.html#bSkipActorPropertyReplication">bSkipActorPropertyReplication</a>, <a href="../engine/actor.html#bSmoothKarmaStateUpdates">bSmoothKarmaStateUpdates</a>, <a href="../engine/actor.html#bSpecialLit">bSpecialLit</a>, <a href="../engine/actor.html#bStasis">bStasis</a>, <a href="../engine/actor.html#bStatic">bStatic</a>, <a href="../engine/actor.html#bStaticLighting">bStaticLighting</a>, <a href="../engine/actor.html#bSuperHighDetail">bSuperHighDetail</a>, <a href="../engine/actor.html#bTearOff">bTearOff</a>, <a href="../engine/actor.html#bTempEditor">bTempEditor</a>, <a href="../engine/actor.html#bTicked">bTicked</a>, <a href="../engine/actor.html#bTimerLoop">bTimerLoop</a>, <a href="../engine/actor.html#bTraceWater">bTraceWater</a>, <a href="../engine/actor.html#bTrailerAllowRotation">bTrailerAllowRotation</a>, <a href="../engine/actor.html#bTrailerPrePivot">bTrailerPrePivot</a>, <a href="../engine/actor.html#bTrailerSameRotation">bTrailerSameRotation</a>, <a href="../engine/actor.html#bTravel">bTravel</a>, <a href="../engine/actor.html#bUnlit">bUnlit</a>, <a href="../engine/actor.html#Buoyancy">Buoyancy</a>, <a href="../engine/actor.html#bUpdateSimulatedPosition">bUpdateSimulatedPosition</a>, <a href="../engine/actor.html#bUseCollisionStaticMesh">bUseCollisionStaticMesh</a>, <a href="../engine/actor.html#bUseCylinderCollision">bUseCylinderCollision</a>, <a href="../engine/actor.html#bUseDynamicLights">bUseDynamicLights</a>, <a href="../engine/actor.html#bUseHighDetailOverlayIndex">bUseHighDetailOverlayIndex</a>, <a href="../engine/actor.html#bUseLightingFromBase">bUseLightingFromBase</a>, <a href="../engine/actor.html#bWasSNFiltered">bWasSNFiltered</a>, <a href="../engine/actor.html#bWorldGeometry">bWorldGeometry</a>, <a href="../engine/actor.html#CachedLocalToWorld">CachedLocalToWorld</a>, <a href="../engine/actor.html#CachedLocation">CachedLocation</a>, <a href="../engine/actor.html#CachedRotation">CachedRotation</a>, <a href="../engine/actor.html#ClientOverlayCounter">ClientOverlayCounter</a>, <a href="../engine/actor.html#ClientOverlayTimer">ClientOverlayTimer</a>, <a href="../engine/actor.html#CollisionHeight">CollisionHeight</a>, <a href="../engine/actor.html#CollisionRadius">CollisionRadius</a>, <a href="../engine/actor.html#CollisionTag">CollisionTag</a>, <a href="../engine/actor.html#ColLocation">ColLocation</a>, <a href="../engine/actor.html#CullDistance">CullDistance</a>, <a href="../engine/actor.html#Deleted">Deleted</a>, <a href="../engine/actor.html#DesiredRotation">DesiredRotation</a>, <a href="../engine/actor.html#DrawScale">DrawScale</a>, <a href="../engine/actor.html#DrawScale3D">DrawScale3D</a>, <a href="../engine/actor.html#DrawType">DrawType</a>, <a href="../engine/actor.html#Event">Event</a>, <a href="../engine/actor.html#ExcludeTag[8]">ExcludeTag[8]</a>, <a href="../engine/actor.html#FluidSurfaceShootStrengthMod">FluidSurfaceShootStrengthMod</a>, <a href="../engine/actor.html#ForcedVisibilityZoneTag">ForcedVisibilityZoneTag</a>, <a href="../engine/actor.html#ForceNoise">ForceNoise</a>, <a href="../engine/actor.html#ForceRadius">ForceRadius</a>, <a href="../engine/actor.html#ForceScale">ForceScale</a>, <a href="../engine/actor.html#ForceType">ForceType</a>, <a href="../engine/actor.html#Group">Group</a>, <a href="../engine/actor.html#HardRelMatrix">HardRelMatrix</a>, <a href="../engine/actor.html#HighDetailOverlay">HighDetailOverlay</a>, <a href="../engine/actor.html#HighDetailOverlayIndex">HighDetailOverlayIndex</a>, <a href="../engine/actor.html#InitialState">InitialState</a>, <a href="../engine/actor.html#Instigator">Instigator</a>, <a href="../engine/actor.html#Inventory">Inventory</a>, <a href="../engine/actor.html#JoinedTag">JoinedTag</a>, <a href="../engine/actor.html#KParams">KParams</a>, <a href="../engine/actor.html#KStepTag">KStepTag</a>, <a href="../engine/actor.html#LastRenderTime">LastRenderTime</a>, <a href="../engine/actor.html#LastReplicateTime">LastReplicateTime</a>, <a href="../engine/actor.html#LatentFloat">LatentFloat</a>, <a href="../engine/actor.html#Leaves">Leaves</a>, <a href="../engine/actor.html#Level">Level</a>, <a href="../engine/actor.html#LifeSpan">LifeSpan</a>, <a href="../engine/actor.html#LightBrightness">LightBrightness</a>, <a href="../engine/actor.html#LightCone">LightCone</a>, <a href="../engine/actor.html#LightEffect">LightEffect</a>, <a href="../engine/actor.html#LightHue">LightHue</a>, <a href="../engine/actor.html#LightPeriod">LightPeriod</a>, <a href="../engine/actor.html#LightPhase">LightPhase</a>, <a href="../engine/actor.html#LightRadius">LightRadius</a>, <a href="../engine/actor.html#LightRenderData">LightRenderData</a>, <a href="../engine/actor.html#LightSaturation">LightSaturation</a>, <a href="../engine/actor.html#LightType">LightType</a>, <a href="../engine/actor.html#Location">Location</a>, <a href="../engine/actor.html#LODBias">LODBias</a>, <a href="../engine/actor.html#Mass">Mass</a>, <a href="../engine/actor.html#MaxLights">MaxLights</a>, <a href="../engine/actor.html#Mesh">Mesh</a>, <a href="../engine/actor.html#MeshInstance">MeshInstance</a>, <a href="../engine/actor.html#MessageClass">MessageClass</a>, <a href="../engine/actor.html#NetPriority">NetPriority</a>, <a href="../engine/actor.html#NetTag">NetTag</a>, <a href="../engine/actor.html#NetUpdateFrequency">NetUpdateFrequency</a>, <a href="../engine/actor.html#NetUpdateTime">NetUpdateTime</a>, <a href="../engine/actor.html#OctreeBox">OctreeBox</a>, <a href="../engine/actor.html#OctreeBoxCenter">OctreeBoxCenter</a>, <a href="../engine/actor.html#OctreeBoxRadii">OctreeBoxRadii</a>, <a href="../engine/actor.html#OctreeNodes">OctreeNodes</a>, <a href="../engine/actor.html#OverlayMaterial">OverlayMaterial</a>, <a href="../engine/actor.html#OverlayTimer">OverlayTimer</a>, <a href="../engine/actor.html#Owner">Owner</a>, <a href="../engine/actor.html#PendingTouch">PendingTouch</a>, <a href="../engine/actor.html#Physics">Physics</a>, <a href="../engine/actor.html#PhysicsVolume">PhysicsVolume</a>, <a href="../engine/actor.html#PrePivot">PrePivot</a>, <a href="../engine/actor.html#Projectors">Projectors</a>, <a href="../engine/actor.html#Region">Region</a>, <a href="../engine/actor.html#RelativeLocation">RelativeLocation</a>, <a href="../engine/actor.html#RelativeRotation">RelativeRotation</a>, <a href="../engine/actor.html#RemoteRole">RemoteRole</a>, <a href="../engine/actor.html#RenderRevision">RenderRevision</a>, <a href="../engine/actor.html#RepSkin">RepSkin</a>, <a href="../engine/actor.html#Role">Role</a>, <a href="../engine/actor.html#Rotation">Rotation</a>, <a href="../engine/actor.html#RotationRate">RotationRate</a>, <a href="../engine/actor.html#ScaleGlow">ScaleGlow</a>, <a href="../engine/actor.html#SimAnim">SimAnim</a>, <a href="../engine/actor.html#Skins">Skins</a>, <a href="../engine/actor.html#SoundOcclusion">SoundOcclusion</a>, <a href="../engine/actor.html#SoundPitch">SoundPitch</a>, <a href="../engine/actor.html#SoundRadius">SoundRadius</a>, <a href="../engine/actor.html#SoundVolume">SoundVolume</a>, <a href="../engine/actor.html#StaticFilterState">StaticFilterState</a>, <a href="../engine/actor.html#StaticMesh">StaticMesh</a>, <a href="../engine/actor.html#StaticMeshInstance">StaticMeshInstance</a>, <a href="../engine/actor.html#StaticMeshProjectors">StaticMeshProjectors</a>, <a href="../engine/actor.html#StaticSectionBatches">StaticSectionBatches</a>, <a href="../engine/actor.html#Style">Style</a>, <a href="../engine/actor.html#SurfaceType">SurfaceType</a>, <a href="../engine/actor.html#Tag">Tag</a>, <a href="../engine/actor.html#Texture">Texture</a>, <a href="../engine/actor.html#TimerCounter">TimerCounter</a>, <a href="../engine/actor.html#TimerRate">TimerRate</a>, <a href="../engine/actor.html#Touching">Touching</a>, <a href="../engine/actor.html#TransientSoundRadius">TransientSoundRadius</a>, <a href="../engine/actor.html#TransientSoundVolume">TransientSoundVolume</a>, <a href="../engine/actor.html#UV2Mode">UV2Mode</a>, <a href="../engine/actor.html#UV2Texture">UV2Texture</a>, <a href="../engine/actor.html#Velocity">Velocity</a>, <a href="../engine/actor.html#XLevel">XLevel</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Enumerations Summary</th>
+</tr>
+<tr><td><a href="#_EFluidGridType" name="EFluidGridType" title="go to the details">EFluidGridType</a><br /><span class="small">FGT_Square,
+FGT_Hexagonal</span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Enumerations from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#EDoubleClickDir">EDoubleClickDir</a>, <a href="../engine/actor.html#EDrawType">EDrawType</a>, <a href="../engine/actor.html#EFilterState">EFilterState</a>, <a href="../engine/actor.html#EFlagState">EFlagState</a>, <a href="../engine/actor.html#EForceType">EForceType</a>, <a href="../engine/actor.html#eKillZType">eKillZType</a>, <a href="../engine/actor.html#ELightEffect">ELightEffect</a>, <a href="../engine/actor.html#ELightType">ELightType</a>, <a href="../engine/actor.html#EMusicTransition">EMusicTransition</a>, <a href="../engine/actor.html#ENetRole">ENetRole</a>, <a href="../engine/actor.html#EPhysics">EPhysics</a>, <a href="../engine/actor.html#ERenderStyle">ERenderStyle</a>, <a href="../engine/actor.html#ESoundOcclusion">ESoundOcclusion</a>, <a href="../engine/actor.html#ESoundSlot">ESoundSlot</a>, <a href="../engine/actor.html#ESurfaceTypes">ESurfaceTypes</a>, <a href="../engine/actor.html#ETravelType">ETravelType</a>, <a href="../engine/actor.html#EUV2Mode">EUV2Mode</a></td>
+</tr>
+</table>
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Structures Summary</th>
+</tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Structures from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#ActorRenderDataPtr">ActorRenderDataPtr</a>, <a href="../engine/actor.html#AnimRep">AnimRep</a>, <a href="../engine/actor.html#BatchReference">BatchReference</a>, <a href="../engine/actor.html#FireProperties">FireProperties</a>, <a href="../engine/actor.html#KRBVec">KRBVec</a>, <a href="../engine/actor.html#KRigidBodyState">KRigidBodyState</a>, <a href="../engine/actor.html#KSimParams">KSimParams</a>, <a href="../engine/actor.html#LightRenderDataPtr">LightRenderDataPtr</a>, <a href="../engine/actor.html#PointRegion">PointRegion</a>, <a href="../engine/actor.html#ProjectorRenderInfoPtr">ProjectorRenderInfoPtr</a>, <a href="../engine/actor.html#StaticMeshProjectorRenderInfoPtr">StaticMeshProjectorRenderInfoPtr</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<table class="title">
+<tr>
+	<th colspan="3" class="title">Functions Summary</th>
+</tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Pling-" name="Pling" title="go to the details">Pling</a> (<a href="../core/object.html#Vector">vector</a> Position, float Strength, optional float Radius)<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_TakeDamage-" name="TakeDamage" title="go to the details">TakeDamage</a> (int Damage, <a href="../engine/pawn.html">Pawn</a> instigatedBy, <a href="../core/object.html#Vector">Vector</a> hitlocation, <a href="../core/object.html#Vector">vector</a> momentum, class&lt;<a href="../engine/damagetype.html">DamageType</a>&gt; damageType, optional int HitIndex))<br /><span class="function_state"></span></td></tr>
+<tr><td nowrap="nowrap"><img src="../img_function.gif" alt="function" title="function" /></td><td>&nbsp;</td><td><a href="#_Touch-" name="Touch" title="go to the details">Touch</a> (<a href="../engine/actor.html">Actor</a> Other))<br /><span class="function_state"></span></td></tr>
+
+</table>
+
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/info.html">Info</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/info.html#AcceptPlayInfoProperty">AcceptPlayInfoProperty</a>, <a href="../engine/info.html#AllowClassRemoval">AllowClassRemoval</a>, <a href="../engine/info.html#FillPlayInfo">FillPlayInfo</a>, <a href="../engine/info.html#GetDescriptionText">GetDescriptionText</a>, <a href="../engine/info.html#GetSecurityLevel">GetSecurityLevel</a></td>
+</tr>
+</table>
+<table>
+<tr>
+	<th class="inherittitle">Inherited Functions from <a href="../engine/engine-overview.html">Engine</a>.<a href="../engine/actor.html">Actor</a></th>
+</tr>
+<tr>
+	<td class="small"><a href="../engine/actor.html#*">*</a>, <a href="../engine/actor.html#+">+</a>, <a href="../engine/actor.html#-">-</a>, <a href="../engine/actor.html#AddToPackageMap">AddToPackageMap</a>, <a href="../engine/actor.html#AdjustVolume">AdjustVolume</a>, <a href="../engine/actor.html#AllActors">AllActors</a>, <a href="../engine/actor.html#AllowMusicPlayback">AllowMusicPlayback</a>, <a href="../engine/actor.html#AnimBlendParams">AnimBlendParams</a>, <a href="../engine/actor.html#AnimBlendToAlpha">AnimBlendToAlpha</a>, <a href="../engine/actor.html#AnimEnd">AnimEnd</a>, <a href="../engine/actor.html#AnimIsInGroup">AnimIsInGroup</a>, <a href="../engine/actor.html#AnimStopLooping">AnimStopLooping</a>, <a href="../engine/actor.html#Attach">Attach</a>, <a href="../engine/actor.html#AttachToBone">AttachToBone</a>, <a href="../engine/actor.html#AutonomousPhysics">AutonomousPhysics</a>, <a href="../engine/actor.html#BaseChange">BaseChange</a>, <a href="../engine/actor.html#BasedActors">BasedActors</a>, <a href="../engine/actor.html#BecomeViewTarget">BecomeViewTarget</a>, <a href="../engine/actor.html#BeginEvent">BeginEvent</a>, <a href="../engine/actor.html#BeginPlay">BeginPlay</a>, <a href="../engine/actor.html#BlocksShotAt">BlocksShotAt</a>, <a href="../engine/actor.html#BoneRefresh">BoneRefresh</a>, <a href="../engine/actor.html#BroadcastLocalizedMessage">BroadcastLocalizedMessage</a>, <a href="../engine/actor.html#Bump">Bump</a>, <a href="../engine/actor.html#CanSplash">CanSplash</a>, <a href="../engine/actor.html#ChangeBaseParamsFeedbackEffect">ChangeBaseParamsFeedbackEffect</a>, <a href="../engine/actor.html#ChangeSpringFeedbackEffect">ChangeSpringFeedbackEffect</a>, <a href="../engine/actor.html#CheckAchievementEvents">CheckAchievementEvents</a>, <a href="../engine/actor.html#CheckForErrors">CheckForErrors</a>, <a href="../engine/actor.html#CheckMaxEffectDistance">CheckMaxEffectDistance</a>, <a href="../engine/actor.html#ChildActors">ChildActors</a>, <a href="../engine/actor.html#ClearStayingDebugLines">ClearStayingDebugLines</a>, <a href="../engine/actor.html#ClientTrigger">ClientTrigger</a>, <a href="../engine/actor.html#Clock">Clock</a>, <a href="../engine/actor.html#CollidingActors">CollidingActors</a>, <a href="../engine/actor.html#ConsoleCommand">ConsoleCommand</a>, <a href="../engine/actor.html#CopyObjectToClipboard">CopyObjectToClipboard</a>, <a href="../engine/actor.html#Crash">Crash</a>, <a href="../engine/actor.html#CurrentLIPSincAnim">CurrentLIPSincAnim</a>, <a href="../engine/actor.html#DebugClock">DebugClock</a>, <a href="../engine/actor.html#DebugUnclock">DebugUnclock</a>, <a href="../engine/actor.html#DemoPlaySound">DemoPlaySound</a>, <a href="../engine/actor.html#Destroy">Destroy</a>, <a href="../engine/actor.html#Destroyed">Destroyed</a>, <a href="../engine/actor.html#Detach">Detach</a>, <a href="../engine/actor.html#DetachFromBone">DetachFromBone</a>, <a href="../engine/actor.html#DisplayDebug">DisplayDebug</a>, <a href="../engine/actor.html#DrawDebugCircle">DrawDebugCircle</a>, <a href="../engine/actor.html#DrawDebugLine">DrawDebugLine</a>, <a href="../engine/actor.html#DrawDebugSphere">DrawDebugSphere</a>, <a href="../engine/actor.html#DrawStayingDebugLine">DrawStayingDebugLine</a>, <a href="../engine/actor.html#DynamicActors">DynamicActors</a>, <a href="../engine/actor.html#EffectIsRelevant">EffectIsRelevant</a>, <a href="../engine/actor.html#EnableChannelNotify">EnableChannelNotify</a>, <a href="../engine/actor.html#EncroachedBy">EncroachedBy</a>, <a href="../engine/actor.html#EncroachingOn">EncroachingOn</a>, <a href="../engine/actor.html#EndedRotation">EndedRotation</a>, <a href="../engine/actor.html#EndEvent">EndEvent</a>, <a href="../engine/actor.html#Error">Error</a>, <a href="../engine/actor.html#Falling">Falling</a>, <a href="../engine/actor.html#FastTrace">FastTrace</a>, <a href="../engine/actor.html#FellOutOfWorld">FellOutOfWorld</a>, <a href="../engine/actor.html#FinishAnim">FinishAnim</a>, <a href="../engine/actor.html#FinishedInterpolation">FinishedInterpolation</a>, <a href="../engine/actor.html#FinishInterpolation">FinishInterpolation</a>, <a href="../engine/actor.html#ForceFeedbackSupported">ForceFeedbackSupported</a>, <a href="../engine/actor.html#FreezeAnimAt">FreezeAnimAt</a>, <a href="../engine/actor.html#GainedChild">GainedChild</a>, <a href="../engine/actor.html#GetAllInt">GetAllInt</a>, <a href="../engine/actor.html#GetAllIntDesc">GetAllIntDesc</a>, <a href="../engine/actor.html#GetAnimDuration">GetAnimDuration</a>, <a href="../engine/actor.html#GetAnimParams">GetAnimParams</a>, <a href="../engine/actor.html#GetBoneCoords">GetBoneCoords</a>, <a href="../engine/actor.html#GetBoneRotation">GetBoneRotation</a>, <a href="../engine/actor.html#GetCacheEntry">GetCacheEntry</a>, <a href="../engine/actor.html#GetClosestBone">GetClosestBone</a>, <a href="../engine/actor.html#GetCollisionExtent">GetCollisionExtent</a>, <a href="../engine/actor.html#GetDebugName">GetDebugName</a>, <a href="../engine/actor.html#GetEventColor">GetEventColor</a>, <a href="../engine/actor.html#GetEvents">GetEvents</a>, <a href="../engine/actor.html#GetHumanReadableName">GetHumanReadableName</a>, <a href="../engine/actor.html#GetLocalString">GetLocalString</a>, <a href="../engine/actor.html#GetMapName">GetMapName</a>, <a href="../engine/actor.html#GetMeshName">GetMeshName</a>, <a href="../engine/actor.html#GetNextInt">GetNextInt</a>, <a href="../engine/actor.html#GetNextIntDesc">GetNextIntDesc</a>, <a href="../engine/actor.html#GetNextSkin">GetNextSkin</a>, <a href="../engine/actor.html#GetNotifyChannel">GetNotifyChannel</a>, <a href="../engine/actor.html#GetRenderBoundingSphere">GetRenderBoundingSphere</a>, <a href="../engine/actor.html#GetRootLocation">GetRootLocation</a>, <a href="../engine/actor.html#GetRootLocationDelta">GetRootLocationDelta</a>, <a href="../engine/actor.html#GetRootRotation">GetRootRotation</a>, <a href="../engine/actor.html#GetRootRotationDelta">GetRootRotationDelta</a>, <a href="../engine/actor.html#GetSoundDuration">GetSoundDuration</a>, <a href="../engine/actor.html#GetURLMap">GetURLMap</a>, <a href="../engine/actor.html#GetUrlOption">GetUrlOption</a>, <a href="../engine/actor.html#HasAnim">HasAnim</a>, <a href="../engine/actor.html#HasLIPSincAnim">HasLIPSincAnim</a>, <a href="../engine/actor.html#HealDamage">HealDamage</a>, <a href="../engine/actor.html#HitPointTrace">HitPointTrace</a>, <a href="../engine/actor.html#HitWall">HitWall</a>, <a href="../engine/actor.html#HurtRadius">HurtRadius</a>, <a href="../engine/actor.html#IsAnimating">IsAnimating</a>, <a href="../engine/actor.html#IsInPain">IsInPain</a>, <a href="../engine/actor.html#IsInVolume">IsInVolume</a>, <a href="../engine/actor.html#IsJoinedTo">IsJoinedTo</a>, <a href="../engine/actor.html#IsPlayingLIPSincAnim">IsPlayingLIPSincAnim</a>, <a href="../engine/actor.html#IsStationary">IsStationary</a>, <a href="../engine/actor.html#IsTweening">IsTweening</a>, <a href="../engine/actor.html#KAddAngularImpulse">KAddAngularImpulse</a>, <a href="../engine/actor.html#KAddBoneLifter">KAddBoneLifter</a>, <a href="../engine/actor.html#KAddImpulse">KAddImpulse</a>, <a href="../engine/actor.html#KApplyForce">KApplyForce</a>, <a href="../engine/actor.html#KDisableCollision">KDisableCollision</a>, <a href="../engine/actor.html#KDrawRigidBodyState">KDrawRigidBodyState</a>, <a href="../engine/actor.html#KEnableCollision">KEnableCollision</a>, <a href="../engine/actor.html#KFreezeRagdoll">KFreezeRagdoll</a>, <a href="../engine/actor.html#KGetActorGravScale">KGetActorGravScale</a>, <a href="../engine/actor.html#KGetCOMOffset">KGetCOMOffset</a>, <a href="../engine/actor.html#KGetCOMPosition">KGetCOMPosition</a>, <a href="../engine/actor.html#KGetDampingProps">KGetDampingProps</a>, <a href="../engine/actor.html#KGetFriction">KGetFriction</a>, <a href="../engine/actor.html#KGetImpactThreshold">KGetImpactThreshold</a>, <a href="../engine/actor.html#KGetInertiaTensor">KGetInertiaTensor</a>, <a href="../engine/actor.html#KGetMass">KGetMass</a>, <a href="../engine/actor.html#KGetRBQuaternion">KGetRBQuaternion</a>, <a href="../engine/actor.html#KGetRestitution">KGetRestitution</a>, <a href="../engine/actor.html#KGetRigidBodyState">KGetRigidBodyState</a>, <a href="../engine/actor.html#KGetSimParams">KGetSimParams</a>, <a href="../engine/actor.html#KGetSkelMass">KGetSkelMass</a>, <a href="../engine/actor.html#KilledBy">KilledBy</a>, <a href="../engine/actor.html#KImpact">KImpact</a>, <a href="../engine/actor.html#KIsAwake">KIsAwake</a>, <a href="../engine/actor.html#KIsRagdollAvailable">KIsRagdollAvailable</a>, <a href="../engine/actor.html#KMakeRagdollAvailable">KMakeRagdollAvailable</a>, <a href="../engine/actor.html#KRBVecFromVector">KRBVecFromVector</a>, <a href="../engine/actor.html#KRBVecToVector">KRBVecToVector</a>, <a href="../engine/actor.html#KRemoveAllBoneLifters">KRemoveAllBoneLifters</a>, <a href="../engine/actor.html#KRemoveLifterFromBone">KRemoveLifterFromBone</a>, <a href="../engine/actor.html#KScaleJointLimits">KScaleJointLimits</a>, <a href="../engine/actor.html#KSetActorGravScale">KSetActorGravScale</a>, <a href="../engine/actor.html#KSetBlockKarma">KSetBlockKarma</a>, <a href="../engine/actor.html#KSetCOMOffset">KSetCOMOffset</a>, <a href="../engine/actor.html#KSetDampingProps">KSetDampingProps</a>, <a href="../engine/actor.html#KSetFriction">KSetFriction</a>, <a href="../engine/actor.html#KSetImpactThreshold">KSetImpactThreshold</a>, <a href="../engine/actor.html#KSetInertiaTensor">KSetInertiaTensor</a>, <a href="../engine/actor.html#KSetMass">KSetMass</a>, <a href="../engine/actor.html#KSetRestitution">KSetRestitution</a>, <a href="../engine/actor.html#KSetSimParams">KSetSimParams</a>, <a href="../engine/actor.html#KSetSkelVel">KSetSkelVel</a>, <a href="../engine/actor.html#KSetStayUpright">KSetStayUpright</a>, <a href="../engine/actor.html#KSetStayUprightParams">KSetStayUprightParams</a>, <a href="../engine/actor.html#KSkelConvulse">KSkelConvulse</a>, <a href="../engine/actor.html#KUpdateState">KUpdateState</a>, <a href="../engine/actor.html#KVelDropBelow">KVelDropBelow</a>, <a href="../engine/actor.html#KWake">KWake</a>, <a href="../engine/actor.html#Landed">Landed</a>, <a href="../engine/actor.html#LinkMesh">LinkMesh</a>, <a href="../engine/actor.html#LinkSkelAnim">LinkSkelAnim</a>, <a href="../engine/actor.html#LIPSincAnimEnd">LIPSincAnimEnd</a>, <a href="../engine/actor.html#LockRootMotion">LockRootMotion</a>, <a href="../engine/actor.html#LoopAnim">LoopAnim</a>, <a href="../engine/actor.html#LostChild">LostChild</a>, <a href="../engine/actor.html#MakeNoise">MakeNoise</a>, <a href="../engine/actor.html#MatchStarting">MatchStarting</a>, <a href="../engine/actor.html#Move">Move</a>, <a href="../engine/actor.html#MoveCacheEntry">MoveCacheEntry</a>, <a href="../engine/actor.html#MoveSmooth">MoveSmooth</a>, <a href="../engine/actor.html#NearSpot">NearSpot</a>, <a href="../engine/actor.html#NotifyLocalPlayerDead">NotifyLocalPlayerDead</a>, <a href="../engine/actor.html#NotifyLocalPlayerTeamReceived">NotifyLocalPlayerTeamReceived</a>, <a href="../engine/actor.html#NotifySelected">NotifySelected</a>, <a href="../engine/actor.html#OnlyAffectPawns">OnlyAffectPawns</a>, <a href="../engine/actor.html#PauseStream">PauseStream</a>, <a href="../engine/actor.html#PawnBaseDied">PawnBaseDied</a>, <a href="../engine/actor.html#PhysicsVolumeChange">PhysicsVolumeChange</a>, <a href="../engine/actor.html#PlayAnim">PlayAnim</a>, <a href="../engine/actor.html#PlayerCanSeeMe">PlayerCanSeeMe</a>, <a href="../engine/actor.html#PlayFeedbackEffect">PlayFeedbackEffect</a>, <a href="../engine/actor.html#PlayLIPSincAnim">PlayLIPSincAnim</a>, <a href="../engine/actor.html#PlayMusic">PlayMusic</a>, <a href="../engine/actor.html#PlayOwnedSound">PlayOwnedSound</a>, <a href="../engine/actor.html#PlaySound">PlaySound</a>, <a href="../engine/actor.html#PlayStream">PlayStream</a>, <a href="../engine/actor.html#PlayTeleportEffect">PlayTeleportEffect</a>, <a href="../engine/actor.html#PostBeginPlay">PostBeginPlay</a>, <a href="../engine/actor.html#PostLoadSavedGame">PostLoadSavedGame</a>, <a href="../engine/actor.html#PostNetBeginPlay">PostNetBeginPlay</a>, <a href="../engine/actor.html#PostNetReceive">PostNetReceive</a>, <a href="../engine/actor.html#PostTeleport">PostTeleport</a>, <a href="../engine/actor.html#PostTouch">PostTouch</a>, <a href="../engine/actor.html#POVChanged">POVChanged</a>, <a href="../engine/actor.html#PreBeginPlay">PreBeginPlay</a>, <a href="../engine/actor.html#PrecacheAnnouncer">PrecacheAnnouncer</a>, <a href="../engine/actor.html#PreSaveGame">PreSaveGame</a>, <a href="../engine/actor.html#PreTeleport">PreTeleport</a>, <a href="../engine/actor.html#RadiusActors">RadiusActors</a>, <a href="../engine/actor.html#RanInto">RanInto</a>, <a href="../engine/actor.html#ReceivedEvent">ReceivedEvent</a>, <a href="../engine/actor.html#RecoverFromBadStateCode">RecoverFromBadStateCode</a>, <a href="../engine/actor.html#RenderOverlays">RenderOverlays</a>, <a href="../engine/actor.html#RenderTexture">RenderTexture</a>, <a href="../engine/actor.html#Reset">Reset</a>, <a href="../engine/actor.html#ResetStaticFilterState">ResetStaticFilterState</a>, <a href="../engine/actor.html#SeekStream">SeekStream</a>, <a href="../engine/actor.html#SelfTriggered">SelfTriggered</a>, <a href="../engine/actor.html#SetAnimFrame">SetAnimFrame</a>, <a href="../engine/actor.html#SetBase">SetBase</a>, <a href="../engine/actor.html#SetBoneDirection">SetBoneDirection</a>, <a href="../engine/actor.html#SetBoneLocation">SetBoneLocation</a>, <a href="../engine/actor.html#SetBoneRotation">SetBoneRotation</a>, <a href="../engine/actor.html#SetBoneScale">SetBoneScale</a>, <a href="../engine/actor.html#SetCollision">SetCollision</a>, <a href="../engine/actor.html#SetCollisionSize">SetCollisionSize</a>, <a href="../engine/actor.html#SetDefaultDisplayProperties">SetDefaultDisplayProperties</a>, <a href="../engine/actor.html#SetDelayedDamageInstigatorController">SetDelayedDamageInstigatorController</a>, <a href="../engine/actor.html#SetDisplayProperties">SetDisplayProperties</a>, <a href="../engine/actor.html#SetDrawScale">SetDrawScale</a>, <a href="../engine/actor.html#SetDrawScale3D">SetDrawScale3D</a>, <a href="../engine/actor.html#SetDrawType">SetDrawType</a>, <a href="../engine/actor.html#SetGRI">SetGRI</a>, <a href="../engine/actor.html#SetInitialState">SetInitialState</a>, <a href="../engine/actor.html#SetLocation">SetLocation</a>, <a href="../engine/actor.html#SetOverlayMaterial">SetOverlayMaterial</a>, <a href="../engine/actor.html#SetOwner">SetOwner</a>, <a href="../engine/actor.html#SetPhysics">SetPhysics</a>, <a href="../engine/actor.html#SetRelativeLocation">SetRelativeLocation</a>, <a href="../engine/actor.html#SetRelativeRotation">SetRelativeRotation</a>, <a href="../engine/actor.html#SetRotation">SetRotation</a>, <a href="../engine/actor.html#SetStaticMesh">SetStaticMesh</a>, <a href="../engine/actor.html#SetTimer">SetTimer</a>, <a href="../engine/actor.html#ShouldBeHidden">ShouldBeHidden</a>, <a href="../engine/actor.html#Sleep">Sleep</a>, <a href="../engine/actor.html#Spawn">Spawn</a>, <a href="../engine/actor.html#SpecialHandling">SpecialHandling</a>, <a href="../engine/actor.html#StartInterpolation">StartInterpolation</a>, <a href="../engine/actor.html#StopAllMusic">StopAllMusic</a>, <a href="../engine/actor.html#StopAnimating">StopAnimating</a>, <a href="../engine/actor.html#StopFeedbackEffect">StopFeedbackEffect</a>, <a href="../engine/actor.html#StopLIPSincAnim">StopLIPSincAnim</a>, <a href="../engine/actor.html#StopMusic">StopMusic</a>, <a href="../engine/actor.html#StopStream">StopStream</a>, <a href="../engine/actor.html#SuggestFallVelocity">SuggestFallVelocity</a>, <a href="../engine/actor.html#TakeDamage">TakeDamage</a>, <a href="../engine/actor.html#TeamLink">TeamLink</a>, <a href="../engine/actor.html#TextToSpeech">TextToSpeech</a>, <a href="../engine/actor.html#Tick">Tick</a>, <a href="../engine/actor.html#Timer">Timer</a>, <a href="../engine/actor.html#TimerPop">TimerPop</a>, <a href="../engine/actor.html#TornOff">TornOff</a>, <a href="../engine/actor.html#Touch">Touch</a>, <a href="../engine/actor.html#TouchingActor">TouchingActor</a>, <a href="../engine/actor.html#TouchingActors">TouchingActors</a>, <a href="../engine/actor.html#Trace">Trace</a>, <a href="../engine/actor.html#TraceActors">TraceActors</a>, <a href="../engine/actor.html#TraceThisActor">TraceThisActor</a>, <a href="../engine/actor.html#TravelPostAccept">TravelPostAccept</a>, <a href="../engine/actor.html#TravelPreAccept">TravelPreAccept</a>, <a href="../engine/actor.html#Trigger">Trigger</a>, <a href="../engine/actor.html#TriggerEvent">TriggerEvent</a>, <a href="../engine/actor.html#TweenAnim">TweenAnim</a>, <a href="../engine/actor.html#UnClock">UnClock</a>, <a href="../engine/actor.html#UnTouch">UnTouch</a>, <a href="../engine/actor.html#UnTrigger">UnTrigger</a>, <a href="../engine/actor.html#UntriggerEvent">UntriggerEvent</a>, <a href="../engine/actor.html#UpdateAnnouncements">UpdateAnnouncements</a>, <a href="../engine/actor.html#UpdateDefaultMesh">UpdateDefaultMesh</a>, <a href="../engine/actor.html#UpdateDefaultStaticMesh">UpdateDefaultStaticMesh</a>, <a href="../engine/actor.html#UpdatePrecacheMaterials">UpdatePrecacheMaterials</a>, <a href="../engine/actor.html#UpdatePrecacheStaticMeshes">UpdatePrecacheStaticMeshes</a>, <a href="../engine/actor.html#UpdateURL">UpdateURL</a>, <a href="../engine/actor.html#UsedBy">UsedBy</a>, <a href="../engine/actor.html#VisibleActors">VisibleActors</a>, <a href="../engine/actor.html#VisibleCollidingActors">VisibleCollidingActors</a>, <a href="../engine/actor.html#ZoneChange">ZoneChange</a></td>
+</tr>
+</table>
+
+
+<br />
+
+
+
+<hr />
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Variables Detail</th>
+</tr>
+</table>
+
+<h4><a name="_bHasWarmedUp" class="hidden"></a>bHasWarmedUp <a href="../Source_engine/fluidsurfaceinfo.html#89" class="small">Source code</a></h4>
+<div class="declaration">var transient const <span class="source_type">bool</span> bHasWarmedUp;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClampBitmap" class="hidden"></a>ClampBitmap <a href="../Source_engine/fluidsurfaceinfo.html#55" class="small">Source code</a></h4>
+<div class="declaration">var const array&lt;<span class="source_type">int</span>&gt; ClampBitmap;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidBoundingBox" class="hidden"></a>FluidBoundingBox <a href="../Source_engine/fluidsurfaceinfo.html#79" class="small">Source code</a></h4>
+<div class="declaration">var transient const <span class="source_type"><a href="../core/object.html#Box" class="source">box</a></span> FluidBoundingBox;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidOrigin" class="hidden"></a>FluidOrigin <a href="../Source_engine/fluidsurfaceinfo.html#80" class="small">Source code</a></h4>
+<div class="declaration">var transient const <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> FluidOrigin;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_LatestVerts" class="hidden"></a>LatestVerts <a href="../Source_engine/fluidsurfaceinfo.html#77" class="small">Source code</a></h4>
+<div class="declaration">var transient const <span class="source_type">int</span> LatestVerts;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Oscillators" class="hidden"></a>Oscillators <a href="../Source_engine/fluidsurfaceinfo.html#88" class="small">Source code</a></h4>
+<div class="declaration">var transient const array&lt;<span class="source_type"><a href="../engine/fluidsurfaceoscillator.html" class="source">FluidSurfaceOscillator</a></span>&gt; Oscillators;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Primitive" class="hidden"></a>Primitive <a href="../Source_engine/fluidsurfaceinfo.html#87" class="small">Source code</a></h4>
+<div class="declaration">var transient const <span class="source_type">FluidSurfacePrimitive</span> <span class="source_type">Primitive</span>;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TestRippleAng" class="hidden"></a>TestRippleAng <a href="../Source_engine/fluidsurfaceinfo.html#85" class="small">Source code</a></h4>
+<div class="declaration">var transient const <span class="source_type">float</span> TestRippleAng;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TimeRollover" class="hidden"></a>TimeRollover <a href="../Source_engine/fluidsurfaceinfo.html#82" class="small">Source code</a></h4>
+<div class="declaration">var transient const <span class="source_type">float</span> TimeRollover;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VertAlpha" class="hidden"></a>VertAlpha <a href="../Source_engine/fluidsurfaceinfo.html#75" class="small">Source code</a></h4>
+<div class="declaration">var transient const array&lt;<span class="source_type">byte</span>&gt; VertAlpha;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Verts0" class="hidden"></a>Verts0 <a href="../Source_engine/fluidsurfaceinfo.html#73" class="small">Source code</a></h4>
+<div class="declaration">var transient const array&lt;<span class="source_type">float</span>&gt; Verts0;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Verts1" class="hidden"></a>Verts1 <a href="../Source_engine/fluidsurfaceinfo.html#74" class="small">Source code</a></h4>
+<div class="declaration">var transient const array&lt;<span class="source_type">float</span>&gt; Verts1;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h3 class="vartag">FluidSurfaceInfo</h3>
+<h4><a name="_AlphaCurveScale" class="hidden"></a>AlphaCurveScale <a href="../Source_engine/fluidsurfaceinfo.html#36" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> AlphaCurveScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AlphaHeightScale" class="hidden"></a>AlphaHeightScale <a href="../Source_engine/fluidsurfaceinfo.html#37" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> AlphaHeightScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_AlphaMax" class="hidden"></a>AlphaMax <a href="../Source_engine/fluidsurfaceinfo.html#38" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">byte</span> AlphaMax;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bShowBoundingBox" class="hidden"></a>bShowBoundingBox <a href="../Source_engine/fluidsurfaceinfo.html#60" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">bool</span> bShowBoundingBox;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_bUseNoRenderZ" class="hidden"></a>bUseNoRenderZ <a href="../Source_engine/fluidsurfaceinfo.html#61" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">bool</span> bUseNoRenderZ;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ClampTerrain" class="hidden"></a>ClampTerrain <a href="../Source_engine/fluidsurfaceinfo.html#58" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) edfindable <span class="source_type"><a href="../engine/terraininfo.html" class="source">TerrainInfo</a></span> ClampTerrain;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidColor" class="hidden"></a>FluidColor <a href="../Source_engine/fluidsurfaceinfo.html#70" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type"><a href="../core/object.html#Color" class="source">color</a></span> FluidColor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidDamping" class="hidden"></a>FluidDamping <a href="../Source_engine/fluidsurfaceinfo.html#22" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> FluidDamping;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidGridSpacing" class="hidden"></a>FluidGridSpacing <a href="../Source_engine/fluidsurfaceinfo.html#14" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> FluidGridSpacing;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidGridType" class="hidden"></a>FluidGridType <a href="../Source_engine/fluidsurfaceinfo.html#8" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type"><a href="../engine/fluidsurfaceinfo.html#EFluidGridType" class="source">EFluidGridType</a></span> FluidGridType;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidHeightScale" class="hidden"></a>FluidHeightScale <a href="../Source_engine/fluidsurfaceinfo.html#18" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> FluidHeightScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidNoiseFrequency" class="hidden"></a>FluidNoiseFrequency <a href="../Source_engine/fluidsurfaceinfo.html#24" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> FluidNoiseFrequency;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidNoiseStrength" class="hidden"></a>FluidNoiseStrength <a href="../Source_engine/fluidsurfaceinfo.html#25" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type"><a href="../core/object.html#Range" class="source">range</a></span> FluidNoiseStrength;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidSpeed" class="hidden"></a>FluidSpeed <a href="../Source_engine/fluidsurfaceinfo.html#20" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> FluidSpeed;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidTimeScale" class="hidden"></a>FluidTimeScale <a href="../Source_engine/fluidsurfaceinfo.html#21" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> FluidTimeScale;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidXSize" class="hidden"></a>FluidXSize <a href="../Source_engine/fluidsurfaceinfo.html#15" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">int</span> FluidXSize;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_FluidYSize" class="hidden"></a>FluidYSize <a href="../Source_engine/fluidsurfaceinfo.html#16" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">int</span> FluidYSize;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_NoRenderZ" class="hidden"></a>NoRenderZ <a href="../Source_engine/fluidsurfaceinfo.html#62" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> NoRenderZ;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OrientShootEffect" class="hidden"></a>OrientShootEffect <a href="../Source_engine/fluidsurfaceinfo.html#49" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">bool</span> OrientShootEffect;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_OrientTouchEffect" class="hidden"></a>OrientTouchEffect <a href="../Source_engine/fluidsurfaceinfo.html#52" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">bool</span> OrientTouchEffect;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_RippleVelocityFactor" class="hidden"></a>RippleVelocityFactor <a href="../Source_engine/fluidsurfaceinfo.html#44" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> RippleVelocityFactor;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ShootEffect" class="hidden"></a>ShootEffect <a href="../Source_engine/fluidsurfaceinfo.html#48" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>&gt; ShootEffect;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ShootRadius" class="hidden"></a>ShootRadius <a href="../Source_engine/fluidsurfaceinfo.html#41" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> ShootRadius;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_ShootStrength" class="hidden"></a>ShootStrength <a href="../Source_engine/fluidsurfaceinfo.html#40" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> ShootStrength;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TestRipple" class="hidden"></a>TestRipple <a href="../Source_engine/fluidsurfaceinfo.html#27" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">bool</span> TestRipple;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TestRippleRadius" class="hidden"></a>TestRippleRadius <a href="../Source_engine/fluidsurfaceinfo.html#30" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> TestRippleRadius;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TestRippleSpeed" class="hidden"></a>TestRippleSpeed <a href="../Source_engine/fluidsurfaceinfo.html#28" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> TestRippleSpeed;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TestRippleStrength" class="hidden"></a>TestRippleStrength <a href="../Source_engine/fluidsurfaceinfo.html#29" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> TestRippleStrength;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TouchEffect" class="hidden"></a>TouchEffect <a href="../Source_engine/fluidsurfaceinfo.html#51" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span>&gt; TouchEffect;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TouchStrength" class="hidden"></a>TouchStrength <a href="../Source_engine/fluidsurfaceinfo.html#45" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> TouchStrength;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UOffset" class="hidden"></a>UOffset <a href="../Source_engine/fluidsurfaceinfo.html#33" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> UOffset;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UpdateRate" class="hidden"></a>UpdateRate <a href="../Source_engine/fluidsurfaceinfo.html#68" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> UpdateRate;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_UTiles" class="hidden"></a>UTiles <a href="../Source_engine/fluidsurfaceinfo.html#32" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> UTiles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VOffset" class="hidden"></a>VOffset <a href="../Source_engine/fluidsurfaceinfo.html#35" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> VOffset;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_VTiles" class="hidden"></a>VTiles <a href="../Source_engine/fluidsurfaceinfo.html#34" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> VTiles;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_WarmUpTime" class="hidden"></a>WarmUpTime <a href="../Source_engine/fluidsurfaceinfo.html#65" class="small">Source code</a></h4>
+<div class="declaration">var(<span class="source_type"><a href="../engine/fluidsurfaceinfo.html" class="source">FluidSurfaceInfo</a></span>) <span class="source_type">float</span> WarmUpTime;</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+<table class="title">
+<tr>
+	<th class="title">Enumerations Detail</th>
+</tr>
+</table>
+
+<h4><a name="_EFluidGridType" class="hidden"></a>EFluidGridType <a href="../Source_engine/fluidsurfaceinfo.html#8" class="small">Source code</a></h4>
+<div class="declaration">enum <span class="source_type"><a href="../engine/fluidsurfaceinfo.html#EFluidGridType" class="source">EFluidGridType</a></span><br />
+{<blockquote>FGT_Square,
+FGT_Hexagonal</blockquote>};
+</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+
+
+
+<table class="title">
+<tr>
+	<th class="title">Functions Detail</th>
+</tr>
+</table>
+
+<h4><a name="_Pling-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Pling <span class="function_state"></span> <a href="../Source_engine/fluidsurfaceinfo.html#95" class="small">Source code</a></h4>
+<div class="declaration">native final function  Pling ( <span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> Position, <span class="source_type">float</span> Strength, optional <span class="source_type">float</span> <span class="source_type">Radius</span> )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_TakeDamage-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> TakeDamage <span class="function_state"></span> <a href="../Source_engine/fluidsurfaceinfo.html#99" class="small">Source code</a></h4>
+<div class="declaration">simulated function  TakeDamage ( <span class="source_type">int</span> Damage, <span class="source_type"><a href="../engine/pawn.html" class="source">Pawn</a></span> instigatedBy, <span class="source_type"><a href="../core/object.html#Vector" class="source">Vector</a></span> <span class="source_type">hitlocation</span>,
+						<span class="source_type"><a href="../core/object.html#Vector" class="source">vector</a></span> momentum, <span class="source_type">class</span>&lt;<span class="source_type"><a href="../engine/damagetype.html" class="source">DamageType</a></span>&gt; <span class="source_type"><a href="../engine/damagetype.html" class="source">damageType</a></span>, optional <span class="source_type">int</span> <span class="source_type">HitIndex</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+<h4><a name="_Touch-" class="hidden"></a><img src="../img_function.gif" alt="" title="function" /> Touch <span class="function_state"></span> <a href="../Source_engine/fluidsurfaceinfo.html#122" class="small">Source code</a></h4>
+<div class="declaration">simulated function  Touch ( <span class="source_type"><a href="../engine/actor.html" class="source">Actor</a></span> <span class="source_type">Other</span>) )</div>
+<blockquote class="comment">
+
+</blockquote>
+<hr class="small" />
+
+
+<br />
+
+
+<table class="title">
+<tr>
+	<th class="title">Defaultproperties</th>
+</tr>
+</table>
+<br />
+<div class="source"><table class="source"><tr><td class="source"><pre class="source">defaultproperties
+{
+     FluidGridType=FGT_Hexagonal
+     FluidGridSpacing=<span class="source_int">24.000000</span>
+     FluidXSize=<span class="source_int">48</span>
+     FluidYSize=<span class="source_int">48</span>
+     FluidHeightScale=<span class="source_int">1.000000</span>
+     FluidSpeed=<span class="source_int">170.000000</span>
+     FluidTimeScale=<span class="source_int">1.000000</span>
+     FluidDamping=<span class="source_int">0.500000</span>
+     FluidNoiseFrequency=<span class="source_int">60.000000</span>
+     FluidNoiseStrength=(Min=-<span class="source_int">70.000000</span>,Max=<span class="source_int">70.000000</span>)
+     TestRippleSpeed=<span class="source_int">3000.000000</span>
+     TestRippleStrength=-<span class="source_int">20.000000</span>
+     TestRippleRadius=<span class="source_int">48.000000</span>
+     UTiles=<span class="source_int">1.000000</span>
+     VTiles=<span class="source_int">1.000000</span>
+     AlphaHeightScale=<span class="source_int">10.000000</span>
+     AlphaMax=<span class="source_int">128</span>
+     ShootStrength=-<span class="source_int">50.000000</span>
+     RippleVelocityFactor=-<span class="source_int">0.050000</span>
+     TouchStrength=-<span class="source_int">50.000000</span>
+     WarmUpTime=<span class="source_int">2.000000</span>
+     UpdateRate=<span class="source_int">50.000000</span>
+     DrawType=DT_FluidSurface
+     bHidden=False
+     bNoDelete=True
+     <span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span>=<span class="source_type"><a href="../engine/texture.html" class="source">Texture</a></span><span class="source_name">'Engine.S_FluidSurf'</span>
+     bUnlit=True
+     bCollideActors=True
+     bEdShouldSnap=True
+}
+</pre></td></tr></table></div>
+
+
+
+<hr />
+<table class="header">
+<tr class="header">
+	<td class="header"><a href="../overview.html">Overview</a></td>
+	<td class="header"><a href="../engine/engine-overview.html">Package</a></td>
+	<td class="header_hilight">Class</td>
+	<td class="header"><a href="../Source_engine/fluidsurfaceinfo.html">Source</a></td>
+	<td class="header"><a class="header" href="../classtree.html#FluidSurfaceInfo">Class tree</a></td>
+	<td class="header"><a class="header" href="../glossary_A.html">Glossary</a></td>
+	<td class="logo" rowspan="2">UnrealScript<br />Documentation</td>
+</tr>
+<tr>
+	<td class="subheader" colspan="3"><a href="../engine/finalblend.html">previous class</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../engine/fluidsurfaceoscillator.html">next class</a></td>
+	<td class="subheader" colspan="2"><a href="../index.html" target="_top">frames</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="" target="_top">no frames</a></td>
+</tr>
+</table>
+
+<div class="stats">Creation time: Fri 13-10-2023 03:18:44.270 - Created with <a href="http://wiki.beyondunreal.com/wiki/UnCodeX" target="_blank">UnCodeX</a></div>
+
+</body>
+</html>
