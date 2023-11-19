@@ -1,7 +1,13 @@
-# Killing Floor 1 Unreal Script Sources
+# Killing Floor 1 UnrealScript Sources
 
-> N.B. #1 I do not own any bit of this. All rights belong to [*Tripwire Interactive*](https://tripwireinteractive.com/). This is uploaded for historical reasons.
+> [!NOTE] 
+> This repo contains more classes and files than what official KF 1 SDK has. We highly advise you to install this on top of it.
 
-> N.B. #2 This repo contains more classes and files than KF 1 SDK installs, so i highly advice you to install this on top of it.
+These sources were uploaded for historical reasons and to make modding more accessible.
 
-I used [Benjamin Wharton](https://app.assembla.com/profile/BenjaminWharton)'s [repo](https://app.assembla.com/spaces/killingfloorsource/subversion/source) to retrieve some of the patches. And used [BatchExportCommandlet](https://wiki.beyondunreal.com/Legacy:BatchExportCommandlet) to get the latest scripts from version 1065 game packages.
+- [Benjamin Wharton](https://app.assembla.com/profile/BenjaminWharton)'s [repo](https://app.assembla.com/spaces/killingfloorsource/subversion/source) was used to retrieve patches prior to v1065. 
+- For v1065 [BatchExportCommandlet](https://wiki.beyondunreal.com/Legacy:BatchExportCommandlet) was used on vanilla game clean install.
+
+---
+
+All rights belong to [*Tripwire Interactive*](https://tripwireinteractive.com/).
